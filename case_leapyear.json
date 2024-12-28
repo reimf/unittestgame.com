@@ -1,0 +1,102 @@
+{
+    "parameters": [
+        {
+            "name": "year",
+            "type": "int",
+            "question": "Jaar"
+        }
+    ],
+    "function": {
+        "name": "is_leapyear",
+        "type": "bool",
+        "question": "Verwachte uitkomst"
+    },
+    "generator": [
+        [
+            "if year % 400 == 0: return True",
+            ""
+        ],
+        [
+            "if year % 100 == 0: return False",
+            ""
+        ],
+        [
+            "return year % 4 == 0",
+            "return True",
+            "return False"
+        ]
+    ],
+    "minimal_unit_tests": [
+        {
+            "year": 2000,
+            "is_leapyear": true
+        },
+        {
+            "year": 2001,
+            "is_leapyear": false
+        },
+        {
+            "year": 2002,
+            "is_leapyear": false
+        },
+        {
+            "year": 2003,
+            "is_leapyear": false
+        },
+        {
+            "year": 2004,
+            "is_leapyear": true
+        },
+        {
+            "year": 1900,
+            "is_leapyear": false
+        },
+        {
+            "year": 1800,
+            "is_leapyear": false
+        },
+        {
+            "year": 1700,
+            "is_leapyear": false
+        },
+        {
+            "year": 1600,
+            "is_leapyear": true
+        }
+    ],
+    "giveaway_unit_tests": [
+        {
+            "year": 2024,
+            "is_leapyear": true
+        },
+        {
+            "year": 2025,
+            "is_leapyear": false
+        },
+        {
+            "year": 2026,
+            "is_leapyear": false
+        },
+        {
+            "year": 2027,
+            "is_leapyear": false
+        },
+        {
+            "year": 2028,
+            "is_leapyear": true
+        }
+    ],
+    "introduction": [
+        "Introductie",
+        "Een uitgever van kalenders laat een nieuwe functie ontwikkelen door een extern softwarebedrijf.",
+        "Als die eenmaal gedrukt zijn kan er niks meer aan veranderd worden dus mogen er geen fouten in zitten.",
+        "Daarom hebben ze jou ingehuurd om unit testen te schrijven voor de functie om te bepalen of een jaar een schrikkeljaar is of niet.",
+        "In het contract vind je wat je moet doen en hoeveel je daarvoor betaald krijgt.",
+        "In de specificatie staat wat de functie precies moet doen."
+    ],
+    "specification": [
+        "Specificatie",
+        "De functie moet aangeven of een jaar een schrikkeljaar is of niet.",
+        "In het eerste geval moet de functie True teruggeven, in het tweede geval False."
+    ]
+}

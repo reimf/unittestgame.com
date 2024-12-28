@@ -4,5 +4,5 @@ class UnitTest:
         self.expected = expected
 
     def __str__(self):
-        return f'assert average_speed{self.arguments} == "{self.expected}"'
+        return f'{self.arguments} -> {self.expected}'
     
