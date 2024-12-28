@@ -26,7 +26,7 @@
             "return False"
         ]
     ],
-    "minimal_unit_tests": [
+    "edgecase_unit_tests": [
         {
             "year": 2000,
             "is_leapyear": true

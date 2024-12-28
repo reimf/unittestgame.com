@@ -52,7 +52,7 @@
             "return str(round(average))"
         ]
     ],
-    "minimal_unit_tests": [
+    "edgecase_unit_tests": [
         {
             "distance": 1,
             "time": -1,

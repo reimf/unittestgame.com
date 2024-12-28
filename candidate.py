@@ -29,3 +29,6 @@ class Candidate:
 
     def code_length(self):
         return len(self.code)
+
+    def __str__(self):
+        return '\n'.join('| ' + line for line in self.code.split('\n'))

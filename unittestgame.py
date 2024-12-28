@@ -7,25 +7,39 @@ from testresult import TestResult
 
 
 class UnitTestGame:
-    def __init__(self, case_name):
-        with open(f'case_{case_name}.json') as json_file:
+    def __init__(self, case_file):
+        with open(case_file) as json_file:
             case = json.load(json_file)
         self.parameters = case['parameters']
         self.function = case['function']
         self.all_candidates = list(self.generate_candidates(case['generator'], []))
-        self.minimal_unit_tests = list(self.generate_unit_tests(case['minimal_unit_tests']))
+        self.edgecase_unit_tests = list(self.generate_unit_tests(case['edgecase_unit_tests']))
         self.giveaway_unit_tests = list(self.generate_unit_tests(case['giveaway_unit_tests']))
         self.introduction = case['introduction']
         self.specification = case['specification']
 
-        print(f'Er zijn {len(self.all_candidates)} kandidaten.')
-        perfect_candidates = self.find_passing_candidates(self.minimal_unit_tests)
+        perfect_candidates = self.find_passing_candidates(self.edgecase_unit_tests)
         if len(perfect_candidates) != 1:
-            for candidate in perfect_candidates:
-                print(candidate.code)
-            raise ValueError(f'Er zijn {len(perfect_candidates)} perfecte kandidaten.')
+            self.show_block([
+                'Perfecte kandidaten',
+                f'Er zijn {len(perfect_candidates)} perfecte kandidaten.',
+                perfect_candidates
+            ])
+            raise ValueError(f'Niet 1 perfecte kandidaat, maar {len(perfect_candidates)} perfecte kandidaten.')
         self.perfect_candidate = perfect_candidates.pop()
-        print(self.perfect_candidate.code)
+
+        for unit_test in self.giveaway_unit_tests:
+            test_result = TestResult(self.perfect_candidate, unit_test)
+            if not test_result.passes:
+                raise ValueError(f'Algemene unit test {unit_test} is niet correct; uitkomst zou "{test_result.value}" moeten zijn.')
+
+        edgecase_failing_candidates = [candidate for candidate in self.all_candidates if candidate.fail_count(self.giveaway_unit_tests) == 0 and candidate.fail_count(self.edgecase_unit_tests) > 0]
+        self.show_block([
+            'Perfecte kandidaat',
+            f'Dit is de perfecte kandidaat uit {len(self.all_candidates)} kandidaten.',
+            self.perfect_candidate,
+            f'Er zijn {len(edgecase_failing_candidates)} kandidaten die slagen voor de algemene unit testen en falen voor de speciale unit testen.',
+        ])
 
     def generate_candidates(self, generator, choices):
         index = len(choices)
@@ -41,8 +55,8 @@ class UnitTestGame:
             name = f'{self.function["name"]}_{identifier}'
             parameterlist = ', '.join([parameter['name'] for parameter in self.parameters])
             definition = f'def {name}({parameterlist}):'
-            lines_with_code = [definition] + [line for line in generator if line]
-            code = '\n'.join(lines_with_code).replace('\n', '\n    ')
+            lines = [definition] + ['    ' + line for line in generator if line]
+            code = '\n'.join(lines)
             candidate = Candidate(name, code)
             yield candidate
 
@@ -62,28 +76,10 @@ class UnitTestGame:
     def find_one_failing_test_result(self, unit_tests):
         all_failing_test_results = []
         for candidate in self.find_passing_candidates(unit_tests):
-            all_failing_test_results += candidate.failing_test_results(self.minimal_unit_tests)
+            all_failing_test_results += candidate.failing_test_results(self.edgecase_unit_tests)
         if not all_failing_test_results:
             return None
         return random.choice(all_failing_test_results)
-
-    def find_failing_minimal_unit_tests(self, unit_tests):
-        all_failing_unit_tests = set()
-        for candidate in self.find_passing_candidates(unit_tests):
-            failing_test_results = candidate.failing_test_results(self.minimal_unit_tests)
-            failing_unit_tests = set([test_result.unit_test for test_result in failing_test_results])
-            all_failing_unit_tests |= failing_unit_tests
-        return all_failing_unit_tests
-
-    def check_unit_tests(self):
-        for unit_test in self.minimal_unit_tests:
-            test_result = TestResult(self.perfect_candidate, unit_test)
-            if not test_result.passes:
-                raise ValueError(f'Unit test {unit_test} is niet correct; uitkomst zou "{test_result.value}" moeten zijn.')
-        if self.perfect_candidate.fail_count(self.giveaway_unit_tests) > 0:
-            raise ValueError(f'De perfecte kandidaat slaagt niet voor alle weg te geven unit testen.')
-        complex_failing_candidates = [candidate for candidate in self.all_candidates if candidate.fail_count(self.giveaway_unit_tests) == 0 and candidate.fail_count(self.minimal_unit_tests) > 0]
-        print(f'Er zijn {len(complex_failing_candidates)} kandidaten die falen voor de minimale unit testen en slagen voor de weg te geven unit testen.')
 
     def convert_type(self, value, type):
         CONVERSIONS = {
@@ -106,27 +102,33 @@ class UnitTestGame:
         test_result = TestResult(self.perfect_candidate, unit_test)
         return unit_test if test_result.passes else None
 
+    def flatten(self, some_list):
+        for element in some_list:
+            if type(element) in (tuple, list):
+                yield from self.flatten(element)
+            else:
+                yield from str(element).split('\n')
+
     def indent(self, line):
         return f'  {line}'
 
     def show_block(self, block):
+        print()
         print(block[0])
-        for line in block[1:]:
+        for line in self.flatten(block[1:]):
             print(self.indent(line))
 
     def show_contract(self):
-        self.show_block(
-            [
-                'Contract',
-                'Jij moet unit testen schrijven zodat de functie NOOIT foute test_resultaten geeft.',
-                'Wat goede test_resultaten zijn staat beschreven in de specificatie.',
-                'Voor het hele traject krijg je €10000 achteraf.',
-                'Er zijn wel wat kosten die jij moet betalen tijdens het traject.',
-                'Het toevoegen van een unit test kost je €200.',
-                'Als een klant een fout constateert in de functie, dan hebben wij daar veel werk aan.',
-                'Jij betaalt dan €500 als bijdrage aan de gemaakte kosten.'
-            ]
-        )
+        self.show_block([
+            'Contract',
+            'Jij moet unit testen schrijven zodat de functie NOOIT foute test_resultaten geeft.',
+            'Wat goede test_resultaten zijn staat beschreven in de specificatie.',
+            'Voor het hele traject krijg je €10000 achteraf.',
+            'Er zijn wel wat kosten die jij moet betalen tijdens het traject.',
+            'Het toevoegen van een unit test kost je €200.',
+            'Als een klant een fout constateert in de functie, dan hebben wij daar veel werk aan.',
+            'Jij betaalt dan €500 als bijdrage aan de gemaakte kosten.'
+        ])
 
     def show_earnings(self, earnings):
         self.show_block([
@@ -136,39 +138,37 @@ class UnitTestGame:
 
     def show_unit_tests(self, unit_tests):
         if unit_tests:
-            block = ['Unit testen'] + [str(unit_test) for unit_test in unit_tests]
-            self.show_block(block)
+            self.show_block([
+                'Unit testen',
+                [str(unit_test) for unit_test in unit_tests],
+            ])
 
     def show_secret_information(self, unit_tests):
-        print()
-        print('Geheime informatie')
         passing_candidates = self.find_passing_candidates(unit_tests)
-        print(f'  Ik kan {len(passing_candidates)} kandidaten bedenken waarbij alle {len(unit_tests)} unit testen slagen.')
-
         shortest_passing_candidate = self.find_shortest_passing_candidate(unit_tests)
-        print('  De kortste kanididaat waarbij alle unit testen slagen is de volgende.')
-        print('  | ' + shortest_passing_candidate.code.replace('\n', '\n  | '))
-
-        failing_minimal_unit_tests = self.find_failing_minimal_unit_tests(unit_tests)
-        print(f'  Er zijn nog minstens {len(failing_minimal_unit_tests)} unit testen nodig.')
-
-        failing_test_result = None
         failing_giveaway_test_results = shortest_passing_candidate.failing_test_results(self.giveaway_unit_tests)
-        print(f'  Bij bovenstaande kandidaat slagen nog {len(failing_giveaway_test_results)} weg te geven unit testen niet.')
+        failing_edgecase_test_results = shortest_passing_candidate.failing_test_results(self.edgecase_unit_tests)
         if failing_giveaway_test_results:
             failing_test_result = random.choice(failing_giveaway_test_results)
+        elif failing_edgecase_test_results:
+            failing_test_result = random.choice(failing_edgecase_test_results)
         else:
-            failing_minimal_test_results = shortest_passing_candidate.failing_test_results(self.minimal_unit_tests)
-            print(f'  Bij bovenstaande kandidaat slagen nog {len(failing_minimal_test_results)} minimale unit testen niet.')
-            if failing_minimal_test_results:
-                failing_test_result = random.choice(failing_minimal_test_results)
-        if failing_test_result:
-            print(f'  Een unit test die nog niet slaagt is bijvoorbeeld de volgende.')
-            print(f'  | {failing_test_result.unit_test}')
+            failing_test_result = None
+        self.show_block([
+            'Geheime informatie',
+            f'Ik kan {len(passing_candidates)} kandidaten bedenken waarbij alle {len(unit_tests)} unit testen slagen.',
+            'De kortste kanididaat waarbij alle unit testen slagen is de volgende.',
+            shortest_passing_candidate,
+            f'Bij bovenstaande kandidaat slagen nog {len(failing_giveaway_test_results)} algemene unit testen niet.',
+            f'Bij bovenstaande kandidaat slagen nog {len(failing_edgecase_test_results)} speciale unit testen niet.',
+            [
+                f'Een unit test die nog niet slaagt is bijvoorbeeld de volgende.',
+                f'| {failing_test_result.unit_test}',
+            ] if failing_test_result else [],
+        ])
         return failing_test_result
 
     def play(self):
-        self.check_unit_tests()
         self.show_block(self.introduction)
         earnings = 0
         userdefined_unit_tests = []
@@ -187,16 +187,15 @@ class UnitTestGame:
                 '[E]inde'
             ])
 
-            print()
-            answer = input('Keuze: ').upper()
+            self.show_block(['Keuze'])
+            answer = input(self.indent('Antwoord: ')).upper()
 
             if answer == 'S':
                 self.show_block(self.specification)
             elif answer == 'C':
                 self.show_contract()
             elif answer == 'V':
-                print()
-                print('Voeg unit test toe')
+                self.show_block(['Voeg unit test toe'])
                 unit_test = self.ask_unit_test()
                 if unit_test:
                     # TODO: is de unit test wel zinvol?
@@ -249,9 +248,9 @@ class UnitTestGame:
             'Totale verdiensten',
             f'€{earnings}',
         ])
-        
-    LEAPYEAR = 'leapyear'
-    TESLA = 'tesla'
+
+    LEAPYEAR = 'case_leapyear.json'
+    TESLA = 'case_tesla.json'
 
 
 if __name__ == '__main__':
