@@ -1,4 +1,5 @@
 {
+    "description": "Bepaal of een jaar een schrikkeljaar is of niet.",
     "parameters": [
         {
             "name": "year",
@@ -21,6 +22,9 @@
             ""
         ],
         [
+            "return year % 2 == 0",
+            "return year % 2 > 0 or year % 4 == 0",
+            "return year % 4 > 0",
             "return year % 4 == 0",
             "return True",
             "return False"
@@ -40,28 +44,12 @@
             "is_leapyear": false
         },
         {
-            "year": 2003,
-            "is_leapyear": false
-        },
-        {
             "year": 2004,
             "is_leapyear": true
         },
         {
             "year": 1900,
             "is_leapyear": false
-        },
-        {
-            "year": 1800,
-            "is_leapyear": false
-        },
-        {
-            "year": 1700,
-            "is_leapyear": false
-        },
-        {
-            "year": 1600,
-            "is_leapyear": true
         }
     ],
     "giveaway_unit_tests": [

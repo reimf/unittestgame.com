@@ -1,4 +1,5 @@
 {
+    "description": "Bereken de gemiddelde snelheid van een auto.",
     "parameters": [
         {
             "name": "distance",
@@ -53,11 +54,6 @@
         ]
     ],
     "edgecase_unit_tests": [
-        {
-            "distance": 1,
-            "time": -1,
-            "average_speed": "ERROR"
-        },
         {
             "distance": 1,
             "time": 0,

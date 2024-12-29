@@ -4,6 +4,7 @@ import json
 from candidate import Candidate
 from unittest import UnitTest
 from testresult import TestResult
+from block import Block
 
 
 class UnitTestGame:
@@ -20,13 +21,19 @@ class UnitTestGame:
 
         perfect_candidates = self.find_passing_candidates(self.edgecase_unit_tests)
         if len(perfect_candidates) != 1:
-            self.show_block([
+            Block.show(
                 'Perfecte kandidaten',
                 f'Er zijn {len(perfect_candidates)} perfecte kandidaten.',
                 perfect_candidates
-            ])
+            )
             raise ValueError(f'Niet 1 perfecte kandidaat, maar {len(perfect_candidates)} perfecte kandidaten.')
         self.perfect_candidate = perfect_candidates.pop()
+
+        for unit_test in self.edgecase_unit_tests:
+            all_minus_one_edgecase_unit_tests = [other_unit_test for other_unit_test in self.edgecase_unit_tests if other_unit_test != unit_test]
+            almost_perfect_candidates = self.find_passing_candidates(all_minus_one_edgecase_unit_tests)
+            if len(almost_perfect_candidates) == 1:
+                print(f'Onnodige speciale unit test: {unit_test}.')
 
         for unit_test in self.giveaway_unit_tests:
             test_result = TestResult(self.perfect_candidate, unit_test)
@@ -34,12 +41,12 @@ class UnitTestGame:
                 raise ValueError(f'Algemene unit test {unit_test} is niet correct; uitkomst zou "{test_result.value}" moeten zijn.')
 
         edgecase_failing_candidates = [candidate for candidate in self.all_candidates if candidate.fail_count(self.giveaway_unit_tests) == 0 and candidate.fail_count(self.edgecase_unit_tests) > 0]
-        self.show_block([
+        Block.show(
             'Perfecte kandidaat',
             f'Dit is de perfecte kandidaat uit {len(self.all_candidates)} kandidaten.',
             self.perfect_candidate,
             f'Er zijn {len(edgecase_failing_candidates)} kandidaten die slagen voor de algemene unit testen en falen voor de speciale unit testen.',
-        ])
+        )
 
     def generate_candidates(self, generator, choices):
         index = len(choices)
@@ -93,33 +100,17 @@ class UnitTestGame:
     def ask_unit_test(self):
         arguments = []
         for parameter in self.parameters:
-            answer = input(self.indent(f'{parameter["question"]}: '))
+            answer = input(Block.indent(f'{parameter["question"]}: '))
             argument = self.convert_type(answer, parameter['type'])
             arguments.append(argument)
-        answer = input(self.indent(f'{self.function["question"]}: '))
+        answer = input(Block.indent(f'{self.function["question"]}: '))
         expected = self.convert_type(answer, self.function['type'])
         unit_test = UnitTest(arguments, expected)
         test_result = TestResult(self.perfect_candidate, unit_test)
         return unit_test if test_result.passes else None
 
-    def flatten(self, some_list):
-        for element in some_list:
-            if type(element) in (tuple, list):
-                yield from self.flatten(element)
-            else:
-                yield from str(element).split('\n')
-
-    def indent(self, line):
-        return f'  {line}'
-
-    def show_block(self, block):
-        print()
-        print(block[0])
-        for line in self.flatten(block[1:]):
-            print(self.indent(line))
-
     def show_contract(self):
-        self.show_block([
+        Block.show(
             'Contract',
             'Jij moet unit testen schrijven zodat de functie NOOIT foute test_resultaten geeft.',
             'Wat goede test_resultaten zijn staat beschreven in de specificatie.',
@@ -128,20 +119,20 @@ class UnitTestGame:
             'Het toevoegen van een unit test kost je €200.',
             'Als een klant een fout constateert in de functie, dan hebben wij daar veel werk aan.',
             'Jij betaalt dan €500 als bijdrage aan de gemaakte kosten.'
-        ])
+        )
 
     def show_earnings(self, earnings):
-        self.show_block([
+        Block.show(
             'Verdiensten',
             f'€{earnings}'
-        ])
+        )
 
     def show_unit_tests(self, unit_tests):
         if unit_tests:
-            self.show_block([
+            Block.show(
                 'Unit testen',
                 [str(unit_test) for unit_test in unit_tests],
-            ])
+            )
 
     def show_secret_information(self, unit_tests):
         passing_candidates = self.find_passing_candidates(unit_tests)
@@ -154,7 +145,7 @@ class UnitTestGame:
             failing_test_result = random.choice(failing_edgecase_test_results)
         else:
             failing_test_result = None
-        self.show_block([
+        Block.show(
             'Geheime informatie',
             f'Ik kan {len(passing_candidates)} kandidaten bedenken waarbij alle {len(unit_tests)} unit testen slagen.',
             'De kortste kanididaat waarbij alle unit testen slagen is de volgende.',
@@ -165,11 +156,11 @@ class UnitTestGame:
                 f'Een unit test die nog niet slaagt is bijvoorbeeld de volgende.',
                 f'| {failing_test_result.unit_test}',
             ] if failing_test_result else [],
-        ])
+        )
         return failing_test_result
 
     def play(self):
-        self.show_block(self.introduction)
+        Block.show(self.introduction)
         earnings = 0
         userdefined_unit_tests = []
         failing_test_result = None
@@ -178,81 +169,100 @@ class UnitTestGame:
             self.show_unit_tests(userdefined_unit_tests)
             failing_test_result = self.show_secret_information(userdefined_unit_tests)
 
-            self.show_block([
+            Block.show(
                 'Menu',
                 '[S]pecificatie tonen',
                 '[C]ontract tonen',
                 '[V]oeg unit test toe (-€200)',
                 '[L]ever unit testen in (-€500 / +€10000)',
                 '[E]inde'
-            ])
+            )
 
-            self.show_block(['Keuze'])
-            answer = input(self.indent('Antwoord: ')).upper()
+            Block.show('Keuze')
+            answer = input(Block.indent('Antwoord: ')).upper()
 
             if answer == 'S':
-                self.show_block(self.specification)
+                Block.show(self.specification)
             elif answer == 'C':
                 self.show_contract()
             elif answer == 'V':
-                self.show_block(['Voeg unit test toe'])
+                Block.show('Voeg unit test toe')
                 unit_test = self.ask_unit_test()
                 if unit_test:
                     # TODO: is de unit test wel zinvol?
                     userdefined_unit_tests.append(unit_test)
-                    self.show_block([
+                    Block.show(
                         'Unit test toegevoegd',
                         'We hebben deze unit test toegevoegd aan onze code.',
                         'We hebben geconstateerd dat er een fout zat in de functie.',
                         'We hebben de fout laten oplossen en nu slagen alle unit testen weer!',
-                    ])
+                    )
                 else:
-                    self.show_block([
+                    Block.show(
                         'Unit test NIET toegevoegd',
                         'We hebben je unit test naast de specificatie gelegd.',
                         'Je unit test blijkt niet correct te zijn.',
                         'We hebben de unit test dus niet toegevoegd aan onze code.',
-                    ])
+                    )
                 earnings -= 200
             elif answer == 'L':
-                self.show_block([
+                Block.show(
                     'Lever unit testen in',
                     'Bedankt!',
                     'We hebben de laatste versie van de functie in productie gebracht.',
-                ])
+                )
                 failing_test_result = self.find_one_failing_test_result(userdefined_unit_tests)
                 if failing_test_result:
-                    self.show_block([
+                    Block.show(
                         'Foutmelding van een klant',
                         'Een klant heeft een fout in de functie gemeld.',
                         f'De functie geeft "{failing_test_result.value}" voor {failing_test_result.arguments}.',
                         'Jouw bijdrag in de kosten om dat te herstellen is €500.',
-                    ])
+                    )
                     earnings -= 500
             elif answer == 'E':
                 if failing_test_result:
-                    self.show_block([
+                    Block.show(
                         'Einde',
                         'Er zitten nog fouten in de functie,',
                         'dus we betalen de €10000 niet aan je uit.'
-                    ])
+                    )
                 else:
-                    self.show_block([
+                    Block.show(
                         'Einde',
                         'Gefeliciteerd! De functie is dankzij jouw unit testen helemaal foutloos.',
                         'We betalen je dan ook met plezier €10000 uit.',
-                    ])
+                    )
                     earnings += 10000
                 break
-        self.show_block([
+        Block.show(
             'Totale verdiensten',
             f'€{earnings}',
-        ])
+        )
 
-    LEAPYEAR = 'case_leapyear.json'
-    TESLA = 'case_tesla.json'
+    @staticmethod
+    def generate_cases():
+        for case_file in ['case_leapyear.json', 'case_tesla.json']:
+            with open(case_file) as json_file:
+                case = json.load(json_file)
+            yield (case_file, case['description'])
 
+    @staticmethod
+    def choose_game():
+        cases = list(UnitTestGame.generate_cases())
+        Block.show(
+            'Spellen',
+            [f'[{index + 1}] {description}' for index, (_, description) in enumerate(cases)],
+            '[0] Einde',
+        )
+        Block.show('Keuze')
+        answer = input(Block.indent('Spel: '))
+        if answer == '0':
+            return None
+        case_file, _ = cases[int(answer) - 1]
+        return UnitTestGame(case_file)
 
 if __name__ == '__main__':
-    game = UnitTestGame(UnitTestGame.TESLA)
-    game.play()
+    game = UnitTestGame.choose_game()
+    if game:
+        game.play()
