@@ -1,5 +1,6 @@
 import random
 import json
+import glob
 
 from candidate import Candidate
 from unittest import UnitTest
@@ -8,9 +9,7 @@ from block import Block
 
 
 class UnitTestGame:
-    def __init__(self, case_file):
-        with open(case_file) as json_file:
-            case = json.load(json_file)
+    def __init__(self, case):
         self.parameters = case['parameters']
         self.function = case['function']
         self.all_candidates = list(self.generate_candidates(case['generator'], []))
@@ -78,7 +77,7 @@ class UnitTestGame:
 
     def find_shortest_passing_candidate(self, unit_tests):
         candidates = self.find_passing_candidates(unit_tests)
-        return min(candidates, key=lambda c: c.code_length())
+        return min(candidates, key=lambda c: (-len(c.failing_test_results(self.giveaway_unit_tests)), -len(c.failing_test_results(self.edgecase_unit_tests)), c.code_length()))
 
     def find_one_failing_test_result(self, unit_tests):
         all_failing_test_results = []
@@ -241,28 +240,24 @@ class UnitTestGame:
         )
 
     @staticmethod
-    def generate_cases():
-        for case_file in ['case_leapyear.json', 'case_tesla.json']:
-            with open(case_file) as json_file:
-                case = json.load(json_file)
-            yield (case_file, case['description'])
-
-    @staticmethod
     def choose_game():
-        cases = list(UnitTestGame.generate_cases())
+        cases = []
+        for case_file in glob.glob('cases/*.json'):
+            with open(case_file) as json_file:
+                cases.append(json.load(json_file))
         Block.show(
             'Spellen',
-            [f'[{index + 1}] {description}' for index, (_, description) in enumerate(cases)],
+            [f'[{index + 1}] {case["description"]}' for index, case in enumerate(cases)],
             '[0] Einde',
         )
         Block.show('Keuze')
         answer = input(Block.indent('Spel: '))
         if answer == '0':
-            return None
-        case_file, _ = cases[int(answer) - 1]
-        return UnitTestGame(case_file)
+            return
+        case = cases[int(answer) - 1]
+        game = UnitTestGame(case)
+        game.play()
+
 
 if __name__ == '__main__':
-    game = UnitTestGame.choose_game()
-    if game:
-        game.play()
+    UnitTestGame.choose_game()
