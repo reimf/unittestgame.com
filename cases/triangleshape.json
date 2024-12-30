@@ -1,5 +1,5 @@
 {
-    "description": "Beschrijf de vorm van de driehoek.",
+    "description": "Beschrijf de vorm van een driehoek.",
     "parameters": [
         {
             "name": "a",
@@ -44,7 +44,7 @@
             "return 'scalene'"
         ]
     ],
-    "edgecase_unit_tests": [
+    "special_unit_tests": [
         {
             "a": 5,
             "b": 5,
@@ -76,7 +76,7 @@
             "triangle_shape": "scalene"
         }
     ],
-    "giveaway_unit_tests": [
+    "general_unit_tests": [
         {
             "a": 6,
             "b": 6,

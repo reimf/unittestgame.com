@@ -53,7 +53,7 @@
             "return str(round(average))"
         ]
     ],
-    "edgecase_unit_tests": [
+    "special_unit_tests": [
         {
             "distance": 1,
             "time": 0,
@@ -95,7 +95,7 @@
             "average_speed": "DANGER"
         }
     ],
-    "giveaway_unit_tests": [
+    "general_unit_tests": [
         {
             "distance": -1000,
             "time": -3600,

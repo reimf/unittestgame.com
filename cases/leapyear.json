@@ -30,7 +30,7 @@
             "return False"
         ]
     ],
-    "edgecase_unit_tests": [
+    "special_unit_tests": [
         {
             "year": 2000,
             "is_leapyear": true
@@ -52,7 +52,7 @@
             "is_leapyear": false
         }
     ],
-    "giveaway_unit_tests": [
+    "general_unit_tests": [
         {
             "year": 2024,
             "is_leapyear": true
