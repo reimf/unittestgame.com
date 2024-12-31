@@ -5,51 +5,50 @@ import glob
 from candidate import Candidate
 from unittest import UnitTest
 from testresult import TestResult
+from value import Value
 from block import Block
 
 
 class UnitTestGame:
-    def __init__(self, parameters, function, generator, special_unit_tests, general_unit_tests, introduction, specification, description):
-        self.parameters = parameters
-        self.function = function
-        self.all_candidates = list(self.generate_candidates(generator, ''))
-        self.special_unit_tests = list(self.generate_unit_tests(special_unit_tests))
-        self.general_unit_tests = list(self.generate_unit_tests(general_unit_tests))
+    def __init__(self, description, parameters, function, candidate_generator, special_unit_tests, general_unit_tests, introduction, specification):
+        self.description = description
+        self.parameters = [Value(**parameter) for parameter in parameters]
+        self.function = Value(**function)
+        self.candidate_generator = candidate_generator
+        self.special_unit_tests = special_unit_tests
+        self.general_unit_tests = general_unit_tests
         self.introduction = introduction
         self.specification = specification
-        self.perfect_candidate = self.find_perfect_candidate()
-        self.check_unit_tests_are_correct(self.special_unit_tests)
-        self.check_unit_tests_are_correct(self.general_unit_tests)
-        self.check_unit_tests_are_needed(self.special_unit_tests)
 
-    def generate_candidates(self, generator, identifier):
+    def generate_candidates(self, candidate_generator, identifier):
         index = len(identifier)
-        if index < len(generator):
-            options = generator[index]
+        if index < len(candidate_generator):
+            options = candidate_generator[index]
             for choice, option in enumerate(options):
-                new_generator = generator.copy()
-                new_generator[index] = option
-                yield from self.generate_candidates(new_generator, identifier + chr(ord('a') + choice))
+                new_candidate_generator = candidate_generator.copy()
+                new_candidate_generator[index] = option
+                new_identifier = identifier + chr(ord('a') + choice)
+                yield from self.generate_candidates(new_candidate_generator, new_identifier)
         else:
-            name = f'{self.function["name"]}_{identifier}'
-            parameterlist = ', '.join([parameter['name'] for parameter in self.parameters])
+            name = f'{self.function.name}_{identifier}'
+            parameterlist = ', '.join([parameter.name for parameter in self.parameters])
             definition = f'def {name}({parameterlist}):'
-            lines = [definition] + [f'    {line}' for line in generator if line]
+            lines = [definition] + [f'    {line}' for line in candidate_generator if line]
             code = '\n'.join(lines)
             candidate = Candidate(name, code)
             yield candidate
 
     def generate_unit_tests(self, unit_tests):
         for unittest in unit_tests:
-            arguments = [unittest[parameter['name']] for parameter in self.parameters]
-            expected = unittest[self.function['name']]
+            arguments = [unittest[parameter.name] for parameter in self.parameters]
+            expected = unittest[self.function.name]
             yield UnitTest(arguments, expected)
 
-    def find_passing_candidates(self, unit_tests):
-        return [candidate for candidate in self.all_candidates if candidate.fail_count(unit_tests) == 0]
+    def find_passing_candidates(self, candidates, unit_tests):
+        return [candidate for candidate in candidates if candidate.fail_count(unit_tests) == 0]
 
-    def find_perfect_candidate(self):
-        perfect_candidates = self.find_passing_candidates(self.special_unit_tests)
+    def find_perfect_candidate(self, candidates, unit_tests):
+        perfect_candidates = self.find_passing_candidates(candidates, unit_tests)
         if len(perfect_candidates) != 1:
             Block.show(
                 'Perfecte kandidaten',
@@ -60,27 +59,27 @@ class UnitTestGame:
         perfect_candidate = perfect_candidates.pop()
         Block.show(
             'Perfecte kandidaat',
-            f'Dit is de perfecte kandidaat uit {len(self.all_candidates)} kandidaten.',
+            f'Dit is de perfecte kandidaat uit {len(candidates)} kandidaten.',
             perfect_candidate,
         )
         return perfect_candidate
 
-    def check_unit_tests_are_correct(self, unit_tests):
+    def check_unit_tests_are_correct(self, candidate, unit_tests):
         for unit_test in unit_tests:
-            test_result = TestResult(self.perfect_candidate, unit_test)
+            test_result = TestResult(candidate, unit_test)
             if not test_result.passes:
                 raise ValueError(f'Unit test {unit_test} is niet correct, want de uitkomst zou "{test_result.value}" moeten zijn.')
 
-    def check_unit_tests_are_needed(self, unit_tests):
+    def check_unit_tests_are_needed(self, candidates, unit_tests):
         for unit_test in unit_tests:
             all_minus_one_unit_tests = [other_unit_test for other_unit_test in unit_tests if other_unit_test != unit_test]
-            almost_perfect_candidates = self.find_passing_candidates(all_minus_one_unit_tests)
+            almost_perfect_candidates = self.find_passing_candidates(candidates, all_minus_one_unit_tests)
             if len(almost_perfect_candidates) == 1:
                 raise ValueError(f'Unit test {unit_test} is onnodig.')
 
-    def find_minimal_passing_candidate(self, unit_tests):
-        candidates = self.find_passing_candidates(unit_tests)
-        return min(candidates, key=lambda c: (-len(c.failing_test_results(self.general_unit_tests)), -len(c.failing_test_results(self.special_unit_tests)), c.code_length()))
+    def find_shortest_passing_candidate(self, candidates, userdefined_unit_tests):
+        candidates = self.find_passing_candidates(candidates, userdefined_unit_tests)
+        return min(candidates, key=lambda c: c.code_length())
 
     def convert_to(self, value, type):
         CONVERSIONS = {
@@ -94,14 +93,12 @@ class UnitTestGame:
     def ask_unit_test(self):
         arguments = []
         for parameter in self.parameters:
-            answer = input(Block.indent(f'{parameter["question"]}: '))
-            argument = self.convert_to(answer, parameter['type'])
+            answer = input(Block.indent(f'{parameter.question}: '))
+            argument = self.convert_to(answer, parameter.type)
             arguments.append(argument)
-        answer = input(Block.indent(f'{self.function["question"]}: '))
-        expected = self.convert_to(answer, self.function['type'])
-        unit_test = UnitTest(arguments, expected)
-        test_result = TestResult(self.perfect_candidate, unit_test)
-        return unit_test if test_result.passes else None
+        answer = input(Block.indent(f'{self.function.question}: '))
+        expected = self.convert_to(answer, self.function.type)
+        return UnitTest(arguments, expected)
 
     def show_contract(self):
         Block.show(
@@ -116,27 +113,34 @@ class UnitTestGame:
         )
 
     def show_earnings(self, earnings):
-        Block.show('Verdiensten', f'€{earnings}')
+        Block.show('Verdiensten', f'{"-" if earnings < 0 else ""}€{abs(earnings)}')
 
     def show_unit_tests(self, unit_tests):
         if unit_tests:
             Block.show('Unit testen', unit_tests)
 
     def play(self):
+        all_candidates = list(self.generate_candidates(self.candidate_generator, ''))
+        all_special_unit_tests = list(self.generate_unit_tests(self.special_unit_tests))
+        all_general_unit_tests = list(self.generate_unit_tests(self.general_unit_tests))
+        perfect_candidate = self.find_perfect_candidate(all_candidates, all_special_unit_tests)
+        self.check_unit_tests_are_correct(perfect_candidate, all_special_unit_tests)
+        self.check_unit_tests_are_correct(perfect_candidate, all_general_unit_tests)
+        self.check_unit_tests_are_needed(all_candidates, all_special_unit_tests)
+
         Block.show(*self.introduction)
         earnings = 0
         all_general_unit_tests_passed_before = False
-        number_of_failing_test_results_before = None
         userdefined_unit_tests = []
         failing_test_result = None
         while True:
             self.show_earnings(earnings)
             self.show_unit_tests(userdefined_unit_tests)
 
-            passing_candidates = self.find_passing_candidates(userdefined_unit_tests)
-            shortest_passing_candidate = self.find_minimal_passing_candidate(userdefined_unit_tests)
-            failing_general_test_results = shortest_passing_candidate.failing_test_results(self.general_unit_tests)
-            failing_special_test_results = shortest_passing_candidate.failing_test_results(self.special_unit_tests)
+            passing_candidates = self.find_passing_candidates(all_candidates, userdefined_unit_tests)
+            shortest_passing_candidate = self.find_shortest_passing_candidate(all_candidates, userdefined_unit_tests)
+            failing_general_test_results = shortest_passing_candidate.failing_test_results(all_general_unit_tests)
+            failing_special_test_results = shortest_passing_candidate.failing_test_results(all_special_unit_tests)
             if failing_general_test_results:
                 failing_test_result = random.choice(failing_general_test_results)
             elif failing_special_test_results:
@@ -159,8 +163,7 @@ class UnitTestGame:
                 f'Ik kan {len(passing_candidates)} kandidaten bedenken waarbij alle {len(userdefined_unit_tests)} unit testen slagen.',
                 'De kortste kanididaat waarbij alle unit testen slagen is de volgende.',
                 shortest_passing_candidate,
-                f'Bij bovenstaande kandidaat slagen nog {len(failing_general_test_results)} algemene unit testen niet.',
-                f'Bij bovenstaande kandidaat slagen nog {len(failing_special_test_results)} speciale unit testen niet.',
+                f'Bij bovenstaande kandidaat slagen nog {len(failing_general_test_results)} algemene unit testen en {len(failing_special_test_results)} speciale unit testen niet.',
                 [
                     f'Een unit test die nog niet slaagt is bijvoorbeeld de volgende.',
                     failing_test_result.unit_test,
@@ -184,15 +187,16 @@ class UnitTestGame:
             elif answer == 'V':
                 Block.show('Voeg unit test toe')
                 unit_test = self.ask_unit_test()
-                if unit_test:
+                test_result = TestResult(perfect_candidate, unit_test)
+                if test_result.passes:
                     userdefined_unit_tests.append(unit_test)
-                    number_of_failing_test_results = len(failing_general_test_results) + len(failing_special_test_results)
-                    if number_of_failing_test_results_before != None and number_of_failing_test_results == number_of_failing_test_results_before:
+                    new_shortest_passing_candidate = self.find_shortest_passing_candidate(all_candidates, userdefined_unit_tests)
+                    if new_shortest_passing_candidate == shortest_passing_candidate:
                         Block.show(
                             'Unit test toegevoegd',
                             'We hebben deze unit test toegevoegd aan onze code.',
                             'Je unit test lijkt erg veel op een eerdere unit test.',
-                            'Daarom is die niet zo zinvol voor ons.',
+                            'We denken daarom dat deze unit test niet zo zinvol is.',
                         )
                     else:
                         Block.show(
@@ -201,7 +205,6 @@ class UnitTestGame:
                             'We hebben geconstateerd dat er een fout zat in de functie die het externe softwarebedrijf had geschreven.',
                             'We hebben de fout laten oplossen en nu slagen alle unit testen weer!',
                         )
-                    number_of_failing_test_results_before = number_of_failing_test_results
                 else:
                     Block.show(
                         'Unit test NIET toegevoegd',
@@ -243,20 +246,20 @@ class UnitTestGame:
 
     @staticmethod
     def choose_game():
-        cases = []
+        games = []
         for case_file in glob.glob('cases/*.json'):
             with open(case_file) as json_file:
-                cases.append(json.load(json_file))
+                case = json.load(json_file)
+                games.append(UnitTestGame(**case))
         Block.show(
             'Spellen',
-            [f'[{index + 1}] {case["description"]}\n' for index, case in enumerate(cases)],
+            [f'[{index}] {game.description}\n' for index, game in enumerate(games, start=1)],
             '[0] Einde\n',
         )
         answer = input(Block.indent('Keuze: '))
         if answer == '0':
             return
-        case = cases[int(answer) - 1]
-        game = UnitTestGame(**case)
+        game = games[int(answer) - 1]
         game.play()
 
 
