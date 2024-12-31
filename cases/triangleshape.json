@@ -1,5 +1,5 @@
 {
-    "description": "Beschrijf de vorm van een driehoek.",
+    "description": "DRIEHOEKVORM - Beschrijf de vorm van een driehoek.",
     "parameters": [
         {
             "name": "a",
@@ -22,7 +22,7 @@
         "type": "str",
         "question": "Vorm van de driehoek"
     },
-    "generator": [
+    "candidate_generator": [
         [
             "if a == b == c: return 'equilateral'",
             "if a == b or b == c or a == c: return 'equilateral'",

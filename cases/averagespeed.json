@@ -1,5 +1,5 @@
 {
-    "description": "Bereken de gemiddelde snelheid van een auto.",
+    "description": "GEMIDDELDESNELHEID - Bereken de gemiddelde snelheid van een auto.",
     "parameters": [
         {
             "name": "distance",
@@ -17,7 +17,7 @@
         "type": "str",
         "question": "Verwachte uitkomst"
     },
-    "generator": [
+    "candidate_generator": [
         [
             "if time == 0 and distance == 0: return '0.0'",
             ""
