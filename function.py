@@ -1,7 +1,7 @@
 from testresult import TestResult
 
 
-class Candidate:
+class Function:
     def __init__(self, name, code):
         self.name = name
         self.code = code

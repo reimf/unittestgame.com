@@ -1,9 +1,9 @@
 class TestResult:
-    def __init__(self, candidate, unit_test):
-        self.candidate = candidate
+    def __init__(self, function, unit_test):
+        self.function = function
         self.unit_test = unit_test
-        self.value = candidate.call_method(unit_test.arguments)
-        self.passes = self.value == unit_test.expected
+        self.result = function.call_method(unit_test.arguments)
+        self.passes = self.result == unit_test.expected
 
     def arguments(self):
         return self.unit_test.arguments
