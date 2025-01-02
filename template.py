@@ -21,20 +21,17 @@ class Template:
         for element in some_list:
             if type(element) == str:
                 element = self.__replace_placeholders(element, **values)
-            if type(element) == str and element[-1] != '\n':
+            if type(element) == str:
                 buffer.append(element)
+            if type(element) != str or element[-1] == '\n':
+                yield ' '.join(buffer).strip('\n')
+                buffer.clear()
+            if element == None or type(element) == str:
+                pass
+            elif type(element) in (tuple, list):
+                yield from self.__generate_paragraphs(element)
             else:
-                if buffer:
-                    yield ' '.join(buffer)
-                    buffer.clear()
-                if element == None:
-                    pass
-                elif type(element) in (tuple, list):
-                    yield from self.__generate_paragraphs(element)
-                elif type(element) == str:
-                    yield element.strip('\n')
-                else:
-                    yield from str(element).split('\n')
+                yield from str(element).split('\n')
 
     def __fullstring(self, **values):
         paragraphs = [self.title] + list(self.__generate_paragraphs(self.block, **values))

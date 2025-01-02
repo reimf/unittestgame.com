@@ -1,5 +1,5 @@
 {
-    "lang": "NL",
+    "lang": "nl",
     "description": "SNELHEID - Toon de snelheid van een auto.",
     "parameters": [
         {
@@ -20,10 +20,10 @@
             ""
         ],
         [
-            "if speed <= 9900: return str(round(speed / 1000, 1))",
-            "if speed < 9950: return str(round(speed / 1000, 1))",
-            "if speed <= 9950: return str(round(speed / 1000, 1))",
-            "if speed < 10000: return str(round(speed / 1000, 1))",
+            "if speed <= 19900: return str(round(speed / 1000, 1))",
+            "if speed < 19950: return str(round(speed / 1000, 1))",
+            "if speed <= 19950: return str(round(speed / 1000, 1))",
+            "if speed < 20000: return str(round(speed / 1000, 1))",
             ""
         ],
         [
@@ -35,7 +35,8 @@
         ],
         [
             "return str(round(speed / 1000))",
-            "return str(round(speed / 1000, 1))"
+            "return str(round(speed / 1000, 1))",
+            "return str(speed / 1000)"
         ]
     ],
     "special_unit_tests": [
@@ -48,12 +49,12 @@
             "display": "0.0"
         },
         {
-            "speed": 9950,
-            "display": "9.9"
+            "speed": 19950,
+            "display": "19.9"
         },
         {
-            "speed": 9951,
-            "display": "10"
+            "speed": 19951,
+            "display": "20"
         },
         {
             "speed": 199499,
@@ -74,124 +75,124 @@
             "display": "0.0"
         },
         {
-            "speed": 500,
-            "display": "0.5"
+            "speed": 900,
+            "display": "0.9"
         },
         {
-            "speed": 1000,
-            "display": "1.0"
+            "speed": 1800,
+            "display": "1.8"
         },
         {
-            "speed": 1500,
-            "display": "1.5"
+            "speed": 2700,
+            "display": "2.7"
         },
         {
-            "speed": 2000,
-            "display": "2.0"
-        },
-        {
-            "speed": 2500,
-            "display": "2.5"
-        },
-        {
-            "speed": 3000,
-            "display": "3.0"
-        },
-        {
-            "speed": 3500,
-            "display": "3.5"
-        },
-        {
-            "speed": 4000,
-            "display": "4.0"
+            "speed": 3600,
+            "display": "3.6"
         },
         {
             "speed": 4500,
             "display": "4.5"
         },
         {
-            "speed": 5000,
-            "display": "5.0"
+            "speed": 5400,
+            "display": "5.4"
         },
         {
-            "speed": 5500,
-            "display": "5.5"
+            "speed": 6300,
+            "display": "6.3"
         },
         {
-            "speed": 6000,
-            "display": "6.0"
+            "speed": 7200,
+            "display": "7.2"
         },
         {
-            "speed": 6500,
-            "display": "6.5"
-        },
-        {
-            "speed": 7000,
-            "display": "7.0"
-        },
-        {
-            "speed": 7500,
-            "display": "7.5"
-        },
-        {
-            "speed": 8000,
-            "display": "8.0"
-        },
-        {
-            "speed": 8500,
-            "display": "8.5"
+            "speed": 8100,
+            "display": "8.1"
         },
         {
             "speed": 9000,
             "display": "9.0"
         },
         {
-            "speed": 9500,
-            "display": "9.5"
+            "speed": 9900,
+            "display": "9.9"
         },
         {
-            "speed": 10000,
-            "display": "10"
+            "speed": 10800,
+            "display": "10.8"
         },
         {
-            "speed": 11000,
-            "display": "11"
+            "speed": 11700,
+            "display": "11.7"
         },
         {
-            "speed": 12000,
-            "display": "12"
+            "speed": 12600,
+            "display": "12.6"
         },
         {
-            "speed": 13000,
-            "display": "13"
+            "speed": 13500,
+            "display": "13.5"
         },
         {
-            "speed": 14000,
-            "display": "14"
+            "speed": 14400,
+            "display": "14.4"
         },
         {
-            "speed": 15000,
-            "display": "15"
+            "speed": 15300,
+            "display": "15.3"
         },
         {
-            "speed": 16000,
-            "display": "16"
+            "speed": 16200,
+            "display": "16.2"
         },
         {
-            "speed": 17000,
-            "display": "17"
+            "speed": 17100,
+            "display": "17.1"
         },
         {
             "speed": 18000,
-            "display": "18"
+            "display": "18.0"
         },
         {
-            "speed": 19000,
-            "display": "19"
+            "speed": 18900,
+            "display": "18.9"
         },
         {
-            "speed": 20000,
-            "display": "20"
+            "speed": 19800,
+            "display": "19.8"
+        },
+        {
+            "speed": 20700,
+            "display": "21"
+        },
+        {
+            "speed": 21600,
+            "display": "22"
+        },
+        {
+            "speed": 22500,
+            "display": "22"
+        },
+        {
+            "speed": 23400,
+            "display": "23"
+        },
+        {
+            "speed": 24300,
+            "display": "24"
+        },
+        {
+            "speed": 25200,
+            "display": "25"
+        },
+        {
+            "speed": 26100,
+            "display": "26"
+        },
+        {
+            "speed": 27000,
+            "display": "27"
         },
         {
             "speed": 30000,
@@ -278,7 +279,14 @@
         "introduction": [
             "Introductie",
             "Een Chinese gadgetmaker laat een nieuwe functie ontwikkelen door een extern softwarebedrijf.",
-            "De gadget laat de gemiddelde snelheid zien op een klein display.",
+            "De gadget laat de gemiddelde snelheid zien op een klein display.\n",
+            "+-------------------+\n",
+            "|  X   XXXX   XXXX  |\n",
+            "|  X   X  X   X  X  |\n",
+            "|  X   XXXX   XXXX  |\n",
+            "|  X   X  X   X  X  |\n",
+            "|  X   XXXX X XXXX  |\n",
+            "+-------------------+\n",
             "Gebruikers rekenen erop dat de getoonde informatie correct is en er mogen dus geen fouten in zitten.",
             "Daarom hebben ze jou ingehuurd om unit testen te schrijven voor die functie.",
             "In het contract vind je wat je moet doen en hoeveel je daarvoor betaald krijgt.",
@@ -288,14 +296,11 @@
             "Specificatie",
             "De functie ontvangt de snelheid in meter per uur en moet de snelheid weergeven in kilometer per uur.",
             "Als er iets mis is met de snelheid (negatief bijvoorbeeld),",
-            "dan moet de functie \"ERROR\" teruggeven.",
-            "Als de auto net gestart is moet de functie \"0.0\" teruggeven",
-            "De snelheid wordt normaliter afgerond op hele kilometers per uur,",
-            "dus bijvoorbeeld \"49\".",
-            "Bij een gemiddelde snelheid die je met 1 cijfer kan schrijven",
-            "wordt er afgerond op 1 decimaal.",
-            "Bij een hoge gemiddelde snelheid die je niet meer kunt schrijven als",
-            "\"1XX\" geeft de functie \"DANGER\" terug."
+            "dan moet de functie \"ERROR\" teruggeven, want dan gaat het display langzaam knipperen.",
+            "Als het mogelijk is, laat dan 1 decimaal zien, bijvoorbeeld \"12.3\".",
+            "Rond anders af op hele kilometers per uur, dus bijvoorbeeld \"49\".",
+            "Als de snelheid niet meer op het display past,",
+            "dan moet de functie \"DANGER\" teruggeven, want dan gaat het display snel knipperen."
         ]
     }
 }

@@ -1,6 +1,4 @@
 {
-    "lang": "NL",
-    "fullname": "Nederlands",
     "templates": {
         "games": [
             "Spellen",
@@ -9,13 +7,13 @@
         ],
         "menu": [
             "Menu",
-            "[1] Specificatie tonen\n",
-            "[2] Contract tonen\n",
-            "[3] Voeg unit test toe (-€200)\n",
-            "[4] Huidige functie tonen (-€700)\n",
+            "[1] Specificatie tonen        (gratis)\n",
+            "[2] Contract tonen            (gratis)\n",
+            "[3] Unit test toevoegen       (-€200)\n",
+            "[4] Huidige functie tonen     (-€700)\n",
             "[5] Hint voor unit test tonen (-€200)\n",
-            "[6] Perfecte functie tonen (-€5000)\n",
-            "[7] Lever unit testen in (-€500 bij foutmelding / +€10000)\n",
+            "[6] Perfecte functie tonen    (-€5000)\n",
+            "[7] Unit testen inleveren     (-€500 bij foutmelding, anders +€10000)\n",
             "[0] Einde"
         ],
         "choice": [
