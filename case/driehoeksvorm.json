@@ -4,23 +4,23 @@
     "parameters": [
         {
             "name": "a",
-            "type": "int",
+            "datatype": "int",
             "question": "Zijde A"
         },
         {
             "name": "b",
-            "type": "int",
+            "datatype": "int",
             "question": "Zijde B"
         },
         {
             "name": "c",
-            "type": "int",
+            "datatype": "int",
             "question": "Zijde C"
         }
     ],
     "function": {
         "name": "triangle_shape",
-        "type": "str",
+        "datatype": "str",
         "question": "Vorm van de driehoek"
     },
     "function_generator": [

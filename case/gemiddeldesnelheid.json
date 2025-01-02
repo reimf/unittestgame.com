@@ -4,18 +4,18 @@
     "parameters": [
         {
             "name": "distance",
-            "type": "int",
+            "datatype": "int",
             "question": "Afstand in meters"
         },
         {
             "name": "time",
-            "type": "int",
+            "datatype": "int",
             "question": "Tijd in seconden"
         }
     ],
     "function": {
         "name": "average_speed",
-        "type": "str",
+        "datatype": "str",
         "question": "Verwachte uitkomst"
     },
     "function_generator": [

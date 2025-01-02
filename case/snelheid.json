@@ -4,13 +4,13 @@
     "parameters": [
         {
             "name": "speed",
-            "type": "int",
+            "datatype": "int",
             "question": "Snelheid in meter per uur"
         }
     ],
     "function": {
         "name": "display",
-        "type": "str",
+        "datatype": "str",
         "question": "Verwachte uitkomst op het display"
     },
     "function_generator": [

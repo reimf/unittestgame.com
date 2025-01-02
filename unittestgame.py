@@ -70,25 +70,24 @@ class UnitTestGame:
 
     def find_shortest_passing_function(self, functions, userdefined_unit_tests):
         functions = self.find_passing_functions(functions, userdefined_unit_tests)
-        return min(functions, key=lambda c: c.code_length())
+        return min(functions, key=lambda function: function.code_length())
 
-    def convert_to(self, value, type):
+    def convert_to(self, value, datatype):
         CONVERSIONS = {
-            'bool': lambda val: True if val.lower() in ['true', 'yes', 'ja', '1'] else (False if val.lower() in ['false', 'no', 'nee', '0'] else bool(val)),
+            'bool': lambda value: True if value.lower() in ['true', 'yes', 'ja', '1'] else (False if value.lower() in ['false', 'no', 'nee', '0'] else bool(value)),
             'int': int,
-            'float': float,
             'str': str,
         }
-        return CONVERSIONS.get(type, lambda val: val)(value)
+        return CONVERSIONS.get(datatype, lambda value: value)(value)
 
     def ask_unit_test(self):
         arguments = []
         for parameter in self.parameters:
             answer = Template('', parameter.question).input()
-            argument = self.convert_to(answer, parameter.type)
+            argument = self.convert_to(answer, parameter.datatype)
             arguments.append(argument)
         answer = Template('', self.function.question).input()
-        expected = self.convert_to(answer, self.function.type)
+        expected = self.convert_to(answer, self.function.datatype)
         return UnitTest(arguments, expected)
 
     def play(self):
@@ -106,14 +105,9 @@ class UnitTestGame:
 
         all_templates['introduction'].print()
         earnings = 0
-        all_general_unit_tests_passed_before = False
+        had_early_payout = False
         userdefined_unit_tests = []
-        failing_test_result = None
         while True:
-            all_templates['earnings'].print(
-                sign_value='-' if earnings < 0 else '',
-                absolute_value=abs(earnings)
-            )
             if userdefined_unit_tests:
                 all_templates['unit_tests'].print(
                     unit_tests=userdefined_unit_tests
@@ -123,17 +117,18 @@ class UnitTestGame:
             shortest_passing_function = self.find_shortest_passing_function(all_functions, userdefined_unit_tests)
             failing_general_test_results = shortest_passing_function.failing_test_results(all_general_unit_tests)
             failing_special_test_results = shortest_passing_function.failing_test_results(all_special_unit_tests)
-            if failing_general_test_results:
-                failing_test_result = random.choice(failing_general_test_results)
-            elif failing_special_test_results:
-                failing_test_result = random.choice(failing_special_test_results)
-            else:
-                failing_test_result = None
+            failing_test_results_to_choose_from = failing_general_test_results if failing_general_test_results else failing_special_test_results
+            failing_test_result = random.choice(failing_test_results_to_choose_from) if failing_test_results_to_choose_from else None
 
-            if not all_general_unit_tests_passed_before and not failing_general_test_results:
+            if not had_early_payout and not failing_general_test_results:
                 all_templates['early_payout'].print()
                 earnings += 5000
-                all_general_unit_tests_passed_before = True
+                had_early_payout = True
+
+            all_templates['earnings'].print(
+                sign_value='-' if earnings < 0 else '',
+                absolute_value=abs(earnings)
+            )
 
             all_templates['menu'].print()
             answer = all_templates['choice'].input()
@@ -157,42 +152,29 @@ class UnitTestGame:
                     all_templates['incorrect_unit_test'].print()
                 earnings -= 200
             elif answer == '4':
-                all_templates['current_function'].print(
-                    shortest_passing_function=shortest_passing_function
-                )
+                all_templates['current_function'].print(shortest_passing_function=shortest_passing_function)
                 earnings -= 700
             elif answer == '5':
-                all_templates['hint_unit_test'].print(
-                    failing_unit_test=failing_test_result.unit_test
-                )
+                all_templates['hint_unit_test'].print(failing_unit_test=failing_test_result.unit_test)
                 earnings -= 200
             elif answer == '6':
-                all_templates['perfect_function'].print(
-                    perfect_function=perfect_function
-                )
+                all_templates['perfect_function'].print(perfect_function=perfect_function)
                 earnings -= 5000
             elif answer == '7':
                 all_templates['hand_in_unit_tests'].print()
                 if failing_test_result:
-                    all_templates['bug_found'].print(
-                        arguments=failing_test_result.arguments,
-                        result=failing_test_result.result
-                    )
+                    all_templates['bug_found'].print(arguments=failing_test_result.arguments, result=failing_test_result.result)
                     earnings -= 500
                 else:
                     break
             elif answer == '0':
                 break
-
         if failing_test_result:
             all_templates['end_negative'].print()
         else:
             all_templates['end_positive'].print()
             earnings += 5000
-        all_templates['end_game'].print(
-            sign_value='-' if earnings < 0 else '',
-            absolute_value=abs(earnings)
-        )
+        all_templates['end_game'].print(sign_value='-' if earnings < 0 else '', absolute_value=abs(earnings))
 
     @staticmethod
     def ask_game():
@@ -206,14 +188,11 @@ class UnitTestGame:
             'UnitTestGame',
             '{games}',
             '[0] Quit / Einde',
-        ).print(
-            games=[f'[{index + 1}] {game.description}\n' for index, game in enumerate(games)]
-        )
+        ).print(games=[f'[{index + 1}] {game.description}\n' for index, game in enumerate(games)])
         answer = Template('', 'Choice / Keuze').input()
         if answer == '0' or not answer.isascii() or not answer.isdecimal() or int(answer) > len(games):
             return
-        game = games[int(answer) - 1]
-        game.play()
+        games[int(answer) - 1].play()
 
 
 if __name__ == '__main__':

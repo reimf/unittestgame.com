@@ -88,7 +88,7 @@
         "bug_found": [
             "Foutmelding van een klant",
             "Een klant heeft een fout in de functie gemeld.",
-            "De functie geeft \"{failing_test_result}\" voor {arguments}.",
+            "De functie geeft \"{result}\" voor {arguments}.",
             "Jouw bijdrage in de kosten om dat te herstellen is €500."
         ],
         "no_bug_found": [
@@ -100,7 +100,7 @@
         "end_negative": [
             "Einde",
             "Er zitten nog fouten in de functie,",
-            "dus we betalen de €10000 niet aan je uit."
+            "dus we betalen verder niets aan je uit."
         ],
         "end_positive": [
             "Einde",

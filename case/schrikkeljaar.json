@@ -4,13 +4,13 @@
     "parameters": [
         {
             "name": "year",
-            "type": "int",
+            "datatype": "int",
             "question": "Jaar"
         }
     ],
     "function": {
         "name": "is_leapyear",
-        "type": "bool",
+        "datatype": "bool",
         "question": "Verwachte uitkomst"
     },
     "function_generator": [

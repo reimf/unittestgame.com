@@ -1,5 +1,5 @@
 class Variable:
-    def __init__(self, name, type, question):
+    def __init__(self, name, datatype, question):
         self.name = name
-        self.type = type
+        self.datatype = datatype
         self.question = question
