@@ -11,7 +11,7 @@ from language import Language
 
 
 class UnitTestGame:
-    def __init__(self, lang, description, parameters, function, function_generator, special_unit_tests, general_unit_tests, templates, language):
+    def __init__(self, lang, description, parameters, function, function_generator, special_unit_tests, general_unit_tests, templates):
         self.lang = lang
         self.description = description
         self.parameters = [Variable(**parameter) for parameter in parameters]
@@ -19,7 +19,7 @@ class UnitTestGame:
         self.function_generator = function_generator
         self.special_unit_tests = special_unit_tests
         self.general_unit_tests = general_unit_tests
-        self.templates = language.templates | {name: Template(*template) for name, template in templates.items()}
+        self.templates = templates
 
     def generate_functions(self, function_generator, identifier):
         index = len(identifier)
@@ -27,7 +27,7 @@ class UnitTestGame:
             options = function_generator[index]
             for choice, option in enumerate(options):
                 new_function_generator = [option if i == index else elem for i, elem in enumerate(function_generator)]
-                new_identifier = identifier + chr(ord('a') + choice)
+                new_identifier = identifier + chr(ord('0') + choice if choice < 10 else ord('a') + choice - 10)
                 yield from self.generate_functions(new_function_generator, new_identifier)
         else:
             name = f'{self.function.name}_{identifier}'
@@ -59,7 +59,7 @@ class UnitTestGame:
         for unit_test in unit_tests:
             test_result = TestResult(perfect_function, unit_test)
             if not test_result.passes:
-                raise ValueError(f'Unit test {unit_test} is incorrect, because the expected result should be "{test_result.result}".')
+                raise ValueError(f'Unit test {unit_test} is incorrect, "{test_result.result}" expected.')
 
     def check_unit_tests_are_needed(self, functions, unit_tests):
         for unit_test in unit_tests:
@@ -91,18 +91,6 @@ class UnitTestGame:
         expected = self.convert_to(answer, self.function.type)
         return UnitTest(arguments, expected)
 
-    def show_earnings(self, earnings):
-        self.templates['earnings'].print(
-            sign_value='-' if earnings < 0 else '',
-            absolute_value=abs(earnings)
-        )
-
-    def show_unit_tests(self, unit_tests):
-        if unit_tests:
-            self.templates['unit_tests'].print(
-                unit_tests=unit_tests
-            )
-
     def play(self):
         Template(self.description).print()
 
@@ -114,14 +102,22 @@ class UnitTestGame:
         self.check_unit_tests_are_correct(perfect_function, all_general_unit_tests)
         self.check_unit_tests_are_needed(all_functions, all_special_unit_tests)
 
-        self.templates['introduction'].print()
+        all_templates = {name: Template(*template) for name, template in (Language(self.lang).templates | self.templates).items()}
+
+        all_templates['introduction'].print()
         earnings = 0
         all_general_unit_tests_passed_before = False
         userdefined_unit_tests = []
         failing_test_result = None
         while True:
-            self.show_earnings(earnings)
-            self.show_unit_tests(userdefined_unit_tests)
+            all_templates['earnings'].print(
+                sign_value='-' if earnings < 0 else '',
+                absolute_value=abs(earnings)
+            )
+            if userdefined_unit_tests:
+                all_templates['unit_tests'].print(
+                    unit_tests=userdefined_unit_tests
+                )
 
             passing_functions = self.find_passing_functions(all_functions, userdefined_unit_tests)
             shortest_passing_function = self.find_shortest_passing_function(all_functions, userdefined_unit_tests)
@@ -135,100 +131,85 @@ class UnitTestGame:
                 failing_test_result = None
 
             if not all_general_unit_tests_passed_before and not failing_general_test_results:
-                self.templates['early_payout'].print()
+                all_templates['early_payout'].print()
                 earnings += 5000
                 all_general_unit_tests_passed_before = True
 
-            self.templates['menu'].print()
-            answer = self.templates['choice'].input()
+            all_templates['menu'].print()
+            answer = all_templates['choice'].input()
 
             if answer == '1':
-                self.templates['specification'].print()
+                all_templates['specification'].print()
             elif answer == '2':
-                self.templates['contract'].print()
+                all_templates['contract'].print()
             elif answer == '3':
-                self.templates['add_unit_test'].print()
+                all_templates['add_unit_test'].print()
                 unit_test = self.ask_unit_test()
                 test_result = TestResult(perfect_function, unit_test)
                 if test_result.passes:
                     userdefined_unit_tests.append(unit_test)
-                    new_shortest_passing_function = self.find_shortest_passing_function(all_functions, userdefined_unit_tests)
-                    if new_shortest_passing_function == shortest_passing_function:
-                        self.templates['useless_unit_test'].print()
+                    current_passing_functions = self.find_passing_functions(all_functions, userdefined_unit_tests)
+                    if len(current_passing_functions) == len(passing_functions):
+                        all_templates['useless_unit_test'].print()
                     else:
-                        self.templates['useful_unit_test'].print()
+                        all_templates['useful_unit_test'].print()
                 else:
-                    self.templates['incorrect_unit_test'].print()
+                    all_templates['incorrect_unit_test'].print()
                 earnings -= 200
             elif answer == '4':
-                self.templates['current_function'].print(
+                all_templates['current_function'].print(
                     shortest_passing_function=shortest_passing_function
                 )
                 earnings -= 700
             elif answer == '5':
-                self.templates['hint_unit_test'].print(
+                all_templates['hint_unit_test'].print(
                     failing_unit_test=failing_test_result.unit_test
                 )
                 earnings -= 200
             elif answer == '6':
-                self.templates['perfect_function'].print(
+                all_templates['perfect_function'].print(
                     perfect_function=perfect_function
                 )
                 earnings -= 5000
             elif answer == '7':
-                self.templates['hand_in_unit_tests'].print()
+                all_templates['hand_in_unit_tests'].print()
                 if failing_test_result:
-                    self.templates['bug_found'].print(
+                    all_templates['bug_found'].print(
                         arguments=failing_test_result.arguments,
                         result=failing_test_result.result
                     )
                     earnings -= 500
                 else:
-                    self.templates['no_bug_found'].print()
+                    break
             elif answer == '0':
-                if failing_test_result:
-                    self.templates['end_negative'].print()
-                else:
-                    self.templates['end_positive'].print()
-                    earnings += 5000
                 break
-        self.show_earnings(earnings)
 
-    @staticmethod
-    def ask_language():
-        languages = []
-        for language_file in glob.glob('langs/*.json'):
-            with open(language_file) as json_file:
-                json_content = json.load(json_file)
-                languages.append(Language(**json_content))
-        languages.sort(key=lambda language: language.lang)
-        Template(
-            'Language / Taal',
-            '{languages}',
-            '[0] Quit / Einde\n',
-        ).print(
-            languages=[f'[{index + 1}] {language}\n' for index, language in enumerate(languages)]
+        if failing_test_result:
+            all_templates['end_negative'].print()
+        else:
+            all_templates['end_positive'].print()
+            earnings += 5000
+        all_templates['end_game'].print(
+            sign_value='-' if earnings < 0 else '',
+            absolute_value=abs(earnings)
         )
-        answer = Template('', 'Choice / Keuze').input()
-        if answer == '0' or not answer.isascii() or not answer.isdecimal() or int(answer) > len(languages):
-            return
-        return languages[int(answer) - 1]
 
     @staticmethod
     def ask_game():
-        language = UnitTestGame.ask_language()
         games = []
-        for case_file in glob.glob('cases/*.json'):
-            with open(case_file) as json_file:
-                case = json.load(json_file)
-                game = UnitTestGame(**case, language=language)
-                if game.lang == language.lang:
-                    games.append(game)
-        games.sort(key=lambda game: game.description)
-        language.templates['games'].print(
+        for case_filename in glob.glob('case/*.json'):
+            with open(case_filename) as case_filehandle:
+                case_content = json.load(case_filehandle)
+            games.append(UnitTestGame(**case_content))
+        games.sort(key=lambda game: (game.lang, game.description))
+        Template(
+            'UnitTestGame',
+            '{games}',
+            '[0] Quit / Einde',
+        ).print(
             games=[f'[{index + 1}] {game.description}\n' for index, game in enumerate(games)]
         )
-        answer = language.templates['choice'].input()
+        answer = Template('', 'Choice / Keuze').input()
         if answer == '0' or not answer.isascii() or not answer.isdecimal() or int(answer) > len(games):
             return
         game = games[int(answer) - 1]

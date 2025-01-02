@@ -32,7 +32,7 @@
             "dan betaal jij €500 als bijdrage aan de kosten die wij vervolgens moeten maken om dat te herstellen."
         ],
         "earnings": [
-            "Verdiensten",
+            "Verdiensten tot nu toe",
             "{sign_value}€{absolute_value}"
         ],
         "unit_tests": [
@@ -108,6 +108,11 @@
             "Einde",
             "Gefeliciteerd! De functie is dankzij jouw unit testen helemaal foutloos.",
             "We betalen je dan ook met plezier de laatste €5000 uit."
+        ],
+        "end_game": [
+            "Einde",
+            "In totaal heb je {sign_value}€{absolute_value} verdiend.",
+            "Bedankt voor het spelen!"
         ]
     }
 }

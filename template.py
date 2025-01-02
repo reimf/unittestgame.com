@@ -1,5 +1,6 @@
 import re
 
+
 class Template:
     def __init__(self, title, *block):
         self.title = title
@@ -35,7 +36,7 @@ class Template:
                 else:
                     yield from str(element).split('\n')
 
-    def fullstring(self, **values):
+    def __fullstring(self, **values):
         paragraphs = [self.title] + list(self.__generate_paragraphs(self.block, **values))
         lines = []
         MAX_LINE_LENGTH = 80
@@ -54,8 +55,7 @@ class Template:
         return '\n'.join(lines)
 
     def print(self, **values):
-        print()
-        print(self.fullstring(**values))
+        print('\n' + self.__fullstring(**values))
 
     def input(self, **values):
-        return input(self.fullstring(**values) + ': ')
+        return input(self.__fullstring(**values) + ': ')
