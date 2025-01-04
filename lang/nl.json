@@ -88,14 +88,15 @@
         "bug_found": [
             "Foutmelding van een klant",
             "Een klant heeft een fout in de functie gemeld.",
-            "De functie geeft \"{result}\" voor {arguments}.",
+            "De functie gaf namelijk het volgende foutieve resultaat.",
+            "{test_result}",
             "Jouw bijdrage in de kosten om dat te herstellen is €500."
         ],
         "no_bug_found": [
             "Geen foutmeldingen meer",
-            "Klanten melden nooit meer een fout in de functie.",
+            "Klanten melden geen fouten meer in de functie.",
             "Bedankt daarvoor!",
-            "Als je het spel nu beëindigt, dan krijg je de laatste €5000 uitbetaald."
+            "Beëindig het spel en je wordt volledig uitbetaald."
         ],
         "end_negative": [
             "Einde",
@@ -107,10 +108,23 @@
             "Gefeliciteerd! De functie is dankzij jouw unit testen helemaal foutloos.",
             "We betalen je dan ook met plezier de laatste €5000 uit."
         ],
-        "end_game": [
+        "total_negative": [
             "Einde",
-            "In totaal heb je {sign_value}€{absolute_value} verdiend.",
+            "In totaal heb je €{absolute_value} verlies geleden.",
+            "Jammer!",
+            "We hopen dat het de volgende keer beter gaat.",
             "Bedankt voor het spelen!"
+        ],
+        "total_positive": [
+            "Einde",
+            "In totaal heb je €{absolute_value} verdiend.",
+            "Super!",
+            "We denken dat je het de volgende keer nog beter gaat doen.",
+            "Bedankt voor het spelen!"
+        ],
+        "invalid_choice": [
+            "Ongeldige keuze",
+            "Je hebt ongeldige keuze \"{choice}\" ingevoerd."
         ]
     }
 }

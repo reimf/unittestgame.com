@@ -1,22 +1,56 @@
 {
     "lang": "nl",
     "description": "GEMIDDELDESNELHEID - Bereken de gemiddelde snelheid van een auto.",
+    "templates": {
+        "introduction": [
+            "Introductie",
+            "Tesla laat een nieuwe functie ontwikkelen door een extern softwarebedrijf.",
+            "Dat is een belangrijke component voor gebruikers en er mogen dus geen fouten in zitten.",
+            "Daarom hebben ze jou ingehuurd om unit testen te schrijven voor die functie.",
+            "In het contract vind je wat je moet doen en hoeveel je daarvoor betaald krijgt.",
+            "In de specificatie staat wat de functie precies moet doen."
+        ],
+        "specification": [
+            "Specificatie",
+            "De functie moet de gemiddelde snelheid weergeven sinds de auto voor het laatst gestart is.",
+            "De gemiddelde snelheid wordt berekend aan de hand van het afgelegde aantal meters",
+            "en de daarvoor benodigde tijd in seconden.",
+            "Als er iets mis is met de invoer (negatief bijvoorbeeld),",
+            "dan moet de functie \"ERROR\" teruggeven.",
+            "Als de auto net gestart is (en de verstreken tijd nul is), dan moet de functie \"0.0\" teruggeven",
+            "De gemiddelde snelheid wordt normaliter afgerond op hele kilometers per uur,",
+            "dus bijvoorbeeld \"49\".",
+            "Bij een gemiddelde snelheid die je met 1 cijfer kan schrijven",
+            "wordt er afgerond op 1 decimaal.",
+            "Bij een hoge gemiddelde snelheid die je niet meer kunt schrijven als",
+            "\"1XX\" geeft de functie \"DANGER\" terug."
+        ]
+    },
     "parameters": [
         {
             "name": "distance",
             "datatype": "int",
-            "question": "Afstand in meters"
+            "template": [
+                "",
+                "Afstand in meters"
+            ]
         },
         {
             "name": "time",
             "datatype": "int",
-            "question": "Tijd in seconden"
+            "template": [
+                "",
+                "Tijd in seconden"
+            ]
         }
     ],
     "function": {
         "name": "average_speed",
         "datatype": "str",
-        "question": "Verwachte uitkomst"
+        "template": [
+            "",
+            "Verwachte uitkomst"
+        ]
     },
     "function_generator": [
         [
@@ -817,30 +851,5 @@
             "time": 10800,
             "average_speed": "83"
         }
-    ],
-    "templates": {
-        "introduction": [
-            "Introductie",
-            "Tesla laat een nieuwe functie ontwikkelen door een extern softwarebedrijf.",
-            "Dat is een belangrijke component voor gebruikers en er mogen dus geen fouten in zitten.",
-            "Daarom hebben ze jou ingehuurd om unit testen te schrijven voor die functie.",
-            "In het contract vind je wat je moet doen en hoeveel je daarvoor betaald krijgt.",
-            "In de specificatie staat wat de functie precies moet doen."
-        ],
-        "specification": [
-            "Specificatie",
-            "De functie moet de gemiddelde snelheid weergeven sinds de auto voor het laatst gestart is.",
-            "De gemiddelde snelheid wordt berekend aan de hand van het afgelegde aantal meters",
-            "en de daarvoor benodigde tijd in seconden.",
-            "Als er iets mis is met de invoer (negatief bijvoorbeeld),",
-            "dan moet de functie \"ERROR\" teruggeven.",
-            "Als de auto net gestart is (en de verstreken tijd nul is), dan moet de functie \"0.0\" teruggeven",
-            "De gemiddelde snelheid wordt normaliter afgerond op hele kilometers per uur,",
-            "dus bijvoorbeeld \"49\".",
-            "Bij een gemiddelde snelheid die je met 1 cijfer kan schrijven",
-            "wordt er afgerond op 1 decimaal.",
-            "Bij een hoge gemiddelde snelheid die je niet meer kunt schrijven als",
-            "\"1XX\" geeft de functie \"DANGER\" terug."
-        ]
-    }
+    ]
 }

@@ -5,5 +5,5 @@ class TestResult:
         self.result = function.call_method(unit_test.arguments)
         self.passes = self.result == unit_test.expected
 
-    def arguments(self):
-        return self.unit_test.arguments
+    def __str__(self):
+        return f'{self.unit_test.arguments} -> {self.result}'

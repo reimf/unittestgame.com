@@ -11,7 +11,12 @@ from language import Language
 
 
 class UnitTestGame:
-    def __init__(self, lang, description, parameters, function, function_generator, special_unit_tests, general_unit_tests, templates):
+    def __init__(self, case_filename):
+        with open(case_filename) as case_filehandle:
+            case_content = json.load(case_filehandle)
+        self.__set_attributes(**case_content)
+
+    def __set_attributes(self, lang, description, parameters, function, function_generator, special_unit_tests, general_unit_tests, templates):
         self.lang = lang
         self.description = description
         self.parameters = [Variable(**parameter) for parameter in parameters]
@@ -72,36 +77,22 @@ class UnitTestGame:
         functions = self.find_passing_functions(functions, userdefined_unit_tests)
         return min(functions, key=lambda function: function.code_length())
 
-    def convert_to(self, value, datatype):
-        CONVERSIONS = {
-            'bool': lambda value: True if value.lower() in ['true', 'yes', 'ja', '1'] else (False if value.lower() in ['false', 'no', 'nee', '0'] else bool(value)),
-            'int': int,
-            'str': str,
-        }
-        return CONVERSIONS.get(datatype, lambda value: value)(value)
-
     def ask_unit_test(self):
-        arguments = []
-        for parameter in self.parameters:
-            answer = Template('', parameter.question).input()
-            argument = self.convert_to(answer, parameter.datatype)
-            arguments.append(argument)
-        answer = Template('', self.function.question).input()
-        expected = self.convert_to(answer, self.function.datatype)
+        arguments = [parameter.ask() for parameter in self.parameters]
+        expected = self.function.ask()
         return UnitTest(arguments, expected)
 
     def play(self):
         Template(self.description).print()
 
+        language_templates = Language(self.lang).templates
+        all_templates = {name: Template(*template) for name, template in (language_templates | self.templates).items()}
         all_functions = list(self.generate_functions(self.function_generator, ''))
         all_special_unit_tests = list(self.generate_unit_tests(self.special_unit_tests))
         all_general_unit_tests = list(self.generate_unit_tests(self.general_unit_tests))
         perfect_function = self.find_perfect_function(all_functions, all_special_unit_tests)
-        self.check_unit_tests_are_correct(perfect_function, all_special_unit_tests)
-        self.check_unit_tests_are_correct(perfect_function, all_general_unit_tests)
         self.check_unit_tests_are_needed(all_functions, all_special_unit_tests)
-
-        all_templates = {name: Template(*template) for name, template in (Language(self.lang).templates | self.templates).items()}
+        self.check_unit_tests_are_correct(perfect_function, all_general_unit_tests)
 
         all_templates['introduction'].print()
         earnings = 0
@@ -109,11 +100,8 @@ class UnitTestGame:
         userdefined_unit_tests = []
         while True:
             if userdefined_unit_tests:
-                all_templates['unit_tests'].print(
-                    unit_tests=userdefined_unit_tests
-                )
+                all_templates['unit_tests'].print(unit_tests=userdefined_unit_tests)
 
-            passing_functions = self.find_passing_functions(all_functions, userdefined_unit_tests)
             shortest_passing_function = self.find_shortest_passing_function(all_functions, userdefined_unit_tests)
             failing_general_test_results = shortest_passing_function.failing_test_results(all_general_unit_tests)
             failing_special_test_results = shortest_passing_function.failing_test_results(all_special_unit_tests)
@@ -125,75 +113,78 @@ class UnitTestGame:
                 earnings += 5000
                 had_early_payout = True
 
-            all_templates['earnings'].print(
-                sign_value='-' if earnings < 0 else '',
-                absolute_value=abs(earnings)
-            )
+            all_templates['earnings'].print(sign_value='-' if earnings < 0 else '', absolute_value=abs(earnings))
 
             all_templates['menu'].print()
-            answer = all_templates['choice'].input()
+            choice = all_templates['choice'].input()
 
-            if answer == '1':
+            if choice == '1':
                 all_templates['specification'].print()
-            elif answer == '2':
+            elif choice == '2':
                 all_templates['contract'].print()
-            elif answer == '3':
+            elif choice == '3':
                 all_templates['add_unit_test'].print()
                 unit_test = self.ask_unit_test()
                 test_result = TestResult(perfect_function, unit_test)
                 if test_result.passes:
+                    passing_functions_before = self.find_passing_functions(all_functions, userdefined_unit_tests)
                     userdefined_unit_tests.append(unit_test)
-                    current_passing_functions = self.find_passing_functions(all_functions, userdefined_unit_tests)
-                    if len(current_passing_functions) == len(passing_functions):
+                    passing_functions_after = self.find_passing_functions(all_functions, userdefined_unit_tests)
+                    if len(passing_functions_after) == len(passing_functions_before):
                         all_templates['useless_unit_test'].print()
                     else:
                         all_templates['useful_unit_test'].print()
                 else:
                     all_templates['incorrect_unit_test'].print()
                 earnings -= 200
-            elif answer == '4':
+            elif choice == '4':
                 all_templates['current_function'].print(shortest_passing_function=shortest_passing_function)
                 earnings -= 700
-            elif answer == '5':
+            elif choice == '5':
                 all_templates['hint_unit_test'].print(failing_unit_test=failing_test_result.unit_test)
                 earnings -= 200
-            elif answer == '6':
+            elif choice == '6':
                 all_templates['perfect_function'].print(perfect_function=perfect_function)
                 earnings -= 5000
-            elif answer == '7':
+            elif choice == '7':
                 all_templates['hand_in_unit_tests'].print()
                 if failing_test_result:
-                    all_templates['bug_found'].print(arguments=failing_test_result.arguments, result=failing_test_result.result)
+                    all_templates['bug_found'].print(test_result=failing_test_result)
                     earnings -= 500
                 else:
-                    break
-            elif answer == '0':
+                    all_templates['no_bug_found'].print()
+            elif choice == '0':
+                if failing_test_result:
+                    all_templates['end_negative'].print()
+                else:
+                    all_templates['end_positive'].print()
+                    earnings += 5000
                 break
-        if failing_test_result:
-            all_templates['end_negative'].print()
+            else:
+                all_templates['invalid_choice'].print(choice=choice)
+        if earnings >= 0:
+            all_templates['total_positive'].print(value=earnings)
         else:
-            all_templates['end_positive'].print()
-            earnings += 5000
-        all_templates['end_game'].print(sign_value='-' if earnings < 0 else '', absolute_value=abs(earnings))
+            all_templates['total_negative'].print(absolute_value=abs(earnings))
 
     @staticmethod
-    def ask_game():
-        games = []
-        for case_filename in glob.glob('case/*.json'):
-            with open(case_filename) as case_filehandle:
-                case_content = json.load(case_filehandle)
-            games.append(UnitTestGame(**case_content))
+    def game_menu():
+        TEMPLATE_GAME_MENU = Template('UnitTestGame', '{games}', '[0] Quit')
+        TEMPLATE_INVALID_CHOICE = Template('Invalid choice', 'You have entered invalid choice "{choice}".')
+        games = [UnitTestGame(case_filename) for case_filename in glob.glob('case/*.json')]
         games.sort(key=lambda game: (game.lang, game.description))
-        Template(
-            'UnitTestGame',
-            '{games}',
-            '[0] Quit / Einde',
-        ).print(games=[f'[{index + 1}] {game.description}\n' for index, game in enumerate(games)])
-        answer = Template('', 'Choice / Keuze').input()
-        if answer == '0' or not answer.isascii() or not answer.isdecimal() or int(answer) > len(games):
-            return
-        games[int(answer) - 1].play()
+        while True:
+            TEMPLATE_GAME_MENU.print(games=[f'[{index + 1}] {game.description}\n' for index, game in enumerate(games)])
+            choice = Template('', 'Choice').input()
+            if game := ([None] + [game for index, game in enumerate(games) if str(index + 1) == choice]).pop():
+                game.play()
+                break
+            elif choice == '0':
+                break
+            else:
+                TEMPLATE_INVALID_CHOICE.print(choice=choice)
 
 
 if __name__ == '__main__':
-    UnitTestGame.ask_game()
+    UnitTestGame.game_menu()
+

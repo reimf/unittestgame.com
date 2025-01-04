@@ -1,17 +1,51 @@
 {
     "lang": "nl",
     "description": "SNELHEID - Toon de snelheid van een auto.",
+    "templates": {
+        "introduction": [
+            "Introductie",
+            "Een Chinese gadgetmaker laat een nieuwe functie ontwikkelen door een extern softwarebedrijf.",
+            "De gadget laat de gemiddelde snelheid zien op een klein display.\n",
+            "+-------------------+\n",
+            "|  X   XXXX   XXXX  |\n",
+            "|  X   X  X   X  X  |\n",
+            "|  X   XXXX   XXXX  |\n",
+            "|  X   X  X   X  X  |\n",
+            "|  X   XXXX X XXXX  |\n",
+            "+-------------------+\n",
+            "Gebruikers rekenen erop dat de getoonde informatie correct is en er mogen dus geen fouten in zitten.",
+            "Daarom hebben ze jou ingehuurd om unit testen te schrijven voor die functie.",
+            "In het contract vind je wat je moet doen en hoeveel je daarvoor betaald krijgt.",
+            "In de specificatie staat wat de functie precies moet doen."
+        ],
+        "specification": [
+            "Specificatie",
+            "De functie ontvangt de snelheid in meter per uur en moet de snelheid weergeven in kilometer per uur.",
+            "Als er iets mis is met de snelheid (negatief bijvoorbeeld),",
+            "dan moet de functie \"ERROR\" teruggeven, want dan gaat het display langzaam knipperen.",
+            "Als het mogelijk is, laat dan 1 decimaal zien, bijvoorbeeld \"12.3\".",
+            "Rond anders af op hele kilometers per uur, dus bijvoorbeeld \"49\".",
+            "Als de snelheid niet meer op het display past,",
+            "dan moet de functie \"DANGER\" teruggeven, want dan gaat het display snel knipperen."
+        ]
+    },
     "parameters": [
         {
             "name": "speed",
             "datatype": "int",
-            "question": "Snelheid in meter per uur"
+            "template": [
+                "",
+                "Snelheid in meter per uur"
+            ]
         }
     ],
     "function": {
         "name": "display",
         "datatype": "str",
-        "question": "Verwachte uitkomst op het display"
+        "template": [
+            "",
+            "Verwachte uitkomst op het display"
+        ]
     },
     "function_generator": [
         [
@@ -274,33 +308,5 @@
             "speed": 220000,
             "display": "DANGER"
         }
-    ],
-    "templates": {
-        "introduction": [
-            "Introductie",
-            "Een Chinese gadgetmaker laat een nieuwe functie ontwikkelen door een extern softwarebedrijf.",
-            "De gadget laat de gemiddelde snelheid zien op een klein display.\n",
-            "+-------------------+\n",
-            "|  X   XXXX   XXXX  |\n",
-            "|  X   X  X   X  X  |\n",
-            "|  X   XXXX   XXXX  |\n",
-            "|  X   X  X   X  X  |\n",
-            "|  X   XXXX X XXXX  |\n",
-            "+-------------------+\n",
-            "Gebruikers rekenen erop dat de getoonde informatie correct is en er mogen dus geen fouten in zitten.",
-            "Daarom hebben ze jou ingehuurd om unit testen te schrijven voor die functie.",
-            "In het contract vind je wat je moet doen en hoeveel je daarvoor betaald krijgt.",
-            "In de specificatie staat wat de functie precies moet doen."
-        ],
-        "specification": [
-            "Specificatie",
-            "De functie ontvangt de snelheid in meter per uur en moet de snelheid weergeven in kilometer per uur.",
-            "Als er iets mis is met de snelheid (negatief bijvoorbeeld),",
-            "dan moet de functie \"ERROR\" teruggeven, want dan gaat het display langzaam knipperen.",
-            "Als het mogelijk is, laat dan 1 decimaal zien, bijvoorbeeld \"12.3\".",
-            "Rond anders af op hele kilometers per uur, dus bijvoorbeeld \"49\".",
-            "Als de snelheid niet meer op het display past,",
-            "dan moet de functie \"DANGER\" teruggeven, want dan gaat het display snel knipperen."
-        ]
-    }
+    ]
 }

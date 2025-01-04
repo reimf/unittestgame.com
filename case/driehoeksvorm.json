@@ -1,27 +1,54 @@
 {
     "lang": "nl",
     "description": "DRIEHOEKVORM - Beschrijf de vorm van een driehoek.",
+    "templates": {
+        "introduction": [
+            "Introductie",
+            "Een architect laat een nieuwe functie ontwikkelen door een extern softwarebedrijf.",
+            "Die functie wordt daarna gebruikt om ontwerpen mee door te rekenen,",
+            "dus mogen er geen fouten in zitten.",
+            "Daarom hebben ze jou ingehuurd om unit testen te schrijven voor de functie om te bepalen wat de vorm van een driehoek is.",
+            "In het contract vind je wat je moet doen en hoeveel je daarvoor betaald krijgt.",
+            "In de specificatie staat wat de functie precies moet doen."
+        ],
+        "specification": [
+            "Specificatie",
+            "De functie moet aangeven of een driehoek gelijkzijdig (equilateral), gelijkbenig (isosceles) of ongelijkzijdig (scalene)."
+        ]
+    },
     "parameters": [
         {
             "name": "a",
             "datatype": "int",
-            "question": "Zijde A"
+            "template": [
+                "",
+                "Zijde A"
+            ]
         },
         {
             "name": "b",
             "datatype": "int",
-            "question": "Zijde B"
+            "template": [
+                "",
+                "Zijde B"
+            ]
         },
         {
             "name": "c",
             "datatype": "int",
-            "question": "Zijde C"
+            "template": [
+                "",
+                "Zijde C"
+            ]
         }
     ],
     "function": {
         "name": "triangle_shape",
         "datatype": "str",
-        "question": "Vorm van de driehoek"
+        "template": [
+            "",
+            "Vorm van de driehoek"
+        ]
     },
     "function_generator": [
         [
@@ -240,20 +267,5 @@
             "c": 8,
             "triangle_shape": "equilateral"
         }
-    ],
-    "templates": {
-        "introduction": [
-            "Introductie",
-            "Een architect laat een nieuwe functie ontwikkelen door een extern softwarebedrijf.",
-            "Die functie wordt daarna gebruikt om ontwerpen mee door te rekenen,",
-            "dus mogen er geen fouten in zitten.",
-            "Daarom hebben ze jou ingehuurd om unit testen te schrijven voor de functie om te bepalen wat de vorm van een driehoek is.",
-            "In het contract vind je wat je moet doen en hoeveel je daarvoor betaald krijgt.",
-            "In de specificatie staat wat de functie precies moet doen."
-        ],
-        "specification": [
-            "Specificatie",
-            "De functie moet aangeven of een driehoek gelijkzijdig (equilateral), gelijkbenig (isosceles) of ongelijkzijdig (scalene)."
-        ]
-    }
+    ]
 }
