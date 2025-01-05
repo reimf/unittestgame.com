@@ -163,7 +163,7 @@ class UnitTestGame:
             else:
                 all_templates['invalid_choice'].print(choice=choice)
         if earnings >= 0:
-            all_templates['total_positive'].print(value=earnings)
+            all_templates['total_positive'].print(absolute_value=earnings)
         else:
             all_templates['total_negative'].print(absolute_value=abs(earnings))
 
