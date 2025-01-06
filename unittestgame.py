@@ -150,7 +150,7 @@ class UnitTestGame:
                 all_templates['hand_in_unit_tests'].print()
                 if failing_test_result:
                     all_templates['bug_found'].print(test_result=failing_test_result)
-                    earnings -= 500
+                    earnings -= 1000
                 else:
                     all_templates['no_bug_found'].print()
             elif choice == '0':
@@ -187,4 +187,3 @@ class UnitTestGame:
 
 if __name__ == '__main__':
     UnitTestGame.game_menu()
-
