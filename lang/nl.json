@@ -22,8 +22,8 @@
         ],
         "contract": [
             "Contract",
-            "Jij moet unit testen schrijven zodat de functie NOOIT foute test_resultaten geeft.",
-            "Wat goede test_resultaten zijn staat beschreven in de specificatie.",
+            "Jij moet unit testen schrijven zodat de functie NOOIT foute test resultaten geeft.",
+            "Wat goede test resultaten zijn staat beschreven in de specificatie.",
             "Voor het hele traject krijg je €10000 achteraf.",
             "In het menu staan bij sommige acties kosten vermeld voor jou.",
             "Als een gebruiker bijvoorbeeld een fout constateert in de functie die slaagt voor al jouw unit testen,",
@@ -51,7 +51,7 @@
         "current_function": [
             "Huidige functie",
             "Het externe softwarebedrijf heeft de volgende functie geschreven waarbij alle unit testen slagen.",
-            "{shortest_passing_function}",
+            "{simplest_passing_function}",
             "De kosten voor het tonen van de functie zijn €700."
         ],
         "hint_unit_test": [
