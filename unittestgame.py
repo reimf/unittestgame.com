@@ -12,7 +12,7 @@ from language import Language
 
 class UnitTestGame:
     def __init__(self, case_filename):
-        with open(case_filename) as case_filehandle:
+        with open(case_filename, 'r', encoding='utf-8') as case_filehandle:
             case_content = json.load(case_filehandle)
         self.__set_attributes(**case_content)
 
