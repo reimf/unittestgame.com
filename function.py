@@ -2,10 +2,15 @@ from testresult import TestResult
 
 
 class Function:
-    def __init__(self, name, code):
+    def __init__(self, name, code, general_unit_tests, special_unit_tests):
         self.name = name
         self.code = code
         self.method = self.add_method()
+        self.complexity = (
+            -self.fail_count(special_unit_tests),
+            -self.fail_count(general_unit_tests),
+            len(self.code)
+        )
 
     def add_method(self):
         namespace = {}
@@ -26,9 +31,6 @@ class Function:
 
     def fail_count(self, unit_tests):
         return len(self.failing_test_results(unit_tests))
-
-    def code_length(self):
-        return len(self.code)
 
     def __str__(self):
         return '\n'.join('| ' + line for line in self.code.split('\n'))

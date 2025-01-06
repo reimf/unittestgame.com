@@ -26,21 +26,21 @@ class UnitTestGame:
         self.general_unit_tests = general_unit_tests
         self.templates = templates
 
-    def generate_functions(self, function_generator, identifier):
+    def generate_functions(self, function_generator, identifier, general_unit_tests, special_unit_tests):
         index = len(identifier)
         if index < len(function_generator):
             options = function_generator[index]
             for choice, option in enumerate(options):
                 new_function_generator = [option if i == index else elem for i, elem in enumerate(function_generator)]
                 new_identifier = identifier + chr(ord('0') + choice if choice < 10 else ord('a') + choice - 10)
-                yield from self.generate_functions(new_function_generator, new_identifier)
+                yield from self.generate_functions(new_function_generator, new_identifier, general_unit_tests, special_unit_tests)
         else:
             name = f'{self.function.name}_{identifier}'
             parameterlist = ', '.join([parameter.name for parameter in self.parameters])
             definition = f'def {name}({parameterlist}):'
             lines = [definition] + [f'    {line}' for line in function_generator if line]
             code = '\n'.join(lines)
-            yield Function(name, code)
+            yield Function(name, code, general_unit_tests, special_unit_tests)
 
     def generate_unit_tests(self, unit_tests):
         for unittest in unit_tests:
@@ -73,9 +73,9 @@ class UnitTestGame:
             if len(almost_perfect_functions) == 1:
                 raise ValueError(f'Unit test {unit_test} is not needed.')
 
-    def find_shortest_passing_function(self, functions, userdefined_unit_tests):
+    def find_simplest_passing_function(self, functions, userdefined_unit_tests, general_unit_tests, special_unit_tests):
         functions = self.find_passing_functions(functions, userdefined_unit_tests)
-        return min(functions, key=lambda function: function.code_length())
+        return min(functions, key=lambda function: function.complexity)
 
     def ask_unit_test(self):
         arguments = [parameter.ask() for parameter in self.parameters]
@@ -87,10 +87,13 @@ class UnitTestGame:
 
         language_templates = Language(self.lang).templates
         all_templates = {name: Template(*template) for name, template in (language_templates | self.templates).items()}
-        all_functions = list(self.generate_functions(self.function_generator, ''))
+
         all_special_unit_tests = list(self.generate_unit_tests(self.special_unit_tests))
         all_general_unit_tests = list(self.generate_unit_tests(self.general_unit_tests))
+        
+        all_functions = list(self.generate_functions(self.function_generator, '', all_general_unit_tests, all_special_unit_tests))
         perfect_function = self.find_perfect_function(all_functions, all_special_unit_tests)
+
         self.check_unit_tests_are_needed(all_functions, all_special_unit_tests)
         self.check_unit_tests_are_correct(perfect_function, all_general_unit_tests)
 
@@ -102,9 +105,9 @@ class UnitTestGame:
             if userdefined_unit_tests:
                 all_templates['unit_tests'].print(unit_tests=userdefined_unit_tests)
 
-            shortest_passing_function = self.find_shortest_passing_function(all_functions, userdefined_unit_tests)
-            failing_general_test_results = shortest_passing_function.failing_test_results(all_general_unit_tests)
-            failing_special_test_results = shortest_passing_function.failing_test_results(all_special_unit_tests)
+            simplest_passing_function = self.find_simplest_passing_function(all_functions, userdefined_unit_tests, all_general_unit_tests, all_special_unit_tests)
+            failing_general_test_results = simplest_passing_function.failing_test_results(all_general_unit_tests)
+            failing_special_test_results = simplest_passing_function.failing_test_results(all_special_unit_tests)
             failing_test_results_to_choose_from = failing_general_test_results if failing_general_test_results else failing_special_test_results
             failing_test_result = random.choice(failing_test_results_to_choose_from) if failing_test_results_to_choose_from else None
 
@@ -138,7 +141,7 @@ class UnitTestGame:
                     all_templates['incorrect_unit_test'].print()
                 earnings -= 200
             elif choice == '4':
-                all_templates['current_function'].print(shortest_passing_function=shortest_passing_function)
+                all_templates['current_function'].print(simplest_passing_function=simplest_passing_function)
                 earnings -= 700
             elif choice == '5':
                 all_templates['hint_unit_test'].print(failing_unit_test=failing_test_result.unit_test)

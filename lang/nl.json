@@ -51,7 +51,7 @@
         "current_function": [
             "Huidige functie",
             "Het externe softwarebedrijf heeft de volgende functie geschreven waarbij alle unit testen slagen.",
-            "{simplest_passing_function}",
+            "{shortest_passing_function}",
             "De kosten voor het tonen van de functie zijn €700."
         ],
         "hint_unit_test": [
