@@ -1,22 +1,17 @@
 import re
 
-from testresult import TestResult
+from test_result import TestResult
 
 
 class Function:
-    def __init__(self, name, code, general_unit_tests, special_unit_tests):
+    def __init__(self, name, code):
         self.name = name
         self.code = code
-        self.method = self.add_method()
-        self.complexity = (
-            -self.fail_count(special_unit_tests),
-            -self.fail_count(general_unit_tests),
-            len(self.code)
-        )
+        self.method = self.__add_method()
 
-    def add_method(self):
+    def __add_method(self):
         namespace = {}
-        exec(self.code, {}, namespace)
+        exec(self.code, globals(), namespace)
         return namespace[self.name]
 
     def call_method(self, arguments):
@@ -24,6 +19,13 @@ class Function:
             return self.method(*arguments)
         except Exception as error:
             return type(error).__name__
+
+    def set_complexity(self, special_unit_tests, general_unit_tests):
+        self.complexity = (
+            -self.fail_count(special_unit_tests),
+            -self.fail_count(general_unit_tests),
+            len(self.code)
+        )
 
     def test_results(self, unit_tests):
         return [TestResult(self, unit_test) for unit_test in unit_tests]

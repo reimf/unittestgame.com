@@ -1,5 +1,3 @@
-from template import Template
-
 class Variable:
     CONVERSIONS = {
         'bool': lambda value: False if value.lower() in ['false', 'no', 'nee', '0'] else bool(value),
@@ -10,7 +8,7 @@ class Variable:
     def __init__(self, name, datatype, template):
         self.name = name
         self.datatype = datatype
-        self.template = Template(*template)
+        self.template = template
 
     def ask(self):
         answer = self.template.input()
