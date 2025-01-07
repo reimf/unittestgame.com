@@ -1,0 +1,317 @@
+{
+    "lang": "nl",
+    "description": "WACHTWOORD - Bekijk of een wachtwoord voldoende sterk is.",
+    "templates": {
+        "introduction": [
+            "Introductie",
+            "Een webshop laat een nieuwe functie ontwikkelen door een extern softwarebedrijf.",
+            "De functie wordt gebruikt om wachtwoorden te controleren voor de webshop.",
+            "Gebruikers moeten erop kunnen rekenen dat de getoonde vereisten correct zijn en er mogen dus geen fouten in zitten.",
+            "Daarom hebben ze jou ingehuurd om unit testen te schrijven voor die functie.",
+            "In het contract vind je wat je moet doen en hoeveel je daarvoor betaald krijgt.",
+            "In de specificatie staat wat de functie precies moet doen."
+        ],
+        "specification": [
+            "Specificatie",  
+            "Regel 1 – Het wachtwoord bestaat uit minstens 5 karakters.\n",
+            "Regel 2 – Het wachtwoord bevat een hoofdletter.\n",
+            "Regel 3 – Het wachtwoord bevat een speciaal teken (#@).\n",
+            "Regel 4 – De cijfers in het wachtwoord tellen op tot 13.\n"
+        ]
+    },
+    "parameters": [
+        {
+            "name": "password",
+            "datatype": "str",
+            "template": [
+                "",
+                "Wachtwoord"
+            ]
+        }
+    ],
+    "function": {
+        "name": "is_strong_password",
+        "datatype": "bool",
+        "template": [
+            "",
+            "Is het een sterk wachtwoord?"
+        ]
+    },
+    "function_generator": [
+        [
+            "if len(password) < 5: return False",
+            "if len(password) <= 5: return False",
+            "if len(password) < 8: return False",
+            "if len(password) >= 5: return True",
+            ""
+        ],
+        [
+            "if not any(char.isupper() for char in password): return False",
+            "if not password.isupper(): return False",
+            "if password.isupper(): return True",
+            ""
+        ],
+        [
+            "if not any(char in '#@' for char in password): return False",
+            "if all(char != '#' for char in password): return False",
+            "if all(char != '@' for char in password): return False",
+            "if not password in '#@': return False",
+            "if password and password[0] not in '#@': return False",
+            "if password and password[-1] not in '#@': return False",
+            "if password and password[0] in '#@': return True",
+            "if password and password[-1] in '#@': return True",
+            ""
+        ],
+        [
+            "if sum([int(char) for char in password if char.isdigit()]) != 13: return False",
+            "if sum([int(char) for char in password if char.isdigit()]) > 13: return False",
+            "if sum([int(char) for char in password if char.isdigit()]) < 13: return False",
+            "if sum([int(char) for char in password if char.isdigit()]) == 13: return True",
+            ""
+        ],
+        [
+            "return True",
+            "return False"
+        ]
+    ],
+    "special_unit_tests": [
+        {
+            "password": "A346#",
+            "is_strong_password": true
+        },
+        {
+            "password": "@2551B",
+            "is_strong_password": true
+        },
+        {
+            "password": "342#C",
+            "is_strong_password": true
+        },
+        {
+            "password": "@34D52",
+            "is_strong_password": false
+        },
+        {
+            "password": "1#236D0",
+            "is_strong_password": false
+        },
+        {
+            "password": "85EFG",
+            "is_strong_password": false
+        },
+        {
+            "password": "@9#4@",
+            "is_strong_password": false
+        }
+    ],
+    "general_unit_tests": [
+        {
+            "password": -1000,
+            "is_strong_password": "ERROR"
+        },
+        {
+            "password": 0,
+            "is_strong_password": "0.0"
+        },
+        {
+            "password": 900,
+            "is_strong_password": "0.9"
+        },
+        {
+            "password": 1800,
+            "is_strong_password": "1.8"
+        },
+        {
+            "password": 2700,
+            "is_strong_password": "2.7"
+        },
+        {
+            "password": 3600,
+            "is_strong_password": "3.6"
+        },
+        {
+            "password": 4500,
+            "is_strong_password": "4.5"
+        },
+        {
+            "password": 5400,
+            "is_strong_password": "5.4"
+        },
+        {
+            "password": 6300,
+            "is_strong_password": "6.3"
+        },
+        {
+            "password": 7200,
+            "is_strong_password": "7.2"
+        },
+        {
+            "password": 8100,
+            "is_strong_password": "8.1"
+        },
+        {
+            "password": 9000,
+            "is_strong_password": "9.0"
+        },
+        {
+            "password": 9900,
+            "is_strong_password": "9.9"
+        },
+        {
+            "password": 10800,
+            "is_strong_password": "10.8"
+        },
+        {
+            "password": 11700,
+            "is_strong_password": "11.7"
+        },
+        {
+            "password": 12600,
+            "is_strong_password": "12.6"
+        },
+        {
+            "password": 13500,
+            "is_strong_password": "13.5"
+        },
+        {
+            "password": 14400,
+            "is_strong_password": "14.4"
+        },
+        {
+            "password": 15300,
+            "is_strong_password": "15.3"
+        },
+        {
+            "password": 16200,
+            "is_strong_password": "16.2"
+        },
+        {
+            "password": 17100,
+            "is_strong_password": "17.1"
+        },
+        {
+            "password": 18000,
+            "is_strong_password": "18.0"
+        },
+        {
+            "password": 18900,
+            "is_strong_password": "18.9"
+        },
+        {
+            "password": 19800,
+            "is_strong_password": "19.8"
+        },
+        {
+            "password": 20700,
+            "is_strong_password": "21"
+        },
+        {
+            "password": 21600,
+            "is_strong_password": "22"
+        },
+        {
+            "password": 22500,
+            "is_strong_password": "22"
+        },
+        {
+            "password": 23400,
+            "is_strong_password": "23"
+        },
+        {
+            "password": 24300,
+            "is_strong_password": "24"
+        },
+        {
+            "password": 25200,
+            "is_strong_password": "25"
+        },
+        {
+            "password": 26100,
+            "is_strong_password": "26"
+        },
+        {
+            "password": 27000,
+            "is_strong_password": "27"
+        },
+        {
+            "password": 30000,
+            "is_strong_password": "30"
+        },
+        {
+            "password": 40000,
+            "is_strong_password": "40"
+        },
+        {
+            "password": 50000,
+            "is_strong_password": "50"
+        },
+        {
+            "password": 60000,
+            "is_strong_password": "60"
+        },
+        {
+            "password": 70000,
+            "is_strong_password": "70"
+        },
+        {
+            "password": 80000,
+            "is_strong_password": "80"
+        },
+        {
+            "password": 90000,
+            "is_strong_password": "90"
+        },
+        {
+            "password": 100000,
+            "is_strong_password": "100"
+        },
+        {
+            "password": 110000,
+            "is_strong_password": "110"
+        },
+        {
+            "password": 120000,
+            "is_strong_password": "120"
+        },
+        {
+            "password": 130000,
+            "is_strong_password": "130"
+        },
+        {
+            "password": 140000,
+            "is_strong_password": "140"
+        },
+        {
+            "password": 150000,
+            "is_strong_password": "150"
+        },
+        {
+            "password": 160000,
+            "is_strong_password": "160"
+        },
+        {
+            "password": 170000,
+            "is_strong_password": "170"
+        },
+        {
+            "password": 180000,
+            "is_strong_password": "180"
+        },
+        {
+            "password": 190000,
+            "is_strong_password": "190"
+        },
+        {
+            "password": 200000,
+            "is_strong_password": "DANGER"
+        },
+        {
+            "password": 210000,
+            "is_strong_password": "DANGER"
+        },
+        {
+            "password": 220000,
+            "is_strong_password": "DANGER"
+        }
+    ]
+}

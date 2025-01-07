@@ -44,7 +44,7 @@
         "datatype": "str",
         "template": [
             "",
-            "Verwachte uitkomst op het display"
+            "Verwachte weergave op het display"
         ]
     },
     "function_generator": [
