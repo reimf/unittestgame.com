@@ -20,8 +20,8 @@ class Function:
         except Exception as error:
             return type(error).__name__
 
-    def set_complexity(self, special_unit_tests, general_unit_tests):
-        self.complexity = (
+    def set_quality(self, special_unit_tests, general_unit_tests):
+        self.quality = (
             -self.fail_count(special_unit_tests),
             -self.fail_count(general_unit_tests),
             len(self.code)

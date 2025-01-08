@@ -1,21 +1,16 @@
 import random
 
 from template import Template
-from dutch import Dutch
+from game_dutch import Dutch
 from variable import Variable
 from unit_test import UnitTest
+
 
 class Wachtwoord(Dutch):
     def __init__(self):
         super().__init__()
-
-    @property
-    def description(self):
-        return 'WACHTWOORD - Bekijk of een wachtwoord voldoende sterk is.'
-    
-    @property
-    def introduction_template(self):
-        return Template(
+        self.description = 'WACHTWOORD - Bekijk of een wachtwoord voldoende sterk is.'
+        self.introduction_template = Template(
             'Introductie',
             'Een webshop laat een nieuwe functie ontwikkelen door een extern softwarebedrijf.',
             'De functie wordt gebruikt om wachtwoorden te controleren voor de webshop.',
@@ -24,38 +19,26 @@ class Wachtwoord(Dutch):
             'In het contract vind je wat je moet doen en hoeveel je daarvoor betaald krijgt.',
             'In de specificatie staat wat de functie precies moet doen.'
         )
-    
-    @property
-    def specification_template(self):
-        return Template(
+        self.specification_template = Template(
             'Specificatie',
             'Regel 1: Het wachtwoord bestaat uit minstens 5 karakters.\n',
             'Regel 2: Het wachtwoord bevat een hoofdletter.\n',
             'Regel 3: Het wachtwoord bevat een speciaal teken (#@).\n',
             'Regel 4: De cijfers in het wachtwoord tellen op tot 13.\n'
         )
-
-    @property
-    def parameters(self):
-        return [
+        self.parameters = [
             Variable(
                 'password',
                 'str',
                 Template('', 'Wachtwoord')
             )
         ]
-    
-    @property
-    def unit(self):
-        return Variable(
+        self.unit = Variable(
             'is_strong_password',
             'bool',
             Template('', 'Is het een sterk wachtwoord?')
         )
-    
-    @property
-    def function_generator(self):
-        return [
+        self.function_elements = [
             [
                 'if len(password) < 5: return False',
                 'if len(password) <= 5: return False',
@@ -69,14 +52,14 @@ class Wachtwoord(Dutch):
                 ''
             ],
             [
-                'if not any(char in '#@' for char in password): return False',
-                'if all(char != '#' for char in password): return False',
-                'if all(char != '@' for char in password): return False',
-                'if not password in '#@': return False',
-                'if password and password[0] not in '#@': return False',
-                'if password and password[-1] not in '#@': return False',
-                'if password and password[0] in '#@': return True',
-                'if password and password[-1] in '#@': return True',
+                'if not any(char in "#@" for char in password): return False',
+                'if all(char != "#" for char in password): return False',
+                'if all(char != "@" for char in password): return False',
+                'if not password in "#@": return False',
+                'if password and password[0] not in "#@": return False',
+                'if password and password[-1] not in "#@": return False',
+                'if password and password[0] in "#@": return True',
+                'if password and password[-1] in "#@": return True',
                 ''
             ],
             [
@@ -90,10 +73,7 @@ class Wachtwoord(Dutch):
                 'return True',
             ]
         ]
-    
-    @property
-    def special_unit_tests(self):
-        return [
+        self.special_unit_tests = [
             UnitTest(['A346#'], True),
             UnitTest(['@2551B'], True),
             UnitTest(['@34D52'], False),
@@ -102,7 +82,7 @@ class Wachtwoord(Dutch):
             UnitTest(['@9#4@'], False),
             UnitTest(['@67B'], False),
         ]
-    
+
     def __generate_digits(self):
         for d1 in range(10):
             for d2 in range(d1, 10):

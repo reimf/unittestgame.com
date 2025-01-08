@@ -1,9 +1,10 @@
-from driehoeksvorm import Driehoeksvorm
-from kommagetal import Kommagetal
-from schrikkeljaar import Schrikkeljaar
-from snelheid import Snelheid
-from wachtwoord import Wachtwoord
+from game_dutch_driehoeksvorm import Driehoeksvorm
+from game_dutch_kommagetal import Kommagetal
+from game_dutch_schrikkeljaar import Schrikkeljaar
+from game_dutch_snelheid import Snelheid
+from game_dutch_wachtwoord import Wachtwoord
 from template import Template
+
 
 class Main:
     def __init__(self):

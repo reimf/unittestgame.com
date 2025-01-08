@@ -1,4 +1,4 @@
-from dutch import Dutch
+from game_dutch import Dutch
 from template import Template
 from variable import Variable
 from unit_test import UnitTest
@@ -7,17 +7,11 @@ from unit_test import UnitTest
 class Snelheid(Dutch):
     def __init__(self):
         super().__init__()
-
-    @property
-    def description(self):
-        return 'SNELHEID - Toon de snelheid van een auto.'
-
-    @property
-    def introduction_template(self):
-        return Template(
+        self.description = 'SNELHEID - Toon de snelheid van een auto.'
+        self.introduction_template = Template(
             'Introductie',
             'Een Chinese gadgetmaker laat een nieuwe functie ontwikkelen door een extern softwarebedrijf.',
-            'De gadget laat de gemiddelde snelheid zien op een klein display.',
+            'De gadget laat de gemiddelde snelheid zien op een klein display.\n',
             '+-------------------+\n',
             '|  X   XXXX   XXXX  |\n',
             '|  X   X  X   X  X  |\n',
@@ -30,12 +24,16 @@ class Snelheid(Dutch):
             'In het contract vind je wat je moet doen en hoeveel je daarvoor betaald krijgt.',
             'In de specificatie staat wat de functie precies moet doen.'
         )
-
-    @property
-    def specification_template(self):
-        return Template(
+        self.specification_template = Template(
             'Specificatie',
-            'De functie ontvangt de snelheid in meter per uur en moet de snelheid weergeven in kilometer per uur.',
+            'De functie ontvangt de snelheid in meter per uur en moet de snelheid weergeven in kilometer per uur.\n',
+            '+-------------------+\n',
+            '|  X   XXXX   XXXX  |\n',
+            '|  X   X  X   X  X  |\n',
+            '|  X   XXXX   XXXX  |\n',
+            '|  X   X  X   X  X  |\n',
+            '|  X   XXXX X XXXX  |\n',
+            '+-------------------+\n',
             'Als er iets mis is met de snelheid (negatief bijvoorbeeld),',
             'dan moet de functie "ERROR" teruggeven, want dan gaat het display langzaam knipperen.',
             'Als het mogelijk is, laat dan 1 decimaal zien, bijvoorbeeld "12.3".',
@@ -43,28 +41,19 @@ class Snelheid(Dutch):
             'Als de snelheid niet meer op het display past,',
             'dan moet de functie "DANGER" teruggeven, want dan gaat het display snel knipperen.'
         )
-
-    @property
-    def parameters(self):
-        return [
+        self.parameters = [
             Variable(
                 'speed',
                 'int',
                 Template('', 'Snelheid in meter per uur'),
             )
         ]
-
-    @property
-    def unit(self):
-        return Variable(
+        self.unit = Variable(
             'display',
             'str',
             Template('', 'Verwachte weergave op het display'),
         )
-
-    @property
-    def function_generator(self):
-        return [
+        self.function_elements = [
             [
                 'if speed < 0: return "ERROR"',
                 'if speed <= 0: return "ERROR"',
@@ -90,10 +79,7 @@ class Snelheid(Dutch):
                 'return str(speed / 1000)'
             ]
         ]
-
-    @property
-    def special_unit_tests(self):
-        return [
+        self.special_unit_tests = [
             UnitTest([-1], 'ERROR'),
             UnitTest([0], '0.0'),
             UnitTest([19950], '19.9'),
