@@ -9,25 +9,24 @@ from template import Template
 class Game():
     def __init__(self):
         pass
-    
+
     def general_arguments_generator(self):
         raise NotImplementedError()
 
     def generate_functions(self, function_elements, identifier):
-        index = len(identifier)
-        if index < len(function_elements):
-            options = function_elements[index]
+        current = len(identifier)
+        if current < len(function_elements):
+            options = function_elements[current]
             for choice, option in enumerate(options):
-                new_function_generator = [option if i == index else elem for i, elem in enumerate(function_elements)]
+                new_function_generator = [option if i == current else elem for i, elem in enumerate(function_elements)]
                 new_identifier = identifier + chr(ord('0') + choice if choice < 10 else ord('a') + choice - 10)
                 yield from self.generate_functions(new_function_generator, new_identifier)
         else:
-            name = f'{self.unit.name}_{identifier}'
             parameterlist = ', '.join([parameter.name for parameter in self.parameters])
-            definition = f'def {name}({parameterlist}):'
+            definition = f'def {self.unit.name}_{identifier}({parameterlist}):'
             lines = [definition] + [f'    {line}' for line in function_elements if line]
             code = '\n'.join(lines)
-            yield Function(name, code)
+            yield Function(code)
 
     def find_passing_functions(self, functions, unit_tests):
         return [function for function in functions if function.fail_count(unit_tests) == 0]
@@ -51,14 +50,9 @@ class Game():
                     str(almost_perfect_functions[0])
                 )
 
-    def find_worst_passing_function(self, functions, userdefined_unit_tests, general_unit_tests, special_unit_tests):
+    def find_worst_passing_function(self, functions, userdefined_unit_tests, quality):
         functions = self.find_passing_functions(functions, userdefined_unit_tests)
-        return min(functions, key=lambda function: function.quality)
-
-    def ask_unit_test(self):
-        arguments = [parameter.ask() for parameter in self.parameters]
-        expected = self.unit.ask()
-        return UnitTest(arguments, expected)
+        return min(functions, key=lambda function: quality[function])
 
     def play(self):
         Template(self.description).print()
@@ -66,11 +60,8 @@ class Game():
         functions = list(self.generate_functions(self.function_elements, ''))
         perfect_function = self.find_perfect_function(functions, self.special_unit_tests)
         self.check_unit_tests_are_needed(functions, self.special_unit_tests)
-
         general_unit_tests = [UnitTest(arguments, perfect_function.call_method(arguments)) for arguments in self.general_arguments_generator()]
-
-        for function in functions:
-            function.set_quality(self.special_unit_tests, general_unit_tests)
+        quality = {function: function.quality(self.special_unit_tests, general_unit_tests) for function in functions}
 
         self.introduction_template.print()
         earnings = 0
@@ -80,7 +71,7 @@ class Game():
             if userdefined_unit_tests:
                 self.unit_tests_template.print(unit_tests=userdefined_unit_tests)
 
-            worst_passing_function = self.find_worst_passing_function(functions, userdefined_unit_tests, general_unit_tests, self.special_unit_tests)
+            worst_passing_function = self.find_worst_passing_function(functions, userdefined_unit_tests, quality)
             failing_general_test_results = worst_passing_function.failing_test_results(general_unit_tests)
             failing_special_test_results = worst_passing_function.failing_test_results(self.special_unit_tests)
             failing_test_results_to_choose_from = failing_general_test_results if failing_general_test_results else failing_special_test_results
@@ -102,7 +93,9 @@ class Game():
                 self.contract_template.print()
             elif choice == '3':
                 self.add_unit_test_template.print()
-                unit_test = self.ask_unit_test()
+                arguments = [parameter.ask() for parameter in self.parameters]
+                expected = self.unit.ask()
+                unit_test = UnitTest(arguments, expected)
                 test_result = TestResult(perfect_function, unit_test)
                 if test_result.passes:
                     passing_functions_before = self.find_passing_functions(functions, userdefined_unit_tests)
@@ -131,15 +124,16 @@ class Game():
                     earnings -= 1000
                 else:
                     self.no_bug_found_template.print()
+                    break
             elif choice == '0':
-                if failing_test_result:
-                    self.end_negative_template.print()
-                else:
-                    self.end_positive_template.print()
-                    earnings += 5000
                 break
             else:
                 self.invalid_choice_template.print(choice=choice)
+        if failing_test_result:
+            self.end_negative_template.print()
+        else:
+            self.end_positive_template.print()
+            earnings += 5000
         if earnings >= 0:
             self.total_positive_template.print(absolute_value=earnings)
         else:

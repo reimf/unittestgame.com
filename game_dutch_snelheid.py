@@ -22,7 +22,7 @@ class Snelheid(Dutch):
             'Gebruikers rekenen erop dat de getoonde informatie correct is en er mogen dus geen fouten in zitten.',
             'Daarom hebben ze jou ingehuurd om unit testen te schrijven voor die functie.',
             'In het contract vind je wat je moet doen en hoeveel je daarvoor betaald krijgt.',
-            'In de specificatie staat wat de functie precies moet doen.'
+            'In de specificatie staat wat de functie precies moet doen.',
         )
         self.specification_template = Template(
             'Specificatie',
@@ -39,7 +39,7 @@ class Snelheid(Dutch):
             'Als het mogelijk is, laat dan 1 decimaal zien, bijvoorbeeld "12.3".',
             'Rond anders af op hele kilometers per uur, dus bijvoorbeeld "49".',
             'Als de snelheid niet meer op het display past,',
-            'dan moet de functie "DANGER" teruggeven, want dan gaat het display snel knipperen.'
+            'dan moet de functie "DANGER" teruggeven, want dan gaat het display snel knipperen.',
         )
         self.parameters = [
             Variable(
@@ -77,7 +77,7 @@ class Snelheid(Dutch):
                 'return str(round(speed / 1000))',
                 'return str(round(speed / 1000, 1))',
                 'return str(speed / 1000)'
-            ]
+            ],
         ]
         self.special_unit_tests = [
             UnitTest([-1], 'ERROR'),

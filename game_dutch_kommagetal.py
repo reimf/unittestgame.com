@@ -17,14 +17,14 @@ class Kommagetal(Dutch):
             'De laboranten gaan er daarna verder mee rekenen en er mogen dus geen fouten in zitten.',
             'Daarom hebben ze jou ingehuurd om unit testen te schrijven voor die functie.',
             'In het contract vind je wat je moet doen en hoeveel je daarvoor betaald krijgt.',
-            'In de specificatie staat wat de functie precies moet doen.'
+            'In de specificatie staat wat de functie precies moet doen.',
         )
         self.specification_template = Template(
             'Specificatie',
             'De functie moet aangeven of een tekst een kommagetal voorstelt en dus True of False teruggeven.',
             'Een kommagetal kan beginnen met een plus-teken of een min-teken.',
             'Daarna volgen één of meer cijfers.',
-            'Als er daarna een komma staat, dan moet er minstens één cijfer volgen.'
+            'Als er daarna een komma staat, dan moet er minstens één cijfer volgen.',
         )
         self.parameters = [
             Variable(

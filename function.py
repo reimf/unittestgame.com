@@ -4,8 +4,8 @@ from test_result import TestResult
 
 
 class Function:
-    def __init__(self, name, code):
-        self.name = name
+    def __init__(self, code):
+        self.name = re.match(r'^def\s+(\w+)', code).group(1)
         self.code = code
         self.method = self.__add_method()
 
@@ -20,8 +20,8 @@ class Function:
         except Exception as error:
             return type(error).__name__
 
-    def set_quality(self, special_unit_tests, general_unit_tests):
-        self.quality = (
+    def quality(self, special_unit_tests, general_unit_tests):
+        return (
             -self.fail_count(special_unit_tests),
             -self.fail_count(general_unit_tests),
             len(self.code)
@@ -37,5 +37,5 @@ class Function:
         return len(self.failing_test_results(unit_tests))
 
     def __str__(self):
-        anonymous_code = re.sub(r'^(def \w+)_[0-9a-z]+', r'\1', self.code)
+        anonymous_code = re.sub(r'^(def\s+\w+)_[0-9a-z]+', r'\1', self.code)
         return '\n'.join('| ' + line for line in anonymous_code.split('\n'))

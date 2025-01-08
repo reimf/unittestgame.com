@@ -17,14 +17,14 @@ class Wachtwoord(Dutch):
             'Gebruikers moeten erop kunnen rekenen dat de getoonde vereisten correct zijn en er mogen dus geen fouten in zitten.',
             'Daarom hebben ze jou ingehuurd om unit testen te schrijven voor die functie.',
             'In het contract vind je wat je moet doen en hoeveel je daarvoor betaald krijgt.',
-            'In de specificatie staat wat de functie precies moet doen.'
+            'In de specificatie staat wat de functie precies moet doen.',
         )
         self.specification_template = Template(
             'Specificatie',
             'Regel 1: Het wachtwoord bestaat uit minstens 5 karakters.\n',
             'Regel 2: Het wachtwoord bevat een hoofdletter.\n',
             'Regel 3: Het wachtwoord bevat een speciaal teken (#@).\n',
-            'Regel 4: De cijfers in het wachtwoord tellen op tot 13.\n'
+            'Regel 4: De cijfers in het wachtwoord tellen op tot 13.\n',
         )
         self.parameters = [
             Variable(
@@ -71,7 +71,7 @@ class Wachtwoord(Dutch):
             ],
             [
                 'return True',
-            ]
+            ],
         ]
         self.special_unit_tests = [
             UnitTest(['A346#'], True),

@@ -23,7 +23,7 @@ class Template:
                 element = self.__replace_placeholders(element, **values)
             if type(element) == str:
                 buffer.append(element)
-            if type(element) != str or element[-1] == '\n':
+            if type(element) != str or element.endswith('\n'):
                 yield ' '.join(buffer).strip('\n')
                 buffer.clear()
             if element == None or type(element) == str:

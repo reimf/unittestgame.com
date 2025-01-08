@@ -1,9 +1,11 @@
-from game_dutch_driehoeksvorm import Driehoeksvorm
-from game_dutch_kommagetal import Kommagetal
-from game_dutch_schrikkeljaar import Schrikkeljaar
-from game_dutch_snelheid import Snelheid
-from game_dutch_wachtwoord import Wachtwoord
+from game import Game
 from template import Template
+
+import game_dutch_driehoeksvorm
+import game_dutch_kommagetal
+import game_dutch_schrikkeljaar
+import game_dutch_snelheid
+import game_dutch_wachtwoord
 
 
 class Main:
@@ -14,12 +16,13 @@ class Main:
     def game_menu():
         TEMPLATE_GAME_MENU = Template('Game', '{games}', '[0] Quit')
         TEMPLATE_INVALID_CHOICE = Template('Invalid choice', 'You have entered invalid choice "{choice}".')
-        games = [Driehoeksvorm(), Kommagetal(), Schrikkeljaar(), Snelheid(), Wachtwoord()]
-        games.sort(key=lambda game: (game.lang, game.description))
+        games = [game() for language in Game.__subclasses__() for game in language.__subclasses__()]
+        numbered_games = {str(index + 1): game for index, game in enumerate(games)}
         while True:
-            TEMPLATE_GAME_MENU.print(games=[f'[{index + 1}] {game.description}\n' for index, game in enumerate(games)])
+            TEMPLATE_GAME_MENU.print(games=[f'[{number}] {game.description}\n' for number, game in numbered_games.items()])
             choice = Template('', 'Choice').input()
-            if game := ([None] + [game for index, game in enumerate(games) if str(index + 1) == choice]).pop():
+            if choice in numbered_games:
+                game = numbered_games[choice]
                 game.play()
                 break
             elif choice == '0':
