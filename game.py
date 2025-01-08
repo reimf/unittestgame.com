@@ -13,18 +13,18 @@ class Game():
     def general_arguments_generator(self):
         raise NotImplementedError()
 
-    def generate_functions(self, function_elements, identifier):
-        current = len(identifier)
-        if current < len(function_elements):
-            options = function_elements[current]
-            for choice, option in enumerate(options):
-                new_function_generator = [option if i == current else elem for i, elem in enumerate(function_elements)]
-                new_identifier = identifier + chr(ord('0') + choice if choice < 10 else ord('a') + choice - 10)
-                yield from self.generate_functions(new_function_generator, new_identifier)
+    def generate_functions(self, elements, id):
+        current = len(id)
+        if current < len(elements):
+            element = elements[current]
+            for choice, line in enumerate(element):
+                new_elements = [line if index == current else elem for index, elem in enumerate(elements)]
+                new_id = id + chr(ord('0') + choice if choice < 10 else ord('a') + choice - 10)
+                yield from self.generate_functions(new_elements, new_id)
         else:
             parameterlist = ', '.join([parameter.name for parameter in self.parameters])
-            definition = f'def {self.unit.name}_{identifier}({parameterlist}):'
-            lines = [definition] + [f'    {line}' for line in function_elements if line]
+            definition = f'def {self.unit.name}_{id}({parameterlist}):'
+            lines = [definition] + [f'    {line}' for line in elements if line]
             code = '\n'.join(lines)
             yield Function(code)
 

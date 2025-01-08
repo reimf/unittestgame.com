@@ -6,4 +6,5 @@ class TestResult:
         self.passes = self.result == unit_test.expected
 
     def __str__(self):
-        return f'{self.unit_test.arguments} -> {self.result}'
+        not_as_expected = '' if self.passes else f' != {self.unit_test.expected}'
+        return f'{self.unit_test.arguments} -> {self.result}{not_as_expected}'
