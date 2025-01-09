@@ -2,7 +2,7 @@ pages:
   script:
     - mkdir public
     - cp *.{html,py} public
-    - gzip -k -6 public/*.{css,html,js,py}
+    - gzip -k -6 public/*.{html,py}
   artifacts:
     paths:
       - public
