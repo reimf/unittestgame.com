@@ -14,8 +14,6 @@ class Driehoeksvorm(Dutch):
             'Die functie wordt daarna gebruikt om ontwerpen mee door te rekenen,',
             'dus mogen er geen fouten in zitten.',
             'Daarom hebben ze jou ingehuurd om unit testen te schrijven voor de functie om te bepalen wat de vorm van een driehoek is.',
-            'In het contract vind je wat je moet doen en hoeveel je daarvoor betaald krijgt.',
-            'In de specificatie staat wat de functie precies moet doen.',
         )
         self.specification_template = Template(
             'Specificatie',

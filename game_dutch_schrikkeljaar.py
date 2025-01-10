@@ -11,10 +11,8 @@ class Schrikkeljaar(Dutch):
         self.introduction_template = Template(
             'Introductie',
             'Een uitgever van kalenders laat een nieuwe functie ontwikkelen door een extern softwarebedrijf.',
-            'Als die eenmaal gedrukt zijn kan er niks meer aan veranderd worden dus mogen er geen fouten in zitten.',
+            'Als kalenders eenmaal gedrukt zijn kan er niks meer aan veranderd worden dus mogen er geen fouten in zitten.',
             'Daarom hebben ze jou ingehuurd om unit testen te schrijven voor de functie om te bepalen of een jaar een schrikkeljaar is of niet.',
-            'In het contract vind je wat je moet doen en hoeveel je daarvoor betaald krijgt.',
-            'In de specificatie staat wat de functie precies moet doen.',
         )
         self.specification_template = Template(
             'Specificatie',
@@ -36,6 +34,7 @@ class Schrikkeljaar(Dutch):
         self.function_elements = [
             [
                 'if year % 400 == 0: return True',
+                'if year % 200 == 0: return True',
                 ''
             ],
             [
@@ -56,8 +55,7 @@ class Schrikkeljaar(Dutch):
             UnitTest([2001], False),
             UnitTest([2002], False),
             UnitTest([2004], True),
-            UnitTest([1900], False),
-
+            UnitTest([1800], False),
         ]
 
     def general_arguments_generator(self):

@@ -23,12 +23,15 @@ class Dutch(Game):
         )
         self.contract_template = Template(
             'Contract',
-            'Jij moet unit testen schrijven zodat de functie NOOIT foute test resultaten geeft.',
-            'Wat goede test resultaten zijn staat beschreven in de specificatie.',
+            'Wij laten een nieuwe functie ontwikkelen door een extern softwarebedrijf.',
+            'We hebben jou ingehuurd om te zorgen dat die functie ALTIJD het juiste resultaat geeft.',
+            'Wat goede resultaten zijn staat beschreven in de specificatie.',
+            'Jouw taak is om voldoende unit testen te schrijven voor die functie,',
+            'zodat de functie geen foute resultaten meer kan geven.',
             'Voor het hele traject krijg je €10000 achteraf.',
             'In het menu staan bij sommige acties kosten vermeld voor jou.',
-            'Als een gebruiker bijvoorbeeld een fout constateert in de functie die slaagt voor al jouw unit testen,',
-            'dan betaal jij €1000 als bijdrage aan de kosten die wij vervolgens moeten maken om dat te herstellen.',
+            'Als een gebruiker bijvoorbeeld een fout constateert in een functie die slaagt voor al jouw unit testen,',
+            'dan betaal jij een boete van €1000.',
         )
         self.earnings_template = Template(
             'Verdiensten tot nu toe',
@@ -66,15 +69,15 @@ class Dutch(Game):
         )
         self.useless_unit_test_template = Template(
             'Unit test toegevoegd',
-            'We hebben deze unit test toegevoegd aan onze code.',
+            'We hebben deze unit test toegevoegd.',
             'Je unit test lijkt erg veel op een eerdere unit test.',
             'We denken daarom dat deze unit test niet zo zinvol is.',
         )
         self.useful_unit_test_template = Template(
             'Unit test toegevoegd',
-            'We hebben deze unit test toegevoegd aan onze code.',
-            'We hebben geconstateerd dat er een fout zat in de functie die het externe softwarebedrijf had geschreven.',
-            'We hebben de fout laten oplossen en nu slagen alle unit testen weer!',
+            'We hebben deze unit test toegevoegd.',
+            'De functie die het externe softwarebedrijf had geschreven bleek inderdaad niet de specificatie te volgen.',
+            'Zij hebben de functie verbeterd en nu zou het beter moeten zijn.',
         )
         self.incorrect_unit_test_template = Template(
             'Unit test NIET toegevoegd',

@@ -16,8 +16,6 @@ class Kommagetal(Dutch):
             'De functie wordt gebruikt om te bekijken of meetwaardes wel correct zijn ingevoerd.',
             'De laboranten gaan er daarna verder mee rekenen en er mogen dus geen fouten in zitten.',
             'Daarom hebben ze jou ingehuurd om unit testen te schrijven voor die functie.',
-            'In het contract vind je wat je moet doen en hoeveel je daarvoor betaald krijgt.',
-            'In de specificatie staat wat de functie precies moet doen.',
         )
         self.specification_template = Template(
             'Specificatie',

@@ -21,8 +21,6 @@ class Snelheid(Dutch):
             '+-------------------+\n',
             'Gebruikers rekenen erop dat de getoonde informatie correct is en er mogen dus geen fouten in zitten.',
             'Daarom hebben ze jou ingehuurd om unit testen te schrijven voor die functie.',
-            'In het contract vind je wat je moet doen en hoeveel je daarvoor betaald krijgt.',
-            'In de specificatie staat wat de functie precies moet doen.',
         )
         self.specification_template = Template(
             'Specificatie',
