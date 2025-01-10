@@ -1,0 +1,7 @@
+body {
+    margin: 0;
+}
+.xterm-screen {
+    height: 100vh !important;
+    padding: 0 10px;
+}
