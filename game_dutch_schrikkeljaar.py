@@ -23,23 +23,23 @@ class Schrikkeljaar(Dutch):
             Variable(
                 'year',
                 'int',
-                Template('', 'Jaar')
+                Template('Jaar')
             )
         ]
         self.unit = Variable(
             'is_leapyear',
             'bool',
-            Template('', 'Is het een schrikkeljaar?')
+            Template('Schrikkeljaar (True/False)')
         )
         self.function_elements = [
             [
                 'if year % 400 == 0: return True',
                 'if year % 200 == 0: return True',
-                ''
+                '',
             ],
             [
                 'if year % 100 == 0: return False',
-                ''
+                '',
             ],
             [
                 'return year % 2 == 0',
@@ -47,7 +47,8 @@ class Schrikkeljaar(Dutch):
                 'return year % 4 != 0',
                 'return year % 4 == 0',
                 'return True',
-                'return False'
+                'return False',
+                'return None',
             ],
         ]
         self.special_unit_tests = [

@@ -20,14 +20,26 @@ class Driehoeksvorm(Dutch):
             'De functie moet aangeven of een driehoek gelijkzijdig (equilateral), gelijkbenig (isosceles) of ongelijkzijdig (scalene).',
         )
         self.parameters = [
-            Variable('a', 'int', Template('', 'Zijde A')),
-            Variable('b', 'int', Template('', 'Zijde B')),
-            Variable('c', 'int', Template('', 'Zijde C')),
+            Variable(
+                'a', 
+                'int', 
+                Template('Zijde A')
+            ),
+            Variable(
+                'b', 
+                'int', 
+                Template('Zijde B')
+            ),
+            Variable(
+                'c', 
+                'int', 
+                Template('Zijde C')
+            ),
         ]
         self.unit = Variable(
             'triangle_shape',
             'str',
-            Template('', 'Vorm van de driehoek')
+            Template('Vorm van de driehoek')
         )
         self.function_elements = [
             [
@@ -36,7 +48,7 @@ class Driehoeksvorm(Dutch):
                 'if a == b: return "equilateral"',
                 'if b == c: return "equilateral"',
                 'if a == c: return "equilateral"',
-                ''
+                '',
             ],
             [
                 'if a == b or b == c or a == c: return "isosceles"',
@@ -46,12 +58,13 @@ class Driehoeksvorm(Dutch):
                 'if a == b: return "isosceles"',
                 'if a == c: return "isosceles"',
                 'if b == c: return "isosceles"',
-                ''
+                '',
             ],
             [
                 'return "equilateral"',
                 'return "isosceles"',
-                'return "scalene"'
+                'return "scalene"',
+                'return None',
             ],
         ]
         self.special_unit_tests = [

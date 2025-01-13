@@ -18,7 +18,6 @@ class Dutch(Game):
             '[0] Einde',
         )
         self.choice_template = Template(
-            '',
             'Keuze',
         )
         self.contract_template = Template(

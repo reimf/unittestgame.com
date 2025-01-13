@@ -28,13 +28,13 @@ class Kommagetal(Dutch):
             Variable(
                 'text',
                 'str',
-                Template('', 'Tekst')
+                Template('Tekst')
             )
         ]
         self.unit = Variable(
             'is_float',
             'bool',
-            Template('', 'Is het een kommagetal?')
+            Template('Is het een kommagetal?')
         )
         self.function_elements = [
             [
@@ -55,6 +55,7 @@ class Kommagetal(Dutch):
                 'return bool(re.match(r"^[+-]?[0-9]*(,[0-9]*)?$", text))',
                 'return True',
                 'return False',
+                'return None',
             ]
         ]
         self.special_unit_tests = [

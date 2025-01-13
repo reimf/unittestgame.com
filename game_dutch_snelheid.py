@@ -43,38 +43,39 @@ class Snelheid(Dutch):
             Variable(
                 'speed',
                 'int',
-                Template('', 'Snelheid in meter per uur'),
+                Template('Snelheid in meter per uur')
             )
         ]
         self.unit = Variable(
             'display',
             'str',
-            Template('', 'Verwachte weergave op het display'),
+            Template('Verwachte weergave op het display')
         )
         self.function_elements = [
             [
                 'if speed < 0: return "ERROR"',
                 'if speed <= 0: return "ERROR"',
-                ''
+                '',
             ],
             [
                 'if speed <= 19900: return str(round(speed / 1000, 1))',
                 'if speed < 19950: return str(round(speed / 1000, 1))',
                 'if speed <= 19950: return str(round(speed / 1000, 1))',
                 'if speed < 20000: return str(round(speed / 1000, 1))',
-                ''
+                '',
             ],
             [
                 'if speed >= 200000: return "DANGER"',
                 'if speed > 199500: return "DANGER"',
                 'if speed >= 199500: return "DANGER"',
                 'if speed > 199000: return "DANGER"',
-                ''
+                '',
             ],
             [
                 'return str(round(speed / 1000))',
                 'return str(round(speed / 1000, 1))',
-                'return str(speed / 1000)'
+                'return str(speed / 1000)',
+                'return None',
             ],
         ]
         self.special_unit_tests = [

@@ -2,9 +2,13 @@ import re
 
 
 class Template:
-    def __init__(self, title, *block):
-        self.title = title
-        self.block = block
+    def __init__(self, *block):
+        if len(block) == 1:
+            self.title = ''        
+            self.block = block
+        else:
+            self.title = block[0]
+            self.block = block[1:]
 
     def __replace_placeholders(self, element, **values):
         if match := re.search(r'^\{(\w+)\}$', element):

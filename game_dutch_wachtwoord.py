@@ -28,13 +28,13 @@ class Wachtwoord(Dutch):
             Variable(
                 'password',
                 'str',
-                Template('', 'Wachtwoord')
+                Template('Wachtwoord')
             )
         ]
         self.unit = Variable(
             'is_strong_password',
             'bool',
-            Template('', 'Is het een sterk wachtwoord?')
+            Template('Sterk wachtwoord (True/False)')
         )
         self.function_elements = [
             [
@@ -42,12 +42,12 @@ class Wachtwoord(Dutch):
                 'if len(password) <= 5: return False',
                 'if len(password) < 8: return False',
                 'if len(password) >= 5: return True',
-                ''
+                '',
             ],
             [
                 'if not password.isupper(): return False',
                 'if password.isupper(): return True',
-                ''
+                '',
             ],
             [
                 'if not any(char in "#@" for char in password): return False',
@@ -58,17 +58,19 @@ class Wachtwoord(Dutch):
                 'if password and password[-1] not in "#@": return False',
                 'if password and password[0] in "#@": return True',
                 'if password and password[-1] in "#@": return True',
-                ''
+                '',
             ],
             [
                 'if sum([int(char) for char in password if char.isdigit()]) != 13: return False',
                 'if sum([int(char) for char in password if char.isdigit()]) > 13: return False',
                 'if sum([int(char) for char in password if char.isdigit()]) < 13: return False',
                 'if sum([int(char) for char in password if char.isdigit()]) == 13: return True',
-                ''
+                '',
             ],
             [
                 'return True',
+                'return False',
+                'return None',
             ],
         ]
         self.special_unit_tests = [
