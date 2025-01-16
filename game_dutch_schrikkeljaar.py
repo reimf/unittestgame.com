@@ -35,10 +35,13 @@ class Schrikkeljaar(Dutch):
             [
                 'if year % 400 == 0: return True',
                 'if year % 200 == 0: return True',
+                'if year == 2000: return True',
                 '',
             ],
             [
                 'if year % 100 == 0: return False',
+                'if year == 1900: return False',
+                'if year == 2100: return False',
                 '',
             ],
             [
@@ -52,11 +55,11 @@ class Schrikkeljaar(Dutch):
             ],
         ]
         self.special_unit_tests = [
-            UnitTest([2000], True),
             UnitTest([2001], False),
             UnitTest([2002], False),
             UnitTest([2004], True),
             UnitTest([1800], False),
+            UnitTest([1600], True),
         ]
 
     def general_arguments_generator(self):
