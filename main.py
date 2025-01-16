@@ -1,11 +1,10 @@
-from game import Game
 from template import Template
 
-import game_dutch_driehoeksvorm
-import game_dutch_kommagetal
-import game_dutch_schrikkeljaar
-import game_dutch_snelheid
-import game_dutch_wachtwoord
+from game_dutch_driehoeksvorm import Driehoeksvorm
+from game_dutch_kommagetal import Kommagetal
+from game_dutch_schrikkeljaar import Schrikkeljaar
+from game_dutch_snelheid import Snelheid
+from game_dutch_wachtwoord import Wachtwoord
 
 
 class Main:
@@ -16,15 +15,21 @@ class Main:
     def game_menu():
         TEMPLATE_GAME_MENU = Template('Game', '{games}', '[0] Quit')
         TEMPLATE_INVALID_CHOICE = Template('Invalid choice', 'You have entered invalid choice "{choice}".')
-        games = [game() for language in Game.__subclasses__() for game in language.__subclasses__()]
+        games = [
+            Driehoeksvorm(),
+            Kommagetal(),
+            Schrikkeljaar(),
+            Snelheid(),
+            Wachtwoord(),
+        ]
         numbered_games = {str(index + 1): game for index, game in enumerate(games)}
+        options = [f'[{number}] {game.description}\n' for number, game in numbered_games.items()]
         while True:
-            TEMPLATE_GAME_MENU.print(games=[f'[{number}] {game.description}\n' for number, game in numbered_games.items()])
+            TEMPLATE_GAME_MENU.print(games=options)
             choice = Template('', 'Choice').input()
             if choice in numbered_games:
                 game = numbered_games[choice]
                 game.play()
-                break
             elif choice == '0':
                 break
             else:
