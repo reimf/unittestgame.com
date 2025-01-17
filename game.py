@@ -31,14 +31,11 @@ class Game():
     def find_passing_functions(self, functions, unit_tests):
         return [function for function in functions if function.fail_count(unit_tests) == 0]
 
-    def find_perfect_function(self, functions, unit_tests):
+    def find_a_perfect_function(self, functions, unit_tests):
         perfect_functions = self.find_passing_functions(functions, unit_tests)
-        if len(perfect_functions) != 1:
-            raise ValueError(
-                f'There are {len(perfect_functions)} perfect functions instead of 1.\n' +
-                '\n'.join([str(function) for function in perfect_functions])
-            )
-        return perfect_functions.pop()
+        if not perfect_functions:
+            raise ValueError(f'There is no perfect function.')
+        return random.choice(perfect_functions)
 
     def check_unit_tests_are_needed(self, functions, unit_tests):
         for unit_test in unit_tests:
@@ -58,7 +55,7 @@ class Game():
         Template(self.description).print()
 
         functions = list(self.generate_functions(self.function_elements, ''))
-        perfect_function = self.find_perfect_function(functions, self.special_unit_tests)
+        perfect_function = self.find_a_perfect_function(functions, self.special_unit_tests)
         self.check_unit_tests_are_needed(functions, self.special_unit_tests)
         general_unit_tests = [UnitTest(arguments, perfect_function.call_method(arguments)) for arguments in self.general_arguments_generator()]
         quality = {function: function.quality(self.special_unit_tests, general_unit_tests) for function in functions}
