@@ -1,47 +1,48 @@
 from template import Template
-from game_dutch import Dutch
+from game_basecamp import Basecamp
 from variable import Variable
 from unit_test import UnitTest
 
 
-class Driehoeksvorm(Dutch):
+class Triangletypechecker(Basecamp):
     def __init__(self):
         super().__init__()
-        self.description = 'DRIEHOEKVORM - Beschrijf de vorm van een driehoek.'
+        self.description = 'A1W2P4 - triangletypechecker.py '
         self.introduction_template = Template(
-            'Introductie\n',
-            '-----------\n',
-            'Een architect laat een nieuwe functie ontwikkelen door een extern softwarebedrijf.',
-            'Die functie wordt daarna gebruikt om ontwerpen mee door te rekenen,',
-            'dus mogen er geen fouten in zitten.',
-            'Daarom hebben ze jou ingehuurd om unit testen te schrijven voor de functie om te bepalen wat de vorm van een driehoek is.',
+            'Introduction\n',
+            '------------\n',
+            'Basecamp students are instructed to write a function that determines the type of a triangle.',
+            'You are hired to write the CodeGrade autotests for this function.',
         )
         self.specification_template = Template(
-            'Specificatie\n',
-            '------------\n',
-            'De functie moet aangeven of een driehoek gelijkzijdig (equilateral), gelijkbenig (isosceles) of ongelijkzijdig (scalene).',
+            'Problem description\n',
+            '-------------------\n',
+            'A triangle can be classified based on the lengths of its sides as equilateral, isosceles or scalene.',
+            'All three sides of an equilateral triangle have the same length.',
+            'An isosceles triangle has two sides that are the same length, an a third side that is a different length.',
+            'If all of the sides have different lengths then the triangle is scalene.',
         )
         self.parameters = [
             Variable(
                 'a', 
                 'int', 
-                Template('Zijde A')
+                Template('Side A')
             ),
             Variable(
                 'b', 
                 'int', 
-                Template('Zijde B')
+                Template('Side B')
             ),
             Variable(
                 'c', 
                 'int', 
-                Template('Zijde C')
+                Template('Side C')
             ),
         ]
         self.unit = Variable(
-            'triangle_shape',
+            'triangle_type',
             'str',
-            Template('Vorm van de driehoek')
+            Template('Type of triangle')
         )
         self.function_elements = [
             [

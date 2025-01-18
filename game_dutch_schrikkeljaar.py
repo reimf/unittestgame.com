@@ -7,7 +7,7 @@ from unit_test import UnitTest
 class Schrikkeljaar(Dutch):
     def __init__(self):
         super().__init__()
-        self.description = 'SCHRIKKELJAAR - Bepaal of een jaar een schrikkeljaar is of niet.'
+        self.description = 'SCHRIKKELJAAR - Bepaal of een jaar een schrikkeljaar is of niet'
         self.introduction_template = Template(
             'Introductie\n',
             '-----------\n',

@@ -5,17 +5,17 @@ from template import Template
 class Dutch(Game):
     def __init__(self):
         super().__init__()
-        self.lang = 'nl'
+        self.context = 'Nederlands'
+        self.multiplier = 10
         self.menu_template = Template(
             'Menu\n',
             '----\n',
             '[1] Specificatie tonen\n',
             '[2] Contract tonen\n',
             '[3] Unit test toevoegen\n',
-            '[4] Huidige functie tonen\n',
-            '[5] Hint voor unit test tonen (-€200)\n',
-            '[6] Perfecte functie tonen    (-€5000)\n',
-            '[7] Unit testen inleveren     (-€1000 bij foutmelding, anders +€10000)\n',
+            '[4] Een functie tonen waar alle unit testen voor slagen\n',
+            '[5] Hint voor unit test tonen (-€500)\n',
+            '[6] Unit testen inleveren (-€1000 bij foutmelding, anders +€10000)\n',
             '[0] Einde',
         )
         self.choice_template = Template(
@@ -37,7 +37,7 @@ class Dutch(Game):
         self.earnings_template = Template(
             'Verdiensten tot nu toe\n',
             '----------------------\n',
-            '{sign_value}€{absolute_value}',
+            '{earnings}',
         )
         self.no_unit_tests_template = Template(
             'Unit testen\n',
@@ -55,12 +55,6 @@ class Dutch(Game):
             'Het gaat goed met het schrijven van unit testen!',
             'We betalen je daarom alvast €5000 van de beloofde €10000 uit.',
             'Gefeliciteerd!',
-        )
-        self.perfect_function_template = Template(
-            'Perfecte functie\n',
-            '----------------\n',
-            '{perfect_function}',
-            'De kosten voor het tonen van de perfecte functie zijn €5000.',
         )
         self.current_function_template = Template(
             'Huidige functie\n',
@@ -134,7 +128,7 @@ class Dutch(Game):
         self.total_negative_template = Template(
             'Totaal\n',
             '------\n',
-            'In totaal heb je €{absolute_value} verlies geleden.',
+            'In totaal heb je {earnings} verlies geleden.',
             'Jammer!',
             'We hopen dat het de volgende keer beter gaat.',
             'Bedankt voor het spelen!',
@@ -142,7 +136,7 @@ class Dutch(Game):
         self.total_positive_template = Template(
             'Totaal\n',
             '------\n',
-            'In totaal heb je €{absolute_value} verdiend.',
+            'In totaal heb je {earnings} verdiend.',
             'Super!',
             'We denken dat je het de volgende keer nog beter gaat doen.',
             'Bedankt voor het spelen!',
@@ -152,3 +146,9 @@ class Dutch(Game):
             '---------------\n',
             'Je hebt ongeldige keuze "{choice}" ingevoerd.',
         )
+
+    def format_earnings(self, earnings):
+        sign = '' if earnings >= 0.0 else '-'
+        absolute_value = abs(earnings)
+        return f'{sign}€{round(absolute_value * 10000)}'
+    

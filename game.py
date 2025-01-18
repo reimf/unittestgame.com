@@ -13,6 +13,9 @@ class Game():
     def general_arguments_generator(self):
         raise NotImplementedError()
 
+    def format_earnings(self, earnings: float):
+        raise NotImplementedError()
+    
     def generate_functions(self, elements, id):
         current = len(id)
         if current < len(elements):
@@ -61,7 +64,7 @@ class Game():
         quality = {function: function.quality(self.special_unit_tests, general_unit_tests) for function in functions}
 
         self.introduction_template.print()
-        earnings = 0
+        earnings = 0.0
         had_early_payout = False
         userdefined_unit_tests = []
         while True:
@@ -80,10 +83,10 @@ class Game():
 
             if not had_early_payout and not failing_general_test_results:
                 self.early_payout_template.print()
-                earnings += 5000
+                earnings += 5.0
                 had_early_payout = True
 
-            self.earnings_template.print(sign_value='-' if earnings < 0 else '', absolute_value=abs(earnings))
+            self.earnings_template.print(earnings=self.format_earnings(earnings))
 
             self.menu_template.print()
             choice = self.choice_template.input()
@@ -112,15 +115,12 @@ class Game():
                 self.current_function_template.print(worst_passing_function=worst_passing_function)
             elif choice == '5':
                 self.hint_unit_test_template.print(failing_unit_test=failing_test_result.unit_test)
-                earnings -= 200
+                earnings -= 0.5
             elif choice == '6':
-                self.perfect_function_template.print(perfect_function=perfect_function)
-                earnings -= 5000
-            elif choice == '7':
                 self.hand_in_unit_tests_template.print()
                 if failing_test_result:
                     self.bug_found_template.print(test_result=failing_test_result)
-                    earnings -= 1000
+                    earnings -= 1.0
                 else:
                     self.no_bug_found_template.print()
                     break
@@ -132,8 +132,8 @@ class Game():
             self.end_negative_template.print()
         else:
             self.end_positive_template.print()
-            earnings += 5000
-        if earnings >= 0:
-            self.total_positive_template.print(absolute_value=earnings)
+            earnings += 5.0
+        if earnings >= 0.0:
+            self.total_positive_template.print(earnings=self.format_earnings(earnings))
         else:
-            self.total_negative_template.print(absolute_value=abs(earnings))
+            self.total_negative_template.print(earnings=self.format_earnings(earnings))

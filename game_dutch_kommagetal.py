@@ -9,7 +9,7 @@ from unit_test import UnitTest
 class Kommagetal(Dutch):
     def __init__(self):
         super().__init__()
-        self.description = 'KOMMAGETAL - Stel vast of een tekst een kommagetal voorstelt.'
+        self.description = 'KOMMAGETAL - Stel vast of een tekst een kommagetal voorstelt'
         self.introduction_template = Template(
             'Introductie\n',
             '-----------\n',

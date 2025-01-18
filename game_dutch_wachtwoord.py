@@ -9,7 +9,7 @@ from unit_test import UnitTest
 class Wachtwoord(Dutch):
     def __init__(self):
         super().__init__()
-        self.description = 'WACHTWOORD - Bekijk of een wachtwoord voldoende sterk is.'
+        self.description = 'WACHTWOORD - Bekijk of een wachtwoord voldoende sterk is'
         self.introduction_template = Template(
             'Introductie\n',
             '-----------\n',

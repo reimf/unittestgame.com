@@ -1,6 +1,6 @@
 from template import Template
 
-from game_dutch_driehoeksvorm import Driehoeksvorm
+from game_basecamp_triangletypechecker import Triangletypechecker
 from game_dutch_kommagetal import Kommagetal
 from game_dutch_schrikkeljaar import Schrikkeljaar
 from game_dutch_snelheid import Snelheid
@@ -16,14 +16,14 @@ class Main:
         TEMPLATE_GAME_MENU = Template('Game\n', '----\n', '{games}', '[0] Quit')
         TEMPLATE_INVALID_CHOICE = Template('Invalid choice', 'You have entered invalid choice "{choice}".')
         games = [
-            Driehoeksvorm(),
+            Triangletypechecker(),
             Kommagetal(),
             Schrikkeljaar(),
             Snelheid(),
             Wachtwoord(),
         ]
         numbered_games = {str(index + 1): game for index, game in enumerate(games)}
-        options = [f'[{number}] {game.description}\n' for number, game in numbered_games.items()]
+        options = [f'[{number}] {game.description} ({game.context})\n' for number, game in numbered_games.items()]
         while True:
             TEMPLATE_GAME_MENU.print(games=options)
             choice = Template('Choice').input()
