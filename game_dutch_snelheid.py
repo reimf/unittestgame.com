@@ -9,7 +9,8 @@ class Snelheid(Dutch):
         super().__init__()
         self.description = 'SNELHEID - Toon de snelheid van een auto.'
         self.introduction_template = Template(
-            'Introductie',
+            'Introductie\n',
+            '-----------\n',
             'Een Chinese gadgetmaker laat een nieuwe functie ontwikkelen door een extern softwarebedrijf.',
             'De gadget laat de gemiddelde snelheid zien op een klein display.\n',
             '+-------------------+\n',
@@ -23,7 +24,8 @@ class Snelheid(Dutch):
             'Daarom hebben ze jou ingehuurd om unit testen te schrijven voor die functie.',
         )
         self.specification_template = Template(
-            'Specificatie',
+            'Specificatie\n',
+            '------------\n',
             'De functie ontvangt de snelheid in meter per uur en moet de snelheid weergeven in kilometer per uur.\n',
             '+-------------------+\n',
             '|  X   XXXX   XXXX  |\n',

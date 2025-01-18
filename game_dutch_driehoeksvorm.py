@@ -9,14 +9,16 @@ class Driehoeksvorm(Dutch):
         super().__init__()
         self.description = 'DRIEHOEKVORM - Beschrijf de vorm van een driehoek.'
         self.introduction_template = Template(
-            'Introductie',
+            'Introductie\n',
+            '-----------\n',
             'Een architect laat een nieuwe functie ontwikkelen door een extern softwarebedrijf.',
             'Die functie wordt daarna gebruikt om ontwerpen mee door te rekenen,',
             'dus mogen er geen fouten in zitten.',
             'Daarom hebben ze jou ingehuurd om unit testen te schrijven voor de functie om te bepalen wat de vorm van een driehoek is.',
         )
         self.specification_template = Template(
-            'Specificatie',
+            'Specificatie\n',
+            '------------\n',
             'De functie moet aangeven of een driehoek gelijkzijdig (equilateral), gelijkbenig (isosceles) of ongelijkzijdig (scalene).',
         )
         self.parameters = [

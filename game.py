@@ -22,8 +22,8 @@ class Game():
                 new_id = id + chr(ord('0') + choice if choice < 10 else ord('a') + choice - 10)
                 yield from self.generate_functions(new_elements, new_id)
         else:
-            parameterlist = ', '.join([parameter.name for parameter in self.parameters])
-            definition = f'def {self.unit.name}_{id}({parameterlist}):'
+            parameterlist = ', '.join([f'{parameter.name}: {parameter.datatype}' for parameter in self.parameters])
+            definition = f'def {self.unit.name}_{id}({parameterlist}) -> {self.unit.datatype}:'
             lines = [definition] + [f'    {line}' for line in elements if line]
             code = '\n'.join(lines)
             yield Function(code)
@@ -67,8 +67,12 @@ class Game():
         while True:
             if userdefined_unit_tests:
                 self.unit_tests_template.print(unit_tests=userdefined_unit_tests)
+            else:
+                self.no_unit_tests_template.print()
 
             worst_passing_function = self.find_worst_passing_function(functions, userdefined_unit_tests, quality)
+            self.current_function_template.print(worst_passing_function=worst_passing_function)
+
             failing_general_test_results = worst_passing_function.failing_test_results(general_unit_tests)
             failing_special_test_results = worst_passing_function.failing_test_results(self.special_unit_tests)
             failing_test_results_to_choose_from = failing_general_test_results if failing_general_test_results else failing_special_test_results
@@ -104,10 +108,8 @@ class Game():
                         self.useful_unit_test_template.print()
                 else:
                     self.incorrect_unit_test_template.print()
-                earnings -= 200
             elif choice == '4':
                 self.current_function_template.print(worst_passing_function=worst_passing_function)
-                earnings -= 700
             elif choice == '5':
                 self.hint_unit_test_template.print(failing_unit_test=failing_test_result.unit_test)
                 earnings -= 200

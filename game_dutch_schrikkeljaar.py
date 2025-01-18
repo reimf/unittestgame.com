@@ -9,13 +9,15 @@ class Schrikkeljaar(Dutch):
         super().__init__()
         self.description = 'SCHRIKKELJAAR - Bepaal of een jaar een schrikkeljaar is of niet.'
         self.introduction_template = Template(
-            'Introductie',
+            'Introductie\n',
+            '-----------\n',
             'Een uitgever van kalenders laat een nieuwe functie ontwikkelen door een extern softwarebedrijf.',
             'Als kalenders eenmaal gedrukt zijn kan er niks meer aan veranderd worden dus mogen er geen fouten in zitten.',
             'Daarom hebben ze jou ingehuurd om unit testen te schrijven voor de functie om te bepalen of een jaar een schrikkeljaar is of niet.',
         )
         self.specification_template = Template(
-            'Specificatie',
+            'Specificatie\n',
+            '------------\n',
             'De functie moet aangeven of een jaar een schrikkeljaar is of niet.',
             'In het eerste geval moet de functie True teruggeven, in het tweede geval False.',
         )

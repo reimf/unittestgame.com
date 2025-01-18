@@ -13,7 +13,7 @@ class Main:
 
     @staticmethod
     def game_menu():
-        TEMPLATE_GAME_MENU = Template('Game', '{games}', '[0] Quit')
+        TEMPLATE_GAME_MENU = Template('Game\n', '----\n', '{games}', '[0] Quit')
         TEMPLATE_INVALID_CHOICE = Template('Invalid choice', 'You have entered invalid choice "{choice}".')
         games = [
             Driehoeksvorm(),
@@ -26,7 +26,7 @@ class Main:
         options = [f'[{number}] {game.description}\n' for number, game in numbered_games.items()]
         while True:
             TEMPLATE_GAME_MENU.print(games=options)
-            choice = Template('', 'Choice').input()
+            choice = Template('Choice').input()
             if choice in numbered_games:
                 game = numbered_games[choice]
                 game.play()

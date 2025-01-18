@@ -11,14 +11,16 @@ class Wachtwoord(Dutch):
         super().__init__()
         self.description = 'WACHTWOORD - Bekijk of een wachtwoord voldoende sterk is.'
         self.introduction_template = Template(
-            'Introductie',
+            'Introductie\n',
+            '-----------\n',
             'Een webshop laat een nieuwe functie ontwikkelen door een extern softwarebedrijf.',
             'De functie wordt gebruikt om wachtwoorden te controleren voor de webshop.',
             'Gebruikers moeten erop kunnen rekenen dat de getoonde vereisten correct zijn en er mogen dus geen fouten in zitten.',
             'Daarom hebben ze jou ingehuurd om unit testen te schrijven voor die functie.',
         )
         self.specification_template = Template(
-            'Specificatie',
+            'Specificatie\n',
+            '------------\n',
             'Regel 1: Het wachtwoord bestaat uit minstens 5 karakters.\n',
             'Regel 2: Het wachtwoord bevat een hoofdletter.\n',
             'Regel 3: Het wachtwoord bevat een speciaal teken ("#" of "@").\n',

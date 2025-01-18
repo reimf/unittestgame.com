@@ -11,14 +11,16 @@ class Kommagetal(Dutch):
         super().__init__()
         self.description = 'KOMMAGETAL - Stel vast of een tekst een kommagetal voorstelt.'
         self.introduction_template = Template(
-            'Introductie',
+            'Introductie\n',
+            '-----------\n',
             'Een laboratorium laat een nieuwe functie ontwikkelen door een extern softwarebedrijf.',
             'De functie wordt gebruikt om te bekijken of meetwaardes wel correct zijn ingevoerd.',
             'De laboranten gaan er daarna verder mee rekenen en er mogen dus geen fouten in zitten.',
             'Daarom hebben ze jou ingehuurd om unit testen te schrijven voor die functie.',
         )
         self.specification_template = Template(
-            'Specificatie',
+            'Specificatie\n',
+            '------------\n',
             'De functie moet aangeven of een tekst een kommagetal voorstelt en dus True of False teruggeven.',
             'Een kommagetal kan beginnen met een plus-teken of een min-teken.',
             'Daarna volgen één of meer cijfers.',

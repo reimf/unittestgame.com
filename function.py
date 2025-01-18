@@ -37,5 +37,4 @@ class Function:
         return len(self.failing_test_results(unit_tests))
 
     def __str__(self):
-        anonymous_code = re.sub(r'^(def\s+\w+)_[0-9a-z]+', r'\1', self.code)
-        return '\n'.join('| ' + line for line in anonymous_code.split('\n'))
+        return re.sub(r'^(def\s+\w+)_[0-9a-z]+', r'\1', self.code)

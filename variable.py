@@ -1,10 +1,4 @@
 class Variable:
-    CONVERSIONS = {
-        'bool': lambda value: False if value.lower() in ['false', 'no', 'nee', '0'] else bool(value),
-        'int': int,
-        'str': str,
-    }
-
     def __init__(self, name, datatype, template):
         self.name = name
         self.datatype = datatype
@@ -12,4 +6,8 @@ class Variable:
 
     def ask(self):
         answer = self.template.input()
-        return Variable.CONVERSIONS[self.datatype](answer)
+        if self.datatype == 'bool':
+            return answer.lower() not in ['false', 'no', 'nee', '0'] and bool(answer)
+        if self.datatype == 'int':
+            return int(answer)
+        return str(answer)

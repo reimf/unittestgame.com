@@ -3,12 +3,7 @@ import re
 
 class Template:
     def __init__(self, *block):
-        if len(block) == 1:
-            self.title = ''        
-            self.block = block
-        else:
-            self.title = block[0]
-            self.block = block[1:]
+        self.block = block
 
     def __replace_placeholders(self, element, **values):
         if match := re.search(r'^\{(\w+)\}$', element):
@@ -38,13 +33,11 @@ class Template:
                 yield from str(element).split('\n')
 
     def __fullstring(self, **values):
-        paragraphs = [self.title] + list(self.__generate_paragraphs(self.block, **values))
+        paragraphs = list(self.__generate_paragraphs(self.block, **values))
         lines = []
         MAX_LINE_LENGTH = 80
-        for index, paragraph in enumerate(paragraphs):
+        for paragraph in paragraphs:
             while paragraph:
-                if index > 0:
-                    paragraph = '  ' + paragraph
                 if len(paragraph) <= MAX_LINE_LENGTH:
                     pos = MAX_LINE_LENGTH
                 else:
