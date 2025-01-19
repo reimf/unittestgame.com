@@ -7,7 +7,7 @@ from unit_test import UnitTest
 class Snelheid(Dutch):
     def __init__(self):
         super().__init__()
-        self.description = 'SNELHEID - Toon de snelheid van een auto'
+        self.description = 'Laat de snelheid van een auto zien'
         self.introduction_template = Template(
             'Introductie\n',
             '-----------\n',

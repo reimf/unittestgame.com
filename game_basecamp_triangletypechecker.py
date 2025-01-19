@@ -7,7 +7,7 @@ from unit_test import UnitTest
 class Triangletypechecker(Basecamp):
     def __init__(self):
         super().__init__()
-        self.description = 'A1W2P4 - triangletypechecker.py '
+        self.description = 'triangletypechecker.py (A1W2P4)'
         self.introduction_template = Template(
             'Introduction\n',
             '------------\n',
