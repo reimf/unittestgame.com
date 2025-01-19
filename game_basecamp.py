@@ -13,9 +13,9 @@ class Basecamp(Game):
             '[2] Show contract\n',
             '[3] Add autotest\n',
             '[4] Show a function that passes all your autotests\n',
-            '[5] Show hint for autotest (-0.5)\n',
-            '[6] Submit autotests (-1 for errors, otherwise +10)\n',
-            '[0] End',
+            '[5] Show hint for autotest (-{penalty_hint})\n',
+            '[6] Submit autotests (-{penalty_bug} if bug)\n',
+            '[0] End (-{penalty_end} if bug)\n',
         )
         self.choice_template = Template(
             'Choice',
@@ -27,15 +27,15 @@ class Basecamp(Game):
             'Your task is to write enough autotests for this function,',
             'so that the students get the right feedback.',
             'You will receive a grade for the entire project.',
-            'If you write enough autotests, you will get 10 points.',
+            'If you write enough autotests, you will get {initial_score} points.',
             'The menu specifies for some actions how much your grade will decrease.',
             'For example, if a student finds an error in a function that passes all your autotests,',
-            'your grade will decrease by 1 point.',
+            'your grade will decrease by {penalty_bug} point.',
         )
-        self.earnings_template = Template(
+        self.score_template = Template(
             'Grade so far\n',
             '---------------\n',
-            '{earnings}',
+            '{score}',
         )
         self.no_unit_tests_template = Template(
             'Autotests\n',
@@ -47,13 +47,6 @@ class Basecamp(Game):
             '----------\n',
             '{unit_tests}',
         )
-        self.early_payout_template = Template(
-            'Early payout\n',
-            '------------\n',
-            'You are doing well with writing autotests!',
-            'We are giving you 5 points in advance from the promised 10 points.',
-            'Congratulations!',
-        )
         self.current_function_template = Template(
             'Current function\n',
             '----------------\n',
@@ -64,7 +57,7 @@ class Basecamp(Game):
             '------------------\n',
             'A autotest that currently fails could be the following.',
             '{failing_unit_test}',
-            'Your grade will decrease by 0.5 points.',
+            'Your grade will decrease by {penalty_hint} points.',
         )
         self.add_unit_test_template = Template(
             'Add autotest\n',
@@ -103,7 +96,7 @@ class Basecamp(Game):
             'A student has reported an error in CodeGrade.',
             'Their function passed all autotests, but it produced the following incorrect result.',
             '{test_result}',
-            'Your grade will decrease by 1 point.',
+            'Your grade will decrease by {penalty_bug} point.',
         )
         self.no_bug_found_template = Template(
             'No more error reports\n',
@@ -115,18 +108,18 @@ class Basecamp(Game):
             'End\n',
             '---\n',
             'There are still wrong functions that pass all your autotests,',
-            'so we will not give you any more points.',
+            'so we will give you the minimum grade.',
         )
         self.end_positive_template = Template(
             'End\n',
             '---\n',
             'Congratulations! CodeGrade is completely error-free thanks to your autotests.',
-            'We are happy to give you the remaining 10 points.',
+            'We are happy to give you {score} points.',
         )
         self.total_negative_template = Template(
             'Total\n',
             '-----\n',
-            'In total, you got a negative grade of {earnings} points.',
+            'In total, you got a negative grade of {score} points.',
             'Too bad!',
             'We hope it goes better next time.',
             'Thanks for playing!',
@@ -134,7 +127,7 @@ class Basecamp(Game):
         self.total_positive_template = Template(
             'Total\n',
             '-----\n',
-            'In total, you got a grade of {earnings} points.',
+            'In total, you got a grade of {score} points.',
             'Amazing!',
             'We think you will do even better next time.',
             'Thanks for playing!',
@@ -145,7 +138,6 @@ class Basecamp(Game):
             'You entered an invalid choice "{choice}".',
         )
 
-    def format_earnings(self, earnings):
-        if earnings == round(earnings):
-            return f'{round(earnings)}'
-        return f'{earnings * 10:.1f}'
+    def format_score(self, score):
+        display = 10 * score
+        return f'{display:.0f}' if display == round(display) else f'{display:.1f}'

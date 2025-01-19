@@ -13,7 +13,7 @@ class Game():
     def general_arguments_generator(self):
         raise NotImplementedError()
 
-    def format_earnings(self, earnings: float):
+    def format_score(self, score: float):
         raise NotImplementedError()
     
     def generate_functions(self, elements, id):
@@ -64,8 +64,12 @@ class Game():
         quality = {function: function.quality(self.special_unit_tests, general_unit_tests) for function in functions}
 
         self.introduction_template.print()
-        earnings = 0.0
-        had_early_payout = False
+
+        INITIAL_SCORE = 1.0
+        PENALTY_HINT = 0.1
+        PENALTY_BUG = 0.2
+        PENALTY_END = 1.0
+        score = INITIAL_SCORE
         userdefined_unit_tests = []
         while True:
             if userdefined_unit_tests:
@@ -81,20 +85,22 @@ class Game():
             failing_test_results_to_choose_from = failing_general_test_results if failing_general_test_results else failing_special_test_results
             failing_test_result = random.choice(failing_test_results_to_choose_from) if failing_test_results_to_choose_from else None
 
-            if not had_early_payout and not failing_general_test_results:
-                self.early_payout_template.print()
-                earnings += 5.0
-                had_early_payout = True
+            self.score_template.print(score=self.format_score(score))
 
-            self.earnings_template.print(earnings=self.format_earnings(earnings))
-
-            self.menu_template.print()
+            self.menu_template.print(
+                penalty_hint=self.format_score(PENALTY_HINT),
+                penalty_bug=self.format_score(PENALTY_BUG),
+                penalty_end=self.format_score(PENALTY_END),
+            )
             choice = self.choice_template.input()
 
             if choice == '1':
                 self.specification_template.print()
             elif choice == '2':
-                self.contract_template.print()
+                self.contract_template.print(
+                    initial_score=self.format_score(INITIAL_SCORE),
+                    penalty_bug=self.format_score(PENALTY_BUG),
+                )
             elif choice == '3':
                 self.add_unit_test_template.print()
                 arguments = [parameter.ask() for parameter in self.parameters]
@@ -114,13 +120,19 @@ class Game():
             elif choice == '4':
                 self.current_function_template.print(worst_passing_function=worst_passing_function)
             elif choice == '5':
-                self.hint_unit_test_template.print(failing_unit_test=failing_test_result.unit_test)
-                earnings -= 0.5
+                self.hint_unit_test_template.print(
+                    failing_unit_test=failing_test_result.unit_test,
+                    penalty_hint=self.format_score(PENALTY_HINT),
+                )
+                score -= PENALTY_HINT
             elif choice == '6':
                 self.hand_in_unit_tests_template.print()
                 if failing_test_result:
-                    self.bug_found_template.print(test_result=failing_test_result)
-                    earnings -= 1.0
+                    self.bug_found_template.print(
+                        test_result=failing_test_result,
+                        penalty_bug=self.format_score(PENALTY_BUG),
+                    )
+                    score -= PENALTY_BUG
                 else:
                     self.no_bug_found_template.print()
                     break
@@ -130,10 +142,10 @@ class Game():
                 self.invalid_choice_template.print(choice=choice)
         if failing_test_result:
             self.end_negative_template.print()
+            score = 0.0
         else:
-            self.end_positive_template.print()
-            earnings += 5.0
-        if earnings >= 0.0:
-            self.total_positive_template.print(earnings=self.format_earnings(earnings))
+            self.end_positive_template.print(score=self.format_score(score))
+        if score >= 0.0:
+            self.total_positive_template.print(score=self.format_score(score))
         else:
-            self.total_negative_template.print(earnings=self.format_earnings(earnings))
+            self.total_negative_template.print(score=self.format_score(score))
