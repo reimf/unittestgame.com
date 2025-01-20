@@ -13,23 +13,27 @@ class Game():
     def general_arguments_generator(self):
         raise NotImplementedError()
 
-    def format_score(self, score: float):
+    def format_score(self, score):
         raise NotImplementedError()
     
-    def generate_functions(self, elements, id):
-        current = len(id)
-        if current < len(elements):
-            element = elements[current]
-            for choice, line in enumerate(element):
-                new_elements = [line if index == current else elem for index, elem in enumerate(elements)]
-                new_id = id + chr(ord('0') + choice if choice < 10 else ord('a') + choice - 10)
-                yield from self.generate_functions(new_elements, new_id)
+    def generate_functions(self, elements, choices=[]):
+        if elements:
+            for choice in enumerate(elements[0]):
+                yield from self.generate_functions(elements[1:], choices + [choice])
         else:
+            id = ''.join([chr(ord('a') + index) for index, _ in choices])
+            indented_lines = [f'    {line}' for _, line in choices if line]
             parameterlist = ', '.join([f'{parameter.name}: {parameter.datatype}' for parameter in self.parameters])
-            definition = f'def {self.unit.name}_{id}({parameterlist}) -> {self.unit.datatype}:'
-            lines = [definition] + [f'    {line}' for line in elements if line]
-            code = '\n'.join(lines)
-            yield Function(code)
+
+            anonymous_name = self.unit.name
+            anonymous_definition = f'def {anonymous_name}({parameterlist}) -> {self.unit.datatype}:'
+            anonymous_code = '\n'.join([anonymous_definition] + indented_lines)
+
+            unique_name = f'{anonymous_name}_{id}'
+            unique_definition = f'def {unique_name}({parameterlist}) -> {self.unit.datatype}:'
+            unique_code = '\n'.join([unique_definition] + indented_lines)
+
+            yield Function(unique_name, unique_code, anonymous_code)
 
     def find_passing_functions(self, functions, unit_tests):
         return [function for function in functions if function.fail_count(unit_tests) == 0]
@@ -57,7 +61,7 @@ class Game():
     def play(self):
         Template(self.description).print()
 
-        functions = list(self.generate_functions(self.function_elements, ''))
+        functions = list(self.generate_functions(self.function_elements))
         perfect_function = self.find_a_perfect_function(functions, self.special_unit_tests)
         self.check_unit_tests_are_needed(functions, self.special_unit_tests)
         general_unit_tests = [UnitTest(arguments, perfect_function.call_method(arguments)) for arguments in self.general_arguments_generator()]
@@ -118,14 +122,12 @@ class Game():
                 else:
                     self.incorrect_unit_test_template.print()
             elif choice == '4':
-                self.current_function_template.print(worst_passing_function=worst_passing_function)
-            elif choice == '5':
                 self.hint_unit_test_template.print(
                     failing_unit_test=failing_test_result.unit_test,
                     penalty_hint=self.format_score(PENALTY_HINT),
                 )
                 score -= PENALTY_HINT
-            elif choice == '6':
+            elif choice == '5':
                 self.hand_in_unit_tests_template.print()
                 if failing_test_result:
                     self.bug_found_template.print(

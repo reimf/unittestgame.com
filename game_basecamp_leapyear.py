@@ -7,7 +7,7 @@ from unit_test import UnitTest
 class Leapyear(Basecamp):
     def __init__(self):
         super().__init__()
-        self.description = 'leapyearcalculator.py (A1W2P2)'
+        self.description = 'A1W2P2 leapyearcalculator.py'
         self.introduction_template = Template(
             'Introduction\n',
             '------------\n',
@@ -53,10 +53,13 @@ class Leapyear(Basecamp):
                 '',
             ],
             [
+                'if year % 4 != 0: return True',
+                'if year % 4 == 0: return True',
+                '',
+            ],
+            [
                 'return year % 2 == 0',
-                'return year % 2 != 0 or year % 4 == 0',
-                'return year % 4 != 0',
-                'return year % 4 == 0',
+                'return year % 2 != 0',
                 'return True',
                 'return False',
                 'return None',

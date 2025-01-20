@@ -13,9 +13,8 @@ class Dutch(Game):
             '[1] Specificatie tonen\n',
             '[2] Contract tonen\n',
             '[3] Unit test toevoegen\n',
-            '[4] Een functie tonen waar alle unit testen voor slagen\n',
-            '[5] Hint voor unit test tonen (-{penalty_hint})\n',
-            '[6] Unit testen inleveren (-{penalty_bug} bij foutmelding)\n',
+            '[4] Hint voor unit test tonen (-{penalty_hint})\n',
+            '[5] Unit testen inleveren (-{penalty_bug} bij foutmelding)\n',
             '[0] Einde (-{penalty_end} bij foutmelding)\n',
         )
         self.choice_template = Template(
@@ -141,7 +140,5 @@ class Dutch(Game):
         )
 
     def format_score(self, score):
-        sign = '' if score >= 0.0 else '-'
-        absolute_value = abs(score)
-        return f'{sign}€{round(absolute_value * 10000)}'
+        return f'{"" if score >= 0.0 else "-"}€{round(abs(score) * 10000)}'
     

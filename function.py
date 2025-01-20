@@ -1,18 +1,17 @@
-import re
-
 from test_result import TestResult
 
 
 class Function:
-    def __init__(self, code):
-        self.name = re.match(r'^def\s+(\w+)', code).group(1)
-        self.code = code
+    def __init__(self, unique_name, unique_code, anonymous_code):
+        self.unique_name = unique_name
+        self.unique_code = unique_code
+        self.anonymous_code = anonymous_code
         self.method = self.__add_method()
 
     def __add_method(self):
         namespace = {}
-        exec(self.code, globals(), namespace)
-        return namespace[self.name]
+        exec(self.unique_code, globals(), namespace)
+        return namespace[self.unique_name]
 
     def call_method(self, arguments):
         try:
@@ -24,7 +23,7 @@ class Function:
         return (
             -self.fail_count(special_unit_tests),
             -self.fail_count(general_unit_tests),
-            len(self.code)
+            len(self.anonymous_code)
         )
 
     def test_results(self, unit_tests):
@@ -37,4 +36,4 @@ class Function:
         return len(self.failing_test_results(unit_tests))
 
     def __str__(self):
-        return re.sub(r'^(def\s+\w+)_[0-9a-z]+', r'\1', self.code)
+        return self.anonymous_code
