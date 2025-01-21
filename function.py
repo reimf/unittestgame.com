@@ -1,3 +1,4 @@
+import re # generated functions must be able to use regexps
 from test_result import TestResult
 
 
