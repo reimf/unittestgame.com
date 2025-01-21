@@ -41,7 +41,7 @@ class Game():
     def find_a_perfect_function(self, functions, unit_tests):
         perfect_functions = self.find_passing_functions(functions, unit_tests)
         if not perfect_functions:
-            raise ValueError(f'There is no perfect function.')
+            raise ValueError(f'There is no perfect function for game {self.__class__.__name__}.')
         return random.choice(perfect_functions)
 
     def check_unit_tests_are_needed(self, functions, unit_tests):
@@ -53,6 +53,14 @@ class Game():
                     f'Unit test {unit_test} is not needed.\n' +
                     str(almost_perfect_functions[0])
                 )
+        
+    def generate_functions_and_unit_tests(self):
+        functions = list(self.generate_functions(self.function_elements))
+        perfect_function = self.find_a_perfect_function(functions, self.special_unit_tests)
+        self.check_unit_tests_are_needed(functions, self.special_unit_tests)
+        general_unit_tests = [UnitTest(arguments, perfect_function.call_method(arguments)) for arguments in self.general_arguments_generator()]
+        quality = {function: function.quality(self.special_unit_tests, general_unit_tests) for function in functions}
+        return functions, perfect_function, general_unit_tests, quality
 
     def find_worst_passing_function(self, functions, userdefined_unit_tests, quality):
         functions = self.find_passing_functions(functions, userdefined_unit_tests)
@@ -61,11 +69,7 @@ class Game():
     def play(self):
         Template(self.description).print()
 
-        functions = list(self.generate_functions(self.function_elements))
-        perfect_function = self.find_a_perfect_function(functions, self.special_unit_tests)
-        self.check_unit_tests_are_needed(functions, self.special_unit_tests)
-        general_unit_tests = [UnitTest(arguments, perfect_function.call_method(arguments)) for arguments in self.general_arguments_generator()]
-        quality = {function: function.quality(self.special_unit_tests, general_unit_tests) for function in functions}
+        functions, perfect_function, general_unit_tests, quality = self.generate_functions_and_unit_tests()
 
         self.introduction_template.print()
 
