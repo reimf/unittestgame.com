@@ -151,7 +151,7 @@ class Game():
             score = 0.0
         else:
             self.end_positive_template.print(score=self.format_score(score))
-        if score >= 0.0:
+        if score > 0.5:
             self.total_positive_template.print(score=self.format_score(score))
         else:
             self.total_negative_template.print(score=self.format_score(score))

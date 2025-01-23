@@ -118,9 +118,9 @@ class Basecamp(Game):
         self.total_negative_template = Template(
             'Total\n',
             '-----\n',
-            'In total, you got a negative grade of {score}.',
+            'In total, you got a grade of {score}.',
             'Too bad!',
-            'We hope it goes better next time.',
+            'We think you will do better next time!',
             'Thanks for playing!',
         )
         self.total_positive_template = Template(
