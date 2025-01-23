@@ -12,5 +12,5 @@ body {
 
 .xterm-screen {
     height: 100vh !important;
-    padding: 0 10px;
+    padding: 10px;
 }
