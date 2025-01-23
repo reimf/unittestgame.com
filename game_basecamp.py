@@ -22,11 +22,11 @@ class Basecamp(Game):
         self.contract_template = Template(
             'Contract\n',
             '--------\n',
-            'We have to make sure students write a function that determines the type of a triangle.',
-            'Your task is to write enough autotests for this function,',
-            'so that the students get the right feedback.',
-            'You will receive a grade for the entire project.',
-            'If you write enough autotests, you will get {initial_score}.',
+            'We have to make sure students write functions that are correct.',
+            'Your task is to write enough autotests for these functions,',
+            'so that students get the right feedback.',
+            'You will receive a grade when you are done writing autotests.',
+            'If you have written enough autotests, you will get {initial_score}.',
             'The menu specifies for some actions how much your grade will decrease.',
             'For example, if a student finds an error in a function that passes all your autotests,',
             'your grade will decrease by {penalty_bug}.',
@@ -39,7 +39,7 @@ class Basecamp(Game):
         self.no_unit_tests_template = Template(
             'Autotests\n',
             '---------\n',
-            '(You have not written any autotests yet)',
+            'You have not written any autotests yet.',
         )
         self.unit_tests_template = Template(
             'Autotests\n',
@@ -54,7 +54,7 @@ class Basecamp(Game):
         self.hint_unit_test_template = Template(
             'Hint for autotest\n',
             '-----------------\n',
-            'A autotest that currently fails could be the following.',
+            'An autotest that currently fails could be the following.',
             '{failing_unit_test}',
             'Your grade will decrease by {penalty_hint}.',
         )
@@ -73,7 +73,7 @@ class Basecamp(Game):
             'Autotest added\n',
             '--------------\n',
             'We have added this autotest.',
-            'The function written by the external software company indeed did not follow the specification.',
+            'There were students who\'s function did not follow the specification.',
             'They improved the function, and it should now be better.',
         )
         self.incorrect_unit_test_template = Template(
