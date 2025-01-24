@@ -67,7 +67,7 @@ class Triangletypechecker(Basecamp):
                 'return "equilateral"',
                 'return "isosceles"',
                 'return "scalene"',
-                'return None',
+                'return ""',
             ],
         ]
         self.special_unit_tests = [

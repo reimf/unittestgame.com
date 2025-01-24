@@ -77,7 +77,7 @@ class Snelheid(Dutch):
                 'return str(round(speed / 1000))',
                 'return str(round(speed / 1000, 1))',
                 'return str(speed / 1000)',
-                'return None',
+                'return ""',
             ],
         ]
         self.special_unit_tests = [

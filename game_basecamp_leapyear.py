@@ -62,7 +62,6 @@ class Leapyear(Basecamp):
                 'return year % 2 != 0',
                 'return True',
                 'return False',
-                'return None',
             ],
         ]
         self.special_unit_tests = [

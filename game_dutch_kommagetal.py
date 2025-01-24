@@ -81,7 +81,6 @@ class Kommagetal(Dutch):
                 'return bool(re.fullmatch(regex, text))',
                 'return True',
                 'return False',
-                'return None',
             ]
         ]
         self.special_unit_tests = [

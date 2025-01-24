@@ -72,7 +72,6 @@ class Wachtwoord(Dutch):
             [
                 'return True',
                 'return False',
-                'return None',
             ],
         ]
         self.special_unit_tests = [
