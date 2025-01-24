@@ -14,3 +14,26 @@ body {
     height: 100vh !important;
     padding: 10px;
 }
+
+.xterm-rows > div {
+    width: auto !important;
+}
+
+#sidebar {
+    float: right;
+
+    > div {
+        border-bottom: 2px solid #ccc;
+        padding: 10px;
+    }
+
+    #unit-tests {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    #current-function {
+        white-space: pre;
+    }
+}

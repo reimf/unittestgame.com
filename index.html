@@ -12,27 +12,37 @@
     <title>unittestgame.com</title>
   </head>
   <body>
-    <article>
-      <py-config>
-        {
-          "files": {
-            "/function.py": "",
-            "/game_basecamp.py": "",
-            "/game_basecamp_leapyear.py": "",
-            "/game_basecamp_triangletypechecker.py": "",
-            "/game_dutch.py": "",
-            "/game_dutch_kommagetal.py": "",
-            "/game_dutch_snelheid.py": "",
-            "/game_dutch_wachtwoord.py": "",
-            "/game.py": "",
-            "/template.py": "",
-            "/test_result.py": "",
-            "/unit_test.py": "",
-            "/variable.py": ""
-          }
+    <py-config>
+      {
+        "files": {
+          "/function.py": "",
+          "/game_basecamp.py": "",
+          "/game_basecamp_leapyear.py": "",
+          "/game_basecamp_triangletypechecker.py": "",
+          "/game_dutch.py": "",
+          "/game_dutch_kommagetal.py": "",
+          "/game_dutch_snelheid.py": "",
+          "/game_dutch_wachtwoord.py": "",
+          "/game.py": "",
+          "/template.py": "",
+          "/test_result.py": "",
+          "/unit_test.py": "",
+          "/variable.py": "",
+          "/web.py": ""
         }
-      </py-config>        
-      <script type="py" terminal worker src="main.py"></script>
-    </article>
+      }
+    </py-config>        
+    <script type="py" terminal worker src="main.py" target="#terminal"></script>
+    <div id="screen">
+      <div id="sidebar">
+        <div>
+          <ol id="unit-tests"><li></li></ol>
+        </div>
+        <div>
+          <code id="current-function"></code>
+        </div>
+      </div>
+      <div id="terminal"></div>
+    </div>
   </body>
 </html>

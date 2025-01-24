@@ -1,0 +1,1 @@
+w_current_function(worst_passing_function)

@@ -4,7 +4,7 @@ from function import Function
 from unit_test import UnitTest
 from test_result import TestResult
 from template import Template
-
+from web import Web
 
 class Game():
     def __init__(self):
@@ -83,11 +83,13 @@ class Game():
         while True:
             if userdefined_unit_tests:
                 self.unit_tests_template.print(unit_tests=userdefined_unit_tests)
+                Web.show_unit_tests(userdefined_unit_tests)
             else:
                 self.no_unit_tests_template.print()
 
             worst_passing_function = self.find_worst_passing_function(functions, userdefined_unit_tests, quality)
             self.current_function_template.print(worst_passing_function=worst_passing_function)
+            Web.show_current_function(worst_passing_function)
 
             failing_general_test_results = worst_passing_function.failing_test_results(general_unit_tests)
             failing_special_test_results = worst_passing_function.failing_test_results(self.special_unit_tests)
