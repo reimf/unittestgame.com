@@ -40,21 +40,45 @@ class Kommagetal(Dutch):
         )
         self.function_elements = [
             [
-                'return bool(re.match(r"^[+-]?[0-9]+(,[0-9]+)?$", text))',
-                'return bool(re.match(r"^[+]?[0-9]+(,[0-9]+)?$", text))',
-                'return bool(re.match(r"^[-]?[0-9]+(,[0-9]+)?$", text))',
-                'return bool(re.match(r"^[0-9]+(,[0-9]+)?$", text))',
-                'return bool(re.match(r"^[0-9]*(,[0-9]*)?$", text))',
-                'return bool(re.match(r"^[0-9]+,[0-9]+$", text))',
-                'return bool(re.match(r"^[0-9]*,[0-9]*$", text))',
-                'return bool(re.match(r"^[0-9]+$", text))',
-                'return bool(re.match(r"^[0-9]*$", text))',
-                'return bool(re.match(r"^[+-][0-9]+(,[0-9]+)?$", text))',
-                'return bool(re.match(r"^[+-]?[0-9]+(.[0-9]+)?$", text))',
-                'return bool(re.match(r"^[+-]?[0-9]+(,[0-9]+)*$", text))',
-                'return bool(re.match(r"^[+-]?[0-9]*(,[0-9]+)?$", text))',
-                'return bool(re.match(r"^[+-]?[0-9]+(,[0-9]*)?$", text))',
-                'return bool(re.match(r"^[+-]?[0-9]*(,[0-9]*)?$", text))',
+                'import re',
+                '',
+            ],
+            [
+                'regex = ""',
+                '',
+            ],
+            [
+                'regex += "[+-]?"',
+                'regex += "[+-]*"',
+                'regex += "[+-]+"',
+                'regex += "[+-]"',
+                'regex += "[-]?"',
+                'regex += "[-]*"',
+                'regex += "[-]+"',
+                'regex += "[-]"',
+                'regex += "[+]?"',
+                'regex += "[+]*"',
+                'regex += "[+]+"',
+                'regex += "[+]"',
+                '',
+            ],
+            [
+                'regex += "[0-9]"',
+                'regex += "[0-9]*"',
+                'regex += "[0-9]+"',
+                '',
+            ],
+            [
+                'regex += ",[0-9]+"',
+                'regex += "(,[0-9]+)?"',
+                'regex += "(,[0-9]+)*"',
+                'regex += ",[0-9]*"',
+                'regex += "(,[0-9]*)?"',
+                'regex += "(,[0-9]*)*"',
+                '',
+            ],
+            [
+                'return bool(re.fullmatch(regex, text))',
                 'return True',
                 'return False',
                 'return None',
@@ -81,3 +105,6 @@ class Kommagetal(Dutch):
             pos = random.randint(0, len(text1) - 1)
             text2 = text1[:pos] + random.choice('0+-,.') + text1[pos + 1:]
             yield [text2]
+
+if __name__ == '__main__':
+    Kommagetal().play()
