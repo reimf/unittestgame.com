@@ -10,8 +10,8 @@ class Dutch(Game):
         self.menu_template = Template(
             'Menu\n',
             '----\n',
-            '[1] Specificatie tonen\n',
-            '[2] Contract tonen\n',
+            '[1] Contract tonen\n',
+            '[2] Specificatie tonen\n',
             '[3] Unit test toevoegen\n',
             '[4] Hint voor unit test tonen (-{penalty_hint})\n',
             '[5] Unit testen inleveren (-{penalty_bug} bij foutmelding)\n',

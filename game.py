@@ -82,21 +82,19 @@ class Game():
         userdefined_unit_tests = []
         while True:
             if userdefined_unit_tests:
-                self.unit_tests_template.print(unit_tests=userdefined_unit_tests)
-                Web.show_unit_tests(userdefined_unit_tests)
+                self.unit_tests_template.print(id='unit-tests', unit_tests=userdefined_unit_tests)
             else:
-                self.no_unit_tests_template.print()
+                self.no_unit_tests_template.print(id='unit-tests')
 
             worst_passing_function = self.find_worst_passing_function(functions, userdefined_unit_tests, quality)
-            self.current_function_template.print(worst_passing_function=worst_passing_function)
-            Web.show_current_function(worst_passing_function)
+            self.current_function_template.print(id='current-function', worst_passing_function=worst_passing_function)
 
             failing_general_test_results = worst_passing_function.failing_test_results(general_unit_tests)
             failing_special_test_results = worst_passing_function.failing_test_results(self.special_unit_tests)
             failing_test_results_to_choose_from = failing_general_test_results if failing_general_test_results else failing_special_test_results
             failing_test_result = random.choice(failing_test_results_to_choose_from) if failing_test_results_to_choose_from else None
 
-            self.score_template.print(score=self.format_score(score))
+            self.score_template.print(id='score', score=self.format_score(score))
 
             self.menu_template.print(
                 penalty_hint=self.format_score(PENALTY_HINT),
@@ -106,12 +104,13 @@ class Game():
             choice = self.choice_template.input()
 
             if choice == '1':
-                self.specification_template.print()
-            elif choice == '2':
                 self.contract_template.print(
+                    id='contract',
                     initial_score=self.format_score(INITIAL_SCORE),
                     penalty_bug=self.format_score(PENALTY_BUG),
                 )
+            elif choice == '2':
+                self.specification_template.print(id='specification')
             elif choice == '3':
                 self.add_unit_test_template.print()
                 arguments = [parameter.ask() for parameter in self.parameters]

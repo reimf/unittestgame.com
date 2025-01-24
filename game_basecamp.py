@@ -9,8 +9,8 @@ class Basecamp(Game):
         self.menu_template = Template(
             'Menu\n',
             '----\n',
-            '[1] Show problem description\n',
-            '[2] Show contract\n',
+            '[1] Show contract\n',
+            '[2] Show problem description\n',
             '[3] Add autotest\n',
             '[4] Show hint for autotest (-{penalty_hint})\n',
             '[5] Submit autotests (-{penalty_bug} if student reports an error)\n',
@@ -39,7 +39,7 @@ class Basecamp(Game):
         self.no_unit_tests_template = Template(
             'Autotests\n',
             '---------\n',
-            'You have not written any autotests yet.',
+            'You have not written any autotest yet.',
         )
         self.unit_tests_template = Template(
             'Autotests\n',
