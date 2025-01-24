@@ -21,19 +21,20 @@ class Game():
             for choice in enumerate(elements[0]):
                 yield from self.generate_functions(elements[1:], choices + [choice])
         else:
-            id = ''.join([chr(ord('a') + index) for index, _ in choices])
-            indented_lines = [f'    {line}' for _, line in choices if line]
-            parameterlist = ', '.join([f'{parameter.name}: {parameter.datatype}' for parameter in self.parameters])
+            yield self.__create_function(choices)
 
-            anonymous_name = self.unit.name
-            anonymous_definition = f'def {anonymous_name}({parameterlist}) -> {self.unit.datatype}:'
-            anonymous_code = '\n'.join([anonymous_definition] + indented_lines)
+    def __create_function(self, choices):
+        id = ''.join([chr(ord('a') + index) for index, _ in choices])
+        indented_lines = [f'    {line}' for _, line in choices if line]
+        parameterlist = ', '.join([f'{parameter.name}: {parameter.datatype}' for parameter in self.parameters])
+        anonymous_name = self.unit.name
+        anonymous_definition = f'def {anonymous_name}({parameterlist}) -> {self.unit.datatype}:'
+        anonymous_code = '\n'.join([anonymous_definition] + indented_lines)
+        unique_name = f'{anonymous_name}_{id}'
+        unique_definition = f'def {unique_name}({parameterlist}) -> {self.unit.datatype}:'
+        unique_code = '\n'.join([unique_definition] + indented_lines)
 
-            unique_name = f'{anonymous_name}_{id}'
-            unique_definition = f'def {unique_name}({parameterlist}) -> {self.unit.datatype}:'
-            unique_code = '\n'.join([unique_definition] + indented_lines)
-
-            yield Function(unique_name, unique_code, anonymous_code)
+        return Function(unique_name, unique_code, anonymous_code)
 
     def find_passing_functions(self, functions, unit_tests):
         return [function for function in functions if function.fail_count(unit_tests) == 0]
