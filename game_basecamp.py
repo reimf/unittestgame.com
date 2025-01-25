@@ -97,38 +97,42 @@ class Basecamp(Game):
             '{test_result}',
             'Your grade will decrease by {penalty_bug} point.',
         )
-        self.no_bug_found_template = Template(
-            'No more error reports\n',
-            '---------------------\n',
-            'Students are no longer reporting errors in CodeGrade.',
-            'Thank you!',
-        )
-        self.end_negative_template = Template(
+        self.end_with_bug_template = Template(
             'End\n',
             '---\n',
-            'There are still wrong functions that pass all your autotests,',
+            'There are still clearly wrong functions that pass all your autotests,',
             'so we will give you the minimum grade.',
-        )
-        self.end_positive_template = Template(
-            'End\n',
-            '---\n',
-            'Congratulations! CodeGrade is completely error-free thanks to your autotests.',
-            'We are happy to give you a grade of {score}.',
-        )
-        self.total_negative_template = Template(
-            'Total\n',
-            '-----\n',
-            'In total, you got a grade of {score}.',
             'Too bad!',
             'We think you will do better next time!',
             'Thanks for playing!',
         )
-        self.total_positive_template = Template(
-            'Total\n',
-            '-----\n',
-            'In total, you got a grade of {score}.',
+        self.end_perfect_template = Template(
+            'End\n',
+            '---\n',
+            'Congratulations!',
+            'CodeGrade is completely error-free thanks to your autotests.',
+            'Your final grade is a perfect {score}.',
             'Amazing!',
+            'Thanks for playing!',
+        )
+        self.end_positive_template = Template(
+            'End\n',
+            '---\n',
+            'Congratulations!',
+            'CodeGrade is completely error-free thanks to your autotests.',
+            'Your final grade is {score}.',
+            'Well done!',
             'We think you will do even better next time.',
+            'Thanks for playing!',
+        )
+        self.end_negative_template = Template(
+            'End\n',
+            '---\n',
+            'Congratulations!',
+            'CodeGrade is completely error-free thanks to your autotests.',
+            'Your final grade is {score}.',
+            'Too bad!',
+            'We think you will do better next time!',
             'Thanks for playing!',
         )
         self.invalid_choice_template = Template(
@@ -138,4 +142,4 @@ class Basecamp(Game):
         )
 
     def format_score(self, score):
-        return f'{round(10 * score)} points'
+        return f'{round(score / 10)} points'

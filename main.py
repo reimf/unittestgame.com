@@ -16,18 +16,31 @@ class Main:
             Snelheid(),
             Wachtwoord(),
         ]
+        self.game_menu_template = Template(
+            'Game\n',
+            '----\n',
+            '{games}', '[0] Quit',
+        )
+        self.invalid_choice_template = Template(
+            'Invalid choice\n',
+            '--------------\n',
+            'You have entered invalid choice "{choice}".',
+        )
+        self.bye_template = Template(
+            'Bye!\n',
+            '----\n',
+            'Take care and see you later!'
+        )
 
     def test_games(self):
         for game in self.games:
             game.generate_functions_and_unit_tests()
 
     def game_menu(self):
-        TEMPLATE_GAME_MENU = Template('Game\n', '----\n', '{games}', '[0] Quit')
-        TEMPLATE_INVALID_CHOICE = Template('Invalid choice', 'You have entered invalid choice "{choice}".')
         numbered_games = {str(index + 1): game for index, game in enumerate(self.games)}
         options = [f'[{number}] {game.context:10s} - {game.description}\n' for number, game in numbered_games.items()]
         while True:
-            TEMPLATE_GAME_MENU.print(games=options)
+            self.game_menu_template.print(games=options)
             choice = Template('Choice').input()
             if choice in numbered_games:
                 game = numbered_games[choice]
@@ -35,7 +48,8 @@ class Main:
             elif choice == '0':
                 break
             else:
-                TEMPLATE_INVALID_CHOICE.print(choice=choice)
+                self.invalid_choice_template.print(choice=choice)
+        self.bye_template.print()
 
 
 if __name__ == '__main__':

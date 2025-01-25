@@ -24,18 +24,18 @@ class Triangletypechecker(Basecamp):
         )
         self.parameters = [
             Variable(
-                'a', 
-                'int', 
+                'a',
+                'int',
                 Template('Side A')
             ),
             Variable(
-                'b', 
-                'int', 
+                'b',
+                'int',
                 Template('Side B')
             ),
             Variable(
-                'c', 
-                'int', 
+                'c',
+                'int',
                 Template('Side C')
             ),
         ]

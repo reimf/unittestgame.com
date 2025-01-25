@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     background-color: #191A19;
     font-family: courier-new, courier, monospace;
@@ -33,6 +37,7 @@ body {
 
     > div {
         border: 1px solid #555;
+        display: none;
         margin: 10px;
         padding: 10px;
         white-space: pre;

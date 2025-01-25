@@ -1,4 +1,4 @@
-from web import Web
+from browser import Browser
 
 class Template:
     def __init__(self, *block):
@@ -49,9 +49,9 @@ class Template:
         return '\n'.join(lines)
 
     def print(self, id=None, **values):
-        if id and Web.has_document():
-            content = self.__fullstring(max_line_length=40, **values)
-            Web.set_text(id, content)
+        if id and Browser.is_available():
+            content = self.__fullstring(max_line_length=50, **values)
+            Browser.set_text(id, content)
         else:
             content = self.__fullstring(max_line_length=80, **values)
             print('\n' + content)

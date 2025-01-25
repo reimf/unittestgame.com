@@ -4,7 +4,7 @@ from function import Function
 from unit_test import UnitTest
 from test_result import TestResult
 from template import Template
-from web import Web
+from browser import Browser
 
 class Game():
     def __init__(self):
@@ -15,7 +15,7 @@ class Game():
 
     def format_score(self, score):
         raise NotImplementedError()
-    
+
     def generate_functions(self, elements, choices=[]):
         if elements:
             for choice in enumerate(elements[0]):
@@ -33,7 +33,6 @@ class Game():
         unique_name = f'{anonymous_name}_{id}'
         unique_definition = f'def {unique_name}({parameterlist}) -> {self.unit.datatype}:'
         unique_code = '\n'.join([unique_definition] + indented_lines)
-
         return Function(unique_name, unique_code, anonymous_code)
 
     def find_passing_functions(self, functions, unit_tests):
@@ -54,7 +53,7 @@ class Game():
                     f'Unit test {unit_test} is not needed.\n' +
                     str(almost_perfect_functions[0])
                 )
-        
+
     def generate_functions_and_unit_tests(self):
         functions = list(self.generate_functions(self.function_elements))
         perfect_function = self.find_a_perfect_function(functions, self.special_unit_tests)
@@ -72,12 +71,12 @@ class Game():
 
         functions, perfect_function, general_unit_tests, quality = self.generate_functions_and_unit_tests()
 
-        self.introduction_template.print()
+        self.introduction_template.print(id='last-reply')
 
-        INITIAL_SCORE = 1.0
-        PENALTY_HINT = 0.1
-        PENALTY_BUG = 0.2
-        PENALTY_END = 1.0
+        INITIAL_SCORE = 100
+        PENALTY_HINT = 10
+        PENALTY_BUG = 20
+        PENALTY_END = 100
         score = INITIAL_SCORE
         userdefined_unit_tests = []
         while True:
@@ -122,19 +121,20 @@ class Game():
                     userdefined_unit_tests.append(unit_test)
                     passing_functions_after = self.find_passing_functions(functions, userdefined_unit_tests)
                     if len(passing_functions_after) == len(passing_functions_before):
-                        self.useless_unit_test_template.print()
+                        self.useless_unit_test_template.print(id='last-reply')
                     else:
-                        self.useful_unit_test_template.print()
+                        self.useful_unit_test_template.print(id='last-reply')
                 else:
-                    self.incorrect_unit_test_template.print()
+                    self.incorrect_unit_test_template.print(id='last-reply')
             elif choice == '4':
                 self.hint_unit_test_template.print(
+                    id='last-reply',
                     failing_unit_test=failing_test_result.unit_test,
                     penalty_hint=self.format_score(PENALTY_HINT),
                 )
                 score -= PENALTY_HINT
             elif choice == '5':
-                self.hand_in_unit_tests_template.print()
+                self.hand_in_unit_tests_template.print(id='last-reply')
                 if failing_test_result:
                     self.bug_found_template.print(
                         test_result=failing_test_result,
@@ -142,18 +142,18 @@ class Game():
                     )
                     score -= PENALTY_BUG
                 else:
-                    self.no_bug_found_template.print()
                     break
             elif choice == '0':
                 break
             else:
-                self.invalid_choice_template.print(choice=choice)
+                self.invalid_choice_template.print(id='last-reply', choice=choice)
         if failing_test_result:
-            self.end_negative_template.print()
-            score = 0.0
+            score = 0
+            self.score_template.print(id='score', score=self.format_score(score))
+            self.end_with_bug_template.print(id='last-reply')
+        elif score == 100:
+            self.end_perfect_template.print(id='last-reply', score=self.format_score(score))
+        elif score > 50:
+            self.end_positive_template.print(id='last-reply', score=self.format_score(score))
         else:
-            self.end_positive_template.print(score=self.format_score(score))
-        if score > 0.5:
-            self.total_positive_template.print(score=self.format_score(score))
-        else:
-            self.total_negative_template.print(score=self.format_score(score))
+            self.end_negative_template.print(id='last-reply', score=self.format_score(score))

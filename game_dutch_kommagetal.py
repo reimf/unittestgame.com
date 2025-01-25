@@ -41,11 +41,9 @@ class Kommagetal(Dutch):
         self.function_elements = [
             [
                 'import re',
-                '',
             ],
             [
                 'regex = ""',
-                '',
             ],
             [
                 'regex += "[+-]?"',
@@ -84,13 +82,13 @@ class Kommagetal(Dutch):
             ]
         ]
         self.special_unit_tests = [
-            UnitTest(['+123,45'], True),
+            UnitTest(['+123'], True),
             UnitTest(['-123,45'], True),
             UnitTest(['123,45'], True),
+            UnitTest(['+-123'], False),
             UnitTest(['123,'], False),
             UnitTest([',45'], False),
             UnitTest(['12,3,45'], False),
-            UnitTest(['123-45'], False),
         ]
 
     def general_arguments_generator(self):

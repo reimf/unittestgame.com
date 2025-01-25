@@ -99,38 +99,42 @@ class Dutch(Game):
             '{test_result}',
             'Jouw bijdrage in de kosten om dat te herstellen is {penalty_bug}.',
         )
-        self.no_bug_found_template = Template(
-            'Geen foutmeldingen meer\n',
-            '-----------------------\n',
-            'Klanten melden geen fouten meer in de functie.',
-            'Bedankt daarvoor!',
-        )
-        self.end_negative_template = Template(
+        self.end_with_bug_template = Template(
             'Einde\n',
             '-----\n',
             'Er zitten nog fouten in de functie,',
             'dus we betalen je niets uit.',
-        )
-        self.end_positive_template = Template(
-            'Einde\n',
-            '-----\n',
-            'Gefeliciteerd! De functie is dankzij jouw unit testen helemaal foutloos.',
-            'We betalen je dan ook met plezier {score} uit.',
-        )
-        self.total_negative_template = Template(
-            'Totaal\n',
-            '------\n',
-            'In totaal heb je {score} verlies geleden.',
             'Jammer!',
             'We hopen dat het de volgende keer beter gaat.',
             'Bedankt voor het spelen!',
         )
-        self.total_positive_template = Template(
-            'Totaal\n',
-            '------\n',
-            'In totaal heb je {score} verdiend.',
+        self.end_perfect_template = Template(
+            'Einde\n',
+            '-----\n',
+            'Gefeliciteerd!',
+            'De functie is dankzij jouw unit testen helemaal foutloos.',
+            'In totaal heb je de maximale {score} verdiend.',
             'Super!',
+            'Bedankt voor het spelen!',
+        )
+        self.end_positive_template = Template(
+            'Einde\n',
+            '-----\n',
+            'Gefeliciteerd!',
+            'De functie is dankzij jouw unit testen helemaal foutloos.',
+            'In totaal heb je {score} verdiend.',
+            'Goed gedaan!',
             'We denken dat je het de volgende keer nog beter gaat doen.',
+            'Bedankt voor het spelen!',
+        )
+        self.end_negative_template = Template(
+            'Einde\n',
+            '-----\n',
+            'Gefeliciteerd!',
+            'De functie is dankzij jouw unit testen helemaal foutloos.',
+            'In totaal heb je {score} verlies geleden.',
+            'Jammer!',
+            'We hopen dat het de volgende keer beter gaat.',
             'Bedankt voor het spelen!',
         )
         self.invalid_choice_template = Template(
@@ -140,5 +144,4 @@ class Dutch(Game):
         )
 
     def format_score(self, score):
-        return f'{"" if score >= 0.0 else "-"}€{round(abs(score) * 10000)}'
-    
+        return f'{"-" if score < 0 else ""}€{round(abs(score) * 10)}'
