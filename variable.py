@@ -1,13 +1,17 @@
 class Variable:
-    def __init__(self, name, datatype, template):
-        self.name = name
+    def __init__(self, label, datatype, name):
+        self.label = label
         self.datatype = datatype
-        self.template = template
+        self.name = name
 
-    def ask(self):
-        answer = self.template.input()
+    def convert(self, value: str):
+        if self.datatype == 'str':
+            return value
         if self.datatype == 'bool':
-            return answer.lower() not in ['false', 'no', 'nee', '0'] and bool(answer)
+            return {'True': True, 'False': False}.get(value, None)
         if self.datatype == 'int':
-            return int(answer)
-        return str(answer)
+            try:
+                return int(value)
+            except ValueError:
+                return None
+        raise ValueError(f'Unknown datatype {self.datatype}')

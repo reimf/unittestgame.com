@@ -28,15 +28,15 @@ class Wachtwoord(Dutch):
         )
         self.parameters = [
             Variable(
-                'password',
-                'str',
-                Template('Wachtwoord')
+                label='Wachtwoord',
+                datatype='str',
+                name='password',
             )
         ]
         self.unit = Variable(
-            'is_strong_password',
-            'bool',
-            Template('Sterk wachtwoord (True/False)')
+            label='Is het wachtwoord sterk? (True/False)',
+            datatype='bool',
+            name='is_strong_password',
         )
         self.function_elements = [
             [

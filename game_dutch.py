@@ -1,5 +1,7 @@
 from game import Game
 from template import Template
+from variable import Variable
+from form import Form
 
 
 class Dutch(Game):
@@ -16,9 +18,9 @@ class Dutch(Game):
             '[4] Hint voor unit test tonen (-{penalty_hint})\n',
             '[5] Unit testen inleveren (-{penalty_bug} bij foutmelding)\n',
             '[0] Einde (-{penalty_end} bij foutmelding)\n',
-        )
-        self.choice_template = Template(
-            'Keuze',
+            Form(
+                Variable(label='Keuze', datatype='int', name='choice'),
+            )
         )
         self.contract_template = Template(
             'Contract\n',
@@ -41,7 +43,7 @@ class Dutch(Game):
         self.no_unit_tests_template = Template(
             'Unit testen\n',
             '-----------\n',
-            '(Je hebt nog geen unit test geschreven)',
+            'Je hebt nog geen unit test geschreven.',
         )
         self.unit_tests_template = Template(
             'Unit testen\n',
@@ -62,7 +64,8 @@ class Dutch(Game):
         )
         self.add_unit_test_template = Template(
             'Unit test toevoegen\n',
-            '-------------------',
+            '-------------------\n',
+            '{form}'
         )
         self.useless_unit_test_template = Template(
             'Unit test toegevoegd\n',

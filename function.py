@@ -4,13 +4,12 @@ from test_result import TestResult
 class Function:
     def __init__(self, unique_name, unique_code, anonymous_code):
         self.unique_name = unique_name
-        self.unique_code = unique_code
+        self.method = self.__add_method(unique_code)
         self.anonymous_code = anonymous_code
-        self.method = self.__add_method()
 
-    def __add_method(self):
+    def __add_method(self, unique_code):
         namespace = {}
-        exec(self.unique_code, globals(), namespace)
+        exec(unique_code, globals(), namespace)
         return namespace[self.unique_name]
 
     def call_method(self, arguments):
@@ -21,8 +20,8 @@ class Function:
 
     def quality(self, special_unit_tests, general_unit_tests):
         return (
-            -self.fail_count(special_unit_tests),
-            -self.fail_count(general_unit_tests),
+            self.pass_count(special_unit_tests),
+            self.pass_count(general_unit_tests),
             len(self.anonymous_code)
         )
 
@@ -34,6 +33,9 @@ class Function:
 
     def fail_count(self, unit_tests):
         return len(self.failing_test_results(unit_tests))
+
+    def pass_count(self, unit_tests):
+        return len(unit_tests) - self.fail_count(unit_tests)
 
     def __str__(self):
         return self.anonymous_code

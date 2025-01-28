@@ -24,25 +24,25 @@ class Triangletypechecker(Basecamp):
         )
         self.parameters = [
             Variable(
-                'a',
-                'int',
-                Template('Side A')
+                label='Side A',
+                datatype='int',
+                name='a'
             ),
             Variable(
-                'b',
-                'int',
-                Template('Side B')
+                label='Side B',
+                datatype='int',
+                name='b'
             ),
             Variable(
-                'c',
-                'int',
-                Template('Side C')
+                label='Side C',
+                datatype='int',
+                name='c'
             ),
         ]
         self.unit = Variable(
-            'triangle_type',
-            'str',
-            Template('Type of triangle')
+            label='Type of triangle (equilateral, isosceles or scalene)',
+            datatype='str',
+            name='triangle_type'
         )
         self.function_elements = [
             [

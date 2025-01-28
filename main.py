@@ -1,4 +1,6 @@
 from template import Template
+from variable import Variable
+from form import Form
 
 from game_basecamp_leapyear import Leapyear
 from game_basecamp_triangletypechecker import Triangletypechecker
@@ -16,10 +18,14 @@ class Main:
             Snelheid(),
             Wachtwoord(),
         ]
+        self.numbered_games = {str(index + 1): game for index, game in enumerate(self.games)}
         self.game_menu_template = Template(
-            'Game\n',
-            '----\n',
+            'Welcome to UnitTestGame\n',
+            '-----------------------\n',
             '{games}', '[0] Quit',
+            Form(
+                Variable(label='Choice', datatype='str', name='choice'),
+            )
         )
         self.invalid_choice_template = Template(
             'Invalid choice\n',
@@ -29,30 +35,27 @@ class Main:
         self.bye_template = Template(
             'Bye!\n',
             '----\n',
-            'Take care and see you later!'
+            'See you later!'
         )
 
-    def test_games(self):
-        for game in self.games:
-            game.generate_functions_and_unit_tests()
-
     def game_menu(self):
-        numbered_games = {str(index + 1): game for index, game in enumerate(self.games)}
-        options = [f'[{number}] {game.context:10s} - {game.description}\n' for number, game in numbered_games.items()]
-        while True:
-            self.game_menu_template.print(games=options)
-            choice = Template('Choice').input()
-            if choice in numbered_games:
-                game = numbered_games[choice]
-                game.play()
-            elif choice == '0':
-                break
-            else:
-                self.invalid_choice_template.print(choice=choice)
-        self.bye_template.print()
+        options = [f'[{number}] {game.context:10s} - {game.description}\n' for number, game in self.numbered_games.items()]
+        self.game_menu_template.show(
+            id='menu',
+            callback=lambda values: self.reply(**values),
+            games=options
+        )
+
+    def reply(self, choice):
+        if choice in self.numbered_games:
+            game = self.numbered_games[choice]
+            game.play()
+        elif choice == '0':
+            self.bye_template.show(id='last-reply')
+        else:
+            self.invalid_choice_template.show(id='last-reply', choice=choice)
 
 
 if __name__ == '__main__':
     main = Main()
-    main.test_games()
     main.game_menu()

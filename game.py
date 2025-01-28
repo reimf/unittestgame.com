@@ -4,9 +4,14 @@ from function import Function
 from unit_test import UnitTest
 from test_result import TestResult
 from template import Template
-from browser import Browser
+from form import Form
 
 class Game():
+    INITIAL_SCORE = 100
+    PENALTY_HINT = 10
+    PENALTY_BUG = 20
+    PENALTY_END = 100
+
     def __init__(self):
         pass
 
@@ -54,106 +59,116 @@ class Game():
                     str(almost_perfect_functions[0])
                 )
 
-    def generate_functions_and_unit_tests(self):
-        functions = list(self.generate_functions(self.function_elements))
-        perfect_function = self.find_a_perfect_function(functions, self.special_unit_tests)
-        self.check_unit_tests_are_needed(functions, self.special_unit_tests)
-        general_unit_tests = [UnitTest(arguments, perfect_function.call_method(arguments)) for arguments in self.general_arguments_generator()]
-        quality = {function: function.quality(self.special_unit_tests, general_unit_tests) for function in functions}
-        return functions, perfect_function, general_unit_tests, quality
-
     def find_worst_passing_function(self, functions, userdefined_unit_tests, quality):
         functions = self.find_passing_functions(functions, userdefined_unit_tests)
         return min(functions, key=lambda function: quality[function])
 
     def play(self):
-        Template(self.description).print()
+        Template(self.description).show(id='last-reply')
 
-        functions, perfect_function, general_unit_tests, quality = self.generate_functions_and_unit_tests()
+        self.functions = list(self.generate_functions(self.function_elements))
+        self.perfect_function = self.find_a_perfect_function(self.functions, self.special_unit_tests)
+        self.check_unit_tests_are_needed(self.functions, self.special_unit_tests)
+        self.general_unit_tests = [UnitTest(arguments, self.perfect_function.call_method(arguments)) for arguments in self.general_arguments_generator()]
+        self.quality = {function: function.quality(self.special_unit_tests, self.general_unit_tests) for function in self.functions}
+        self.userdefined_unit_tests = []
+        self.score = Game.INITIAL_SCORE
 
-        self.introduction_template.print(id='last-reply')
+        self.introduction_template.show(id='last-reply')
+        self.menu()
 
-        INITIAL_SCORE = 100
-        PENALTY_HINT = 10
-        PENALTY_BUG = 20
-        PENALTY_END = 100
-        score = INITIAL_SCORE
-        userdefined_unit_tests = []
-        while True:
-            if userdefined_unit_tests:
-                self.unit_tests_template.print(id='unit-tests', unit_tests=userdefined_unit_tests)
-            else:
-                self.no_unit_tests_template.print(id='unit-tests')
-
-            worst_passing_function = self.find_worst_passing_function(functions, userdefined_unit_tests, quality)
-            self.current_function_template.print(id='current-function', worst_passing_function=worst_passing_function)
-
-            failing_general_test_results = worst_passing_function.failing_test_results(general_unit_tests)
-            failing_special_test_results = worst_passing_function.failing_test_results(self.special_unit_tests)
-            failing_test_results_to_choose_from = failing_general_test_results if failing_general_test_results else failing_special_test_results
-            failing_test_result = random.choice(failing_test_results_to_choose_from) if failing_test_results_to_choose_from else None
-
-            self.score_template.print(id='score', score=self.format_score(score))
-
-            self.menu_template.print(
-                penalty_hint=self.format_score(PENALTY_HINT),
-                penalty_bug=self.format_score(PENALTY_BUG),
-                penalty_end=self.format_score(PENALTY_END),
-            )
-            choice = self.choice_template.input()
-
-            if choice == '1':
-                self.contract_template.print(
-                    id='contract',
-                    initial_score=self.format_score(INITIAL_SCORE),
-                    penalty_bug=self.format_score(PENALTY_BUG),
-                )
-            elif choice == '2':
-                self.specification_template.print(id='specification')
-            elif choice == '3':
-                self.add_unit_test_template.print()
-                arguments = [parameter.ask() for parameter in self.parameters]
-                expected = self.unit.ask()
-                unit_test = UnitTest(arguments, expected)
-                test_result = TestResult(perfect_function, unit_test)
-                if test_result.passes:
-                    passing_functions_before = self.find_passing_functions(functions, userdefined_unit_tests)
-                    userdefined_unit_tests.append(unit_test)
-                    passing_functions_after = self.find_passing_functions(functions, userdefined_unit_tests)
-                    if len(passing_functions_after) == len(passing_functions_before):
-                        self.useless_unit_test_template.print(id='last-reply')
-                    else:
-                        self.useful_unit_test_template.print(id='last-reply')
-                else:
-                    self.incorrect_unit_test_template.print(id='last-reply')
-            elif choice == '4':
-                self.hint_unit_test_template.print(
-                    id='last-reply',
-                    failing_unit_test=failing_test_result.unit_test,
-                    penalty_hint=self.format_score(PENALTY_HINT),
-                )
-                score -= PENALTY_HINT
-            elif choice == '5':
-                self.hand_in_unit_tests_template.print(id='last-reply')
-                if failing_test_result:
-                    self.bug_found_template.print(
-                        test_result=failing_test_result,
-                        penalty_bug=self.format_score(PENALTY_BUG),
-                    )
-                    score -= PENALTY_BUG
-                else:
-                    break
-            elif choice == '0':
-                break
-            else:
-                self.invalid_choice_template.print(id='last-reply', choice=choice)
-        if failing_test_result:
-            score = 0
-            self.score_template.print(id='score', score=self.format_score(score))
-            self.end_with_bug_template.print(id='last-reply')
-        elif score == 100:
-            self.end_perfect_template.print(id='last-reply', score=self.format_score(score))
-        elif score > 50:
-            self.end_positive_template.print(id='last-reply', score=self.format_score(score))
+    def menu(self):
+        if self.userdefined_unit_tests:
+            self.unit_tests_template.show(id='unit-tests', unit_tests=self.userdefined_unit_tests)
         else:
-            self.end_negative_template.print(id='last-reply', score=self.format_score(score))
+            self.no_unit_tests_template.show(id='unit-tests')
+
+        worst_passing_function = self.find_worst_passing_function(self.functions, self.userdefined_unit_tests, self.quality)
+        self.current_function_template.show(id='current-function', worst_passing_function=worst_passing_function)
+
+        failing_general_test_results = worst_passing_function.failing_test_results(self.general_unit_tests)
+        failing_special_test_results = worst_passing_function.failing_test_results(self.special_unit_tests)
+        failing_test_results_to_choose_from = failing_general_test_results if failing_general_test_results else failing_special_test_results
+        self.failing_test_result = random.choice(failing_test_results_to_choose_from) if failing_test_results_to_choose_from else None
+
+        self.score_template.show(id='score', score=self.format_score(self.score))
+
+        self.menu_template.show(
+            id='menu',
+            callback=lambda values: self.reply(**values),
+            penalty_hint=self.format_score(Game.PENALTY_HINT),
+            penalty_bug=self.format_score(Game.PENALTY_BUG),
+            penalty_end=self.format_score(Game.PENALTY_END),
+        )
+
+    def reply(self, choice):
+        if choice == '1':
+            self.contract_template.show(
+                id='last-reply',
+                initial_score=self.format_score(Game.INITIAL_SCORE),
+                penalty_bug=self.format_score(Game.PENALTY_BUG),
+            )
+            self.menu()
+        elif choice == '2':
+            self.specification_template.show(id='last-reply')
+            self.menu()
+        elif choice == '3':
+            self.add_unit_test_template.show(
+                id='add-unit-test', 
+                callback=lambda values: self.add_unit_test(values),
+                form=Form(*self.parameters, self.unit),
+            )
+        elif choice == '4':
+            self.hint_unit_test_template.show(
+                id='last-reply',
+                failing_unit_test=self.failing_test_result.unit_test,
+                penalty_hint=self.format_score(Game.PENALTY_HINT),
+            )
+            self.score -= Game.PENALTY_HINT
+            self.menu()
+        elif choice == '5':
+            self.hand_in_unit_tests_template.show(id='last-reply')
+            if self.failing_test_result:
+                self.bug_found_template.show(
+                    id='last-reply',
+                    test_result=self.failing_test_result,
+                    penalty_bug=self.format_score(Game.PENALTY_BUG),
+                )
+                self.score -= Game.PENALTY_BUG
+                self.menu()
+            else:
+                self.end()
+        elif choice == '0':
+            self.end()
+        else:
+            self.invalid_choice_template.show(id='last-reply', choice=choice)
+            self.menu()
+
+    def end(self):
+        if self.failing_test_result:
+            self.score = 0
+            self.score_template.show(id='score', score=self.format_score(self.score))
+            self.end_with_bug_template.show(id='last-reply')
+        elif self.score == 100:
+            self.end_perfect_template.show(id='last-reply', score=self.format_score(self.score))
+        elif self.score > 50:
+            self.end_positive_template.show(id='last-reply', score=self.format_score(self.score))
+        else:
+            self.end_negative_template.show(id='last-reply', score=self.format_score(self.score))
+
+    def add_unit_test(self, values):
+        arguments = [values[parameter.name] for parameter in self.parameters]
+        expected = values[self.unit.name]
+        unit_test = UnitTest(arguments, expected)
+        test_result = TestResult(self.perfect_function, unit_test)
+        if test_result.passes:
+            passing_functions_before = self.find_passing_functions(self.functions, self.userdefined_unit_tests)
+            self.userdefined_unit_tests.append(unit_test)
+            passing_functions_after = self.find_passing_functions(self.functions, self.userdefined_unit_tests)
+            if len(passing_functions_after) == len(passing_functions_before):
+                self.useless_unit_test_template.show(id='last-reply')
+            else:
+                self.useful_unit_test_template.show(id='last-reply')
+        else:
+            self.incorrect_unit_test_template.show(id='last-reply')
+        self.menu()

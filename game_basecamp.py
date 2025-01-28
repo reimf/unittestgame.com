@@ -1,5 +1,7 @@
 from game import Game
 from template import Template
+from variable import Variable
+from form import Form
 
 
 class Basecamp(Game):
@@ -15,9 +17,9 @@ class Basecamp(Game):
             '[4] Show hint for autotest (-{penalty_hint})\n',
             '[5] Submit autotests (-{penalty_bug} if student reports an error)\n',
             '[0] End (-{penalty_end} if student reports an error)\n',
-        )
-        self.choice_template = Template(
-            'Choice',
+            Form(
+                Variable(label='Choice', datatype='str', name='choice'),
+            )
         )
         self.contract_template = Template(
             'Contract\n',
@@ -60,7 +62,8 @@ class Basecamp(Game):
         )
         self.add_unit_test_template = Template(
             'Add autotest\n',
-            '-------------',
+            '------------\n',
+            '{form}'
         )
         self.useless_unit_test_template = Template(
             'Autotest added\n',

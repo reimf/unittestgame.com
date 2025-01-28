@@ -28,15 +28,15 @@ class Kommagetal(Dutch):
         )
         self.parameters = [
             Variable(
-                'text',
-                'str',
-                Template('Tekst')
+                label='Tekst',
+                datatype='str',
+                name='text'
             )
         ]
         self.unit = Variable(
-            'is_float',
-            'bool',
-            Template('Is het een kommagetal?')
+            label='Is het een kommagetal? (True/False)',
+            datatype='bool',
+            name='is_float',
         )
         self.function_elements = [
             [
@@ -102,6 +102,3 @@ class Kommagetal(Dutch):
             pos = random.randint(0, len(text1) - 1)
             text2 = text1[:pos] + random.choice('0+-,.') + text1[pos + 1:]
             yield [text2]
-
-if __name__ == '__main__':
-    Kommagetal().play()

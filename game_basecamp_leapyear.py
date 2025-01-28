@@ -29,15 +29,15 @@ class Leapyear(Basecamp):
         )
         self.parameters = [
             Variable(
-                'year',
-                'int',
-                Template('Year')
-            )
+                label='Year',
+                datatype='int',
+                name='year'
+            ),
         ]
         self.unit = Variable(
-            'is_leapyear',
-            'bool',
-            Template('Leap year (True/False)')
+            label='Is it a leap year? (True/False)',
+            datatype='bool',
+            name='is_leapyear'
         )
         self.function_elements = [
             [

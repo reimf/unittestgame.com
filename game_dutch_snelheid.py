@@ -43,15 +43,15 @@ class Snelheid(Dutch):
         )
         self.parameters = [
             Variable(
-                'speed',
-                'int',
-                Template('Snelheid in meter per uur')
+                label='Snelheid in meter per uur',
+                datatype='int',
+                name='speed',
             )
         ]
         self.unit = Variable(
-            'display',
-            'str',
-            Template('Verwachte weergave op het display')
+            label='Verwachte weergave op het display',
+            datatype='str',
+            name='display',
         )
         self.function_elements = [
             [
