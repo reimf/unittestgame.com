@@ -3,64 +3,100 @@
 }
 
 body {
-    background-color: #191A19;
-    font-family: courier-new, courier, monospace;
+    background-color: #ece5dd;
+    color: #333;
+    font-family: monospace;
     font-size: 15px;
     margin: 0;
 }
 
-label {
-    display: block;
+a {
+    color: #128c7e;
 }
 
-input {
-    background-color: #F5F2E7;
-    border: none;
-    border-radius: 5px;
-    font-family: inherit;
-    font-size: inherit;
-    margin: 10px;
-    padding: 5px;
+p {
+    margin: 0;
 }
 
-button {
-    background-color: #F5F2E7;
-    border: none;
-    border-radius: 5px;
-    font-family: inherit;
-    font-size: inherit;
-    padding: 10px 40px;
+form {
+    label {
+        display: inline-block;
+        margin: 5px 0;
+    }
+    
+    input[type="text"], input[type="number"] {
+        background-color: #fff;
+        border: 1px solid #ece5dd;
+        border-radius: 5px;
+        font-family: inherit;
+        font-size: inherit;
+        height: 40px;
+        margin: 0 0 0 1rem;
+        padding: 10px;
+        width: 8rem;
+    }
+    
+    input[type="checkbox"] {
+        margin: 0 0 0 1rem;
+    }
+    
+    input[type="radio"] {
+        margin: 0 0.5rem 0 1.5rem;
+    }
+    
+    input[type="submit"] {
+        background-color: #fff;
+        border: 1px solid #ece5dd;
+        border-radius: 5px;
+        font-family: inherit;
+        font-size: inherit;
+        height: 40px;
+        margin: 0;
+        width: 10rem;
+    }
 }
 
-.terminal {
-    overflow: hidden;
+#screen {
+    display: flex;
 }
 
-.xterm-viewport {
-    overflow: hidden;
-}
+#conversation {
+    height: 100vh;
+    overflow: scroll;
+    width: 60vw;
 
-.xterm-screen {
-    height: 100vh !important;
-    padding: 10px;
-}
+    section {
+        width: 50vw;
 
-.xterm-rows {
-    font-family: inherit !important;
+        &.human {
+            background-color: #dcf8c6;
+            margin-left: 10vw;
+        }
 
-    > div {
-        width: auto !important;
+        header {
+            display: none;
+        }
     }
 }
 
 #sidebar {
-    color: #F5F2E7;
-    float: right;
+    width: 40vw;
+}
 
-    > div {
-        border: 1px solid #555;
-        margin: 10px;
+section {
+    background-color: #fff;
+    border-radius: 5px;
+    margin: 10px;
+    white-space: break-spaces;
+
+    header {
+        background-color: #128c7e;
+        border-radius: 5px 5px 0 0;
+        color: #fff;
         padding: 10px;
-        white-space: pre;
+    }
+
+    main {
+        padding: 10px;
     }
 }

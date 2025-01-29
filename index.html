@@ -3,41 +3,33 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="/variable.js"></script>
+    <script src="/form.js"></script>
+    <script src="/unit_test.js"></script>
+    <script src="/test_result.js"></script>
+    <script src="/candidate.js"></script>
+    <script src="/template.js"></script>
+    <script src="/game.js"></script>
+    <script src="/game_basecamp.js"></script>
+    <script src="/game_basecamp_leapyear.js"></script>
+    <script src="/game_basecamp_triangletype.js"></script>
+    <script src="/game_dutch.js"></script>
+    <script src="/game_dutch_kommagetal.js"></script>
+    <script src="/game_dutch_snelheid.js"></script>
+    <script src="/game_dutch_wachtwoord.js"></script>
+    <script src="/main.js"></script>
     <script src="/index.js"></script>
-    <link rel="stylesheet" href="https://pyscript.net/releases/2024.11.1/core.css">
-    <script type="module" src="https://pyscript.net/releases/2024.11.1/core.js"></script>
     <link rel="stylesheet" href="index.css">
     <meta name="theme-color" content="black">
     <link rel="icon" type="image/ico" href="favicon.ico">
     <title>unittestgame.com</title>
   </head>
   <body>
-    <py-config>
-      {
-        "files": {
-          "/browser.py": "",
-          "/form.py": "",
-          "/function.py": "",
-          "/game_basecamp.py": "",
-          "/game_basecamp_leapyear.py": "",
-          "/game_basecamp_triangletypechecker.py": "",
-          "/game_dutch.py": "",
-          "/game_dutch_kommagetal.py": "",
-          "/game_dutch_snelheid.py": "",
-          "/game_dutch_wachtwoord.py": "",
-          "/game.py": "",
-          "/template.py": "",
-          "/terminal.py": "",
-          "/test_result.py": "",
-          "/unit_test.py": "",
-          "/variable.py": ""
-        }
-      }
-    </py-config>
-    <script type="py" terminal worker src="main.py" target="#terminal"></script>
     <div id="screen">
+      <div id="conversation">
+        <div id="messages"></div>
+      </div>
       <div id="sidebar"></div>
-      <div id="terminal"></div>
     </div>
   </body>
 </html>
