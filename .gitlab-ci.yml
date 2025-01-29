@@ -1,8 +1,8 @@
 pages:
   script:
     - mkdir public
-    - cp *.{css,html,ico,js,png,py} public
-    - gzip -k -6 public/*.{css,html,js,py}
+    - cp *.{css,html,ico,js,png} public
+    - gzip -k -6 public/*.{css,html,js}
   artifacts:
     paths:
       - public
