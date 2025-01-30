@@ -4,9 +4,8 @@ class Form {
         this.variables = variables;
         this.callback = callback;
     }
-    toHtmlElement() {
-        const form = document.createElement('form');
-        form.addEventListener('submit', event => {
+    toHtml() {
+        const callbackProxy = (event) => {
             event.preventDefault();
             const target = event.target;
             const section = target.closest('section');
@@ -18,13 +17,10 @@ class Form {
             const button = section.querySelector('input[type="submit"]');
             button.remove();
             this.callback(...values);
-        });
-        for (const variable of this.variables)
-            form.appendChild(variable.toHtmlElement());
-        const button = document.createElement('input');
-        button.type = 'submit';
-        button.innerText = 'Go!';
-        form.appendChild(button);
-        return form;
+        };
+        const inputs = this.variables.map(variable => variable.toHtml());
+        const button = new Html('input').type('submit').value('Go!');
+        const block = new Html('div').appendChild(button);
+        return new Html('form').onSubmit(callbackProxy).appendChildren(inputs).appendChild(block);
     }
 }

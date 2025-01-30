@@ -15,22 +15,12 @@ class RadioVariable extends Variable {
         const checked = document.querySelector(selector);
         return checked.value;
     }
-    toHtmlElement() {
-        const div = document.createElement('div');
-        const text = document.createTextNode(this.label);
-        div.appendChild(text);
-        for (const option of this.options) {
-            const input = document.createElement('input');
-            input.type = 'radio';
-            input.name = this.name;
-            input.value = option;
-            const label = document.createElement('label');
-            label.appendChild(input);
-            const text = document.createTextNode(option);
-            label.appendChild(text);
-            div.appendChild(label);
-        }
-        return div;
+    toHtml() {
+        const radioButtons = this.options.map(option => {
+            const input = new Html('input').type('radio').name(this.name).accessKey(option).value(option);
+            return new Html('label').appendChild(input).appendText(option);
+        });
+        return new Html('div').appendText(this.label).appendChildren(radioButtons);
     }
 }
 class BooleanVariable extends Variable {
@@ -40,17 +30,10 @@ class BooleanVariable extends Variable {
     value(element) {
         return element.checked;
     }
-    toHtmlElement() {
-        const div = document.createElement('div');
-        const label = document.createElement('label');
-        const text = document.createTextNode(this.label);
-        label.appendChild(text);
-        const input = document.createElement('input');
-        input.type = 'checkbox';
-        input.name = this.name;
-        label.appendChild(input);
-        div.appendChild(label);
-        return div;
+    toHtml() {
+        const input = new Html('input').type('checkbox').name(this.name);
+        const label = new Html('label').appendChild(input);
+        return new Html('div').appendChild(label).appendText(this.label);
     }
 }
 class StringVariable extends Variable {
@@ -60,18 +43,10 @@ class StringVariable extends Variable {
     value(element) {
         return element.value;
     }
-    toHtmlElement() {
-        const div = document.createElement('div');
-        const label = document.createElement('label');
-        const text = document.createTextNode(this.label);
-        label.appendChild(text);
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.name = this.name;
-        input.autocomplete = 'off';
-        label.appendChild(input);
-        div.appendChild(label);
-        return div;
+    toHtml() {
+        const input = new Html('input').type('text').name(this.name).autocomplete('off');
+        const label = new Html('label').appendText(this.label).appendChild(input);
+        return new Html('div').appendChild(label);
     }
 }
 class NumberVariable extends Variable {
@@ -81,17 +56,9 @@ class NumberVariable extends Variable {
     value(element) {
         return Number(element.value);
     }
-    toHtmlElement() {
-        const div = document.createElement('div');
-        const label = document.createElement('label');
-        const text = document.createTextNode(this.label);
-        label.appendChild(text);
-        const input = document.createElement('input');
-        input.type = 'number';
-        input.name = this.name;
-        input.autocomplete = 'off';
-        label.appendChild(input);
-        div.appendChild(label);
-        return div;
+    toHtml() {
+        const input = new Html('input').type('number').name(this.name).autocomplete('off');
+        const label = new Html('label').appendText(this.label).appendChild(input);
+        return new Html('div').appendChild(label);
     }
 }

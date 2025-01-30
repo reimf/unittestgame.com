@@ -7,9 +7,7 @@ class UnitTest {
         this.expected = expected
     }
 
-    public toHtmlElement(): HTMLElement {
-        const element = document.createElement('div')
-        element.textContent = `${this.argumentList} -> ${this.expected}`
-        return element
+    public toHtml(): Html {
+        return new Paragraph(`${this.argumentList} -> ${this.expected}`)
     }
 }

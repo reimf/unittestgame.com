@@ -8,18 +8,16 @@ class Triangletype extends Basecamp {
     }
     introductionTemplate() {
         return new Template([
-            'Introduction\n',
-            'Basecamp students are instructed to write a function that determines the type of a triangle.',
-            'You are hired to write the CodeGrade autotests for this function.',
+            new Paragraph('Basecamp students are instructed to write a function that determines the type of a triangle. ' +
+                'You are hired to write the CodeGrade autotests for this function.'),
         ]);
     }
     specificationTemplate() {
         return new Template([
-            'Problem description\n',
-            'A triangle can be classified based on the lengths of its sides as equilateral, isosceles or scalene.',
-            'All three sides of an equilateral triangle have the same length.',
-            'An isosceles triangle has two sides that are the same length, and a third side that is a different length.',
-            'If all of the sides have different lengths then the triangle is scalene.',
+            new Paragraph('A triangle can be classified based on the lengths of its sides as equilateral, isosceles or scalene. ' +
+                'All three sides of an equilateral triangle have the same length. ' +
+                'An isosceles triangle has two sides that are the same length, and a third side that is a different length ' +
+                'If all of the sides have different lengths then the triangle is scalene.'),
         ]);
     }
     getParameters() {

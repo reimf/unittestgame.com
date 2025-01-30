@@ -8,20 +8,18 @@ class Kommagetal extends Dutch {
     }
     introductionTemplate() {
         return new Template([
-            'Introductie\n',
-            'Een laboratorium laat een nieuwe functie ontwikkelen door een extern softwarebedrijf.',
-            'De functie wordt gebruikt om te bekijken of meetwaardes wel correct zijn ingevoerd.',
-            'De laboranten gaan er daarna verder mee rekenen en er mogen dus geen fouten in zitten.',
-            'Daarom hebben ze jou ingehuurd om unit testen te schrijven voor die functie.',
+            new Paragraph('Een laboratorium laat een nieuwe functie ontwikkelen door een extern softwarebedrijf. ' +
+                'De functie wordt gebruikt om te bekijken of meetwaardes wel correct zijn ingevoerd. ' +
+                'De laboranten gaan er daarna verder mee rekenen en er mogen dus geen fouten in zitten. ' +
+                'Daarom hebben ze jou ingehuurd om unit testen te schrijven voor die functie.'),
         ]);
     }
     specificationTemplate() {
         return new Template([
-            'Specificatie\n',
-            'De functie moet aangeven of een tekst een kommagetal voorstelt en dus True of False teruggeven.',
-            'Een kommagetal kan beginnen met een plus-teken of een min-teken.',
-            'Daarna volgen één of meer cijfers.',
-            'Als er daarna een komma staat, dan moet er minstens één cijfer volgen.',
+            new Paragraph('De functie moet aangeven of een tekst een kommagetal voorstelt en dus True of False teruggeven. ' +
+                'Een kommagetal kan beginnen met een plus-teken of een min-teken. ' +
+                'Daarna volgen één of meer cijfers. ' +
+                'Als er daarna een komma staat, dan moet er minstens één cijfer volgen. '),
         ]);
     }
     getParameters() {

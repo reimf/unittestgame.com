@@ -44,9 +44,7 @@ class Candidate {
         return unitTests.length - this.failCount(unitTests)
     }
 
-    public toHtmlElement(): HTMLElement {
-        const element = document.createElement('p')
-        element.innerHTML = this.func.toString()
-        return element
+    public toHtml(): Html {
+        return new Html('code').appendText(this.func.toString())
     }
 }

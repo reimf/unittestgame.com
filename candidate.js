@@ -35,9 +35,7 @@ class Candidate {
     passCount(unitTests) {
         return unitTests.length - this.failCount(unitTests);
     }
-    toHtmlElement() {
-        const element = document.createElement('p');
-        element.innerHTML = this.func.toString();
-        return element;
+    toHtml() {
+        return new Html('code').appendText(this.func.toString());
     }
 }

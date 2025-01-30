@@ -9,38 +9,48 @@ class Snelheid extends Dutch {
 
     protected introductionTemplate(): Template {
         return new Template([
-            'Introductie\n',
-            'Een Chinese gadgetmaker laat een nieuwe functie ontwikkelen door een extern softwarebedrijf.',
-            'De gadget laat de gemiddelde snelheid zien op een klein display.\n',
-            '+-------------------+\n',
-            '|  X   XXXX   XXXX  |\n',
-            '|  X   X  X   X  X  |\n',
-            '|  X   XXXX   XXXX  |\n',
-            '|  X   X  X   X  X  |\n',
-            '|  X   XXXX X XXXX  |\n',
-            '+-------------------+\n',
-            'Gebruikers rekenen erop dat de getoonde informatie correct is en er mogen dus geen fouten in zitten.',
-            'Daarom hebben ze jou ingehuurd om unit testen te schrijven voor die functie.',
+            new Paragraph(
+                'Een Chinese gadgetmaker laat een nieuwe functie ontwikkelen door een extern softwarebedrijf. ' +
+                'De gadget laat de gemiddelde snelheid zien op een klein display.'
+            ),
+            new Paragraph(
+                '+-------------------+\n' +
+                '|  X   XXXX   XXXX  |\n' +
+                '|  X   X  X   X  X  |\n' +
+                '|  X   XXXX   XXXX  |\n' +
+                '|  X   X  X   X  X  |\n' +
+                '|  X   XXXX X XXXX  |\n' + 
+                '+-------------------+'
+            ),
+            new Paragraph(
+                'Gebruikers rekenen erop dat de getoonde informatie correct is en er mogen dus geen fouten in zitten. ' +
+                'Daarom hebben ze jou ingehuurd om unit testen te schrijven voor die functie.'
+            ),
         ])
     }
 
     protected specificationTemplate(): Template {
         return new Template([
-            'Specificatie\n',
-            'De functie ontvangt de snelheid in meter per uur en moet de snelheid weergeven in kilometer per uur.\n',
-            '+-------------------+\n',
-            '|  X   XXXX   XXXX  |\n',
-            '|  X   X  X   X  X  |\n',
-            '|  X   XXXX   XXXX  |\n',
-            '|  X   X  X   X  X  |\n',
-            '|  X   XXXX X XXXX  |\n',
-            '+-------------------+\n',
-            'Als er iets mis is met de snelheid (negatief bijvoorbeeld),',
-            'dan moet de functie "ERROR" teruggeven, want dan gaat het display langzaam knipperen.',
-            'Als het mogelijk is, laat dan 1 decimaal zien, bijvoorbeeld "12.3".',
-            'Rond anders af op hele kilometers per uur, dus bijvoorbeeld "49".',
-            'Als de snelheid niet meer op het display past,',
-            'dan moet de functie "DANGER" teruggeven, want dan gaat het display snel knipperen.',
+            new Paragraph(
+                'De functie ontvangt de snelheid in meter per uur en moet de snelheid weergeven in kilometer per uur.'
+            ),
+            new Paragraph(
+                '+-------------------+\n' +
+                '|  X   XXXX   XXXX  |\n' +
+                '|  X   X  X   X  X  |\n' +
+                '|  X   XXXX   XXXX  |\n' +
+                '|  X   X  X   X  X  |\n' +
+                '|  X   XXXX X XXXX  |\n' + 
+                '+-------------------+'
+            ),
+            new Paragraph(
+                'Als er iets mis is met de snelheid (negatief bijvoorbeeld), ' +
+                'dan moet de functie "ERROR" teruggeven, want dan gaat het display langzaam knipperen. ' +
+                'Als het mogelijk is, laat dan 1 decimaal zien, bijvoorbeeld "12.3". ' +
+                'Rond anders af op hele kilometers per uur, dus bijvoorbeeld "49". ' +
+                'Als de snelheid niet meer op het display past, ' +
+                'dan moet de functie "DANGER" teruggeven, want dan gaat het display snel knipperen.'
+            ),
         ])
     }
 

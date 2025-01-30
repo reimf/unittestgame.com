@@ -5,6 +5,6 @@ class UnitTest {
         this.expected = expected;
     }
     toHtml() {
-        return new Paragraph(`${this.argumentList} -> ${this.expected}`);
+        return new Html('div').appendText(`${this.argumentList} -> ${this.expected}`);
     }
 }

@@ -7,9 +7,8 @@ class Form {
         this.callback = callback
     }
 
-    public toHtmlElement() {
-        const form = document.createElement('form')
-        form.addEventListener('submit', event => {
+    public toHtml() {
+        const callbackProxy = (event: Event) => {
             event.preventDefault()
             const target = event.target as HTMLElement
             const section = target.closest('section') as HTMLElement
@@ -21,13 +20,10 @@ class Form {
             const button = section.querySelector('input[type="submit"]') as HTMLInputElement
             button.remove()
             this.callback(...values)
-        })
-        for (const variable of this.variables)
-            form.appendChild(variable.toHtmlElement())
-        const button = document.createElement('input')
-        button.type = 'submit'
-        button.innerText = 'Go!'
-        form.appendChild(button)
-        return form
+        }
+        const inputs = this.variables.map(variable => variable.toHtml())
+        const button = new Html('input').type('submit').value('Go!')
+        const block = new Html('div').appendChild(button)
+        return new Html('form').onSubmit(callbackProxy).appendChildren(inputs).appendChild(block)
     }
 }

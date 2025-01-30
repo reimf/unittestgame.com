@@ -28,7 +28,8 @@ abstract class Game {
     protected abstract currentCandidateTemplate(candidate: Candidate): Template
     protected abstract scoreTemplate(score: number): Template
     protected abstract contractTemplate(initialscore: number, penaltybug: number): Template
-    protected abstract addUnitTestTemplate(form: Form): Template
+    protected abstract addUnitTestFormTemplate(form: Form): Template
+    protected abstract addUnitTestTextTemplate(unitTest: UnitTest): Template
     protected abstract hintUnitTestTemplate(unitTest: UnitTest, penaltyhint: number): Template
     protected abstract bugFoundTemplate(testResult: TestResult, penaltybug: number): Template
     protected abstract endWithBugTemplate(): Template
@@ -72,9 +73,7 @@ abstract class Game {
     }
 
     private createCandidate(lines: string[]): Candidate {
-        const parameterList = this.parameters
-            .map((parameter) => parameter.name)
-            .join(", ")
+        const parameterList = this.parameters.map((parameter) => parameter.name).join(", ")
         const code = [
             `function ${this.unit.name}(${parameterList}) {`,
             ...lines.filter((line) => line !== "").map((line) => "  " + line),
@@ -140,28 +139,28 @@ abstract class Game {
 
     private answer(choice: string): void {
         if (choice === '1') {
-            this.option1Template().replaceHumanMessage()
+            this.option1Template().replaceLastHumanMessage()
             this.contractTemplate(this.INITIALSCORE, this.PENALTYBUG).newComputerMessage()
             this.menu()
         }
         else if (choice === '2') {
-            this.option2Template().replaceHumanMessage()
+            this.option2Template().replaceLastHumanMessage()
             this.specificationTemplate().newComputerMessage()
             this.menu()
         }
         else if (choice === '3') {
-            this.addUnitTestTemplate(new Form([...this.parameters, this.unit], this.addUnitTest.bind(this))).replaceHumanMessage()
+            this.addUnitTestFormTemplate(new Form([...this.parameters, this.unit], this.addUnitTest.bind(this))).replaceLastHumanMessage()
         }
         else if (choice === '4') {
             if (this.failingTestResult) {
-                this.option4Template().replaceHumanMessage()
+                this.option4Template().replaceLastHumanMessage()
                 this.hintUnitTestTemplate(this.failingTestResult.unitTest, this.PENALTYHINT).newComputerMessage()
                 this.score -= this.PENALTYHINT
             }
             this.menu()
         }
         else if (choice === '5') {
-            this.option5Template().replaceHumanMessage()
+            this.option5Template().replaceLastHumanMessage()
             if (this.failingTestResult) {
                 this.bugFoundTemplate(this.failingTestResult, this.PENALTYBUG).newComputerMessage()
                 this.score -= this.PENALTYBUG
@@ -198,6 +197,7 @@ abstract class Game {
         const argumentList = values.slice(0, -1)
         const expected = values.slice(-1).pop()
         const unitTest = new UnitTest(argumentList, expected)
+        this.addUnitTestTextTemplate(unitTest).replaceLastHumanMessage()
         const testResult = new TestResult(this.perfectCandidate, unitTest)
         if (testResult.passes) {
             const passingCandidatesBefore = this.findPassingCandidates(this.candidates, this.userdefinedUnitTests)

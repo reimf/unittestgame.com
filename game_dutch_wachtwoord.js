@@ -8,20 +8,18 @@ class Wachtwoord extends Dutch {
     }
     introductionTemplate() {
         return new Template([
-            'Introductie\n',
-            'Een webshop laat een nieuwe functie ontwikkelen door een extern softwarebedrijf.',
-            'De functie wordt gebruikt om wachtwoorden te controleren voor de webshop.',
-            'Gebruikers moeten erop kunnen rekenen dat de getoonde vereisten correct zijn en er mogen dus geen fouten in zitten.',
-            'Daarom hebben ze jou ingehuurd om unit testen te schrijven voor die functie.',
+            new Paragraph('Een webshop laat een nieuwe functie ontwikkelen door een extern softwarebedrijf. ' +
+                'De functie wordt gebruikt om wachtwoorden te controleren voor de webshop. ' +
+                'Gebruikers moeten erop kunnen rekenen dat de getoonde vereisten correct zijn en er mogen dus geen fouten in zitten. ' +
+                'Daarom hebben ze jou ingehuurd om unit testen te schrijven voor die functie.'),
         ]);
     }
     specificationTemplate() {
         return new Template([
-            'Specificatie\n',
-            'Regel 1: Het wachtwoord bestaat uit minstens 5 karakters.\n',
-            'Regel 2: Het wachtwoord bevat een hoofdletter.\n',
-            'Regel 3: Het wachtwoord bevat een speciaal teken ("#" of "@").\n',
-            'Regel 4: De cijfers in het wachtwoord tellen op tot 13.\n',
+            new Paragraph('Regel 1: Het wachtwoord bestaat uit minstens 5 karakters.'),
+            new Paragraph('Regel 2: Het wachtwoord bevat een hoofdletter.'),
+            new Paragraph('Regel 3: Het wachtwoord bevat een speciaal teken ("#" of "@").'),
+            new Paragraph('Regel 4: De cijfers in het wachtwoord tellen op tot 13.'),
         ]);
     }
     getParameters() {
