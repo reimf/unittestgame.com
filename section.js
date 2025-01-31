@@ -4,16 +4,16 @@ class Section extends Html {
         super('section');
         this.appendChildren(children);
     }
-    showPanel(id) {
+    show(id) {
         this.id(id).addTo('panels');
     }
-    addComputerMessage() {
+    addAsComputer() {
         this.id(`message-${++Section.messageCount}`).addClass('computer').addTo('messages');
     }
-    addHumanMessage() {
+    addAsHuman() {
         this.id(`message-${++Section.messageCount}`).addClass('human').addTo('messages');
     }
-    replaceHumanMessage() {
+    replaceLastHuman() {
         this.id(`message-${Section.messageCount}`).addClass('human').addTo('messages');
     }
 }

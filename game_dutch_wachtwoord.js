@@ -6,16 +6,22 @@ class Wachtwoord extends Dutch {
     description() {
         return 'Bepaal of een wachtwoord voldoende sterk is';
     }
-    introductionMessage() {
+    introductionMessage(initialScore, penaltyBug) {
         return new Section([
             new Paragraph('Een webshop laat een nieuwe functie ontwikkelen door een extern softwarebedrijf. ' +
-                'De functie wordt gebruikt om wachtwoorden te controleren voor de webshop. ' +
-                'Gebruikers moeten erop kunnen rekenen dat de getoonde vereisten correct zijn en er mogen dus geen fouten in zitten. ' +
-                'Daarom hebben ze jou ingehuurd om unit testen te schrijven voor die functie.'),
+                'De functie wordt gebruikt om te controleren of een wachtwoord sterk genoeg is. ' +
+                'Gebruikers moeten erop kunnen rekenen dat hun gegevens goed beschermd zijn. ' +
+                'Daarom hebben ze jou ingehuurd om voldoende unit testen te schrijven voor die functie. ' +
+                'zodat de functie geen foute resultaten meer kan geven. ' +
+                `Voor het hele traject krijg je ${this.formatScore(initialScore)}. ` +
+                'In het menu staan bij sommige acties kosten vermeld voor jou. ' +
+                'Als een gebruiker bijvoorbeeld een fout constateert in een functie die slaagt voor al jouw unit testen, ' +
+                `dan betaal jij een boete van ${this.formatScore(penaltyBug)}.`),
         ]);
     }
-    specificationMessage() {
+    specificationPanel() {
         return new Section([
+            new Header('Specificatie'),
             new Paragraph('Regel 1: Het wachtwoord bestaat uit minstens 5 karakters.'),
             new Paragraph('Regel 2: Het wachtwoord bevat een hoofdletter.'),
             new Paragraph('Regel 3: Het wachtwoord bevat een speciaal teken ("#" of "@").'),

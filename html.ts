@@ -62,8 +62,8 @@ class Html {
         return this
     }
 
-    public onSubmit(callback: (event: Event) => void): Html {
-        this.element.addEventListener('submit', callback)
+    public on(eventType: string, callback: (event: Event) => void): Html {
+        this.element.addEventListener(eventType, callback)
         return this
     }
 

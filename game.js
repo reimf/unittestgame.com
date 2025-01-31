@@ -53,57 +53,54 @@ class Game {
     }
     findShortestPassingCandidate(candidates, userDefinedUnitTests) {
         const passingCandidates = this.findPassingCandidates(candidates, userDefinedUnitTests);
-        return passingCandidates.reduce((shortestSoFar, current) => current.length() < shortestSoFar.length() ? current : shortestSoFar);
+        return passingCandidates.reduce((shortestSoFar, current) => current.complexity() < shortestSoFar.complexity() ? current : shortestSoFar);
     }
     play() {
-        this.introductionMessage().addComputerMessage();
+        this.specificationPanel().show('specification');
+        this.introductionMessage(this.INITIALSCORE, this.PENALTYBUG).addAsComputer();
         this.menu();
     }
     menu() {
-        this.unitTestsPanel(this.userdefinedUnitTests).showPanel('unit-tests');
+        this.unitTestsPanel(this.userdefinedUnitTests).show('unit-tests');
         const shortestPassingCandidate = this.findShortestPassingCandidate(this.candidates, this.userdefinedUnitTests);
-        this.currentCandidatePanel(shortestPassingCandidate).showPanel('current-candidate');
+        this.currentCandidatePanel(shortestPassingCandidate).show('current-candidate');
         const failingGeneralTestResults = shortestPassingCandidate.failingTestResults(this.generalUnitTests);
         const failingSpecialTestResults = shortestPassingCandidate.failingTestResults(this.specialUnitTests);
         const failingTestResultsToChooseFrom = failingGeneralTestResults ? failingGeneralTestResults : failingSpecialTestResults;
         this.failingTestResult = failingTestResultsToChooseFrom
             ? failingTestResultsToChooseFrom.random()
             : undefined;
-        this.scorePanel(this.score).showPanel('score');
-        this.menuMessage(this.PENALTYHINT, this.PENALTYBUG, this.PENALTYEND, new Form([new RadioVariable(this.choiceLabel(), 'choice', ['1', '2', '3', '4', '5', '0'])], this.buttonText(), this.answer.bind(this))).addHumanMessage();
+        this.scorePanel(this.score).show('score');
+        const choices = [
+            this.addUnitTestOption(),
+            this.seeHintOption(this.PENALTYHINT),
+            this.submitOption(this.PENALTYBUG),
+            this.endOption(this.PENALTYEND),
+        ];
+        this.menuMessage(new Form([new VerticalRadioVariable(this.choiceLabel(), 'choice', choices)], this.buttonText(), this.answer.bind(this))).addAsHuman();
     }
     answer(choice) {
-        if (choice === '1') {
-            this.optionSeeContractMessage().replaceHumanMessage();
-            this.contractMessage(this.INITIALSCORE, this.PENALTYBUG).addComputerMessage();
-            this.menu();
+        if (choice === this.addUnitTestOption()) {
+            this.addUnitTestFormMessage(new Form([...this.parameters, this.unit], this.buttonText(), this.addUnitTest.bind(this))).replaceLastHuman();
         }
-        else if (choice === '2') {
-            this.optionSeeProblemDescriptionMessage().replaceHumanMessage();
-            this.specificationMessage().addComputerMessage();
-            this.menu();
-        }
-        else if (choice === '3') {
-            this.addUnitTestFormMessage(new Form([...this.parameters, this.unit], this.buttonText(), this.addUnitTest.bind(this))).replaceHumanMessage();
-        }
-        else if (choice === '4') {
+        else if (choice === this.seeHintOption(this.PENALTYHINT)) {
             if (this.failingTestResult) {
-                this.optionSeeHintMessage().replaceHumanMessage();
-                this.hintUnitTestMessage(this.failingTestResult.unitTest, this.PENALTYHINT).addComputerMessage();
+                this.seeHintMessage().replaceLastHuman();
+                this.hintUnitTestMessage(this.failingTestResult.unitTest, this.PENALTYHINT).addAsComputer();
                 this.score -= this.PENALTYHINT;
             }
             this.menu();
         }
-        else if (choice === '5') {
-            this.optionSubmitMessage().replaceHumanMessage();
+        else if (choice === this.submitOption(this.PENALTYBUG)) {
+            this.submitMessage().replaceLastHuman();
             if (this.failingTestResult) {
-                this.bugFoundMessage(this.failingTestResult, this.PENALTYBUG).addComputerMessage();
+                this.bugFoundMessage(this.failingTestResult, this.PENALTYBUG).addAsComputer();
                 this.score -= this.PENALTYBUG;
             }
             else
                 this.end();
         }
-        else if (choice === '0')
+        else if (choice === this.endOption(this.PENALTYEND))
             this.end();
         else
             this.menu();
@@ -111,33 +108,33 @@ class Game {
     end() {
         if (this.failingTestResult) {
             this.score = 0;
-            this.scorePanel(this.score).showPanel('score');
-            this.endWithBugMessage().addComputerMessage();
+            this.scorePanel(this.score).show('score');
+            this.endWithBugMessage().addAsComputer();
         }
         else if (this.score == 100)
-            this.endPerfectMessage(this.score).addComputerMessage();
+            this.endPerfectMessage(this.score).addAsComputer();
         else if (this.score > 50)
-            this.endPositiveMessage(this.score).addComputerMessage();
+            this.endPositiveMessage(this.score).addAsComputer();
         else
-            this.endNegativeMessage(this.score).addComputerMessage();
+            this.endNegativeMessage(this.score).addAsComputer();
     }
     addUnitTest(...values) {
         const argumentList = values.slice(0, -1);
         const expected = values.slice(-1).pop();
         const unitTest = new UnitTest(argumentList, expected);
-        this.addUnitTestTextMessage(unitTest).replaceHumanMessage();
+        this.addUnitTestTextMessage(unitTest).replaceLastHuman();
         const testResult = new TestResult(this.perfectCandidate, unitTest);
         if (testResult.passes) {
             const passingCandidatesBefore = this.findPassingCandidates(this.candidates, this.userdefinedUnitTests);
             this.userdefinedUnitTests.push(unitTest);
             const passingCandidatesAfter = this.findPassingCandidates(this.candidates, this.userdefinedUnitTests);
             if (passingCandidatesAfter.length === passingCandidatesBefore.length)
-                this.uselessUnitTestMessage().addComputerMessage();
+                this.uselessUnitTestMessage().addAsComputer();
             else
-                this.usefulUnitTestMessage().addComputerMessage();
+                this.usefulUnitTestMessage().addAsComputer();
         }
         else
-            this.incorrectUnitTestMessage().addComputerMessage();
+            this.incorrectUnitTestMessage().addAsComputer();
         this.menu();
     }
 }

@@ -3,8 +3,8 @@ abstract class Basecamp extends Game {
         super()
     }
 
-    public language() : string {
-        return 'Basecamp'
+    public theme(): string {
+        return 'Write better autotests for CodeGrade'
     }
 
     protected choiceLabel(): string {
@@ -39,43 +39,25 @@ abstract class Basecamp extends Game {
         ])
     }
 
-    protected menuMessage(penaltyhint: number, penaltybug: number, penaltyend: number, form: Form): Section {
+    protected addUnitTestOption(): string {
+        return 'I want to add an autotest'
+    }
+
+    protected seeHintOption(penaltyHint: number): string {
+        return `I want to see a hint for an autotest (-${this.formatScore(penaltyHint)})`
+    }
+
+    protected submitOption(penaltyBug: number): string {
+        return `I want to submit the autotests (-${this.formatScore(penaltyBug)} on error)`
+    }
+
+    protected endOption(penaltyend: number): string {
+        return `I want to end the game (-${this.formatScore(penaltyend)} on error)`
+    }
+
+    protected menuMessage(form: Form): Section {
         return new Section([
-            new Paragraph('I want to…'),
-            new Paragraph('[1] …see the contract'),
-            new Paragraph('[2] …see the problem description'),
-            new Paragraph('[3] …add an autotest'),
-            new Paragraph(`[4] …see a hint for an autotest (-${this.formatScore(penaltyhint)})`),
-            new Paragraph(`[5] …submit the autotests (-${this.formatScore(penaltybug)} if student reports an error)`),
-            new Paragraph(`[0] …end the game (-${this.formatScore(penaltyend)} if student reports an error)`),
             form.toHtml(),
-        ])
-    }
-
-    protected optionSeeContractMessage(): Section {
-        return new Section([
-            new Paragraph('I want to see the contract.'),
-        ])
-    }
-
-    protected contractMessage(initialscore: number, penaltybug: number): Section {
-        return new Section([
-            new Paragraph(
-                'We have to make sure students write functions that are correct. ' +
-                'Your task is to write enough autotests for these functions, ' +
-                'so that students get the right feedback. ' +
-                'You will receive a grade when you are done writing autotests. ' +
-                `If you have written enough autotests, you will get ${this.formatScore(initialscore)}. ` +
-                'The menu specifies for some actions how much your grade will decrease. ' +
-                'For example, if a student finds an error in a function that passes all your autotests, ' +
-                `your grade will decrease by ${this.formatScore(penaltybug)}.`
-            )
-        ])
-    }
-
-    protected optionSeeProblemDescriptionMessage(): Section {
-        return new Section([
-            new Paragraph('I want to see the problem description.'),
         ])
     }
 
@@ -93,13 +75,13 @@ abstract class Basecamp extends Game {
         ])
     }
 
-    protected optionSeeHintMessage(): Section {
+    protected seeHintMessage(): Section {
         return new Section([
             new Paragraph('I want to see a hint for an autotest.'),
         ])
     }
 
-    protected optionSubmitMessage(): Section {
+    protected submitMessage(): Section {
         return new Section([
             new Paragraph('I want to submit the autotests.'),
         ])
@@ -111,15 +93,15 @@ abstract class Basecamp extends Game {
         ])
     }
 
-    protected hintUnitTestMessage(unitTest: UnitTest, penaltyhint: number): Section {
+    protected hintUnitTestMessage(unitTest: UnitTest, penaltyHint: number): Section {
         return new Section([
             new Paragraph('An autotest that currently fails could be the following.'),
             unitTest.toHtml(),
-            new Paragraph(`Your grade will decrease by ${this.formatScore(penaltyhint)}.`),
+            new Paragraph(`Your grade will decrease by ${this.formatScore(penaltyHint)}.`),
         ])
     }
 
-    protected bugFoundMessage(testResult: TestResult, penaltybug: number): Section {
+    protected bugFoundMessage(testResult: TestResult, penaltyBug: number): Section {
         return new Section([
             new Paragraph(
                 'Thank you! ' +
@@ -128,7 +110,7 @@ abstract class Basecamp extends Game {
                 'Their function passed all autotests, but it produced the following incorrect result.'
             ),
             testResult.toHtml(),
-            new Paragraph(`Your grade will decrease by ${this.formatScore(penaltybug)} point.`),
+            new Paragraph(`Your grade will decrease by ${this.formatScore(penaltyBug)} point.`),
         ])
     }
 
@@ -210,7 +192,7 @@ abstract class Basecamp extends Game {
         ])
     }
 
-    private formatScore(score: number): string {
+    protected formatScore(score: number): string {
         return `${Math.round(score / 10)} points`
     }
 }

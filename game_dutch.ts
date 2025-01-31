@@ -3,8 +3,8 @@ abstract class Dutch extends Game {
         super()
     }
 
-    public language(): string {
-        return 'Nederlands'
+    public theme(): string {
+        return 'Controleer het werk van een extern softwarebedrijf'
     }
 
     protected choiceLabel(): string {
@@ -15,38 +15,35 @@ abstract class Dutch extends Game {
         return 'Ga!'
     }
 
-    protected menuMessage(penaltyHint: number, penaltyBug: number, penaltyEnd: number, form: Form): Section {
+    protected addUnitTestOption(): string {
+        return 'Ik wil een unit test toevoegen'
+    }
+
+    protected seeHintOption(penaltyHint: number): string {
+        return `Ik wil een hint voor een unit test zien (-${this.formatScore(penaltyHint)})`
+    }
+
+    protected submitOption(penaltyBug: number): string {
+        return `Ik wil de unit testen inleveren (-${this.formatScore(penaltyBug)} bij fout)`
+    }
+
+    protected endOption(penaltyEnd: number): string {
+        return `Ik wil het spel beëindigen (-${this.formatScore(penaltyEnd)} bij fout)`
+    }
+
+    protected menuMessage(form: Form): Section {
         return new Section([
-            new Paragraph('Ik wil…'),
-            new Paragraph('[1] …het contract zien'),
-            new Paragraph('[2] …de specificatie zien'),
-            new Paragraph('[3] …een unit test toevoegen'),
-            new Paragraph(`[4] …een hint voor een unit test zien (-${this.formatScore(penaltyHint)})`),
-            new Paragraph(`[5] …de unit testen inleveren (-${this.formatScore(penaltyBug)} bij foutmelding)`),
-            new Paragraph(`[0] …het spel beëindigen (-${this.formatScore(penaltyEnd)} bij foutmelding)`),
             form.toHtml(),
         ])
     }
 
-    protected optionSeeContractMessage(): Section {
-        return new Section([
-            new Paragraph('Ik wil het contract zien.'),
-        ])
-    }
-
-    protected optionSeeProblemDescriptionMessage(): Section {
-        return new Section([
-            new Paragraph('Ik wil de specificatie zien.'),
-        ])
-    }
-
-    protected optionSeeHintMessage(): Section {
+    protected seeHintMessage(): Section {
         return new Section([
             new Paragraph('Ik wil een hint voor een unit test zien.'),
         ])
     }
 
-    protected optionSubmitMessage(): Section {
+    protected submitMessage(): Section {
         return new Section([
             new Paragraph('Ik wil de unit testen inleveren.'),
         ])
@@ -79,22 +76,6 @@ abstract class Dutch extends Game {
         return new Section([
             new Header('Verdiensten\n'),
             new Paragraph(`${this.formatScore(score)}`),
-        ])
-    }
-
-    protected contractMessage(initialScore: number, penaltyBug: number): Section {
-        return new Section([
-            new Paragraph(
-                'Wij laten een nieuwe functie ontwikkelen door een extern softwarebedrijf. ' +
-                'We hebben jou ingehuurd om te zorgen dat die functie ALTIJD het juiste resultaat geeft. ' +
-                'Wat goede resultaten zijn staat beschreven in de specificatie. ' +
-                'Jouw taak is om voldoende unit testen te schrijven voor die functie, ' +
-                'zodat de functie geen foute resultaten meer kan geven. ' +
-                `Voor het hele traject krijg je ${this.formatScore(initialScore)}. ` +
-                'In het menu staan bij sommige acties kosten vermeld voor jou. ' +
-                'Als een gebruiker bijvoorbeeld een fout constateert in een functie die slaagt voor al jouw unit testen, ' +
-                `dan betaal jij een boete van ${this.formatScore(penaltyBug)}.`
-            ),
         ])
     }
 
@@ -211,7 +192,7 @@ abstract class Dutch extends Game {
         ])
     }
 
-    private formatScore(score: number): string {
+    protected formatScore(score: number): string {
         return `${score < 0 ? '-' : ''}€${Math.round(Math.abs(score) * 10)}`
     }
 }

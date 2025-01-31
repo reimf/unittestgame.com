@@ -4,16 +4,22 @@ class Triangletype extends Basecamp {
         super();
     }
     description() {
-        return 'A1W2P4 triangletype.py';
+        return 'A1W2P4 triangletypechecker.py';
     }
-    introductionMessage() {
+    introductionMessage(initialScore, penaltyBug) {
         return new Section([
             new Paragraph('Basecamp students are instructed to write a function that determines the type of a triangle. ' +
-                'You are hired to write the CodeGrade autotests for this function.'),
+                'You must write enough CodeGrade autotests for this function, ' +
+                'so that students get the right feedback. ' +
+                `If you have written enough autotests, you will get ${this.formatScore(initialScore)}. ` +
+                'The menu specifies for some actions how much your grade will decrease. ' +
+                'For example, if a student finds an error in a function that passes all your autotests, ' +
+                `your grade will decrease by ${this.formatScore(penaltyBug)}.`)
         ]);
     }
-    specificationMessage() {
+    specificationPanel() {
         return new Section([
+            new Header('Specification'),
             new Paragraph('A triangle can be classified based on the lengths of its sides as equilateral, isosceles or scalene. ' +
                 'All three sides of an equilateral triangle have the same length. ' +
                 'An isosceles triangle has two sides that are the same length, and a third side that is a different length ' +
@@ -28,7 +34,7 @@ class Triangletype extends Basecamp {
         ];
     }
     getUnit() {
-        return new RadioVariable('Type of triangle', 'triangleType', ['equilateral', 'isosceles', 'scalene']);
+        return new HorizontalRadioVariable('Type of triangle', 'triangleType', ['equilateral', 'isosceles', 'scalene']);
     }
     getCandidateElements() {
         return [

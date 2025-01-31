@@ -6,7 +6,7 @@ class Snelheid extends Dutch {
     description() {
         return 'Laat de snelheid van een auto zien';
     }
-    introductionMessage() {
+    introductionMessage(initialScore, penaltyBug) {
         return new Section([
             new Paragraph('Een Chinese gadgetmaker laat een nieuwe functie ontwikkelen door een extern softwarebedrijf. ' +
                 'De gadget laat de gemiddelde snelheid zien op een klein display.'),
@@ -18,11 +18,17 @@ class Snelheid extends Dutch {
                 '|  X   XXXX X XXXX  |\n' +
                 '+-------------------+'),
             new Paragraph('Gebruikers rekenen erop dat de getoonde informatie correct is en er mogen dus geen fouten in zitten. ' +
-                'Daarom hebben ze jou ingehuurd om unit testen te schrijven voor die functie.'),
+                'Daarom hebben ze jou ingehuurd om voldoende unit testen te schrijven voor die functie. ' +
+                'zodat de functie geen foute resultaten meer kan geven. ' +
+                `Voor het hele traject krijg je ${this.formatScore(initialScore)}. ` +
+                'In het menu staan bij sommige acties kosten vermeld voor jou. ' +
+                'Als een gebruiker bijvoorbeeld een fout constateert in een functie die slaagt voor al jouw unit testen, ' +
+                `dan betaal jij een boete van ${this.formatScore(penaltyBug)}.`),
         ]);
     }
-    specificationMessage() {
+    specificationPanel() {
         return new Section([
+            new Header('Specificatie'),
             new Paragraph('De functie ontvangt de snelheid in meter per uur en moet de snelheid weergeven in kilometer per uur.'),
             new Paragraph('+-------------------+\n' +
                 '|  X   XXXX   XXXX  |\n' +

@@ -6,19 +6,19 @@ class Section extends Html {
         this.appendChildren(children)
     }
 
-    public showPanel(id: string): void {
+    public show(id: string): void {
         this.id(id).addTo('panels')
     }
 
-    public addComputerMessage(): void {
+    public addAsComputer(): void {
         this.id(`message-${++Section.messageCount}`).addClass('computer').addTo('messages')
     }
 
-    public addHumanMessage(): void {
+    public addAsHuman(): void {
         this.id(`message-${++Section.messageCount}`).addClass('human').addTo('messages')
     }
 
-    public replaceHumanMessage(): void {
+    public replaceLastHuman(): void {
         this.id(`message-${Section.messageCount}`).addClass('human').addTo('messages')
     }
 }

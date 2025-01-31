@@ -7,23 +7,29 @@ class Leapyear extends Basecamp {
         return 'A1W2P2 leapyearcalculator.py'
     }
 
-    protected introductionMessage(): Section {
+    protected introductionMessage(initialScore: number, penaltyBug: number): Section {
         return new Section([
             new Paragraph(
                 'Basecamp students are instructed to write a function that determines whether or not a year is a leap year. ' +
-                'You are hired to write the CodeGrade autotests for this function.'
-            ),
+                'You must write enough CodeGrade autotests for this function, ' +
+                'so that students get the right feedback. ' +
+                `If you have written enough autotests, you will get ${this.formatScore(initialScore)}. ` +
+                'The menu specifies for some actions how much your grade will decrease. ' +
+                'For example, if a student finds an error in a function that passes all your autotests, ' +
+                `your grade will decrease by ${this.formatScore(penaltyBug)}.`
+            )
         ])
     }
 
-    protected specificationMessage(): Section {
+    protected specificationPanel(): Section {
         return new Section([
+            new Header('Specification'),
             new Paragraph(
                 'Most years have 365 days. ' +
-                'However, the time required for the Earth to orbit the Sun is actually slightly more than that. ' +
+                'However, the time required for the earth to orbit the sun is actually slightly more than 365 days. ' +
                 'As a result, an extra day, February 29, is included in some years to correct for this difference. ' +
-                'Such years are referred to as leap years. ' +
-                'The rules for determining whether or not a year is a leap year follow: '
+                'Such years are called leap years. ' +
+                'The rules for determining whether a year is a leap year or not are as follows:'
             ),
             new Paragraph('- Any year that is divisible by 400 is a leap year.'),
             new Paragraph('- Of the remaining years, any year that is divisible by 100 is not a leap year.'),

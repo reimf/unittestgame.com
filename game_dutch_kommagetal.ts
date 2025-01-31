@@ -7,19 +7,25 @@ class Kommagetal extends Dutch {
         return 'Stel met een reguliere expressie vast of een tekst een kommagetal voorstelt'
     }
 
-    protected introductionMessage(): Section {
+    protected introductionMessage(initialScore: number, penaltyBug: number): Section {
         return new Section([
             new Paragraph(
                 'Een laboratorium laat een nieuwe functie ontwikkelen door een extern softwarebedrijf. ' +
                 'De functie wordt gebruikt om te bekijken of meetwaardes wel correct zijn ingevoerd. ' +
                 'De laboranten gaan er daarna verder mee rekenen en er mogen dus geen fouten in zitten. ' +
-                'Daarom hebben ze jou ingehuurd om unit testen te schrijven voor die functie.'
+                'Daarom hebben ze jou ingehuurd om voldoende unit testen te schrijven voor die functie. ' +
+                'zodat de functie geen foute resultaten meer kan geven. ' +
+                `Voor het hele traject krijg je ${this.formatScore(initialScore)}. ` +
+                'In het menu staan bij sommige acties kosten vermeld voor jou. ' +
+                'Als een gebruiker bijvoorbeeld een fout constateert in een functie die slaagt voor al jouw unit testen, ' +
+                `dan betaal jij een boete van ${this.formatScore(penaltyBug)}.`
             ),
         ])
     }
 
-    protected specificationMessage(): Section {
+    protected specificationPanel(): Section {
         return new Section([
+            new Header('Specificatie'),
             new Paragraph(
                 'De functie moet aangeven of een tekst een kommagetal voorstelt en dus True of False teruggeven. ' +
                 'Een kommagetal kan beginnen met een plus-teken of een min-teken. ' +

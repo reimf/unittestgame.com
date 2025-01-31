@@ -12,6 +12,7 @@ class Form {
             const section = target.closest('section');
             const values = this.variables.map(variable => {
                 const input = section.querySelector(`input[name="${variable.name}"]`);
+                console.log(input);
                 input.disabled = true;
                 return variable.value(input);
             });
@@ -22,6 +23,6 @@ class Form {
         const inputs = this.variables.map(variable => variable.toHtml());
         const button = new Html('input').type('submit').value(this.buttonText);
         const block = new Html('div').appendChild(button);
-        return new Html('form').onSubmit(callbackProxy).appendChildren(inputs).appendChild(block);
+        return new Html('form').on('submit', callbackProxy).appendChildren(inputs).appendChild(block);
     }
 }

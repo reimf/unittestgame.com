@@ -3,8 +3,8 @@ class Basecamp extends Game {
     constructor() {
         super();
     }
-    language() {
-        return 'Basecamp';
+    theme() {
+        return 'Write better autotests for CodeGrade';
     }
     choiceLabel() {
         return 'Choice';
@@ -33,38 +33,21 @@ class Basecamp extends Game {
             new Paragraph(`${this.formatScore(score)}`),
         ]);
     }
-    menuMessage(penaltyhint, penaltybug, penaltyend, form) {
+    addUnitTestOption() {
+        return 'I want to add an autotest';
+    }
+    seeHintOption(penaltyHint) {
+        return `I want to see a hint for an autotest (-${this.formatScore(penaltyHint)})`;
+    }
+    submitOption(penaltyBug) {
+        return `I want to submit the autotests (-${this.formatScore(penaltyBug)} on error)`;
+    }
+    endOption(penaltyend) {
+        return `I want to end the game (-${this.formatScore(penaltyend)} on error)`;
+    }
+    menuMessage(form) {
         return new Section([
-            new Paragraph('I want to…'),
-            new Paragraph('[1] …see the contract'),
-            new Paragraph('[2] …see the problem description'),
-            new Paragraph('[3] …add an autotest'),
-            new Paragraph(`[4] …see a hint for an autotest (-${this.formatScore(penaltyhint)})`),
-            new Paragraph(`[5] …submit the autotests (-${this.formatScore(penaltybug)} if student reports an error)`),
-            new Paragraph(`[0] …end the game (-${this.formatScore(penaltyend)} if student reports an error)`),
             form.toHtml(),
-        ]);
-    }
-    optionSeeContractMessage() {
-        return new Section([
-            new Paragraph('I want to see the contract.'),
-        ]);
-    }
-    contractMessage(initialscore, penaltybug) {
-        return new Section([
-            new Paragraph('We have to make sure students write functions that are correct. ' +
-                'Your task is to write enough autotests for these functions, ' +
-                'so that students get the right feedback. ' +
-                'You will receive a grade when you are done writing autotests. ' +
-                `If you have written enough autotests, you will get ${this.formatScore(initialscore)}. ` +
-                'The menu specifies for some actions how much your grade will decrease. ' +
-                'For example, if a student finds an error in a function that passes all your autotests, ' +
-                `your grade will decrease by ${this.formatScore(penaltybug)}.`)
-        ]);
-    }
-    optionSeeProblemDescriptionMessage() {
-        return new Section([
-            new Paragraph('I want to see the problem description.'),
         ]);
     }
     addUnitTestFormMessage(form) {
@@ -79,12 +62,12 @@ class Basecamp extends Game {
             unitTest.toHtml(),
         ]);
     }
-    optionSeeHintMessage() {
+    seeHintMessage() {
         return new Section([
             new Paragraph('I want to see a hint for an autotest.'),
         ]);
     }
-    optionSubmitMessage() {
+    submitMessage() {
         return new Section([
             new Paragraph('I want to submit the autotests.'),
         ]);
@@ -94,21 +77,21 @@ class Basecamp extends Game {
             new Paragraph('I want to end the game.'),
         ]);
     }
-    hintUnitTestMessage(unitTest, penaltyhint) {
+    hintUnitTestMessage(unitTest, penaltyHint) {
         return new Section([
             new Paragraph('An autotest that currently fails could be the following.'),
             unitTest.toHtml(),
-            new Paragraph(`Your grade will decrease by ${this.formatScore(penaltyhint)}.`),
+            new Paragraph(`Your grade will decrease by ${this.formatScore(penaltyHint)}.`),
         ]);
     }
-    bugFoundMessage(testResult, penaltybug) {
+    bugFoundMessage(testResult, penaltyBug) {
         return new Section([
             new Paragraph('Thank you! ' +
                 'We have deployed the latest version of the function to production. ' +
                 'A student has reported an error in CodeGrade. ' +
                 'Their function passed all autotests, but it produced the following incorrect result.'),
             testResult.toHtml(),
-            new Paragraph(`Your grade will decrease by ${this.formatScore(penaltybug)} point.`),
+            new Paragraph(`Your grade will decrease by ${this.formatScore(penaltyBug)} point.`),
         ]);
     }
     endWithBugMessage() {

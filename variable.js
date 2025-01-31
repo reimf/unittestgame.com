@@ -5,7 +5,32 @@ class Variable {
         this.name = name;
     }
 }
-class RadioVariable extends Variable {
+class HorizontalRadioVariable extends Variable {
+    constructor(label, name, options) {
+        super(label, name);
+        this.options = options;
+        this.options = options;
+    }
+    value(element) {
+        const selector = `input[name="${element.name}"]:checked`;
+        const checked = document.querySelector(selector);
+        return checked.value;
+    }
+    toHtml() {
+        const callback = (event) => {
+            const target = event.target;
+            const form = target.closest('form');
+            const button = form.querySelector('input[type="submit"]');
+            button.click();
+        };
+        const radioButtons = this.options.map(option => {
+            const input = new Html('input').type('radio').name(this.name).accessKey(option).value(option).on('mouseup', callback);
+            return new Html('label').addClass('with-horizontal-radio-input').appendChild(input).appendText(option);
+        });
+        return new Html('div').addClass('with-horizontal-radio-input').appendText(this.label).appendChildren(radioButtons);
+    }
+}
+class VerticalRadioVariable extends Variable {
     constructor(label, name, options) {
         super(label, name);
         this.options = options;
@@ -19,9 +44,9 @@ class RadioVariable extends Variable {
     toHtml() {
         const radioButtons = this.options.map(option => {
             const input = new Html('input').type('radio').name(this.name).accessKey(option).value(option);
-            return new Html('label').appendChild(input).appendText(option);
+            return new Html('label').addClass('with-vertical-radio-input').appendChild(input).appendText(option);
         });
-        return new Html('div').appendText(this.label).appendChildren(radioButtons);
+        return new Html('div').addClass('with-vertical-radio-input').appendText(this.label).appendChildren(radioButtons);
     }
 }
 class CheckboxVariable extends Variable {
@@ -33,8 +58,8 @@ class CheckboxVariable extends Variable {
     }
     toHtml() {
         const input = new Html('input').type('checkbox').name(this.name);
-        const label = new Html('label').appendChild(input);
-        return new Html('div').appendChild(label).appendText(this.label);
+        const label = new Html('label').addClass('with-checkbox-input').appendChild(input);
+        return new Html('div').addClass('with-checkbox-input').appendChild(label).appendText(this.label);
     }
 }
 class TextVariable extends Variable {
@@ -46,8 +71,8 @@ class TextVariable extends Variable {
     }
     toHtml() {
         const input = new Html('input').type('text').name(this.name).autocomplete('off');
-        const label = new Html('label').appendText(this.label).appendChild(input);
-        return new Html('div').appendChild(label);
+        const label = new Html('label').addClass('with-text-input').appendText(this.label).appendChild(input);
+        return new Html('div').addClass('with-text-input').appendChild(label);
     }
 }
 class NumberVariable extends Variable {
@@ -59,7 +84,7 @@ class NumberVariable extends Variable {
     }
     toHtml() {
         const input = new Html('input').type('number').name(this.name).autocomplete('off');
-        const label = new Html('label').appendText(this.label).appendChild(input);
-        return new Html('div').appendChild(label);
+        const label = new Html('label').addClass('with-number-input').appendText(this.label).appendChild(input);
+        return new Html('div').addClass('with-number-input').appendChild(label);
     }
 }

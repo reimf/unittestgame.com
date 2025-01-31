@@ -49,8 +49,8 @@ class Html {
             this.element.appendChild(value.element);
         return this;
     }
-    onSubmit(callback) {
-        this.element.addEventListener('submit', callback);
+    on(eventType, callback) {
+        this.element.addEventListener(eventType, callback);
         return this;
     }
     addTo(parentId) {

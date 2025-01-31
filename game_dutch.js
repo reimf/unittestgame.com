@@ -3,8 +3,8 @@ class Dutch extends Game {
     constructor() {
         super();
     }
-    language() {
-        return 'Nederlands';
+    theme() {
+        return 'Controleer het werk van een extern softwarebedrijf';
     }
     choiceLabel() {
         return 'Keuze';
@@ -12,34 +12,29 @@ class Dutch extends Game {
     buttonText() {
         return 'Ga!';
     }
-    menuMessage(penaltyHint, penaltyBug, penaltyEnd, form) {
+    addUnitTestOption() {
+        return 'Ik wil een unit test toevoegen';
+    }
+    seeHintOption(penaltyHint) {
+        return `Ik wil een hint voor een unit test zien (-${this.formatScore(penaltyHint)})`;
+    }
+    submitOption(penaltyBug) {
+        return `Ik wil de unit testen inleveren (-${this.formatScore(penaltyBug)} bij fout)`;
+    }
+    endOption(penaltyEnd) {
+        return `Ik wil het spel beëindigen (-${this.formatScore(penaltyEnd)} bij fout)`;
+    }
+    menuMessage(form) {
         return new Section([
-            new Paragraph('Ik wil…'),
-            new Paragraph('[1] …het contract zien'),
-            new Paragraph('[2] …de specificatie zien'),
-            new Paragraph('[3] …een unit test toevoegen'),
-            new Paragraph(`[4] …een hint voor een unit test zien (-${this.formatScore(penaltyHint)})`),
-            new Paragraph(`[5] …de unit testen inleveren (-${this.formatScore(penaltyBug)} bij foutmelding)`),
-            new Paragraph(`[0] …het spel beëindigen (-${this.formatScore(penaltyEnd)} bij foutmelding)`),
             form.toHtml(),
         ]);
     }
-    optionSeeContractMessage() {
-        return new Section([
-            new Paragraph('Ik wil het contract zien.'),
-        ]);
-    }
-    optionSeeProblemDescriptionMessage() {
-        return new Section([
-            new Paragraph('Ik wil de specificatie zien.'),
-        ]);
-    }
-    optionSeeHintMessage() {
+    seeHintMessage() {
         return new Section([
             new Paragraph('Ik wil een hint voor een unit test zien.'),
         ]);
     }
-    optionSubmitMessage() {
+    submitMessage() {
         return new Section([
             new Paragraph('Ik wil de unit testen inleveren.'),
         ]);
@@ -68,19 +63,6 @@ class Dutch extends Game {
         return new Section([
             new Header('Verdiensten\n'),
             new Paragraph(`${this.formatScore(score)}`),
-        ]);
-    }
-    contractMessage(initialScore, penaltyBug) {
-        return new Section([
-            new Paragraph('Wij laten een nieuwe functie ontwikkelen door een extern softwarebedrijf. ' +
-                'We hebben jou ingehuurd om te zorgen dat die functie ALTIJD het juiste resultaat geeft. ' +
-                'Wat goede resultaten zijn staat beschreven in de specificatie. ' +
-                'Jouw taak is om voldoende unit testen te schrijven voor die functie, ' +
-                'zodat de functie geen foute resultaten meer kan geven. ' +
-                `Voor het hele traject krijg je ${this.formatScore(initialScore)}. ` +
-                'In het menu staan bij sommige acties kosten vermeld voor jou. ' +
-                'Als een gebruiker bijvoorbeeld een fout constateert in een functie die slaagt voor al jouw unit testen, ' +
-                `dan betaal jij een boete van ${this.formatScore(penaltyBug)}.`),
         ]);
     }
     addUnitTestFormMessage(form) {

@@ -13,7 +13,7 @@ class Candidate {
         }
     }
 
-    public length(): number {
+    public complexity(): number {
         return this.function.toString().length
     }
 

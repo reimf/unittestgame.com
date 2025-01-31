@@ -11,7 +11,7 @@ class Candidate {
             return error.name;
         }
     }
-    length() {
+    complexity() {
         return this.function.toString().length;
     }
     testResults(unitTests) {
