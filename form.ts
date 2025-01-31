@@ -1,11 +1,9 @@
 class Form {
-    private variables: Variable[]
-    private callback: Function
-
-    public constructor(variables: Variable[], callback: Function) {
-        this.variables = variables
-        this.callback = callback
-    }
+    public constructor(
+        private variables: Variable[],
+        private buttonText: string,
+        private callback: Function
+    ) { }
 
     public toHtml() {
         const callbackProxy = (event: Event) => {
@@ -22,7 +20,7 @@ class Form {
             this.callback(...values)
         }
         const inputs = this.variables.map(variable => variable.toHtml())
-        const button = new Html('input').type('submit').value('Go!')
+        const button = new Html('input').type('submit').value(this.buttonText)
         const block = new Html('div').appendChild(button)
         return new Html('form').onSubmit(callbackProxy).appendChildren(inputs).appendChild(block)
     }

@@ -11,9 +11,7 @@ class Game {
         this.specialUnitTests = this.getSpecialUnitTests();
         this.perfectCandidate = this.findOnePerfectCandidate(this.candidates, this.specialUnitTests);
         this.checkUnitTestsAreNeeded(this.candidates, this.specialUnitTests);
-        this.generalUnitTests = [...this.generalArgumentsGenerator()].map(argumentList => new UnitTest(argumentList, this.perfectCandidate.callFunc(argumentList)));
-        for (const candidate of this.candidates)
-            candidate.setQuality(this.specialUnitTests, this.generalUnitTests);
+        this.generalUnitTests = [...this.generalArgumentsGenerator()].map(argumentList => new UnitTest(argumentList, this.perfectCandidate.callFunction(argumentList)));
         this.userdefinedUnitTests = [];
         this.score = this.INITIALSCORE;
         this.failingTestResult = undefined;
@@ -43,7 +41,7 @@ class Game {
         const perfectFunctions = this.findPassingCandidates(candidates, unitTests);
         if (perfectFunctions.length === 0)
             throw new Error(`There is no perfect function for game ${this.constructor.name}.`);
-        return perfectFunctions[Math.floor(Math.random() * perfectFunctions.length)];
+        return perfectFunctions.random();
     }
     checkUnitTestsAreNeeded(candidates, unitTests) {
         for (const unitTest of unitTests) {
@@ -53,101 +51,93 @@ class Game {
                 throw new Error(`Unit test ${unitTest} is not needed.\n${almostPerfectFunctions[0]}`);
         }
     }
-    findWorstPassingCandidate(candidates, userDefinedUnitTests) {
+    findShortestPassingCandidate(candidates, userDefinedUnitTests) {
         const passingCandidates = this.findPassingCandidates(candidates, userDefinedUnitTests);
-        return passingCandidates.reduce((worstSoFar, current) => Candidate.worst(current, worstSoFar));
+        return passingCandidates.reduce((shortestSoFar, current) => current.length() < shortestSoFar.length() ? current : shortestSoFar);
     }
     play() {
-        this.introductionTemplate().newComputerMessage();
+        this.introductionMessage().addComputerMessage();
         this.menu();
     }
     menu() {
-        if (this.userdefinedUnitTests.length > 0)
-            this.unitTestsTemplate(this.userdefinedUnitTests).inSidebar('unit-tests');
-        else
-            this.noUnitTestsTemplate().inSidebar('unit-tests');
-        const worstPassingCandidate = this.findWorstPassingCandidate(this.candidates, this.userdefinedUnitTests);
-        this.currentCandidateTemplate(worstPassingCandidate).inSidebar('current-candidate');
-        const failingGeneralTestResults = worstPassingCandidate.failingTestResults(this.generalUnitTests);
-        const failingSpecialTestResults = worstPassingCandidate.failingTestResults(this.specialUnitTests);
+        this.unitTestsPanel(this.userdefinedUnitTests).showPanel('unit-tests');
+        const shortestPassingCandidate = this.findShortestPassingCandidate(this.candidates, this.userdefinedUnitTests);
+        this.currentCandidatePanel(shortestPassingCandidate).showPanel('current-candidate');
+        const failingGeneralTestResults = shortestPassingCandidate.failingTestResults(this.generalUnitTests);
+        const failingSpecialTestResults = shortestPassingCandidate.failingTestResults(this.specialUnitTests);
         const failingTestResultsToChooseFrom = failingGeneralTestResults ? failingGeneralTestResults : failingSpecialTestResults;
         this.failingTestResult = failingTestResultsToChooseFrom
-            ? failingTestResultsToChooseFrom[Math.floor(Math.random() * failingTestResultsToChooseFrom.length)]
+            ? failingTestResultsToChooseFrom.random()
             : undefined;
-        this.scoreTemplate(this.score).inSidebar('score');
-        this.menuTemplate(this.PENALTYHINT, this.PENALTYBUG, this.PENALTYEND, new Form([new RadioVariable(this.choiceLabel(), 'choice', ['1', '2', '3', '4', '5', '0'])], this.answer.bind(this))).newHumanMessage();
+        this.scorePanel(this.score).showPanel('score');
+        this.menuMessage(this.PENALTYHINT, this.PENALTYBUG, this.PENALTYEND, new Form([new RadioVariable(this.choiceLabel(), 'choice', ['1', '2', '3', '4', '5', '0'])], this.buttonText(), this.answer.bind(this))).addHumanMessage();
     }
     answer(choice) {
         if (choice === '1') {
-            this.option1Template().replaceLastHumanMessage();
-            this.contractTemplate(this.INITIALSCORE, this.PENALTYBUG).newComputerMessage();
+            this.optionSeeContractMessage().replaceHumanMessage();
+            this.contractMessage(this.INITIALSCORE, this.PENALTYBUG).addComputerMessage();
             this.menu();
         }
         else if (choice === '2') {
-            this.option2Template().replaceLastHumanMessage();
-            this.specificationTemplate().newComputerMessage();
+            this.optionSeeProblemDescriptionMessage().replaceHumanMessage();
+            this.specificationMessage().addComputerMessage();
             this.menu();
         }
         else if (choice === '3') {
-            this.addUnitTestFormTemplate(new Form([...this.parameters, this.unit], this.addUnitTest.bind(this))).replaceLastHumanMessage();
+            this.addUnitTestFormMessage(new Form([...this.parameters, this.unit], this.buttonText(), this.addUnitTest.bind(this))).replaceHumanMessage();
         }
         else if (choice === '4') {
             if (this.failingTestResult) {
-                this.option4Template().replaceLastHumanMessage();
-                this.hintUnitTestTemplate(this.failingTestResult.unitTest, this.PENALTYHINT).newComputerMessage();
+                this.optionSeeHintMessage().replaceHumanMessage();
+                this.hintUnitTestMessage(this.failingTestResult.unitTest, this.PENALTYHINT).addComputerMessage();
                 this.score -= this.PENALTYHINT;
             }
             this.menu();
         }
         else if (choice === '5') {
-            this.option5Template().replaceLastHumanMessage();
+            this.optionSubmitMessage().replaceHumanMessage();
             if (this.failingTestResult) {
-                this.bugFoundTemplate(this.failingTestResult, this.PENALTYBUG).newComputerMessage();
+                this.bugFoundMessage(this.failingTestResult, this.PENALTYBUG).addComputerMessage();
                 this.score -= this.PENALTYBUG;
             }
             else
                 this.end();
         }
-        else if (choice === '0') {
+        else if (choice === '0')
             this.end();
-        }
-        else {
+        else
             this.menu();
-        }
     }
     end() {
         if (this.failingTestResult) {
             this.score = 0;
-            this.scoreTemplate(this.score).inSidebar('score');
-            this.endWithBugTemplate().newComputerMessage();
+            this.scorePanel(this.score).showPanel('score');
+            this.endWithBugMessage().addComputerMessage();
         }
-        else if (this.score == 100) {
-            this.endPerfectTemplate(this.score).newComputerMessage();
-        }
-        else if (this.score > 50) {
-            this.endPositiveTemplate(this.score).newComputerMessage();
-        }
-        else {
-            this.endNegativeTemplate(this.score).newComputerMessage();
-        }
+        else if (this.score == 100)
+            this.endPerfectMessage(this.score).addComputerMessage();
+        else if (this.score > 50)
+            this.endPositiveMessage(this.score).addComputerMessage();
+        else
+            this.endNegativeMessage(this.score).addComputerMessage();
     }
     addUnitTest(...values) {
         const argumentList = values.slice(0, -1);
         const expected = values.slice(-1).pop();
         const unitTest = new UnitTest(argumentList, expected);
-        this.addUnitTestTextTemplate(unitTest).replaceLastHumanMessage();
+        this.addUnitTestTextMessage(unitTest).replaceHumanMessage();
         const testResult = new TestResult(this.perfectCandidate, unitTest);
         if (testResult.passes) {
             const passingCandidatesBefore = this.findPassingCandidates(this.candidates, this.userdefinedUnitTests);
             this.userdefinedUnitTests.push(unitTest);
             const passingCandidatesAfter = this.findPassingCandidates(this.candidates, this.userdefinedUnitTests);
             if (passingCandidatesAfter.length === passingCandidatesBefore.length)
-                this.uselessUnitTestTemplate().newComputerMessage();
+                this.uselessUnitTestMessage().addComputerMessage();
             else
-                this.usefulUnitTestTemplate().newComputerMessage();
+                this.usefulUnitTestMessage().addComputerMessage();
         }
         else
-            this.incorrectUnitTestTemplate().newComputerMessage();
+            this.incorrectUnitTestMessage().addComputerMessage();
         this.menu();
     }
 }

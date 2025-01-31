@@ -11,36 +11,36 @@ abstract class Game {
 
     public abstract language() : string
     public abstract description(): string
+    protected abstract choiceLabel(): string
+    protected abstract buttonText(): string
     protected abstract getParameters(): Variable[]
     protected abstract getUnit(): Variable
     protected abstract getCandidateElements(): string[][]
     protected abstract getSpecialUnitTests(): UnitTest[]
     protected abstract generalArgumentsGenerator(): Generator<any[]>
-    protected abstract introductionTemplate(): Template
-    protected abstract menuTemplate(penaltyhint: number, penaltybug: number, penaltyend: number, form: Form): Template
-    protected abstract option1Template(): Template
-    protected abstract option2Template(): Template
-    protected abstract option4Template(): Template
-    protected abstract option5Template(): Template
-    protected abstract option0Template(): Template
-    protected abstract noUnitTestsTemplate(): Template
-    protected abstract unitTestsTemplate(unitTests: UnitTest[]): Template
-    protected abstract currentCandidateTemplate(candidate: Candidate): Template
-    protected abstract scoreTemplate(score: number): Template
-    protected abstract contractTemplate(initialscore: number, penaltybug: number): Template
-    protected abstract addUnitTestFormTemplate(form: Form): Template
-    protected abstract addUnitTestTextTemplate(unitTest: UnitTest): Template
-    protected abstract hintUnitTestTemplate(unitTest: UnitTest, penaltyhint: number): Template
-    protected abstract bugFoundTemplate(testResult: TestResult, penaltybug: number): Template
-    protected abstract endWithBugTemplate(): Template
-    protected abstract endPerfectTemplate(score: number): Template
-    protected abstract endPositiveTemplate(score: number): Template
-    protected abstract endNegativeTemplate(score: number): Template
-    protected abstract uselessUnitTestTemplate(): Template
-    protected abstract usefulUnitTestTemplate(): Template
-    protected abstract incorrectUnitTestTemplate(): Template
-    protected abstract specificationTemplate(): Template
-    protected abstract choiceLabel(): string
+    protected abstract introductionMessage(): Section
+    protected abstract menuMessage(penaltyhint: number, penaltybug: number, penaltyend: number, form: Form): Section
+    protected abstract optionSeeContractMessage(): Section
+    protected abstract optionSeeProblemDescriptionMessage(): Section
+    protected abstract optionSeeHintMessage(): Section
+    protected abstract optionSubmitMessage(): Section
+    protected abstract optionEndMessage(): Section
+    protected abstract unitTestsPanel(unitTests: UnitTest[]): Section
+    protected abstract currentCandidatePanel(candidate: Candidate): Section
+    protected abstract scorePanel(score: number): Section
+    protected abstract contractMessage(initialscore: number, penaltybug: number): Section
+    protected abstract addUnitTestFormMessage(form: Form): Section
+    protected abstract addUnitTestTextMessage(unitTest: UnitTest): Section
+    protected abstract hintUnitTestMessage(unitTest: UnitTest, penaltyhint: number): Section
+    protected abstract bugFoundMessage(testResult: TestResult, penaltybug: number): Section
+    protected abstract endWithBugMessage(): Section
+    protected abstract endPerfectMessage(score: number): Section
+    protected abstract endPositiveMessage(score: number): Section
+    protected abstract endNegativeMessage(score: number): Section
+    protected abstract uselessUnitTestMessage(): Section
+    protected abstract usefulUnitTestMessage(): Section
+    protected abstract incorrectUnitTestMessage(): Section
+    protected abstract specificationMessage(): Section
 
     INITIALSCORE = 100
     PENALTYHINT = 10
@@ -54,9 +54,7 @@ abstract class Game {
         this.specialUnitTests = this.getSpecialUnitTests()
         this.perfectCandidate = this.findOnePerfectCandidate(this.candidates, this.specialUnitTests)
         this.checkUnitTestsAreNeeded(this.candidates, this.specialUnitTests)
-        this.generalUnitTests = [...this.generalArgumentsGenerator()].map(argumentList => new UnitTest(argumentList, this.perfectCandidate.callFunc(argumentList)))
-        for (const candidate of this.candidates)
-            candidate.setQuality(this.specialUnitTests, this.generalUnitTests)
+        this.generalUnitTests = [...this.generalArgumentsGenerator()].map(argumentList => new UnitTest(argumentList, this.perfectCandidate.callFunction(argumentList)))
         this.userdefinedUnitTests = []
         this.score = this.INITIALSCORE
         this.failingTestResult = undefined
@@ -90,7 +88,7 @@ abstract class Game {
         const perfectFunctions = this.findPassingCandidates(candidates, unitTests)
         if (perfectFunctions.length === 0)
             throw new Error(`There is no perfect function for game ${this.constructor.name}.`)
-        return perfectFunctions[Math.floor(Math.random() * perfectFunctions.length)]
+        return perfectFunctions.random()
     }
 
     private checkUnitTestsAreNeeded(candidates: Candidate[], unitTests: UnitTest[]): void {
@@ -102,114 +100,106 @@ abstract class Game {
         }
     }
 
-    private findWorstPassingCandidate(candidates: Candidate[], userDefinedUnitTests: UnitTest[]): Candidate {
+    private findShortestPassingCandidate(candidates: Candidate[], userDefinedUnitTests: UnitTest[]): Candidate {
         const passingCandidates = this.findPassingCandidates(candidates, userDefinedUnitTests)
-        return passingCandidates.reduce((worstSoFar, current) => Candidate.worst(current, worstSoFar))
+        return passingCandidates.reduce((shortestSoFar, current) => current.length() < shortestSoFar.length() ? current : shortestSoFar)
     }
 
     public play(): void {
-        this.introductionTemplate().newComputerMessage()
+        this.introductionMessage().addComputerMessage()
         this.menu()
     }
 
     private menu(): void {
-        if (this.userdefinedUnitTests.length > 0)
-            this.unitTestsTemplate(this.userdefinedUnitTests).inSidebar('unit-tests')
-        else
-            this.noUnitTestsTemplate().inSidebar('unit-tests')
+        this.unitTestsPanel(this.userdefinedUnitTests).showPanel('unit-tests')
 
-        const worstPassingCandidate = this.findWorstPassingCandidate(this.candidates, this.userdefinedUnitTests)
-        this.currentCandidateTemplate(worstPassingCandidate).inSidebar('current-candidate')
+        const shortestPassingCandidate = this.findShortestPassingCandidate(this.candidates, this.userdefinedUnitTests)
+        this.currentCandidatePanel(shortestPassingCandidate).showPanel('current-candidate')
 
-        const failingGeneralTestResults = worstPassingCandidate.failingTestResults(this.generalUnitTests)
-        const failingSpecialTestResults = worstPassingCandidate.failingTestResults(this.specialUnitTests)
+        const failingGeneralTestResults = shortestPassingCandidate.failingTestResults(this.generalUnitTests)
+        const failingSpecialTestResults = shortestPassingCandidate.failingTestResults(this.specialUnitTests)
         const failingTestResultsToChooseFrom = failingGeneralTestResults ? failingGeneralTestResults : failingSpecialTestResults
         this.failingTestResult = failingTestResultsToChooseFrom
-            ? failingTestResultsToChooseFrom[Math.floor(Math.random() * failingTestResultsToChooseFrom.length)]
+            ? failingTestResultsToChooseFrom.random()
             : undefined
 
-        this.scoreTemplate(this.score).inSidebar('score')
-        this.menuTemplate(
+        this.scorePanel(this.score).showPanel('score')
+        this.menuMessage(
             this.PENALTYHINT,
             this.PENALTYBUG,
             this.PENALTYEND,
-            new Form([new RadioVariable(this.choiceLabel(), 'choice', ['1', '2', '3', '4', '5', '0'])], this.answer.bind(this)),
-        ).newHumanMessage()
+            new Form([new RadioVariable(this.choiceLabel(), 'choice', ['1', '2', '3', '4', '5', '0'])], this.buttonText(), this.answer.bind(this)),
+        ).addHumanMessage()
     }
 
     private answer(choice: string): void {
         if (choice === '1') {
-            this.option1Template().replaceLastHumanMessage()
-            this.contractTemplate(this.INITIALSCORE, this.PENALTYBUG).newComputerMessage()
+            this.optionSeeContractMessage().replaceHumanMessage()
+            this.contractMessage(this.INITIALSCORE, this.PENALTYBUG).addComputerMessage()
             this.menu()
         }
         else if (choice === '2') {
-            this.option2Template().replaceLastHumanMessage()
-            this.specificationTemplate().newComputerMessage()
+            this.optionSeeProblemDescriptionMessage().replaceHumanMessage()
+            this.specificationMessage().addComputerMessage()
             this.menu()
         }
         else if (choice === '3') {
-            this.addUnitTestFormTemplate(new Form([...this.parameters, this.unit], this.addUnitTest.bind(this))).replaceLastHumanMessage()
+            this.addUnitTestFormMessage(new Form([...this.parameters, this.unit], this.buttonText(), this.addUnitTest.bind(this))).replaceHumanMessage()
         }
         else if (choice === '4') {
             if (this.failingTestResult) {
-                this.option4Template().replaceLastHumanMessage()
-                this.hintUnitTestTemplate(this.failingTestResult.unitTest, this.PENALTYHINT).newComputerMessage()
+                this.optionSeeHintMessage().replaceHumanMessage()
+                this.hintUnitTestMessage(this.failingTestResult.unitTest, this.PENALTYHINT).addComputerMessage()
                 this.score -= this.PENALTYHINT
             }
             this.menu()
         }
         else if (choice === '5') {
-            this.option5Template().replaceLastHumanMessage()
+            this.optionSubmitMessage().replaceHumanMessage()
             if (this.failingTestResult) {
-                this.bugFoundTemplate(this.failingTestResult, this.PENALTYBUG).newComputerMessage()
+                this.bugFoundMessage(this.failingTestResult, this.PENALTYBUG).addComputerMessage()
                 this.score -= this.PENALTYBUG
             }
             else
                 this.end()
         }
-        else if (choice === '0') {
+        else if (choice === '0')
             this.end()
-        }
-        else {
+        else
             this.menu()
-        }
     }
 
     private end(): void {
         if (this.failingTestResult) {
             this.score = 0
-            this.scoreTemplate(this.score).inSidebar('score')
-            this.endWithBugTemplate().newComputerMessage()
+            this.scorePanel(this.score).showPanel('score')
+            this.endWithBugMessage().addComputerMessage()
         }
-        else if (this.score == 100) {
-            this.endPerfectTemplate(this.score).newComputerMessage()
-        }
-        else if (this.score > 50) {
-            this.endPositiveTemplate(this.score).newComputerMessage()
-        }
-        else {
-            this.endNegativeTemplate(this.score).newComputerMessage()
-        }
+        else if (this.score == 100)
+            this.endPerfectMessage(this.score).addComputerMessage()
+        else if (this.score > 50)
+            this.endPositiveMessage(this.score).addComputerMessage()
+        else
+            this.endNegativeMessage(this.score).addComputerMessage()
     }
 
     private addUnitTest(...values: any[]): void {
         const argumentList = values.slice(0, -1)
         const expected = values.slice(-1).pop()
         const unitTest = new UnitTest(argumentList, expected)
-        this.addUnitTestTextTemplate(unitTest).replaceLastHumanMessage()
+        this.addUnitTestTextMessage(unitTest).replaceHumanMessage()
         const testResult = new TestResult(this.perfectCandidate, unitTest)
         if (testResult.passes) {
             const passingCandidatesBefore = this.findPassingCandidates(this.candidates, this.userdefinedUnitTests)
             this.userdefinedUnitTests.push(unitTest)
             const passingCandidatesAfter = this.findPassingCandidates(this.candidates, this.userdefinedUnitTests)
             if (passingCandidatesAfter.length === passingCandidatesBefore.length)
-                this.uselessUnitTestTemplate().newComputerMessage()
+                this.uselessUnitTestMessage().addComputerMessage()
             else
-                this.usefulUnitTestTemplate().newComputerMessage()
+                this.usefulUnitTestMessage().addComputerMessage()
         }
         else
-            this.incorrectUnitTestTemplate().newComputerMessage()
+            this.incorrectUnitTestMessage().addComputerMessage()
         this.menu()
     }
 }

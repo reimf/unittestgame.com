@@ -1,31 +1,20 @@
 class Candidate {
-    private func: Function
-    private quality: string
+    private function: Function
 
     public constructor(code: string) {
-        this.func = new Function("return " + code)()
-        this.quality = ''
+        this.function = new Function('return ' + code)()
     }
 
-    public callFunc(argumentsList: any[]): any {
+    public callFunction(argumentsList: any[]): any {
         try {
-            return this.func(...argumentsList)
+            return this.function(...argumentsList)
         } catch (error: any) {
             return error.name
         }
     }
 
-    public setQuality(specialUnitTests: UnitTest[], generalUnitTests: UnitTest[]): void {
-        const elements = [
-            this.passCount(specialUnitTests),
-            this.passCount(generalUnitTests),
-            this.func.toString().length,
-        ]
-        this.quality = 'quality:' + elements.map(element => element.toString().padStart(4, '0')).join(':')
-    }
-
-    public static worst(candidateOne: Candidate, candidateTwo: Candidate): Candidate {
-        return candidateOne.quality < candidateTwo.quality ? candidateOne : candidateTwo
+    public length(): number {
+        return this.function.toString().length
     }
 
     public testResults(unitTests: UnitTest[]): TestResult[] {
@@ -45,6 +34,6 @@ class Candidate {
     }
 
     public toHtml(): Html {
-        return new Html('code').appendText(this.func.toString())
+        return new Html('code').appendText(this.function.toString())
     }
 }

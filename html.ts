@@ -40,7 +40,7 @@ class Html {
         return this
     }
 
-    public className(value?: string): Html {
+    public addClass(value?: string): Html {
         if (value)
             this.element.classList.add(value)
         return this
@@ -52,13 +52,13 @@ class Html {
     }
 
     public appendChild(value: Html): Html {
-        this.element.appendChild(value.toHTMLElement())
+        this.element.appendChild(value.element)
         return this
     }
 
     public appendChildren(values: Html[]): Html {
         for (const value of values)
-            this.element.appendChild(value.toHTMLElement())
+            this.element.appendChild(value.element)
         return this
     }
 
@@ -67,12 +67,13 @@ class Html {
         return this
     }
 
-    public toHtml(): Html {
-        return this
-    }
-
-    public toHTMLElement(): HTMLElement {
-        return this.element
+    public addTo(parentId: string): void {
+        const old = document.querySelector('#' + this.element.id)
+        if (old) 
+            old.replaceWith(this.element)
+        else
+            document.querySelector('#' + parentId)!.appendChild(this.element)
+        this.element.querySelector('input')?.focus()
     }
 }
 

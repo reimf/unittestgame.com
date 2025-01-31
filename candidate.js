@@ -1,27 +1,18 @@
 "use strict";
 class Candidate {
     constructor(code) {
-        this.func = new Function("return " + code)();
-        this.quality = '';
+        this.function = new Function('return ' + code)();
     }
-    callFunc(argumentsList) {
+    callFunction(argumentsList) {
         try {
-            return this.func(...argumentsList);
+            return this.function(...argumentsList);
         }
         catch (error) {
             return error.name;
         }
     }
-    setQuality(specialUnitTests, generalUnitTests) {
-        const elements = [
-            this.passCount(specialUnitTests),
-            this.passCount(generalUnitTests),
-            this.func.toString().length,
-        ];
-        this.quality = 'quality:' + elements.map(element => element.toString().padStart(4, '0')).join(':');
-    }
-    static worst(candidateOne, candidateTwo) {
-        return candidateOne.quality < candidateTwo.quality ? candidateOne : candidateTwo;
+    length() {
+        return this.function.toString().length;
     }
     testResults(unitTests) {
         return unitTests.map(unitTest => new TestResult(this, unitTest));
@@ -36,6 +27,6 @@ class Candidate {
         return unitTests.length - this.failCount(unitTests);
     }
     toHtml() {
-        return new Html('code').appendText(this.func.toString());
+        return new Html('code').appendText(this.function.toString());
     }
 }

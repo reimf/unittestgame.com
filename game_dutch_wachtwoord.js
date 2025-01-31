@@ -6,16 +6,16 @@ class Wachtwoord extends Dutch {
     description() {
         return 'Bepaal of een wachtwoord voldoende sterk is';
     }
-    introductionTemplate() {
-        return new Template([
+    introductionMessage() {
+        return new Section([
             new Paragraph('Een webshop laat een nieuwe functie ontwikkelen door een extern softwarebedrijf. ' +
                 'De functie wordt gebruikt om wachtwoorden te controleren voor de webshop. ' +
                 'Gebruikers moeten erop kunnen rekenen dat de getoonde vereisten correct zijn en er mogen dus geen fouten in zitten. ' +
                 'Daarom hebben ze jou ingehuurd om unit testen te schrijven voor die functie.'),
         ]);
     }
-    specificationTemplate() {
-        return new Template([
+    specificationMessage() {
+        return new Section([
             new Paragraph('Regel 1: Het wachtwoord bestaat uit minstens 5 karakters.'),
             new Paragraph('Regel 2: Het wachtwoord bevat een hoofdletter.'),
             new Paragraph('Regel 3: Het wachtwoord bevat een speciaal teken ("#" of "@").'),
@@ -24,11 +24,11 @@ class Wachtwoord extends Dutch {
     }
     getParameters() {
         return [
-            new StringVariable('Wachtwoord', 'password')
+            new TextVariable('Wachtwoord', 'password')
         ];
     }
     getUnit() {
-        return new BooleanVariable('Is het wachtwoord sterk?', 'isStrong');
+        return new CheckboxVariable('Is het wachtwoord sterk?', 'isStrong');
     }
     getCandidateElements() {
         return [
@@ -119,9 +119,9 @@ class Wachtwoord extends Dutch {
         const letters = [...this.generateLetters()];
         const specialChars = [...this.generateSpecialCharacters()];
         for (let i = 0; i < 100; i++) {
-            const ds = digits[Math.floor(Math.random() * digits.length)];
-            const us = letters[Math.floor(Math.random() * letters.length)];
-            const scs = specialChars[Math.floor(Math.random() * specialChars.length)];
+            const ds = digits.random();
+            const us = letters.random();
+            const scs = specialChars.random();
             const chars = [...ds, ...us, ...scs];
             this.shuffleArray(chars);
             yield [chars.join("")];

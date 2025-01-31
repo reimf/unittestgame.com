@@ -7,8 +7,8 @@ class Snelheid extends Dutch {
         return 'Laat de snelheid van een auto zien'
     }
 
-    protected introductionTemplate(): Template {
-        return new Template([
+    protected introductionMessage(): Section {
+        return new Section([
             new Paragraph(
                 'Een Chinese gadgetmaker laat een nieuwe functie ontwikkelen door een extern softwarebedrijf. ' +
                 'De gadget laat de gemiddelde snelheid zien op een klein display.'
@@ -19,7 +19,7 @@ class Snelheid extends Dutch {
                 '|  X   X  X   X  X  |\n' +
                 '|  X   XXXX   XXXX  |\n' +
                 '|  X   X  X   X  X  |\n' +
-                '|  X   XXXX X XXXX  |\n' + 
+                '|  X   XXXX X XXXX  |\n' +
                 '+-------------------+'
             ),
             new Paragraph(
@@ -29,8 +29,8 @@ class Snelheid extends Dutch {
         ])
     }
 
-    protected specificationTemplate(): Template {
-        return new Template([
+    protected specificationMessage(): Section {
+        return new Section([
             new Paragraph(
                 'De functie ontvangt de snelheid in meter per uur en moet de snelheid weergeven in kilometer per uur.'
             ),
@@ -40,7 +40,7 @@ class Snelheid extends Dutch {
                 '|  X   X  X   X  X  |\n' +
                 '|  X   XXXX   XXXX  |\n' +
                 '|  X   X  X   X  X  |\n' +
-                '|  X   XXXX X XXXX  |\n' + 
+                '|  X   XXXX X XXXX  |\n' +
                 '+-------------------+'
             ),
             new Paragraph(
@@ -61,7 +61,7 @@ class Snelheid extends Dutch {
     }
 
     protected getUnit(): Variable {
-        return new StringVariable(
+        return new TextVariable(
             'Verwachte weergave op het display',
             'display'
         )

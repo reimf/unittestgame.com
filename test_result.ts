@@ -1,11 +1,10 @@
 class TestResult {
-    readonly unitTest: UnitTest
     private result: any
     readonly passes: boolean
 
-    public constructor(candidate: Candidate, unitTest: UnitTest) {
+    public constructor(candidate: Candidate, readonly unitTest: UnitTest) {
         this.unitTest = unitTest
-        this.result = candidate.callFunc(unitTest.argumentList)
+        this.result = candidate.callFunction(unitTest.argumentList)
         this.passes = this.result === unitTest.expected
     }
 

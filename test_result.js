@@ -2,7 +2,8 @@
 class TestResult {
     constructor(candidate, unitTest) {
         this.unitTest = unitTest;
-        this.result = candidate.callFunc(unitTest.argumentList);
+        this.unitTest = unitTest;
+        this.result = candidate.callFunction(unitTest.argumentList);
         this.passes = this.result === unitTest.expected;
     }
     toHtml() {

@@ -6,14 +6,14 @@ class Triangletype extends Basecamp {
     description() {
         return 'A1W2P4 triangletype.py';
     }
-    introductionTemplate() {
-        return new Template([
+    introductionMessage() {
+        return new Section([
             new Paragraph('Basecamp students are instructed to write a function that determines the type of a triangle. ' +
                 'You are hired to write the CodeGrade autotests for this function.'),
         ]);
     }
-    specificationTemplate() {
-        return new Template([
+    specificationMessage() {
+        return new Section([
             new Paragraph('A triangle can be classified based on the lengths of its sides as equilateral, isosceles or scalene. ' +
                 'All three sides of an equilateral triangle have the same length. ' +
                 'An isosceles triangle has two sides that are the same length, and a third side that is a different length ' +

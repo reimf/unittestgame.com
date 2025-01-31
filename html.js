@@ -31,7 +31,7 @@ class Html {
         this.element.autocomplete = value;
         return this;
     }
-    className(value) {
+    addClass(value) {
         if (value)
             this.element.classList.add(value);
         return this;
@@ -41,23 +41,26 @@ class Html {
         return this;
     }
     appendChild(value) {
-        this.element.appendChild(value.toHTMLElement());
+        this.element.appendChild(value.element);
         return this;
     }
     appendChildren(values) {
         for (const value of values)
-            this.element.appendChild(value.toHTMLElement());
+            this.element.appendChild(value.element);
         return this;
     }
     onSubmit(callback) {
         this.element.addEventListener('submit', callback);
         return this;
     }
-    toHtml() {
-        return this;
-    }
-    toHTMLElement() {
-        return this.element;
+    addTo(parentId) {
+        var _a;
+        const old = document.querySelector('#' + this.element.id);
+        if (old)
+            old.replaceWith(this.element);
+        else
+            document.querySelector('#' + parentId).appendChild(this.element);
+        (_a = this.element.querySelector('input')) === null || _a === void 0 ? void 0 : _a.focus();
     }
 }
 class Header extends Html {

@@ -6,8 +6,8 @@ class Snelheid extends Dutch {
     description() {
         return 'Laat de snelheid van een auto zien';
     }
-    introductionTemplate() {
-        return new Template([
+    introductionMessage() {
+        return new Section([
             new Paragraph('Een Chinese gadgetmaker laat een nieuwe functie ontwikkelen door een extern softwarebedrijf. ' +
                 'De gadget laat de gemiddelde snelheid zien op een klein display.'),
             new Paragraph('+-------------------+\n' +
@@ -21,8 +21,8 @@ class Snelheid extends Dutch {
                 'Daarom hebben ze jou ingehuurd om unit testen te schrijven voor die functie.'),
         ]);
     }
-    specificationTemplate() {
-        return new Template([
+    specificationMessage() {
+        return new Section([
             new Paragraph('De functie ontvangt de snelheid in meter per uur en moet de snelheid weergeven in kilometer per uur.'),
             new Paragraph('+-------------------+\n' +
                 '|  X   XXXX   XXXX  |\n' +
@@ -45,7 +45,7 @@ class Snelheid extends Dutch {
         ];
     }
     getUnit() {
-        return new StringVariable('Verwachte weergave op het display', 'display');
+        return new TextVariable('Verwachte weergave op het display', 'display');
     }
     getCandidateElements() {
         return [

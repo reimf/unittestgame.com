@@ -7,8 +7,8 @@ class Leapyear extends Basecamp {
         return 'A1W2P2 leapyearcalculator.py'
     }
 
-    protected introductionTemplate(): Template {
-        return new Template([
+    protected introductionMessage(): Section {
+        return new Section([
             new Paragraph(
                 'Basecamp students are instructed to write a function that determines whether or not a year is a leap year. ' +
                 'You are hired to write the CodeGrade autotests for this function.'
@@ -16,8 +16,8 @@ class Leapyear extends Basecamp {
         ])
     }
 
-    protected specificationTemplate(): Template {
-        return new Template([
+    protected specificationMessage(): Section {
+        return new Section([
             new Paragraph(
                 'Most years have 365 days. ' +
                 'However, the time required for the Earth to orbit the Sun is actually slightly more than that. ' +
@@ -42,7 +42,7 @@ class Leapyear extends Basecamp {
     }
 
     protected getUnit(): Variable {
-        return new BooleanVariable(
+        return new CheckboxVariable(
             'Is it a leap year?',
             'isLeapyear'
         )

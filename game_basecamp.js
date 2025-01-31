@@ -6,8 +6,35 @@ class Basecamp extends Game {
     language() {
         return 'Basecamp';
     }
-    menuTemplate(penaltyhint, penaltybug, penaltyend, form) {
-        return new Template([
+    choiceLabel() {
+        return 'Choice';
+    }
+    buttonText() {
+        return 'Go!';
+    }
+    unitTestsPanel(unitTests) {
+        const list = unitTests.length === 0
+            ? [new Paragraph('You have not written any autotest yet.')]
+            : unitTests.map(unitTest => unitTest.toHtml());
+        return new Section([
+            new Header('Autotests'),
+            ...list,
+        ]);
+    }
+    currentCandidatePanel(candidate) {
+        return new Section([
+            new Header('Current function'),
+            candidate.toHtml(),
+        ]);
+    }
+    scorePanel(score) {
+        return new Section([
+            new Header('Grade so far'),
+            new Paragraph(`${this.formatScore(score)}`),
+        ]);
+    }
+    menuMessage(penaltyhint, penaltybug, penaltyend, form) {
+        return new Section([
             new Paragraph('I want to…'),
             new Paragraph('[1] …see the contract'),
             new Paragraph('[2] …see the problem description'),
@@ -18,60 +45,13 @@ class Basecamp extends Game {
             form.toHtml(),
         ]);
     }
-    option1Template() {
-        return new Template([
+    optionSeeContractMessage() {
+        return new Section([
             new Paragraph('I want to see the contract.'),
         ]);
     }
-    option2Template() {
-        return new Template([
-            new Paragraph('I want to see the problem description.'),
-        ]);
-    }
-    option4Template() {
-        return new Template([
-            new Paragraph('I want to see a hint for an autotest.'),
-        ]);
-    }
-    option5Template() {
-        return new Template([
-            new Paragraph('I want to submit the autotests.'),
-        ]);
-    }
-    option0Template() {
-        return new Template([
-            new Paragraph('I want to end the game.'),
-        ]);
-    }
-    choiceLabel() {
-        return 'Choice';
-    }
-    noUnitTestsTemplate() {
-        return new Template([
-            new Header('Autotests'),
-            new Paragraph('You have not written any autotest yet.'),
-        ]);
-    }
-    unitTestsTemplate(unitTests) {
-        return new Template([
-            new Header('Autotests'),
-            ...unitTests.map(unitTest => unitTest.toHtml()),
-        ]);
-    }
-    currentCandidateTemplate(candidate) {
-        return new Template([
-            new Header('Current function'),
-            candidate.toHtml(),
-        ]);
-    }
-    scoreTemplate(score) {
-        return new Template([
-            new Header('Grade so far'),
-            new Paragraph(`${this.formatScore(score)}`),
-        ]);
-    }
-    contractTemplate(initialscore, penaltybug) {
-        return new Template([
+    contractMessage(initialscore, penaltybug) {
+        return new Section([
             new Paragraph('We have to make sure students write functions that are correct. ' +
                 'Your task is to write enough autotests for these functions, ' +
                 'so that students get the right feedback. ' +
@@ -82,27 +62,47 @@ class Basecamp extends Game {
                 `your grade will decrease by ${this.formatScore(penaltybug)}.`)
         ]);
     }
-    addUnitTestFormTemplate(form) {
-        return new Template([
+    optionSeeProblemDescriptionMessage() {
+        return new Section([
+            new Paragraph('I want to see the problem description.'),
+        ]);
+    }
+    addUnitTestFormMessage(form) {
+        return new Section([
             new Paragraph('I want to add an autotest.'),
             form.toHtml(),
         ]);
     }
-    addUnitTestTextTemplate(unitTest) {
-        return new Template([
+    addUnitTestTextMessage(unitTest) {
+        return new Section([
             new Paragraph('I want to add the following autotest:'),
             unitTest.toHtml(),
         ]);
     }
-    hintUnitTestTemplate(unitTest, penaltyhint) {
-        return new Template([
+    optionSeeHintMessage() {
+        return new Section([
+            new Paragraph('I want to see a hint for an autotest.'),
+        ]);
+    }
+    optionSubmitMessage() {
+        return new Section([
+            new Paragraph('I want to submit the autotests.'),
+        ]);
+    }
+    optionEndMessage() {
+        return new Section([
+            new Paragraph('I want to end the game.'),
+        ]);
+    }
+    hintUnitTestMessage(unitTest, penaltyhint) {
+        return new Section([
             new Paragraph('An autotest that currently fails could be the following.'),
             unitTest.toHtml(),
             new Paragraph(`Your grade will decrease by ${this.formatScore(penaltyhint)}.`),
         ]);
     }
-    bugFoundTemplate(testResult, penaltybug) {
-        return new Template([
+    bugFoundMessage(testResult, penaltybug) {
+        return new Section([
             new Paragraph('Thank you! ' +
                 'We have deployed the latest version of the function to production. ' +
                 'A student has reported an error in CodeGrade. ' +
@@ -111,8 +111,8 @@ class Basecamp extends Game {
             new Paragraph(`Your grade will decrease by ${this.formatScore(penaltybug)} point.`),
         ]);
     }
-    endWithBugTemplate() {
-        return new Template([
+    endWithBugMessage() {
+        return new Section([
             new Paragraph('There are still clearly wrong functions that pass all your autotests, ' +
                 'so we will give you the minimum grade. ' +
                 'Too bad! ' +
@@ -120,8 +120,8 @@ class Basecamp extends Game {
                 'Thanks for playing!'),
         ]);
     }
-    endPerfectTemplate(score) {
-        return new Template([
+    endPerfectMessage(score) {
+        return new Section([
             new Paragraph('Congratulations! ' +
                 'CodeGrade is completely error-free thanks to your autotests. ' +
                 `Your final grade is a perfect ${this.formatScore(score)}. ` +
@@ -129,8 +129,8 @@ class Basecamp extends Game {
                 'Thanks for playing!'),
         ]);
     }
-    endPositiveTemplate(score) {
-        return new Template([
+    endPositiveMessage(score) {
+        return new Section([
             new Paragraph('Congratulations! ' +
                 'CodeGrade is completely error-free thanks to your autotests. ' +
                 `Your final grade is ${this.formatScore(score)}. ` +
@@ -139,8 +139,8 @@ class Basecamp extends Game {
                 'Thanks for playing!')
         ]);
     }
-    endNegativeTemplate(score) {
-        return new Template([
+    endNegativeMessage(score) {
+        return new Section([
             new Paragraph('Congratulations! ' +
                 'CodeGrade is completely error-free thanks to your autotests. ' +
                 `Your final grade is ${this.formatScore(score)}. ` +
@@ -149,22 +149,20 @@ class Basecamp extends Game {
                 'Thanks for playing!')
         ]);
     }
-    uselessUnitTestTemplate() {
-        return new Template([
+    uselessUnitTestMessage() {
+        return new Section([
             new Paragraph('We have added this autotest. ' +
-                'Your autotest seems very similar to a previous autotest. ' +
+                'The current function already passed this autotest. ' +
                 'Therefore, we think this autotest is not very useful.'),
         ]);
     }
-    usefulUnitTestTemplate() {
-        return new Template([
-            new Paragraph('We have added this autotest. ' +
-                'There were students who\'s function did not follow the specification. ' +
-                'They improved the function, and it should now be better.'),
+    usefulUnitTestMessage() {
+        return new Section([
+            new Paragraph('Autotest added successfully.'),
         ]);
     }
-    incorrectUnitTestTemplate() {
-        return new Template([
+    incorrectUnitTestMessage() {
+        return new Section([
             new Paragraph('We compared your autotest with the specification. ' +
                 'Your autotest turns out to be incorrect. ' +
                 'So we did not add the autotest to our code.'),

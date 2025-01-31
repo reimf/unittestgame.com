@@ -9,6 +9,7 @@ class RadioVariable extends Variable {
     constructor(label, name, options) {
         super(label, name);
         this.options = options;
+        this.options = options;
     }
     value(element) {
         const selector = `input[name="${element.name}"]:checked`;
@@ -23,7 +24,7 @@ class RadioVariable extends Variable {
         return new Html('div').appendText(this.label).appendChildren(radioButtons);
     }
 }
-class BooleanVariable extends Variable {
+class CheckboxVariable extends Variable {
     constructor(label, name) {
         super(label, name);
     }
@@ -36,7 +37,7 @@ class BooleanVariable extends Variable {
         return new Html('div').appendChild(label).appendText(this.label);
     }
 }
-class StringVariable extends Variable {
+class TextVariable extends Variable {
     constructor(label, name) {
         super(label, name);
     }

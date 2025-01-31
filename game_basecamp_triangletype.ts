@@ -7,8 +7,8 @@ class Triangletype extends Basecamp {
         return 'A1W2P4 triangletype.py'
     }
 
-    protected introductionTemplate(): Template {
-        return new Template([
+    protected introductionMessage(): Section {
+        return new Section([
             new Paragraph(
                 'Basecamp students are instructed to write a function that determines the type of a triangle. ' +
                 'You are hired to write the CodeGrade autotests for this function.'
@@ -16,8 +16,8 @@ class Triangletype extends Basecamp {
         ])
     }
 
-    protected specificationTemplate(): Template {
-        return new Template([
+    protected specificationMessage(): Section {
+        return new Section([
             new Paragraph(
                 'A triangle can be classified based on the lengths of its sides as equilateral, isosceles or scalene. ' +
                 'All three sides of an equilateral triangle have the same length. ' +

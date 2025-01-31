@@ -1,25 +1,17 @@
 abstract class Variable {
-    protected label: string
-    public name: string
-
-    protected constructor(label: string, name: string) {
-        this.label = label
-        this.name = name
-    }
+    protected constructor(protected label: string, public name: string) { }
 
     public abstract value(element: HTMLElement): boolean | number | string
     public abstract toHtml(): Html
 }
 
 class RadioVariable extends Variable {
-    private options: string[]
-
-    public constructor(label: string, name: string, options: string[]) {
+    public constructor(label: string, name: string, private options: string[]) {
         super(label, name)
         this.options = options
     }
 
-    public value(element: HTMLInputElement): boolean | number | string {
+    public value(element: HTMLInputElement): string {
         const selector = `input[name="${element.name}"]:checked`
         const checked = document.querySelector(selector) as HTMLInputElement
         return checked.value
@@ -34,12 +26,12 @@ class RadioVariable extends Variable {
     }
 }
 
-class BooleanVariable extends Variable {
+class CheckboxVariable extends Variable {
     public constructor(label: string, name: string) {
         super(label, name)
     }
 
-    public value(element: HTMLInputElement): boolean | number | string {
+    public value(element: HTMLInputElement): boolean {
         return element.checked
     }
 
@@ -50,12 +42,12 @@ class BooleanVariable extends Variable {
     }
 }
 
-class StringVariable extends Variable {
+class TextVariable extends Variable {
     public constructor(label: string, name: string) {
         super(label, name)
     }
 
-    public value(element: HTMLInputElement): boolean | number | string {
+    public value(element: HTMLInputElement): string {
         return element.value
     }
 
@@ -71,7 +63,7 @@ class NumberVariable extends Variable {
         super(label, name)
     }
 
-    public value(element: HTMLInputElement): boolean | number | string {
+    public value(element: HTMLInputElement): number {
         return Number(element.value)
     }
 

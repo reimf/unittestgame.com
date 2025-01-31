@@ -1,7 +1,8 @@
 "use strict";
 class Form {
-    constructor(variables, callback) {
+    constructor(variables, buttonText, callback) {
         this.variables = variables;
+        this.buttonText = buttonText;
         this.callback = callback;
     }
     toHtml() {
@@ -19,7 +20,7 @@ class Form {
             this.callback(...values);
         };
         const inputs = this.variables.map(variable => variable.toHtml());
-        const button = new Html('input').type('submit').value('Go!');
+        const button = new Html('input').type('submit').value(this.buttonText);
         const block = new Html('div').appendChild(button);
         return new Html('form').onSubmit(callbackProxy).appendChildren(inputs).appendChild(block);
     }

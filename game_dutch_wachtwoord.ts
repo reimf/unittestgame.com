@@ -7,8 +7,8 @@ class Wachtwoord extends Dutch {
         return 'Bepaal of een wachtwoord voldoende sterk is'
     }
 
-    protected introductionTemplate(): Template {
-        return new Template([
+    protected introductionMessage(): Section {
+        return new Section([
             new Paragraph(
                 'Een webshop laat een nieuwe functie ontwikkelen door een extern softwarebedrijf. ' +
                 'De functie wordt gebruikt om wachtwoorden te controleren voor de webshop. ' +
@@ -18,8 +18,8 @@ class Wachtwoord extends Dutch {
         ])
     }
 
-    protected specificationTemplate(): Template {
-        return new Template([
+    protected specificationMessage(): Section {
+        return new Section([
             new Paragraph('Regel 1: Het wachtwoord bestaat uit minstens 5 karakters.'),
             new Paragraph('Regel 2: Het wachtwoord bevat een hoofdletter.'),
             new Paragraph('Regel 3: Het wachtwoord bevat een speciaal teken ("#" of "@").'),
@@ -29,12 +29,12 @@ class Wachtwoord extends Dutch {
 
     protected getParameters(): Variable[] {
         return [
-            new StringVariable('Wachtwoord', 'password')
+            new TextVariable('Wachtwoord', 'password')
         ]
     }
 
     protected getUnit(): Variable {
-        return new BooleanVariable(
+        return new CheckboxVariable(
             'Is het wachtwoord sterk?',
             'isStrong'
         )
@@ -130,12 +130,12 @@ class Wachtwoord extends Dutch {
         const digits = [...this.generateDigits()]
         const letters = [...this.generateLetters()]
         const specialChars = [...this.generateSpecialCharacters()]
-        
+
         for (let i = 0; i < 100; i++) {
-            const ds = digits[Math.floor(Math.random() * digits.length)]
-            const us = letters[Math.floor(Math.random() * letters.length)]
-            const scs = specialChars[Math.floor(Math.random() * specialChars.length)]
-            
+            const ds = digits.random()
+            const us = letters.random()
+            const scs = specialChars.random()
+
             const chars = [...ds, ...us, ...scs]
             this.shuffleArray(chars)
 

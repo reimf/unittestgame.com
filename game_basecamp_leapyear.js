@@ -6,14 +6,14 @@ class Leapyear extends Basecamp {
     description() {
         return 'A1W2P2 leapyearcalculator.py';
     }
-    introductionTemplate() {
-        return new Template([
+    introductionMessage() {
+        return new Section([
             new Paragraph('Basecamp students are instructed to write a function that determines whether or not a year is a leap year. ' +
                 'You are hired to write the CodeGrade autotests for this function.'),
         ]);
     }
-    specificationTemplate() {
-        return new Template([
+    specificationMessage() {
+        return new Section([
             new Paragraph('Most years have 365 days. ' +
                 'However, the time required for the Earth to orbit the Sun is actually slightly more than that. ' +
                 'As a result, an extra day, February 29, is included in some years to correct for this difference. ' +
@@ -31,7 +31,7 @@ class Leapyear extends Basecamp {
         ];
     }
     getUnit() {
-        return new BooleanVariable('Is it a leap year?', 'isLeapyear');
+        return new CheckboxVariable('Is it a leap year?', 'isLeapyear');
     }
     getCandidateElements() {
         return [

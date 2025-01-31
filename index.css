@@ -10,7 +10,7 @@ body {
 }
 
 a {
-    color: #128c7e;
+    color: inherit;
 }
 
 form {
@@ -23,17 +23,25 @@ form {
         display: inline-block;
         height: 2rem;
         line-height: 2rem;
-        padding-right: 1rem;
 
-        &:has(input[type="radio"]:focus) {
+        &:has(input[type="radio"]) {
             background-color: #fff;
+            color: #333;
+            margin-left: 0.5rem;
+            padding-right: 1rem;
+        }
+
+        &:has(input[type="radio"]:focus), &:has(input[type="radio"]:checked) {
+            background-color: #25d366;
+            color: #fff;
         }
     }
-    
+
     input[type="text"], input[type="number"] {
         background-color: #fff;
         border: none;
         border-radius: 0.5rem;
+        color: #333;
         font-family: inherit;
         font-size: inherit;
         height: 2rem;
@@ -41,19 +49,22 @@ form {
         padding: 0 0.5rem;
         width: 8rem;
     }
-    
+
     input[type="checkbox"] {
         margin: 0 0.5rem 0 0;
     }
-    
+
     input[type="radio"] {
-        margin: 0 0.5rem 0 1rem;
+        margin: 0 0.5rem;
+        opacity: 0;
+        width: 0;
     }
-    
+
     input[type="submit"] {
         background-color: #fff;
         border: none;
         border-radius: 0.5rem;
+        color: #333;
         font-family: inherit;
         font-size: inherit;
         height: 2.5rem;
@@ -76,6 +87,7 @@ form {
 
         &.human {
             background-color: #dcf8c6;
+            color: #333;
             margin-left: 10vw;
         }
 
@@ -92,6 +104,7 @@ form {
 section {
     background-color: #fff;
     border-radius: 0.5rem;
+    color: #333;
     margin: 0.7rem;
     padding: 0.7rem;
     white-space: break-spaces;

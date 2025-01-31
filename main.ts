@@ -7,16 +7,16 @@ class Main {
         new Wachtwoord(),
     ]
 
-    private aboutTemplate(): Template {
+    private aboutMessage(): Section {
         const link = new Html('a').href('mailto:feedback@unittestgame.com').appendText('feedback@unittestgame.com')
-        return new Template([
+        return new Section([
             new Header('Learn unit testing with UnitTestGame.com'),
             new Paragraph('Please send ').appendChild(link)
         ])
     }
 
-    private gameMenuTemplate(options: Html[], form: Form): Template {
-        return new Template([
+    private gameMenuMessage(options: Html[], form: Form): Section {
+        return new Section([
             new Paragraph('I want to play the following game:'),
             ...options,
             new Paragraph('[0] Quit'),
@@ -24,46 +24,47 @@ class Main {
         ])
     }
 
-    private choosenGameTemplate(game: Game): Template {
-        return new Template([
-            new Paragraph(`I want to play ${game.language()} - ${game.description()}.`),
+    private choosenGameMessage(game: Game): Section {
+        return new Section([
+            new Paragraph('I want to play the following game:'),
+            new Paragraph(`${game.language()} - ${game.description()}`),
         ])
     }
 
-    private quitTemplate(): Template {
-        return new Template([
+    private quitMessage(): Section {
+        return new Section([
             new Paragraph('I want to quit.')
         ])
     }
 
-    private byeTemplate(): Template {
-        return new Template([
+    private byeMessage(): Section {
+        return new Section([
             new Paragraph('Bye!'),
         ])
     }
 
     public start(): void {
-        this.aboutTemplate().inSidebar('welcome')
+        this.aboutMessage().showPanel('welcome')
         this.menu()
     }
 
     private menu(): void {
         const choices = [...this.games.map((_, index) => `${index + 1}`)].concat(['0'])
-        this.gameMenuTemplate(
+        this.gameMenuMessage(
             this.games.map((game, index) => new Paragraph(`[${index + 1}] ${game.language().padEnd(10)} - ${game.description()}`)),
-            new Form([new RadioVariable('Choice', 'choice', choices)], this.answer.bind(this))
-        ).newHumanMessage()
+            new Form([new RadioVariable('Choice', 'choice', choices)], 'Go!', this.answer.bind(this))
+        ).addHumanMessage()
     }
 
     private answer(choice: string): void {
         const game = this.games.find((_, index) => choice === `${index + 1}`)
         if (game) {
-            this.choosenGameTemplate(game).replaceLastHumanMessage()
+            this.choosenGameMessage(game).replaceHumanMessage()
             game.play()
         }
         else if (choice === '0') {
-            this.quitTemplate().replaceLastHumanMessage()
-            this.byeTemplate().newComputerMessage()
+            this.quitMessage().replaceHumanMessage()
+            this.byeMessage().addComputerMessage()
         }
         else {
             this.menu()

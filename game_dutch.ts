@@ -7,8 +7,16 @@ abstract class Dutch extends Game {
         return 'Nederlands'
     }
 
-    protected menuTemplate(penaltyHint: number, penaltyBug: number, penaltyEnd: number, form: Form): Template {
-        return new Template([
+    protected choiceLabel(): string {
+        return 'Keuze'
+    }
+
+    protected buttonText(): string {
+        return 'Ga!'
+    }
+
+    protected menuMessage(penaltyHint: number, penaltyBug: number, penaltyEnd: number, form: Form): Section {
+        return new Section([
             new Paragraph('Ik wil…'),
             new Paragraph('[1] …het contract zien'),
             new Paragraph('[2] …de specificatie zien'),
@@ -20,70 +28,62 @@ abstract class Dutch extends Game {
         ])
     }
 
-    protected option1Template(): Template {
-        return new Template([
+    protected optionSeeContractMessage(): Section {
+        return new Section([
             new Paragraph('Ik wil het contract zien.'),
         ])
     }
 
-    protected option2Template(): Template {
-        return new Template([
+    protected optionSeeProblemDescriptionMessage(): Section {
+        return new Section([
             new Paragraph('Ik wil de specificatie zien.'),
         ])
     }
 
-    protected option4Template(): Template {
-        return new Template([
+    protected optionSeeHintMessage(): Section {
+        return new Section([
             new Paragraph('Ik wil een hint voor een unit test zien.'),
         ])
     }
 
-    protected option5Template(): Template {
-        return new Template([
+    protected optionSubmitMessage(): Section {
+        return new Section([
             new Paragraph('Ik wil de unit testen inleveren.'),
         ])
     }
 
-    protected option0Template(): Template {
-        return new Template([
+    protected optionEndMessage(): Section {
+        return new Section([
             new Paragraph('Ik wil het spel beëindigen.'),
         ])
     }
 
-    protected choiceLabel(): string {
-        return 'Keuze'
-    }
-
-    protected noUnitTestsTemplate(): Template {
-        return new Template([
+    protected unitTestsPanel(unitTests: UnitTest[]): Section {
+        const list = unitTests.length === 0
+            ? [new Paragraph('Je hebt nog geen unit test geschreven.')]
+            : unitTests.map(unitTest => unitTest.toHtml())
+        return new Section([
             new Header('Unit testen\n'),
-            new Paragraph('Je hebt nog geen unit test geschreven.'),
+            ...list,
         ])
     }
 
-    protected unitTestsTemplate(unitTests: UnitTest[]): Template {
-        return new Template([
-            new Header('Unit testen\n'),
-            ...unitTests.map(unitTest => unitTest.toHtml()),
-        ])
-    }
-
-    protected currentCandidateTemplate(candidate: Candidate): Template {
-        return new Template([
+    protected currentCandidatePanel(candidate: Candidate): Section {
+        return new Section([
             new Header('Huidige functie\n'),
             candidate.toHtml(),
         ])
     }
 
-    protected scoreTemplate(score: number): Template {
-        return new Template([
+    protected scorePanel(score: number): Section {
+        return new Section([
             new Header('Verdiensten\n'),
             new Paragraph(`${this.formatScore(score)}`),
         ])
     }
 
-    protected contractTemplate(initialScore: number, penaltyBug: number): Template {
-        return new Template([
+    protected contractMessage(initialScore: number, penaltyBug: number): Section {
+        return new Section([
             new Paragraph(
                 'Wij laten een nieuwe functie ontwikkelen door een extern softwarebedrijf. ' +
                 'We hebben jou ingehuurd om te zorgen dat die functie ALTIJD het juiste resultaat geeft. ' +
@@ -98,30 +98,30 @@ abstract class Dutch extends Game {
         ])
     }
 
-    protected addUnitTestFormTemplate(form: Form): Template {
-        return new Template([
+    protected addUnitTestFormMessage(form: Form): Section {
+        return new Section([
             new Paragraph('Ik wil een unit test toevoegen.'),
             form.toHtml(),
         ])
     }
 
-    protected addUnitTestTextTemplate(unitTest: UnitTest): Template {
-        return new Template([
+    protected addUnitTestTextMessage(unitTest: UnitTest): Section {
+        return new Section([
             new Paragraph('Ik wil de volgende unit test toevoegen:'),
             unitTest.toHtml(),
         ])
     }
 
-    protected hintUnitTestTemplate(unitTest: UnitTest, penaltyHint: number): Template {
-        return new Template([
+    protected hintUnitTestMessage(unitTest: UnitTest, penaltyHint: number): Section {
+        return new Section([
             new Paragraph('Een unit test die nu niet slaagt is bijvoorbeeld de volgende.'),
             unitTest.toHtml(),
             new Paragraph(`De kosten voor deze hint zijn ${this.formatScore(penaltyHint)}.`),
         ])
     }
 
-    protected bugFoundTemplate(testResult: TestResult, penaltyBug: number): Template {
-        return new Template([
+    protected bugFoundMessage(testResult: TestResult, penaltyBug: number): Section {
+        return new Section([
             new Paragraph(
                 'Bedankt! ' +
                 'We hebben de laatste versie van de functie in productie gebracht. ' +
@@ -133,8 +133,8 @@ abstract class Dutch extends Game {
         ])
     }
 
-    protected endWithBugTemplate(): Template {
-        return new Template([
+    protected endWithBugMessage(): Section {
+        return new Section([
             new Paragraph(
                 'Er zitten nog fouten in de functie, ' +
                 'dus we betalen je niets uit. ' +
@@ -145,8 +145,8 @@ abstract class Dutch extends Game {
         ])
     }
 
-    protected endPerfectTemplate(score: number): Template {
-        return new Template([
+    protected endPerfectMessage(score: number): Section {
+        return new Section([
             new Paragraph(
                 'Gefeliciteerd! ' +
                 'De functie is dankzij jouw unit testen helemaal foutloos. ' +
@@ -157,8 +157,8 @@ abstract class Dutch extends Game {
         ])
     }
 
-    protected endPositiveTemplate(score: number): Template {
-        return new Template([
+    protected endPositiveMessage(score: number): Section {
+        return new Section([
             new Paragraph(
                 'Gefeliciteerd! ' +
                 'De functie is dankzij jouw unit testen helemaal foutloos. ' +
@@ -170,8 +170,8 @@ abstract class Dutch extends Game {
         ])
     }
 
-    protected endNegativeTemplate(score: number): Template {
-        return new Template([
+    protected endNegativeMessage(score: number): Section {
+        return new Section([
             new Paragraph(
                 'Gefeliciteerd! ' +
                 'De functie is dankzij jouw unit testen helemaal foutloos. ' +
@@ -183,28 +183,26 @@ abstract class Dutch extends Game {
         ])
     }
 
-    protected uselessUnitTestTemplate(): Template {
-        return new Template([
+    protected uselessUnitTestMessage(): Section {
+        return new Section([
             new Paragraph(
                 'We hebben deze unit test toegevoegd. ' +
-                'Je unit test lijkt erg veel op een eerdere unit test. ' +
+                'De huidige functie slaagde al voor deze unit test. ' +
                 'We denken daarom dat deze unit test niet zo zinvol is.'
             ),
         ])
     }
 
-    protected usefulUnitTestTemplate(): Template {
-        return new Template([
+    protected usefulUnitTestMessage(): Section {
+        return new Section([
             new Paragraph(
-                'We hebben deze unit test toegevoegd. ' +
-                'De functie die het externe softwarebedrijf had geschreven bleek inderdaad niet de specificatie te volgen. ' +
-                'Zij hebben de functie verbeterd en nu zou het beter moeten zijn.'
+                'Gedaan.'
             ),
         ])
     }
 
-    protected incorrectUnitTestTemplate(): Template {
-        return new Template([
+    protected incorrectUnitTestMessage(): Section {
+        return new Section([
             new Paragraph(
                 'We hebben je unit test naast de specificatie gelegd. ' +
                 'Je unit test blijkt niet correct te zijn. ' +
