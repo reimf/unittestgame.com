@@ -1,10 +1,11 @@
 "use strict";
 class Votingage extends Game {
-    constructor(theme) {
-        super(theme);
+    constructor() {
+        super();
+        this.theme = Intro.instance;
     }
     description() {
-        return 'I want to write unit tests for voting age.';
+        return 'I want to write unit tests for a function that checks if a person is allowed to vote based on their age.';
     }
     introductionMessage() {
         return new Section([

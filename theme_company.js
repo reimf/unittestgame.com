@@ -14,22 +14,24 @@ class Company extends Theme {
     }
     contractMessage(initialScore, penaltyHint, penaltyBug) {
         return new Section([
-            new Paragraph(`If you write enough unit tests, you will earn ${this.formatScore(initialScore)}. ` +
+            new Paragraph('You are hired to write sufficient unit tests for this function, ' +
+                'so that the function only produces correct results. ' +
+                `If you write enough unit tests, you will earn ${this.formatScore(initialScore)}. ` +
                 `However, a hint costs ${this.formatScore(penaltyHint)}. ` +
                 'And if a user, for example, finds a bug in a function that passes all submitted unit tests, ' +
                 `you will have to pay a penalty of ${this.formatScore(penaltyBug)}.`),
         ]);
     }
-    addUnitTestOption() {
+    addUnitTestButton() {
         return 'I want to add a unit test.';
     }
-    seeHintOption(penaltyHint) {
+    seeHintButton(penaltyHint) {
         return `I want to see a hint for a unit test (-${this.formatScore(penaltyHint)}).`;
     }
-    submitOption(penaltyBug) {
+    submitButton(penaltyBug) {
         return `I want to submit the unit tests (-${this.formatScore(penaltyBug)} if incorrect).`;
     }
-    endOption(penaltyEnd) {
+    endButton(penaltyEnd) {
         return `I want to end the game (-${this.formatScore(penaltyEnd)} if incorrect).`;
     }
     seeHintMessage() {
@@ -42,7 +44,7 @@ class Company extends Theme {
             new Paragraph('I want to submit the unit tests.'),
         ]);
     }
-    optionEndMessage() {
+    endMessage() {
         return new Section([
             new Paragraph('I want to end the game.'),
         ]);
@@ -155,6 +157,7 @@ class Company extends Theme {
         ]);
     }
     formatScore(score) {
-        return `${score < 0 ? '-' : ''}€${Math.round(Math.abs(score) * 10)}`;
+        return `${score < 0 ? '-' : ''}€${Math.abs(score) * 10}`;
     }
 }
+Company.instance = new Company();

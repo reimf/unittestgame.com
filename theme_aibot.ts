@@ -1,12 +1,18 @@
-class Company extends Theme {
-    public static instance = new Company()
+class AIBot extends Theme {
+    static #instance: AIBot
 
     private constructor() {
         super()
     }
 
+    public static instance(): AIBot {
+        if (!AIBot.#instance)
+            AIBot.#instance = new AIBot()
+        return AIBot.#instance
+    }
+
     public description(): string {
-        return 'I want to review the work of an external software company.'
+        return 'I want to ensure an AI-bot functions correctly by testing it.'
     }
 
     public choiceLabel(): string {
@@ -14,18 +20,16 @@ class Company extends Theme {
     }
 
     public buttonText(): string {
-        return 'Go!'
+        return 'Execute!'
     }
 
     public contractMessage(initialScore: number, penaltyHint: number, penaltyBug: number): Section {
         return new Section([
             new Paragraph(
-                'You are hired to write sufficient unit tests for this function, ' +
-                'so that the function only produces correct results. ' +
                 `If you write enough unit tests, you will earn ${this.formatScore(initialScore)}. ` +
                 `However, a hint costs ${this.formatScore(penaltyHint)}. ` +
-                'And if a user, for example, finds a bug in a function that passes all submitted unit tests, ' +
-                `you will have to pay a penalty of ${this.formatScore(penaltyBug)}.`
+                'And if the AI-bot produces an error that passes all submitted unit tests, ' +
+                `you will incur a penalty of ${this.formatScore(penaltyBug)}.`
             ),
         ])
     }
@@ -43,7 +47,7 @@ class Company extends Theme {
     }
 
     public endButton(penaltyEnd: number): string {
-        return `I want to end the game (-${this.formatScore(penaltyEnd)} if incorrect).`
+        return `I want to finalize testing (-${this.formatScore(penaltyEnd)} if incorrect).`
     }
 
     public seeHintMessage(): Section {
@@ -60,13 +64,13 @@ class Company extends Theme {
 
     public endMessage(): Section {
         return new Section([
-            new Paragraph('I want to end the game.'),
+            new Paragraph('I want to finalize testing.'),
         ])
     }
 
     public unitTestsPanel(unitTests: UnitTest[]): Section {
         const list = unitTests.length === 0
-            ? [new Paragraph('You have not written any unit tests yet.')]
+            ? [new Paragraph('You have not written any unit tests yet.')] 
             : unitTests.map(unitTest => unitTest.toHtml())
         return new Section([
             new Header('Unit Tests'),
@@ -76,14 +80,14 @@ class Company extends Theme {
 
     public currentCandidatePanel(candidate: Candidate): Section {
         return new Section([
-            new Header('Current Function'),
+            new Header('Current AI Functionality'),
             candidate.toHtml(),
         ])
     }
 
     public scorePanel(score: number): Section {
         return new Section([
-            new Header('Earnings'),
+            new Header('Performance Score'),
             new Paragraph(`${this.formatScore(score)}`),
         ])
     }
@@ -113,24 +117,22 @@ class Company extends Theme {
     public bugFoundMessage(testResult: TestResult, penaltyBug: number): Section {
         return new Section([
             new Paragraph(
-                'Thank you! ' +
-                'We have deployed the latest version of the function into production. ' +
-                'A customer has reported a bug in the function. ' +
-                'The function produced the following incorrect result.'
+                'Warning! ' +
+                'The AI-bot has encountered an unexpected issue in production. ' +
+                'The following incorrect output was generated:'
             ),
             testResult.toHtml(),
-            new Paragraph(`Your share of the cost to fix this is ${this.formatScore(penaltyBug)}.`),
+            new Paragraph(`Your penalty for missing this issue is ${this.formatScore(penaltyBug)}.`),
         ])
     }
 
     public endWithBugMessage(): Section {
         return new Section([
             new Paragraph(
-                'There are still bugs in the function, ' +
-                'so we are not paying you anything. ' +
-                'Too bad! ' +
-                'We hope you do better next time. ' +
-                'Thanks for playing!'
+                'There are still critical issues in the AI-bot, ' +
+                'so you receive no reward. ' +
+                'Better luck next time! ' +
+                'Thanks for testing!'
             ),
         ])
     }
@@ -138,11 +140,11 @@ class Company extends Theme {
     public endPerfectMessage(score: number): Section {
         return new Section([
             new Paragraph(
-                'Congratulations! ' +
-                'Thanks to your unit tests, the function is completely bug-free. ' +
-                `In total, you earned the maximum of ${this.formatScore(score)}. ` +
-                'Awesome! ' +
-                'Thanks for playing!'
+                'Fantastic! ' +
+                'Thanks to your thorough testing, the AI-bot is fully functional. ' +
+                `You achieved the maximum score of ${this.formatScore(score)}. ` +
+                'Well done! ' +
+                'Thanks for testing!'
             ),
         ])
     }
@@ -150,12 +152,11 @@ class Company extends Theme {
     public endPositiveMessage(score: number): Section {
         return new Section([
             new Paragraph(
-                'Congratulations! ' +
-                'Thanks to your unit tests, the function is completely bug-free. ' +
-                `In total, you earned ${this.formatScore(score)}. ` +
-                'Well done! ' +
-                'We think you’ll do even better next time. ' +
-                'Thanks for playing!'
+                'Great job! ' +
+                'Your testing has ensured the AI-bot runs smoothly. ' +
+                `Your final score is ${this.formatScore(score)}. ` +
+                'Keep up the good work! ' +
+                'Thanks for testing!'
             ),
         ])
     }
@@ -163,12 +164,10 @@ class Company extends Theme {
     public endNegativeMessage(score: number): Section {
         return new Section([
             new Paragraph(
-                'Congratulations! ' +
-                'Thanks to your unit tests, the function is completely bug-free. ' +
-                `In total, you lost ${this.formatScore(score)}. ` +
-                'Too bad! ' +
-                'We hope you do better next time. ' +
-                'Thanks for playing!'
+                'Unfortunately, your testing did not fully validate the AI-bot. ' +
+                `Your final score is ${this.formatScore(score)}. ` +
+                'Try again next time! ' +
+                'Thanks for testing!'
             ),
         ])
     }
@@ -176,9 +175,8 @@ class Company extends Theme {
     public uselessUnitTestMessage(): Section {
         return new Section([
             new Paragraph(
-                'We have added the unit test. ' +
-                'The current function already passed the unit test. ' +
-                'Therefore, we think the unit test is not very useful.'
+                'The unit test was added, but the AI-bot already passed it. ' +
+                'This test may not provide much additional value.'
             ),
         ])
     }
@@ -186,7 +184,7 @@ class Company extends Theme {
     public usefulUnitTestMessage(): Section {
         return new Section([
             new Paragraph(
-                'Done.'
+                'The unit test has been successfully added.'
             ),
         ])
     }
@@ -194,14 +192,13 @@ class Company extends Theme {
     public incorrectUnitTestMessage(): Section {
         return new Section([
             new Paragraph(
-                'We have checked your unit test against the specification. ' +
-                'Your unit test appears to be incorrect. ' +
-                'Therefore, we have not added the unit test to our code.'
+                'We checked your unit test against the expected behavior. ' +
+                'Your test appears to be incorrect, so it has not been included in the evaluation.'
             ),
         ])
     }
 
     public formatScore(score: number): string {
-        return `${score < 0 ? '-' : ''}€${Math.abs(score) * 10}`
+        return `${score}%`
     }
 }

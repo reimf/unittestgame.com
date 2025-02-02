@@ -14,7 +14,9 @@ class School extends Theme {
     }
     contractMessage(initialScore, penaltyHint, penaltyBug) {
         return new Section([
-            new Paragraph(`If you have written enough unit tests, you will get ${this.formatScore(initialScore)}. ` +
+            new Paragraph('You must write enough unit tests for this function, ' +
+                'so that students get the right feedback. ' +
+                `If you have written enough unit tests, you will get ${this.formatScore(initialScore)}. ` +
                 `But if you need a hint, your grade will decrease by ${this.formatScore(penaltyHint)}. ` +
                 'And if a student finds an error in a function that passes all your submitted unit tests, ' +
                 `your grade will decrease by ${this.formatScore(penaltyBug)}.`)
@@ -41,16 +43,16 @@ class School extends Theme {
             new Paragraph(`${this.formatScore(score)}`),
         ]);
     }
-    addUnitTestOption() {
+    addUnitTestButton() {
         return 'I want to add an unit test.';
     }
-    seeHintOption(penaltyHint) {
+    seeHintButton(penaltyHint) {
         return `I want to see a hint for an unit test (-${this.formatScore(penaltyHint)}).`;
     }
-    submitOption(penaltyBug) {
+    submitButton(penaltyBug) {
         return `I want to submit the unit tests (-${this.formatScore(penaltyBug)} on error).`;
     }
-    endOption(penaltyend) {
+    endButton(penaltyend) {
         return `I want to end the game (-${this.formatScore(penaltyend)} on error).`;
     }
     addUnitTestFormMessage(form) {
@@ -75,7 +77,7 @@ class School extends Theme {
             new Paragraph('I want to submit the unit tests.'),
         ]);
     }
-    optionEndMessage() {
+    endMessage() {
         return new Section([
             new Paragraph('I want to end the game.'),
         ]);
@@ -158,3 +160,4 @@ class School extends Theme {
         return `${Math.round(score / 10)} points`;
     }
 }
+School.instance = new School();

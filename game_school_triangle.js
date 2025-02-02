@@ -1,16 +1,15 @@
 "use strict";
 class Triangle extends Game {
-    constructor(theme) {
-        super(theme);
+    constructor() {
+        super();
+        this.theme = School.instance;
     }
     description() {
-        return 'I want to write better unit tests for a triangle checker.';
+        return 'I want to write better unit tests for a triangle type checker.';
     }
     introductionMessage() {
         return new Section([
-            new Paragraph('Students are instructed to write a function that determines the type of a triangle. ' +
-                'You must write enough unit tests for this function, ' +
-                'so that students get the right feedback.')
+            new Paragraph('Students are instructed to write a function that determines the type of a triangle.')
         ]);
     }
     specificationPanel() {
@@ -30,7 +29,7 @@ class Triangle extends Game {
         ];
     }
     getUnit() {
-        return new RadioVariable('Type of triangle', 'triangle', ['equilateral', 'isosceles', 'scalene']);
+        return new RadioVariable('Type of triangle', 'triangleType', ['equilateral', 'isosceles', 'scalene']);
     }
     getCandidateElements() {
         return [

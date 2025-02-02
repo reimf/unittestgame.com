@@ -6,10 +6,10 @@ class Variable {
     }
 }
 class RadioVariable extends Variable {
-    constructor(label, name, options) {
+    constructor(label, name, texts) {
         super(label, name);
-        this.options = options;
-        this.options = options;
+        this.texts = texts;
+        this.texts = texts;
     }
     value(element) {
         const selector = `input[name="${element.name}"]:checked`;
@@ -17,9 +17,9 @@ class RadioVariable extends Variable {
         return checked.value;
     }
     toHtml() {
-        const radioButtons = this.options.map(option => {
-            const input = new Input().type('radio').name(this.name).value(option);
-            return new Label().appendChild(input).appendText(option);
+        const radioButtons = this.texts.map(text => {
+            const input = new Input().type('radio').name(this.name).value(text);
+            return new Label().appendChild(input).appendText(text);
         });
         return new Div().appendText(this.label).appendChildren(radioButtons);
     }

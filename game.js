@@ -1,7 +1,6 @@
 "use strict";
 class Game {
-    constructor(theme) {
-        this.theme = theme;
+    constructor() {
         this.INITIALSCORE = 100;
         this.PENALTYHINT = 10;
         this.PENALTYBUG = 20;
@@ -43,11 +42,6 @@ class Game {
         const perfectCandidates = this.findPassingCandidates(candidates, unitTests);
         if (perfectCandidates.length === 0)
             throw new Error(`There is no perfect function for game ${this.constructor.name}.`);
-        //else if (perfectCandidates.length > 1)
-        //    console.log(
-        //        `There are ${perfectCandidates.length} perfect functions for game ${this.constructor.name}.` +
-        //        perfectCandidates.map(candidate => candidate.toString()).join("\n")
-        //    )
         return perfectCandidates;
     }
     checkUnitTestsAreNeeded(candidates, unitTests) {
@@ -88,14 +82,14 @@ class Game {
             : undefined;
         this.theme.scorePanel(this.score).show('score');
         this.menuMessage([
-            new Button(this.theme.addUnitTestOption()).on('click', () => this.showUnitTestForm()),
-            new Button(this.theme.seeHintOption(this.PENALTYHINT)).on('click', () => this.showHint()),
-            new Button(this.theme.submitOption(this.PENALTYBUG)).on('click', () => this.submit()),
-            new Button(this.theme.endOption(this.PENALTYEND)).on('click', () => this.end()),
+            new Button(this.theme.addUnitTestButton()).on('click', () => this.showUnitTestForm()),
+            new Button(this.theme.seeHintButton(this.PENALTYHINT)).on('click', () => this.showHint()),
+            new Button(this.theme.submitButton(this.PENALTYBUG)).on('click', () => this.submit()),
+            new Button(this.theme.endButton(this.PENALTYEND)).on('click', () => this.end()),
         ]).addAsHuman();
     }
     showUnitTestForm() {
-        this.theme.addUnitTestFormMessage(new Form([...this.parameters, this.unit], this.theme.buttonText(), this.addUnitTest.bind(this))).replaceLastHuman();
+        this.theme.addUnitTestFormMessage(new Form([...this.parameters, this.unit], this.theme.buttonText(), (values) => this.addUnitTest(values))).replaceLastHuman();
     }
     showHint() {
         if (this.failingTestResult) {
@@ -128,7 +122,7 @@ class Game {
         else
             this.theme.endNegativeMessage(this.score).addAsComputer();
     }
-    addUnitTest(...values) {
+    addUnitTest(values) {
         const argumentList = values.slice(0, -1);
         const expected = values.slice(-1).pop();
         const unitTest = new UnitTest(argumentList, expected);

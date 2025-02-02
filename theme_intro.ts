@@ -1,5 +1,7 @@
 class Intro extends Theme {
-    public constructor() {
+    public static instance = new Intro()
+
+    private constructor() {
         super()
     }
 
@@ -27,19 +29,19 @@ class Intro extends Theme {
         ])
     }
 
-    public addUnitTestOption(): string {
+    public addUnitTestButton(): string {
         return 'I want to add a unit test.'
     }
 
-    public seeHintOption(penaltyHint: number): string {
+    public seeHintButton(penaltyHint: number): string {
         return `I want to see a hint for a unit test.`
     }
 
-    public submitOption(penaltyBug: number): string {
+    public submitButton(penaltyBug: number): string {
         return `I want to submit the unit tests.`
     }
 
-    public endOption(penaltyEnd: number): string {
+    public endButton(penaltyEnd: number): string {
         return `I want to end the game.`
     }
 
@@ -55,7 +57,7 @@ class Intro extends Theme {
         ])
     }
 
-    public optionEndMessage(): Section {
+    public endMessage(): Section {
         return new Section([
             new Paragraph('I want to end the game.'),
         ])

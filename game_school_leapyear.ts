@@ -1,6 +1,8 @@
 class Leapyear extends Game {
-    public constructor(theme: Theme) {
-        super(theme)
+    readonly theme = School.instance
+
+    public constructor() {
+        super()
     }
 
     public description(): string {
@@ -10,9 +12,7 @@ class Leapyear extends Game {
     protected introductionMessage(): Section {
         return new Section([
             new Paragraph(
-                'Students are instructed to write a function that determines whether or not a year is a leap year. ' +
-                'You must write enough unit tests for this function, ' +
-                'so that students get the right feedback.'
+                'Students are instructed to write a function that determines whether or not a year is a leap year.'
             )
         ])
     }

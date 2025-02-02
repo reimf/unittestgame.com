@@ -1,5 +1,7 @@
 class School extends Theme {
-    public constructor() {
+    public static instance = new School()
+
+    private constructor() {
         super()
     }
 
@@ -18,6 +20,8 @@ class School extends Theme {
     public contractMessage(initialScore: number, penaltyHint: number, penaltyBug: number): Section {
         return new Section([
             new Paragraph(
+                'You must write enough unit tests for this function, ' +
+                'so that students get the right feedback. ' +
                 `If you have written enough unit tests, you will get ${this.formatScore(initialScore)}. ` +
                 `But if you need a hint, your grade will decrease by ${this.formatScore(penaltyHint)}. ` +
                 'And if a student finds an error in a function that passes all your submitted unit tests, ' +
@@ -50,19 +54,19 @@ class School extends Theme {
         ])
     }
 
-    public addUnitTestOption(): string {
+    public addUnitTestButton(): string {
         return 'I want to add an unit test.'
     }
 
-    public seeHintOption(penaltyHint: number): string {
+    public seeHintButton(penaltyHint: number): string {
         return `I want to see a hint for an unit test (-${this.formatScore(penaltyHint)}).`
     }
 
-    public submitOption(penaltyBug: number): string {
+    public submitButton(penaltyBug: number): string {
         return `I want to submit the unit tests (-${this.formatScore(penaltyBug)} on error).`
     }
 
-    public endOption(penaltyend: number): string {
+    public endButton(penaltyend: number): string {
         return `I want to end the game (-${this.formatScore(penaltyend)} on error).`
     }
 
@@ -92,7 +96,7 @@ class School extends Theme {
         ])
     }
 
-    public optionEndMessage(): Section {
+    public endMessage(): Section {
         return new Section([
             new Paragraph('I want to end the game.'),
         ])

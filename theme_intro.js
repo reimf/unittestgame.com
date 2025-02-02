@@ -21,16 +21,16 @@ class Intro extends Theme {
                 'Keep adding unit tests until the function works as specified.'),
         ]);
     }
-    addUnitTestOption() {
+    addUnitTestButton() {
         return 'I want to add a unit test.';
     }
-    seeHintOption(penaltyHint) {
+    seeHintButton(penaltyHint) {
         return `I want to see a hint for a unit test.`;
     }
-    submitOption(penaltyBug) {
+    submitButton(penaltyBug) {
         return `I want to submit the unit tests.`;
     }
-    endOption(penaltyEnd) {
+    endButton(penaltyEnd) {
         return `I want to end the game.`;
     }
     seeHintMessage() {
@@ -43,7 +43,7 @@ class Intro extends Theme {
             new Paragraph('I want to submit the unit tests.'),
         ]);
     }
-    optionEndMessage() {
+    endMessage() {
         return new Section([
             new Paragraph('I want to end the game.'),
         ]);
@@ -132,3 +132,4 @@ class Intro extends Theme {
         return '';
     }
 }
+Intro.instance = new Intro();

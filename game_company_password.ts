@@ -1,6 +1,8 @@
 class Password extends Game {
-    public constructor(theme: Theme) {
-        super(theme)
+    readonly theme = Company.instance
+
+    public constructor() {
+        super()
     }
 
     public description(): string {
@@ -10,11 +12,8 @@ class Password extends Game {
     protected introductionMessage(): Section {
         return new Section([
             new Paragraph(
-                'An online store is having a new function developed by an external software company. ' +
-                'The function is used to check whether a password is strong enough. ' +
-                'Customers must be able to rely on their data being well protected. ' +
-                'That is why they hired you to write sufficient unit tests for this function, ' +
-                'so that the function no longer produces incorrect results.'
+                'An online store needs a function to check whether a password is strong enough. ' +
+                'Customers must be able to rely on their data being well protected.'
             ),
         ])
     }

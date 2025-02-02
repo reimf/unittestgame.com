@@ -1,19 +1,21 @@
 "use strict";
 class Main {
     constructor() {
-        this.quitButton = new Button('I want to quit.').on('click', () => this.end());
-        const intro = new Intro();
-        const school = new School();
-        const company = new Company();
-        this.themes = [intro, school, company];
-        this.games = [
-            new Votingage(intro),
-            new Leapyear(school),
-            new Triangle(school),
-            new Speed(company),
-            new Float(company),
-            new Password(company),
+        this.themes = [
+            Company.instance,
+            Intro.instance,
+            School.instance,
         ];
+        this.games = [
+            new Votingage(),
+            new Evenodd(),
+            new Leapyear(),
+            new Triangle(),
+            new Speed(),
+            new Float(),
+            new Password(),
+        ];
+        this.quitButton = new Button('I want to quit.').on('click', () => this.end());
     }
     aboutPanel() {
         const anchor = new Anchor().href('mailto:feedback@unittestgame.com').appendText('feedback@unittestgame.com');

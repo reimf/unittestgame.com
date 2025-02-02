@@ -1,10 +1,12 @@
 class Votingage extends Game {
-    public constructor(theme: Theme) {
-        super(theme)
+    readonly theme = Intro.instance
+
+    public constructor() {
+        super()
     }
 
     public description(): string {
-        return 'I want to write unit tests for voting age.'
+        return 'I want to write unit tests for a function that checks if a person is allowed to vote based on their age.'
     }
 
     protected introductionMessage(): Section {

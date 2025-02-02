@@ -1,7 +1,8 @@
 "use strict";
 class Speed extends Game {
-    constructor(theme) {
-        super(theme);
+    constructor() {
+        super();
+        this.theme = Company.instance;
     }
     description() {
         return 'I want to review a function that displays the speed of a car on a small display.';
@@ -9,17 +10,8 @@ class Speed extends Game {
     introductionMessage() {
         return new Section([
             new Paragraph('A Chinese gadget maker is having a new function developed by an external software company. ' +
-                'The gadget displays the average speed on a small display.'),
-            new Paragraph('+-------------------+\n' +
-                '|  X   XXXX   XXXX  |\n' +
-                '|  X   X  X   X  X  |\n' +
-                '|  X   XXXX   XXXX  |\n' +
-                '|  X   X  X   X  X  |\n' +
-                '|  X   XXXX X XXXX  |\n' +
-                '+-------------------+'),
-            new Paragraph('Users rely on the displayed information to be correct, so there must be no errors. ' +
-                'That is why they hired you to write sufficient unit tests for this function, ' +
-                'so that the function no longer produces incorrect results.'),
+                'The gadget displays the average speed on a small display. ' +
+                'Drivers rely on the displayed information to be correct, so there must be no errors.'),
         ]);
     }
     specificationPanel() {

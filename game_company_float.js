@@ -1,18 +1,16 @@
 "use strict";
 class Float extends Game {
-    constructor(theme) {
-        super(theme);
+    constructor() {
+        super();
+        this.theme = Company.instance;
     }
     description() {
         return 'I want to review a function that uses a regular expression to determine whether a text represents a float.';
     }
     introductionMessage() {
         return new Section([
-            new Paragraph('A laboratory is having a new function developed by an external software company. ' +
-                'The function is used to check whether measured values have been entered correctly. ' +
-                'The lab technicians will then perform calculations with them, so there must be no errors. ' +
-                'That is why they hired you to write sufficient unit tests for this function, ' +
-                'so that the function no longer produces incorrect results.'),
+            new Paragraph('A laboratory needs a function to check whether measured values have been entered correctly. ' +
+                'The lab technicians will perform ciritcal calculations with these numbers, so there must be no errors.'),
         ]);
     }
     specificationPanel() {

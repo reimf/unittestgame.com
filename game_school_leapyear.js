@@ -1,16 +1,15 @@
 "use strict";
 class Leapyear extends Game {
-    constructor(theme) {
-        super(theme);
+    constructor() {
+        super();
+        this.theme = School.instance;
     }
     description() {
         return 'I want to write better unit tests for a leap year calculator.';
     }
     introductionMessage() {
         return new Section([
-            new Paragraph('Students are instructed to write a function that determines whether or not a year is a leap year. ' +
-                'You must write enough unit tests for this function, ' +
-                'so that students get the right feedback.')
+            new Paragraph('Students are instructed to write a function that determines whether or not a year is a leap year.')
         ]);
     }
     specificationPanel() {

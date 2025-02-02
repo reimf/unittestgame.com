@@ -6,9 +6,9 @@ abstract class Variable {
 }
 
 class RadioVariable extends Variable {
-    public constructor(label: string, name: string, private options: string[]) {
+    public constructor(label: string, name: string, private texts: string[]) {
         super(label, name)
-        this.options = options
+        this.texts = texts
     }
 
     public value(element: HTMLInputElement): string {
@@ -18,9 +18,9 @@ class RadioVariable extends Variable {
     }
 
     public toHtml(): Html {
-        const radioButtons = this.options.map(option => {
-            const input = new Input().type('radio').name(this.name).value(option)
-            return new Label().appendChild(input).appendText(option)
+        const radioButtons = this.texts.map(text => {
+            const input = new Input().type('radio').name(this.name).value(text)
+            return new Label().appendChild(input).appendText(text)
         })
         return new Div().appendText(this.label).appendChildren(radioButtons)
     }

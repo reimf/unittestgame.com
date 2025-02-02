@@ -1,6 +1,8 @@
 class Float extends Game {
-    public constructor(theme: Theme) {
-        super(theme)
+    readonly theme = Company.instance
+
+    public constructor() {
+        super()
     }
 
     public description(): string {
@@ -10,11 +12,8 @@ class Float extends Game {
     protected introductionMessage(): Section {
         return new Section([
             new Paragraph(
-                'A laboratory is having a new function developed by an external software company. ' +
-                'The function is used to check whether measured values have been entered correctly. ' +
-                'The lab technicians will then perform calculations with them, so there must be no errors. ' +
-                'That is why they hired you to write sufficient unit tests for this function, ' +
-                'so that the function no longer produces incorrect results.'
+                'A laboratory needs a function to check whether measured values have been entered correctly. ' +
+                'The lab technicians will perform ciritcal calculations with these numbers, so there must be no errors.'
             ),
         ])
     }

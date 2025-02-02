@@ -1,4 +1,5 @@
 abstract class Game {
+    readonly abstract theme: Theme
     private parameters: Variable[]
     private unit: Variable
     private candidates: Candidate[]
@@ -24,7 +25,7 @@ abstract class Game {
     PENALTYBUG = 20
     PENALTYEND = 100
 
-    public constructor(public theme: Theme) {
+    public constructor() {
         this.parameters = this.getParameters()
         this.unit = this.getUnit()
         this.candidates = [...this.generateFunctions(this.getCandidateElements())]
@@ -66,11 +67,6 @@ abstract class Game {
         const perfectCandidates = this.findPassingCandidates(candidates, unitTests)
         if (perfectCandidates.length === 0)
             throw new Error(`There is no perfect function for game ${this.constructor.name}.`)
-        //else if (perfectCandidates.length > 1)
-        //    console.log(
-        //        `There are ${perfectCandidates.length} perfect functions for game ${this.constructor.name}.` +
-        //        perfectCandidates.map(candidate => candidate.toString()).join("\n")
-        //    )
         return perfectCandidates
     }
 
@@ -119,15 +115,15 @@ abstract class Game {
 
         this.theme.scorePanel(this.score).show('score')
         this.menuMessage([
-            new Button(this.theme.addUnitTestOption()).on('click', () => this.showUnitTestForm()),
-            new Button(this.theme.seeHintOption(this.PENALTYHINT)).on('click', () => this.showHint()),
-            new Button(this.theme.submitOption(this.PENALTYBUG)).on('click', () => this.submit()),
-            new Button(this.theme.endOption(this.PENALTYEND)).on('click', () => this.end()),
+            new Button(this.theme.addUnitTestButton()).on('click', () => this.showUnitTestForm()),
+            new Button(this.theme.seeHintButton(this.PENALTYHINT)).on('click', () => this.showHint()),
+            new Button(this.theme.submitButton(this.PENALTYBUG)).on('click', () => this.submit()),
+            new Button(this.theme.endButton(this.PENALTYEND)).on('click', () => this.end()),
         ]).addAsHuman()
     }
 
     private showUnitTestForm(): void {
-        this.theme.addUnitTestFormMessage(new Form([...this.parameters, this.unit], this.theme.buttonText(), this.addUnitTest.bind(this))).replaceLastHuman()
+        this.theme.addUnitTestFormMessage(new Form([...this.parameters, this.unit], this.theme.buttonText(), (values: any[]) => this.addUnitTest(values))).replaceLastHuman()
     }
 
     private showHint(): void { 
@@ -164,7 +160,7 @@ abstract class Game {
             this.theme.endNegativeMessage(this.score).addAsComputer()
     }
 
-    private addUnitTest(...values: any[]): void {
+    private addUnitTest(values: any[]): void {
         const argumentList = values.slice(0, -1)
         const expected = values.slice(-1).pop()
         const unitTest = new UnitTest(argumentList, expected)

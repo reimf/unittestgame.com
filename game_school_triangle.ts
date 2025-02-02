@@ -1,18 +1,18 @@
 class Triangle extends Game {
-    public constructor(theme: Theme) {
-        super(theme)
+    readonly theme = School.instance
+
+    public constructor() {
+        super()
     }
 
     public description(): string {
-        return 'I want to write better unit tests for a triangle checker.'
+        return 'I want to write better unit tests for a triangle type checker.'
     }
 
     protected introductionMessage(): Section {
         return new Section([
             new Paragraph(
-                'Students are instructed to write a function that determines the type of a triangle. ' +
-                'You must write enough unit tests for this function, ' +
-                'so that students get the right feedback.'
+                'Students are instructed to write a function that determines the type of a triangle.'
             )
         ])
     }
@@ -40,7 +40,7 @@ class Triangle extends Game {
     protected getUnit(): Variable {
         return new RadioVariable(
             'Type of triangle',
-            'triangle',
+            'triangleType',
             ['equilateral', 'isosceles', 'scalene']
         )
     }
