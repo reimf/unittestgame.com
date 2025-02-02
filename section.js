@@ -12,9 +12,15 @@ class Section extends Html {
     }
     addAsHuman() {
         this.id(`message-${++Section.messageCount}`).addClass('human').addTo('messages');
+        this.setFocus();
     }
     replaceLastHuman() {
         this.id(`message-${Section.messageCount}`).addClass('human').addTo('messages');
+        this.setFocus();
+    }
+    setFocus() {
+        const firstFocusable = this.element.querySelector('button, input');
+        firstFocusable === null || firstFocusable === void 0 ? void 0 : firstFocusable.focus();
     }
 }
 Section.messageCount = 0;

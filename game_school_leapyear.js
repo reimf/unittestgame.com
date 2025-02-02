@@ -1,20 +1,16 @@
 "use strict";
-class Leapyear extends Basecamp {
-    constructor() {
-        super();
+class Leapyear extends Game {
+    constructor(theme) {
+        super(theme);
     }
     description() {
-        return 'A1W2P2 leapyearcalculator.py';
+        return 'I want to write better unit tests for a leap year calculator.';
     }
-    introductionMessage(initialScore, penaltyBug) {
+    introductionMessage() {
         return new Section([
-            new Paragraph('Basecamp students are instructed to write a function that determines whether or not a year is a leap year. ' +
-                'You must write enough CodeGrade autotests for this function, ' +
-                'so that students get the right feedback. ' +
-                `If you have written enough autotests, you will get ${this.formatScore(initialScore)}. ` +
-                'The menu specifies for some actions how much your grade will decrease. ' +
-                'For example, if a student finds an error in a function that passes all your autotests, ' +
-                `your grade will decrease by ${this.formatScore(penaltyBug)}.`)
+            new Paragraph('Students are instructed to write a function that determines whether or not a year is a leap year. ' +
+                'You must write enough unit tests for this function, ' +
+                'so that students get the right feedback.')
         ]);
     }
     specificationPanel() {

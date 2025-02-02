@@ -16,9 +16,16 @@ class Section extends Html {
 
     public addAsHuman(): void {
         this.id(`message-${++Section.messageCount}`).addClass('human').addTo('messages')
+        this.setFocus()
     }
 
     public replaceLastHuman(): void {
         this.id(`message-${Section.messageCount}`).addClass('human').addTo('messages')
+        this.setFocus()
+    }
+
+    private setFocus(): void {
+        const firstFocusable = this.element.querySelector('button, input') as HTMLElement
+        firstFocusable?.focus()
     }
 }

@@ -4,7 +4,10 @@ class UnitTest {
         this.expected = expected
     }
 
+    public toString(): string {
+        return `${this.argumentList} -> ${this.expected}`
+    }
     public toHtml(): Html {
-        return new Paragraph(`${this.argumentList} -> ${this.expected}`)
+        return new Paragraph(this.toString())
     }
 }

@@ -26,7 +26,10 @@ class Candidate {
     passCount(unitTests) {
         return unitTests.length - this.failCount(unitTests);
     }
+    toString() {
+        return this.function.toString();
+    }
     toHtml() {
-        return new Html('code').appendText(this.function.toString());
+        return new Code().appendText(this.toString());
     }
 }

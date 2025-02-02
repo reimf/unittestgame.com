@@ -7,33 +7,8 @@ class Html {
         this.element.id = id;
         return this;
     }
-    href(value) {
-        this.element.href = value;
-        return this;
-    }
-    type(value) {
-        this.element.type = value;
-        return this;
-    }
-    name(value) {
-        this.element.name = value;
-        return this;
-    }
-    accessKey(value) {
-        this.element.accessKey = value[0];
-        return this;
-    }
-    value(value) {
-        this.element.value = value;
-        return this;
-    }
-    autocomplete(value) {
-        this.element.autocomplete = value;
-        return this;
-    }
     addClass(value) {
-        if (value)
-            this.element.classList.add(value);
+        this.element.classList.add(value);
         return this;
     }
     appendText(value) {
@@ -53,14 +28,47 @@ class Html {
         this.element.addEventListener(eventType, callback);
         return this;
     }
+    href(value) {
+        if (this.element instanceof HTMLAnchorElement)
+            this.element.href = value;
+        return this;
+    }
+    type(value) {
+        if (this.element instanceof HTMLInputElement)
+            this.element.type = value;
+        return this;
+    }
+    name(value) {
+        if (this.element instanceof HTMLInputElement)
+            this.element.name = value;
+        return this;
+    }
+    value(value) {
+        if (this.element instanceof HTMLInputElement)
+            this.element.value = value;
+        return this;
+    }
+    autocomplete(value) {
+        if (this.element instanceof HTMLInputElement)
+            this.element.autocomplete = value ? 'on' : 'off';
+        return this;
+    }
     addTo(parentId) {
-        var _a;
         const old = document.querySelector('#' + this.element.id);
         if (old)
             old.replaceWith(this.element);
         else
             document.querySelector('#' + parentId).appendChild(this.element);
-        (_a = this.element.querySelector('input')) === null || _a === void 0 ? void 0 : _a.focus();
+    }
+}
+class Anchor extends Html {
+    constructor() {
+        super('a');
+    }
+}
+class Input extends Html {
+    constructor() {
+        super('input');
     }
 }
 class Header extends Html {
@@ -73,5 +81,26 @@ class Paragraph extends Html {
     constructor(text) {
         super('p');
         this.appendText(text);
+    }
+}
+class Button extends Html {
+    constructor(text) {
+        super('button');
+        this.appendText(text);
+    }
+}
+class Label extends Html {
+    constructor() {
+        super('label');
+    }
+}
+class Div extends Html {
+    constructor() {
+        super('div');
+    }
+}
+class Code extends Html {
+    constructor() {
+        super('code');
     }
 }

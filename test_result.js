@@ -6,7 +6,10 @@ class TestResult {
         this.result = candidate.callFunction(unitTest.argumentList);
         this.passes = this.result === unitTest.expected;
     }
+    toString() {
+        return `${this.unitTest.argumentList} -> ${this.result}`;
+    }
     toHtml() {
-        return new Paragraph(`${this.unitTest.argumentList} -> ${this.result}`);
+        return new Paragraph(this.toString());
     }
 }

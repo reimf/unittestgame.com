@@ -1,15 +1,15 @@
 "use strict";
-class Snelheid extends Dutch {
-    constructor() {
-        super();
+class Speed extends Game {
+    constructor(theme) {
+        super(theme);
     }
     description() {
-        return 'Laat de snelheid van een auto zien';
+        return 'I want to review a function that displays the speed of a car on a small display.';
     }
-    introductionMessage(initialScore, penaltyBug) {
+    introductionMessage() {
         return new Section([
-            new Paragraph('Een Chinese gadgetmaker laat een nieuwe functie ontwikkelen door een extern softwarebedrijf. ' +
-                'De gadget laat de gemiddelde snelheid zien op een klein display.'),
+            new Paragraph('A Chinese gadget maker is having a new function developed by an external software company. ' +
+                'The gadget displays the average speed on a small display.'),
             new Paragraph('+-------------------+\n' +
                 '|  X   XXXX   XXXX  |\n' +
                 '|  X   X  X   X  X  |\n' +
@@ -17,19 +17,15 @@ class Snelheid extends Dutch {
                 '|  X   X  X   X  X  |\n' +
                 '|  X   XXXX X XXXX  |\n' +
                 '+-------------------+'),
-            new Paragraph('Gebruikers rekenen erop dat de getoonde informatie correct is en er mogen dus geen fouten in zitten. ' +
-                'Daarom hebben ze jou ingehuurd om voldoende unit testen te schrijven voor die functie. ' +
-                'zodat de functie geen foute resultaten meer kan geven. ' +
-                `Voor het hele traject krijg je ${this.formatScore(initialScore)}. ` +
-                'In het menu staan bij sommige acties kosten vermeld voor jou. ' +
-                'Als een gebruiker bijvoorbeeld een fout constateert in een functie die slaagt voor al jouw unit testen, ' +
-                `dan betaal jij een boete van ${this.formatScore(penaltyBug)}.`),
+            new Paragraph('Users rely on the displayed information to be correct, so there must be no errors. ' +
+                'That is why they hired you to write sufficient unit tests for this function, ' +
+                'so that the function no longer produces incorrect results.'),
         ]);
     }
     specificationPanel() {
         return new Section([
-            new Header('Specificatie'),
-            new Paragraph('De functie ontvangt de snelheid in meter per uur en moet de snelheid weergeven in kilometer per uur.'),
+            new Header('Specification'),
+            new Paragraph('The function receives speed in meters per hour and must display the speed in kilometers per hour.'),
             new Paragraph('+-------------------+\n' +
                 '|  X   XXXX   XXXX  |\n' +
                 '|  X   X  X   X  X  |\n' +
@@ -37,21 +33,21 @@ class Snelheid extends Dutch {
                 '|  X   X  X   X  X  |\n' +
                 '|  X   XXXX X XXXX  |\n' +
                 '+-------------------+'),
-            new Paragraph('Als er iets mis is met de snelheid (negatief bijvoorbeeld), ' +
-                'dan moet de functie "ERROR" teruggeven, want dan gaat het display langzaam knipperen. ' +
-                'Als het mogelijk is, laat dan 1 decimaal zien, bijvoorbeeld "12.3". ' +
-                'Rond anders af op hele kilometers per uur, dus bijvoorbeeld "49". ' +
-                'Als de snelheid niet meer op het display past, ' +
-                'dan moet de functie "DANGER" teruggeven, want dan gaat het display snel knipperen.'),
+            new Paragraph('If something is wrong with the speed (for example, if it is negative), ' +
+                'then the function must return "ERROR" because the display will start blinking slowly. ' +
+                'If possible, show one decimal place, for example, "12.3". ' +
+                'Otherwise, round to whole kilometers per hour, such as "49". ' +
+                'If the speed no longer fits on the display, ' +
+                'then the function must return "DANGER" because the display will start blinking rapidly.'),
         ]);
     }
     getParameters() {
         return [
-            new NumberVariable('Snelheid in meter per uur', 'speed')
+            new NumberVariable('Speed in meters per hour', 'speed')
         ];
     }
     getUnit() {
-        return new TextVariable('Verwachte weergave op het display', 'display');
+        return new TextVariable('Expected display output', 'display');
     }
     getCandidateElements() {
         return [

@@ -1,25 +1,28 @@
 class Main {
-    private themes: Game[]
+    private themes: Theme[]
     private games: Game[]
+    private quitButton = new Button('I want to quit.').on('click', () => this.end())
 
     public constructor() {
-        this.themes = [
-            new Leapyear(),
-            new Snelheid(),
-        ]
+        const intro = new Intro()
+        const school = new School()
+        const company = new Company()
+        this.themes = [intro, school, company]
         this.games = [
-            ...this.themes,
-            new Triangletype(),
-            new Kommagetal(),
-            new Wachtwoord(),
+            new Votingage(intro),
+            new Leapyear(school),
+            new Triangle(school),
+            new Speed(company),
+            new Float(company),
+            new Password(company),
         ]
     }
 
     private aboutPanel(): Section {
-        const link = new Html('a').href('mailto:feedback@unittestgame.com').appendText('feedback@unittestgame.com')
+        const anchor = new Anchor().href('mailto:feedback@unittestgame.com').appendText('feedback@unittestgame.com')
         return new Section([
             new Header('Learn unit testing with UnitTestGame.com'),
-            new Paragraph('Please send ').appendChild(link)
+            new Paragraph('Please send ').appendChild(anchor)
         ])
     }
 
@@ -28,33 +31,33 @@ class Main {
             new Paragraph(
                 'Welcome to UnitTestGame.com! ' +
                 'Here you can learn to write the right unit tests. ' +
-                'But first, pick a theme and start the game.'
+                'But first, pick a theme to start the game.'
             ),
         ])
     }
 
-    private themeMenuMessage(form: Form): Section {
+    private themeMenuMessage(buttons: Html[]): Section {
         return new Section([
-            form.toHtml(),
+            ...buttons,
+            this.quitButton,
         ])
     }
 
-    private choosenThemeMessage(theme: Game): Section {
+    private choosenThemeMessage(theme: Theme): Section {
         return new Section([
-            new Paragraph('I like the following theme:'),
-            new Paragraph(theme.theme()),
+            new Paragraph(theme.description()),
         ])
     }
 
-    private gameMenuMessage(form: Form): Section {
+    private gameMenuMessage(buttons: Html[]): Section {
         return new Section([
-            form.toHtml(),
+            ...buttons,
+            this.quitButton,
         ])
     }
 
     private choosenGameMessage(game: Game): Section {
         return new Section([
-            new Paragraph('I want to play the following game:'),
             new Paragraph(game.description()),
         ])
     }
@@ -78,47 +81,30 @@ class Main {
     }
 
     private themeMenu(): void {
-        const themeChoices = [...this.themes.map(theme => theme.theme()), 'Quit']
         this.themeMenuMessage(
-            new Form([new VerticalRadioVariable('Theme', 'theme', themeChoices)], 'Go!', this.themeAnswer.bind(this))
+            this.themes.map(theme => new Button(theme.description()).on('click', () => this.themeAnswer(theme)))
         ).addAsHuman()
     }
 
-    private themeAnswer(choice: string): void {
-        const theme = this.themes.find(theme => choice === theme.theme())
-        if (theme) {
-            this.choosenThemeMessage(theme).replaceLastHuman()
-            this.gameMenu(theme)
-        }
-        else if (choice === '0') {
-            this.quitMessage().replaceLastHuman()
-            this.byeMessage().addAsComputer()
-        }
-        else {
-            this.themeMenu()
-        }
+    private themeAnswer(theme: Theme): void {
+        this.choosenThemeMessage(theme).replaceLastHuman()
+        this.gameMenu(theme)
     }
 
-    private gameMenu(theme: Game): void {
-        const gamesForThisTheme = this.games.filter(game => game.theme() === theme.theme())
-        const gameChoices = [...gamesForThisTheme.map(game => game.description()), 'Quit']
+    private gameMenu(theme: Theme): void {
+        const gamesForThisTheme = this.games.filter(game => game.theme === theme)
         this.gameMenuMessage(
-            new Form([new VerticalRadioVariable('Game', 'game', gameChoices)], 'Go!', this.gameAnswer.bind(this))
+            gamesForThisTheme.map(game => new Button(game.description()).on('click', () => this.gameAnswer(game)))
         ).addAsHuman()
     }
 
-    private gameAnswer(choice: string): void {
-        const game = this.games.find(game => choice === game.description())
-        if (game) {
-            this.choosenGameMessage(game).replaceLastHuman()
-            game.play()
-        }
-        else if (choice === '0') {
-            this.quitMessage().replaceLastHuman()
-            this.byeMessage().addAsComputer()
-        }
-        else {
-            this.themeMenu()
-        }
+    private gameAnswer(game: Game): void {
+        this.choosenGameMessage(game).replaceLastHuman()
+        game.play()
+    }
+
+    private end(): void {
+        this.quitMessage().replaceLastHuman()
+        this.byeMessage().addAsComputer()
     }
 }

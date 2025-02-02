@@ -1,17 +1,17 @@
-class Snelheid extends Dutch {
-    public constructor() {
-        super()
+class Speed extends Game {
+    public constructor(theme: Theme) {
+        super(theme)
     }
 
     public description(): string {
-        return 'Laat de snelheid van een auto zien'
+        return 'I want to review a function that displays the speed of a car on a small display.'
     }
 
-    protected introductionMessage(initialScore: number, penaltyBug: number): Section {
+    protected introductionMessage(): Section {
         return new Section([
             new Paragraph(
-                'Een Chinese gadgetmaker laat een nieuwe functie ontwikkelen door een extern softwarebedrijf. ' +
-                'De gadget laat de gemiddelde snelheid zien op een klein display.'
+                'A Chinese gadget maker is having a new function developed by an external software company. ' +
+                'The gadget displays the average speed on a small display.'
             ),
             new Paragraph(
                 '+-------------------+\n' +
@@ -23,22 +23,18 @@ class Snelheid extends Dutch {
                 '+-------------------+'
             ),
             new Paragraph(
-                'Gebruikers rekenen erop dat de getoonde informatie correct is en er mogen dus geen fouten in zitten. ' +
-                'Daarom hebben ze jou ingehuurd om voldoende unit testen te schrijven voor die functie. ' +
-                'zodat de functie geen foute resultaten meer kan geven. ' +
-                `Voor het hele traject krijg je ${this.formatScore(initialScore)}. ` +
-                'In het menu staan bij sommige acties kosten vermeld voor jou. ' +
-                'Als een gebruiker bijvoorbeeld een fout constateert in een functie die slaagt voor al jouw unit testen, ' +
-                `dan betaal jij een boete van ${this.formatScore(penaltyBug)}.`
+                'Users rely on the displayed information to be correct, so there must be no errors. ' +
+                'That is why they hired you to write sufficient unit tests for this function, ' +
+                'so that the function no longer produces incorrect results.'
             ),
         ])
     }
 
     protected specificationPanel(): Section {
         return new Section([
-            new Header('Specificatie'),
+            new Header('Specification'),
             new Paragraph(
-                'De functie ontvangt de snelheid in meter per uur en moet de snelheid weergeven in kilometer per uur.'
+                'The function receives speed in meters per hour and must display the speed in kilometers per hour.'
             ),
             new Paragraph(
                 '+-------------------+\n' +
@@ -50,25 +46,25 @@ class Snelheid extends Dutch {
                 '+-------------------+'
             ),
             new Paragraph(
-                'Als er iets mis is met de snelheid (negatief bijvoorbeeld), ' +
-                'dan moet de functie "ERROR" teruggeven, want dan gaat het display langzaam knipperen. ' +
-                'Als het mogelijk is, laat dan 1 decimaal zien, bijvoorbeeld "12.3". ' +
-                'Rond anders af op hele kilometers per uur, dus bijvoorbeeld "49". ' +
-                'Als de snelheid niet meer op het display past, ' +
-                'dan moet de functie "DANGER" teruggeven, want dan gaat het display snel knipperen.'
+                'If something is wrong with the speed (for example, if it is negative), ' +
+                'then the function must return "ERROR" because the display will start blinking slowly. ' +
+                'If possible, show one decimal place, for example, "12.3". ' +
+                'Otherwise, round to whole kilometers per hour, such as "49". ' +
+                'If the speed no longer fits on the display, ' +
+                'then the function must return "DANGER" because the display will start blinking rapidly.'
             ),
         ])
     }
 
     protected getParameters(): Variable[] {
         return [
-            new NumberVariable('Snelheid in meter per uur', 'speed')
+            new NumberVariable('Speed in meters per hour', 'speed')
         ]
     }
 
     protected getUnit(): Variable {
         return new TextVariable(
-            'Verwachte weergave op het display',
+            'Expected display output',
             'display'
         )
     }

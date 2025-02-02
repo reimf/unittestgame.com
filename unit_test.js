@@ -6,7 +6,10 @@ class UnitTest {
         this.argumentList = argumentList;
         this.expected = expected;
     }
+    toString() {
+        return `${this.argumentList} -> ${this.expected}`;
+    }
     toHtml() {
-        return new Paragraph(`${this.argumentList} -> ${this.expected}`);
+        return new Paragraph(this.toString());
     }
 }

@@ -8,7 +8,11 @@ class TestResult {
         this.passes = this.result === unitTest.expected
     }
 
+    public toString(): string {
+        return `${this.unitTest.argumentList} -> ${this.result}`
+    }
+
     public toHtml(): Html {
-        return new Paragraph(`${this.unitTest.argumentList} -> ${this.result}`)
+        return new Paragraph(this.toString())
     }
 }

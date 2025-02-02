@@ -1,42 +1,51 @@
-"use strict";
-class Triangletype extends Basecamp {
-    constructor() {
-        super();
+class Triangle extends Game {
+    public constructor(theme: Theme) {
+        super(theme)
     }
-    description() {
-        return 'A1W2P4 triangletypechecker.py';
+
+    public description(): string {
+        return 'I want to write better unit tests for a triangle checker.'
     }
-    introductionMessage(initialScore, penaltyBug) {
+
+    protected introductionMessage(): Section {
         return new Section([
-            new Paragraph('Basecamp students are instructed to write a function that determines the type of a triangle. ' +
-                'You must write enough CodeGrade autotests for this function, ' +
-                'so that students get the right feedback. ' +
-                `If you have written enough autotests, you will get ${this.formatScore(initialScore)}. ` +
-                'The menu specifies for some actions how much your grade will decrease. ' +
-                'For example, if a student finds an error in a function that passes all your autotests, ' +
-                `your grade will decrease by ${this.formatScore(penaltyBug)}.`)
-        ]);
+            new Paragraph(
+                'Students are instructed to write a function that determines the type of a triangle. ' +
+                'You must write enough unit tests for this function, ' +
+                'so that students get the right feedback.'
+            )
+        ])
     }
-    specificationPanel() {
+            
+    protected specificationPanel(): Section {
         return new Section([
             new Header('Specification'),
-            new Paragraph('A triangle can be classified based on the lengths of its sides as equilateral, isosceles or scalene. ' +
+            new Paragraph(
+                'A triangle can be classified based on the lengths of its sides as equilateral, isosceles or scalene. ' +
                 'All three sides of an equilateral triangle have the same length. ' +
                 'An isosceles triangle has two sides that are the same length, and a third side that is a different length ' +
-                'If all of the sides have different lengths then the triangle is scalene.'),
-        ]);
+                'If all of the sides have different lengths then the triangle is scalene.'
+            ),
+        ])
     }
-    getParameters() {
+
+    protected getParameters(): Variable[] {
         return [
             new NumberVariable('Side A', 'a'),
             new NumberVariable('Side B', 'b'),
             new NumberVariable('Side C', 'c'),
-        ];
+        ]
     }
-    getUnit() {
-        return new HorizontalRadioVariable('Type of triangle', 'triangleType', ['equilateral', 'isosceles', 'scalene']);
+
+    protected getUnit(): Variable {
+        return new RadioVariable(
+            'Type of triangle',
+            'triangle',
+            ['equilateral', 'isosceles', 'scalene']
+        )
     }
-    getCandidateElements() {
+
+    protected getCandidateElements(): string[][] {
         return [
             [
                 'if (a === b && b === c) return "equilateral"',
@@ -62,21 +71,23 @@ class Triangletype extends Basecamp {
                 'return "scalene"',
                 'return ""',
             ],
-        ];
+        ]
     }
-    getSpecialUnitTests() {
+
+    protected getSpecialUnitTests(): UnitTest[] {
         return [
             new UnitTest([5, 5, 5], 'equilateral'),
             new UnitTest([3, 5, 5], 'isosceles'),
             new UnitTest([5, 3, 5], 'isosceles'),
             new UnitTest([5, 5, 3], 'isosceles'),
             new UnitTest([3, 4, 5], 'scalene'),
-        ];
+        ]
     }
-    *generalArgumentsGenerator() {
+
+    protected *generalArgumentsGenerator(): Generator<any[]> {
         for (let a = 6; a < 9; a++)
             for (let b = 6; b < 9; b++)
                 for (let c = 6; c < 9; c++)
-                    yield [a, b, c];
+                    yield [a, b, c]
     }
 }

@@ -33,7 +33,11 @@ class Candidate {
         return unitTests.length - this.failCount(unitTests)
     }
 
+    public toString(): string {
+        return this.function.toString()
+    }
+    
     public toHtml(): Html {
-        return new Html('code').appendText(this.function.toString())
+        return new Code().appendText(this.toString())
     }
 }
