@@ -1,20 +1,13 @@
 class School extends Theme {
-    public static instance = new School()
+    public static readonly instance = new School()
+    public readonly description = 'I want to write better unit tests for student assignments.'
 
-    private constructor() {
-        super()
+    public addUnitTestFormButton(): string {
+        return 'Add unit test'
     }
 
-    public description(): string {
-        return 'I want to write better unit tests for student assignments.'
-    }
-
-    public choiceLabel(): string {
-        return 'Choice'
-    }
-
-    public buttonText(): string {
-        return 'Go!'
+    public cancelUnitTestFormButton(): string {
+        return 'Cancel'
     }
 
     public contractMessage(initialScore: number, penaltyHint: number, penaltyBug: number): Section {
@@ -54,11 +47,11 @@ class School extends Theme {
         ])
     }
 
-    public addUnitTestButton(): string {
+    public formUnitTestButton(): string {
         return 'I want to add an unit test.'
     }
 
-    public seeHintButton(penaltyHint: number): string {
+    public showHintButton(penaltyHint: number): string {
         return `I want to see a hint for an unit test (-${this.formatScore(penaltyHint)}).`
     }
 
@@ -77,6 +70,12 @@ class School extends Theme {
         ])
     }
 
+    public cancelUnitTestFormMessage(): Section {
+        return new Section([
+            new Paragraph('I don\'t want to add a unit test now.'),
+        ])
+    }
+
     public addUnitTestTextMessage(unitTest: UnitTest): Section {
         return new Section([
             new Paragraph('I want to add the following unit test:'),
@@ -84,7 +83,7 @@ class School extends Theme {
         ])
     }
 
-    public seeHintMessage(): Section {
+    public showHintMessage(): Section {
         return new Section([
             new Paragraph('I want to see a hint for an unit test.'),
         ])

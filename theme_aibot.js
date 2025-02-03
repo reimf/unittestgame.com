@@ -1,46 +1,29 @@
 "use strict";
-var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, state, kind, f) {
-    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
-    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
-    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
-};
-var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, state, value, kind, f) {
-    if (kind === "m") throw new TypeError("Private method is not writable");
-    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
-    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
-    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
-};
-var _a, _AIBot_instance;
 class AIBot extends Theme {
     constructor() {
-        super();
+        super(...arguments);
+        this.description = 'I want to ensure an AI-bot functions correctly.';
     }
-    static instance() {
-        if (!__classPrivateFieldGet(_a, _a, "f", _AIBot_instance))
-            __classPrivateFieldSet(_a, _a, new _a(), "f", _AIBot_instance);
-        return __classPrivateFieldGet(_a, _a, "f", _AIBot_instance);
+    addUnitTestFormButton() {
+        return 'Add unit test';
     }
-    description() {
-        return 'I want to ensure an AI-bot functions correctly by testing it.';
-    }
-    choiceLabel() {
-        return 'Choice';
-    }
-    buttonText() {
-        return 'Execute!';
+    cancelUnitTestFormButton() {
+        return 'Cancel';
     }
     contractMessage(initialScore, penaltyHint, penaltyBug) {
         return new Section([
-            new Paragraph(`If you write enough unit tests, you will earn ${this.formatScore(initialScore)}. ` +
+            new Paragraph('Your boss wants you to work with an AI-bot as co-developer. ' +
+                'The AI-bot writes a function and you will write unit tests for it to prevent the AI-bot from hallucinating. ' +
+                `If you write enough unit tests, you will earn ${this.formatScore(initialScore)}. ` +
                 `However, a hint costs ${this.formatScore(penaltyHint)}. ` +
-                'And if the AI-bot produces an error that passes all submitted unit tests, ' +
-                `you will incur a penalty of ${this.formatScore(penaltyBug)}.`),
+                'And if the AI-bot produces a function that passes all submitted unit tests but is incorrect, ' +
+                `it will cost you ${this.formatScore(penaltyBug)}.`),
         ]);
     }
-    addUnitTestButton() {
+    formUnitTestButton() {
         return 'I want to add a unit test.';
     }
-    seeHintButton(penaltyHint) {
+    showHintButton(penaltyHint) {
         return `I want to see a hint for a unit test (-${this.formatScore(penaltyHint)}).`;
     }
     submitButton(penaltyBug) {
@@ -49,7 +32,7 @@ class AIBot extends Theme {
     endButton(penaltyEnd) {
         return `I want to finalize testing (-${this.formatScore(penaltyEnd)} if incorrect).`;
     }
-    seeHintMessage() {
+    showHintMessage() {
         return new Section([
             new Paragraph('I want to see a hint for a unit test.'),
         ]);
@@ -81,7 +64,7 @@ class AIBot extends Theme {
     }
     scorePanel(score) {
         return new Section([
-            new Header('Performance Score'),
+            new Header('Your Performance Score'),
             new Paragraph(`${this.formatScore(score)}`),
         ]);
     }
@@ -89,6 +72,11 @@ class AIBot extends Theme {
         return new Section([
             new Paragraph('I want to add a unit test.'),
             form,
+        ]);
+    }
+    cancelUnitTestFormMessage() {
+        return new Section([
+            new Paragraph('I don\'t want to add a unit test now.'),
         ]);
     }
     addUnitTestTextMessage(unitTest) {
@@ -168,5 +156,4 @@ class AIBot extends Theme {
         return `${score}%`;
     }
 }
-_a = AIBot;
-_AIBot_instance = { value: void 0 };
+AIBot.instance = new AIBot();

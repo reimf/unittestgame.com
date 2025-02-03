@@ -1,19 +1,15 @@
 class Speed extends Game {
-    readonly theme = Company.instance
+    public readonly theme = Company.instance
+    public readonly description = 'I want to review a function that displays the speed of a car on a small display.'
 
     public constructor() {
         super()
     }
 
-    public description(): string {
-        return 'I want to review a function that displays the speed of a car on a small display.'
-    }
-
     protected introductionMessage(): Section {
         return new Section([
             new Paragraph(
-                'A Chinese gadget maker is having a new function developed by an external software company. ' +
-                'The gadget displays the average speed on a small display. ' +
+                'A Chinese gadget maker needs a function to display the average speed on a small display. ' +
                 'Drivers rely on the displayed information to be correct, so there must be no errors.'
             ),
         ])
@@ -25,7 +21,7 @@ class Speed extends Game {
             new Paragraph(
                 'The function receives speed in meters per hour and must display the speed in kilometers per hour.'
             ),
-            new Paragraph(
+            new Div().appendText(
                 '+-------------------+\n' +
                 '|  X   XXXX   XXXX  |\n' +
                 '|  X   X  X   X  X  |\n' +
@@ -88,7 +84,7 @@ class Speed extends Game {
         ]
     }
 
-    protected getSpecialUnitTests(): UnitTest[] {
+    protected getMinimalUnitTests(): UnitTest[] {
         return [
             new UnitTest([-1], 'ERROR'),
             new UnitTest([0], '0.0'),
@@ -99,7 +95,7 @@ class Speed extends Game {
         ]
     }
 
-    protected *generalArgumentsGenerator(): Generator<any[]> {
+    protected *hintGenerator(): Generator<any[]> {
         yield [-1000]
         for (let speed = 0; speed <= 27000; speed += 900)
             yield [speed]

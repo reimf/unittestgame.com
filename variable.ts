@@ -1,7 +1,7 @@
 abstract class Variable {
     protected constructor(protected label: string, public name: string) { }
 
-    public abstract value(element: HTMLElement): boolean | number | string
+    public abstract value(): boolean | number | string
     public abstract toHtml(): Html
 }
 
@@ -11,10 +11,9 @@ class RadioVariable extends Variable {
         this.texts = texts
     }
 
-    public value(element: HTMLInputElement): string {
-        const selector = `input[name="${element.name}"]:checked`
-        const checked = document.querySelector(selector) as HTMLInputElement
-        return checked.value
+    public value(): string {
+        const input = document.querySelector(`input[name="${this.name}"]:checked`) as HTMLInputElement
+        return input.value
     }
 
     public toHtml(): Html {
@@ -31,8 +30,9 @@ class CheckboxVariable extends Variable {
         super(label, name)
     }
 
-    public value(element: HTMLInputElement): boolean {
-        return element.checked
+    public value(): boolean {
+        const input = document.querySelector(`input[name="${this.name}"]`) as HTMLInputElement
+        return input.checked
     }
 
     public toHtml(): Html {
@@ -47,8 +47,9 @@ class TextVariable extends Variable {
         super(label, name)
     }
 
-    public value(element: HTMLInputElement): string {
-        return element.value
+    public value(): string {
+        const input = document.querySelector(`input[name="${this.name}"]`) as HTMLInputElement
+        return input.value
     }
 
     public toHtml(): Html {
@@ -63,8 +64,9 @@ class NumberVariable extends Variable {
         super(label, name)
     }
 
-    public value(element: HTMLInputElement): number {
-        return Number(element.value)
+    public value(): number {
+        const input = document.querySelector(`input[name="${this.name}"]`) as HTMLInputElement
+        return Number(input.value)
     }
 
     public toHtml(): Html {

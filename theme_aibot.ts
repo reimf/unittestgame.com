@@ -1,44 +1,33 @@
 class AIBot extends Theme {
-    static #instance: AIBot
+    public static readonly instance = new AIBot()
+    public readonly description = 'I want to ensure an AI-bot functions correctly.'
 
-    private constructor() {
-        super()
+    public addUnitTestFormButton(): string {
+        return 'Add unit test'
     }
 
-    public static instance(): AIBot {
-        if (!AIBot.#instance)
-            AIBot.#instance = new AIBot()
-        return AIBot.#instance
-    }
-
-    public description(): string {
-        return 'I want to ensure an AI-bot functions correctly by testing it.'
-    }
-
-    public choiceLabel(): string {
-        return 'Choice'
-    }
-
-    public buttonText(): string {
-        return 'Execute!'
+    public cancelUnitTestFormButton(): string {
+        return 'Cancel'
     }
 
     public contractMessage(initialScore: number, penaltyHint: number, penaltyBug: number): Section {
         return new Section([
             new Paragraph(
+                'Your boss wants you to work with an AI-bot as co-developer. ' +
+                'The AI-bot writes a function and you will write unit tests for it to prevent the AI-bot from hallucinating. ' +
                 `If you write enough unit tests, you will earn ${this.formatScore(initialScore)}. ` +
                 `However, a hint costs ${this.formatScore(penaltyHint)}. ` +
-                'And if the AI-bot produces an error that passes all submitted unit tests, ' +
-                `you will incur a penalty of ${this.formatScore(penaltyBug)}.`
+                'And if the AI-bot produces a function that passes all submitted unit tests but is incorrect, ' +
+                `it will cost you ${this.formatScore(penaltyBug)}.`
             ),
         ])
     }
 
-    public addUnitTestButton(): string {
+    public formUnitTestButton(): string {
         return 'I want to add a unit test.'
     }
 
-    public seeHintButton(penaltyHint: number): string {
+    public showHintButton(penaltyHint: number): string {
         return `I want to see a hint for a unit test (-${this.formatScore(penaltyHint)}).`
     }
 
@@ -50,7 +39,7 @@ class AIBot extends Theme {
         return `I want to finalize testing (-${this.formatScore(penaltyEnd)} if incorrect).`
     }
 
-    public seeHintMessage(): Section {
+    public showHintMessage(): Section {
         return new Section([
             new Paragraph('I want to see a hint for a unit test.'),
         ])
@@ -70,7 +59,7 @@ class AIBot extends Theme {
 
     public unitTestsPanel(unitTests: UnitTest[]): Section {
         const list = unitTests.length === 0
-            ? [new Paragraph('You have not written any unit tests yet.')] 
+            ? [new Paragraph('You have not written any unit tests yet.')]
             : unitTests.map(unitTest => unitTest.toHtml())
         return new Section([
             new Header('Unit Tests'),
@@ -87,7 +76,7 @@ class AIBot extends Theme {
 
     public scorePanel(score: number): Section {
         return new Section([
-            new Header('Performance Score'),
+            new Header('Your Performance Score'),
             new Paragraph(`${this.formatScore(score)}`),
         ])
     }
@@ -96,6 +85,12 @@ class AIBot extends Theme {
         return new Section([
             new Paragraph('I want to add a unit test.'),
             form,
+        ])
+    }
+
+    public cancelUnitTestFormMessage(): Section {
+        return new Section([
+            new Paragraph('I don\'t want to add a unit test now.'),
         ])
     }
 

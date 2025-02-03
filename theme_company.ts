@@ -1,40 +1,35 @@
 class Company extends Theme {
-    public static instance = new Company()
+    public static readonly instance = new Company()
+    public readonly description = 'I want to review the work of an external software company.'
 
-    private constructor() {
-        super()
-    }
-
-    public description(): string {
-        return 'I want to review the work of an external software company.'
-    }
-
-    public choiceLabel(): string {
-        return 'Choice'
-    }
-
-    public buttonText(): string {
+    public addUnitTestFormButton(): string {
         return 'Go!'
+    }
+
+    public cancelUnitTestFormButton(): string {
+        return 'Cancel'
     }
 
     public contractMessage(initialScore: number, penaltyHint: number, penaltyBug: number): Section {
         return new Section([
             new Paragraph(
-                'You are hired to write sufficient unit tests for this function, ' +
-                'so that the function only produces correct results. ' +
-                `If you write enough unit tests, you will earn ${this.formatScore(initialScore)}. ` +
+                'You are hired to check the work of an external software company. ' +
+                'They write the function and it is your task to make sure the function follows the specification. ' +
+                'So you write sufficient unit tests, ' +
+                'such that the function always gives a correct result. ' +
+                `If you have written enough unit tests, you will earn ${this.formatScore(initialScore)}. ` +
                 `However, a hint costs ${this.formatScore(penaltyHint)}. ` +
-                'And if a user, for example, finds a bug in a function that passes all submitted unit tests, ' +
+                'And if a user finds a bug in a function that passes all your unit tests, ' +
                 `you will have to pay a penalty of ${this.formatScore(penaltyBug)}.`
             ),
         ])
     }
 
-    public addUnitTestButton(): string {
+    public formUnitTestButton(): string {
         return 'I want to add a unit test.'
     }
 
-    public seeHintButton(penaltyHint: number): string {
+    public showHintButton(penaltyHint: number): string {
         return `I want to see a hint for a unit test (-${this.formatScore(penaltyHint)}).`
     }
 
@@ -46,7 +41,7 @@ class Company extends Theme {
         return `I want to end the game (-${this.formatScore(penaltyEnd)} if incorrect).`
     }
 
-    public seeHintMessage(): Section {
+    public showHintMessage(): Section {
         return new Section([
             new Paragraph('I want to see a hint for a unit test.'),
         ])
@@ -92,6 +87,12 @@ class Company extends Theme {
         return new Section([
             new Paragraph('I want to add a unit test.'),
             form,
+        ])
+    }
+
+    public cancelUnitTestFormMessage(): Section {
+        return new Section([
+            new Paragraph('I don\'t want to add a unit test now.'),
         ])
     }
 

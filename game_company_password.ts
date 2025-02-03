@@ -1,14 +1,11 @@
 class Password extends Game {
-    readonly theme = Company.instance
+    public readonly theme = Company.instance
+    public readonly description = 'I want to review a function that determines whether a password is strong enough.'
 
     public constructor() {
         super()
     }
 
-    public description(): string {
-        return 'I want to review a function that determines whether a password is strong enough.'
-    }
-    
     protected introductionMessage(): Section {
         return new Section([
             new Paragraph(
@@ -17,7 +14,7 @@ class Password extends Game {
             ),
         ])
     }
-    
+
     protected specificationPanel(): Section {
         return new Section([
             new Header('Specification'),
@@ -27,7 +24,7 @@ class Password extends Game {
             new Paragraph('Rule 4: The password must contain a special character ("#" or "@").'),
         ])
     }
-    
+
 
     protected getParameters(): Variable[] {
         return [
@@ -77,7 +74,7 @@ class Password extends Game {
         ]
     }
 
-    protected getSpecialUnitTests(): UnitTest[] {
+    protected getMinimalUnitTests(): UnitTest[] {
         return [
             new UnitTest(['A3a6#'], true),
             new UnitTest(['@251Bc'], true),
@@ -136,7 +133,7 @@ class Password extends Game {
         }
     }
 
-    protected *generalArgumentsGenerator(): Generator<string[]> {
+    protected *hintGenerator(): Generator<string[]> {
         const digits = [...this.generateDigits()]
         const uppercase = [...this.generateUppercase()]
         const lowercase = [...this.generateLowercase()]

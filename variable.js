@@ -11,10 +11,9 @@ class RadioVariable extends Variable {
         this.texts = texts;
         this.texts = texts;
     }
-    value(element) {
-        const selector = `input[name="${element.name}"]:checked`;
-        const checked = document.querySelector(selector);
-        return checked.value;
+    value() {
+        const input = document.querySelector(`input[name="${this.name}"]:checked`);
+        return input.value;
     }
     toHtml() {
         const radioButtons = this.texts.map(text => {
@@ -28,8 +27,9 @@ class CheckboxVariable extends Variable {
     constructor(label, name) {
         super(label, name);
     }
-    value(element) {
-        return element.checked;
+    value() {
+        const input = document.querySelector(`input[name="${this.name}"]`);
+        return input.checked;
     }
     toHtml() {
         const input = new Input().type('checkbox').name(this.name);
@@ -41,8 +41,9 @@ class TextVariable extends Variable {
     constructor(label, name) {
         super(label, name);
     }
-    value(element) {
-        return element.value;
+    value() {
+        const input = document.querySelector(`input[name="${this.name}"]`);
+        return input.value;
     }
     toHtml() {
         const input = new Input().type('text').name(this.name).autocomplete(false);
@@ -54,8 +55,9 @@ class NumberVariable extends Variable {
     constructor(label, name) {
         super(label, name);
     }
-    value(element) {
-        return Number(element.value);
+    value() {
+        const input = document.querySelector(`input[name="${this.name}"]`);
+        return Number(input.value);
     }
     toHtml() {
         const input = new Input().type('number').name(this.name).autocomplete(false);

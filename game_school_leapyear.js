@@ -3,9 +3,7 @@ class Leapyear extends Game {
     constructor() {
         super();
         this.theme = School.instance;
-    }
-    description() {
-        return 'I want to write better unit tests for a leap year calculator.';
+        this.description = 'I want to write better unit tests for a leap year calculator.';
     }
     introductionMessage() {
         return new Section([
@@ -61,7 +59,7 @@ class Leapyear extends Game {
             ],
         ];
     }
-    getSpecialUnitTests() {
+    getMinimalUnitTests() {
         return [
             new UnitTest([2001], false),
             new UnitTest([2002], false),
@@ -70,7 +68,7 @@ class Leapyear extends Game {
             new UnitTest([1600], true),
         ];
     }
-    *generalArgumentsGenerator() {
+    *hintGenerator() {
         for (let year = 2001; year <= 2030; year += 1)
             yield [year];
         for (let year = 1000; year <= 3000; year += 100)

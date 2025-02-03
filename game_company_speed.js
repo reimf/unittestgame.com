@@ -3,14 +3,11 @@ class Speed extends Game {
     constructor() {
         super();
         this.theme = Company.instance;
-    }
-    description() {
-        return 'I want to review a function that displays the speed of a car on a small display.';
+        this.description = 'I want to review a function that displays the speed of a car on a small display.';
     }
     introductionMessage() {
         return new Section([
-            new Paragraph('A Chinese gadget maker is having a new function developed by an external software company. ' +
-                'The gadget displays the average speed on a small display. ' +
+            new Paragraph('A Chinese gadget maker needs a function to display the average speed on a small display. ' +
                 'Drivers rely on the displayed information to be correct, so there must be no errors.'),
         ]);
     }
@@ -18,7 +15,7 @@ class Speed extends Game {
         return new Section([
             new Header('Specification'),
             new Paragraph('The function receives speed in meters per hour and must display the speed in kilometers per hour.'),
-            new Paragraph('+-------------------+\n' +
+            new Div().appendText('+-------------------+\n' +
                 '|  X   XXXX   XXXX  |\n' +
                 '|  X   X  X   X  X  |\n' +
                 '|  X   XXXX   XXXX  |\n' +
@@ -70,7 +67,7 @@ class Speed extends Game {
             ],
         ];
     }
-    getSpecialUnitTests() {
+    getMinimalUnitTests() {
         return [
             new UnitTest([-1], 'ERROR'),
             new UnitTest([0], '0.0'),
@@ -80,7 +77,7 @@ class Speed extends Game {
             new UnitTest([199500], 'DANGER'),
         ];
     }
-    *generalArgumentsGenerator() {
+    *hintGenerator() {
         yield [-1000];
         for (let speed = 0; speed <= 27000; speed += 900)
             yield [speed];

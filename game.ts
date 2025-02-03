@@ -1,22 +1,22 @@
 abstract class Game {
-    readonly abstract theme: Theme
+    public readonly abstract theme: Theme
+    public readonly abstract description: string
     private parameters: Variable[]
     private unit: Variable
     private candidates: Candidate[]
     private perfectCandidates: Candidate[]
     private perfectCandidate: Candidate
-    private specialUnitTests: UnitTest[]
-    private generalUnitTests: UnitTest[]
+    private minimalUnitTests: UnitTest[]
+    private hints: UnitTest[]
     private userdefinedUnitTests: UnitTest[]
     private score: number
     private failingTestResult: TestResult | undefined
 
-    public abstract description(): string
     protected abstract getParameters(): Variable[]
     protected abstract getUnit(): Variable
     protected abstract getCandidateElements(): string[][]
-    protected abstract getSpecialUnitTests(): UnitTest[]
-    protected abstract generalArgumentsGenerator(): Generator<any[]>
+    protected abstract getMinimalUnitTests(): UnitTest[]
+    protected abstract hintGenerator(): Generator<any[]>
     protected abstract introductionMessage(): Section
     protected abstract specificationPanel(): Section
 
@@ -29,11 +29,11 @@ abstract class Game {
         this.parameters = this.getParameters()
         this.unit = this.getUnit()
         this.candidates = [...this.generateFunctions(this.getCandidateElements())]
-        this.specialUnitTests = this.getSpecialUnitTests()
-        this.perfectCandidates = this.findPerfectCandidates(this.candidates, this.specialUnitTests)
+        this.minimalUnitTests = this.getMinimalUnitTests()
+        this.perfectCandidates = this.findPerfectCandidates(this.candidates, this.minimalUnitTests)
         this.perfectCandidate = this.perfectCandidates.random()
-        this.checkUnitTestsAreNeeded(this.candidates, this.specialUnitTests)
-        this.generalUnitTests = [...this.generalArgumentsGenerator()].map(argumentList => new UnitTest(argumentList, this.perfectCandidate.callFunction(argumentList)))
+        this.checkUnitTestsAreNeeded(this.candidates, this.minimalUnitTests)
+        this.hints = [...this.hintGenerator()].map(argumentList => new UnitTest(argumentList, this.perfectCandidate.callFunction(argumentList)))
         this.userdefinedUnitTests = []
         this.score = this.INITIALSCORE
         this.failingTestResult = undefined
@@ -89,7 +89,7 @@ abstract class Game {
 
     public play(): void {
         this.specificationPanel().show('specification')
-        this.introductionMessage()
+        this.introductionMessage().addAsComputer()
         this.theme.contractMessage(this.INITIALSCORE, this.PENALTYHINT, this.PENALTYBUG).addAsComputer()
         this.menu()
     }
@@ -106,63 +106,42 @@ abstract class Game {
         const simplestPassingCandidate = this.findSimplestPassingCandidate(this.candidates, this.userdefinedUnitTests, this.perfectCandidates)
         this.theme.currentCandidatePanel(simplestPassingCandidate).show('current-candidate')
 
-        const failingGeneralTestResults = simplestPassingCandidate.failingTestResults(this.generalUnitTests)
-        const failingSpecialTestResults = simplestPassingCandidate.failingTestResults(this.specialUnitTests)
-        const failingTestResultsToChooseFrom = failingGeneralTestResults ? failingGeneralTestResults : failingSpecialTestResults
+        const failingTestResultsHints = simplestPassingCandidate.failingTestResults(this.hints)
+        const failingTestResultsUnitTests = simplestPassingCandidate.failingTestResults(this.minimalUnitTests)
+        const failingTestResultsToChooseFrom = failingTestResultsHints ? failingTestResultsHints : failingTestResultsUnitTests
         this.failingTestResult = failingTestResultsToChooseFrom
             ? failingTestResultsToChooseFrom.random()
             : undefined
 
         this.theme.scorePanel(this.score).show('score')
         this.menuMessage([
-            new Button(this.theme.addUnitTestButton()).on('click', () => this.showUnitTestForm()),
-            new Button(this.theme.seeHintButton(this.PENALTYHINT)).on('click', () => this.showHint()),
+            new Button(this.theme.formUnitTestButton()).on('click', () => this.showFormUnitTest()),
+            new Button(this.theme.showHintButton(this.PENALTYHINT)).on('click', () => this.showHint()),
             new Button(this.theme.submitButton(this.PENALTYBUG)).on('click', () => this.submit()),
             new Button(this.theme.endButton(this.PENALTYEND)).on('click', () => this.end()),
         ]).addAsHuman()
     }
 
-    private showUnitTestForm(): void {
-        this.theme.addUnitTestFormMessage(new Form([...this.parameters, this.unit], this.theme.buttonText(), (values: any[]) => this.addUnitTest(values))).replaceLastHuman()
+    private showFormUnitTest(): void {
+        const form = new Form(
+            [...this.parameters, this.unit],
+            this.theme.addUnitTestFormButton(),
+            (event: Event) => this.addUnitTest(event),
+            this.theme.cancelUnitTestFormButton(),
+            (event: Event) => this.cancelUnitTest(event)
+        )
+        this.theme.addUnitTestFormMessage(form).replaceLastHuman()
     }
 
-    private showHint(): void { 
-        if (this.failingTestResult) {
-            this.theme.seeHintMessage().replaceLastHuman()
-            this.theme.hintUnitTestMessage(this.failingTestResult.unitTest, this.PENALTYHINT).addAsComputer()
-            this.score -= this.PENALTYHINT
-        }
+    private cancelUnitTest(event: Event): void {
+        this.theme.cancelUnitTestFormMessage().replaceLastHuman()
         this.menu()
     }
 
-    private submit(): void { 
-        this.theme.submitMessage().replaceLastHuman()
-        if (this.failingTestResult) {
-            this.theme.bugFoundMessage(this.failingTestResult, this.PENALTYBUG).addAsComputer()
-            this.score -= this.PENALTYBUG
-            this.menu()
-        }
-        else
-            this.end()
-    }
-
-    private end(): void {
-        if (this.failingTestResult) {
-            this.score = 0
-            this.theme.scorePanel(this.score).show('score')
-            this.theme.endWithBugMessage().addAsComputer()
-        }
-        else if (this.score == 100)
-            this.theme.endPerfectMessage(this.score).addAsComputer()
-        else if (this.score > 50)
-            this.theme.endPositiveMessage(this.score).addAsComputer()
-        else
-            this.theme.endNegativeMessage(this.score).addAsComputer()
-    }
-
-    private addUnitTest(values: any[]): void {
-        const argumentList = values.slice(0, -1)
-        const expected = values.slice(-1).pop()
+    private addUnitTest(event: Event): void {
+        event.preventDefault()
+        const argumentList = this.parameters.map(parameter => parameter.value())
+        const expected = this.unit.value()
         const unitTest = new UnitTest(argumentList, expected)
         this.theme.addUnitTestTextMessage(unitTest).replaceLastHuman()
         const testResult = new TestResult(this.perfectCandidate, unitTest)
@@ -178,5 +157,40 @@ abstract class Game {
         else
             this.theme.incorrectUnitTestMessage().addAsComputer()
         this.menu()
+    }
+
+    private showHint(): void {
+        if (this.failingTestResult) {
+            this.theme.showHintMessage().replaceLastHuman()
+            this.theme.hintUnitTestMessage(this.failingTestResult.unitTest, this.PENALTYHINT).addAsComputer()
+            this.score -= this.PENALTYHINT
+        }
+        this.menu()
+    }
+
+    private submit(): void {
+        this.theme.submitMessage().replaceLastHuman()
+        if (this.failingTestResult) {
+            this.theme.bugFoundMessage(this.failingTestResult, this.PENALTYBUG).addAsComputer()
+            this.score -= this.PENALTYBUG
+            this.menu()
+        }
+        else
+            this.end()
+    }
+
+    private end(): void {
+        this.theme.endMessage().replaceLastHuman()
+        if (this.failingTestResult) {
+            this.score = 0
+            this.theme.scorePanel(this.score).show('score')
+            this.theme.endWithBugMessage().addAsComputer()
+        }
+        else if (this.score == 100)
+            this.theme.endPerfectMessage(this.score).addAsComputer()
+        else if (this.score > 50)
+            this.theme.endPositiveMessage(this.score).addAsComputer()
+        else
+            this.theme.endNegativeMessage(this.score).addAsComputer()
     }
 }

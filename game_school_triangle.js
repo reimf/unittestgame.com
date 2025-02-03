@@ -3,9 +3,7 @@ class Triangle extends Game {
     constructor() {
         super();
         this.theme = School.instance;
-    }
-    description() {
-        return 'I want to write better unit tests for a triangle type checker.';
+        this.description = 'I want to write better unit tests for a triangle type checker.';
     }
     introductionMessage() {
         return new Section([
@@ -59,7 +57,7 @@ class Triangle extends Game {
             ],
         ];
     }
-    getSpecialUnitTests() {
+    getMinimalUnitTests() {
         return [
             new UnitTest([5, 5, 5], 'equilateral'),
             new UnitTest([3, 5, 5], 'isosceles'),
@@ -68,7 +66,7 @@ class Triangle extends Game {
             new UnitTest([3, 4, 5], 'scalene'),
         ];
     }
-    *generalArgumentsGenerator() {
+    *hintGenerator() {
         for (let a = 6; a < 9; a++)
             for (let b = 6; b < 9; b++)
                 for (let c = 6; c < 9; c++)

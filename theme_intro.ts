@@ -1,39 +1,32 @@
 class Intro extends Theme {
-    public static instance = new Intro()
+    public static readonly instance = new Intro()
+    public readonly description = 'I want to have a nice introduction into this game.'
 
-    private constructor() {
-        super()
+    public addUnitTestFormButton(): string {
+        return 'Add unit test'
     }
 
-    public description(): string {
-        return 'I want to have a nice introduction into this game.'
-    }
-
-    public choiceLabel(): string {
-        return 'Choice'
-    }
-
-    public buttonText(): string {
-        return 'Go!'
+    public cancelUnitTestFormButton(): string {
+        return 'Cancel'
     }
 
     public contractMessage(initialScore: number, penaltyHint: number, penaltyBug: number): Section {
         return new Section([
             new Paragraph(
-                'The game has started. ' +
-                'It is your task to write unit tests for a function that determines whether you are allowed to vote or not. ' +
-                'Unit tests consist of an age and a boolean result (true if you are allowed to vote, false otherwise). ' +
-                'After adding a unit test, check the current function to see if it is correct. ' +
-                'Keep adding unit tests until the function works as specified.'
+                'It is your task to write unit tests for this function. ' +
+                'A unit test consists of a list of arguments for the function and the expected result. ' +
+                'After adding a unit test, check the current function to see if the function is correct. ' +
+                'Keep adding unit tests until the function works as specified, ' +
+                'then submit your unit tests.'
             ),
         ])
     }
 
-    public addUnitTestButton(): string {
+    public formUnitTestButton(): string {
         return 'I want to add a unit test.'
     }
 
-    public seeHintButton(penaltyHint: number): string {
+    public showHintButton(penaltyHint: number): string {
         return `I want to see a hint for a unit test.`
     }
 
@@ -45,7 +38,7 @@ class Intro extends Theme {
         return `I want to end the game.`
     }
 
-    public seeHintMessage(): Section {
+    public showHintMessage(): Section {
         return new Section([
             new Paragraph('I want to see a hint for a unit test.'),
         ])
@@ -92,6 +85,12 @@ class Intro extends Theme {
         ])
     }
 
+    public cancelUnitTestFormMessage(): Section {
+        return new Section([
+            new Paragraph('I don\'t want to add a unit test now.'),
+        ])
+    }
+
     public addUnitTestTextMessage(unitTest: UnitTest): Section {
         return new Section([
             new Paragraph('I want to add the following unit test:'),
@@ -118,7 +117,7 @@ class Intro extends Theme {
     public endWithBugMessage(): Section {
         return new Section([
             new Paragraph(
-                'There are still bugs in the function. ' +                
+                'There are still bugs in the function. ' +
                 'Thanks for playing!'
             ),
         ])

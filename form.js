@@ -1,22 +1,13 @@
 "use strict";
 class Form extends Html {
-    constructor(variables, buttonText, callback) {
+    constructor(variables, submitButtonText, callbackSubmit, cancelButtonText, callbackCancel) {
         super('form');
         this.variables = variables;
-        this.callback = callback;
+        this.callbackSubmit = callbackSubmit;
         const inputs = variables.map(variable => variable.toHtml());
-        const button = new Input().type('submit').value(buttonText);
-        const block = new Div().appendChild(button);
-        this.on('submit', event => this.submit(event)).appendChildren(inputs).appendChild(block);
-    }
-    submit(event) {
-        event.preventDefault();
-        const target = event.target;
-        const section = target.closest('section');
-        const values = this.variables.map(variable => {
-            const input = section.querySelector(`input[name="${variable.name}"]`);
-            return variable.value(input);
-        });
-        this.callback(values);
+        const submitButton = new Input().type('submit').value(submitButtonText);
+        const cancelButton = new Button(cancelButtonText).on('click', event => callbackCancel(event));
+        const block = new Div().appendChildren([submitButton, cancelButton]);
+        this.appendChildren(inputs).appendChild(block).on('submit', event => this.callbackSubmit(event));
     }
 }

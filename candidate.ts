@@ -36,7 +36,7 @@ class Candidate {
     public toString(): string {
         return this.function.toString()
     }
-    
+
     public toHtml(): Html {
         return new Code().appendText(this.toString())
     }

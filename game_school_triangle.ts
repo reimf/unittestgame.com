@@ -1,12 +1,9 @@
 class Triangle extends Game {
-    readonly theme = School.instance
+    public readonly theme = School.instance
+    public readonly description = 'I want to write better unit tests for a triangle type checker.'
 
     public constructor() {
         super()
-    }
-
-    public description(): string {
-        return 'I want to write better unit tests for a triangle type checker.'
     }
 
     protected introductionMessage(): Section {
@@ -16,7 +13,7 @@ class Triangle extends Game {
             )
         ])
     }
-            
+
     protected specificationPanel(): Section {
         return new Section([
             new Header('Specification'),
@@ -74,7 +71,7 @@ class Triangle extends Game {
         ]
     }
 
-    protected getSpecialUnitTests(): UnitTest[] {
+    protected getMinimalUnitTests(): UnitTest[] {
         return [
             new UnitTest([5, 5, 5], 'equilateral'),
             new UnitTest([3, 5, 5], 'isosceles'),
@@ -84,7 +81,7 @@ class Triangle extends Game {
         ]
     }
 
-    protected *generalArgumentsGenerator(): Generator<any[]> {
+    protected *hintGenerator(): Generator<any[]> {
         for (let a = 6; a < 9; a++)
             for (let b = 6; b < 9; b++)
                 for (let c = 6; c < 9; c++)

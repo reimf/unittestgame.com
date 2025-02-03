@@ -68,7 +68,7 @@ class Html {
 
     public addTo(parentId: string): void {
         const old = document.querySelector('#' + this.element.id)
-        if (old) 
+        if (old)
             old.replaceWith(this.element)
         else
             document.querySelector('#' + parentId)!.appendChild(this.element)

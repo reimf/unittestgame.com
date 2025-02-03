@@ -3,14 +3,13 @@ class Votingage extends Game {
     constructor() {
         super();
         this.theme = Intro.instance;
-    }
-    description() {
-        return 'I want to write unit tests for a function that checks if a person is allowed to vote based on their age.';
+        this.description = 'I want to write unit tests for a function that checks if a person is allowed to vote based on their age.';
     }
     introductionMessage() {
         return new Section([
             new Paragraph('A legal voting age is the minimum age that a person is allowed to vote in a democratic process. ' +
-                'For general elections around the world, the right to vote is restricted to adults, and most nations use 18 as their voting age.')
+                'For general elections around the world, the right to vote is restricted to adults, and most nations use 18 as their voting age. ' +
+                'A government needs a function that determines whether someone is allowed to vote or not.')
         ]);
     }
     specificationPanel() {
@@ -41,13 +40,13 @@ class Votingage extends Game {
             ],
         ];
     }
-    getSpecialUnitTests() {
+    getMinimalUnitTests() {
         return [
             new UnitTest([17], false),
             new UnitTest([18], true),
         ];
     }
-    *generalArgumentsGenerator() {
+    *hintGenerator() {
         for (let age = 1; age <= 40; age += 1)
             yield [age];
     }

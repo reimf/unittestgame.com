@@ -1,16 +1,14 @@
 "use strict";
 class School extends Theme {
     constructor() {
-        super();
+        super(...arguments);
+        this.description = 'I want to write better unit tests for student assignments.';
     }
-    description() {
-        return 'I want to write better unit tests for student assignments.';
+    addUnitTestFormButton() {
+        return 'Add unit test';
     }
-    choiceLabel() {
-        return 'Choice';
-    }
-    buttonText() {
-        return 'Go!';
+    cancelUnitTestFormButton() {
+        return 'Cancel';
     }
     contractMessage(initialScore, penaltyHint, penaltyBug) {
         return new Section([
@@ -43,10 +41,10 @@ class School extends Theme {
             new Paragraph(`${this.formatScore(score)}`),
         ]);
     }
-    addUnitTestButton() {
+    formUnitTestButton() {
         return 'I want to add an unit test.';
     }
-    seeHintButton(penaltyHint) {
+    showHintButton(penaltyHint) {
         return `I want to see a hint for an unit test (-${this.formatScore(penaltyHint)}).`;
     }
     submitButton(penaltyBug) {
@@ -61,13 +59,18 @@ class School extends Theme {
             form,
         ]);
     }
+    cancelUnitTestFormMessage() {
+        return new Section([
+            new Paragraph('I don\'t want to add a unit test now.'),
+        ]);
+    }
     addUnitTestTextMessage(unitTest) {
         return new Section([
             new Paragraph('I want to add the following unit test:'),
             unitTest.toHtml(),
         ]);
     }
-    seeHintMessage() {
+    showHintMessage() {
         return new Section([
             new Paragraph('I want to see a hint for an unit test.'),
         ]);

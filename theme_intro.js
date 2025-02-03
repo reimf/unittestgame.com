@@ -1,30 +1,28 @@
 "use strict";
 class Intro extends Theme {
     constructor() {
-        super();
+        super(...arguments);
+        this.description = 'I want to have a nice introduction into this game.';
     }
-    description() {
-        return 'I want to have a nice introduction into this game.';
+    addUnitTestFormButton() {
+        return 'Add unit test';
     }
-    choiceLabel() {
-        return 'Choice';
-    }
-    buttonText() {
-        return 'Go!';
+    cancelUnitTestFormButton() {
+        return 'Cancel';
     }
     contractMessage(initialScore, penaltyHint, penaltyBug) {
         return new Section([
-            new Paragraph('The game has started. ' +
-                'It is your task to write unit tests for a function that determines whether you are allowed to vote or not. ' +
-                'Unit tests consist of an age and a boolean result (true if you are allowed to vote, false otherwise). ' +
-                'After adding a unit test, check the current function to see if it is correct. ' +
-                'Keep adding unit tests until the function works as specified.'),
+            new Paragraph('It is your task to write unit tests for this function. ' +
+                'A unit test consists of a list of arguments for the function and the expected result. ' +
+                'After adding a unit test, check the current function to see if the function is correct. ' +
+                'Keep adding unit tests until the function works as specified, ' +
+                'then submit your unit tests.'),
         ]);
     }
-    addUnitTestButton() {
+    formUnitTestButton() {
         return 'I want to add a unit test.';
     }
-    seeHintButton(penaltyHint) {
+    showHintButton(penaltyHint) {
         return `I want to see a hint for a unit test.`;
     }
     submitButton(penaltyBug) {
@@ -33,7 +31,7 @@ class Intro extends Theme {
     endButton(penaltyEnd) {
         return `I want to end the game.`;
     }
-    seeHintMessage() {
+    showHintMessage() {
         return new Section([
             new Paragraph('I want to see a hint for a unit test.'),
         ]);
@@ -70,6 +68,11 @@ class Intro extends Theme {
         return new Section([
             new Paragraph('I want to add a unit test.'),
             form,
+        ]);
+    }
+    cancelUnitTestFormMessage() {
+        return new Section([
+            new Paragraph('I don\'t want to add a unit test now.'),
         ]);
     }
     addUnitTestTextMessage(unitTest) {

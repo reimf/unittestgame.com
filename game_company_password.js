@@ -3,9 +3,7 @@ class Password extends Game {
     constructor() {
         super();
         this.theme = Company.instance;
-    }
-    description() {
-        return 'I want to review a function that determines whether a password is strong enough.';
+        this.description = 'I want to review a function that determines whether a password is strong enough.';
     }
     introductionMessage() {
         return new Section([
@@ -64,7 +62,7 @@ class Password extends Game {
             ],
         ];
     }
-    getSpecialUnitTests() {
+    getMinimalUnitTests() {
         return [
             new UnitTest(['A3a6#'], true),
             new UnitTest(['@251Bc'], true),
@@ -121,7 +119,7 @@ class Password extends Game {
             }
         }
     }
-    *generalArgumentsGenerator() {
+    *hintGenerator() {
         const digits = [...this.generateDigits()];
         const uppercase = [...this.generateUppercase()];
         const lowercase = [...this.generateLowercase()];

@@ -1,12 +1,9 @@
 class Leapyear extends Game {
-    readonly theme = School.instance
+    public readonly theme = School.instance
+    public readonly description = 'I want to write better unit tests for a leap year calculator.'
 
     public constructor() {
         super()
-    }
-
-    public description(): string {
-        return 'I want to write better unit tests for a leap year calculator.'
     }
 
     protected introductionMessage(): Section {
@@ -78,7 +75,7 @@ class Leapyear extends Game {
         ]
     }
 
-    protected getSpecialUnitTests(): UnitTest[] {
+    protected getMinimalUnitTests(): UnitTest[] {
         return [
             new UnitTest([2001], false),
             new UnitTest([2002], false),
@@ -88,7 +85,7 @@ class Leapyear extends Game {
         ]
     }
 
-    protected *generalArgumentsGenerator(): Generator<any[]> {
+    protected *hintGenerator(): Generator<any[]> {
         for (let year = 2001; year <= 2030; year += 1)
             yield [year]
         for (let year = 1000; year <= 3000; year += 100)

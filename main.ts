@@ -1,9 +1,4 @@
 class Main {
-    private themes = [
-        Company.instance,
-        Intro.instance, 
-        School.instance, 
-    ]
     private games = [
         new Votingage(),
         new Evenodd(),
@@ -13,12 +8,14 @@ class Main {
         new Float(),
         new Password(),
     ]
+
+    private themes = this.games.map(game => game.theme).filter((theme, index, themes) => themes.indexOf(theme) === index)
     private quitButton = new Button('I want to quit.').on('click', () => this.end())
 
     private aboutPanel(): Section {
         const anchor = new Anchor().href('mailto:feedback@unittestgame.com').appendText('feedback@unittestgame.com')
         return new Section([
-            new Header('Learn unit testing with UnitTestGame.com'),
+            new Header('Learn Unit Testing with UnitTestGame.com'),
             new Paragraph('Please send ').appendChild(anchor)
         ])
     }
@@ -42,7 +39,7 @@ class Main {
 
     private choosenThemeMessage(theme: Theme): Section {
         return new Section([
-            new Paragraph(theme.description()),
+            new Paragraph(theme.description),
         ])
     }
 
@@ -55,7 +52,7 @@ class Main {
 
     private choosenGameMessage(game: Game): Section {
         return new Section([
-            new Paragraph(game.description()),
+            new Paragraph(game.description),
         ])
     }
 
@@ -79,7 +76,7 @@ class Main {
 
     private themeMenu(): void {
         this.themeMenuMessage(
-            this.themes.map(theme => new Button(theme.description()).on('click', () => this.themeAnswer(theme)))
+            this.themes.map(theme => new Button(theme.description).on('click', () => this.themeAnswer(theme)))
         ).addAsHuman()
     }
 
@@ -91,12 +88,13 @@ class Main {
     private gameMenu(theme: Theme): void {
         const gamesForThisTheme = this.games.filter(game => game.theme === theme)
         this.gameMenuMessage(
-            gamesForThisTheme.map(game => new Button(game.description()).on('click', () => this.gameAnswer(game)))
+            gamesForThisTheme.map(game => new Button(game.description).on('click', () => this.gameAnswer(game)))
         ).addAsHuman()
     }
 
     private gameAnswer(game: Game): void {
         this.choosenGameMessage(game).replaceLastHuman()
+        document.querySelector('#welcome')?.remove()
         game.play()
     }
 

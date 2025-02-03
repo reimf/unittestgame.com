@@ -3,9 +3,7 @@ class Float extends Game {
     constructor() {
         super();
         this.theme = Company.instance;
-    }
-    description() {
-        return 'I want to review a function that uses a regular expression to determine whether a text represents a float.';
+        this.description = 'I want to review a function that uses a regular expression to determine whether a text represents a float.';
     }
     introductionMessage() {
         return new Section([
@@ -19,7 +17,7 @@ class Float extends Game {
             new Paragraph('The function must determine whether a text represents a float and returns true or false accordingly. ' +
                 'A float may start with a plus sign or a minus sign. ' +
                 'This is followed by one or more digits. ' +
-                'If there is a dot, at least one digit must follow. '),
+                'If there is a dot, at least one digit must follow.'),
         ]);
     }
     getParameters() {
@@ -72,7 +70,7 @@ class Float extends Game {
             ]
         ];
     }
-    getSpecialUnitTests() {
+    getMinimalUnitTests() {
         return [
             new UnitTest(['+123'], true),
             new UnitTest(['-123.45'], true),
@@ -83,7 +81,7 @@ class Float extends Game {
             new UnitTest(['12.3.45'], false),
         ];
     }
-    *generalArgumentsGenerator() {
+    *hintGenerator() {
         for (let i = 0; i < 100; i++) {
             const number = Math.random() * 1000;
             const precision = Math.floor(Math.random() * 4);

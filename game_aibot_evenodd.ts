@@ -1,12 +1,9 @@
 class Evenodd extends Game {
-    readonly theme = Intro.instance
+    public readonly theme = AIBot.instance
+    public readonly description = 'I want to write unit tests for a function that checks if a number is even or odd.'
 
     public constructor() {
         super()
-    }
-
-    public description(): string {
-        return 'I want to write unit tests for a function that checks if a number is even or odd.'
     }
 
     protected introductionMessage(): Section {
@@ -59,6 +56,26 @@ class Evenodd extends Game {
                 '',
             ],
             [
+                'return number < 1',
+                'return number < 2',
+                'return number < 3',
+                'return number < 4',
+                'return number < 5',
+                'return number < 6',
+                'return number < 7',
+                'return number < 8',
+                'return number < 9',
+                'return number < 10',
+                'return number > 1',
+                'return number > 2',
+                'return number > 3',
+                'return number > 4',
+                'return number > 5',
+                'return number > 6',
+                'return number > 7',
+                'return number > 8',
+                'return number > 9',
+                'return number > 10',
                 'return number % 2 === 0',
                 'return true',
                 'return false',
@@ -66,14 +83,14 @@ class Evenodd extends Game {
         ]
     }
 
-    protected getSpecialUnitTests(): UnitTest[] {
+    protected getMinimalUnitTests(): UnitTest[] {
         return [
             new UnitTest([17], false),
             new UnitTest([24], true),
         ]
     }
 
-    protected *generalArgumentsGenerator(): Generator<any[]> {
+    protected *hintGenerator(): Generator<any[]> {
         for (let number = 0; number <= 40; number += 1)
             yield [number]
     }

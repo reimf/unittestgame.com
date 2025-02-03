@@ -1,14 +1,11 @@
 class Float extends Game {
-    readonly theme = Company.instance
+    public readonly theme = Company.instance
+    public readonly description = 'I want to review a function that uses a regular expression to determine whether a text represents a float.'
 
     public constructor() {
         super()
     }
 
-    public description(): string {
-        return 'I want to review a function that uses a regular expression to determine whether a text represents a float.'
-    }
-    
     protected introductionMessage(): Section {
         return new Section([
             new Paragraph(
@@ -17,7 +14,7 @@ class Float extends Game {
             ),
         ])
     }
-    
+
     protected specificationPanel(): Section {
         return new Section([
             new Header('Specification'),
@@ -25,10 +22,10 @@ class Float extends Game {
                 'The function must determine whether a text represents a float and returns true or false accordingly. ' +
                 'A float may start with a plus sign or a minus sign. ' +
                 'This is followed by one or more digits. ' +
-                'If there is a dot, at least one digit must follow. '
+                'If there is a dot, at least one digit must follow.'
             ),
         ])
-    }    
+    }
 
     protected getParameters(): Variable[] {
         return [
@@ -86,7 +83,7 @@ class Float extends Game {
         ]
     }
 
-    protected getSpecialUnitTests(): UnitTest[] {
+    protected getMinimalUnitTests(): UnitTest[] {
         return [
             new UnitTest(['+123'], true),
             new UnitTest(['-123.45'], true),
@@ -98,7 +95,7 @@ class Float extends Game {
         ]
     }
 
-    protected *generalArgumentsGenerator(): Generator<any[]> {
+    protected *hintGenerator(): Generator<any[]> {
         for (let i = 0; i < 100; i++) {
             const number = Math.random() * 1000
             const precision = Math.floor(Math.random() * 4)
