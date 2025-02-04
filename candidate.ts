@@ -1,5 +1,6 @@
 class Candidate {
-    private function: Function
+    private readonly function: Function
+    private complexity: number[] = []
 
     public constructor(code: string) {
         this.function = new Function('return ' + code)()
@@ -13,8 +14,12 @@ class Candidate {
         }
     }
 
-    public complexity(): number {
-        return this.function.toString().length
+    public setComplexity(hints: UnitTest[]): void {
+        this.complexity = [this.function.toString().length, this.passCount(hints)]
+    }
+
+    public simplest(other: Candidate): Candidate {
+        return this.complexity < other.complexity ? this : other
     }
 
     public testResults(unitTests: UnitTest[]): TestResult[] {

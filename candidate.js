@@ -1,6 +1,7 @@
 "use strict";
 class Candidate {
     constructor(code) {
+        this.complexity = [];
         this.function = new Function('return ' + code)();
     }
     callFunction(argumentsList) {
@@ -11,8 +12,11 @@ class Candidate {
             return error.name;
         }
     }
-    complexity() {
-        return this.function.toString().length;
+    setComplexity(hints) {
+        this.complexity = [this.function.toString().length, this.passCount(hints)];
+    }
+    simplest(other) {
+        return this.complexity < other.complexity ? this : other;
     }
     testResults(unitTests) {
         return unitTests.map(unitTest => new TestResult(this, unitTest));

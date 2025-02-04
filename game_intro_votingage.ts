@@ -44,12 +44,12 @@ class Votingage extends Game {
     protected getCandidateElements(): string[][] {
         return [
             [
-                'if (age >= 16) return true',
-                'if (age >= 18) return true',
-                'if (age >= 20) return true',
-                '',
-            ],
-            [
+                'return age >= 16',
+                'return age >= 17',
+                'return age >= 18',
+                'return age >= 19',
+                'return age >= 20',
+                'return age >= 21',
                 'return true',
                 'return false',
             ],

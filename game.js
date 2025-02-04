@@ -13,6 +13,7 @@ class Game {
         this.perfectCandidate = this.perfectCandidates.random();
         this.checkUnitTestsAreNeeded(this.candidates, this.minimalUnitTests);
         this.hints = [...this.hintGenerator()].map(argumentList => new UnitTest(argumentList, this.perfectCandidate.callFunction(argumentList)));
+        this.candidates.forEach(candidate => candidate.setComplexity(this.hints));
         this.userdefinedUnitTests = [];
         this.score = this.INITIALSCORE;
         this.failingTestResult = undefined;
@@ -57,7 +58,7 @@ class Game {
         const nonPerfectPassingCandidates = passingCandidates.filter(candidate => !perfectCandidates.includes(candidate));
         if (nonPerfectPassingCandidates.length == 0)
             return passingCandidates.random();
-        return nonPerfectPassingCandidates.reduce((simplestSoFar, current) => current.complexity() < simplestSoFar.complexity() ? current : simplestSoFar);
+        return nonPerfectPassingCandidates.reduce((simplestSoFar, current) => simplestSoFar.simplest(current));
     }
     play() {
         this.specificationPanel().show('specification');

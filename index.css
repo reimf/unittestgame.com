@@ -19,6 +19,8 @@ form {
     }
 
     button {
+        background-color: #ece5dd;
+        color: #333;
         display: inline;
         height: 2.5rem;
         margin: 0 0 0 1rem;
