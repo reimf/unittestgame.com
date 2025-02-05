@@ -4,7 +4,7 @@ class Candidate {
 
     public constructor(code: string) {
         this.function = new Function('return ' + code)()
-        this.complexity = code.length.toString().padStart(4, '0')
+        this.complexity = code.length.toString()
     }
 
     public callFunction(argumentsList: any[]): any {
@@ -16,7 +16,7 @@ class Candidate {
     }
 
     public refineComplexity(hints: UnitTest[]): void {
-        this.complexity += this.passCount(hints).toString().padStart(4, '0')
+        this.complexity += this.passCount(hints) / (hints.length + 1)
     }
 
     public simplest(other: Candidate): Candidate {
@@ -44,6 +44,6 @@ class Candidate {
     }
 
     public toHtml(): Html {
-        return new Code().appendText(this.toString())
+        return new Code(this.toString())
     }
 }

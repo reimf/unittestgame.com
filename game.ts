@@ -6,13 +6,13 @@ abstract class Game {
 
     public readonly abstract theme: Theme
     public readonly abstract description: string
-    private parameters: Variable[]
-    private unit: Variable
-    private candidates: Candidate[]
-    private perfectCandidates: Candidate[]
-    private perfectCandidate: Candidate
-    private minimalUnitTests: UnitTest[]
-    private hints: UnitTest[]
+    private parameters: Variable[] = this.getParameters()
+    private unit: Variable = this.getUnit()
+    private candidates: Candidate[] = [...this.generateCandidates(this.getCandidateElements())]
+    private minimalUnitTests: UnitTest[] = this.getMinimalUnitTests()
+    private perfectCandidates: Candidate[] = this.findPerfectCandidates(this.candidates, this.minimalUnitTests)
+    private perfectCandidate: Candidate = this.perfectCandidates.random()
+    private hints: UnitTest[] = [...this.hintGenerator()].map(argumentList => new UnitTest(argumentList, this.perfectCandidate.callFunction(argumentList)))
     private userdefinedUnitTests: UnitTest[] = []
     private score: number = this.INITIALSCORE
     private failingTestResult: TestResult | undefined = undefined
@@ -26,22 +26,15 @@ abstract class Game {
     protected abstract specificationPanel(): Section
 
     public constructor() {
-        this.parameters = this.getParameters()
-        this.unit = this.getUnit()
-        this.candidates = [...this.generateFunctions(this.getCandidateElements())]
-        this.minimalUnitTests = this.getMinimalUnitTests()
-        this.perfectCandidates = this.findPerfectCandidates(this.candidates, this.minimalUnitTests)
-        this.perfectCandidate = this.perfectCandidates.random()
         this.checkUnitTestsAreNeeded(this.candidates, this.minimalUnitTests)
-        this.hints = [...this.hintGenerator()].map(argumentList => new UnitTest(argumentList, this.perfectCandidate.callFunction(argumentList)))
         this.candidates.forEach(candidate => candidate.refineComplexity(this.hints))
     }
 
-    private *generateFunctions(listOfListOfLines: string[][], lines: string[] = []): Generator<Candidate> {
+    private *generateCandidates(listOfListOfLines: string[][], lines: string[] = []): Generator<Candidate> {
         if (listOfListOfLines.length > 0) {
             const [firstListOfLines, ...remainingListOfListOfLines] = listOfListOfLines
             for (const line of firstListOfLines)
-                yield* this.generateFunctions(remainingListOfListOfLines, [...lines, line])
+                yield* this.generateCandidates(remainingListOfListOfLines, [...lines, line])
         }
         else
             yield this.createCandidate(lines)
@@ -113,10 +106,10 @@ abstract class Game {
 
         this.theme.scorePanel(this.score).show('score')
         this.menuMessage([
-            new Button(this.theme.formUnitTestButton()).on('click', () => this.showFormUnitTest()),
-            new Button(this.theme.showHintButton(this.PENALTYHINT)).on('click', () => this.showHint()),
-            new Button(this.theme.submitButton(this.PENALTYBUG)).on('click', () => this.submit()),
-            new Button(this.theme.endButton(this.PENALTYEND)).on('click', () => this.end()),
+            new Button(this.theme.formUnitTestButton(), () => this.showFormUnitTest()),
+            new Button(this.theme.showHintButton(this.PENALTYHINT), () => this.showHint()),
+            new Button(this.theme.submitButton(this.PENALTYBUG), () => this.submit()),
+            new Button(this.theme.endButton(this.PENALTYEND), () => this.end()),
         ]).addAsHuman()
     }
 

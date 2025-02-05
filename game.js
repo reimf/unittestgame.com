@@ -5,24 +5,24 @@ class Game {
         this.PENALTYHINT = 10;
         this.PENALTYBUG = 20;
         this.PENALTYEND = 100;
-        this.userdefinedUnitTests = [];
-        this.score = this.INITIALSCORE;
-        this.failingTestResult = undefined;
         this.parameters = this.getParameters();
         this.unit = this.getUnit();
-        this.candidates = [...this.generateFunctions(this.getCandidateElements())];
+        this.candidates = [...this.generateCandidates(this.getCandidateElements())];
         this.minimalUnitTests = this.getMinimalUnitTests();
         this.perfectCandidates = this.findPerfectCandidates(this.candidates, this.minimalUnitTests);
         this.perfectCandidate = this.perfectCandidates.random();
-        this.checkUnitTestsAreNeeded(this.candidates, this.minimalUnitTests);
         this.hints = [...this.hintGenerator()].map(argumentList => new UnitTest(argumentList, this.perfectCandidate.callFunction(argumentList)));
+        this.userdefinedUnitTests = [];
+        this.score = this.INITIALSCORE;
+        this.failingTestResult = undefined;
+        this.checkUnitTestsAreNeeded(this.candidates, this.minimalUnitTests);
         this.candidates.forEach(candidate => candidate.refineComplexity(this.hints));
     }
-    *generateFunctions(listOfListOfLines, lines = []) {
+    *generateCandidates(listOfListOfLines, lines = []) {
         if (listOfListOfLines.length > 0) {
             const [firstListOfLines, ...remainingListOfListOfLines] = listOfListOfLines;
             for (const line of firstListOfLines)
-                yield* this.generateFunctions(remainingListOfListOfLines, [...lines, line]);
+                yield* this.generateCandidates(remainingListOfListOfLines, [...lines, line]);
         }
         else
             yield this.createCandidate(lines);
@@ -83,10 +83,10 @@ class Game {
             : undefined;
         this.theme.scorePanel(this.score).show('score');
         this.menuMessage([
-            new Button(this.theme.formUnitTestButton()).on('click', () => this.showFormUnitTest()),
-            new Button(this.theme.showHintButton(this.PENALTYHINT)).on('click', () => this.showHint()),
-            new Button(this.theme.submitButton(this.PENALTYBUG)).on('click', () => this.submit()),
-            new Button(this.theme.endButton(this.PENALTYEND)).on('click', () => this.end()),
+            new Button(this.theme.formUnitTestButton(), () => this.showFormUnitTest()),
+            new Button(this.theme.showHintButton(this.PENALTYHINT), () => this.showHint()),
+            new Button(this.theme.submitButton(this.PENALTYBUG), () => this.submit()),
+            new Button(this.theme.endButton(this.PENALTYEND), () => this.end()),
         ]).addAsHuman();
     }
     showFormUnitTest() {

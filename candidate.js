@@ -2,7 +2,7 @@
 class Candidate {
     constructor(code) {
         this.function = new Function('return ' + code)();
-        this.complexity = code.length.toString().padStart(4, '0');
+        this.complexity = code.length.toString();
     }
     callFunction(argumentsList) {
         try {
@@ -13,7 +13,7 @@ class Candidate {
         }
     }
     refineComplexity(hints) {
-        this.complexity += this.passCount(hints).toString().padStart(4, '0');
+        this.complexity += this.passCount(hints) / (hints.length + 1);
     }
     simplest(other) {
         return this.complexity < other.complexity ? this : other;
@@ -34,6 +34,6 @@ class Candidate {
         return this.function.toString();
     }
     toHtml() {
-        return new Code().appendText(this.toString());
+        return new Code(this.toString());
     }
 }

@@ -28,31 +28,6 @@ class Html {
         this.element.addEventListener(eventType, callback);
         return this;
     }
-    href(value) {
-        if (this.element instanceof HTMLAnchorElement)
-            this.element.href = value;
-        return this;
-    }
-    type(value) {
-        if (this.element instanceof HTMLInputElement)
-            this.element.type = value;
-        return this;
-    }
-    name(value) {
-        if (this.element instanceof HTMLInputElement)
-            this.element.name = value;
-        return this;
-    }
-    value(value) {
-        if (this.element instanceof HTMLInputElement)
-            this.element.value = value;
-        return this;
-    }
-    autocomplete(value) {
-        if (this.element instanceof HTMLInputElement)
-            this.element.autocomplete = value ? 'on' : 'off';
-        return this;
-    }
     addTo(parentId) {
         const old = document.querySelector('#' + this.element.id);
         if (old)
@@ -62,13 +37,37 @@ class Html {
     }
 }
 class Anchor extends Html {
-    constructor() {
+    constructor(href) {
         super('a');
+        this.anchor = this.element;
+        this.href(href);
+    }
+    href(value) {
+        this.anchor.href = value;
+        return this;
     }
 }
 class Input extends Html {
-    constructor() {
+    constructor(type) {
         super('input');
+        this.input = this.element;
+        this.type(type);
+    }
+    type(value) {
+        this.input.type = value;
+        return this;
+    }
+    name(value) {
+        this.input.name = value;
+        return this;
+    }
+    value(value) {
+        this.input.value = value;
+        return this;
+    }
+    autocomplete(value) {
+        this.input.autocomplete = value ? 'on' : 'off';
+        return this;
     }
 }
 class Header extends Html {
@@ -84,9 +83,9 @@ class Paragraph extends Html {
     }
 }
 class Button extends Html {
-    constructor(text) {
+    constructor(text, callback) {
         super('button');
-        this.appendText(text);
+        this.appendText(text).on('click', callback);
     }
 }
 class Label extends Html {
@@ -100,7 +99,8 @@ class Div extends Html {
     }
 }
 class Code extends Html {
-    constructor() {
+    constructor(text) {
         super('code');
+        this.appendText(text);
     }
 }

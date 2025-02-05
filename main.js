@@ -11,10 +11,10 @@ class Main {
             new Password(),
         ];
         this.themes = this.games.map(game => game.theme).filter((theme, index, themes) => themes.indexOf(theme) === index);
-        this.quitButton = new Button('I want to quit.').on('click', () => this.end());
+        this.quitButton = new Button('I want to quit.', () => this.end());
     }
     aboutPanel() {
-        const anchor = new Anchor().href('mailto:feedback@unittestgame.com').appendText('feedback@unittestgame.com');
+        const anchor = new Anchor('mailto:feedback@unittestgame.com').appendText('feedback@unittestgame.com');
         return new Section([
             new Header('Learn Unit Testing with UnitTestGame.com'),
             new Paragraph('Please send ').appendChild(anchor)
@@ -65,7 +65,7 @@ class Main {
         this.themeMenu();
     }
     themeMenu() {
-        this.themeMenuMessage(this.themes.map(theme => new Button(theme.description).on('click', () => this.themeAnswer(theme)))).addAsHuman();
+        this.themeMenuMessage(this.themes.map(theme => new Button(theme.description, () => this.themeAnswer(theme)))).addAsHuman();
     }
     themeAnswer(theme) {
         this.choosenThemeMessage(theme).replaceLastHuman();
@@ -73,7 +73,7 @@ class Main {
     }
     gameMenu(theme) {
         const gamesForThisTheme = this.games.filter(game => game.theme === theme);
-        this.gameMenuMessage(gamesForThisTheme.map(game => new Button(game.description).on('click', () => this.gameAnswer(game)))).addAsHuman();
+        this.gameMenuMessage(gamesForThisTheme.map(game => new Button(game.description, () => this.gameAnswer(game)))).addAsHuman();
     }
     gameAnswer(game) {
         this.choosenGameMessage(game).replaceLastHuman();

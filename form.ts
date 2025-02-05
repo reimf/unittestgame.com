@@ -1,10 +1,10 @@
 class Form extends Html {
-    public constructor(private variables: Variable[], submitButtonText: string, private callbackSubmit: Function, cancelButtonText: string, callbackCancel: Function) {
+    public constructor(private variables: Variable[], submitButtonText: string, private callbackSubmit: (event: Event) => void, cancelButtonText: string, callbackCancel: (event: Event) => void) {
         super('form')
         const inputs = variables.map(variable => variable.toHtml())
-        const submitButton = new Input().type('submit').value(submitButtonText)
-        const cancelButton = new Button(cancelButtonText).on('click', event => callbackCancel(event))
-        const block = new Div().appendChildren([submitButton, cancelButton])
-        this.appendChildren(inputs).appendChild(block).on('submit', event => this.callbackSubmit(event))
+        const submitButton = new Input('submit').value(submitButtonText)
+        const cancelButton = new Button(cancelButtonText, event => callbackCancel(event))
+        const buttonBlock = new Div().appendChildren([submitButton, cancelButton])
+        this.appendChildren(inputs).appendChild(buttonBlock).on('submit', event => this.callbackSubmit(event))
     }
 }

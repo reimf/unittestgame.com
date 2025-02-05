@@ -36,36 +36,6 @@ class Html {
         return this
     }
 
-    public href(value: string): Html {
-        if (this.element instanceof HTMLAnchorElement)
-            this.element.href = value
-        return this
-    }
-
-    public type(value: string): Html {
-        if (this.element instanceof HTMLInputElement)
-            this.element.type = value
-        return this
-    }
-
-    public name(value: string): Html {
-        if (this.element instanceof HTMLInputElement)
-            this.element.name = value
-        return this
-    }
-
-    public value(value: string): Html {
-        if (this.element instanceof HTMLInputElement)
-            this.element.value = value
-        return this
-    }
-
-    public autocomplete(value: boolean): Html {
-        if (this.element instanceof HTMLInputElement)
-            this.element.autocomplete = value ? 'on' : 'off'
-        return this
-    }
-
     public addTo(parentId: string): void {
         const old = document.querySelector('#' + this.element.id)
         if (old)
@@ -76,14 +46,45 @@ class Html {
 }
 
 class Anchor extends Html {
-    public constructor() {
+    private anchor = this.element as HTMLAnchorElement
+
+    public constructor(href: string) {
         super('a')
+        this.href(href)
+    }
+
+    public href(value: string): Anchor {
+        this.anchor.href = value
+        return this
     }
 }
 
 class Input extends Html {
-    public constructor() {
+    private input = this.element as HTMLInputElement
+
+    public constructor(type: string) {
         super('input')
+        this.type(type)
+    }
+
+    public type(value: string): Input {
+        this.input.type = value
+        return this
+    }
+
+    public name(value: string): Input {
+        this.input.name = value
+        return this
+    }
+
+    public value(value: string): Input {
+        this.input.value = value
+        return this
+    }
+
+    public autocomplete(value: boolean): Input {
+        this.input.autocomplete = value ? 'on' : 'off'
+        return this
     }
 }
 
@@ -102,9 +103,9 @@ class Paragraph extends Html {
 }
 
 class Button extends Html {
-    public constructor(text: string) {
+    public constructor(text: string, callback: (event: Event) => void) {
         super('button')
-        this.appendText(text)
+        this.appendText(text).on('click', callback)
     }
 }
 
@@ -121,7 +122,8 @@ class Div extends Html {
 }
 
 class Code extends Html {
-    public constructor() {
+    public constructor(text: string) {
         super('code')
+        this.appendText(text)
     }
 }
