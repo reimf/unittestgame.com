@@ -10,6 +10,6 @@ class UnitTest {
         return `${this.argumentList} -> ${this.expected}`;
     }
     toHtml() {
-        return new Paragraph(this.toString());
+        return new Div().appendText(this.toString());
     }
 }

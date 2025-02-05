@@ -1,4 +1,9 @@
 abstract class Game {
+    INITIALSCORE = 100
+    PENALTYHINT = 10
+    PENALTYBUG = 20
+    PENALTYEND = 100
+
     public readonly abstract theme: Theme
     public readonly abstract description: string
     private parameters: Variable[]
@@ -8,9 +13,9 @@ abstract class Game {
     private perfectCandidate: Candidate
     private minimalUnitTests: UnitTest[]
     private hints: UnitTest[]
-    private userdefinedUnitTests: UnitTest[]
-    private score: number
-    private failingTestResult: TestResult | undefined
+    private userdefinedUnitTests: UnitTest[] = []
+    private score: number = this.INITIALSCORE
+    private failingTestResult: TestResult | undefined = undefined
 
     protected abstract getParameters(): Variable[]
     protected abstract getUnit(): Variable
@@ -19,11 +24,6 @@ abstract class Game {
     protected abstract hintGenerator(): Generator<any[]>
     protected abstract introductionMessage(): Section
     protected abstract specificationPanel(): Section
-
-    INITIALSCORE = 100
-    PENALTYHINT = 10
-    PENALTYBUG = 20
-    PENALTYEND = 100
 
     public constructor() {
         this.parameters = this.getParameters()
@@ -34,10 +34,7 @@ abstract class Game {
         this.perfectCandidate = this.perfectCandidates.random()
         this.checkUnitTestsAreNeeded(this.candidates, this.minimalUnitTests)
         this.hints = [...this.hintGenerator()].map(argumentList => new UnitTest(argumentList, this.perfectCandidate.callFunction(argumentList)))
-        this.candidates.forEach(candidate => candidate.setComplexity(this.hints))
-        this.userdefinedUnitTests = []
-        this.score = this.INITIALSCORE
-        this.failingTestResult = undefined
+        this.candidates.forEach(candidate => candidate.refineComplexity(this.hints))
     }
 
     private *generateFunctions(listOfListOfLines: string[][], lines: string[] = []): Generator<Candidate> {
@@ -51,12 +48,12 @@ abstract class Game {
     }
 
     private createCandidate(lines: string[]): Candidate {
-        const parameterList = this.parameters.map((parameter) => parameter.name).join(", ")
+        const parameterList = this.parameters.map((parameter) => parameter.name).join(', ')
         const code = [
             `function ${this.unit.name}(${parameterList}) {`,
-            ...lines.filter((line) => line !== "").map((line) => "  " + line),
-            "}",
-        ].join("\n")
+            ...lines.filter((line) => line !== '').map((line) => '  ' + line),
+            '}',
+        ].join('\n')
         return new Candidate(code)
     }
 

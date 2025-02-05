@@ -69,7 +69,7 @@ class Main {
     }
 
     public start(): void {
-        this.aboutPanel().show('welcome')
+        this.aboutPanel().show('specification')
         this.welcomeMessage().addAsComputer()
         this.themeMenu()
     }
@@ -94,7 +94,6 @@ class Main {
 
     private gameAnswer(game: Game): void {
         this.choosenGameMessage(game).replaceLastHuman()
-        document.querySelector('#welcome')?.remove()
         game.play()
     }
 

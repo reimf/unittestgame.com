@@ -5,6 +5,9 @@ class Game {
         this.PENALTYHINT = 10;
         this.PENALTYBUG = 20;
         this.PENALTYEND = 100;
+        this.userdefinedUnitTests = [];
+        this.score = this.INITIALSCORE;
+        this.failingTestResult = undefined;
         this.parameters = this.getParameters();
         this.unit = this.getUnit();
         this.candidates = [...this.generateFunctions(this.getCandidateElements())];
@@ -13,10 +16,7 @@ class Game {
         this.perfectCandidate = this.perfectCandidates.random();
         this.checkUnitTestsAreNeeded(this.candidates, this.minimalUnitTests);
         this.hints = [...this.hintGenerator()].map(argumentList => new UnitTest(argumentList, this.perfectCandidate.callFunction(argumentList)));
-        this.candidates.forEach(candidate => candidate.setComplexity(this.hints));
-        this.userdefinedUnitTests = [];
-        this.score = this.INITIALSCORE;
-        this.failingTestResult = undefined;
+        this.candidates.forEach(candidate => candidate.refineComplexity(this.hints));
     }
     *generateFunctions(listOfListOfLines, lines = []) {
         if (listOfListOfLines.length > 0) {
@@ -28,12 +28,12 @@ class Game {
             yield this.createCandidate(lines);
     }
     createCandidate(lines) {
-        const parameterList = this.parameters.map((parameter) => parameter.name).join(", ");
+        const parameterList = this.parameters.map((parameter) => parameter.name).join(', ');
         const code = [
             `function ${this.unit.name}(${parameterList}) {`,
-            ...lines.filter((line) => line !== "").map((line) => "  " + line),
-            "}",
-        ].join("\n");
+            ...lines.filter((line) => line !== '').map((line) => '  ' + line),
+            '}',
+        ].join('\n');
         return new Candidate(code);
     }
     findPassingCandidates(candidates, unitTests) {

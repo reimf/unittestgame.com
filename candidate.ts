@@ -1,9 +1,10 @@
 class Candidate {
     private readonly function: Function
-    private complexity: number[] = []
+    private complexity: string
 
     public constructor(code: string) {
         this.function = new Function('return ' + code)()
+        this.complexity = code.length.toString().padStart(4, '0')
     }
 
     public callFunction(argumentsList: any[]): any {
@@ -14,8 +15,8 @@ class Candidate {
         }
     }
 
-    public setComplexity(hints: UnitTest[]): void {
-        this.complexity = [this.function.toString().length, this.passCount(hints)]
+    public refineComplexity(hints: UnitTest[]): void {
+        this.complexity += this.passCount(hints).toString().padStart(4, '0')
     }
 
     public simplest(other: Candidate): Candidate {

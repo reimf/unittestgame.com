@@ -18,10 +18,12 @@ class Password extends Game {
     protected specificationPanel(): Section {
         return new Section([
             new Header('Specification'),
-            new Paragraph('Rule 1: The password must be at least 5 characters long.'),
-            new Paragraph('Rule 2: The password must contain an uppercase letter.'),
-            new Paragraph('Rule 3: The password must contain a lowercase letter.'),
-            new Paragraph('Rule 4: The password must contain a special character ("#" or "@").'),
+            new Paragraph(
+                'The password must be at least 5 characters long and ' +
+                'contain an uppercase letter, ' +
+                'a lowercase letter and ' +
+                'a special character ("#" or "@").'
+            ),
         ])
     }
 
@@ -42,10 +44,12 @@ class Password extends Game {
     protected getCandidateElements(): string[][] {
         return [
             [
+                'if (password.length < 4) return false',
                 'if (password.length < 5) return false',
                 'if (password.length <= 5) return false',
                 'if (password.length < 8) return false',
                 'if (password.length >= 5) return true',
+                'if (password.length >= 6) return true',
                 '',
             ],
             [
@@ -101,7 +105,7 @@ class Password extends Game {
     }
 
     private *generateUppercase(): Generator<string[]> {
-        const uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
         for (const upper1 of uppercase) {
             yield [upper1]
             for (const upper2 of uppercase) {
@@ -112,7 +116,7 @@ class Password extends Game {
     }
 
     private *generateLowercase(): Generator<string[]> {
-        const lowercase = "abcdefghijklmnopqrstuvwxyz"
+        const lowercase = 'abcdefghijklmnopqrstuvwxyz'
         for (const lower1 of lowercase) {
             yield [lower1]
             for (const lower2 of lowercase) {
@@ -123,7 +127,7 @@ class Password extends Game {
     }
 
     private *generateSpecialCharacters(): Generator<string[]> {
-        const specialChars = "@#!"
+        const specialChars = '@#!'
         for (const special1 of specialChars) {
             yield [special1]
             for (const special2 of specialChars) {
@@ -148,11 +152,11 @@ class Password extends Game {
             const chars = [...ds, ...us, ...ls, ...scs]
             this.shuffleArray(chars)
 
-            yield [chars.join("")]
+            yield [chars.join('')]
 
             const pos = Math.floor(Math.random() * chars.length)
             chars[pos] = Math.floor(Math.random() * 10).toString()
-            yield [chars.join("")]
+            yield [chars.join('')]
         }
     }
 

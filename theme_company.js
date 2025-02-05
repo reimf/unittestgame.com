@@ -5,7 +5,7 @@ class Company extends Theme {
         this.description = 'I want to review the work of an external software company.';
     }
     addUnitTestFormButton() {
-        return 'Go!';
+        return 'Add Unit Test';
     }
     cancelUnitTestFormButton() {
         return 'Cancel';

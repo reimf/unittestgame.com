@@ -3,7 +3,7 @@ class Company extends Theme {
     public readonly description = 'I want to review the work of an external software company.'
 
     public addUnitTestFormButton(): string {
-        return 'Go!'
+        return 'Add Unit Test'
     }
 
     public cancelUnitTestFormButton(): string {

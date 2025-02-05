@@ -60,7 +60,7 @@ class Main {
         ]);
     }
     start() {
-        this.aboutPanel().show('welcome');
+        this.aboutPanel().show('specification');
         this.welcomeMessage().addAsComputer();
         this.themeMenu();
     }
@@ -76,9 +76,7 @@ class Main {
         this.gameMenuMessage(gamesForThisTheme.map(game => new Button(game.description).on('click', () => this.gameAnswer(game)))).addAsHuman();
     }
     gameAnswer(game) {
-        var _a;
         this.choosenGameMessage(game).replaceLastHuman();
-        (_a = document.querySelector('#welcome')) === null || _a === void 0 ? void 0 : _a.remove();
         game.play();
     }
     end() {

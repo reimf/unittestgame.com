@@ -7,7 +7,8 @@ class UnitTest {
     public toString(): string {
         return `${this.argumentList} -> ${this.expected}`
     }
+    
     public toHtml(): Html {
-        return new Paragraph(this.toString())
+        return new Div().appendText(this.toString())
     }
 }

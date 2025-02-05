@@ -61,6 +61,7 @@ class Speed extends Game {
             ],
             [
                 'return Math.round(speed / 1000).toString()',
+                'return (speed / 1000).toFixed() // no decimals',
                 'return (speed / 1000).toFixed(1)',
                 'return (speed / 1000).toString()',
                 'return ""',
