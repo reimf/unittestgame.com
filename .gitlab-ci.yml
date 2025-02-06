@@ -1,5 +1,10 @@
+default:
+  image: node:latest
+
 pages:
   script:
+    - npm install typescript
+    - tsc --verbose
     - mkdir public
     - cp *.{css,html,ico,js,png} public
     - gzip -k -6 public/*.{css,html,js}
