@@ -138,10 +138,14 @@ abstract class Game {
         const testResult = new TestResult(this.perfectCandidate, unitTest)
         if (testResult.passes) {
             const passingCandidatesBefore = this.findPassingCandidates(this.candidates, this.userdefinedUnitTests)
+            const simplestPassingCandidateBefore = this.findSimplestPassingCandidate(this.candidates, this.userdefinedUnitTests, this.perfectCandidates)
             this.userdefinedUnitTests.push(unitTest)
             const passingCandidatesAfter = this.findPassingCandidates(this.candidates, this.userdefinedUnitTests)
+            const simplestPassingCandidateAfter = this.findSimplestPassingCandidate(this.candidates, this.userdefinedUnitTests, this.perfectCandidates)
             if (passingCandidatesAfter.length === passingCandidatesBefore.length)
-                this.theme.uselessUnitTestMessage().addAsComputer()
+                this.theme.overallUselessUnitTestMessage().addAsComputer()
+            else if (simplestPassingCandidateAfter === simplestPassingCandidateBefore)
+                this.theme.currentlyUselessUnitTestMessage().addAsComputer()
             else
                 this.theme.usefulUnitTestMessage().addAsComputer()
         }

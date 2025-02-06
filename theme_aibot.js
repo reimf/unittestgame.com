@@ -135,10 +135,16 @@ class AIBot extends Theme {
                 'Thanks for testing!'),
         ]);
     }
-    uselessUnitTestMessage() {
+    overallUselessUnitTestMessage() {
+        return new Section([
+            new Paragraph('The unit test was added, but it looks like another unit test. ' +
+                'This test may not provide much additional value.'),
+        ]);
+    }
+    currentlyUselessUnitTestMessage() {
         return new Section([
             new Paragraph('The unit test was added, but the AI-bot already passed it. ' +
-                'This test may not provide much additional value.'),
+                'This test may not provide much additional value at the moment.'),
         ]);
     }
     usefulUnitTestMessage() {

@@ -112,11 +112,18 @@ class Intro extends Theme {
     endNegativeMessage(score) {
         return this.endPerfectMessage(score);
     }
-    uselessUnitTestMessage() {
+    overallUselessUnitTestMessage() {
+        return new Section([
+            new Paragraph('We have added the unit test. ' +
+                'The unit test looks like another unit test. ' +
+                'Therefore, we think the unit test is not very useful.'),
+        ]);
+    }
+    currentlyUselessUnitTestMessage() {
         return new Section([
             new Paragraph('We have added the unit test. ' +
                 'The current function already passed the unit test. ' +
-                'Therefore, we think the unit test is not very useful.'),
+                'Therefore, we think the unit test is not very useful at the moment.'),
         ]);
     }
     usefulUnitTestMessage() {

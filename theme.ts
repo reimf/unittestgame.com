@@ -22,7 +22,8 @@ abstract class Theme {
     public abstract endPerfectMessage(score: number): Section
     public abstract endPositiveMessage(score: number): Section
     public abstract endNegativeMessage(score: number): Section
-    public abstract uselessUnitTestMessage(): Section
+    public abstract overallUselessUnitTestMessage(): Section
+    public abstract currentlyUselessUnitTestMessage(): Section
     public abstract usefulUnitTestMessage(): Section
     public abstract incorrectUnitTestMessage(): Section
     public abstract formatScore(score: number): string
