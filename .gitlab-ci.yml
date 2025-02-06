@@ -3,8 +3,11 @@ default:
 
 pages:
   script:
+    - node -v
+    - npm -v
     - npm install typescript
-    - tsc --verbose
+    - npx tsc -v
+    - npx tsc --verbose
     - mkdir public
     - cp *.{css,html,ico,js,png} public
     - gzip -k -6 public/*.{css,html,js}
