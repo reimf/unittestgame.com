@@ -2,7 +2,7 @@
 class Candidate {
     constructor(code) {
         this.function = new Function('return ' + code)();
-        this.complexity = code.length.toString();
+        this.complexity = code.length;
     }
     callFunction(argumentsList) {
         try {
