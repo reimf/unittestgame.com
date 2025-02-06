@@ -132,7 +132,7 @@ section {
 
     >* {
         margin: 0.7rem 0;
-        overflow: auto; /* scroll always shows scrollbars in Windows 11 Edge */
+        overflow: auto;
     }
 
     div {
