@@ -1,6 +1,10 @@
 UnitTestGame.com
 ================
 
+[ ] After end back to beginning
+[ ] Store achievements
+
+```mermaid
 stateDiagram-v2
     [*] --> Main.start()
     state Main {
@@ -26,3 +30,4 @@ stateDiagram-v2
         Game.submit() --> Game.end()
         Game.end() --> [*]
     }
+```
