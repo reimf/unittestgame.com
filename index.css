@@ -128,16 +128,9 @@ section {
     margin: 0.75rem;
     overflow: hidden;
     padding: 0 0.75rem;
-    white-space: break-spaces;
 
     > * {
         margin: 0.75rem 0;
-        overflow: scroll;
-        scrollbar-width: none;
-    }
-
-    div {
-        white-space: pre;
     }
 
     header {
@@ -150,6 +143,5 @@ section {
 
     code {
         display: block;
-        white-space: pre;
     }
 }
