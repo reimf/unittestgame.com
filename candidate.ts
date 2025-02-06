@@ -1,10 +1,10 @@
 class Candidate {
     private readonly function: Function
-    private complexity: string
+    private complexity: number
 
     public constructor(code: string) {
         this.function = new Function('return ' + code)()
-        this.complexity = code.length.toString()
+        this.complexity = code.length
     }
 
     public callFunction(argumentsList: any[]): any {
