@@ -11,7 +11,6 @@ class Main {
             new Password(),
         ];
         this.themes = this.games.map(game => game.theme).filter((theme, index, themes) => themes.indexOf(theme) === index);
-        this.quitButton = new Button('I want to quit.', () => this.end());
     }
     aboutPanel() {
         const anchor = new Anchor('mailto:feedback@unittestgame.com').appendText('feedback@unittestgame.com');
@@ -30,7 +29,6 @@ class Main {
     themeMenuMessage(buttons) {
         return new Section([
             ...buttons,
-            this.quitButton,
         ]);
     }
     choosenThemeMessage(theme) {
@@ -41,7 +39,6 @@ class Main {
     gameMenuMessage(buttons) {
         return new Section([
             ...buttons,
-            this.quitButton,
         ]);
     }
     choosenGameMessage(game) {
@@ -49,14 +46,9 @@ class Main {
             new Paragraph(game.description),
         ]);
     }
-    quitMessage() {
+    anotherThemeMessage() {
         return new Section([
-            new Paragraph('I want to quit.')
-        ]);
-    }
-    byeMessage() {
-        return new Section([
-            new Paragraph('Bye!'),
+            new Paragraph('I want another theme.')
         ]);
     }
     start() {
@@ -73,14 +65,19 @@ class Main {
     }
     gameMenu(theme) {
         const gamesForThisTheme = this.games.filter(game => game.theme === theme);
-        this.gameMenuMessage(gamesForThisTheme.map(game => new Button(game.description, () => this.gameAnswer(game)))).addAsHuman();
+        const anotherThemeButton = new Button('I want another theme.', () => this.anotherTheme());
+        this.gameMenuMessage([...gamesForThisTheme.map(game => new Button(game.description, () => this.gameAnswer(game))), anotherThemeButton]).addAsHuman();
     }
     gameAnswer(game) {
         this.choosenGameMessage(game).replaceLastHuman();
         game.play();
     }
-    end() {
-        this.quitMessage().replaceLastHuman();
-        this.byeMessage().addAsComputer();
+    anotherTheme() {
+        this.anotherThemeMessage().replaceLastHuman();
+        this.themeMenu();
+    }
+    restart() {
+        this.themeMenu();
     }
 }
+Main.instance = new Main();

@@ -1,4 +1,5 @@
 class Main {
+    public static readonly instance = new Main()
     private games = [
         new Votingage(),
         new Evenodd(),
@@ -8,9 +9,9 @@ class Main {
         new Float(),
         new Password(),
     ]
-
     private themes = this.games.map(game => game.theme).filter((theme, index, themes) => themes.indexOf(theme) === index)
-    private quitButton = new Button('I want to quit.', () => this.end())
+
+    private constructor() { }
 
     private aboutPanel(): Section {
         const anchor = new Anchor('mailto:feedback@unittestgame.com').appendText('feedback@unittestgame.com')
@@ -33,7 +34,6 @@ class Main {
     private themeMenuMessage(buttons: Html[]): Section {
         return new Section([
             ...buttons,
-            this.quitButton,
         ])
     }
 
@@ -46,7 +46,6 @@ class Main {
     private gameMenuMessage(buttons: Html[]): Section {
         return new Section([
             ...buttons,
-            this.quitButton,
         ])
     }
 
@@ -56,15 +55,9 @@ class Main {
         ])
     }
 
-    private quitMessage(): Section {
+    private anotherThemeMessage(): Section {
         return new Section([
-            new Paragraph('I want to quit.')
-        ])
-    }
-
-    private byeMessage(): Section {
-        return new Section([
-            new Paragraph('Bye!'),
+            new Paragraph('I want another theme.')
         ])
     }
 
@@ -87,8 +80,9 @@ class Main {
 
     private gameMenu(theme: Theme): void {
         const gamesForThisTheme = this.games.filter(game => game.theme === theme)
+        const anotherThemeButton = new Button('I want another theme.', () => this.anotherTheme())
         this.gameMenuMessage(
-            gamesForThisTheme.map(game => new Button(game.description, () => this.gameAnswer(game)))
+            [...gamesForThisTheme.map(game => new Button(game.description, () => this.gameAnswer(game))), anotherThemeButton]
         ).addAsHuman()
     }
 
@@ -97,8 +91,12 @@ class Main {
         game.play()
     }
 
-    private end(): void {
-        this.quitMessage().replaceLastHuman()
-        this.byeMessage().addAsComputer()
+    private anotherTheme(): void {
+        this.anotherThemeMessage().replaceLastHuman()
+        this.themeMenu()
+    }
+
+    public restart(): void {
+        this.themeMenu()
     }
 }

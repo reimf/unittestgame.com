@@ -187,5 +187,6 @@ abstract class Game {
             this.theme.endPositiveMessage(this.score).addAsComputer()
         else
             this.theme.endNegativeMessage(this.score).addAsComputer()
+        Main.instance.restart()
     }
 }

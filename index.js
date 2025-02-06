@@ -14,4 +14,4 @@ document.addEventListener('keydown', event => {
     const newFocused = focusables.item(newIndex);
     newFocused.focus();
 });
-document.addEventListener('DOMContentLoaded', () => new Main().start());
+document.addEventListener('DOMContentLoaded', () => Main.instance.start());
