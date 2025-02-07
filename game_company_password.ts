@@ -1,13 +1,13 @@
 class Password extends Game {
     public readonly theme = Company.instance
-    public readonly description = 'I want to review a function that determines whether a password is strong enough.'
+    public readonly description = 'I want to review a function that determines whether a password is strong enough'
 
     public constructor() {
         super()
     }
 
-    protected introductionMessage(): Section {
-        return new Section([
+    protected introductionMessage(): Message {
+        return new Message([
             new Paragraph(
                 'An online store needs a function to check whether a password is strong enough. ' +
                 'Customers must be able to rely on their data being well protected.'
@@ -15,9 +15,8 @@ class Password extends Game {
         ])
     }
 
-    protected specificationPanel(): Section {
-        return new Section([
-            new Header('Specification'),
+    protected specificationPanel(): Panel {
+        return new Panel('Specification', [
             new Paragraph(
                 'The password must be at least 5 characters long and ' +
                 'contain an uppercase letter, ' +

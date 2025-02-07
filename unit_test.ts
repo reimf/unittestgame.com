@@ -9,6 +9,8 @@ class UnitTest {
     }
     
     public toHtml(): Html {
-        return new Div().appendText(this.toString())
+        const div = new Div()
+        div.appendText(this.toString())
+        return div
     }
 }

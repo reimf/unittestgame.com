@@ -3,17 +3,16 @@ class Password extends Game {
     constructor() {
         super();
         this.theme = Company.instance;
-        this.description = 'I want to review a function that determines whether a password is strong enough.';
+        this.description = 'I want to review a function that determines whether a password is strong enough';
     }
     introductionMessage() {
-        return new Section([
+        return new Message([
             new Paragraph('An online store needs a function to check whether a password is strong enough. ' +
                 'Customers must be able to rely on their data being well protected.'),
         ]);
     }
     specificationPanel() {
-        return new Section([
-            new Header('Specification'),
+        return new Panel('Specification', [
             new Paragraph('The password must be at least 5 characters long and ' +
                 'contain an uppercase letter, ' +
                 'a lowercase letter and ' +

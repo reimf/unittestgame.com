@@ -1,22 +1,21 @@
 class Evenodd extends Game {
     public readonly theme = AIBot.instance
-    public readonly description = 'I want to write unit tests for a function that checks if a number is even or odd.'
+    public readonly description = 'I want to write unit tests for a function that checks if a number is even or odd'
 
     public constructor() {
         super()
     }
 
-    protected introductionMessage(): Section {
-        return new Section([
+    protected introductionMessage(): Message {
+        return new Message([
             new Paragraph(
                 'All integer numbers are even or odd.'
             )
         ])
     }
 
-    protected specificationPanel(): Section {
-        return new Section([
-            new Header('Specification'),
+    protected specificationPanel(): Panel {
+        return new Panel('Specification', [
             new Paragraph(
                 'A number is even if it is divisible by 2, otherwise it is odd.'
             ),

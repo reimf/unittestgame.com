@@ -1,22 +1,21 @@
 class Leapyear extends Game {
     public readonly theme = School.instance
-    public readonly description = 'I want to write better unit tests for a leap year calculator.'
+    public readonly description = 'I want to write better unit tests for a leap year calculator'
 
     public constructor() {
         super()
     }
 
-    protected introductionMessage(): Section {
-        return new Section([
+    protected introductionMessage(): Message {
+        return new Message([
             new Paragraph(
                 'Students are instructed to write a function that determines whether or not a year is a leap year.'
             )
         ])
     }
 
-    protected specificationPanel(): Section {
-        return new Section([
-            new Header('Specification'),
+    protected specificationPanel(): Panel {
+        return new Panel('Specification', [
             new Paragraph(
                 'Most years have 365 days. ' +
                 'However, the time required for the earth to orbit the sun is actually slightly more than 365 days. ' +

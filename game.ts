@@ -22,8 +22,8 @@ abstract class Game {
     protected abstract getCandidateElements(): string[][]
     protected abstract getMinimalUnitTests(): UnitTest[]
     protected abstract hintGenerator(): Generator<any[]>
-    protected abstract introductionMessage(): Section
-    protected abstract specificationPanel(): Section
+    protected abstract introductionMessage(): Message
+    protected abstract specificationPanel(): Panel
 
     public constructor() {
         this.checkUnitTestsAreNeeded(this.candidates, this.minimalUnitTests)
@@ -85,9 +85,9 @@ abstract class Game {
         this.menu()
     }
 
-    private menuMessage(buttons: Html[]): Section {
-        return new Section([
-            ...buttons,
+    private menuMessage(buttons: Html[]): Message {
+        return new Message([
+            new Menu(buttons),
         ])
     }
 
@@ -117,20 +117,14 @@ abstract class Game {
         const form = new Form(
             [...this.parameters, this.unit],
             this.theme.addUnitTestFormButton(),
-            (event: Event) => this.addUnitTest(event),
+            () => this.addUnitTest(),
             this.theme.cancelUnitTestFormButton(),
-            (event: Event) => this.cancelUnitTest(event)
+            () => this.menu()
         )
         this.theme.addUnitTestFormMessage(form).replaceLastHuman()
     }
 
-    private cancelUnitTest(event: Event): void {
-        this.theme.cancelUnitTestFormMessage().replaceLastHuman()
-        this.menu()
-    }
-
-    private addUnitTest(event: Event): void {
-        event.preventDefault()
+    private addUnitTest(): void {
         const argumentList = this.parameters.map(parameter => parameter.value())
         const expected = this.unit.value()
         const unitTest = new UnitTest(argumentList, expected)
@@ -156,7 +150,6 @@ abstract class Game {
 
     private showHint(): void {
         if (this.failingTestResult) {
-            this.theme.showHintMessage().replaceLastHuman()
             this.theme.hintUnitTestMessage(this.failingTestResult.unitTest, this.PENALTYHINT).addAsComputer()
             this.score -= this.PENALTYHINT
         }
@@ -164,7 +157,6 @@ abstract class Game {
     }
 
     private submit(): void {
-        this.theme.submitMessage().replaceLastHuman()
         if (this.failingTestResult) {
             this.theme.bugFoundMessage(this.failingTestResult, this.PENALTYBUG).addAsComputer()
             this.score -= this.PENALTYBUG
@@ -175,7 +167,6 @@ abstract class Game {
     }
 
     private end(): void {
-        this.theme.endMessage().replaceLastHuman()
         if (this.failingTestResult) {
             this.score = 0
             this.theme.scorePanel(this.score).show('score')
@@ -187,6 +178,6 @@ abstract class Game {
             this.theme.endPositiveMessage(this.score).addAsComputer()
         else
             this.theme.endNegativeMessage(this.score).addAsComputer()
-        Main.instance.restart()
+        Main.instance.start()
     }
 }

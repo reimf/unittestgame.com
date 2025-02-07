@@ -1,13 +1,13 @@
 class Votingage extends Game {
     public readonly theme = Intro.instance
-    public readonly description = 'I want to write unit tests for a function that checks if a person is allowed to vote based on their age.'
+    public readonly description = 'I want to write unit tests for a function that checks if a person is allowed to vote based on their age'
 
     public constructor() {
         super()
     }
 
-    protected introductionMessage(): Section {
-        return new Section([
+    protected introductionMessage(): Message {
+        return new Message([
             new Paragraph(
                 'A legal voting age is the minimum age that a person is allowed to vote in a democratic process. ' +
                 'For general elections around the world, the right to vote is restricted to adults, and most nations use 18 as their voting age. ' +
@@ -16,9 +16,8 @@ class Votingage extends Game {
         ])
     }
 
-    protected specificationPanel(): Section {
-        return new Section([
-            new Header('Specification'),
+    protected specificationPanel(): Panel {
+        return new Panel('Specification', [
             new Paragraph(
                 'If you are 18 years or over, you are allowed to vote.'
             ),
@@ -37,7 +36,7 @@ class Votingage extends Game {
     protected getUnit(): Variable {
         return new CheckboxVariable(
             'Allowed to vote?',
-            'mayVote'
+            'isAllowedToVote'
         )
     }
 

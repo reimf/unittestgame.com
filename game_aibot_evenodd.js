@@ -3,16 +3,15 @@ class Evenodd extends Game {
     constructor() {
         super();
         this.theme = AIBot.instance;
-        this.description = 'I want to write unit tests for a function that checks if a number is even or odd.';
+        this.description = 'I want to write unit tests for a function that checks if a number is even or odd';
     }
     introductionMessage() {
-        return new Section([
+        return new Message([
             new Paragraph('All integer numbers are even or odd.')
         ]);
     }
     specificationPanel() {
-        return new Section([
-            new Header('Specification'),
+        return new Panel('Specification', [
             new Paragraph('A number is even if it is divisible by 2, otherwise it is odd.'),
         ]);
     }

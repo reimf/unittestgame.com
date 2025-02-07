@@ -4,23 +4,13 @@ class Section extends Html {
         super('section');
         this.appendChildren(children);
     }
-    show(id) {
-        this.id(id).addTo('panels');
+    existingElement() {
+        return document.querySelector('#' + this.element.id);
     }
-    addAsComputer() {
-        this.id(`message-${++Section.messageCount}`).addClass('computer').addTo('messages');
+    replaceExisting() {
+        this.existingElement().replaceWith(this.element);
     }
-    addAsHuman() {
-        this.id(`message-${++Section.messageCount}`).addClass('human').addTo('messages');
-        this.setFocus();
-    }
-    replaceLastHuman() {
-        this.id(`message-${Section.messageCount}`).addClass('human').addTo('messages');
-        this.setFocus();
-    }
-    setFocus() {
-        const firstFocusable = this.element.querySelector('button, input');
-        firstFocusable === null || firstFocusable === void 0 ? void 0 : firstFocusable.focus();
+    addTo(parentId) {
+        document.querySelector('#' + parentId).appendChild(this.element);
     }
 }
-Section.messageCount = 0;

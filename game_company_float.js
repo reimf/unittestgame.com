@@ -3,17 +3,16 @@ class Float extends Game {
     constructor() {
         super();
         this.theme = Company.instance;
-        this.description = 'I want to review a function that uses a regular expression to determine whether a text represents a float.';
+        this.description = 'I want to review a function that uses a regular expression to determine whether a text represents a float';
     }
     introductionMessage() {
-        return new Section([
+        return new Message([
             new Paragraph('A laboratory needs a function to check whether measured values have been entered correctly. ' +
                 'The lab technicians will perform ciritcal calculations with these numbers, so there must be no errors.'),
         ]);
     }
     specificationPanel() {
-        return new Section([
-            new Header('Specification'),
+        return new Panel('Specification', [
             new Paragraph('The function must determine whether a text represents a float and returns true or false accordingly. ' +
                 'A float may start with a plus sign or a minus sign. ' +
                 'This is followed by one or more digits. ' +

@@ -5,43 +5,29 @@ class Html {
         this.element = document.createElement(tagName)
     }
 
-    public id(id: string): Html {
+    public id(id: string): void {
         this.element.id = id
-        return this
     }
 
-    public addClass(value: string): Html {
+    public addClass(value: string): void {
         this.element.classList.add(value)
-        return this
     }
 
-    public appendText(value: string): Html {
+    public appendText(value: string): void {
         this.element.appendChild(document.createTextNode(value))
-        return this
     }
 
-    public appendChild(value: Html): Html {
+    public appendChild(value: Html): void {
         this.element.appendChild(value.element)
-        return this
     }
 
-    public appendChildren(values: Html[]): Html {
+    public appendChildren(values: Html[]): void {
         for (const value of values)
             this.element.appendChild(value.element)
-        return this
     }
 
-    public on(eventType: string, callback: (event: Event) => void): Html {
+    public on(eventType: string, callback: (event: Event) => void): void {
         this.element.addEventListener(eventType, callback)
-        return this
-    }
-
-    public addTo(parentId: string): void {
-        const old = document.querySelector('#' + this.element.id)
-        if (old)
-            old.replaceWith(this.element)
-        else
-            document.querySelector('#' + parentId)!.appendChild(this.element)
     }
 }
 
@@ -53,9 +39,8 @@ class Anchor extends Html {
         this.href(href)
     }
 
-    public href(value: string): Anchor {
+    public href(value: string): void {
         this.anchor.href = value
-        return this
     }
 }
 
@@ -67,24 +52,20 @@ class Input extends Html {
         this.type(type)
     }
 
-    public type(value: string): Input {
+    public type(value: string): void {
         this.input.type = value
-        return this
     }
 
-    public name(value: string): Input {
+    public name(value: string): void {
         this.input.name = value
-        return this
     }
 
-    public value(value: string): Input {
+    public value(value: string): void {
         this.input.value = value
-        return this
     }
 
-    public autocomplete(value: boolean): Input {
+    public autocomplete(value: boolean): void {
         this.input.autocomplete = value ? 'on' : 'off'
-        return this
     }
 }
 
@@ -102,10 +83,35 @@ class Paragraph extends Html {
     }
 }
 
+class UnorderedList extends Html {
+    public constructor(listItems: ListItem[]) {
+        super('ul')
+        this.appendChildren(listItems)
+    }
+}
+
+class ListItem extends Html {
+    public constructor(child: Html) {
+        super('li')
+        this.appendChild(child)
+    }
+}
+
+class Menu extends Html {
+    public constructor(buttons: Button[]) {
+        super('menu')
+        this.appendChildren(buttons.map(button => new ListItem(button)))
+    }    
+}
+
 class Button extends Html {
     public constructor(text: string, callback: (event: Event) => void) {
         super('button')
-        this.appendText(text).on('click', callback)
+        this.appendText(text)
+        this.on('click', event => {
+            new Message([new Paragraph(this.element.textContent! + '.')]).replaceLastHuman()
+            callback(event)
+        })
     }
 }
 

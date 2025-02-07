@@ -1,17 +1,17 @@
 class School extends Theme {
     public static readonly instance = new School()
-    public readonly description = 'I want to write better unit tests for student assignments.'
+    public readonly description = 'I want to write better unit tests for student assignments'
 
     public addUnitTestFormButton(): string {
-        return 'Add unit test'
+        return 'I want to add this unit test'
     }
 
     public cancelUnitTestFormButton(): string {
-        return 'Cancel'
+        return 'I don\'t want to add a unit test now'
     }
 
-    public contractMessage(initialScore: number, penaltyHint: number, penaltyBug: number): Section {
-        return new Section([
+    public contractMessage(initialScore: number, penaltyHint: number, penaltyBug: number): Message {
+        return new Message([
             new Paragraph(
                 'You must write enough unit tests for this function, ' +
                 'so that students get the right feedback. ' +
@@ -23,94 +23,72 @@ class School extends Theme {
         ])
     }
 
-    public unitTestsPanel(unitTests: UnitTest[]): Section {
-        const list = unitTests.length === 0
-            ? [new Paragraph('You have not written any unit test yet.')]
-            : unitTests.map(unitTest => unitTest.toHtml())
-        return new Section([
-            new Header('Unit tests'),
-            ...list,
+    public unitTestsPanel(unitTests: UnitTest[]): Panel {
+        return new Panel('Unit Tests', [
+            unitTests.length === 0
+            ? new Paragraph('You have not written any unit test yet.')
+            : new UnorderedList(unitTests.map(unitTest => new ListItem(unitTest.toHtml()))),
         ])
     }
 
-    public currentCandidatePanel(candidate: Candidate): Section {
-        return new Section([
-            new Header('Current function'),
+    public currentCandidatePanel(candidate: Candidate): Panel {
+        return new Panel('Current Function', [
             candidate.toHtml(),
         ])
     }
 
-    public scorePanel(score: number): Section {
-        return new Section([
-            new Header('Grade so far'),
+    public scorePanel(score: number): Panel {
+        return new Panel('Grade', [
             new Paragraph(`${this.formatScore(score)}`),
         ])
     }
 
     public formUnitTestButton(): string {
-        return 'I want to add an unit test.'
+        return 'I want to add a unit test'
     }
 
     public showHintButton(penaltyHint: number): string {
-        return `I want to see a hint for an unit test (-${this.formatScore(penaltyHint)}).`
+        return `I want to see a hint for a unit test (-${this.formatScore(penaltyHint)})`
     }
 
     public submitButton(penaltyBug: number): string {
-        return `I want to submit the unit tests (-${this.formatScore(penaltyBug)} on error).`
+        return `I want to submit the unit tests (-${this.formatScore(penaltyBug)} on error)`
     }
 
     public endButton(penaltyend: number): string {
-        return `I want to end the game (-${this.formatScore(penaltyend)} on error).`
+        return `I want to end the game (-${this.formatScore(penaltyend)} on error)`
     }
 
-    public addUnitTestFormMessage(form: Form): Section {
-        return new Section([
-            new Paragraph('I want to add an unit test.'),
+    public addUnitTestFormMessage(form: Form): Message {
+        return new Message([
+            new Paragraph('I want to add a unit test.'),
             form,
         ])
     }
 
-    public cancelUnitTestFormMessage(): Section {
-        return new Section([
+    public cancelUnitTestFormMessage(): Message {
+        return new Message([
             new Paragraph('I don\'t want to add a unit test now.'),
         ])
     }
 
-    public addUnitTestTextMessage(unitTest: UnitTest): Section {
-        return new Section([
+    public addUnitTestTextMessage(unitTest: UnitTest): Message {
+        return new Message([
             new Paragraph('I want to add the following unit test:'),
             unitTest.toHtml(),
         ])
     }
 
-    public showHintMessage(): Section {
-        return new Section([
-            new Paragraph('I want to see a hint for an unit test.'),
-        ])
-    }
-
-    public submitMessage(): Section {
-        return new Section([
-            new Paragraph('I want to submit the unit tests.'),
-        ])
-    }
-
-    public endMessage(): Section {
-        return new Section([
-            new Paragraph('I want to end the game.'),
-        ])
-    }
-
-    public hintUnitTestMessage(unitTest: UnitTest, penaltyHint: number): Section {
-        return new Section([
-            new Paragraph('An unit test that currently fails is the following.'),
+    public hintUnitTestMessage(unitTest: UnitTest, penaltyHint: number): Message {
+        return new Message([
+            new Paragraph('A unit test that currently fails is the following.'),
             unitTest.toHtml(),
             new Paragraph(`Your grade will decrease by ${this.formatScore(penaltyHint)}.`),
         ])
     }
 
-    public bugFoundMessage(testResult: TestResult, penaltyBug: number): Section {
-        return new Section([
+    public bugFoundMessage(testResult: TestResult, penaltyBug: number): Message {
+        return new Message([
             new Paragraph(
                 'Thank you! ' +
                 'We have deployed the latest version of the function to production. ' +
@@ -122,8 +100,8 @@ class School extends Theme {
         ])
     }
 
-    public endWithBugMessage(): Section {
-        return new Section([
+    public endWithBugMessage(): Message {
+        return new Message([
             new Paragraph(
                 'There are still clearly wrong functions that pass all your unit tests, ' +
                 'so we will give you the minimum grade. ' +
@@ -134,8 +112,8 @@ class School extends Theme {
         ])
     }
 
-    public endPerfectMessage(score: number): Section {
-        return new Section([
+    public endPerfectMessage(score: number): Message {
+        return new Message([
             new Paragraph(
                 'Congratulations! ' +
                 'The grading of the assignments is completely error-free thanks to your unit tests. ' +
@@ -146,8 +124,8 @@ class School extends Theme {
         ])
     }
 
-    public endPositiveMessage(score: number): Section {
-        return new Section([
+    public endPositiveMessage(score: number): Message {
+        return new Message([
             new Paragraph(
                 'Congratulations! ' +
                 'The grading of the assignments is completely error-free thanks to your unit tests. ' +
@@ -159,8 +137,8 @@ class School extends Theme {
         ])
     }
 
-    public endNegativeMessage(score: number): Section {
-        return new Section([
+    public endNegativeMessage(score: number): Message {
+        return new Message([
             new Paragraph(
                 'Congratulations! ' +
                 'The grading of the assignments is completely error-free thanks to your unit tests. ' +
@@ -172,8 +150,8 @@ class School extends Theme {
         ])
     }
 
-    public overallUselessUnitTestMessage(): Section {
-        return new Section([
+    public overallUselessUnitTestMessage(): Message {
+        return new Message([
             new Paragraph(
                 'We have added the unit test. ' +
                 'The unit test looks like another unit test. ' +
@@ -182,8 +160,8 @@ class School extends Theme {
         ])
     }
 
-    public currentlyUselessUnitTestMessage(): Section {
-        return new Section([
+    public currentlyUselessUnitTestMessage(): Message {
+        return new Message([
             new Paragraph(
                 'We have added the unit test. ' +
                 'The current function already passed the unit test. ' +
@@ -192,16 +170,16 @@ class School extends Theme {
         ])
     }
 
-    public usefulUnitTestMessage(): Section {
-        return new Section([
+    public usefulUnitTestMessage(): Message {
+        return new Message([
             new Paragraph(
                 'Unit test added successfully.'
             ),
         ])
     }
 
-    public incorrectUnitTestMessage(): Section {
-        return new Section([
+    public incorrectUnitTestMessage(): Message {
+        return new Message([
             new Paragraph(
                 'We compared your unit test with the specification. ' +
                 'Your unit test turns out to be incorrect. ' +

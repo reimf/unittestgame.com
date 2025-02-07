@@ -13,75 +13,6 @@ a {
     color: inherit;
 }
 
-form {
-    div:not(:has(input[type="radio"])) {
-        margin: 0.75rem 0;
-    }
-
-    button {
-        background-color: #ece5dd;
-        color: #333;
-        display: inline;
-        height: 2.5rem;
-        margin: 0 0 0 1rem;
-        padding: 0 1rem;
-        width: auto;
-    }
-
-}
-
-label {
-    border-radius: 0.5rem;
-    display: inline-block;
-    height: 2rem;
-    line-height: 2rem;
-
-    &:has(input[type="radio"]) {
-        background-color: #25d366;
-        color: #fff;
-        margin-left: 0.75rem;
-        padding-right: 0.75rem;
-
-        &:hover {
-            cursor: pointer;
-        }
-    }
-}
-
-input[type="text"],
-input[type="number"] {
-    background-color: #25d366;
-    border: none;
-    border-radius: 0.5rem;
-    color: #fff;
-    font-family: inherit;
-    font-size: inherit;
-    height: 2rem;
-    margin: 0 0 0 0.75rem;
-    padding: 0 0.75rem;
-    width: 8rem;
-}
-
-input[type="checkbox"] {
-    margin: 0 0.75rem 0 0.3rem;
-}
-
-input[type="radio"] {
-    margin: 0 0.5rem 0 0.75rem;
-}
-
-input[type="submit"] {
-    background-color: #25d366;
-    border: none;
-    border-radius: 0.5rem;
-    color: #fff;
-    font-family: inherit;
-    font-size: inherit;
-    height: 2.5rem;
-    margin: 0 0 0 0.3rem;
-    padding: 0 1rem;
-}
-
 button {
     background-color: #25d366;
     border: none;
@@ -96,29 +27,83 @@ button {
     width: 100%;
 }
 
-#screen {
-    display: flex;
-}
+form {
+    button {
+        background-color: #ece5dd;
+        color: #999;
+        display: inline;
+        height: 2.5rem;
+        margin: 0;
+        padding: 0 1rem;
+        width: auto;
+    }
 
-#conversation {
-    height: 100vh;
-    overflow: scroll;
-    scrollbar-width: none;
-    width: 60vw;
+    div:not(:has(input[type="radio"])) {
+        margin: 0.75rem 0;
+    }
 
-    section {
-        width: 50vw;
+    div:has(button) {
+        display: flex;
+        gap: 0.75rem;
+    }
+    
+    input[type="text"],
+    input[type="number"] {
+        background-color: #25d366;
+        border: none;
+        border-radius: 0.5rem;
+        color: #fff;
+        font-family: inherit;
+        font-size: inherit;
+        height: 2rem;
+        margin: 0 0 0 0.75rem;
+        padding: 0 0.75rem;
+        width: 8rem;
+    }
+    
+    input[type="checkbox"] {
+        margin: 0 0.75rem 0 0;
+        vertical-align: 0.1rem;
+    }
+    
+    input[type="radio"] {
+        margin: 0 0.5rem 0 0.75rem;
+    }
+    
+    input[type="submit"] {
+        background-color: #25d366;
+        border: none;
+        border-radius: 0.5rem;
+        color: #fff;
+        font-family: inherit;
+        font-size: inherit;
+        height: 2.5rem;
+        margin: 0;
+        padding: 0 1rem;
+    }
 
-        &.human {
-            background-color: #dcf8c6;
-            color: #333;
-            margin-left: 10vw;
+    label {
+        border-radius: 0.5rem;
+        display: inline-block;
+        height: 2rem;
+        line-height: 2rem;
+    
+        &:has(input[type="radio"]) {
+            background-color: #25d366;
+            color: #fff;
+            margin-left: 0.75rem;
+            padding-right: 0.75rem;
+    
+            &:hover {
+                cursor: pointer;
+            }
         }
     }
 }
 
-#sidebar {
-    width: 40vw;
+menu, ul {
+    list-style-type: none;
+    padding: 0;
 }
 
 section {
@@ -143,5 +128,33 @@ section {
 
     code {
         display: block;
+        white-space: pre;
+    }
+}
+
+#screen {
+    display: flex;
+
+    #conversation {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        overflow: scroll;
+        scrollbar-width: none;
+        width: 60%;
+    
+        section {
+            width: 80%;
+    
+            &.human {
+                background-color: #dcf8c6;
+                color: #333;
+                margin-left: 10vw;
+            }
+        }
+    }
+    
+    #sidebar {
+        width: 40%;
     }
 }

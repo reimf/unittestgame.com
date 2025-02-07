@@ -3,16 +3,15 @@ class Leapyear extends Game {
     constructor() {
         super();
         this.theme = School.instance;
-        this.description = 'I want to write better unit tests for a leap year calculator.';
+        this.description = 'I want to write better unit tests for a leap year calculator';
     }
     introductionMessage() {
-        return new Section([
+        return new Message([
             new Paragraph('Students are instructed to write a function that determines whether or not a year is a leap year.')
         ]);
     }
     specificationPanel() {
-        return new Section([
-            new Header('Specification'),
+        return new Panel('Specification', [
             new Paragraph('Most years have 365 days. ' +
                 'However, the time required for the earth to orbit the sun is actually slightly more than 365 days. ' +
                 'As a result, an extra day, February 29, is included in some years to correct for this difference. ' +

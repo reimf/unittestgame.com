@@ -1,13 +1,13 @@
 class Float extends Game {
     public readonly theme = Company.instance
-    public readonly description = 'I want to review a function that uses a regular expression to determine whether a text represents a float.'
+    public readonly description = 'I want to review a function that uses a regular expression to determine whether a text represents a float'
 
     public constructor() {
         super()
     }
 
-    protected introductionMessage(): Section {
-        return new Section([
+    protected introductionMessage(): Message {
+        return new Message([
             new Paragraph(
                 'A laboratory needs a function to check whether measured values have been entered correctly. ' +
                 'The lab technicians will perform ciritcal calculations with these numbers, so there must be no errors.'
@@ -15,9 +15,8 @@ class Float extends Game {
         ])
     }
 
-    protected specificationPanel(): Section {
-        return new Section([
-            new Header('Specification'),
+    protected specificationPanel(): Panel {
+        return new Panel('Specification', [
             new Paragraph(
                 'The function must determine whether a text represents a float and returns true or false accordingly. ' +
                 'A float may start with a plus sign or a minus sign. ' +

@@ -3,19 +3,18 @@ class Speed extends Game {
     constructor() {
         super();
         this.theme = Company.instance;
-        this.description = 'I want to review a function that displays the speed of a car on a small display.';
+        this.description = 'I want to review a function that displays the speed of a car on a small display';
     }
     introductionMessage() {
-        return new Section([
+        return new Message([
             new Paragraph('A Chinese gadget maker needs a function to display the average speed on a small display. ' +
                 'Drivers rely on the displayed information to be correct, so there must be no errors.'),
         ]);
     }
     specificationPanel() {
-        return new Section([
-            new Header('Specification'),
+        return new Panel('Specification', [
             new Paragraph('The function receives speed in meters per hour and must display the speed in kilometers per hour.'),
-            new Div().appendText('+-------------------+\n' +
+            new Paragraph('+-------------------+\n' +
                 '|  X   XXXX   XXXX  |\n' +
                 '|  X   X  X   X  X  |\n' +
                 '|  X   XXXX   XXXX  |\n' +

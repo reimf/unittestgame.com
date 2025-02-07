@@ -1,13 +1,13 @@
 class Speed extends Game {
     public readonly theme = Company.instance
-    public readonly description = 'I want to review a function that displays the speed of a car on a small display.'
+    public readonly description = 'I want to review a function that displays the speed of a car on a small display'
 
     public constructor() {
         super()
     }
 
-    protected introductionMessage(): Section {
-        return new Section([
+    protected introductionMessage(): Message {
+        return new Message([
             new Paragraph(
                 'A Chinese gadget maker needs a function to display the average speed on a small display. ' +
                 'Drivers rely on the displayed information to be correct, so there must be no errors.'
@@ -15,13 +15,12 @@ class Speed extends Game {
         ])
     }
 
-    protected specificationPanel(): Section {
-        return new Section([
-            new Header('Specification'),
+    protected specificationPanel(): Panel {
+        return new Panel('Specification', [
             new Paragraph(
                 'The function receives speed in meters per hour and must display the speed in kilometers per hour.'
             ),
-            new Div().appendText(
+            new Paragraph(
                 '+-------------------+\n' +
                 '|  X   XXXX   XXXX  |\n' +
                 '|  X   X  X   X  X  |\n' +

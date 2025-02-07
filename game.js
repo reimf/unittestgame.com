@@ -67,8 +67,8 @@ class Game {
         this.menu();
     }
     menuMessage(buttons) {
-        return new Section([
-            ...buttons,
+        return new Message([
+            new Menu(buttons),
         ]);
     }
     menu() {
@@ -90,15 +90,10 @@ class Game {
         ]).addAsHuman();
     }
     showFormUnitTest() {
-        const form = new Form([...this.parameters, this.unit], this.theme.addUnitTestFormButton(), (event) => this.addUnitTest(event), this.theme.cancelUnitTestFormButton(), (event) => this.cancelUnitTest(event));
+        const form = new Form([...this.parameters, this.unit], this.theme.addUnitTestFormButton(), () => this.addUnitTest(), this.theme.cancelUnitTestFormButton(), () => this.menu());
         this.theme.addUnitTestFormMessage(form).replaceLastHuman();
     }
-    cancelUnitTest(event) {
-        this.theme.cancelUnitTestFormMessage().replaceLastHuman();
-        this.menu();
-    }
-    addUnitTest(event) {
-        event.preventDefault();
+    addUnitTest() {
         const argumentList = this.parameters.map(parameter => parameter.value());
         const expected = this.unit.value();
         const unitTest = new UnitTest(argumentList, expected);
@@ -123,14 +118,12 @@ class Game {
     }
     showHint() {
         if (this.failingTestResult) {
-            this.theme.showHintMessage().replaceLastHuman();
             this.theme.hintUnitTestMessage(this.failingTestResult.unitTest, this.PENALTYHINT).addAsComputer();
             this.score -= this.PENALTYHINT;
         }
         this.menu();
     }
     submit() {
-        this.theme.submitMessage().replaceLastHuman();
         if (this.failingTestResult) {
             this.theme.bugFoundMessage(this.failingTestResult, this.PENALTYBUG).addAsComputer();
             this.score -= this.PENALTYBUG;
@@ -140,7 +133,6 @@ class Game {
             this.end();
     }
     end() {
-        this.theme.endMessage().replaceLastHuman();
         if (this.failingTestResult) {
             this.score = 0;
             this.theme.scorePanel(this.score).show('score');
@@ -152,6 +144,6 @@ class Game {
             this.theme.endPositiveMessage(this.score).addAsComputer();
         else
             this.theme.endNegativeMessage(this.score).addAsComputer();
-        Main.instance.restart();
+        Main.instance.start();
     }
 }

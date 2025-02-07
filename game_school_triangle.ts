@@ -1,22 +1,21 @@
 class Triangle extends Game {
     public readonly theme = School.instance
-    public readonly description = 'I want to write better unit tests for a triangle type checker.'
+    public readonly description = 'I want to write better unit tests for a triangle type checker'
 
     public constructor() {
         super()
     }
 
-    protected introductionMessage(): Section {
-        return new Section([
+    protected introductionMessage(): Message {
+        return new Message([
             new Paragraph(
                 'Students are instructed to write a function that determines the type of a triangle.'
             )
         ])
     }
 
-    protected specificationPanel(): Section {
-        return new Section([
-            new Header('Specification'),
+    protected specificationPanel(): Panel {
+        return new Panel('Specification', [
             new Paragraph(
                 'A triangle can be classified based on the lengths of its sides as equilateral, isosceles or scalene. ' +
                 'All three sides of an equilateral triangle have the same length. ' +

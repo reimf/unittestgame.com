@@ -10,6 +10,8 @@ class UnitTest {
         return `${this.argumentList} -> ${this.expected}`;
     }
     toHtml() {
-        return new Div().appendText(this.toString());
+        const div = new Div();
+        div.appendText(this.toString());
+        return div;
     }
 }

@@ -2,16 +2,16 @@
 class School extends Theme {
     constructor() {
         super(...arguments);
-        this.description = 'I want to write better unit tests for student assignments.';
+        this.description = 'I want to write better unit tests for student assignments';
     }
     addUnitTestFormButton() {
-        return 'Add unit test';
+        return 'I want to add this unit test';
     }
     cancelUnitTestFormButton() {
-        return 'Cancel';
+        return 'I don\'t want to add a unit test now';
     }
     contractMessage(initialScore, penaltyHint, penaltyBug) {
-        return new Section([
+        return new Message([
             new Paragraph('You must write enough unit tests for this function, ' +
                 'so that students get the right feedback. ' +
                 `If you have written enough unit tests, you will get ${this.formatScore(initialScore)}. ` +
@@ -21,79 +21,60 @@ class School extends Theme {
         ]);
     }
     unitTestsPanel(unitTests) {
-        const list = unitTests.length === 0
-            ? [new Paragraph('You have not written any unit test yet.')]
-            : unitTests.map(unitTest => unitTest.toHtml());
-        return new Section([
-            new Header('Unit tests'),
-            ...list,
+        return new Panel('Unit Tests', [
+            unitTests.length === 0
+                ? new Paragraph('You have not written any unit test yet.')
+                : new UnorderedList(unitTests.map(unitTest => new ListItem(unitTest.toHtml()))),
         ]);
     }
     currentCandidatePanel(candidate) {
-        return new Section([
-            new Header('Current function'),
+        return new Panel('Current Function', [
             candidate.toHtml(),
         ]);
     }
     scorePanel(score) {
-        return new Section([
-            new Header('Grade so far'),
+        return new Panel('Grade', [
             new Paragraph(`${this.formatScore(score)}`),
         ]);
     }
     formUnitTestButton() {
-        return 'I want to add an unit test.';
+        return 'I want to add a unit test';
     }
     showHintButton(penaltyHint) {
-        return `I want to see a hint for an unit test (-${this.formatScore(penaltyHint)}).`;
+        return `I want to see a hint for a unit test (-${this.formatScore(penaltyHint)})`;
     }
     submitButton(penaltyBug) {
-        return `I want to submit the unit tests (-${this.formatScore(penaltyBug)} on error).`;
+        return `I want to submit the unit tests (-${this.formatScore(penaltyBug)} on error)`;
     }
     endButton(penaltyend) {
-        return `I want to end the game (-${this.formatScore(penaltyend)} on error).`;
+        return `I want to end the game (-${this.formatScore(penaltyend)} on error)`;
     }
     addUnitTestFormMessage(form) {
-        return new Section([
-            new Paragraph('I want to add an unit test.'),
+        return new Message([
+            new Paragraph('I want to add a unit test.'),
             form,
         ]);
     }
     cancelUnitTestFormMessage() {
-        return new Section([
+        return new Message([
             new Paragraph('I don\'t want to add a unit test now.'),
         ]);
     }
     addUnitTestTextMessage(unitTest) {
-        return new Section([
+        return new Message([
             new Paragraph('I want to add the following unit test:'),
             unitTest.toHtml(),
         ]);
     }
-    showHintMessage() {
-        return new Section([
-            new Paragraph('I want to see a hint for an unit test.'),
-        ]);
-    }
-    submitMessage() {
-        return new Section([
-            new Paragraph('I want to submit the unit tests.'),
-        ]);
-    }
-    endMessage() {
-        return new Section([
-            new Paragraph('I want to end the game.'),
-        ]);
-    }
     hintUnitTestMessage(unitTest, penaltyHint) {
-        return new Section([
-            new Paragraph('An unit test that currently fails is the following.'),
+        return new Message([
+            new Paragraph('A unit test that currently fails is the following.'),
             unitTest.toHtml(),
             new Paragraph(`Your grade will decrease by ${this.formatScore(penaltyHint)}.`),
         ]);
     }
     bugFoundMessage(testResult, penaltyBug) {
-        return new Section([
+        return new Message([
             new Paragraph('Thank you! ' +
                 'We have deployed the latest version of the function to production. ' +
                 'A student has reported an error in the grading of their assignment. ' +
@@ -103,7 +84,7 @@ class School extends Theme {
         ]);
     }
     endWithBugMessage() {
-        return new Section([
+        return new Message([
             new Paragraph('There are still clearly wrong functions that pass all your unit tests, ' +
                 'so we will give you the minimum grade. ' +
                 'Too bad! ' +
@@ -112,7 +93,7 @@ class School extends Theme {
         ]);
     }
     endPerfectMessage(score) {
-        return new Section([
+        return new Message([
             new Paragraph('Congratulations! ' +
                 'The grading of the assignments is completely error-free thanks to your unit tests. ' +
                 `Your final grade is a perfect ${this.formatScore(score)}. ` +
@@ -121,7 +102,7 @@ class School extends Theme {
         ]);
     }
     endPositiveMessage(score) {
-        return new Section([
+        return new Message([
             new Paragraph('Congratulations! ' +
                 'The grading of the assignments is completely error-free thanks to your unit tests. ' +
                 `Your final grade is ${this.formatScore(score)}. ` +
@@ -131,7 +112,7 @@ class School extends Theme {
         ]);
     }
     endNegativeMessage(score) {
-        return new Section([
+        return new Message([
             new Paragraph('Congratulations! ' +
                 'The grading of the assignments is completely error-free thanks to your unit tests. ' +
                 `Your final grade is ${this.formatScore(score)}. ` +
@@ -141,26 +122,26 @@ class School extends Theme {
         ]);
     }
     overallUselessUnitTestMessage() {
-        return new Section([
+        return new Message([
             new Paragraph('We have added the unit test. ' +
                 'The unit test looks like another unit test. ' +
                 'Therefore, we think the unit test is not very useful.'),
         ]);
     }
     currentlyUselessUnitTestMessage() {
-        return new Section([
+        return new Message([
             new Paragraph('We have added the unit test. ' +
                 'The current function already passed the unit test. ' +
                 'Therefore, we think the unit test is not very useful at the moment.'),
         ]);
     }
     usefulUnitTestMessage() {
-        return new Section([
+        return new Message([
             new Paragraph('Unit test added successfully.'),
         ]);
     }
     incorrectUnitTestMessage() {
-        return new Section([
+        return new Message([
             new Paragraph('We compared your unit test with the specification. ' +
                 'Your unit test turns out to be incorrect. ' +
                 'So we did not add the unit test to our code.'),

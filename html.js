@@ -5,35 +5,22 @@ class Html {
     }
     id(id) {
         this.element.id = id;
-        return this;
     }
     addClass(value) {
         this.element.classList.add(value);
-        return this;
     }
     appendText(value) {
         this.element.appendChild(document.createTextNode(value));
-        return this;
     }
     appendChild(value) {
         this.element.appendChild(value.element);
-        return this;
     }
     appendChildren(values) {
         for (const value of values)
             this.element.appendChild(value.element);
-        return this;
     }
     on(eventType, callback) {
         this.element.addEventListener(eventType, callback);
-        return this;
-    }
-    addTo(parentId) {
-        const old = document.querySelector('#' + this.element.id);
-        if (old)
-            old.replaceWith(this.element);
-        else
-            document.querySelector('#' + parentId).appendChild(this.element);
     }
 }
 class Anchor extends Html {
@@ -44,7 +31,6 @@ class Anchor extends Html {
     }
     href(value) {
         this.anchor.href = value;
-        return this;
     }
 }
 class Input extends Html {
@@ -55,19 +41,15 @@ class Input extends Html {
     }
     type(value) {
         this.input.type = value;
-        return this;
     }
     name(value) {
         this.input.name = value;
-        return this;
     }
     value(value) {
         this.input.value = value;
-        return this;
     }
     autocomplete(value) {
         this.input.autocomplete = value ? 'on' : 'off';
-        return this;
     }
 }
 class Header extends Html {
@@ -82,10 +64,32 @@ class Paragraph extends Html {
         this.appendText(text);
     }
 }
+class UnorderedList extends Html {
+    constructor(listItems) {
+        super('ul');
+        this.appendChildren(listItems);
+    }
+}
+class ListItem extends Html {
+    constructor(child) {
+        super('li');
+        this.appendChild(child);
+    }
+}
+class Menu extends Html {
+    constructor(buttons) {
+        super('menu');
+        this.appendChildren(buttons.map(button => new ListItem(button)));
+    }
+}
 class Button extends Html {
     constructor(text, callback) {
         super('button');
-        this.appendText(text).on('click', callback);
+        this.appendText(text);
+        this.on('click', event => {
+            new Message([new Paragraph(this.element.textContent + '.')]).replaceLastHuman();
+            callback(event);
+        });
     }
 }
 class Label extends Html {

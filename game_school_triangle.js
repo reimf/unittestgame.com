@@ -3,16 +3,15 @@ class Triangle extends Game {
     constructor() {
         super();
         this.theme = School.instance;
-        this.description = 'I want to write better unit tests for a triangle type checker.';
+        this.description = 'I want to write better unit tests for a triangle type checker';
     }
     introductionMessage() {
-        return new Section([
+        return new Message([
             new Paragraph('Students are instructed to write a function that determines the type of a triangle.')
         ]);
     }
     specificationPanel() {
-        return new Section([
-            new Header('Specification'),
+        return new Panel('Specification', [
             new Paragraph('A triangle can be classified based on the lengths of its sides as equilateral, isosceles or scalene. ' +
                 'All three sides of an equilateral triangle have the same length. ' +
                 'An isosceles triangle has two sides that are the same length, and a third side that is a different length ' +

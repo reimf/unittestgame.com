@@ -1,31 +1,18 @@
-class Section extends Html {
-    static messageCount: number = 0
-
+abstract class Section extends Html {
     public constructor(children: Html[]) {
         super('section')
         this.appendChildren(children)
     }
 
-    public show(id: string): void {
-        this.id(id).addTo('panels')
+    protected existingElement(): HTMLElement | null {
+        return document.querySelector('#' + this.element.id)
     }
 
-    public addAsComputer(): void {
-        this.id(`message-${++Section.messageCount}`).addClass('computer').addTo('messages')
+    protected replaceExisting(): void {
+        this.existingElement()!.replaceWith(this.element)
     }
 
-    public addAsHuman(): void {
-        this.id(`message-${++Section.messageCount}`).addClass('human').addTo('messages')
-        this.setFocus()
-    }
-
-    public replaceLastHuman(): void {
-        this.id(`message-${Section.messageCount}`).addClass('human').addTo('messages')
-        this.setFocus()
-    }
-
-    private setFocus(): void {
-        const firstFocusable = this.element.querySelector('button, input') as HTMLElement
-        firstFocusable?.focus()
+    protected addTo(parentId: string): void {
+        document.querySelector('#' + parentId)!.appendChild(this.element)
     }
 }
