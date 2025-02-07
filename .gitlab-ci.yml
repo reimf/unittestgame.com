@@ -3,11 +3,9 @@ default:
 
 pages:
   script:
-    - node -v
-    - npm -v
     - npm install typescript
-    - npx tsc -v
     - npx tsc --build --verbose
+    - rm fiveserver.config.js
     - mkdir public
     - cp *.{css,html,ico,js,png} public
     - gzip -k -6 public/*.{css,html,js}
