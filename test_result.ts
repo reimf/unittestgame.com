@@ -4,7 +4,7 @@ class TestResult {
 
     public constructor(candidate: Candidate, readonly unitTest: UnitTest) {
         this.unitTest = unitTest
-        this.result = candidate.callFunction(unitTest.argumentList)
+        this.result = candidate.execute(unitTest.argumentList)
         this.passes = this.result === unitTest.expected
     }
 

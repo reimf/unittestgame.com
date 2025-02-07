@@ -12,7 +12,7 @@ abstract class Game {
     private minimalUnitTests: UnitTest[] = this.getMinimalUnitTests()
     private perfectCandidates: Candidate[] = this.findPerfectCandidates(this.candidates, this.minimalUnitTests)
     private perfectCandidate: Candidate = this.perfectCandidates.random()
-    private hints: UnitTest[] = [...this.hintGenerator()].map(argumentList => new UnitTest(argumentList, this.perfectCandidate.callFunction(argumentList)))
+    private hints: UnitTest[] = [...this.hintGenerator()].map(argumentList => new UnitTest(argumentList, this.perfectCandidate.execute(argumentList)))
     private userdefinedUnitTests: UnitTest[] = []
     private score: number = this.INITIALSCORE
     private failingTestResult: TestResult | undefined = undefined

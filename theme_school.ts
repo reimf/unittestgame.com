@@ -81,7 +81,7 @@ class School extends Theme {
 
     public hintUnitTestMessage(unitTest: UnitTest, penaltyHint: number): Message {
         return new Message([
-            new Paragraph('A unit test that currently fails is the following.'),
+            new Paragraph('A unit test that currently would fail is the following.'),
             unitTest.toHtml(),
             new Paragraph(`Your grade will decrease by ${this.formatScore(penaltyHint)}.`),
         ])

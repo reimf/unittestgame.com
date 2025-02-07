@@ -7,7 +7,7 @@ class Candidate {
         this.complexity = code.length
     }
 
-    public callFunction(argumentsList: any[]): any {
+    public execute(argumentsList: any[]): any {
         try {
             return this.function(...argumentsList)
         } catch (error: any) {
