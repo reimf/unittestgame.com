@@ -1,4 +1,4 @@
-class Votingage extends Game {
+class VotingAge extends Game {
     public readonly theme = Intro.instance
     public readonly description = 'I want to write unit tests for a function that checks if a person is allowed to vote based on their age'
 

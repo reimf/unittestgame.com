@@ -1,4 +1,4 @@
 module.exports = {
-    wait: 1000,
+    wait: 2000,
     open: "index.html",
 }

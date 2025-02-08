@@ -4,7 +4,7 @@ class Candidate {
         this.function = new Function('return ' + code)();
         this.complexity = code.length;
     }
-    callFunction(argumentsList) {
+    execute(argumentsList) {
         try {
             return this.function(...argumentsList);
         }

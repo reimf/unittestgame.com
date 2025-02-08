@@ -11,7 +11,7 @@ class Game {
         this.minimalUnitTests = this.getMinimalUnitTests();
         this.perfectCandidates = this.findPerfectCandidates(this.candidates, this.minimalUnitTests);
         this.perfectCandidate = this.perfectCandidates.random();
-        this.hints = [...this.hintGenerator()].map(argumentList => new UnitTest(argumentList, this.perfectCandidate.callFunction(argumentList)));
+        this.hints = [...this.hintGenerator()].map(argumentList => new UnitTest(argumentList, this.perfectCandidate.execute(argumentList)));
         this.userdefinedUnitTests = [];
         this.score = this.INITIALSCORE;
         this.failingTestResult = undefined;
@@ -144,6 +144,7 @@ class Game {
             this.theme.endPositiveMessage(this.score).addAsComputer();
         else
             this.theme.endNegativeMessage(this.score).addAsComputer();
+        new HighScore(this.constructor.name, this.score.toString().padStart(3, '0'), this.theme.formatScore(this.score), Date.now().toString()).save();
         Main.instance.start();
     }
 }

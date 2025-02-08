@@ -3,14 +3,11 @@ class Panel extends Section {
     constructor(header, children) {
         super([new Header(header), ...children]);
     }
-    replaceExistingOrAddTo(parentId) {
+    show(id) {
+        this.id(id);
         if (this.existingElement())
             this.replaceExisting();
         else
-            this.addTo(parentId);
-    }
-    show(id) {
-        this.id(id);
-        this.replaceExistingOrAddTo('panels');
+            this.addTo('panels');
     }
 }

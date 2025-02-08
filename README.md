@@ -1,8 +1,5 @@
 # UnitTestGame.com
 
-## Wishlist
-[ ] Store achievements (e.g. in cookie or local storage)
-
 ## State Diagram
 ```mermaid
 stateDiagram-v2

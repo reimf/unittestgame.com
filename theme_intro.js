@@ -13,8 +13,8 @@ class Intro extends Theme {
     contractMessage(initialScore, penaltyHint, penaltyBug) {
         return new Message([
             new Paragraph('It is your task to write unit tests for this function. ' +
-                'A unit test consists of a content of arguments for the function and the expected result. ' +
-                'After adding a unit test, check the current function to see if the function is correct. ' +
+                'A unit test consists of the argument for the function and the expected result. ' +
+                'After adding a unit test, check the current function to see if the function has improved. ' +
                 'Keep adding unit tests until the function works as specified, ' +
                 'then submit your unit tests.'),
         ]);
@@ -45,7 +45,7 @@ class Intro extends Theme {
     }
     scorePanel(score) {
         return new Panel('Score', [
-            new Paragraph('This intro game is not scored.'),
+            new Paragraph(`${this.formatScore(score)}`),
         ]);
     }
     addUnitTestFormMessage(form) {
@@ -67,7 +67,7 @@ class Intro extends Theme {
     }
     hintUnitTestMessage(unitTest, penaltyHint) {
         return new Message([
-            new Paragraph('A unit test that currently fails is the following.'),
+            new Paragraph('A unit test that currently would fail is the following.'),
             unitTest.toHtml(),
         ]);
     }
@@ -123,7 +123,7 @@ class Intro extends Theme {
         ]);
     }
     formatScore(score) {
-        return '';
+        return 'No score available';
     }
 }
 Intro.instance = new Intro();

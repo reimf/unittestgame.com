@@ -1,4 +1,4 @@
-class Leapyear extends Game {
+class LeapYear extends Game {
     public readonly theme = School.instance
     public readonly description = 'I want to write better unit tests for a leap year calculator'
 
@@ -42,7 +42,7 @@ class Leapyear extends Game {
     protected getUnit(): Variable {
         return new CheckboxVariable(
             'Is it a leap year?',
-            'isLeapyear'
+            'isLeapYear'
         )
     }
 

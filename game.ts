@@ -85,7 +85,7 @@ abstract class Game {
         this.menu()
     }
 
-    private menuMessage(buttons: Html[]): Message {
+    private menuMessage(buttons: Button[]): Message {
         return new Message([
             new Menu(buttons),
         ])
@@ -178,6 +178,12 @@ abstract class Game {
             this.theme.endPositiveMessage(this.score).addAsComputer()
         else
             this.theme.endNegativeMessage(this.score).addAsComputer()
+        new HighScore(
+            this.constructor.name,
+            this.score.toString().padStart(3, '0'),
+            this.theme.formatScore(this.score),
+            Date.now().toString()
+        ).save()
         Main.instance.start()
     }
 }

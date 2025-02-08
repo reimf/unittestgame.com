@@ -14,8 +14,8 @@ class Intro extends Theme {
         return new Message([
             new Paragraph(
                 'It is your task to write unit tests for this function. ' +
-                'A unit test consists of a content of arguments for the function and the expected result. ' +
-                'After adding a unit test, check the current function to see if the function is correct. ' +
+                'A unit test consists of the argument for the function and the expected result. ' +
+                'After adding a unit test, check the current function to see if the function has improved. ' +
                 'Keep adding unit tests until the function works as specified, ' +
                 'then submit your unit tests.'
             ),
@@ -54,7 +54,7 @@ class Intro extends Theme {
 
     public scorePanel(score: number): Panel {
         return new Panel('Score', [
-            new Paragraph('This intro game is not scored.'),
+            new Paragraph(`${this.formatScore(score)}`),
         ])
     }
 
@@ -160,6 +160,6 @@ class Intro extends Theme {
     }
 
     public formatScore(score: number): string {
-        return ''
+        return 'No score available'
     }
 }

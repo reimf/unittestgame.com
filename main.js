@@ -2,9 +2,9 @@
 class Main {
     constructor() {
         this.games = [
-            new Votingage(),
+            new VotingAge(),
             new Evenodd(),
-            new Leapyear(),
+            new LeapYear(),
             new Triangle(),
             new Speed(),
             new Float(),
@@ -19,6 +19,11 @@ class Main {
         paragraph.appendChild(anchor);
         return new Panel('Learn Unit Testing with UnitTestGame.com', [
             paragraph
+        ]);
+    }
+    HighScorePanel(highScores) {
+        return new Panel('High Scores', [
+            new UnorderedList(highScores.map(highScore => new ListItem(highScore.toHtml()))),
         ]);
     }
     welcomeMessage() {
@@ -40,6 +45,8 @@ class Main {
     }
     start() {
         this.aboutPanel().show('specification');
+        const highScores = this.games.map(game => HighScore.fromLocalStorage(game.constructor.name)).filter(highScore => highScore !== null);
+        this.HighScorePanel(highScores).show('high-scores');
         this.welcomeMessage().addAsComputer();
         this.themeMenu();
     }

@@ -1,5 +1,5 @@
 "use strict";
-class Votingage extends Game {
+class VotingAge extends Game {
     constructor() {
         super();
         this.theme = Intro.instance;

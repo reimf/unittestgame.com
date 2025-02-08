@@ -1,5 +1,5 @@
 "use strict";
-class Leapyear extends Game {
+class LeapYear extends Game {
     constructor() {
         super();
         this.theme = School.instance;
@@ -29,7 +29,7 @@ class Leapyear extends Game {
         ];
     }
     getUnit() {
-        return new CheckboxVariable('Is it a leap year?', 'isLeapyear');
+        return new CheckboxVariable('Is it a leap year?', 'isLeapYear');
     }
     getCandidateElements() {
         return [
