@@ -1,10 +1,19 @@
+:root {
+    --almost-black: #011f4b;
+    --dark-blue: #005b96;
+    --medium-blue: #6497b1;
+    --light-blue: #ecf2f7;
+    --light-brown: #ece5dd;
+    --white: #ffffff;
+}
+
 * {
     box-sizing: border-box;
 }
 
 body {
-    background-color: #ece5dd;
-    color: #333;
+    background-color: var(--light-brown);
+    color: var(--almost-black);
     font-family: monospace;
     margin: 0;
 }
@@ -14,10 +23,10 @@ a {
 }
 
 button {
-    background-color: #25d366;
+    background-color: var(--medium-blue);
     border: none;
     border-radius: 0.5rem;
-    color: #fff;
+    color: var(--white);
     display: block;
     font-family: inherit;
     font-size: inherit;
@@ -29,8 +38,8 @@ button {
 
 form {
     button {
-        background-color: #ece5dd;
-        color: #999;
+        background-color: var(--light-brown);
+        color: var(--medium-blue);
         display: inline;
         height: 2.5rem;
         margin: 0;
@@ -49,10 +58,10 @@ form {
     
     input[type="text"],
     input[type="number"] {
-        background-color: #25d366;
+        background-color: var(--medium-blue);
         border: none;
         border-radius: 0.5rem;
-        color: #fff;
+        color: var(--white);
         font-family: inherit;
         font-size: inherit;
         height: 2rem;
@@ -71,10 +80,10 @@ form {
     }
     
     input[type="submit"] {
-        background-color: #25d366;
+        background-color: var(--medium-blue);
         border: none;
         border-radius: 0.5rem;
-        color: #fff;
+        color: var(--white);
         font-family: inherit;
         font-size: inherit;
         height: 2.5rem;
@@ -89,8 +98,8 @@ form {
         line-height: 2rem;
     
         &:has(input[type="radio"]) {
-            background-color: #25d366;
-            color: #fff;
+            background-color: var(--medium-blue);
+            color: var(--white);
             margin-left: 0.75rem;
             padding-right: 0.75rem;
     
@@ -107,9 +116,9 @@ menu, ul {
 }
 
 section {
-    background-color: #fff;
+    background-color: var(--white);
     border-radius: 0.5rem;
-    color: #333;
+    color: var(--almost-black);
     margin: 0.75rem;
     overflow: hidden;
     padding: 0 0.75rem;
@@ -119,9 +128,9 @@ section {
     }
 
     header {
-        background-color: #128c7e;
+        background-color: var(--dark-blue);
         border-radius: 0.5rem 0.5rem 0 0;
-        color: #fff;
+        color: var(--white);
         margin: 0 -0.75rem 0.75rem -0.75rem;
         padding: 0.75rem;
     }
@@ -147,9 +156,9 @@ section {
             width: 80%;
     
             &.human {
-                background-color: #dcf8c6;
-                color: #333;
-                margin-left: 10vw;
+                background-color: var(--light-blue);
+                color: var(--almost-black);
+                margin-left: 20%;
             }
         }
     }
