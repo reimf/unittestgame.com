@@ -72,10 +72,7 @@ abstract class Game {
 
     private findSimplestPassingCandidate(candidates: Candidate[], userDefinedUnitTests: UnitTest[], perfectCandidates: Candidate[]): Candidate {
         const passingCandidates = this.findPassingCandidates(candidates, userDefinedUnitTests)
-        const nonPerfectPassingCandidates = passingCandidates.filter(candidate => !perfectCandidates.includes(candidate))
-        if (nonPerfectPassingCandidates.length == 0)
-            return passingCandidates.random()
-        return nonPerfectPassingCandidates.reduce((simplestSoFar, current) => simplestSoFar.simplest(current))
+        return passingCandidates.reduce((simplestSoFar, current) => simplestSoFar.simplest(current))
     }
 
     public play(): void {
@@ -182,8 +179,7 @@ abstract class Game {
             this.constructor.name,
             this.score.toString().padStart(3, '0'),
             this.theme.formatScore(this.score),
-            Date.now().toString()
         ).save()
-        Main.instance.start()
+        Main.instance.restart()
     }
 }

@@ -23,10 +23,11 @@ class Main {
         ])
     }
 
-    private HighScorePanel(highScores: HighScore[]): Panel {
+    private HighScorePanel(): Panel {
+        const highScores = this.games.map(game => HighScore.fromLocalStorage(game.constructor.name)).filter(highScore => highScore !== null)
         return new Panel('High Scores', [
             new UnorderedList(
-                highScores.map(highScore => new ListItem(highScore.toHtml()))
+                highScores.map(highScore => new ListItem(new Span(highScore.toString())))
             ),
         ])
     }
@@ -41,13 +42,7 @@ class Main {
         ])
     }
 
-    private themeMenuMessage(buttons: Button[]): Message {
-        return new Message([
-            new Menu(buttons),
-        ])
-    }
-
-    private gameMenuMessage(buttons: Html[]): Message {
+    private menuMessage(buttons: Button[]): Message {
         return new Message([
             new Menu(buttons),
         ])
@@ -55,22 +50,34 @@ class Main {
 
     public start(): void {
         this.aboutPanel().show('specification')
-        const highScores = this.games.map(game => HighScore.fromLocalStorage(game.constructor.name)).filter(highScore => highScore !== null)
-        this.HighScorePanel(highScores).show('high-scores')
         this.welcomeMessage().addAsComputer()
+        this.HighScorePanel().show('high-scores')
         this.themeMenu()
     }
 
     private themeMenu(): void {
-        this.themeMenuMessage(
+        this.menuMessage(
             this.themes.map(theme => new Button(theme.description, () => this.gameMenu(theme)))
         ).addAsHuman()
     }
 
     private gameMenu(theme: Theme): void {
         const gamesForThisTheme = this.games.filter(game => game.theme === theme)
-        this.gameMenuMessage(
-            gamesForThisTheme.map(game => new Button(game.description, () => game.play())),
+        this.menuMessage(
+            gamesForThisTheme.map(game => new Button(game.description, () => this.playGame(game))),
         ).addAsHuman()
+    }
+
+    private playGame(game: Game): void {
+        Panel.remove('high-scores')
+        game.play()
+    }
+
+    public restart(): void {
+        this.HighScorePanel().show('high-scores')
+        this.menuMessage([
+            new Button('Pick another theme and game', () => this.themeMenu()),
+            new Button('Exit UnitTestGame.com', () => window.close()),
+        ]).addAsHuman()
     }
 }

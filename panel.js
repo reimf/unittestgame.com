@@ -10,4 +10,8 @@ class Panel extends Section {
         else
             this.addTo('panels');
     }
+    static remove(id) {
+        var _a;
+        (_a = document.querySelector('#' + id)) === null || _a === void 0 ? void 0 : _a.remove();
+    }
 }

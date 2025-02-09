@@ -45,13 +45,13 @@ class Company extends Theme {
         return new Panel('Unit Tests', [
             unitTests.length === 0
             ? new Paragraph('You have not written any unit tests yet.')
-            : new UnorderedList(unitTests.map(unitTest => new ListItem(unitTest.toHtml()))),
+            : new UnorderedList(unitTests.map(unitTest => new ListItem(new Span(unitTest.toString())))),
         ])
     }
 
     public currentCandidatePanel(candidate: Candidate): Panel {
         return new Panel('Current Function', [
-            candidate.toHtml(),
+            new Code(candidate.toString()),
         ])
     }
 
@@ -77,14 +77,14 @@ class Company extends Theme {
     public addUnitTestTextMessage(unitTest: UnitTest): Message {
         return new Message([
             new Paragraph('I want to add the following unit test:'),
-            unitTest.toHtml(),
+            new Paragraph(unitTest.toString()),
         ])
     }
 
     public hintUnitTestMessage(unitTest: UnitTest, penaltyHint: number): Message {
         return new Message([
             new Paragraph('A unit test that currently would fail is the following.'),
-            unitTest.toHtml(),
+            new Paragraph(unitTest.toString()),
             new Paragraph(`The cost for this hint is ${this.formatScore(penaltyHint)}.`),
         ])
     }
@@ -97,7 +97,7 @@ class Company extends Theme {
                 'A customer has reported a bug in the function. ' +
                 'The function produced the following incorrect result.'
             ),
-            testResult.toHtml(),
+            new Paragraph(testResult.toString()),
             new Paragraph(`Your share of the cost to fix this is ${this.formatScore(penaltyBug)}.`),
         ])
     }

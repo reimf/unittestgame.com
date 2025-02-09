@@ -1,6 +1,7 @@
 "use strict";
 class Candidate {
     constructor(code) {
+        this.code = code;
         this.function = new Function('return ' + code)();
         this.complexity = code.length;
     }
@@ -32,8 +33,5 @@ class Candidate {
     }
     toString() {
         return this.function.toString();
-    }
-    toHtml() {
-        return new Code(this.toString());
     }
 }

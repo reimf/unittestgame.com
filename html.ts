@@ -31,6 +31,13 @@ class Html {
     }
 }
 
+class Span extends Html {
+    public constructor(text: string) {
+        super('span')
+        this.appendText(text)
+    }
+}
+
 class Anchor extends Html {
     private anchor = this.element as HTMLAnchorElement
 
@@ -101,7 +108,7 @@ class Menu extends Html {
     public constructor(buttons: Button[]) {
         super('menu')
         this.appendChildren(buttons.map(button => new ListItem(button)))
-    }    
+    }
 }
 
 class Button extends Html {

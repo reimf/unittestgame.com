@@ -23,6 +23,12 @@ class Html {
         this.element.addEventListener(eventType, callback);
     }
 }
+class Span extends Html {
+    constructor(text) {
+        super('span');
+        this.appendText(text);
+    }
+}
 class Anchor extends Html {
     constructor(href) {
         super('a');

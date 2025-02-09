@@ -9,9 +9,4 @@ class UnitTest {
     toString() {
         return `${this.argumentList} -> ${this.expected}`;
     }
-    toHtml() {
-        const div = new Div();
-        div.appendText(this.toString());
-        return div;
-    }
 }

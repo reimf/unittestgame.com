@@ -2,7 +2,7 @@ class Candidate {
     private readonly function: Function
     private complexity: number
 
-    public constructor(code: string) {
+    public constructor(private code: string) {
         this.function = new Function('return ' + code)()
         this.complexity = code.length
     }
@@ -41,9 +41,5 @@ class Candidate {
 
     public toString(): string {
         return this.function.toString()
-    }
-
-    public toHtml(): Html {
-        return new Code(this.toString())
     }
 }

@@ -21,9 +21,10 @@ class Main {
             paragraph
         ]);
     }
-    HighScorePanel(highScores) {
+    HighScorePanel() {
+        const highScores = this.games.map(game => HighScore.fromLocalStorage(game.constructor.name)).filter(highScore => highScore !== null);
         return new Panel('High Scores', [
-            new UnorderedList(highScores.map(highScore => new ListItem(highScore.toHtml()))),
+            new UnorderedList(highScores.map(highScore => new ListItem(new Span(highScore.toString())))),
         ]);
     }
     welcomeMessage() {
@@ -33,29 +34,34 @@ class Main {
                 'But first, pick a theme to start the game.'),
         ]);
     }
-    themeMenuMessage(buttons) {
-        return new Message([
-            new Menu(buttons),
-        ]);
-    }
-    gameMenuMessage(buttons) {
+    menuMessage(buttons) {
         return new Message([
             new Menu(buttons),
         ]);
     }
     start() {
         this.aboutPanel().show('specification');
-        const highScores = this.games.map(game => HighScore.fromLocalStorage(game.constructor.name)).filter(highScore => highScore !== null);
-        this.HighScorePanel(highScores).show('high-scores');
         this.welcomeMessage().addAsComputer();
+        this.HighScorePanel().show('high-scores');
         this.themeMenu();
     }
     themeMenu() {
-        this.themeMenuMessage(this.themes.map(theme => new Button(theme.description, () => this.gameMenu(theme)))).addAsHuman();
+        this.menuMessage(this.themes.map(theme => new Button(theme.description, () => this.gameMenu(theme)))).addAsHuman();
     }
     gameMenu(theme) {
         const gamesForThisTheme = this.games.filter(game => game.theme === theme);
-        this.gameMenuMessage(gamesForThisTheme.map(game => new Button(game.description, () => game.play()))).addAsHuman();
+        this.menuMessage(gamesForThisTheme.map(game => new Button(game.description, () => this.playGame(game)))).addAsHuman();
+    }
+    playGame(game) {
+        Panel.remove('high-scores');
+        game.play();
+    }
+    restart() {
+        this.HighScorePanel().show('high-scores');
+        this.menuMessage([
+            new Button('Pick another theme and game', () => this.themeMenu()),
+            new Button('Exit UnitTestGame.com', () => window.close()),
+        ]).addAsHuman();
     }
 }
 Main.instance = new Main();

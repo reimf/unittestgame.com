@@ -55,10 +55,7 @@ class Game {
     }
     findSimplestPassingCandidate(candidates, userDefinedUnitTests, perfectCandidates) {
         const passingCandidates = this.findPassingCandidates(candidates, userDefinedUnitTests);
-        const nonPerfectPassingCandidates = passingCandidates.filter(candidate => !perfectCandidates.includes(candidate));
-        if (nonPerfectPassingCandidates.length == 0)
-            return passingCandidates.random();
-        return nonPerfectPassingCandidates.reduce((simplestSoFar, current) => simplestSoFar.simplest(current));
+        return passingCandidates.reduce((simplestSoFar, current) => simplestSoFar.simplest(current));
     }
     play() {
         this.specificationPanel().show('specification');
@@ -144,7 +141,7 @@ class Game {
             this.theme.endPositiveMessage(this.score).addAsComputer();
         else
             this.theme.endNegativeMessage(this.score).addAsComputer();
-        new HighScore(this.constructor.name, this.score.toString().padStart(3, '0'), this.theme.formatScore(this.score), Date.now().toString()).save();
-        Main.instance.start();
+        new HighScore(this.constructor.name, this.score.toString().padStart(3, '0'), this.theme.formatScore(this.score)).save();
+        Main.instance.restart();
     }
 }

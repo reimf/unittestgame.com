@@ -35,12 +35,12 @@ class Intro extends Theme {
         return new Panel('Unit Tests', [
             unitTests.length === 0
                 ? new Paragraph('You have not written any unit tests yet.')
-                : new UnorderedList(unitTests.map(unitTest => new ListItem(unitTest.toHtml()))),
+                : new UnorderedList(unitTests.map(unitTest => new ListItem(new Span(unitTest.toString())))),
         ]);
     }
     currentCandidatePanel(candidate) {
         return new Panel('Current Function', [
-            candidate.toHtml(),
+            new Code(candidate.toString()),
         ]);
     }
     scorePanel(score) {
@@ -62,19 +62,19 @@ class Intro extends Theme {
     addUnitTestTextMessage(unitTest) {
         return new Message([
             new Paragraph('I want to add the following unit test:'),
-            unitTest.toHtml(),
+            new Paragraph(unitTest.toString()),
         ]);
     }
     hintUnitTestMessage(unitTest, penaltyHint) {
         return new Message([
             new Paragraph('A unit test that currently would fail is the following.'),
-            unitTest.toHtml(),
+            new Paragraph(unitTest.toString()),
         ]);
     }
     bugFoundMessage(testResult, penaltyBug) {
         return new Message([
             new Paragraph('There are still bugs in the function.'),
-            testResult.toHtml(),
+            new Paragraph(testResult.toString()),
         ]);
     }
     endWithBugMessage() {

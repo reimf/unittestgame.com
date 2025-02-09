@@ -10,4 +10,8 @@ class Panel extends Section {
         else
             this.addTo('panels')
     }
+
+    public static remove(id: string): void {
+        document.querySelector('#' + id)?.remove()
+    }
 }

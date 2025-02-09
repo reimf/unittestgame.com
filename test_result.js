@@ -9,7 +9,4 @@ class TestResult {
     toString() {
         return `${this.unitTest.argumentList} -> ${this.result}`;
     }
-    toHtml() {
-        return new Paragraph(this.toString());
-    }
 }

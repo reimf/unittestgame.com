@@ -11,8 +11,4 @@ class TestResult {
     public toString(): string {
         return `${this.unitTest.argumentList} -> ${this.result}`
     }
-
-    public toHtml(): Html {
-        return new Paragraph(this.toString())
-    }
 }

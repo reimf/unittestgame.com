@@ -6,7 +6,10 @@ stateDiagram-v2
     [*] --> Main.start
     Main.start --> Main.themeMenu
     Main.themeMenu --> Main.gameMenu
-    Main.gameMenu --> Game.play
+    Main.gameMenu --> Main.playGame
+    Main.playGame --> Game.play
+    Main.restart --> Main.themeMenu
+    Main.restart --> [*]
     Game.play --> Game.menu
     Game.menu --> Game.showUnitTestForm
     Game.menu --> Game.showHint
@@ -18,5 +21,5 @@ stateDiagram-v2
     Game.showHint --> Game.menu
     Game.submit --> Game.menu
     Game.submit --> Game.end
-    Game.end --> Main.start
+    Game.end --> Main.restart
 ```

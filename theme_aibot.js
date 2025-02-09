@@ -36,12 +36,12 @@ class AIBot extends Theme {
         return new Panel('Unit Tests', [
             unitTests.length === 0
                 ? new Paragraph('You have not written any unit tests yet.')
-                : new UnorderedList(unitTests.map(unitTest => new ListItem(unitTest.toHtml()))),
+                : new UnorderedList(unitTests.map(unitTest => new ListItem(new Span(unitTest.toString())))),
         ]);
     }
     currentCandidatePanel(candidate) {
         return new Panel('Current AI Functionality', [
-            candidate.toHtml(),
+            new Code(candidate.toString()),
         ]);
     }
     scorePanel(score) {
@@ -63,13 +63,13 @@ class AIBot extends Theme {
     addUnitTestTextMessage(unitTest) {
         return new Message([
             new Paragraph('I want to add the following unit test:'),
-            unitTest.toHtml(),
+            new Paragraph(unitTest.toString()),
         ]);
     }
     hintUnitTestMessage(unitTest, penaltyHint) {
         return new Message([
             new Paragraph('A unit test that currently would fail is the following.'),
-            unitTest.toHtml(),
+            new Paragraph(unitTest.toString()),
             new Paragraph(`The cost for this hint is ${this.formatScore(penaltyHint)}.`),
         ]);
     }
@@ -78,7 +78,7 @@ class AIBot extends Theme {
             new Paragraph('Warning! ' +
                 'The AI-bot has encountered an unexpected issue in production. ' +
                 'The following incorrect output was generated:'),
-            testResult.toHtml(),
+            new Paragraph(testResult.toString()),
             new Paragraph(`Your penalty for missing this issue is ${this.formatScore(penaltyBug)}.`),
         ]);
     }

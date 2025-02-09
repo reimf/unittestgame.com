@@ -42,13 +42,13 @@ class Intro extends Theme {
         return new Panel('Unit Tests', [
             unitTests.length === 0
             ? new Paragraph('You have not written any unit tests yet.')
-            : new UnorderedList(unitTests.map(unitTest => new ListItem(unitTest.toHtml()))),
+            : new UnorderedList(unitTests.map(unitTest => new ListItem(new Span(unitTest.toString())))),
         ])
     }
 
     public currentCandidatePanel(candidate: Candidate): Panel {
         return new Panel('Current Function', [
-            candidate.toHtml(),
+            new Code(candidate.toString()),
         ])
     }
 
@@ -74,14 +74,14 @@ class Intro extends Theme {
     public addUnitTestTextMessage(unitTest: UnitTest): Message {
         return new Message([
             new Paragraph('I want to add the following unit test:'),
-            unitTest.toHtml(),
+            new Paragraph(unitTest.toString()),
         ])
     }
 
     public hintUnitTestMessage(unitTest: UnitTest, penaltyHint: number): Message {
         return new Message([
             new Paragraph('A unit test that currently would fail is the following.'),
-            unitTest.toHtml(),
+            new Paragraph(unitTest.toString()),
         ])
     }
 
@@ -90,7 +90,7 @@ class Intro extends Theme {
             new Paragraph(
                 'There are still bugs in the function.'
             ),
-            testResult.toHtml(),
+            new Paragraph(testResult.toString()),
         ])
     }
 
