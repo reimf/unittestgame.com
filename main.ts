@@ -26,9 +26,9 @@ class Main {
     private HighScorePanel(): Panel {
         const highScores = this.games.map(game => HighScore.fromLocalStorage(game.constructor.name)).filter(highScore => highScore !== null)
         return new Panel('High Scores', [
-            new UnorderedList(
-                highScores.map(highScore => new ListItem(new Span(highScore.toString())))
-            ),
+            highScores.length === 0
+            ? new Paragraph('You have not played a game yet.')
+            : new UnorderedList(highScores.map(highScore => new ListItem(new Span(highScore.toString()))))
         ])
     }
 
