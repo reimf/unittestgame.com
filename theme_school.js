@@ -4,14 +4,14 @@ class School extends Theme {
         super(...arguments);
         this.description = 'I want to write better unit tests for student assignments';
     }
-    addUnitTestFormButton() {
+    addUnitTestFormButtonText() {
         return 'I want to add this unit test';
     }
-    cancelUnitTestFormButton() {
+    cancelUnitTestFormButtonText() {
         return 'I don\'t want to add a unit test now';
     }
     contractMessage(initialScore, penaltyHint, penaltyBug) {
-        return new Message([
+        return new ComputerMessage([
             new Paragraph('You must write enough unit tests for this function, ' +
                 'so that students get the right feedback. ' +
                 `If you have written enough unit tests, you will get ${this.formatScore(initialScore)}. ` +
@@ -50,31 +50,31 @@ class School extends Theme {
         return `I want to end the game (-${this.formatScore(penaltyend)} on error)`;
     }
     addUnitTestFormMessage(form) {
-        return new Message([
+        return new HumanMessage([
             new Paragraph('I want to add a unit test.'),
             form,
         ]);
     }
     cancelUnitTestFormMessage() {
-        return new Message([
+        return new HumanMessage([
             new Paragraph('I don\'t want to add a unit test now.'),
         ]);
     }
     addUnitTestTextMessage(unitTest) {
-        return new Message([
+        return new HumanMessage([
             new Paragraph('I want to add the following unit test:'),
             new Paragraph(unitTest.toString()),
         ]);
     }
     hintUnitTestMessage(unitTest, penaltyHint) {
-        return new Message([
+        return new ComputerMessage([
             new Paragraph('A unit test that currently would fail is the following.'),
             new Paragraph(unitTest.toString()),
             new Paragraph(`Your grade will decrease by ${this.formatScore(penaltyHint)}.`),
         ]);
     }
     bugFoundMessage(testResult, penaltyBug) {
-        return new Message([
+        return new ComputerMessage([
             new Paragraph('Thank you! ' +
                 'We have deployed the latest version of the function to production. ' +
                 'A student has reported an error in the grading of their assignment. ' +
@@ -84,7 +84,7 @@ class School extends Theme {
         ]);
     }
     endWithBugMessage() {
-        return new Message([
+        return new ComputerMessage([
             new Paragraph('There are still clearly wrong functions that pass all your unit tests, ' +
                 'so we will give you the minimum grade. ' +
                 'Too bad! ' +
@@ -93,7 +93,7 @@ class School extends Theme {
         ]);
     }
     endPerfectMessage(score) {
-        return new Message([
+        return new ComputerMessage([
             new Paragraph('Congratulations! ' +
                 'The grading of the assignments is completely error-free thanks to your unit tests. ' +
                 `Your final grade is a perfect ${this.formatScore(score)}. ` +
@@ -102,7 +102,7 @@ class School extends Theme {
         ]);
     }
     endPositiveMessage(score) {
-        return new Message([
+        return new ComputerMessage([
             new Paragraph('Congratulations! ' +
                 'The grading of the assignments is completely error-free thanks to your unit tests. ' +
                 `Your final grade is ${this.formatScore(score)}. ` +
@@ -112,7 +112,7 @@ class School extends Theme {
         ]);
     }
     endNegativeMessage(score) {
-        return new Message([
+        return new ComputerMessage([
             new Paragraph('Congratulations! ' +
                 'The grading of the assignments is completely error-free thanks to your unit tests. ' +
                 `Your final grade is ${this.formatScore(score)}. ` +
@@ -122,26 +122,26 @@ class School extends Theme {
         ]);
     }
     overallUselessUnitTestMessage() {
-        return new Message([
+        return new ComputerMessage([
             new Paragraph('We have added the unit test. ' +
                 'The unit test looks like another unit test. ' +
                 'Therefore, we think the unit test is not very useful.'),
         ]);
     }
     currentlyUselessUnitTestMessage() {
-        return new Message([
+        return new ComputerMessage([
             new Paragraph('We have added the unit test. ' +
                 'The current function already passed the unit test. ' +
                 'Therefore, we think the unit test is not very useful at the moment.'),
         ]);
     }
     usefulUnitTestMessage() {
-        return new Message([
+        return new ComputerMessage([
             new Paragraph('Unit test added successfully.'),
         ]);
     }
     incorrectUnitTestMessage() {
-        return new Message([
+        return new ComputerMessage([
             new Paragraph('We compared your unit test with the specification. ' +
                 'Your unit test turns out to be incorrect. ' +
                 'So we did not add the unit test to our code.'),

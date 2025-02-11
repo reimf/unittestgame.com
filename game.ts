@@ -11,7 +11,7 @@ abstract class Game {
     private candidates: Candidate[] = [...this.generateCandidates(this.getCandidateElements())]
     private minimalUnitTests: UnitTest[] = this.getMinimalUnitTests()
     private perfectCandidates: Candidate[] = this.findPerfectCandidates(this.candidates, this.minimalUnitTests)
-    private perfectCandidate: Candidate = this.perfectCandidates.random()
+    private perfectCandidate: Candidate = this.perfectCandidates.randomElement()
     private hints: UnitTest[] = [...this.hintGenerator()].map(argumentList => new UnitTest(argumentList, this.perfectCandidate.execute(argumentList)))
     private userdefinedUnitTests: UnitTest[] = []
     private score: number = this.INITIALSCORE
@@ -22,7 +22,7 @@ abstract class Game {
     protected abstract getCandidateElements(): string[][]
     protected abstract getMinimalUnitTests(): UnitTest[]
     protected abstract hintGenerator(): Generator<any[]>
-    protected abstract introductionMessage(): Message
+    protected abstract introductionMessage(): ComputerMessage
     protected abstract specificationPanel(): Panel
 
     public constructor() {
@@ -77,15 +77,9 @@ abstract class Game {
 
     public play(): void {
         this.specificationPanel().show('specification')
-        this.introductionMessage().addAsComputer()
-        this.theme.contractMessage(this.INITIALSCORE, this.PENALTYHINT, this.PENALTYBUG).addAsComputer()
+        this.introductionMessage().show()
+        this.theme.contractMessage(this.INITIALSCORE, this.PENALTYHINT, this.PENALTYBUG).show()
         this.menu()
-    }
-
-    private menuMessage(buttons: Button[]): Message {
-        return new Message([
-            new Menu(buttons),
-        ])
     }
 
     private menu(): void {
@@ -98,34 +92,34 @@ abstract class Game {
         const failingTestResultsUnitTests = simplestPassingCandidate.failingTestResults(this.minimalUnitTests)
         const failingTestResultsToChooseFrom = failingTestResultsHints ? failingTestResultsHints : failingTestResultsUnitTests
         this.failingTestResult = failingTestResultsToChooseFrom
-            ? failingTestResultsToChooseFrom.random()
+            ? failingTestResultsToChooseFrom.randomElement()
             : undefined
 
         this.theme.scorePanel(this.score).show('score')
-        this.menuMessage([
+        new HumanMenuMessage([
             new Button(this.theme.formUnitTestButton(), () => this.showFormUnitTest()),
             new Button(this.theme.showHintButton(this.PENALTYHINT), () => this.showHint()),
             new Button(this.theme.submitButton(this.PENALTYBUG), () => this.submit()),
             new Button(this.theme.endButton(this.PENALTYEND), () => this.end()),
-        ]).addAsHuman()
+        ]).show()
     }
 
     private showFormUnitTest(): void {
         const form = new Form(
             [...this.parameters, this.unit],
-            this.theme.addUnitTestFormButton(),
+            this.theme.addUnitTestFormButtonText(),
             () => this.addUnitTest(),
-            this.theme.cancelUnitTestFormButton(),
+            this.theme.cancelUnitTestFormButtonText(),
             () => this.menu()
         )
-        this.theme.addUnitTestFormMessage(form).replaceLastHuman()
+        this.theme.addUnitTestFormMessage(form).replace()
     }
 
     private addUnitTest(): void {
         const argumentList = this.parameters.map(parameter => parameter.value())
         const expected = this.unit.value()
         const unitTest = new UnitTest(argumentList, expected)
-        this.theme.addUnitTestTextMessage(unitTest).replaceLastHuman()
+        this.theme.addUnitTestTextMessage(unitTest).replace()
         const testResult = new TestResult(this.perfectCandidate, unitTest)
         if (testResult.passes) {
             const passingCandidatesBefore = this.findPassingCandidates(this.candidates, this.userdefinedUnitTests)
@@ -134,20 +128,20 @@ abstract class Game {
             const passingCandidatesAfter = this.findPassingCandidates(this.candidates, this.userdefinedUnitTests)
             const simplestPassingCandidateAfter = this.findSimplestPassingCandidate(this.candidates, this.userdefinedUnitTests, this.perfectCandidates)
             if (passingCandidatesAfter.length === passingCandidatesBefore.length)
-                this.theme.overallUselessUnitTestMessage().addAsComputer()
+                this.theme.overallUselessUnitTestMessage().show()
             else if (simplestPassingCandidateAfter === simplestPassingCandidateBefore)
-                this.theme.currentlyUselessUnitTestMessage().addAsComputer()
+                this.theme.currentlyUselessUnitTestMessage().show()
             else
-                this.theme.usefulUnitTestMessage().addAsComputer()
+                this.theme.usefulUnitTestMessage().show()
         }
         else
-            this.theme.incorrectUnitTestMessage().addAsComputer()
+            this.theme.incorrectUnitTestMessage().show()
         this.menu()
     }
 
     private showHint(): void {
         if (this.failingTestResult) {
-            this.theme.hintUnitTestMessage(this.failingTestResult.unitTest, this.PENALTYHINT).addAsComputer()
+            this.theme.hintUnitTestMessage(this.failingTestResult.unitTest, this.PENALTYHINT).show()
             this.score -= this.PENALTYHINT
         }
         this.menu()
@@ -155,7 +149,7 @@ abstract class Game {
 
     private submit(): void {
         if (this.failingTestResult) {
-            this.theme.bugFoundMessage(this.failingTestResult, this.PENALTYBUG).addAsComputer()
+            this.theme.bugFoundMessage(this.failingTestResult, this.PENALTYBUG).show()
             this.score -= this.PENALTYBUG
             this.menu()
         }
@@ -167,14 +161,14 @@ abstract class Game {
         if (this.failingTestResult) {
             this.score = 0
             this.theme.scorePanel(this.score).show('score')
-            this.theme.endWithBugMessage().addAsComputer()
+            this.theme.endWithBugMessage().show()
         }
         else if (this.score == 100)
-            this.theme.endPerfectMessage(this.score).addAsComputer()
+            this.theme.endPerfectMessage(this.score).show()
         else if (this.score > 50)
-            this.theme.endPositiveMessage(this.score).addAsComputer()
+            this.theme.endPositiveMessage(this.score).show()
         else
-            this.theme.endNegativeMessage(this.score).addAsComputer()
+            this.theme.endNegativeMessage(this.score).show()
         new HighScore(
             this.constructor.name,
             this.score.toString().padStart(3, '0'),

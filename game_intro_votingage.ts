@@ -6,8 +6,8 @@ class VotingAge extends Game {
         super()
     }
 
-    protected introductionMessage(): Message {
-        return new Message([
+    protected introductionMessage(): ComputerMessage {
+        return new ComputerMessage([
             new Paragraph(
                 'A legal voting age is the minimum age that a person is allowed to vote in a democratic process. ' +
                 'For general elections around the world, the right to vote is restricted to adults, and most nations use 18 as their voting age. ' +

@@ -6,8 +6,8 @@ class Triangle extends Game {
         super()
     }
 
-    protected introductionMessage(): Message {
-        return new Message([
+    protected introductionMessage(): ComputerMessage {
+        return new ComputerMessage([
             new Paragraph(
                 'Students are instructed to write a function that determines the type of a triangle.'
             )

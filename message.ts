@@ -1,28 +1,41 @@
-class Message extends Section {
-    static messageCount: number = 0
-
-    public constructor(children: Html[]) {
+abstract class Message extends Section {
+    protected constructor(children: Html[]) {
         super(children)
     }
 
-    public addAsComputer(): void {
-        this.id(`message-${++Message.messageCount}`)
+    public show(): void {
+        const count = document.querySelector('#messages')!.childElementCount
+        this.id(`message-${count}`)
+        this.addTo('messages')
+        this.scrollIntoView()
+    }
+
+    protected scrollIntoView(): void {
+        this.element.scrollIntoView()
+    }
+}
+
+class ComputerMessage extends Message {
+    public constructor(children: Html[]) {
+        super(children)
         this.addClass('computer')
-        this.addTo('messages')
-        this.scrollIntoView()
+    }
+}
+
+class HumanMessage extends Message {
+    public constructor(children: Html[]) {
+        super(children)
+        this.addClass('human')
     }
 
-    public addAsHuman(): void {
-        this.id(`message-${++Message.messageCount}`)
-        this.addClass('human')
-        this.addTo('messages')
+    public show(): void {
+        super.show()
         this.setFocus()
-        this.scrollIntoView()
     }
 
-    public replaceLastHuman(): void {
-        this.id(`message-${Message.messageCount}`)
-        this.addClass('human')
+    public replace(): void {
+        const lastMessage = document.querySelector('#messages')!.lastElementChild!
+        this.id(lastMessage.id)
         this.replaceExisting()
         this.setFocus()
         this.scrollIntoView()
@@ -32,8 +45,12 @@ class Message extends Section {
         const firstFocusable = this.element.querySelector('button, input') as HTMLElement
         firstFocusable?.focus()
     }
+}
 
-    private scrollIntoView(): void {
-        this.element.scrollIntoView()
+class HumanMenuMessage extends HumanMessage {
+    public constructor(buttons: Button[]) {
+        super([
+            new Menu(buttons),
+        ])
     }
 }

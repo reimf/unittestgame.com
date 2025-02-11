@@ -6,7 +6,7 @@ class Float extends Game {
         this.description = 'I want to review a function that uses a regular expression to determine whether a text represents a float';
     }
     introductionMessage() {
-        return new Message([
+        return new ComputerMessage([
             new Paragraph('A laboratory needs a function to check whether measured values have been entered correctly. ' +
                 'The lab technicians will perform ciritcal calculations with these numbers, so there must be no errors.'),
         ]);
@@ -83,13 +83,13 @@ class Float extends Game {
     *hintGenerator() {
         for (let i = 0; i < 100; i++) {
             const number = Math.random() * 1000;
-            const precision = Math.floor(Math.random() * 4);
-            const sign = ['-', '+', ''].random();
+            const precision = Math.randomInt(4);
+            const sign = ['-', '+', ''].randomElement();
             const rounded = number.toFixed(precision);
             const text1 = sign + rounded;
             yield [text1];
-            const pos = Math.floor(Math.random() * text1.length);
-            const text2 = text1.substring(0, pos) + ['0', '+', '-', '.'].random() + text1.substring(pos + 1);
+            const pos = Math.randomInt(text1.length);
+            const text2 = text1.substring(0, pos) + ['0', '+', '-', '.'].randomElement() + text1.substring(pos + 1);
             yield [text2];
         }
     }

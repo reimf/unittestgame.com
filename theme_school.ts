@@ -2,16 +2,16 @@ class School extends Theme {
     public static readonly instance = new School()
     public readonly description = 'I want to write better unit tests for student assignments'
 
-    public addUnitTestFormButton(): string {
+    public addUnitTestFormButtonText(): string {
         return 'I want to add this unit test'
     }
 
-    public cancelUnitTestFormButton(): string {
+    public cancelUnitTestFormButtonText(): string {
         return 'I don\'t want to add a unit test now'
     }
 
-    public contractMessage(initialScore: number, penaltyHint: number, penaltyBug: number): Message {
-        return new Message([
+    public contractMessage(initialScore: number, penaltyHint: number, penaltyBug: number): ComputerMessage {
+        return new ComputerMessage([
             new Paragraph(
                 'You must write enough unit tests for this function, ' +
                 'so that students get the right feedback. ' +
@@ -59,36 +59,36 @@ class School extends Theme {
         return `I want to end the game (-${this.formatScore(penaltyend)} on error)`
     }
 
-    public addUnitTestFormMessage(form: Form): Message {
-        return new Message([
+    public addUnitTestFormMessage(form: Form): HumanMessage {
+        return new HumanMessage([
             new Paragraph('I want to add a unit test.'),
             form,
         ])
     }
 
-    public cancelUnitTestFormMessage(): Message {
-        return new Message([
+    public cancelUnitTestFormMessage(): HumanMessage {
+        return new HumanMessage([
             new Paragraph('I don\'t want to add a unit test now.'),
         ])
     }
 
-    public addUnitTestTextMessage(unitTest: UnitTest): Message {
-        return new Message([
+    public addUnitTestTextMessage(unitTest: UnitTest): HumanMessage {
+        return new HumanMessage([
             new Paragraph('I want to add the following unit test:'),
             new Paragraph(unitTest.toString()),
         ])
     }
 
-    public hintUnitTestMessage(unitTest: UnitTest, penaltyHint: number): Message {
-        return new Message([
+    public hintUnitTestMessage(unitTest: UnitTest, penaltyHint: number): ComputerMessage {
+        return new ComputerMessage([
             new Paragraph('A unit test that currently would fail is the following.'),
             new Paragraph(unitTest.toString()),
             new Paragraph(`Your grade will decrease by ${this.formatScore(penaltyHint)}.`),
         ])
     }
 
-    public bugFoundMessage(testResult: TestResult, penaltyBug: number): Message {
-        return new Message([
+    public bugFoundMessage(testResult: TestResult, penaltyBug: number): ComputerMessage {
+        return new ComputerMessage([
             new Paragraph(
                 'Thank you! ' +
                 'We have deployed the latest version of the function to production. ' +
@@ -100,8 +100,8 @@ class School extends Theme {
         ])
     }
 
-    public endWithBugMessage(): Message {
-        return new Message([
+    public endWithBugMessage(): ComputerMessage {
+        return new ComputerMessage([
             new Paragraph(
                 'There are still clearly wrong functions that pass all your unit tests, ' +
                 'so we will give you the minimum grade. ' +
@@ -112,8 +112,8 @@ class School extends Theme {
         ])
     }
 
-    public endPerfectMessage(score: number): Message {
-        return new Message([
+    public endPerfectMessage(score: number): ComputerMessage {
+        return new ComputerMessage([
             new Paragraph(
                 'Congratulations! ' +
                 'The grading of the assignments is completely error-free thanks to your unit tests. ' +
@@ -124,8 +124,8 @@ class School extends Theme {
         ])
     }
 
-    public endPositiveMessage(score: number): Message {
-        return new Message([
+    public endPositiveMessage(score: number): ComputerMessage {
+        return new ComputerMessage([
             new Paragraph(
                 'Congratulations! ' +
                 'The grading of the assignments is completely error-free thanks to your unit tests. ' +
@@ -137,8 +137,8 @@ class School extends Theme {
         ])
     }
 
-    public endNegativeMessage(score: number): Message {
-        return new Message([
+    public endNegativeMessage(score: number): ComputerMessage {
+        return new ComputerMessage([
             new Paragraph(
                 'Congratulations! ' +
                 'The grading of the assignments is completely error-free thanks to your unit tests. ' +
@@ -150,8 +150,8 @@ class School extends Theme {
         ])
     }
 
-    public overallUselessUnitTestMessage(): Message {
-        return new Message([
+    public overallUselessUnitTestMessage(): ComputerMessage {
+        return new ComputerMessage([
             new Paragraph(
                 'We have added the unit test. ' +
                 'The unit test looks like another unit test. ' +
@@ -160,8 +160,8 @@ class School extends Theme {
         ])
     }
 
-    public currentlyUselessUnitTestMessage(): Message {
-        return new Message([
+    public currentlyUselessUnitTestMessage(): ComputerMessage {
+        return new ComputerMessage([
             new Paragraph(
                 'We have added the unit test. ' +
                 'The current function already passed the unit test. ' +
@@ -170,16 +170,16 @@ class School extends Theme {
         ])
     }
 
-    public usefulUnitTestMessage(): Message {
-        return new Message([
+    public usefulUnitTestMessage(): ComputerMessage {
+        return new ComputerMessage([
             new Paragraph(
                 'Unit test added successfully.'
             ),
         ])
     }
 
-    public incorrectUnitTestMessage(): Message {
-        return new Message([
+    public incorrectUnitTestMessage(): ComputerMessage {
+        return new ComputerMessage([
             new Paragraph(
                 'We compared your unit test with the specification. ' +
                 'Your unit test turns out to be incorrect. ' +

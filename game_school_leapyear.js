@@ -6,7 +6,7 @@ class LeapYear extends Game {
         this.description = 'I want to write better unit tests for a leap year calculator';
     }
     introductionMessage() {
-        return new Message([
+        return new ComputerMessage([
             new Paragraph('Students are instructed to write a function that determines whether or not a year is a leap year.')
         ]);
     }

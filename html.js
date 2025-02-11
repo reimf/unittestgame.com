@@ -93,7 +93,7 @@ class Button extends Html {
         super('button');
         this.appendText(text);
         this.on('click', event => {
-            new Message([new Paragraph(this.element.textContent + '.')]).replaceLastHuman();
+            new HumanMessage([new Paragraph(this.element.textContent + '.')]).replace();
             callback(event);
         });
     }

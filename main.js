@@ -24,33 +24,30 @@ class Main {
     HighScorePanel() {
         const highScores = this.games.map(game => HighScore.fromLocalStorage(game.constructor.name)).filter(highScore => highScore !== null);
         return new Panel('High Scores', [
-            new UnorderedList(highScores.map(highScore => new ListItem(new Span(highScore.toString())))),
+            highScores.length === 0
+                ? new Paragraph('You have not played a game yet.')
+                : new UnorderedList(highScores.map(highScore => new ListItem(new Span(highScore.toString()))))
         ]);
     }
     welcomeMessage() {
-        return new Message([
+        return new ComputerMessage([
             new Paragraph('Welcome to UnitTestGame.com! ' +
                 'Here you can learn to write the right unit tests. ' +
                 'But first, pick a theme to start the game.'),
         ]);
     }
-    menuMessage(buttons) {
-        return new Message([
-            new Menu(buttons),
-        ]);
-    }
     start() {
         this.aboutPanel().show('specification');
-        this.welcomeMessage().addAsComputer();
+        this.welcomeMessage().show();
         this.HighScorePanel().show('high-scores');
         this.themeMenu();
     }
     themeMenu() {
-        this.menuMessage(this.themes.map(theme => new Button(theme.description, () => this.gameMenu(theme)))).addAsHuman();
+        new HumanMenuMessage(this.themes.map(theme => new Button(theme.description, () => this.gameMenu(theme)))).show();
     }
     gameMenu(theme) {
         const gamesForThisTheme = this.games.filter(game => game.theme === theme);
-        this.menuMessage(gamesForThisTheme.map(game => new Button(game.description, () => this.playGame(game)))).addAsHuman();
+        new HumanMenuMessage(gamesForThisTheme.map(game => new Button(game.description, () => this.playGame(game)))).show();
     }
     playGame(game) {
         Panel.remove('high-scores');
@@ -58,10 +55,10 @@ class Main {
     }
     restart() {
         this.HighScorePanel().show('high-scores');
-        this.menuMessage([
+        new HumanMenuMessage([
             new Button('Pick another theme and game', () => this.themeMenu()),
             new Button('Exit UnitTestGame.com', () => window.close()),
-        ]).addAsHuman();
+        ]).show();
     }
 }
 Main.instance = new Main();

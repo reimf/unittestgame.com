@@ -6,7 +6,7 @@ class Speed extends Game {
         this.description = 'I want to review a function that displays the speed of a car on a small display';
     }
     introductionMessage() {
-        return new Message([
+        return new ComputerMessage([
             new Paragraph('A Chinese gadget maker needs a function to display the average speed on a small display. ' +
                 'Drivers rely on the displayed information to be correct, so there must be no errors.'),
         ]);

@@ -2,16 +2,16 @@ class AIBot extends Theme {
     public static readonly instance = new AIBot()
     public readonly description = 'I want to ensure an AI-bot functions correctly'
 
-    public addUnitTestFormButton(): string {
+    public addUnitTestFormButtonText(): string {
         return 'I want to add this unit test'
     }
 
-    public cancelUnitTestFormButton(): string {
+    public cancelUnitTestFormButtonText(): string {
         return 'I don\'t want to add a unit test now'
     }
 
-    public contractMessage(initialScore: number, penaltyHint: number, penaltyBug: number): Message {
-        return new Message([
+    public contractMessage(initialScore: number, penaltyHint: number, penaltyBug: number): ComputerMessage {
+        return new ComputerMessage([
             new Paragraph(
                 'Your boss wants you to work with an AI-bot as co-developer. ' +
                 'The AI-bot writes a function and you will write unit tests for it to prevent the AI-bot from hallucinating. ' +
@@ -59,36 +59,36 @@ class AIBot extends Theme {
         ])
     }
 
-    public addUnitTestFormMessage(form: Form): Message {
-        return new Message([
+    public addUnitTestFormMessage(form: Form): HumanMessage {
+        return new HumanMessage([
             new Paragraph('I want to add a unit test.'),
             form,
         ])
     }
 
-    public cancelUnitTestFormMessage(): Message {
-        return new Message([
+    public cancelUnitTestFormMessage(): HumanMessage {
+        return new HumanMessage([
             new Paragraph('I don\'t want to add a unit test now.'),
         ])
     }
 
-    public addUnitTestTextMessage(unitTest: UnitTest): Message {
-        return new Message([
+    public addUnitTestTextMessage(unitTest: UnitTest): HumanMessage {
+        return new HumanMessage([
             new Paragraph('I want to add the following unit test:'),
             new Paragraph(unitTest.toString()),
         ])
     }
 
-    public hintUnitTestMessage(unitTest: UnitTest, penaltyHint: number): Message {
-        return new Message([
+    public hintUnitTestMessage(unitTest: UnitTest, penaltyHint: number): ComputerMessage {
+        return new ComputerMessage([
             new Paragraph('A unit test that currently would fail is the following.'),
             new Paragraph(unitTest.toString()),
             new Paragraph(`The cost for this hint is ${this.formatScore(penaltyHint)}.`),
         ])
     }
 
-    public bugFoundMessage(testResult: TestResult, penaltyBug: number): Message {
-        return new Message([
+    public bugFoundMessage(testResult: TestResult, penaltyBug: number): ComputerMessage {
+        return new ComputerMessage([
             new Paragraph(
                 'Warning! ' +
                 'The AI-bot has encountered an unexpected issue in production. ' +
@@ -99,8 +99,8 @@ class AIBot extends Theme {
         ])
     }
 
-    public endWithBugMessage(): Message {
-        return new Message([
+    public endWithBugMessage(): ComputerMessage {
+        return new ComputerMessage([
             new Paragraph(
                 'There are still critical issues in the AI-bot, ' +
                 'so you receive no reward. ' +
@@ -110,8 +110,8 @@ class AIBot extends Theme {
         ])
     }
 
-    public endPerfectMessage(score: number): Message {
-        return new Message([
+    public endPerfectMessage(score: number): ComputerMessage {
+        return new ComputerMessage([
             new Paragraph(
                 'Fantastic! ' +
                 'Thanks to your thorough testing, the AI-bot is fully functional. ' +
@@ -122,8 +122,8 @@ class AIBot extends Theme {
         ])
     }
 
-    public endPositiveMessage(score: number): Message {
-        return new Message([
+    public endPositiveMessage(score: number): ComputerMessage {
+        return new ComputerMessage([
             new Paragraph(
                 'Great job! ' +
                 'Your testing has ensured the AI-bot runs smoothly. ' +
@@ -134,8 +134,8 @@ class AIBot extends Theme {
         ])
     }
 
-    public endNegativeMessage(score: number): Message {
-        return new Message([
+    public endNegativeMessage(score: number): ComputerMessage {
+        return new ComputerMessage([
             new Paragraph(
                 'Unfortunately, your testing did not fully validate the AI-bot. ' +
                 `Your final score is ${this.formatScore(score)}. ` +
@@ -145,8 +145,8 @@ class AIBot extends Theme {
         ])
     }
 
-    public overallUselessUnitTestMessage(): Message {
-        return new Message([
+    public overallUselessUnitTestMessage(): ComputerMessage {
+        return new ComputerMessage([
             new Paragraph(
                 'The unit test was added, but it looks like another unit test. ' +
                 'This test may not provide much additional value.'
@@ -154,8 +154,8 @@ class AIBot extends Theme {
         ])
     }
 
-    public currentlyUselessUnitTestMessage(): Message {
-        return new Message([
+    public currentlyUselessUnitTestMessage(): ComputerMessage {
+        return new ComputerMessage([
             new Paragraph(
                 'The unit test was added, but the AI-bot already passed it. ' +
                 'This test may not provide much additional value at the moment.'
@@ -164,16 +164,16 @@ class AIBot extends Theme {
     }
 
 
-    public usefulUnitTestMessage(): Message {
-        return new Message([
+    public usefulUnitTestMessage(): ComputerMessage {
+        return new ComputerMessage([
             new Paragraph(
                 'The unit test has been successfully added.'
             ),
         ])
     }
 
-    public incorrectUnitTestMessage(): Message {
-        return new Message([
+    public incorrectUnitTestMessage(): ComputerMessage {
+        return new ComputerMessage([
             new Paragraph(
                 'We checked your unit test against the expected behavior. ' +
                 'Your test appears to be incorrect, so it has not been included in the evaluation.'

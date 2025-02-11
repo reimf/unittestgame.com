@@ -3,22 +3,34 @@ class Message extends Section {
     constructor(children) {
         super(children);
     }
-    addAsComputer() {
-        this.id(`message-${++Message.messageCount}`);
+    show() {
+        const count = document.querySelector('#messages').childElementCount;
+        this.id(`message-${count}`);
+        this.addTo('messages');
+        this.scrollIntoView();
+    }
+    scrollIntoView() {
+        this.element.scrollIntoView();
+    }
+}
+class ComputerMessage extends Message {
+    constructor(children) {
+        super(children);
         this.addClass('computer');
-        this.addTo('messages');
-        this.scrollIntoView();
     }
-    addAsHuman() {
-        this.id(`message-${++Message.messageCount}`);
+}
+class HumanMessage extends Message {
+    constructor(children) {
+        super(children);
         this.addClass('human');
-        this.addTo('messages');
+    }
+    show() {
+        super.show();
         this.setFocus();
-        this.scrollIntoView();
     }
-    replaceLastHuman() {
-        this.id(`message-${Message.messageCount}`);
-        this.addClass('human');
+    replace() {
+        const lastMessage = document.querySelector('#messages').lastElementChild;
+        this.id(lastMessage.id);
         this.replaceExisting();
         this.setFocus();
         this.scrollIntoView();
@@ -27,8 +39,11 @@ class Message extends Section {
         const firstFocusable = this.element.querySelector('button, input');
         firstFocusable === null || firstFocusable === void 0 ? void 0 : firstFocusable.focus();
     }
-    scrollIntoView() {
-        this.element.scrollIntoView();
+}
+class HumanMenuMessage extends HumanMessage {
+    constructor(buttons) {
+        super([
+            new Menu(buttons),
+        ]);
     }
 }
-Message.messageCount = 0;

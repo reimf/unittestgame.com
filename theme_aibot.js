@@ -4,14 +4,14 @@ class AIBot extends Theme {
         super(...arguments);
         this.description = 'I want to ensure an AI-bot functions correctly';
     }
-    addUnitTestFormButton() {
+    addUnitTestFormButtonText() {
         return 'I want to add this unit test';
     }
-    cancelUnitTestFormButton() {
+    cancelUnitTestFormButtonText() {
         return 'I don\'t want to add a unit test now';
     }
     contractMessage(initialScore, penaltyHint, penaltyBug) {
-        return new Message([
+        return new ComputerMessage([
             new Paragraph('Your boss wants you to work with an AI-bot as co-developer. ' +
                 'The AI-bot writes a function and you will write unit tests for it to prevent the AI-bot from hallucinating. ' +
                 `If you write enough unit tests, you will earn ${this.formatScore(initialScore)}. ` +
@@ -50,31 +50,31 @@ class AIBot extends Theme {
         ]);
     }
     addUnitTestFormMessage(form) {
-        return new Message([
+        return new HumanMessage([
             new Paragraph('I want to add a unit test.'),
             form,
         ]);
     }
     cancelUnitTestFormMessage() {
-        return new Message([
+        return new HumanMessage([
             new Paragraph('I don\'t want to add a unit test now.'),
         ]);
     }
     addUnitTestTextMessage(unitTest) {
-        return new Message([
+        return new HumanMessage([
             new Paragraph('I want to add the following unit test:'),
             new Paragraph(unitTest.toString()),
         ]);
     }
     hintUnitTestMessage(unitTest, penaltyHint) {
-        return new Message([
+        return new ComputerMessage([
             new Paragraph('A unit test that currently would fail is the following.'),
             new Paragraph(unitTest.toString()),
             new Paragraph(`The cost for this hint is ${this.formatScore(penaltyHint)}.`),
         ]);
     }
     bugFoundMessage(testResult, penaltyBug) {
-        return new Message([
+        return new ComputerMessage([
             new Paragraph('Warning! ' +
                 'The AI-bot has encountered an unexpected issue in production. ' +
                 'The following incorrect output was generated:'),
@@ -83,7 +83,7 @@ class AIBot extends Theme {
         ]);
     }
     endWithBugMessage() {
-        return new Message([
+        return new ComputerMessage([
             new Paragraph('There are still critical issues in the AI-bot, ' +
                 'so you receive no reward. ' +
                 'Better luck next time! ' +
@@ -91,7 +91,7 @@ class AIBot extends Theme {
         ]);
     }
     endPerfectMessage(score) {
-        return new Message([
+        return new ComputerMessage([
             new Paragraph('Fantastic! ' +
                 'Thanks to your thorough testing, the AI-bot is fully functional. ' +
                 `You achieved the maximum score of ${this.formatScore(score)}. ` +
@@ -100,7 +100,7 @@ class AIBot extends Theme {
         ]);
     }
     endPositiveMessage(score) {
-        return new Message([
+        return new ComputerMessage([
             new Paragraph('Great job! ' +
                 'Your testing has ensured the AI-bot runs smoothly. ' +
                 `Your final score is ${this.formatScore(score)}. ` +
@@ -109,7 +109,7 @@ class AIBot extends Theme {
         ]);
     }
     endNegativeMessage(score) {
-        return new Message([
+        return new ComputerMessage([
             new Paragraph('Unfortunately, your testing did not fully validate the AI-bot. ' +
                 `Your final score is ${this.formatScore(score)}. ` +
                 'Try again next time! ' +
@@ -117,24 +117,24 @@ class AIBot extends Theme {
         ]);
     }
     overallUselessUnitTestMessage() {
-        return new Message([
+        return new ComputerMessage([
             new Paragraph('The unit test was added, but it looks like another unit test. ' +
                 'This test may not provide much additional value.'),
         ]);
     }
     currentlyUselessUnitTestMessage() {
-        return new Message([
+        return new ComputerMessage([
             new Paragraph('The unit test was added, but the AI-bot already passed it. ' +
                 'This test may not provide much additional value at the moment.'),
         ]);
     }
     usefulUnitTestMessage() {
-        return new Message([
+        return new ComputerMessage([
             new Paragraph('The unit test has been successfully added.'),
         ]);
     }
     incorrectUnitTestMessage() {
-        return new Message([
+        return new ComputerMessage([
             new Paragraph('We checked your unit test against the expected behavior. ' +
                 'Your test appears to be incorrect, so it has not been included in the evaluation.'),
         ]);

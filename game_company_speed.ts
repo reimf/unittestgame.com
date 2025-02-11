@@ -6,8 +6,8 @@ class Speed extends Game {
         super()
     }
 
-    protected introductionMessage(): Message {
-        return new Message([
+    protected introductionMessage(): ComputerMessage {
+        return new ComputerMessage([
             new Paragraph(
                 'A Chinese gadget maker needs a function to display the average speed on a small display. ' +
                 'Drivers rely on the displayed information to be correct, so there must be no errors.'

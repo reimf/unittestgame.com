@@ -32,8 +32,8 @@ class Main {
         ])
     }
 
-    private welcomeMessage(): Message {
-        return new Message([
+    private welcomeMessage(): ComputerMessage {
+        return new ComputerMessage([
             new Paragraph(
                 'Welcome to UnitTestGame.com! ' +
                 'Here you can learn to write the right unit tests. ' +
@@ -42,30 +42,24 @@ class Main {
         ])
     }
 
-    private menuMessage(buttons: Button[]): Message {
-        return new Message([
-            new Menu(buttons),
-        ])
-    }
-
     public start(): void {
         this.aboutPanel().show('specification')
-        this.welcomeMessage().addAsComputer()
+        this.welcomeMessage().show()
         this.HighScorePanel().show('high-scores')
         this.themeMenu()
     }
 
     private themeMenu(): void {
-        this.menuMessage(
+        new HumanMenuMessage(
             this.themes.map(theme => new Button(theme.description, () => this.gameMenu(theme)))
-        ).addAsHuman()
+        ).show()
     }
 
     private gameMenu(theme: Theme): void {
         const gamesForThisTheme = this.games.filter(game => game.theme === theme)
-        this.menuMessage(
+        new HumanMenuMessage(
             gamesForThisTheme.map(game => new Button(game.description, () => this.playGame(game))),
-        ).addAsHuman()
+        ).show()
     }
 
     private playGame(game: Game): void {
@@ -75,9 +69,9 @@ class Main {
 
     public restart(): void {
         this.HighScorePanel().show('high-scores')
-        this.menuMessage([
+        new HumanMenuMessage([
             new Button('Pick another theme and game', () => this.themeMenu()),
             new Button('Exit UnitTestGame.com', () => window.close()),
-        ]).addAsHuman()
+        ]).show()
     }
 }

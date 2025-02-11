@@ -6,7 +6,7 @@ class Password extends Game {
         this.description = 'I want to review a function that determines whether a password is strong enough';
     }
     introductionMessage() {
-        return new Message([
+        return new ComputerMessage([
             new Paragraph('An online store needs a function to check whether a password is strong enough. ' +
                 'Customers must be able to rely on their data being well protected.'),
         ]);
@@ -126,21 +126,21 @@ class Password extends Game {
         const lowercase = [...this.generateLowercase()];
         const specialChars = [...this.generateSpecialCharacters()];
         for (let i = 0; i < 100; i++) {
-            const ds = digits.random();
-            const us = uppercase.random();
-            const ls = lowercase.random();
-            const scs = specialChars.random();
+            const ds = digits.randomElement();
+            const us = uppercase.randomElement();
+            const ls = lowercase.randomElement();
+            const scs = specialChars.randomElement();
             const chars = [...ds, ...us, ...ls, ...scs];
             this.shuffleArray(chars);
             yield [chars.join('')];
-            const pos = Math.floor(Math.random() * chars.length);
-            chars[pos] = Math.floor(Math.random() * 10).toString();
+            const pos = Math.randomInt(chars.length);
+            chars[pos] = Math.randomInt(10).toString();
             yield [chars.join('')];
         }
     }
     shuffleArray(array) {
         for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
+            const j = Math.randomInt(i + 1);
             const swap = array[i];
             array[i] = array[j];
             array[j] = swap;

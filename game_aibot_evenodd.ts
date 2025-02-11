@@ -6,8 +6,8 @@ class Evenodd extends Game {
         super()
     }
 
-    protected introductionMessage(): Message {
-        return new Message([
+    protected introductionMessage(): ComputerMessage {
+        return new ComputerMessage([
             new Paragraph(
                 'All integer numbers are even or odd.'
             )

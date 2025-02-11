@@ -2,16 +2,16 @@ class Intro extends Theme {
     public static readonly instance = new Intro()
     public readonly description = 'I want to have a nice introduction into this game'
 
-    public addUnitTestFormButton(): string {
+    public addUnitTestFormButtonText(): string {
         return 'I want to add this unit test'
     }
 
-    public cancelUnitTestFormButton(): string {
+    public cancelUnitTestFormButtonText(): string {
         return 'I don\'t want to add a unit test now'
     }
 
-    public contractMessage(initialScore: number, penaltyHint: number, penaltyBug: number): Message {
-        return new Message([
+    public contractMessage(initialScore: number, penaltyHint: number, penaltyBug: number): ComputerMessage {
+        return new ComputerMessage([
             new Paragraph(
                 'It is your task to write unit tests for this function. ' +
                 'A unit test consists of the argument for the function and the expected result. ' +
@@ -58,35 +58,35 @@ class Intro extends Theme {
         ])
     }
 
-    public addUnitTestFormMessage(form: Form): Message {
-        return new Message([
+    public addUnitTestFormMessage(form: Form): HumanMessage {
+        return new HumanMessage([
             new Paragraph('I want to add a unit test.'),
             form,
         ])
     }
 
-    public cancelUnitTestFormMessage(): Message {
-        return new Message([
+    public cancelUnitTestFormMessage(): HumanMessage {
+        return new HumanMessage([
             new Paragraph('I don\'t want to add a unit test now.'),
         ])
     }
 
-    public addUnitTestTextMessage(unitTest: UnitTest): Message {
-        return new Message([
+    public addUnitTestTextMessage(unitTest: UnitTest): HumanMessage {
+        return new HumanMessage([
             new Paragraph('I want to add the following unit test:'),
             new Paragraph(unitTest.toString()),
         ])
     }
 
-    public hintUnitTestMessage(unitTest: UnitTest, penaltyHint: number): Message {
-        return new Message([
+    public hintUnitTestMessage(unitTest: UnitTest, penaltyHint: number): ComputerMessage {
+        return new ComputerMessage([
             new Paragraph('A unit test that currently would fail is the following.'),
             new Paragraph(unitTest.toString()),
         ])
     }
 
-    public bugFoundMessage(testResult: TestResult, penaltyBug: number): Message {
-        return new Message([
+    public bugFoundMessage(testResult: TestResult, penaltyBug: number): ComputerMessage {
+        return new ComputerMessage([
             new Paragraph(
                 'There are still bugs in the function.'
             ),
@@ -94,8 +94,8 @@ class Intro extends Theme {
         ])
     }
 
-    public endWithBugMessage(): Message {
-        return new Message([
+    public endWithBugMessage(): ComputerMessage {
+        return new ComputerMessage([
             new Paragraph(
                 'There are still bugs in the function. ' +
                 'Thanks for playing!'
@@ -103,8 +103,8 @@ class Intro extends Theme {
         ])
     }
 
-    public endPerfectMessage(score: number): Message {
-        return new Message([
+    public endPerfectMessage(score: number): ComputerMessage {
+        return new ComputerMessage([
             new Paragraph(
                 'Congratulations! ' +
                 'Thanks to your unit tests, the function is completely bug-free. ' +
@@ -113,16 +113,16 @@ class Intro extends Theme {
         ])
     }
 
-    public endPositiveMessage(score: number): Message {
+    public endPositiveMessage(score: number): ComputerMessage {
         return this.endPerfectMessage(score)
     }
 
-    public endNegativeMessage(score: number): Message {
+    public endNegativeMessage(score: number): ComputerMessage {
         return this.endPerfectMessage(score)
     }
 
-    public overallUselessUnitTestMessage(): Message {
-        return new Message([
+    public overallUselessUnitTestMessage(): ComputerMessage {
+        return new ComputerMessage([
             new Paragraph(
                 'We have added the unit test. ' +
                 'The unit test looks like another unit test. ' +
@@ -131,8 +131,8 @@ class Intro extends Theme {
         ])
     }
 
-    public currentlyUselessUnitTestMessage(): Message {
-        return new Message([
+    public currentlyUselessUnitTestMessage(): ComputerMessage {
+        return new ComputerMessage([
             new Paragraph(
                 'We have added the unit test. ' +
                 'The current function already passed the unit test. ' +
@@ -141,16 +141,16 @@ class Intro extends Theme {
         ])
     }
 
-    public usefulUnitTestMessage(): Message {
-        return new Message([
+    public usefulUnitTestMessage(): ComputerMessage {
+        return new ComputerMessage([
             new Paragraph(
                 'Done.'
             ),
         ])
     }
 
-    public incorrectUnitTestMessage(): Message {
-        return new Message([
+    public incorrectUnitTestMessage(): ComputerMessage {
+        return new ComputerMessage([
             new Paragraph(
                 'We have checked your unit test against the specification. ' +
                 'Your unit test appears to be incorrect. ' +

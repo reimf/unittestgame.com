@@ -6,7 +6,7 @@ class Triangle extends Game {
         this.description = 'I want to write better unit tests for a triangle type checker';
     }
     introductionMessage() {
-        return new Message([
+        return new ComputerMessage([
             new Paragraph('Students are instructed to write a function that determines the type of a triangle.')
         ]);
     }

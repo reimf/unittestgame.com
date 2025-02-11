@@ -6,7 +6,7 @@ class Evenodd extends Game {
         this.description = 'I want to write unit tests for a function that checks if a number is even or odd';
     }
     introductionMessage() {
-        return new Message([
+        return new ComputerMessage([
             new Paragraph('All integer numbers are even or odd.')
         ]);
     }
