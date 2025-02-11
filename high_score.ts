@@ -1,23 +1,23 @@
 class HighScore {
-    public constructor(private name: string, private rawScore: string, private formattedScore: string) { }
+    public constructor(private name: string, private score: number, private achievement: string) { }
 
     public save(): void {
-        const oldRawScore = localStorage.getItem(`${this.name}.rawScore`)
-        if (!oldRawScore || this.rawScore > oldRawScore) {
-            localStorage.setItem(`${this.name}.rawScore`, this.rawScore)
-            localStorage.setItem(`${this.name}.formattedScore`, this.formattedScore)
+        const oldScore = Number(localStorage.getItem(`${this.name}.score`))
+        if (!oldScore || this.score > oldScore) {
+            localStorage.setItem(`${this.name}.score`, this.score.toString())
+            localStorage.setItem(`${this.name}.achievement`, this.achievement)
         }
     }
 
     public toString(): string {
-        return `${this.name}: ${this.formattedScore}`
+        return `${this.name}: ${this.achievement}`
     }
 
     public static fromLocalStorage(name: string): HighScore | null {
-        const rawScore = localStorage.getItem(`${name}.rawScore`)
-        const formattedScore = localStorage.getItem(`${name}.formattedScore`)
-        if (rawScore && formattedScore)
-            return new HighScore(name, rawScore, formattedScore)
+        const score = Number(localStorage.getItem(`${name}.score`))
+        const achievement = localStorage.getItem(`${name}.achievement`)
+        if (score && achievement)
+            return new HighScore(name, score, achievement)
         return null
     }
 }

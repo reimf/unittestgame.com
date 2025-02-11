@@ -1,10 +1,12 @@
 :root {
-    --almost-black: #011f4b;
-    --dark-blue: #005b96;
-    --medium-blue: #6497b1;
-    --light-blue: #ecf2f7;
-    --light-brown: #ece5dd;
-    --white: #ffffff;
+    --dark-text: #333333;
+    --light-text: #F5F5F5;
+    --panel-heading-background: #800080;
+    --input-background: #4682B4;
+    --human-message-background: #F5F5F5;
+    --general-background: #ECE5DD;
+    --computer-message-background: #FFFFFF;
+    --panel-background: #FFFFFF;
 }
 
 * {
@@ -12,8 +14,8 @@
 }
 
 body {
-    background-color: var(--light-brown);
-    color: var(--almost-black);
+    background-color: var(--general-background);
+    color: var(--dark-text);
     font-family: monospace;
     margin: 0;
 }
@@ -23,10 +25,10 @@ a {
 }
 
 button {
-    background-color: var(--medium-blue);
+    background-color: var(--input-background);
     border: none;
     border-radius: 0.5rem;
-    color: var(--white);
+    color: var(--light-text);
     display: block;
     font-family: inherit;
     font-size: inherit;
@@ -38,8 +40,8 @@ button {
 
 form {
     button {
-        background-color: var(--light-brown);
-        color: var(--medium-blue);
+        background-color: var(--general-background);
+        color: var(--input-background);
         display: inline;
         height: 2.5rem;
         margin: 0;
@@ -58,10 +60,10 @@ form {
     
     input[type="text"],
     input[type="number"] {
-        background-color: var(--medium-blue);
+        background-color: var(--input-background);
         border: none;
         border-radius: 0.5rem;
-        color: var(--white);
+        color: var(--light-text);
         font-family: inherit;
         font-size: inherit;
         height: 2rem;
@@ -80,10 +82,10 @@ form {
     }
     
     input[type="submit"] {
-        background-color: var(--medium-blue);
+        background-color: var(--input-background);
         border: none;
         border-radius: 0.5rem;
-        color: var(--white);
+        color: var(--light-text);
         font-family: inherit;
         font-size: inherit;
         height: 2.5rem;
@@ -98,8 +100,8 @@ form {
         line-height: 2rem;
     
         &:has(input[type="radio"]) {
-            background-color: var(--medium-blue);
-            color: var(--white);
+            background-color: var(--input-background);
+            color: var(--light-text);
             margin-left: 0.75rem;
             padding-right: 0.75rem;
     
@@ -116,9 +118,7 @@ menu, ul {
 }
 
 section {
-    background-color: var(--white);
     border-radius: 0.5rem;
-    color: var(--almost-black);
     margin: 0.75rem;
     overflow: hidden;
     padding: 0 0.75rem;
@@ -128,9 +128,9 @@ section {
     }
 
     header {
-        background-color: var(--dark-blue);
+        background-color: var(--panel-heading-background);
         border-radius: 0.5rem 0.5rem 0 0;
-        color: var(--white);
+        color: var(--light-text);
         margin: 0 -0.75rem 0.75rem -0.75rem;
         padding: 0.75rem;
     }
@@ -156,14 +156,24 @@ section {
             width: 80%;
     
             &.human {
-                background-color: var(--light-blue);
-                color: var(--almost-black);
+                background-color: var(--human-message-background);
+                color: var(--dark-text);
                 margin-left: 20%;
+            }
+
+            &.computer {
+                background-color: var(--computer-message-background);
+                color: var(--dark-text);
             }
         }
     }
     
     #sidebar {
         width: 40%;
+
+        section {
+            background-color: var(--computer-message-background);
+            color: var(--dark-text);        
+        }
     }
 }

@@ -140,10 +140,11 @@ abstract class Game {
     }
 
     private showHint(): void {
-        if (this.failingTestResult) {
+        if (this.failingTestResult)
             this.theme.hintUnitTestMessage(this.failingTestResult.unitTest, this.PENALTYHINT).show()
-            this.score -= this.PENALTYHINT
-        }
+        else
+            this.theme.noHintUnitTestMessage(this.PENALTYHINT).show()
+        this.score -= this.PENALTYHINT
         this.menu()
     }
 
@@ -171,7 +172,7 @@ abstract class Game {
             this.theme.endNegativeMessage(this.score).show()
         new HighScore(
             this.constructor.name,
-            this.score.toString().padStart(3, '0'),
+            this.score,
             this.theme.formatScore(this.score),
         ).save()
         Main.instance.restart()

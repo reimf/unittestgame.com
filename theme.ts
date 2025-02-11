@@ -14,6 +14,7 @@ abstract class Theme {
     public abstract cancelUnitTestFormMessage(): HumanMessage
     public abstract addUnitTestTextMessage(unitTest: UnitTest): HumanMessage
     public abstract hintUnitTestMessage(unitTest: UnitTest, penaltyHint: number): ComputerMessage
+    public abstract noHintUnitTestMessage(penaltyHint: number): ComputerMessage
     public abstract bugFoundMessage(testResult: TestResult, penaltyBug: number): ComputerMessage
     public abstract endWithBugMessage(): ComputerMessage
     public abstract endPerfectMessage(score: number): ComputerMessage

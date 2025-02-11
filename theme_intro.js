@@ -71,6 +71,12 @@ class Intro extends Theme {
             new Paragraph(unitTest.toString()),
         ]);
     }
+    noHintUnitTestMessage(penaltyHint) {
+        return new ComputerMessage([
+            new Paragraph('The function is completely bug-free now!'),
+            new Paragraph(`The cost for this \'hint\' is ${this.formatScore(penaltyHint)}.`),
+        ]);
+    }
     bugFoundMessage(testResult, penaltyBug) {
         return new ComputerMessage([
             new Paragraph('There are still bugs in the function.'),

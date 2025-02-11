@@ -73,6 +73,12 @@ class AIBot extends Theme {
             new Paragraph(`The cost for this hint is ${this.formatScore(penaltyHint)}.`),
         ]);
     }
+    noHintUnitTestMessage(penaltyHint) {
+        return new ComputerMessage([
+            new Paragraph('The AI-bot can\'t come up with a failing unit test.'),
+            new Paragraph(`The cost for this \'hint\' is ${this.formatScore(penaltyHint)}.`),
+        ]);
+    }
     bugFoundMessage(testResult, penaltyBug) {
         return new ComputerMessage([
             new Paragraph('Warning! ' +

@@ -109,10 +109,11 @@ class Game {
         this.menu();
     }
     showHint() {
-        if (this.failingTestResult) {
+        if (this.failingTestResult)
             this.theme.hintUnitTestMessage(this.failingTestResult.unitTest, this.PENALTYHINT).show();
-            this.score -= this.PENALTYHINT;
-        }
+        else
+            this.theme.noHintUnitTestMessage(this.PENALTYHINT).show();
+        this.score -= this.PENALTYHINT;
         this.menu();
     }
     submit() {
@@ -136,7 +137,7 @@ class Game {
             this.theme.endPositiveMessage(this.score).show();
         else
             this.theme.endNegativeMessage(this.score).show();
-        new HighScore(this.constructor.name, this.score.toString().padStart(3, '0'), this.theme.formatScore(this.score)).save();
+        new HighScore(this.constructor.name, this.score, this.theme.formatScore(this.score)).save();
         Main.instance.restart();
     }
 }
