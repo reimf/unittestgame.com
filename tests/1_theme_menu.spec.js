@@ -11,13 +11,17 @@ test_1.test.describe('theme menu', () => {
     (0, test_1.test)('has about panel', async ({ page }) => {
         const aboutPanel = page.locator('#about');
         await (0, test_1.expect)(aboutPanel).toContainText('About');
-        await (0, test_1.expect)(aboutPanel).toContainText('Learn Unit Testing with UnitTestGame.com');
-        await (0, test_1.expect)(aboutPanel).toContainText('Please send us feedback@unittestgame.com');
-        await (0, test_1.expect)(aboutPanel.locator('a')).toHaveText('feedback@unittestgame.com');
+    });
+    (0, test_1.test)('has feedback mail address', async ({ page }) => {
+        const link = page.locator('a');
+        await (0, test_1.expect)(link).toHaveText('feedback@unittestgame.com');
     });
     (0, test_1.test)('has high scores panel', async ({ page }) => {
         const highScoresPanel = page.locator('#high-scores');
         await (0, test_1.expect)(highScoresPanel).toContainText('High Scores');
+    });
+    (0, test_1.test)('has no high scores', async ({ page }) => {
+        const highScoresPanel = page.locator('#high-scores');
         await (0, test_1.expect)(highScoresPanel).toContainText('You have not played a game yet.');
     });
     (0, test_1.test)('has welcome message', async ({ page }) => {

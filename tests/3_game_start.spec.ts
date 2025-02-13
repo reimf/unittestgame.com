@@ -32,6 +32,11 @@ test.describe('game start', () => {
     await expect(currentCandidatePanel).toContainText('Current Function')
   })
 
+  test('has the simplest candidate in the current candidate panel', async ({ page }) => {
+    const currentCandidatePanel = page.locator('#current-candidate')
+    await expect(currentCandidatePanel).toContainText(/function isAllowedToVote\(age\) \{\s+return (true|false)\s+\}/)
+  })
+
   test('has score panel', async ({ page }) => {
     const scorePanel = page.locator('#score')
     await expect(scorePanel).toContainText('Score')
@@ -39,7 +44,7 @@ test.describe('game start', () => {
 
   test('has introduction message', async ({ page }) => {
     const messages = page.locator('#messages')
-    await expect(messages).toContainText('A legal voting age is the minimum age that a person is allowed to vote in a democratic process.')
+    await expect(messages).toContainText('A government needs a function that determines whether someone is allowed to vote or not.')
   })
 
   test('has contract message', async ({ page }) => {

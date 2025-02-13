@@ -15,9 +15,29 @@ test_1.test.describe('game start', () => {
         const highScoresPanel = page.locator('#high-scores');
         await (0, test_1.expect)(highScoresPanel).not.toBeAttached();
     });
+    (0, test_1.test)('has specification panel', async ({ page }) => {
+        const specificationPanel = page.locator('#specification');
+        await (0, test_1.expect)(specificationPanel).toContainText('Specification');
+    });
+    (0, test_1.test)('has unit tests panel', async ({ page }) => {
+        const unitTestsPanel = page.locator('#unit-tests');
+        await (0, test_1.expect)(unitTestsPanel).toContainText('Unit Tests');
+    });
+    (0, test_1.test)('has current candidate panel', async ({ page }) => {
+        const currentCandidatePanel = page.locator('#current-candidate');
+        await (0, test_1.expect)(currentCandidatePanel).toContainText('Current Function');
+    });
+    (0, test_1.test)('has the simplest candidate in the current candidate panel', async ({ page }) => {
+        const currentCandidatePanel = page.locator('#current-candidate');
+        await (0, test_1.expect)(currentCandidatePanel).toContainText(/function isAllowedToVote\(age\) \{\s+return (true|false)\s+\}/);
+    });
+    (0, test_1.test)('has score panel', async ({ page }) => {
+        const scorePanel = page.locator('#score');
+        await (0, test_1.expect)(scorePanel).toContainText('Score');
+    });
     (0, test_1.test)('has introduction message', async ({ page }) => {
         const messages = page.locator('#messages');
-        await (0, test_1.expect)(messages).toContainText('A legal voting age is the minimum age that a person is allowed to vote in a democratic process.');
+        await (0, test_1.expect)(messages).toContainText('A government needs a function that determines whether someone is allowed to vote or not.');
     });
     (0, test_1.test)('has contract message', async ({ page }) => {
         const messages = page.locator('#messages');
