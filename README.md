@@ -11,8 +11,6 @@ class Candidate {
     -complexity: number
     -code: string
     +execute() any
-    +refineComplexity() void
-    +simplest() Candidate
     +testResults() TestResult[]
     +failingTestResults() TestResult[]
     +failCount() number

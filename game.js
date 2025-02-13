@@ -16,7 +16,6 @@ class Game {
         this.score = this.INITIALSCORE;
         this.failingTestResult = undefined;
         this.checkUnitTestsAreNeeded(this.candidates, this.minimalUnitTests);
-        this.candidates.forEach(candidate => candidate.refineComplexity(this.hints));
     }
     *generateCandidates(listOfListOfLines, lines = []) {
         if (listOfListOfLines.length > 0) {
@@ -55,7 +54,8 @@ class Game {
     }
     findSimplestPassingCandidate(candidates, userDefinedUnitTests, perfectCandidates) {
         const passingCandidates = this.findPassingCandidates(candidates, userDefinedUnitTests);
-        return passingCandidates.reduce((simplestSoFar, current) => simplestSoFar.simplest(current));
+        const minimumComplexity = Math.min(...passingCandidates.map(candidate => candidate.complexity));
+        return passingCandidates.filter(candidate => candidate.complexity === minimumComplexity).randomElement();
     }
     play() {
         this.specificationPanel().show('specification');

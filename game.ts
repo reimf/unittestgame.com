@@ -27,7 +27,6 @@ abstract class Game {
 
     public constructor() {
         this.checkUnitTestsAreNeeded(this.candidates, this.minimalUnitTests)
-        this.candidates.forEach(candidate => candidate.refineComplexity(this.hints))
     }
 
     private *generateCandidates(listOfListOfLines: string[][], lines: string[] = []): Generator<Candidate> {
@@ -72,7 +71,8 @@ abstract class Game {
 
     private findSimplestPassingCandidate(candidates: Candidate[], userDefinedUnitTests: UnitTest[], perfectCandidates: Candidate[]): Candidate {
         const passingCandidates = this.findPassingCandidates(candidates, userDefinedUnitTests)
-        return passingCandidates.reduce((simplestSoFar, current) => simplestSoFar.simplest(current))
+        const minimumComplexity = Math.min(...passingCandidates.map(candidate => candidate.complexity))
+        return passingCandidates.filter(candidate => candidate.complexity === minimumComplexity).randomElement()
     }
 
     public play(): void {

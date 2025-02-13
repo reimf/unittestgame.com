@@ -3,7 +3,7 @@ class Candidate {
     constructor(code) {
         this.code = code;
         this.function = new Function('return ' + code)();
-        this.complexity = code.length;
+        this.complexity = code.split(/\s+/).length;
     }
     execute(argumentsList) {
         try {
@@ -12,12 +12,6 @@ class Candidate {
         catch (error) {
             return error.name;
         }
-    }
-    refineComplexity(hints) {
-        this.complexity += this.passCount(hints) / (hints.length + 1);
-    }
-    simplest(other) {
-        return this.complexity < other.complexity ? this : other;
     }
     testResults(unitTests) {
         return unitTests.map(unitTest => new TestResult(this, unitTest));

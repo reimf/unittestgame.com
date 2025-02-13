@@ -1,10 +1,10 @@
 class Candidate {
     private readonly function: Function
-    private complexity: number
+    public readonly complexity: number
 
     public constructor(private code: string) {
         this.function = new Function('return ' + code)()
-        this.complexity = code.length
+        this.complexity = code.split(/\s+/).length
     }
 
     public execute(argumentsList: any[]): any {
@@ -13,14 +13,6 @@ class Candidate {
         } catch (error: any) {
             return error.name
         }
-    }
-
-    public refineComplexity(hints: UnitTest[]): void {
-        this.complexity += this.passCount(hints) / (hints.length + 1)
-    }
-
-    public simplest(other: Candidate): Candidate {
-        return this.complexity < other.complexity ? this : other
     }
 
     public testResults(unitTests: UnitTest[]): TestResult[] {
