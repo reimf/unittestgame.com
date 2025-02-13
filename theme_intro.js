@@ -105,20 +105,18 @@ class Intro extends Theme {
     overallUselessUnitTestMessage() {
         return new ComputerMessage([
             new Paragraph('We have added the unit test. ' +
-                'The unit test looks like another unit test. ' +
-                'Therefore, we think the unit test is not very useful.'),
+                'Try to write a unit test that fails for the current function.'),
         ]);
     }
     currentlyUselessUnitTestMessage() {
         return new ComputerMessage([
             new Paragraph('We have added the unit test. ' +
-                'The current function already passed the unit test. ' +
-                'Therefore, we think the unit test is not very useful at the moment.'),
+                'Try to write a unit test that fails for the current function.'),
         ]);
     }
     usefulUnitTestMessage() {
         return new ComputerMessage([
-            new Paragraph('Done.'),
+            new Paragraph('We have added the unit test.'),
         ]);
     }
     incorrectUnitTestMessage() {
