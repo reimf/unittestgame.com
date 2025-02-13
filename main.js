@@ -13,15 +13,17 @@ class Main {
         this.themes = this.games.map(game => game.theme).filter((theme, index, themes) => themes.indexOf(theme) === index);
     }
     aboutPanel() {
+        const learnParagraph = new Paragraph('Learn Unit Testing with UnitTestGame.com');
         const anchor = new Anchor('mailto:feedback@unittestgame.com');
         anchor.appendText('feedback@unittestgame.com');
-        const paragraph = new Paragraph('Please send ');
-        paragraph.appendChild(anchor);
-        return new Panel('Learn Unit Testing with UnitTestGame.com', [
-            paragraph
+        const feedbackParagraph = new Paragraph('Please send us ');
+        feedbackParagraph.appendChild(anchor);
+        return new Panel('About', [
+            learnParagraph,
+            feedbackParagraph
         ]);
     }
-    HighScorePanel() {
+    highScorePanel() {
         const highScores = this.games.map(game => HighScore.fromLocalStorage(game.constructor.name)).filter(highScore => highScore !== null);
         return new Panel('High Scores', [
             highScores.length === 0
@@ -37,9 +39,9 @@ class Main {
         ]);
     }
     start() {
-        this.aboutPanel().show('specification');
+        this.aboutPanel().show('about');
         this.welcomeMessage().show();
-        this.HighScorePanel().show('high-scores');
+        this.highScorePanel().show('high-scores');
         this.themeMenu();
     }
     themeMenu() {
@@ -50,11 +52,12 @@ class Main {
         new HumanMenuMessage(gamesForThisTheme.map(game => new Button(game.description, () => this.playGame(game)))).show();
     }
     playGame(game) {
+        Panel.remove('about');
         Panel.remove('high-scores');
         game.play();
     }
     restart() {
-        this.HighScorePanel().show('high-scores');
+        this.highScorePanel().show('high-scores');
         new HumanMenuMessage([
             new Button('Pick another theme and game', () => this.themeMenu()),
             new Button('Exit UnitTestGame.com', () => window.close()),

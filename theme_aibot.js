@@ -20,16 +20,16 @@ class AIBot extends Theme {
                 `it will cost you ${this.formatScore(penaltyBug)}.`),
         ]);
     }
-    formUnitTestButton() {
+    formUnitTestButtonText() {
         return 'I want to add a unit test';
     }
-    showHintButton(penaltyHint) {
+    showHintButtonText(penaltyHint) {
         return `I want to see a hint for a unit test (-${this.formatScore(penaltyHint)})`;
     }
-    submitButton(penaltyBug) {
+    submitButtonText(penaltyBug) {
         return `I want to submit the unit tests (-${this.formatScore(penaltyBug)} if incorrect)`;
     }
-    endButton(penaltyEnd) {
+    endButtonText(penaltyEnd) {
         return `I want to finalize testing (-${this.formatScore(penaltyEnd)} if incorrect)`;
     }
     unitTestsPanel(unitTests) {

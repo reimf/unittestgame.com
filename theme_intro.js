@@ -19,16 +19,16 @@ class Intro extends Theme {
                 'then submit your unit tests.'),
         ]);
     }
-    formUnitTestButton() {
+    formUnitTestButtonText() {
         return 'I want to add a unit test';
     }
-    showHintButton(penaltyHint) {
+    showHintButtonText(penaltyHint) {
         return `I want to see a hint for a unit test`;
     }
-    submitButton(penaltyBug) {
+    submitButtonText(penaltyBug) {
         return `I want to submit the unit tests`;
     }
-    endButton(penaltyEnd) {
+    endButtonText(penaltyEnd) {
         return `I want to end the game`;
     }
     unitTestsPanel(unitTests) {

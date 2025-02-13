@@ -37,16 +37,16 @@ class School extends Theme {
             new Paragraph(`${this.formatScore(score)}`),
         ]);
     }
-    formUnitTestButton() {
+    formUnitTestButtonText() {
         return 'I want to add a unit test';
     }
-    showHintButton(penaltyHint) {
+    showHintButtonText(penaltyHint) {
         return `I want to see a hint for a unit test (-${this.formatScore(penaltyHint)})`;
     }
-    submitButton(penaltyBug) {
+    submitButtonText(penaltyBug) {
         return `I want to submit the unit tests (-${this.formatScore(penaltyBug)} on error)`;
     }
-    endButton(penaltyend) {
+    endButtonText(penaltyend) {
         return `I want to end the game (-${this.formatScore(penaltyend)} on error)`;
     }
     addUnitTestFormMessage(form) {

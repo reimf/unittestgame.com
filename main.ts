@@ -14,16 +14,18 @@ class Main {
     private constructor() { }
 
     private aboutPanel(): Panel {
+        const learnParagraph = new Paragraph('Learn Unit Testing with UnitTestGame.com')
         const anchor = new Anchor('mailto:feedback@unittestgame.com')
         anchor.appendText('feedback@unittestgame.com')
-        const paragraph = new Paragraph('Please send ')
-        paragraph.appendChild(anchor)
-        return new Panel('Learn Unit Testing with UnitTestGame.com', [
-            paragraph
+        const feedbackParagraph = new Paragraph('Please send us ')
+        feedbackParagraph.appendChild(anchor)
+        return new Panel('About', [
+            learnParagraph,
+            feedbackParagraph
         ])
     }
 
-    private HighScorePanel(): Panel {
+    private highScorePanel(): Panel {
         const highScores = this.games.map(game => HighScore.fromLocalStorage(game.constructor.name)).filter(highScore => highScore !== null)
         return new Panel('High Scores', [
             highScores.length === 0
@@ -43,9 +45,9 @@ class Main {
     }
 
     public start(): void {
-        this.aboutPanel().show('specification')
+        this.aboutPanel().show('about')
         this.welcomeMessage().show()
-        this.HighScorePanel().show('high-scores')
+        this.highScorePanel().show('high-scores')
         this.themeMenu()
     }
 
@@ -63,12 +65,13 @@ class Main {
     }
 
     private playGame(game: Game): void {
+        Panel.remove('about')
         Panel.remove('high-scores')
         game.play()
     }
 
     public restart(): void {
-        this.HighScorePanel().show('high-scores')
+        this.highScorePanel().show('high-scores')
         new HumanMenuMessage([
             new Button('Pick another theme and game', () => this.themeMenu()),
             new Button('Exit UnitTestGame.com', () => window.close()),

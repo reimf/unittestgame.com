@@ -22,19 +22,19 @@ class Intro extends Theme {
         ])
     }
 
-    public formUnitTestButton(): string {
+    public formUnitTestButtonText(): string {
         return 'I want to add a unit test'
     }
 
-    public showHintButton(penaltyHint: number): string {
+    public showHintButtonText(penaltyHint: number): string {
         return `I want to see a hint for a unit test`
     }
 
-    public submitButton(penaltyBug: number): string {
+    public submitButtonText(penaltyBug: number): string {
         return `I want to submit the unit tests`
     }
 
-    public endButton(penaltyEnd: number): string {
+    public endButtonText(penaltyEnd: number): string {
         return `I want to end the game`
     }
 

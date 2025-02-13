@@ -43,19 +43,19 @@ class School extends Theme {
         ])
     }
 
-    public formUnitTestButton(): string {
+    public formUnitTestButtonText(): string {
         return 'I want to add a unit test'
     }
 
-    public showHintButton(penaltyHint: number): string {
+    public showHintButtonText(penaltyHint: number): string {
         return `I want to see a hint for a unit test (-${this.formatScore(penaltyHint)})`
     }
 
-    public submitButton(penaltyBug: number): string {
+    public submitButtonText(penaltyBug: number): string {
         return `I want to submit the unit tests (-${this.formatScore(penaltyBug)} on error)`
     }
 
-    public endButton(penaltyend: number): string {
+    public endButtonText(penaltyend: number): string {
         return `I want to end the game (-${this.formatScore(penaltyend)} on error)`
     }
 

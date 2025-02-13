@@ -1,8 +1,8 @@
 abstract class Game {
-    INITIALSCORE = 100
-    PENALTYHINT = 10
-    PENALTYBUG = 20
-    PENALTYEND = 100
+    private readonly INITIALSCORE = 100
+    private readonly PENALTYHINT = 10
+    private readonly PENALTYBUG = 20
+    private readonly PENALTYEND = 100
 
     public readonly abstract theme: Theme
     public readonly abstract description: string
@@ -97,10 +97,10 @@ abstract class Game {
 
         this.theme.scorePanel(this.score).show('score')
         new HumanMenuMessage([
-            new Button(this.theme.formUnitTestButton(), () => this.showFormUnitTest()),
-            new Button(this.theme.showHintButton(this.PENALTYHINT), () => this.showHint()),
-            new Button(this.theme.submitButton(this.PENALTYBUG), () => this.submit()),
-            new Button(this.theme.endButton(this.PENALTYEND), () => this.end()),
+            new Button(this.theme.formUnitTestButtonText(), () => this.showFormUnitTest()),
+            new Button(this.theme.showHintButtonText(this.PENALTYHINT), () => this.showHint()),
+            new Button(this.theme.submitButtonText(this.PENALTYBUG), () => this.submit()),
+            new Button(this.theme.endButtonText(this.PENALTYEND), () => this.end()),
         ]).show()
     }
 

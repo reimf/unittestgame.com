@@ -3,10 +3,10 @@ abstract class Theme {
     public abstract addUnitTestFormButtonText(): string
     public abstract cancelUnitTestFormButtonText(): string
     public abstract contractMessage(initialScore: number, penaltyHint: number, penaltyBug: number): ComputerMessage
-    public abstract formUnitTestButton(): string
-    public abstract showHintButton(penaltyHint: number): string
-    public abstract submitButton(penaltyBug: number): string
-    public abstract endButton(penaltyEnd: number): string
+    public abstract formUnitTestButtonText(): string
+    public abstract showHintButtonText(penaltyHint: number): string
+    public abstract submitButtonText(penaltyBug: number): string
+    public abstract endButtonText(penaltyEnd: number): string
     public abstract unitTestsPanel(unitTests: UnitTest[]): Panel
     public abstract currentCandidatePanel(candidate: Candidate): Panel
     public abstract scorePanel(score: number): Panel
