@@ -1,4 +1,4 @@
-"use strict";
+import Main from './src/main.js';
 window.onerror = (message, source, lineno, colno, error) => {
     alert(`${error === null || error === void 0 ? void 0 : error.name}: ${message}\n${source}:${lineno}:${colno}`);
 };

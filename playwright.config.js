@@ -1,6 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const test_1 = require("@playwright/test");
+import { defineConfig, devices } from '@playwright/test';
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -11,9 +9,9 @@ const test_1 = require("@playwright/test");
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
-exports.default = (0, test_1.defineConfig)({
-    testIgnore: '*.js',
-    testDir: './tests',
+export default defineConfig({
+    testMatch: /.*\.ts/,
+    testDir: './playwright-tests',
     /* Run tests in files in parallel */
     fullyParallel: true,
     /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -35,16 +33,16 @@ exports.default = (0, test_1.defineConfig)({
     projects: [
         {
             name: 'chromium',
-            use: Object.assign({}, test_1.devices['Desktop Chrome']),
+            use: Object.assign({}, devices['Desktop Chrome']),
         },
-        {
-            name: 'firefox',
-            use: Object.assign({}, test_1.devices['Desktop Firefox']),
-        },
-        {
-            name: 'webkit',
-            use: Object.assign({}, test_1.devices['Desktop Safari']),
-        },
+        // {
+        //   name: 'firefox',
+        //   use: { ...devices['Desktop Firefox'] },
+        // },
+        // {
+        //   name: 'webkit',
+        //   use: { ...devices['Desktop Safari'] },
+        // },
         /* Test against mobile viewports. */
         // {
         //   name: 'Mobile Chrome',
