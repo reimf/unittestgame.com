@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test'
 test.describe('submit insufficient unit test', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('http://localhost:5500/')
-    await page.getByText('I want to have a nice introduction into this game').click() 
+    await page.getByText('I want to have a nice introduction into this game').click()
     await page.getByText('I want to write unit tests for a function that checks if a person is allowed to vote based on their age').click()
     await page.getByText('I want to submit the unit tests').click()
   })

@@ -57,7 +57,7 @@ form {
         display: flex;
         gap: 0.75rem;
     }
-    
+
     input[type="text"],
     input[type="number"] {
         background-color: var(--input-background);
@@ -71,16 +71,16 @@ form {
         padding: 0 0.75rem;
         width: 8rem;
     }
-    
+
     input[type="checkbox"] {
         margin: 0 0.75rem 0 0;
         vertical-align: 0.1rem;
     }
-    
+
     input[type="radio"] {
         margin: 0 0.5rem 0 0.75rem;
     }
-    
+
     input[type="submit"] {
         background-color: var(--input-background);
         border: none;
@@ -98,13 +98,13 @@ form {
         display: inline-block;
         height: 2rem;
         line-height: 2rem;
-    
+
         &:has(input[type="radio"]) {
             background-color: var(--input-background);
             color: var(--light-text);
             margin-left: 0.75rem;
             padding-right: 0.75rem;
-    
+
             &:hover {
                 cursor: pointer;
             }
@@ -151,10 +151,10 @@ section {
         overflow: scroll;
         scrollbar-width: none;
         width: 60%;
-    
+
         section {
             width: 80%;
-    
+
             &.human {
                 background-color: var(--human-message-background);
                 color: var(--dark-text);
@@ -167,13 +167,13 @@ section {
             }
         }
     }
-    
+
     #sidebar {
         width: 40%;
 
         section {
             background-color: var(--computer-message-background);
-            color: var(--dark-text);        
+            color: var(--dark-text);
         }
     }
 }

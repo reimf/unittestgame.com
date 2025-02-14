@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test'
 test.describe('game start', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('http://localhost:5500/')
-    page.getByText('I want to have a nice introduction into this game').click() 
+    page.getByText('I want to have a nice introduction into this game').click()
     page.getByText('I want to write unit tests for a function that checks if a person is allowed to vote based on their age').click()
   })
 

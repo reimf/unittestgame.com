@@ -135,7 +135,7 @@ class Main {
     +restart() void
 }
 
-class Message { 
+class Message {
     <<Abstract>>
     +show() void
 }
@@ -153,7 +153,7 @@ Message <|-- HumanMessage
 class HumanMenuMessage
 HumanMessage <|-- HumanMenuMessage
 
-class Panel{    
+class Panel{
     +show() void
     +remove() void$
 }

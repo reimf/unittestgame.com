@@ -3,5 +3,6 @@ const config = {
     host: 'localhost',
     open: 'index.html',
     watch: 'src',
-};
-export default config;
+}
+
+export default config
