@@ -4,21 +4,19 @@ export default class HighScore {
         this.score = score;
         this.achievement = achievement;
     }
-    save() {
-        const oldScore = Number(localStorage.getItem(`${this.name}.score`));
-        if (!oldScore || this.score > oldScore) {
-            localStorage.setItem(`${this.name}.score`, this.score.toString());
-            localStorage.setItem(`${this.name}.achievement`, this.achievement);
-        }
+    save(storage) {
+        const oldHighScore = HighScore.fromStorage(storage, this.name);
+        if (!oldHighScore || this.score > oldHighScore.score)
+            storage.setItem(`${this.name}.highScore`, [this.score, this.achievement].join('|'));
     }
     toString() {
         return `${this.name}: ${this.achievement}`;
     }
-    static fromLocalStorage(name) {
-        const score = Number(localStorage.getItem(`${name}.score`));
-        const achievement = localStorage.getItem(`${name}.achievement`);
-        if (score && achievement)
-            return new HighScore(name, score, achievement);
-        return null;
+    static fromStorage(storage, name) {
+        const content = storage.getItem(`${name}.highScore`);
+        if (!content)
+            return null;
+        const [score, achievement] = content.split('|');
+        return new HighScore(name, Number(score), achievement);
     }
 }

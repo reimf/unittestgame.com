@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import Candidate from '../../src/candidate.js';
-test.describe('candidate', () => {
+test.describe('class Candidate', () => {
     test('computes complexity for simple function', () => {
         const candidate = new Candidate('function divide(a, b) { return a / b }');
         expect(candidate.complexity).toBe(10);

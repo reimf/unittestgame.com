@@ -1,4 +1,4 @@
-export class Html {
+export abstract class Html {
     protected element: HTMLElement
 
     protected constructor(tagName: string) {

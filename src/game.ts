@@ -34,7 +34,7 @@ export default abstract class Game {
     protected abstract introductionMessage(): ComputerMessage
     protected abstract specificationPanel(): Panel
 
-    public constructor() {
+    protected constructor() {
         this.checkUnitTestsAreNeeded(this.candidates, this.minimalUnitTests)
     }
 
@@ -86,10 +86,13 @@ export default abstract class Game {
         }
     }
 
-    private findSimplestPassingCandidate(candidates: Candidate[], userDefinedUnitTests: UnitTest[]): Candidate {
-        const passingCandidates = this.findPassingCandidates(candidates, userDefinedUnitTests)
-        const minimumComplexity = Math.min(...passingCandidates.map(candidate => candidate.complexity))
-        const candidatesWithMinimumComplexity = passingCandidates.filter(candidate => candidate.complexity === minimumComplexity)
+    private findSimplestPassingCandidate(candidates: Candidate[], userDefinedUnitTests: UnitTest[], perfectCandidates: Candidate[]): Candidate {
+        const nonPerfectCandidates = candidates.filter(candidate => !perfectCandidates.includes(candidate))
+        const nonPerfectPassingCandidates = this.findPassingCandidates(nonPerfectCandidates, userDefinedUnitTests)
+        if (nonPerfectPassingCandidates.length === 0)
+            return this.randomElementFrom(perfectCandidates)
+        const minimumComplexity = Math.min(...nonPerfectPassingCandidates.map(candidate => candidate.complexity))
+        const candidatesWithMinimumComplexity = nonPerfectPassingCandidates.filter(candidate => candidate.complexity === minimumComplexity)
         return this.randomElementFrom(candidatesWithMinimumComplexity)
     }
 
@@ -103,7 +106,7 @@ export default abstract class Game {
     private menu(): void {
         this.theme.unitTestsPanel(this.userdefinedUnitTests).show('unit-tests')
 
-        const simplestPassingCandidate = this.findSimplestPassingCandidate(this.candidates, this.userdefinedUnitTests)
+        const simplestPassingCandidate = this.findSimplestPassingCandidate(this.candidates, this.userdefinedUnitTests, this.perfectCandidates)
         this.theme.currentCandidatePanel(simplestPassingCandidate).show('current-candidate')
 
         const failingTestResultsHints = simplestPassingCandidate.failingTestResults(this.hints)
@@ -141,10 +144,10 @@ export default abstract class Game {
         const testResult = new TestResult(this.perfectCandidate, unitTest)
         if (testResult.passes) {
             const passingCandidatesBefore = this.findPassingCandidates(this.candidates, this.userdefinedUnitTests)
-            const simplestPassingCandidateBefore = this.findSimplestPassingCandidate(this.candidates, this.userdefinedUnitTests)
+            const simplestPassingCandidateBefore = this.findSimplestPassingCandidate(this.candidates, this.userdefinedUnitTests, this.perfectCandidates)
             this.userdefinedUnitTests.push(unitTest)
             const passingCandidatesAfter = this.findPassingCandidates(this.candidates, this.userdefinedUnitTests)
-            const simplestPassingCandidateAfter = this.findSimplestPassingCandidate(this.candidates, this.userdefinedUnitTests)
+            const simplestPassingCandidateAfter = this.findSimplestPassingCandidate(this.candidates, this.userdefinedUnitTests, this.perfectCandidates)
             if (passingCandidatesAfter.length === passingCandidatesBefore.length)
                 this.theme.overallUselessUnitTestMessage().show()
             else if (simplestPassingCandidateAfter === simplestPassingCandidateBefore)
@@ -192,7 +195,7 @@ export default abstract class Game {
             this.constructor.name,
             this.score,
             this.theme.formatScore(this.score),
-        ).save()
+        ).save(localStorage)
         Main.instance.restart()
     }
 }

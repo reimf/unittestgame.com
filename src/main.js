@@ -32,7 +32,7 @@ class Main {
         ]);
     }
     highScorePanel() {
-        const highScores = this.games.map(game => HighScore.fromLocalStorage(game.constructor.name)).filter(highScore => highScore !== null);
+        const highScores = this.games.map(game => HighScore.fromStorage(localStorage, game.constructor.name)).filter(highScore => highScore !== null);
         return new Panel('High Scores', [
             highScores.length === 0
                 ? new Paragraph('You have not played a game yet.')

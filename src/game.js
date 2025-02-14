@@ -63,10 +63,13 @@ export default class Game {
                 throw new Error(`Unit test ${unitTest} is not needed.\n${almostPerfectCandidates[0]}`);
         }
     }
-    findSimplestPassingCandidate(candidates, userDefinedUnitTests) {
-        const passingCandidates = this.findPassingCandidates(candidates, userDefinedUnitTests);
-        const minimumComplexity = Math.min(...passingCandidates.map(candidate => candidate.complexity));
-        const candidatesWithMinimumComplexity = passingCandidates.filter(candidate => candidate.complexity === minimumComplexity);
+    findSimplestPassingCandidate(candidates, userDefinedUnitTests, perfectCandidates) {
+        const nonPerfectCandidates = candidates.filter(candidate => !perfectCandidates.includes(candidate));
+        const nonPerfectPassingCandidates = this.findPassingCandidates(nonPerfectCandidates, userDefinedUnitTests);
+        if (nonPerfectPassingCandidates.length === 0)
+            return this.randomElementFrom(perfectCandidates);
+        const minimumComplexity = Math.min(...nonPerfectPassingCandidates.map(candidate => candidate.complexity));
+        const candidatesWithMinimumComplexity = nonPerfectPassingCandidates.filter(candidate => candidate.complexity === minimumComplexity);
         return this.randomElementFrom(candidatesWithMinimumComplexity);
     }
     play() {
@@ -77,7 +80,7 @@ export default class Game {
     }
     menu() {
         this.theme.unitTestsPanel(this.userdefinedUnitTests).show('unit-tests');
-        const simplestPassingCandidate = this.findSimplestPassingCandidate(this.candidates, this.userdefinedUnitTests);
+        const simplestPassingCandidate = this.findSimplestPassingCandidate(this.candidates, this.userdefinedUnitTests, this.perfectCandidates);
         this.theme.currentCandidatePanel(simplestPassingCandidate).show('current-candidate');
         const failingTestResultsHints = simplestPassingCandidate.failingTestResults(this.hints);
         const failingTestResultsUnitTests = simplestPassingCandidate.failingTestResults(this.minimalUnitTests);
@@ -105,10 +108,10 @@ export default class Game {
         const testResult = new TestResult(this.perfectCandidate, unitTest);
         if (testResult.passes) {
             const passingCandidatesBefore = this.findPassingCandidates(this.candidates, this.userdefinedUnitTests);
-            const simplestPassingCandidateBefore = this.findSimplestPassingCandidate(this.candidates, this.userdefinedUnitTests);
+            const simplestPassingCandidateBefore = this.findSimplestPassingCandidate(this.candidates, this.userdefinedUnitTests, this.perfectCandidates);
             this.userdefinedUnitTests.push(unitTest);
             const passingCandidatesAfter = this.findPassingCandidates(this.candidates, this.userdefinedUnitTests);
-            const simplestPassingCandidateAfter = this.findSimplestPassingCandidate(this.candidates, this.userdefinedUnitTests);
+            const simplestPassingCandidateAfter = this.findSimplestPassingCandidate(this.candidates, this.userdefinedUnitTests, this.perfectCandidates);
             if (passingCandidatesAfter.length === passingCandidatesBefore.length)
                 this.theme.overallUselessUnitTestMessage().show();
             else if (simplestPassingCandidateAfter === simplestPassingCandidateBefore)
@@ -149,7 +152,7 @@ export default class Game {
             this.theme.endPositiveMessage(this.score).show();
         else
             this.theme.endNegativeMessage(this.score).show();
-        new HighScore(this.constructor.name, this.score, this.theme.formatScore(this.score)).save();
+        new HighScore(this.constructor.name, this.score, this.theme.formatScore(this.score)).save(localStorage);
         Main.instance.restart();
     }
 }
