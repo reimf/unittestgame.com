@@ -4,6 +4,7 @@ default:
 pages:
   script:
     - rm *.config.{js,ts}
+    - rm -rf playwright-tests
     - npm install typescript
     - npx tsc --build --verbose
     - mkdir public
