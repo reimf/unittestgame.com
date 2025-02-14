@@ -3,12 +3,14 @@ default:
 
 pages:
   script:
+    - rm *.config.{js,ts}
     - npm install typescript
     - npx tsc --build --verbose
-    - rm fiveserver.config.js
     - mkdir public
     - cp *.{css,html,ico,js,png} public
-    - gzip -k -6 public/*.{css,html,js}
+    - mkdir public/src
+    - cp src/*.js public/src
+    - gzip -k -6 public/*.{css,html,js} public/src/*.js
   artifacts:
     paths:
       - public
