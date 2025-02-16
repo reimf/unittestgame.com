@@ -3,24 +3,27 @@
 ## Class Diagram
 ```mermaid
 classDiagram
-direction LR
-class Section
-Html <|-- Section
 
-class Candidate {
-    -function: Function
-    -complexity: number
-    -code: string
-    +execute() any
-    +testResults() TestResult[]
-    +failingTestResults() TestResult[]
-    +failCount() number
-    +passCount() number
-    +toString() string
+class Main {
+    +instance: Main$
+    +start() void
+    -themeMenu() void
+    -gameMenu() void
+    -playGame() void
+    +restart() void
 }
 
-class Form
-Html <|-- Form
+class Game {
+    <<Abstract>>
+    +description: string*
+    +play() void
+    -menu() void
+    -showFormUnitTest() void
+    -addUnitTest() void
+    -showHint() void
+    -submit() void
+    -end() void
+}
 
 class Evenodd
 Game <|-- Evenodd
@@ -43,18 +46,48 @@ Game <|-- LeapYear
 class Triangle
 Game <|-- Triangle
 
-class Game {
-    <<Abstract>>
-    +theme: Theme*
-    +description: string*
-    +play() void
-    -menu() void
-    -showFormUnitTest() void
-    -addUnitTest() void
-    -showHint() void
-    -submit() void
-    -end() void
+class Candidate {
+    -function: Function
+    -complexity: number
+    -code: string
+    +execute() any
+    +testResults() TestResult[]
+    +failingTestResults() TestResult[]
+    +failCount() number
+    +passCount() number
+    +toString() string
 }
+
+class TestResult {
+    -result: any
+    +passes: boolean
+    +unitTest: UnitTest
+    +toString() string
+}
+
+class UnitTest {
+    +argumentList: any[]
+    +expected: any
+    +toString() string
+}
+
+class Variable {
+    +name: string
+    +value() string | number | boolean*
+    +toHtml() Html*
+}
+
+class RadioVariable
+Variable <|-- RadioVariable
+
+class CheckboxVariable
+Variable <|-- CheckboxVariable
+
+class TextVariable
+Variable <|-- TextVariable
+
+class NumberVariable
+Variable <|-- NumberVariable
 
 class HighScore {
     -name: string
@@ -75,9 +108,6 @@ class Html {
     +on() void
 }
 
-class Span
-Html <|--Span
-
 class Anchor{
     +href() void
 }
@@ -90,6 +120,12 @@ class Input{
     +autocomplete() void
 }
 Html <|-- Input
+
+class Section
+Html <|-- Section
+
+class Form
+Html <|-- Form
 
 class Header
 Html <|-- Header
@@ -118,15 +154,6 @@ Html <|-- Div
 class Code
 Html <|-- Code
 
-class Main {
-    +instance: Main$
-    +start() void
-    -themeMenu() void
-    -gameMenu() void
-    -playGame() void
-    +restart() void
-}
-
 class Message {
     <<Abstract>>
     +show() void
@@ -145,62 +172,12 @@ Message <|-- HumanMessage
 class HumanMenuMessage
 HumanMessage <|-- HumanMenuMessage
 
-class Panel{
+class Panel {
     +show() void
     +remove() void$
 }
 Section <|-- Panel
 
-class TestResult {
-    -result: any
-    +passes: boolean
-    +unitTest: UnitTest
-    +toString() string
-}
-
-class AIBot
-Theme <|-- AIBot
-
-class Company
-Theme <|-- Company
-
-class Intro
-Theme <|-- Intro
-
-class School
-Theme <|-- School
-
-class Theme {
-    <<Abstract>>
-    +instance Theme$
-    +description string*
-}
-
-class UnitTest {
-    +argumentList: any[]
-    +expected: any
-    +toString() string
-}
-
-class Variable {
-    +name: string
-    +value() string | number | boolean*
-    +toHtml() Html*
-}
-
-class RadioVariable
-Variable <|-- RadioVariable
-
-class CheckboxVariable
-Variable <|-- CheckboxVariable
-
-class TextVariable
-Variable <|-- TextVariable
-
-class NumberVariable
-Variable <|-- NumberVariable
-
-Game "*" <--> "1" Theme
 Game "1" <--> "*" Candidate
 Game "1" <--> "*" UnitTest
 UnitTest "1" <--> "*" TestResult
@@ -218,11 +195,10 @@ Main "1" <--> "*" Message
 ```mermaid
 stateDiagram-v2
     [*] --> Main.start
-    Main.start --> Main.ThemeMenu
-    Main.ThemeMenu --> Main.gameMenu
+    Main.start --> Main.gameMenu
     Main.gameMenu --> Main.playGame
     Main.playGame --> Game.play
-    Main.restart --> Main.ThemeMenu
+    Main.restart --> Main.gameMenu
     Main.restart --> [*]
     Game.play --> Game.menu
     Game.menu --> Game.showUnitTestForm

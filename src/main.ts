@@ -1,5 +1,5 @@
 import { Game } from './game.js'
-import { Button, Paragraph, Anchor, Span, UnorderedList, ListItem, Panel, HumanMenuMessage, ComputerMessage } from './html.js'
+import { Button, Paragraph, Anchor, Div, UnorderedList, Panel, HumanMenuMessage, ComputerMessage } from './html.js'
 import { VotingAge } from './game_voting_age.js'
 import { EvenOdd } from './game_even_odd.js'
 import { LeapYear } from './game_leap_year.js'
@@ -40,7 +40,7 @@ export class Main {
                 this.games.
                 map(game => game.highScore()).
                 filter(highScore => highScore !== null).
-                map(highScore => new ListItem(new Span(highScore.toString())))
+                map(highScore => new Div().appendText(highScore.toString()))
             ).ifEmpty('You have not played a game yet.'),
         ])
     }

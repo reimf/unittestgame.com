@@ -1,5 +1,5 @@
 import { Main } from './main.js';
-import { Button, Form, Paragraph, UnorderedList, ListItem, Code, Span, Panel, HumanMessage, HumanMenuMessage, ComputerMessage } from './html.js';
+import { Button, Form, Paragraph, UnorderedList, Div, Code, Panel, HumanMessage, HumanMenuMessage, ComputerMessage } from './html.js';
 import { HighScore } from './high_score.js';
 import { Candidate } from './candidate.js';
 import { UnitTest } from './unit_test.js';
@@ -90,7 +90,7 @@ export class Game {
     }
     showUnitTestsPanel() {
         new Panel('Unit Tests', [
-            new UnorderedList(this.userdefinedUnitTests.map(unitTest => new ListItem(new Span(unitTest.toString())))).ifEmpty('You have not written any unit tests yet.'),
+            new UnorderedList(this.userdefinedUnitTests.map(unitTest => new Div().appendText(unitTest.toString()))).ifEmpty('You have not written any unit tests yet.'),
         ]).show('unit-tests');
     }
     showCurrentCandidatePanel(candidate) {
@@ -183,13 +183,13 @@ export class Game {
         new ComputerMessage([
             new Paragraph('A unit test that would fail for the function is the following.'),
             new Paragraph(unitTest.toString()),
-            new Paragraph(`The cost for this hint is ${this.PENALTYHINT}.`),
+            new Paragraph(`The cost for this hint is ${this.PENALTYHINT}%.`),
         ]).show();
     }
     showNoHintMessage() {
         new ComputerMessage([
             new Paragraph('I can\'t come up with a failing unit test. '),
-            new Paragraph(`The cost for this \'hint\' is ${this.PENALTYHINT}.`),
+            new Paragraph(`The cost for this \'hint\' is ${this.PENALTYHINT}%.`),
         ]).show();
     }
     showHint() {
@@ -205,7 +205,7 @@ export class Game {
             new Paragraph('The function is NOT according to the specification. ' +
                 'The function produces the following incorrect output:'),
             new Paragraph(testResult.toString()),
-            new Paragraph(`The cost for missing this issue is ${this.PENALTYBUG}.`),
+            new Paragraph(`The cost for this submission is ${this.PENALTYBUG}%.`),
         ]).show();
     }
     submit() {

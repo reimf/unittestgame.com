@@ -10,11 +10,16 @@
     --focus-background: #FF6F20;
 }
 
-:focus, label:has(input[type="checkbox"]:focus), label:has(input[type="radio"]:focus) {
+input:focus, button:focus, label:has(input[type="checkbox"]:focus), label:has(input[type="radio"]:focus) {
     background-color: var(--focus-background) !important;
     color: var(--light-text) !important;
     outline: 0.25rem solid var(--focus-background);
     outline-offset: 0.25rem;
+}
+
+input:hover, button:hover, label:has(input[type="checkbox"]:hover), label:has(input[type="radio"]:hover) {
+    background-color: var(--focus-background) !important;
+    color: var(--light-text) !important;
 }
 
 * {
@@ -129,6 +134,8 @@ form {
         }
 
         &:has(input[type="checkbox"]) {
+            background-color: var(--input-background);
+            color: var(--light-text);
             padding-right: 0.25rem;
         }
     }

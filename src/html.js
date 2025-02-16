@@ -4,28 +4,28 @@ export class Html {
     }
     id(id) {
         this.element.id = id;
+        return this;
     }
     addClass(value) {
         this.element.classList.add(value);
+        return this;
     }
     appendText(value) {
         this.element.appendChild(document.createTextNode(value));
+        return this;
     }
     appendChild(value) {
         this.element.appendChild(value.element);
+        return this;
     }
     appendChildren(values) {
         for (const value of values)
             this.element.appendChild(value.element);
+        return this;
     }
     on(eventType, callback) {
         this.element.addEventListener(eventType, callback);
-    }
-}
-export class Span extends Html {
-    constructor(text) {
-        super('span');
-        this.appendText(text);
+        return this;
     }
 }
 export class Anchor extends Html {
@@ -36,6 +36,7 @@ export class Anchor extends Html {
     }
     href(value) {
         this.anchor.href = value;
+        return this;
     }
 }
 export class Input extends Html {
@@ -46,15 +47,19 @@ export class Input extends Html {
     }
     type(value) {
         this.input.type = value;
+        return this;
     }
     name(value) {
         this.input.name = value;
+        return this;
     }
     value(value) {
         this.input.value = value;
+        return this;
     }
     autocomplete(value) {
         this.input.autocomplete = value ? 'on' : 'off';
+        return this;
     }
 }
 export class Form extends Html {
@@ -85,9 +90,9 @@ export class Paragraph extends Html {
     }
 }
 export class UnorderedList extends Html {
-    constructor(listItems) {
+    constructor(elements) {
         super('ul');
-        this.appendChildren(listItems);
+        this.appendChildren(elements.map(element => new ListItem(element)));
     }
     ifEmpty(text) {
         if (this.element.childElementCount > 0)
@@ -95,7 +100,7 @@ export class UnorderedList extends Html {
         return new Paragraph(text);
     }
 }
-export class ListItem extends Html {
+class ListItem extends Html {
     constructor(child) {
         super('li');
         this.appendChild(child);

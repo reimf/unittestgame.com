@@ -5,36 +5,35 @@ export abstract class Html {
         this.element = document.createElement(tagName)
     }
 
-    public id(id: string): void {
+    public id(id: string): Html {
         this.element.id = id
+        return this
     }
 
-    public addClass(value: string): void {
+    public addClass(value: string): Html {
         this.element.classList.add(value)
+        return this
     }
 
-    public appendText(value: string): void {
+    public appendText(value: string): Html {
         this.element.appendChild(document.createTextNode(value))
+        return this
     }
 
-    public appendChild(value: Html): void {
+    public appendChild(value: Html): Html {
         this.element.appendChild(value.element)
+        return this
     }
 
-    public appendChildren(values: Html[]): void {
+    public appendChildren(values: Html[]): Html {
         for (const value of values)
             this.element.appendChild(value.element)
+        return this
     }
 
-    public on(eventType: string, callback: (event: Event) => void): void {
+    public on(eventType: string, callback: (event: Event) => void): Html {
         this.element.addEventListener(eventType, callback)
-    }
-}
-
-export class Span extends Html {
-    public constructor(text: string) {
-        super('span')
-        this.appendText(text)
+        return this
     }
 }
 
@@ -46,8 +45,9 @@ export class Anchor extends Html {
         this.href(href)
     }
 
-    public href(value: string): void {
+    public href(value: string): Html {
         this.anchor.href = value
+        return this
     }
 }
 
@@ -59,20 +59,24 @@ export class Input extends Html {
         this.type(type)
     }
 
-    public type(value: string): void {
+    public type(value: string): Html {
         this.input.type = value
+        return this
     }
 
-    public name(value: string): void {
+    public name(value: string): Html {
         this.input.name = value
+        return this
     }
 
-    public value(value: string): void {
+    public value(value: string): Html {
         this.input.value = value
+        return this
     }
 
-    public autocomplete(value: boolean): void {
+    public autocomplete(value: boolean): Html {
         this.input.autocomplete = value ? 'on' : 'off'
+        return this
     }
 }
 
@@ -106,9 +110,9 @@ export class Paragraph extends Html {
 }
 
 export class UnorderedList extends Html {
-    public constructor(listItems: ListItem[]) {
+    public constructor(elements: Html[]) {
         super('ul')
-        this.appendChildren(listItems)
+        this.appendChildren(elements.map(element => new ListItem(element)))
     }
 
     public ifEmpty(text: string): Html {
@@ -118,7 +122,7 @@ export class UnorderedList extends Html {
     }
 }
 
-export class ListItem extends Html {
+class ListItem extends Html {
     public constructor(child: Html) {
         super('li')
         this.appendChild(child)
