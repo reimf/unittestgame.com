@@ -1,4 +1,4 @@
-export default class HighScore {
+export class HighScore {
     public constructor(private name: string, private score: number) { }
 
     public save(storage: Storage): void {
@@ -8,7 +8,7 @@ export default class HighScore {
     }
 
     public toString(): string {
-        return `${this.name}: ${this.score}`
+        return `${this.name}: ${this.score}%`
     }
 
     public static fromStorage(storage: Storage, name: string): HighScore | null {

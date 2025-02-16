@@ -3,5 +3,5 @@ module.exports = {
     wait: 2000,
     host: 'localhost',
     open: 'index.html',
-    watch: 'src',
+    ignore: ['**/playwright-tests/**']
 };

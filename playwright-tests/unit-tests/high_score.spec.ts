@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test'
-import HighScore from '../../src/high_score.js'
+import { HighScore } from '../../src/high_score.js'
 import { MockStorage } from './mock_storage.js'
 
 test.describe('class HighScore', () => {
@@ -9,7 +9,7 @@ test.describe('class HighScore', () => {
 
   test('converts to a string', () => {
     const highScore = new HighScore('Sillygame', 30)
-    expect(highScore.toString()).toBe('Sillygame: 30')
+    expect(highScore.toString()).toBe('Sillygame: 30%')
   })
 
   test('gets the saved high score', () => {

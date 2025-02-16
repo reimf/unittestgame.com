@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test'
-import UnitTest from '../../src/unit_test.js'
+import { UnitTest } from '../../src/unit_test.js'
 
 test.describe('class UnitTest', () => {
   test('converts to a string', () => {

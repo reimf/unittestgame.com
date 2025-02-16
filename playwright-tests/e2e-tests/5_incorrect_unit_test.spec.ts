@@ -30,9 +30,9 @@ test.describe('incorrect unit test', () => {
     const buttons = messages.locator('button')
     await expect(buttons).toHaveText([
       'I want to add a unit test',
-      'I want to see a hint for a unit test (-10)',
-      'I want to submit the unit tests (-20?)',
-      'I want to end the game (-100?)',
+      'I want to see a hint for a unit test (-10%)',
+      'I want to submit the unit tests (-20%?)',
+      'I want to end the game (-100%?)',
     ])
   })
 })

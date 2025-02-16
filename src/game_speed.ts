@@ -1,9 +1,9 @@
-import Game from './game.js'
+import { Game } from './game.js'
 import { Paragraph, Panel, Code } from './html.js'
 import { Variable, TextVariable, NumberVariable } from './variable.js'
-import UnitTest from './unit_test.js'
+import { UnitTest } from './unit_test.js'
 
-export default class Speed extends Game {
+export class Speed extends Game {
     public readonly description = 'Speed: display the speed of a car'
 
     public constructor() {

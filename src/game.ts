@@ -1,12 +1,12 @@
-import Main from './main.js'
+import { Main } from './main.js'
 import { Button, Form, Paragraph, UnorderedList, ListItem, Code, Span, Panel, HumanMessage, HumanMenuMessage, ComputerMessage } from './html.js'
-import HighScore from './high_score.js'
-import Candidate from './candidate.js'
-import UnitTest from './unit_test.js'
-import TestResult from './test_result.js'
+import { HighScore } from './high_score.js'
+import { Candidate } from './candidate.js'
+import { UnitTest } from './unit_test.js'
+import { TestResult } from './test_result.js'
 import { Variable } from './variable.js'
 
-export default abstract class Game {
+export abstract class Game {
     private readonly INITIALSCORE = 100
     private readonly PENALTYHINT = 10
     private readonly PENALTYBUG = 20
@@ -97,36 +97,57 @@ export default abstract class Game {
         return this.randomElementFrom(candidatesWithMinimumComplexity)
     }
 
-    public showScorePanel(): void {
+    private showScorePanel(): void {
         new Panel('Score', [
-            new Paragraph(`${this.score}`),
+            new Paragraph(`${this.score}%`),
         ]).show('score')
     }
 
-    public play(): void {
-        this.specificationPanel().show('specification')
+    private showContractMessage(): void {
         new ComputerMessage([
             new Paragraph(
                 'In the sidebar you see the specification, ' +
                 'the unit tests you have written and ' +
-                'the function I wrote that passes all the unit tests. ' +
+                'the current function that passes all the unit tests. ' +
                 'Keep adding unit tests until the function is according to the specification.'
             ),
         ]).show()
-        this.menu()
     }
 
-    private menu(): void {
+    private showUnitTestsPanel(): void {
         new Panel('Unit Tests', [
             new UnorderedList(
                 this.userdefinedUnitTests.map(unitTest => new ListItem(new Span(unitTest.toString())))
             ).ifEmpty('You have not written any unit tests yet.'),
         ]).show('unit-tests')
+    }
+
+    private showCurrentCandidatePanel(candidate: Candidate): void {
+        new Panel('Current Function', [
+            new Code(candidate.toString()),
+        ]).show('current-candidate')
+    }
+
+    private showMenuMessage(): void {
+        new HumanMenuMessage([
+            new Button('I want to add a unit test', () => this.showFormUnitTestMessage()),
+            new Button(`I want to see a hint for a unit test (-${this.PENALTYHINT}%)`, () => this.showHint()),
+            new Button(`I want to submit the unit tests (-${this.PENALTYBUG}%?)`, () => this.submit()),
+            new Button(`I want to end the game (-${this.PENALTYEND}%?)`, () => this.end()),
+        ]).show()
+    }
+
+    public play(): void {
+        this.specificationPanel().show('specification')
+        this.showContractMessage()
+        this.menu()
+    }
+
+    private menu(): void {
+        this.showUnitTestsPanel()
 
         const simplestPassingCandidate = this.findSimplestPassingCandidate(this.candidates, this.userdefinedUnitTests, this.perfectCandidates)
-        new Panel('Function', [
-            new Code(simplestPassingCandidate.toString()),
-        ]).show('current-candidate')
+        this.showCurrentCandidatePanel(simplestPassingCandidate)
 
         const failingTestResultsHints = simplestPassingCandidate.failingTestResults(this.hints)
         const failingTestResultsUnitTests = simplestPassingCandidate.failingTestResults(this.minimalUnitTests)
@@ -136,15 +157,10 @@ export default abstract class Game {
             : undefined
 
         this.showScorePanel()
-        new HumanMenuMessage([
-            new Button('I want to add a unit test', () => this.showFormUnitTest()),
-            new Button(`I want to see a hint for a unit test (-${this.PENALTYHINT})`, () => this.showHint()),
-            new Button(`I want to submit the unit tests (-${this.PENALTYBUG}?)`, () => this.submit()),
-            new Button(`I want to end the game (-${this.PENALTYEND}?)`, () => this.end()),
-        ]).show()
+        this.showMenuMessage()
     }
 
-    private showFormUnitTest(): void {
+    private showFormUnitTestMessage(): void {
         new HumanMessage([
             new Paragraph('I want to add a unit test.'),
             new Form(
@@ -157,14 +173,50 @@ export default abstract class Game {
         ]).replace()
     }
 
-    private addUnitTest(): void {
-        const argumentList = this.parameters.map(parameter => parameter.value())
-        const expected = this.unit.value()
-        const unitTest = new UnitTest(argumentList, expected)
+    private showAddUnitTestMessage(unitTest: UnitTest): void {
         new HumanMessage([
             new Paragraph('I want to add the following unit test:'),
             new Paragraph(unitTest.toString()),
         ]).replace()
+    }
+
+    private showGeneralUselessUnitTestMessage(): void {
+        new ComputerMessage([
+            new Paragraph(
+                'I added the unit test, but it looks a lot like another unit test, so I didn\'t have to improve the function.'
+            ),
+        ]).show()
+    }
+
+    private showCurrentlyUselessUnitTestMessage(): void {
+        new ComputerMessage([
+            new Paragraph(
+                'I added the unit test, but my function already passed this unit test, so I didn\'t improve the function.'
+            ),
+        ]).show()
+    }
+
+    private showUsefulUnitTestMessage(): void {
+        new ComputerMessage([
+            new Paragraph(
+                'I added the unit test and I improved the function.'
+            ),
+        ]).show()
+    }
+
+    private showIncorrectUnitTestMessage(): void {
+        new ComputerMessage([
+            new Paragraph(
+                'I did NOT add the unit test, because it is NOT according to the specification.'
+            ),
+        ]).show()
+    }
+
+    private addUnitTest(): void {
+        const argumentList = this.parameters.map(parameter => parameter.value())
+        const expected = this.unit.value()
+        const unitTest = new UnitTest(argumentList, expected)
+        this.showAddUnitTestMessage(unitTest)
         const testResult = new TestResult(this.perfectCandidate, unitTest)
         if (testResult.passes) {
             const passingCandidatesBefore = this.findPassingCandidates(this.candidates, this.userdefinedUnitTests)
@@ -173,59 +225,55 @@ export default abstract class Game {
             const passingCandidatesAfter = this.findPassingCandidates(this.candidates, this.userdefinedUnitTests)
             const simplestPassingCandidateAfter = this.findSimplestPassingCandidate(this.candidates, this.userdefinedUnitTests, this.perfectCandidates)
             if (passingCandidatesAfter.length === passingCandidatesBefore.length)
-                new ComputerMessage([
-                    new Paragraph(
-                        'I added the unit test, but it looks a lot like another unit test, so I didn\'t improve the function.'
-                    ),
-                ]).show()
+                this.showGeneralUselessUnitTestMessage()
             else if (simplestPassingCandidateAfter === simplestPassingCandidateBefore)
-                new ComputerMessage([
-                    new Paragraph(
-                        'I added the unit test, but my function already passed this unit test, so I didn\'t improve the function.'
-                    ),
-                ]).show()
+                this.showCurrentlyUselessUnitTestMessage()
             else
-                new ComputerMessage([
-                    new Paragraph(
-                        'I added the unit test and I improved the function.'
-                    ),
-                ]).show()
+                this.showUsefulUnitTestMessage()
         }
         else
-            new ComputerMessage([
-                new Paragraph(
-                    'I did NOT add the unit test, because it is NOT according to the specification.'
-                ),
-            ]).show()
+            this.showIncorrectUnitTestMessage()
         this.menu()
+    }
+
+    private showHintMessage(unitTest: UnitTest): void {
+        new ComputerMessage([
+            new Paragraph('A unit test that would fail for the function is the following.'),
+            new Paragraph(unitTest.toString()),
+            new Paragraph(`The cost for this hint is ${this.PENALTYHINT}.`),
+        ]).show()
+    }
+
+    private showNoHintMessage(): void {
+        new ComputerMessage([
+            new Paragraph('I can\'t come up with a failing unit test. '),
+            new Paragraph(`The cost for this \'hint\' is ${this.PENALTYHINT}.`),
+        ]).show()
     }
 
     private showHint(): void {
         if (this.failingTestResult)
-            new ComputerMessage([
-                new Paragraph('A unit test that would fail for the function is the following.'),
-                new Paragraph(this.failingTestResult.unitTest.toString()),
-                new Paragraph(`The cost for this hint is ${this.PENALTYHINT}.`),
-            ]).show()
+            this.showHintMessage(this.failingTestResult.unitTest)
         else
-            new ComputerMessage([
-                new Paragraph('I can\'t come up with a failing unit test. '),
-                new Paragraph(`The cost for this \'hint\' is ${this.PENALTYHINT}.`),
-            ]).show()
+            this.showNoHintMessage()
         this.score -= this.PENALTYHINT
         this.menu()
     }
 
+    private showBugFoundMessage(testResult: TestResult): void {
+        new ComputerMessage([
+            new Paragraph(
+                'The function is NOT according to the specification. ' +
+                'The function produces the following incorrect output:'
+            ),
+            new Paragraph(testResult.toString()),
+            new Paragraph(`The cost for missing this issue is ${this.PENALTYBUG}.`),
+        ]).show()
+    }
+
     private submit(): void {
         if (this.failingTestResult) {
-            new ComputerMessage([
-                new Paragraph(
-                    'The function is NOT according to the specification. ' +
-                    'The function produces the following incorrect output:'
-                ),
-                new Paragraph(this.failingTestResult.toString()),
-                new Paragraph(`The cost for missing this issue is ${this.PENALTYBUG}.`),
-            ]).show()
+            this.showBugFoundMessage(this.failingTestResult)
             this.score -= this.PENALTYBUG
             this.menu()
         }
@@ -233,31 +281,43 @@ export default abstract class Game {
             this.end()
     }
 
+    private showUnsuccessfulEndMessage(): void {
+        new ComputerMessage([
+            new Paragraph(
+                'The function is NOT according to the specification. ' +
+                `Your final score is ${this.score}%.`
+            ),
+        ]).show()
+    }
+
+    private showPerfectEndMessage(): void {
+        new ComputerMessage([
+            new Paragraph(
+                'The function is according to the specification. ' +
+                `You achieved the maximum score of ${this.score}%.`
+            ),
+        ]).show()
+    }
+
+    private showSuccessfulEndMessage(): void {
+        new ComputerMessage([
+            new Paragraph(
+                'The function is according to the specification. ' +
+                `Your final score is ${this.score}%.`
+            ),
+        ]).show()
+    }
+
     private end(): void {
         if (this.failingTestResult) {
             this.score = 0
             this.showScorePanel()
-            new ComputerMessage([
-                new Paragraph(
-                    'The function is NOT according to the specification. ' +
-                    'Better luck next time!'
-                ),
-            ]).show()
+            this.showUnsuccessfulEndMessage()
         }
         else if (this.score == 100)
-            new ComputerMessage([
-                new Paragraph(
-                    'The function is according to the specification. ' +
-                    `You achieved the maximum score of ${this.score}.`
-                ),
-            ]).show()
+            this.showPerfectEndMessage()
         else
-            new ComputerMessage([
-                new Paragraph(
-                    'The function is according to the specification. ' +
-                    `Your final score is ${this.score}.`
-                ),
-            ]).show()
+            this.showSuccessfulEndMessage()
         new HighScore(
             this.constructor.name,
             this.score,

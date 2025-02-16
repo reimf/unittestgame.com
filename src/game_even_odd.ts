@@ -1,9 +1,9 @@
-import Game from './game.js'
+import { Game } from './game.js'
 import { Paragraph, Panel } from './html.js'
 import { Variable, CheckboxVariable, NumberVariable } from './variable.js'
-import UnitTest from './unit_test.js'
+import { UnitTest } from './unit_test.js'
 
-export default class EvenOdd extends Game {
+export class EvenOdd extends Game {
     public readonly description = 'EvenOdd: separate the numbers'
 
     public constructor() {

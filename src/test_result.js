@@ -1,4 +1,4 @@
-export default class TestResult {
+export class TestResult {
     constructor(candidate, unitTest) {
         this.unitTest = unitTest;
         this.unitTest = unitTest;

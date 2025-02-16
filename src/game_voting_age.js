@@ -1,8 +1,8 @@
-import Game from './game.js';
+import { Game } from './game.js';
 import { Paragraph, Panel } from './html.js';
 import { CheckboxVariable, NumberVariable } from './variable.js';
-import UnitTest from './unit_test.js';
-export default class VotingAge extends Game {
+import { UnitTest } from './unit_test.js';
+export class VotingAge extends Game {
     constructor() {
         super();
         this.description = 'VotingAge: is someone allowed to vote';

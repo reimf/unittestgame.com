@@ -1,4 +1,4 @@
-export default class UnitTest {
+export class UnitTest {
     constructor(argumentList, expected) {
         this.argumentList = argumentList;
         this.expected = expected;

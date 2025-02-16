@@ -1,7 +1,7 @@
-import UnitTest from './unit_test.js'
-import TestResult from './test_result.js'
+import { UnitTest } from './unit_test.js'
+import { TestResult } from './test_result.js'
 
-export default class Candidate {
+export class Candidate {
     private readonly function: Function
     public readonly complexity: number
 

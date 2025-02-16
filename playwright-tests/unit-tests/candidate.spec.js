@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import Candidate from '../../src/candidate.js';
+import { Candidate } from '../../src/candidate.js';
 test.describe('class Candidate', () => {
     test('computes complexity for simple function', () => {
         const candidate = new Candidate('function divide(a, b) { return a / b }');

@@ -1,4 +1,4 @@
-import Main from './src/main.js'
+import { Main } from './src/main.js'
 
 window.onerror = (message, source, lineno, colno, error) => {
     alert(`${error?.name}: ${message}\n${source}:${lineno}:${colno}`)

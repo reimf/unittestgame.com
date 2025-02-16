@@ -1,8 +1,8 @@
-import Game from './game.js';
+import { Game } from './game.js';
 import { Paragraph, Panel } from './html.js';
 import { RadioVariable, NumberVariable } from './variable.js';
-import UnitTest from './unit_test.js';
-export default class Triangle extends Game {
+import { UnitTest } from './unit_test.js';
+export class Triangle extends Game {
     constructor() {
         super();
         this.description = 'Triangle: name the triangle type';

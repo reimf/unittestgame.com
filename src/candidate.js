@@ -1,5 +1,5 @@
-import TestResult from './test_result.js';
-export default class Candidate {
+import { TestResult } from './test_result.js';
+export class Candidate {
     constructor(code) {
         this.code = code;
         this.function = new Function('return ' + code)();

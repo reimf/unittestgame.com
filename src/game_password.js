@@ -1,8 +1,8 @@
-import Game from './game.js';
+import { Game } from './game.js';
 import { Paragraph, Panel } from './html.js';
 import { CheckboxVariable, TextVariable } from './variable.js';
-import UnitTest from './unit_test.js';
-export default class Password extends Game {
+import { UnitTest } from './unit_test.js';
+export class Password extends Game {
     constructor() {
         super();
         this.description = 'Password: see if a password is strong';

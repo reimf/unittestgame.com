@@ -1,8 +1,8 @@
-import Game from './game.js';
+import { Game } from './game.js';
 import { Paragraph, Panel, Code } from './html.js';
 import { TextVariable, NumberVariable } from './variable.js';
-import UnitTest from './unit_test.js';
-export default class Speed extends Game {
+import { UnitTest } from './unit_test.js';
+export class Speed extends Game {
     constructor() {
         super();
         this.description = 'Speed: display the speed of a car';

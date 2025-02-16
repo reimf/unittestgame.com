@@ -1,14 +1,14 @@
-import Game from './game.js'
+import { Game } from './game.js'
 import { Button, Paragraph, Anchor, Span, UnorderedList, ListItem, Panel, HumanMenuMessage, ComputerMessage } from './html.js'
-import VotingAge from './game_voting_age.js'
-import EvenOdd from './game_even_odd.js'
-import LeapYear from './game_leap_year.js'
-import Triangle from './game_triangle.js'
-import Speed from './game_speed.js'
-import Float from './game_float.js'
-import Password from './game_password.js'
+import { VotingAge } from './game_voting_age.js'
+import { EvenOdd } from './game_even_odd.js'
+import { LeapYear } from './game_leap_year.js'
+import { Triangle } from './game_triangle.js'
+import { Speed } from './game_speed.js'
+import { Float } from './game_float.js'
+import { Password } from './game_password.js'
 
-export default class Main {
+export class Main {
     public static readonly instance = new Main()
     private games = [
         new VotingAge(),
@@ -49,7 +49,7 @@ export default class Main {
         return new ComputerMessage([
             new Paragraph(
                 'Welcome to UnitTestGame.com! ' +
-                'I am AI-BOT and I am hired as your co-developer. ' +
+                'I am an AI-bot and I am hired as your co-developer. ' +
                 'Your task is to prevent me from hallucinating. ' +
                 'What are we going to do now?'
             ),

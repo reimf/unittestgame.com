@@ -1,8 +1,8 @@
-import Game from './game.js';
+import { Game } from './game.js';
 import { Paragraph, Panel } from './html.js';
 import { CheckboxVariable, NumberVariable } from './variable.js';
-import UnitTest from './unit_test.js';
-export default class LeapYear extends Game {
+import { UnitTest } from './unit_test.js';
+export class LeapYear extends Game {
     constructor() {
         super();
         this.description = 'LeapYear: find the leap years';

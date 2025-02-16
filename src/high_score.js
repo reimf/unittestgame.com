@@ -1,4 +1,4 @@
-export default class HighScore {
+export class HighScore {
     constructor(name, score) {
         this.name = name;
         this.score = score;
@@ -9,7 +9,7 @@ export default class HighScore {
             storage.setItem(`${this.name}.score`, `${this.score}`);
     }
     toString() {
-        return `${this.name}: ${this.score}`;
+        return `${this.name}: ${this.score}%`;
     }
     static fromStorage(storage, name) {
         const score = storage.getItem(`${name}.score`);

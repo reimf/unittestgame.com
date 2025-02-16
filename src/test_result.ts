@@ -1,7 +1,7 @@
-import Candidate from './candidate.js'
-import UnitTest from './unit_test.js'
+import { Candidate } from './candidate.js'
+import { UnitTest } from './unit_test.js'
 
-export default class TestResult {
+export class TestResult {
     private result: any
     readonly passes: boolean
 

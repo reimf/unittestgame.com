@@ -2,15 +2,18 @@
     --dark-text: #333333;
     --light-text: #F5F5F5;
     --panel-heading-background: #800080;
-    --input-background: #4682B4;
+    --input-background: #999999;
     --human-message-background: #FFEECC;
     --general-background: #ECE5DD;
     --computer-message-background: #FFFFFF;
     --panel-background: #FFFFFF;
+    --focus-background: #FF6F20;
 }
 
-:focus {
-    outline: 0.25rem solid #FF6F20;
+:focus, label:has(input[type="checkbox"]:focus), label:has(input[type="radio"]:focus) {
+    background-color: var(--focus-background) !important;
+    color: var(--light-text) !important;
+    outline: 0.25rem solid var(--focus-background);
     outline-offset: 0.25rem;
 }
 
@@ -47,7 +50,7 @@ button {
 form {
     button {
         background-color: var(--general-background);
-        color: var(--input-background);
+        color: var(--dark-text);
         display: inline;
         height: 2.5rem;
         margin: 0;
@@ -74,18 +77,26 @@ form {
         font-size: inherit;
         height: 2rem;
         margin: 0 0 0 0.75rem;
-        padding: 0 0.75rem;
+        padding: 0 0.5rem;
         width: 8rem;
     }
 
     input[type="checkbox"] {
         border-radius: 0.25rem;
-        margin: 0 0.75rem 0 0;
+        margin: 0 0.75rem 0 0.25rem;
         vertical-align: 0.1rem;
+
+        &:focus {
+            outline: none;
+        }
     }
 
     input[type="radio"] {
         margin: 0 0.5rem 0 0.75rem;
+
+        &:focus {
+            outline: none;
+        }
     }
 
     input[type="submit"] {
@@ -115,6 +126,10 @@ form {
             &:hover {
                 cursor: pointer;
             }
+        }
+
+        &:has(input[type="checkbox"]) {
+            padding-right: 0.25rem;
         }
     }
 }

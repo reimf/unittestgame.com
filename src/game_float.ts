@@ -1,9 +1,9 @@
-import Game from './game.js'
+import { Game } from './game.js'
 import { Paragraph, Panel } from './html.js'
 import { Variable, CheckboxVariable, TextVariable } from './variable.js'
-import UnitTest from './unit_test.js'
+import { UnitTest } from './unit_test.js'
 
-export default class Float extends Game {
+export class Float extends Game {
     public readonly description = 'Float: check the format'
 
     public constructor() {
