@@ -1,6 +1,5 @@
 import Main from './main.js'
-import Theme from './theme.js'
-import { Button, Form, Panel, HumanMenuMessage, ComputerMessage } from './html.js'
+import { Button, Form, Paragraph, UnorderedList, ListItem, Code, Span, Panel, HumanMessage, HumanMenuMessage, ComputerMessage } from './html.js'
 import HighScore from './high_score.js'
 import Candidate from './candidate.js'
 import UnitTest from './unit_test.js'
@@ -13,7 +12,6 @@ export default abstract class Game {
     private readonly PENALTYBUG = 20
     private readonly PENALTYEND = 100
 
-    public readonly abstract theme: Theme
     public readonly abstract description: string
     private parameters: Variable[] = this.getParameters()
     private unit: Variable = this.getUnit()
@@ -31,11 +29,14 @@ export default abstract class Game {
     protected abstract getCandidateElements(): string[][]
     protected abstract getMinimalUnitTests(): UnitTest[]
     protected abstract hintGenerator(): Generator<any[]>
-    protected abstract introductionMessage(): ComputerMessage
     protected abstract specificationPanel(): Panel
 
     protected constructor() {
         this.checkUnitTestsAreNeeded(this.candidates, this.minimalUnitTests)
+    }
+
+    public highScore(): HighScore | null {
+        return HighScore.fromStorage(localStorage, this.constructor.name)
     }
 
     protected randomElementFrom(list: any[]): any {
@@ -96,18 +97,36 @@ export default abstract class Game {
         return this.randomElementFrom(candidatesWithMinimumComplexity)
     }
 
+    public showScorePanel(): void {
+        new Panel('Score', [
+            new Paragraph(`${this.score}`),
+        ]).show('score')
+    }
+
     public play(): void {
         this.specificationPanel().show('specification')
-        this.introductionMessage().show()
-        this.theme.contractMessage(this.INITIALSCORE, this.PENALTYHINT, this.PENALTYBUG).show()
+        new ComputerMessage([
+            new Paragraph(
+                'In the sidebar you see the specification, ' +
+                'the unit tests you have written and ' +
+                'the function I wrote that passes all the unit tests. ' +
+                'Keep adding unit tests until the function is according to the specification.'
+            ),
+        ]).show()
         this.menu()
     }
 
     private menu(): void {
-        this.theme.unitTestsPanel(this.userdefinedUnitTests).show('unit-tests')
+        new Panel('Unit Tests', [
+            new UnorderedList(
+                this.userdefinedUnitTests.map(unitTest => new ListItem(new Span(unitTest.toString())))
+            ).ifEmpty('You have not written any unit tests yet.'),
+        ]).show('unit-tests')
 
         const simplestPassingCandidate = this.findSimplestPassingCandidate(this.candidates, this.userdefinedUnitTests, this.perfectCandidates)
-        this.theme.currentCandidatePanel(simplestPassingCandidate).show('current-candidate')
+        new Panel('Function', [
+            new Code(simplestPassingCandidate.toString()),
+        ]).show('current-candidate')
 
         const failingTestResultsHints = simplestPassingCandidate.failingTestResults(this.hints)
         const failingTestResultsUnitTests = simplestPassingCandidate.failingTestResults(this.minimalUnitTests)
@@ -116,31 +135,36 @@ export default abstract class Game {
             ? this.randomElementFrom(failingTestResultsToChooseFrom)
             : undefined
 
-        this.theme.scorePanel(this.score).show('score')
+        this.showScorePanel()
         new HumanMenuMessage([
-            new Button(this.theme.formUnitTestButtonText(), () => this.showFormUnitTest()),
-            new Button(this.theme.showHintButtonText(this.PENALTYHINT), () => this.showHint()),
-            new Button(this.theme.submitButtonText(this.PENALTYBUG), () => this.submit()),
-            new Button(this.theme.endButtonText(this.PENALTYEND), () => this.end()),
+            new Button('I want to add a unit test', () => this.showFormUnitTest()),
+            new Button(`I want to see a hint for a unit test (-${this.PENALTYHINT})`, () => this.showHint()),
+            new Button(`I want to submit the unit tests (-${this.PENALTYBUG}?)`, () => this.submit()),
+            new Button(`I want to end the game (-${this.PENALTYEND}?)`, () => this.end()),
         ]).show()
     }
 
     private showFormUnitTest(): void {
-        const form = new Form(
-            [...this.parameters, this.unit].map(variable => variable.toHtml()),
-            this.theme.addUnitTestFormButtonText(),
-            () => this.addUnitTest(),
-            this.theme.cancelUnitTestFormButtonText(),
-            () => this.menu()
-        )
-        this.theme.addUnitTestFormMessage(form).replace()
+        new HumanMessage([
+            new Paragraph('I want to add a unit test.'),
+            new Form(
+                [...this.parameters, this.unit].map(variable => variable.toHtml()),
+                'I want to add this unit test',
+                () => this.addUnitTest(),
+                'I don\'t want to add a unit test now',
+                () => this.menu()
+            )
+        ]).replace()
     }
 
     private addUnitTest(): void {
         const argumentList = this.parameters.map(parameter => parameter.value())
         const expected = this.unit.value()
         const unitTest = new UnitTest(argumentList, expected)
-        this.theme.addUnitTestTextMessage(unitTest).replace()
+        new HumanMessage([
+            new Paragraph('I want to add the following unit test:'),
+            new Paragraph(unitTest.toString()),
+        ]).replace()
         const testResult = new TestResult(this.perfectCandidate, unitTest)
         if (testResult.passes) {
             const passingCandidatesBefore = this.findPassingCandidates(this.candidates, this.userdefinedUnitTests)
@@ -149,29 +173,59 @@ export default abstract class Game {
             const passingCandidatesAfter = this.findPassingCandidates(this.candidates, this.userdefinedUnitTests)
             const simplestPassingCandidateAfter = this.findSimplestPassingCandidate(this.candidates, this.userdefinedUnitTests, this.perfectCandidates)
             if (passingCandidatesAfter.length === passingCandidatesBefore.length)
-                this.theme.overallUselessUnitTestMessage().show()
+                new ComputerMessage([
+                    new Paragraph(
+                        'I added the unit test, but it looks a lot like another unit test, so I didn\'t improve the function.'
+                    ),
+                ]).show()
             else if (simplestPassingCandidateAfter === simplestPassingCandidateBefore)
-                this.theme.currentlyUselessUnitTestMessage().show()
+                new ComputerMessage([
+                    new Paragraph(
+                        'I added the unit test, but my function already passed this unit test, so I didn\'t improve the function.'
+                    ),
+                ]).show()
             else
-                this.theme.usefulUnitTestMessage().show()
+                new ComputerMessage([
+                    new Paragraph(
+                        'I added the unit test and I improved the function.'
+                    ),
+                ]).show()
         }
         else
-            this.theme.incorrectUnitTestMessage().show()
+            new ComputerMessage([
+                new Paragraph(
+                    'I did NOT add the unit test, because it is NOT according to the specification.'
+                ),
+            ]).show()
         this.menu()
     }
 
     private showHint(): void {
         if (this.failingTestResult)
-            this.theme.hintUnitTestMessage(this.failingTestResult.unitTest, this.PENALTYHINT).show()
+            new ComputerMessage([
+                new Paragraph('A unit test that would fail for the function is the following.'),
+                new Paragraph(this.failingTestResult.unitTest.toString()),
+                new Paragraph(`The cost for this hint is ${this.PENALTYHINT}.`),
+            ]).show()
         else
-            this.theme.noHintUnitTestMessage(this.PENALTYHINT).show()
+            new ComputerMessage([
+                new Paragraph('I can\'t come up with a failing unit test. '),
+                new Paragraph(`The cost for this \'hint\' is ${this.PENALTYHINT}.`),
+            ]).show()
         this.score -= this.PENALTYHINT
         this.menu()
     }
 
     private submit(): void {
         if (this.failingTestResult) {
-            this.theme.bugFoundMessage(this.failingTestResult, this.PENALTYBUG).show()
+            new ComputerMessage([
+                new Paragraph(
+                    'The function is NOT according to the specification. ' +
+                    'The function produces the following incorrect output:'
+                ),
+                new Paragraph(this.failingTestResult.toString()),
+                new Paragraph(`The cost for missing this issue is ${this.PENALTYBUG}.`),
+            ]).show()
             this.score -= this.PENALTYBUG
             this.menu()
         }
@@ -182,19 +236,31 @@ export default abstract class Game {
     private end(): void {
         if (this.failingTestResult) {
             this.score = 0
-            this.theme.scorePanel(this.score).show('score')
-            this.theme.endWithBugMessage().show()
+            this.showScorePanel()
+            new ComputerMessage([
+                new Paragraph(
+                    'The function is NOT according to the specification. ' +
+                    'Better luck next time!'
+                ),
+            ]).show()
         }
         else if (this.score == 100)
-            this.theme.endPerfectMessage(this.score).show()
-        else if (this.score > 50)
-            this.theme.endPositiveMessage(this.score).show()
+            new ComputerMessage([
+                new Paragraph(
+                    'The function is according to the specification. ' +
+                    `You achieved the maximum score of ${this.score}.`
+                ),
+            ]).show()
         else
-            this.theme.endNegativeMessage(this.score).show()
+            new ComputerMessage([
+                new Paragraph(
+                    'The function is according to the specification. ' +
+                    `Your final score is ${this.score}.`
+                ),
+            ]).show()
         new HighScore(
             this.constructor.name,
             this.score,
-            this.theme.formatScore(this.score),
         ).save(localStorage)
         Main.instance.restart()
     }

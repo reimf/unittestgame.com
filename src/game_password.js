@@ -1,24 +1,17 @@
 import Game from './game.js';
-import Company from './theme_company.js';
-import { Paragraph, Panel, ComputerMessage } from './html.js';
+import { Paragraph, Panel } from './html.js';
 import { CheckboxVariable, TextVariable } from './variable.js';
 import UnitTest from './unit_test.js';
 export default class Password extends Game {
     constructor() {
         super();
-        this.theme = Company.instance;
-        this.description = 'I want to review a function that determines whether a password is strong enough';
-    }
-    introductionMessage() {
-        return new ComputerMessage([
-            new Paragraph('An online store needs a function to check whether a password is strong enough. ' +
-                'Customers must be able to rely on their data being well protected.'),
-        ]);
+        this.description = 'Password: see if a password is strong';
     }
     specificationPanel() {
         return new Panel('Specification', [
-            new Paragraph('The password must be at least 5 characters long and ' +
-                'contain an uppercase letter, ' +
+            new Paragraph('Return true if the password is strong and return false if the password is not strong. ' +
+                'A password is strong if it contains at least 5 characters, ' +
+                'an uppercase letter, ' +
                 'a lowercase letter and ' +
                 'a special character ("#" or "@").'),
         ]);

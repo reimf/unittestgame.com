@@ -1,32 +1,22 @@
 import Game from './game.js'
-import Company from './theme_company.js'
-import { Paragraph, Panel, ComputerMessage } from './html.js'
+import { Paragraph, Panel, Code } from './html.js'
 import { Variable, TextVariable, NumberVariable } from './variable.js'
 import UnitTest from './unit_test.js'
 
 export default class Speed extends Game {
-    public readonly theme = Company.instance
-    public readonly description = 'I want to review a function that displays the speed of a car on a small display'
+    public readonly description = 'Speed: display the speed of a car'
 
     public constructor() {
         super()
     }
 
-    protected introductionMessage(): ComputerMessage {
-        return new ComputerMessage([
-            new Paragraph(
-                'A Chinese gadget maker needs a function to display the average speed on a small display. ' +
-                'Drivers rely on the displayed information to be correct, so there must be no errors.'
-            ),
-        ])
-    }
-
     protected specificationPanel(): Panel {
         return new Panel('Specification', [
             new Paragraph(
-                'The function receives speed in meters per hour and must display the speed in kilometers per hour.'
+                'Return the correct display output. ' +
+                'The function receives the speed in meters per hour and must display the speed in kilometers per hour.'
             ),
-            new Paragraph(
+            new Code(
                 '+-------------------+\n' +
                 '|  X   XXXX   XXXX  |\n' +
                 '|  X   X  X   X  X  |\n' +
@@ -37,11 +27,11 @@ export default class Speed extends Game {
             ),
             new Paragraph(
                 'If something is wrong with the speed (for example, if it is negative), ' +
-                'then the function must return "ERROR" because the display will start blinking slowly. ' +
+                'then the function must return "ERROR" and the display will start blinking slowly. ' +
                 'If possible, show one decimal place, for example, "12.3". ' +
                 'Otherwise, round to whole kilometers per hour, such as "49". ' +
                 'If the speed no longer fits on the display, ' +
-                'then the function must return "DANGER" because the display will start blinking rapidly.'
+                'then the function must return "DANGER" and the display will start blinking rapidly.'
             ),
         ])
     }

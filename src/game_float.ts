@@ -1,46 +1,35 @@
 import Game from './game.js'
-import Company from './theme_company.js'
-import { Paragraph, Panel, ComputerMessage } from './html.js'
+import { Paragraph, Panel } from './html.js'
 import { Variable, CheckboxVariable, TextVariable } from './variable.js'
 import UnitTest from './unit_test.js'
 
 export default class Float extends Game {
-    public readonly theme = Company.instance
-    public readonly description = 'I want to review a function that uses a regular expression to determine whether a text represents a float'
+    public readonly description = 'Float: check the format'
 
     public constructor() {
         super()
     }
 
-    protected introductionMessage(): ComputerMessage {
-        return new ComputerMessage([
-            new Paragraph(
-                'A laboratory needs a function to check whether measured values have been entered correctly. ' +
-                'The lab technicians will perform ciritcal calculations with these numbers, so there must be no errors.'
-            ),
-        ])
-    }
-
     protected specificationPanel(): Panel {
         return new Panel('Specification', [
             new Paragraph(
-                'The function must determine whether a text represents a float and returns true or false accordingly. ' +
-                'A float may start with a plus sign or a minus sign. ' +
+                'Return true if the text represents a float and returns false if it doesn\'t. ' +
+                'A float may start with a plus or a minus sign. ' +
                 'This is followed by one or more digits. ' +
-                'If there is a dot, at least one digit must follow.'
+                'If that is followed by a dot, one or more digit must follow.'
             ),
         ])
     }
 
     protected getParameters(): Variable[] {
         return [
-            new TextVariable('Tekst', 'text')
+            new TextVariable('Text', 'text')
         ]
     }
 
     protected getUnit(): Variable {
         return new CheckboxVariable(
-            'Is het een kommagetal?',
+            'Does it represent a float?',
             'isFloat'
         )
     }

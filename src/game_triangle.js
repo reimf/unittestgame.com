@@ -1,25 +1,18 @@
 import Game from './game.js';
-import School from './theme_school.js';
-import { Paragraph, Panel, ComputerMessage } from './html.js';
+import { Paragraph, Panel } from './html.js';
 import { RadioVariable, NumberVariable } from './variable.js';
 import UnitTest from './unit_test.js';
 export default class Triangle extends Game {
     constructor() {
         super();
-        this.theme = School.instance;
-        this.description = 'I want to write better unit tests for a triangle type checker';
-    }
-    introductionMessage() {
-        return new ComputerMessage([
-            new Paragraph('Students are instructed to write a function that determines the type of a triangle.')
-        ]);
+        this.description = 'Triangle: name the triangle type';
     }
     specificationPanel() {
         return new Panel('Specification', [
-            new Paragraph('A triangle can be classified based on the lengths of its sides as equilateral, isosceles or scalene. ' +
-                'All three sides of an equilateral triangle have the same length. ' +
-                'An isosceles triangle has two sides that are the same length, and a third side that is a different length ' +
-                'If all of the sides have different lengths then the triangle is scalene.'),
+            new Paragraph('Return the type of the triangle: equilateral, isosceles or scalene. ' +
+                'A triangle is equilateral if all three sides have the same length. ' +
+                'A triangle is isosceles if two sides have the same length and a third side has a different length. ' +
+                'A triangle is scalene if all three sides have different lengths.'),
         ]);
     }
     getParameters() {

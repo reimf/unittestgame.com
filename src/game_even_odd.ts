@@ -1,29 +1,19 @@
 import Game from './game.js'
-import AIBot from './theme_aibot.js'
-import { Paragraph, Panel, ComputerMessage } from './html.js'
+import { Paragraph, Panel } from './html.js'
 import { Variable, CheckboxVariable, NumberVariable } from './variable.js'
 import UnitTest from './unit_test.js'
 
-export default class Evenodd extends Game {
-    public readonly theme = AIBot.instance
-    public readonly description = 'I want to write unit tests for a function that checks if a number is even or odd'
+export default class EvenOdd extends Game {
+    public readonly description = 'EvenOdd: separate the numbers'
 
     public constructor() {
         super()
     }
 
-    protected introductionMessage(): ComputerMessage {
-        return new ComputerMessage([
-            new Paragraph(
-                'All integer numbers are even or odd.'
-            )
-        ])
-    }
-
     protected specificationPanel(): Panel {
         return new Panel('Specification', [
             new Paragraph(
-                'A number is even if it is divisible by 2, otherwise it is odd.'
+                'Return true if the number is even and false if it is odd.'
             ),
         ])
     }

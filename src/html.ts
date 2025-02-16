@@ -110,6 +110,12 @@ export class UnorderedList extends Html {
         super('ul')
         this.appendChildren(listItems)
     }
+
+    public ifEmpty(text: string): Html {
+        if (this.element.childElementCount > 0)
+            return this
+        return new Paragraph(text)
+    }
 }
 
 export class ListItem extends Html {

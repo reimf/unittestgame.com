@@ -1,37 +1,26 @@
 import Game from './game.js'
-import Company from './theme_company.js'
-import { Paragraph, Panel, ComputerMessage } from './html.js'
+import { Paragraph, Panel } from './html.js'
 import { Variable, CheckboxVariable, TextVariable } from './variable.js'
 import UnitTest from './unit_test.js'
 
 export default class Password extends Game {
-    public readonly theme = Company.instance
-    public readonly description = 'I want to review a function that determines whether a password is strong enough'
+    public readonly description = 'Password: see if a password is strong'
 
     public constructor() {
         super()
     }
 
-    protected introductionMessage(): ComputerMessage {
-        return new ComputerMessage([
-            new Paragraph(
-                'An online store needs a function to check whether a password is strong enough. ' +
-                'Customers must be able to rely on their data being well protected.'
-            ),
-        ])
-    }
-
     protected specificationPanel(): Panel {
         return new Panel('Specification', [
             new Paragraph(
-                'The password must be at least 5 characters long and ' +
-                'contain an uppercase letter, ' +
+                'Return true if the password is strong and return false if the password is not strong. ' +
+                'A password is strong if it contains at least 5 characters, ' +
+                'an uppercase letter, ' +
                 'a lowercase letter and ' +
                 'a special character ("#" or "@").'
             ),
         ])
     }
-
 
     protected getParameters(): Variable[] {
         return [

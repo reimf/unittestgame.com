@@ -3,6 +3,7 @@
 ## Class Diagram
 ```mermaid
 classDiagram
+direction LR
 class Section
 Html <|-- Section
 
@@ -46,13 +47,6 @@ class Game {
     <<Abstract>>
     +theme: Theme*
     +description: string*
-    #getParameters() Variable[]*
-    #getUnit() Variable*
-    #getCandidateElements() string[][]*
-    #getMinimalUnitTests() UnitTest[]*
-    #hintGenerator() Generator~any[], any, unknown~*
-    #introductionMessage() ComputerMessage*
-    #specificationPanel() Panel*
     +play() void
     -menu() void
     -showFormUnitTest() void
@@ -68,7 +62,7 @@ class HighScore {
     -achievement: string
     +save() void
     +toString() string
-    +fromLocalStorage() HighScore$
+    +fromStorage() HighScore$
 }
 
 class Html {
@@ -126,8 +120,6 @@ Html <|-- Code
 
 class Main {
     +instance: Main$
-    -highScorePanel() Panel
-    -welcomeMessage() ComputerMessage
     +start() void
     -themeMenu() void
     -gameMenu() void
@@ -182,31 +174,6 @@ class Theme {
     <<Abstract>>
     +instance Theme$
     +description string*
-    +addUnitTestFormButtonText() string*
-    +cancelUnitTestFormButtonText() string*
-    +contractMessage() ComputerMessage*
-    +formUnitTestButtonText() string*
-    +showHintButtonText() string*
-    +submitButtonText() string*
-    +endButtonText() string*
-    +unitTestsPanel() Panel*
-    +currentCandidatePanel() Panel*
-    +scorePanel() Panel*
-    +addUnitTestFormMessage() HumanMessage*
-    +cancelUnitTestFormMessage() HumanMessage*
-    +addUnitTestTextMessage() HumanMessage*
-    +hintUnitTestMessage() ComputerMessage*
-    +noHintUnitTestMessage() ComputerMessage*
-    +bugFoundMessage() ComputerMessage*
-    +endWithBugMessage() ComputerMessage*
-    +endPerfectMessage() ComputerMessage*
-    +endPositiveMessage() ComputerMessage*
-    +endNegativeMessage() ComputerMessage*
-    +overallUselessUnitTestMessage() ComputerMessage*
-    +currentlyUselessUnitTestMessage() ComputerMessage*
-    +usefulUnitTestMessage() ComputerMessage*
-    +incorrectUnitTestMessage() ComputerMessage*
-    +formatScore() string*
 }
 
 class UnitTest {
@@ -240,7 +207,6 @@ UnitTest "1" <--> "*" TestResult
 Candidate "1" <--> "*" TestResult
 Game "1" <--> "*" Variable
 Main "1" <--> "*" Game
-Main "1" <--> "*" HighScore
 Game "1" <--> "0..1" HighScore
 Game "1" <--> "*" Panel
 Game "1" <--> "*" Message

@@ -1,21 +1,20 @@
 export default class HighScore {
-    public constructor(private name: string, private score: number, private achievement: string) { }
+    public constructor(private name: string, private score: number) { }
 
     public save(storage: Storage): void {
         const oldHighScore = HighScore.fromStorage(storage, this.name)
         if (!oldHighScore || this.score > oldHighScore.score)
-            storage.setItem(`${this.name}.highScore`, [this.score, this.achievement].join('|'))
+            storage.setItem(`${this.name}.score`, `${this.score}`)
     }
 
     public toString(): string {
-        return `${this.name}: ${this.achievement}`
+        return `${this.name}: ${this.score}`
     }
 
-    public static fromStorage(storage: Storage, name: string): HighScore | null{
-        const content = storage.getItem(`${name}.highScore`)
-        if (!content)
+    public static fromStorage(storage: Storage, name: string): HighScore | null {
+        const score = storage.getItem(`${name}.score`)
+        if (!score)
             return null
-        const [score, achievement] = content.split('|')
-        return new HighScore(name, Number(score), achievement)
+        return new HighScore(name, Number(score))
     }
 }

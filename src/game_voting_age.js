@@ -1,22 +1,15 @@
 import Game from './game.js';
-import Intro from './theme_intro.js';
-import { Paragraph, Panel, ComputerMessage } from './html.js';
+import { Paragraph, Panel } from './html.js';
 import { CheckboxVariable, NumberVariable } from './variable.js';
 import UnitTest from './unit_test.js';
 export default class VotingAge extends Game {
     constructor() {
         super();
-        this.theme = Intro.instance;
-        this.description = 'I want to write unit tests for a function that checks if a person is allowed to vote based on their age';
-    }
-    introductionMessage() {
-        return new ComputerMessage([
-            new Paragraph('A government needs a function that determines whether someone is allowed to vote or not.')
-        ]);
+        this.description = 'VotingAge: is someone allowed to vote';
     }
     specificationPanel() {
         return new Panel('Specification', [
-            new Paragraph('If you are 18 years or over, you are allowed to vote.'),
+            new Paragraph('Return true if the age is 18 years or over and return false if the age is under 18.'),
         ]);
     }
     getParameters() {

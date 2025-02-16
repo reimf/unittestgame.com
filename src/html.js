@@ -89,6 +89,11 @@ export class UnorderedList extends Html {
         super('ul');
         this.appendChildren(listItems);
     }
+    ifEmpty(text) {
+        if (this.element.childElementCount > 0)
+            return this;
+        return new Paragraph(text);
+    }
 }
 export class ListItem extends Html {
     constructor(child) {

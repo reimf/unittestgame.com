@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-test.describe('theme menu', () => {
+test.describe('game menu', () => {
     test.beforeEach(async ({ page }) => {
         await page.goto('http://localhost:5500/');
     });
@@ -30,10 +30,13 @@ test.describe('theme menu', () => {
         const messages = page.locator('#messages');
         const buttons = messages.locator('button');
         await expect(buttons).toHaveText([
-            'I want to have a nice introduction into this game',
-            'I want to ensure an AI-bot functions correctly',
-            'I want to write better unit tests for student assignments',
-            'I want to review the work of an external software company',
+            'VotingAge: is someone allowed to vote',
+            'EvenOdd: separate the numbers',
+            'LeapYear: find the leap years',
+            'Triangle: name the triangle type',
+            'Float: check the format',
+            'Password: see if a password is strong',
+            'Speed: display the speed of a car',
         ]);
     });
 });
