@@ -71,8 +71,9 @@ export abstract class Level {
     }
 
     private saveScore(storage: Storage): void {
-        if (!this.hasHighScore(storage) || this.score > this.getHighScore(storage))
-            storage.setItem(`${this.name}.score`, `${this.score}`)
+        if (this.score <= this.getHighScore(storage))
+            return
+        storage.setItem(`${this.name}.score`, `${this.score}`)
     }
 
     private *generateCandidates(listOfListOfLines: string[][], lines: string[] = []): Generator<Candidate> {

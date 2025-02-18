@@ -53,8 +53,9 @@ export class Level {
         return this.getHighScore(storage) > 0;
     }
     saveScore(storage) {
-        if (!this.hasHighScore(storage) || this.score > this.getHighScore(storage))
-            storage.setItem(`${this.name}.score`, `${this.score}`);
+        if (this.score <= this.getHighScore(storage))
+            return;
+        storage.setItem(`${this.name}.score`, `${this.score}`);
     }
     *generateCandidates(listOfListOfLines, lines = []) {
         if (listOfListOfLines.length > 0) {
