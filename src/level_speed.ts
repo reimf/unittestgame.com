@@ -1,17 +1,17 @@
-import { Game } from './game.js'
+import { Level } from './level.js'
 import { Paragraph, Panel, Code } from './html.js'
 import { Variable, TextVariable, NumberVariable } from './variable.js'
 import { UnitTest } from './unit_test.js'
 
-export class Speed extends Game {
-    public readonly description = 'Speed: display the speed of a car'
+export class Speed extends Level {
+    public readonly description = 'display the speed of a car'
 
-    public constructor() {
-        super()
+    public constructor(index: number) {
+        super(index)
     }
 
-    protected specificationPanel(): Panel {
-        return new Panel('Specification', [
+    public showSpecificationPanel(): void {
+        new Panel('Specification', [
             new Paragraph(
                 'Return the correct display output. ' +
                 'The function receives the speed in meters per hour and must display the speed in kilometers per hour.'
@@ -33,23 +33,23 @@ export class Speed extends Game {
                 'If the speed no longer fits on the display, ' +
                 'then the function must return "DANGER" and the display will start blinking rapidly.'
             ),
-        ])
+        ]).show('specification')
     }
 
-    protected getParameters(): Variable[] {
+    public getParameters(): Variable[] {
         return [
             new NumberVariable('Speed in meters per hour', 'speed')
         ]
     }
 
-    protected getUnit(): Variable {
+    public getUnit(): Variable {
         return new TextVariable(
             'Expected display output',
             'display'
         )
     }
 
-    protected getCandidateElements(): string[][] {
+    public getCandidateElements(): string[][] {
         return [
             [
                 'if (speed < 0) return "ERROR"',
@@ -80,7 +80,7 @@ export class Speed extends Game {
         ]
     }
 
-    protected getMinimalUnitTests(): UnitTest[] {
+    public getMinimalUnitTests(): UnitTest[] {
         return [
             new UnitTest([-1], 'ERROR'),
             new UnitTest([0], '0.0'),
@@ -91,7 +91,7 @@ export class Speed extends Game {
         ]
     }
 
-    protected *hintGenerator(): Generator<any[]> {
+    public *hintGenerator(): Generator<any[]> {
         yield [-1000]
         for (let speed = 0; speed <= 27000; speed += 900)
             yield [speed]

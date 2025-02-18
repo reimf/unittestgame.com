@@ -1,26 +1,26 @@
-import { Game } from './game.js'
+import { Level } from './level.js'
 import { Paragraph, Panel } from './html.js'
 import { Variable, CheckboxVariable, NumberVariable } from './variable.js'
 import { UnitTest } from './unit_test.js'
 
-export class LeapYear extends Game {
-    public readonly description = 'LeapYear: find the leap years'
+export class LeapYear extends Level {
+    public readonly description = 'find the leap years'
 
-    public constructor() {
-        super()
+    public constructor(index: number) {
+        super(index)
     }
 
-    protected specificationPanel(): Panel {
-        return new Panel('Specification', [
+    public showSpecificationPanel(): void {
+        new Panel('Specification', [
             new Paragraph(
                 'Return true if the year is a leap year and return false if the year is not a leap year. ' +
                 'A year is a leap year if it is divisible by 4. ' +
                 'The exception is that years that are divisible by 100 are not leap years, unless they are also divisible by 400.'
             ),
-        ])
+        ]).show('specification')
     }
 
-    protected getParameters(): Variable[] {
+    public getParameters(): Variable[] {
         return [
             new NumberVariable(
                 'Year',
@@ -29,14 +29,14 @@ export class LeapYear extends Game {
         ]
     }
 
-    protected getUnit(): Variable {
+    public getUnit(): Variable {
         return new CheckboxVariable(
             'Is it a leap year?',
             'isLeapYear'
         )
     }
 
-    protected getCandidateElements(): string[][] {
+    public getCandidateElements(): string[][] {
         return [
             [
                 'if (year % 400 == 0) return true',
@@ -64,7 +64,7 @@ export class LeapYear extends Game {
         ]
     }
 
-    protected getMinimalUnitTests(): UnitTest[] {
+    public getMinimalUnitTests(): UnitTest[] {
         return [
             new UnitTest([2001], false),
             new UnitTest([2002], false),
@@ -74,7 +74,7 @@ export class LeapYear extends Game {
         ]
     }
 
-    protected *hintGenerator(): Generator<any[]> {
+    public *hintGenerator(): Generator<any[]> {
         for (let year = 2001; year <= 2030; year += 1)
             yield [year]
         for (let year = 1000; year <= 3000; year += 100)

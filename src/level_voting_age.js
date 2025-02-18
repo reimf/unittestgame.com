@@ -1,16 +1,16 @@
-import { Game } from './game.js';
+import { Level } from './level.js';
 import { Paragraph, Panel } from './html.js';
 import { CheckboxVariable, NumberVariable } from './variable.js';
 import { UnitTest } from './unit_test.js';
-export class VotingAge extends Game {
-    constructor() {
-        super();
-        this.description = 'VotingAge: is someone allowed to vote';
+export class VotingAge extends Level {
+    constructor(index) {
+        super(index);
+        this.description = 'are you allowed to vote';
     }
-    specificationPanel() {
-        return new Panel('Specification', [
+    showSpecificationPanel() {
+        new Panel('Specification', [
             new Paragraph('Return true if the age is 18 years or over and return false if the age is under 18.'),
-        ]);
+        ]).show('specification');
     }
     getParameters() {
         return [

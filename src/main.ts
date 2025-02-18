@@ -1,85 +1,69 @@
-import { Game } from './game.js'
+import { Level } from './level.js'
 import { Button, Paragraph, Anchor, Div, UnorderedList, Panel, HumanMenuMessage, ComputerMessage } from './html.js'
-import { VotingAge } from './game_voting_age.js'
-import { EvenOdd } from './game_even_odd.js'
-import { LeapYear } from './game_leap_year.js'
-import { Triangle } from './game_triangle.js'
-import { Speed } from './game_speed.js'
-import { Float } from './game_float.js'
-import { Password } from './game_password.js'
+import { VotingAge } from './level_voting_age.js'
+import { EvenOdd } from './level_even_odd.js'
+import { LeapYear } from './level_leap_year.js'
+import { Triangle } from './level_triangle.js'
+import { Speed } from './level_speed.js'
+import { Float } from './level_float.js'
+import { Password } from './level_password.js'
 
 export class Main {
     public static readonly instance = new Main()
-    private games = [
-        new VotingAge(),
-        new EvenOdd(),
-        new LeapYear(),
-        new Triangle(),
-        new Float(),
-        new Password(),
-        new Speed(),
+    private levels = [
+        new VotingAge(1),
+        new EvenOdd(2),
+        new LeapYear(3),
+        new Triangle(4),
+        new Float(5),
+        new Password(6),
+        new Speed(7),
     ]
 
     private constructor() { }
 
-    private aboutPanel(): Panel {
+    private showAboutPanel(): void {
         const learnParagraph = new Paragraph('Learn Unit Testing with UnitTestGame.com')
         const anchor = new Anchor('mailto:feedback@unittestgame.com')
         anchor.appendText('feedback@unittestgame.com')
         const feedbackParagraph = new Paragraph('Please send us ')
         feedbackParagraph.appendChild(anchor)
-        return new Panel('About', [
+        new Panel('About', [
             learnParagraph,
             feedbackParagraph
-        ])
+        ]).show('about')
     }
 
-    private highScorePanel(): Panel {
-        return new Panel('High Scores', [
-            new UnorderedList(
-                this.games.
-                map(game => game.highScore()).
-                filter(highScore => highScore !== null).
-                map(highScore => new Div().appendText(highScore.toString()))
-            ).ifEmpty('You have not played a game yet.'),
-        ])
-    }
-
-    private welcomeMessage(): ComputerMessage {
-        return new ComputerMessage([
+    private showWelcomeMessage(): void {
+        new ComputerMessage([
             new Paragraph(
                 'Welcome to UnitTestGame.com! ' +
                 'I am an AI-bot and I am hired as your co-developer. ' +
                 'Your task is to prevent me from hallucinating. ' +
                 'What are we going to do now?'
             ),
-        ])
+        ]).show()
     }
 
     public start(): void {
-        this.aboutPanel().show('about')
-        this.welcomeMessage().show()
-        this.highScorePanel().show('high-scores')
-        this.gameMenu()
+        this.showAboutPanel()
+        this.showWelcomeMessage()
+        this.showLevelMenu()
     }
 
-    private gameMenu(): void {
+    public showLevelMenu(): void {
+        const unlockedIndex = this.levels.find(level => !level.hasHighScore(localStorage))?.index || this.levels.length
         new HumanMenuMessage(
-            this.games.map(game => new Button(game.description, () => this.playGame(game))),
-        ).show()
+            this.levels.map(level =>
+                new Button(level.buttonText(localStorage, unlockedIndex), () => this.playLevel(level))
+                .disabled(level.index > unlockedIndex)
+            ),
+        ).show().focusLast()
     }
 
-    private playGame(game: Game): void {
+    private playLevel(level: Level): void {
         Panel.remove('about')
         Panel.remove('high-scores')
-        game.play()
-    }
-
-    public restart(): void {
-        this.highScorePanel().show('high-scores')
-        new HumanMenuMessage([
-            new Button('Pick another task', () => this.gameMenu()),
-            new Button('Close UnitTestGame.com', () => window.close()),
-        ]).show()
+        level.play()
     }
 }

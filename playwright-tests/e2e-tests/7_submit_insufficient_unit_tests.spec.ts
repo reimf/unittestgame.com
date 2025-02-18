@@ -3,8 +3,8 @@ import { test, expect } from '@playwright/test'
 test.describe('submit insufficient unit test', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('http://localhost:5500/')
-    await page.getByText('VotingAge: is someone allowed to vote').click()
-    await page.getByText('I want to submit the unit tests').click()
+    await page.getByRole('button', { name: /VotingAge/i }).click()
+    await page.getByRole('button', { name: 'I want to submit the unit tests'}).click()
   })
 
   test('has bug found message', async ({ page }) => {
@@ -24,7 +24,7 @@ test.describe('submit insufficient unit test', () => {
       'I want to add a unit test',
       'I want to see a hint for a unit test (-10%)',
       'I want to submit the unit tests (-20%?)',
-      'I want to end the game (-100%?)',
+      'I want to exit this level (-100%?)',
     ])
   })
 })

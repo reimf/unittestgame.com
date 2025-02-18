@@ -8,9 +8,9 @@ class Main {
     +instance: Main$
     +start() void
     -themeMenu() void
-    -gameMenu() void
-    -playGame() void
-    +restart() void
+    -showLevelMenu() void
+    -playLevel() void
+    +continue() void
 }
 
 class Game {
@@ -195,11 +195,11 @@ Main "1" <--> "*" Message
 ```mermaid
 stateDiagram-v2
     [*] --> Main.start
-    Main.start --> Main.gameMenu
-    Main.gameMenu --> Main.playGame
-    Main.playGame --> Game.play
-    Main.restart --> Main.gameMenu
-    Main.restart --> [*]
+    Main.start --> Main.showLevelMenu
+    Main.showLevelMenu --> Main.playLevel
+    Main.playLevel --> Game.play
+    Main.continue --> Main.showLevelMenu
+    Main.continue --> [*]
     Game.play --> Game.menu
     Game.menu --> Game.showUnitTestForm
     Game.menu --> Game.showHint
@@ -211,5 +211,5 @@ stateDiagram-v2
     Game.showHint --> Game.menu
     Game.submit --> Game.menu
     Game.submit --> Game.end
-    Game.end --> Main.restart
+    Game.end --> Main.continue
 ```

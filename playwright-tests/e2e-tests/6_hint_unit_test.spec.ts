@@ -3,8 +3,8 @@ import { test, expect } from '@playwright/test'
 test.describe('hint unit test', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('http://localhost:5500/')
-    await page.getByText('VotingAge: is someone allowed to vote').click()
-    await page.getByText('I want to see a hint for a unit test').click()
+    await page.getByRole('button', { name: /VotingAge/i }).click()
+    await page.getByRole('button', { name: 'I want to see a hint for a unit test' }).click()
   })
 
   test('has hint unit test message', async ({ page }) => {
@@ -19,7 +19,7 @@ test.describe('hint unit test', () => {
       'I want to add a unit test',
       'I want to see a hint for a unit test (-10%)',
       'I want to submit the unit tests (-20%?)',
-      'I want to end the game (-100%?)',
+      'I want to exit this level (-100%?)',
     ])
   })
 })

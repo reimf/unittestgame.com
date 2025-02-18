@@ -1,24 +1,27 @@
-import { Main } from './main.js'
-import { Button, Form, Paragraph, UnorderedList, Div, Code, Panel, HumanMessage, HumanMenuMessage, ComputerMessage } from './html.js'
-import { HighScore } from './high_score.js'
-import { Candidate } from './candidate.js'
 import { UnitTest } from './unit_test.js'
-import { TestResult } from './test_result.js'
 import { Variable } from './variable.js'
+import { Main } from './main.js'
+import { Random } from './random.js'
+import { Button, Form, Paragraph, UnorderedList, Div, Code, Panel, HumanMessage, HumanMenuMessage, ComputerMessage } from './html.js'
+import { Candidate } from './candidate.js'
+import { TestResult } from './test_result.js'
 
-export abstract class Game {
+export abstract class Level {
     private readonly INITIALSCORE = 100
     private readonly PENALTYHINT = 10
     private readonly PENALTYBUG = 20
     private readonly PENALTYEND = 100
+    private readonly PERFECTSCORE = 100
+    private readonly SUFFICIENTSCORE = 60
 
+    public readonly name: string = this.constructor.name
     public readonly abstract description: string
     private parameters: Variable[] = this.getParameters()
     private unit: Variable = this.getUnit()
     private candidates: Candidate[] = [...this.generateCandidates(this.getCandidateElements())]
     private minimalUnitTests: UnitTest[] = this.getMinimalUnitTests()
     private perfectCandidates: Candidate[] = this.findPerfectCandidates(this.candidates, this.minimalUnitTests)
-    private perfectCandidate: Candidate = this.randomElementFrom(this.perfectCandidates)
+    private perfectCandidate: Candidate = Random.elementFrom(this.perfectCandidates)
     private hints: UnitTest[] = [...this.hintGenerator()].map(argumentList => new UnitTest(argumentList, this.perfectCandidate.execute(argumentList)))
     private userdefinedUnitTests: UnitTest[] = []
     private score: number = this.INITIALSCORE
@@ -29,22 +32,48 @@ export abstract class Game {
     protected abstract getCandidateElements(): string[][]
     protected abstract getMinimalUnitTests(): UnitTest[]
     protected abstract hintGenerator(): Generator<any[]>
-    protected abstract specificationPanel(): Panel
+    protected abstract showSpecificationPanel(): void
 
-    protected constructor() {
+    protected constructor(public readonly index: number) {
         this.checkUnitTestsAreNeeded(this.candidates, this.minimalUnitTests)
     }
 
-    public highScore(): HighScore | null {
-        return HighScore.fromStorage(localStorage, this.constructor.name)
+    private emoji(storage: Storage, unlockedIndex: number): string {
+        if (this.index > unlockedIndex)
+            return '🔒'
+        if (this.index === unlockedIndex)
+            return '👉'
+        const highScore = this.getHighScore(storage)
+        if (highScore === this.INITIALSCORE)
+            return '🥇'
+        if (highScore >= this.SUFFICIENTSCORE)
+            return '🥈'
+        return '🥉'
     }
 
-    protected randomElementFrom(list: any[]): any {
-        return list[this.randomInt(list.length)]
+    private state(storage: Storage, unlockedIndex: number): string {
+        if (this.index > unlockedIndex)
+            return 'Locked'
+        if (this.index === unlockedIndex)
+            return 'Play now'
+        return `Score ${this.getHighScore(storage)}%`
     }
 
-    protected randomInt(x: number): number {
-        return Math.floor(Math.random() * x)
+    public buttonText(storage: Storage, unlockedIndex: number): string {
+        return `${this.emoji(storage, unlockedIndex)} Level ${this.index}: ${this.name} - ${this.description} (${this.state(storage, unlockedIndex)})`
+    }
+
+    public getHighScore(storage: Storage): number {
+        return Number(storage.getItem(`${this.name}.score`))
+    }
+
+    public hasHighScore(storage: Storage): boolean {
+        return this.getHighScore(storage) > 0
+    }
+
+    private saveScore(storage: Storage): void {
+        if (!this.hasHighScore(storage) || this.score > this.getHighScore(storage))
+            storage.setItem(`${this.name}.score`, `${this.score}`)
     }
 
     private *generateCandidates(listOfListOfLines: string[][], lines: string[] = []): Generator<Candidate> {
@@ -74,7 +103,7 @@ export abstract class Game {
     private findPerfectCandidates(candidates: Candidate[], unitTests: UnitTest[]): Candidate[] {
         const perfectCandidates = this.findPassingCandidates(candidates, unitTests)
         if (perfectCandidates.length === 0)
-            throw new Error(`There is no perfect function for game ${this.constructor.name}.`)
+            throw new Error(`There is no perfect function for level ${this.constructor.name}.`)
         return perfectCandidates
     }
 
@@ -91,10 +120,10 @@ export abstract class Game {
         const nonPerfectCandidates = candidates.filter(candidate => !perfectCandidates.includes(candidate))
         const nonPerfectPassingCandidates = this.findPassingCandidates(nonPerfectCandidates, userDefinedUnitTests)
         if (nonPerfectPassingCandidates.length === 0)
-            return this.randomElementFrom(perfectCandidates)
+            return Random.elementFrom(perfectCandidates)
         const minimumComplexity = Math.min(...nonPerfectPassingCandidates.map(candidate => candidate.complexity))
         const candidatesWithMinimumComplexity = nonPerfectPassingCandidates.filter(candidate => candidate.complexity === minimumComplexity)
-        return this.randomElementFrom(candidatesWithMinimumComplexity)
+        return Random.elementFrom(candidatesWithMinimumComplexity)
     }
 
     private showScorePanel(): void {
@@ -133,12 +162,12 @@ export abstract class Game {
             new Button('I want to add a unit test', () => this.showFormUnitTestMessage()),
             new Button(`I want to see a hint for a unit test (-${this.PENALTYHINT}%)`, () => this.showHint()),
             new Button(`I want to submit the unit tests (-${this.PENALTYBUG}%?)`, () => this.submit()),
-            new Button(`I want to end the game (-${this.PENALTYEND}%?)`, () => this.end()),
-        ]).show()
+            new Button(`I want to exit this level (-${this.PENALTYEND}%?)`, () => this.end()),
+        ]).show().focusFirst()
     }
 
     public play(): void {
-        this.specificationPanel().show('specification')
+        this.showSpecificationPanel()
         this.showContractMessage()
         this.menu()
     }
@@ -153,7 +182,7 @@ export abstract class Game {
         const failingTestResultsUnitTests = simplestPassingCandidate.failingTestResults(this.minimalUnitTests)
         const failingTestResultsToChooseFrom = failingTestResultsHints ? failingTestResultsHints : failingTestResultsUnitTests
         this.failingTestResult = failingTestResultsToChooseFrom
-            ? this.randomElementFrom(failingTestResultsToChooseFrom)
+            ? Random.elementFrom(failingTestResultsToChooseFrom)
             : undefined
 
         this.showScorePanel()
@@ -170,7 +199,7 @@ export abstract class Game {
                 'I don\'t want to add a unit test now',
                 () => this.menu()
             )
-        ]).replace()
+        ]).replace().focusFirst()
     }
 
     private showAddUnitTestMessage(unitTest: UnitTest): void {
@@ -314,14 +343,11 @@ export abstract class Game {
             this.showScorePanel()
             this.showUnsuccessfulEndMessage()
         }
-        else if (this.score == 100)
+        else if (this.score == this.PERFECTSCORE)
             this.showPerfectEndMessage()
         else
             this.showSuccessfulEndMessage()
-        new HighScore(
-            this.constructor.name,
-            this.score,
-        ).save(localStorage)
-        Main.instance.restart()
+        this.saveScore(localStorage)
+        Main.instance.showLevelMenu()
     }
 }

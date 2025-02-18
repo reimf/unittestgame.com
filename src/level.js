@@ -1,35 +1,62 @@
-import { Main } from './main.js';
-import { Button, Form, Paragraph, UnorderedList, Div, Code, Panel, HumanMessage, HumanMenuMessage, ComputerMessage } from './html.js';
-import { HighScore } from './high_score.js';
-import { Candidate } from './candidate.js';
 import { UnitTest } from './unit_test.js';
+import { Main } from './main.js';
+import { Random } from './random.js';
+import { Button, Form, Paragraph, UnorderedList, Div, Code, Panel, HumanMessage, HumanMenuMessage, ComputerMessage } from './html.js';
+import { Candidate } from './candidate.js';
 import { TestResult } from './test_result.js';
-export class Game {
-    constructor() {
+export class Level {
+    constructor(index) {
+        this.index = index;
         this.INITIALSCORE = 100;
         this.PENALTYHINT = 10;
         this.PENALTYBUG = 20;
         this.PENALTYEND = 100;
+        this.PERFECTSCORE = 100;
+        this.SUFFICIENTSCORE = 60;
+        this.name = this.constructor.name;
         this.parameters = this.getParameters();
         this.unit = this.getUnit();
         this.candidates = [...this.generateCandidates(this.getCandidateElements())];
         this.minimalUnitTests = this.getMinimalUnitTests();
         this.perfectCandidates = this.findPerfectCandidates(this.candidates, this.minimalUnitTests);
-        this.perfectCandidate = this.randomElementFrom(this.perfectCandidates);
+        this.perfectCandidate = Random.elementFrom(this.perfectCandidates);
         this.hints = [...this.hintGenerator()].map(argumentList => new UnitTest(argumentList, this.perfectCandidate.execute(argumentList)));
         this.userdefinedUnitTests = [];
         this.score = this.INITIALSCORE;
         this.failingTestResult = undefined;
         this.checkUnitTestsAreNeeded(this.candidates, this.minimalUnitTests);
     }
-    highScore() {
-        return HighScore.fromStorage(localStorage, this.constructor.name);
+    emoji(storage, unlockedIndex) {
+        if (this.index > unlockedIndex)
+            return '🔒';
+        if (this.index === unlockedIndex)
+            return '👉';
+        const highScore = this.getHighScore(storage);
+        if (highScore === this.INITIALSCORE)
+            return '🥇';
+        if (highScore >= this.SUFFICIENTSCORE)
+            return '🥈';
+        return '🥉';
     }
-    randomElementFrom(list) {
-        return list[this.randomInt(list.length)];
+    state(storage, unlockedIndex) {
+        if (this.index > unlockedIndex)
+            return 'Locked';
+        if (this.index === unlockedIndex)
+            return 'Play now';
+        return `Score ${this.getHighScore(storage)}%`;
     }
-    randomInt(x) {
-        return Math.floor(Math.random() * x);
+    buttonText(storage, unlockedIndex) {
+        return `${this.emoji(storage, unlockedIndex)} Level ${this.index}: ${this.name} - ${this.description} (${this.state(storage, unlockedIndex)})`;
+    }
+    getHighScore(storage) {
+        return Number(storage.getItem(`${this.name}.score`));
+    }
+    hasHighScore(storage) {
+        return this.getHighScore(storage) > 0;
+    }
+    saveScore(storage) {
+        if (!this.hasHighScore(storage) || this.score > this.getHighScore(storage))
+            storage.setItem(`${this.name}.score`, `${this.score}`);
     }
     *generateCandidates(listOfListOfLines, lines = []) {
         if (listOfListOfLines.length > 0) {
@@ -55,7 +82,7 @@ export class Game {
     findPerfectCandidates(candidates, unitTests) {
         const perfectCandidates = this.findPassingCandidates(candidates, unitTests);
         if (perfectCandidates.length === 0)
-            throw new Error(`There is no perfect function for game ${this.constructor.name}.`);
+            throw new Error(`There is no perfect function for level ${this.constructor.name}.`);
         return perfectCandidates;
     }
     checkUnitTestsAreNeeded(candidates, unitTests) {
@@ -70,10 +97,10 @@ export class Game {
         const nonPerfectCandidates = candidates.filter(candidate => !perfectCandidates.includes(candidate));
         const nonPerfectPassingCandidates = this.findPassingCandidates(nonPerfectCandidates, userDefinedUnitTests);
         if (nonPerfectPassingCandidates.length === 0)
-            return this.randomElementFrom(perfectCandidates);
+            return Random.elementFrom(perfectCandidates);
         const minimumComplexity = Math.min(...nonPerfectPassingCandidates.map(candidate => candidate.complexity));
         const candidatesWithMinimumComplexity = nonPerfectPassingCandidates.filter(candidate => candidate.complexity === minimumComplexity);
-        return this.randomElementFrom(candidatesWithMinimumComplexity);
+        return Random.elementFrom(candidatesWithMinimumComplexity);
     }
     showScorePanel() {
         new Panel('Score', [
@@ -103,11 +130,11 @@ export class Game {
             new Button('I want to add a unit test', () => this.showFormUnitTestMessage()),
             new Button(`I want to see a hint for a unit test (-${this.PENALTYHINT}%)`, () => this.showHint()),
             new Button(`I want to submit the unit tests (-${this.PENALTYBUG}%?)`, () => this.submit()),
-            new Button(`I want to end the game (-${this.PENALTYEND}%?)`, () => this.end()),
-        ]).show();
+            new Button(`I want to exit this level (-${this.PENALTYEND}%?)`, () => this.end()),
+        ]).show().focusFirst();
     }
     play() {
-        this.specificationPanel().show('specification');
+        this.showSpecificationPanel();
         this.showContractMessage();
         this.menu();
     }
@@ -119,7 +146,7 @@ export class Game {
         const failingTestResultsUnitTests = simplestPassingCandidate.failingTestResults(this.minimalUnitTests);
         const failingTestResultsToChooseFrom = failingTestResultsHints ? failingTestResultsHints : failingTestResultsUnitTests;
         this.failingTestResult = failingTestResultsToChooseFrom
-            ? this.randomElementFrom(failingTestResultsToChooseFrom)
+            ? Random.elementFrom(failingTestResultsToChooseFrom)
             : undefined;
         this.showScorePanel();
         this.showMenuMessage();
@@ -128,7 +155,7 @@ export class Game {
         new HumanMessage([
             new Paragraph('I want to add a unit test.'),
             new Form([...this.parameters, this.unit].map(variable => variable.toHtml()), 'I want to add this unit test', () => this.addUnitTest(), 'I don\'t want to add a unit test now', () => this.menu())
-        ]).replace();
+        ]).replace().focusFirst();
     }
     showAddUnitTestMessage(unitTest) {
         new HumanMessage([
@@ -241,11 +268,11 @@ export class Game {
             this.showScorePanel();
             this.showUnsuccessfulEndMessage();
         }
-        else if (this.score == 100)
+        else if (this.score == this.PERFECTSCORE)
             this.showPerfectEndMessage();
         else
             this.showSuccessfulEndMessage();
-        new HighScore(this.constructor.name, this.score).save(localStorage);
-        Main.instance.restart();
+        this.saveScore(localStorage);
+        Main.instance.showLevelMenu();
     }
 }

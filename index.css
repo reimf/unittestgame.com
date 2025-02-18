@@ -2,7 +2,7 @@
     --dark-text: #333333;
     --light-text: #F5F5F5;
     --panel-heading-background: #800080;
-    --input-background: #999999;
+    --input-background: #6497b1;
     --human-message-background: #FFEECC;
     --general-background: #ECE5DD;
     --computer-message-background: #FFFFFF;
@@ -10,14 +10,14 @@
     --focus-background: #FF6F20;
 }
 
-input:focus, button:focus, label:has(input[type="checkbox"]:focus), label:has(input[type="radio"]:focus) {
+input:focus, button:enabled:focus, label:has(input[type="checkbox"]:focus), label:has(input[type="radio"]:focus) {
     background-color: var(--focus-background) !important;
     color: var(--light-text) !important;
     outline: 0.25rem solid var(--focus-background);
     outline-offset: 0.25rem;
 }
 
-input:hover, button:hover, label:has(input[type="checkbox"]:hover), label:has(input[type="radio"]:hover) {
+input:hover, button:enabled:hover, label:has(input[type="checkbox"]:hover), label:has(input[type="radio"]:hover) {
     background-color: var(--focus-background) !important;
     color: var(--light-text) !important;
 }
@@ -47,9 +47,13 @@ button {
     font-family: inherit;
     font-size: inherit;
     margin: 0.75rem 0;
-    padding: 1rem;
+    padding: 0.75rem;
     text-align: left;
     width: 100%;
+
+    &:disabled {
+        opacity: 0.5;
+    }
 }
 
 form {

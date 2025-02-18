@@ -2,27 +2,32 @@ import { test, expect } from '@playwright/test';
 test.describe('submit insufficient unit test', () => {
     test.beforeEach(async ({ page }) => {
         await page.goto('http://localhost:5500/');
-        await page.getByText('VotingAge: is someone allowed to vote').click();
-        await page.getByText('I want to add a unit test').click();
+        await page.getByRole('button', { name: /VotingAge/i }).click();
+        await page.getByRole('button', { name: 'I want to add a unit test' }).click();
         await page.getByLabel('Age').fill('17');
         await page.getByLabel('Allowed to vote?').uncheck();
-        await page.getByText('I want to add this unit test').click();
-        await page.getByText('I want to add a unit test').click();
+        await page.getByRole('button', { name: 'I want to add this unit test' }).click();
+        await page.getByRole('button', { name: 'I want to add a unit test' }).click();
         await page.getByLabel('Age').fill('18');
         await page.getByLabel('Allowed to vote?').check();
-        await page.getByText('I want to add this unit test').click();
-        await page.getByText('I want to submit the unit tests').click();
+        await page.getByRole('button', { name: 'I want to add this unit test' }).click();
+        await page.getByRole('button', { name: 'I want to submit the unit tests' }).click();
     });
     test('has end message', async ({ page }) => {
         const messages = page.locator('#messages');
         await expect(messages).toContainText('The function is according to the specification');
     });
-    test('has restart menu message', async ({ page }) => {
+    test('has continue menu message', async ({ page }) => {
         const messages = page.locator('#messages');
         const buttons = messages.locator('button');
         await expect(buttons).toHaveText([
-            'Pick another task',
-            'Close UnitTestGame.com',
+            '🥇 Level 1: VotingAge - are you allowed to vote (Score 100%)',
+            '👉 Level 2: EvenOdd - separate the numbers (Play now)',
+            '🔒 Level 3: LeapYear - find the leap years (Locked)',
+            '🔒 Level 4: Triangle - name the triangle type (Locked)',
+            '🔒 Level 5: Float - check the format (Locked)',
+            '🔒 Level 6: Password - see if a password is strong (Locked)',
+            '🔒 Level 7: Speed - display the speed of a car (Locked)',
         ]);
     });
 });

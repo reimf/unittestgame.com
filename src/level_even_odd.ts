@@ -1,24 +1,24 @@
-import { Game } from './game.js'
+import { Level } from './level.js'
 import { Paragraph, Panel } from './html.js'
 import { Variable, CheckboxVariable, NumberVariable } from './variable.js'
 import { UnitTest } from './unit_test.js'
 
-export class EvenOdd extends Game {
-    public readonly description = 'EvenOdd: separate the numbers'
+export class EvenOdd extends Level {
+    public readonly description = 'separate the numbers'
 
-    public constructor() {
-        super()
+    public constructor(index: number) {
+        super(index)
     }
 
-    protected specificationPanel(): Panel {
-        return new Panel('Specification', [
+    public showSpecificationPanel(): void {
+        new Panel('Specification', [
             new Paragraph(
                 'Return true if the number is even and false if it is odd.'
             ),
-        ])
+        ]).show('specification')
     }
 
-    protected getParameters(): Variable[] {
+    public getParameters(): Variable[] {
         return [
             new NumberVariable(
                 'Number',
@@ -27,14 +27,14 @@ export class EvenOdd extends Game {
         ]
     }
 
-    protected getUnit(): Variable {
+    public getUnit(): Variable {
         return new CheckboxVariable(
             'Is the number even?',
             'isEven'
         )
     }
 
-    protected getCandidateElements(): string[][] {
+    public getCandidateElements(): string[][] {
         return [
             [
                 'if (number === 0) return true',
@@ -78,14 +78,14 @@ export class EvenOdd extends Game {
         ]
     }
 
-    protected getMinimalUnitTests(): UnitTest[] {
+    public getMinimalUnitTests(): UnitTest[] {
         return [
             new UnitTest([17], false),
             new UnitTest([24], true),
         ]
     }
 
-    protected *hintGenerator(): Generator<any[]> {
+    public *hintGenerator(): Generator<any[]> {
         for (let number = 0; number <= 40; number += 1)
             yield [number]
     }

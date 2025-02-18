@@ -1,20 +1,21 @@
-import { Game } from './game.js';
+import { Level } from './level.js';
+import { Random } from './random.js';
 import { Paragraph, Panel } from './html.js';
 import { CheckboxVariable, TextVariable } from './variable.js';
 import { UnitTest } from './unit_test.js';
-export class Password extends Game {
-    constructor() {
-        super();
-        this.description = 'Password: see if a password is strong';
+export class Password extends Level {
+    constructor(index) {
+        super(index);
+        this.description = 'see if a password is strong';
     }
-    specificationPanel() {
-        return new Panel('Specification', [
+    showSpecificationPanel() {
+        new Panel('Specification', [
             new Paragraph('Return true if the password is strong and return false if the password is not strong. ' +
                 'A password is strong if it contains at least 5 characters, ' +
                 'an uppercase letter, ' +
                 'a lowercase letter and ' +
                 'a special character ("#" or "@").'),
-        ]);
+        ]).show('specification');
     }
     getParameters() {
         return [
@@ -123,21 +124,21 @@ export class Password extends Game {
         const lowercase = [...this.generateLowercase()];
         const specialChars = [...this.generateSpecialCharacters()];
         for (let i = 0; i < 100; i++) {
-            const ds = this.randomElementFrom(digits);
-            const us = this.randomElementFrom(uppercase);
-            const ls = this.randomElementFrom(lowercase);
-            const scs = this.randomElementFrom(specialChars);
+            const ds = Random.elementFrom(digits);
+            const us = Random.elementFrom(uppercase);
+            const ls = Random.elementFrom(lowercase);
+            const scs = Random.elementFrom(specialChars);
             const chars = [...ds, ...us, ...ls, ...scs];
             this.shuffleArray(chars);
             yield [chars.join('')];
-            const pos = this.randomInt(chars.length);
-            chars[pos] = this.randomInt(10).toString();
+            const pos = Random.randomInt(chars.length);
+            chars[pos] = Random.randomInt(10).toString();
             yield [chars.join('')];
         }
     }
     shuffleArray(array) {
         for (let i = array.length - 1; i > 0; i--) {
-            const j = this.randomInt(i + 1);
+            const j = Random.randomInt(i + 1);
             const swap = array[i];
             array[i] = array[j];
             array[j] = swap;

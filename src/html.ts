@@ -59,22 +59,22 @@ export class Input extends Html {
         this.type(type)
     }
 
-    public type(value: string): Html {
+    public type(value: string): Input {
         this.input.type = value
         return this
     }
 
-    public name(value: string): Html {
+    public name(value: string): Input {
         this.input.name = value
         return this
     }
 
-    public value(value: string): Html {
+    public value(value: string): Input {
         this.input.value = value
         return this
     }
 
-    public autocomplete(value: boolean): Html {
+    public autocomplete(value: boolean): Input {
         this.input.autocomplete = value ? 'on' : 'off'
         return this
     }
@@ -115,7 +115,7 @@ export class UnorderedList extends Html {
         this.appendChildren(elements.map(element => new ListItem(element)))
     }
 
-    public ifEmpty(text: string): Html {
+    public ifEmpty(text: string): Paragraph {
         if (this.element.childElementCount > 0)
             return this
         return new Paragraph(text)
@@ -137,6 +137,8 @@ export class Menu extends Html {
 }
 
 export class Button extends Html {
+    private button = this.element as HTMLButtonElement
+
     public constructor(text: string, callback: (event: Event) => void) {
         super('button')
         this.appendText(text)
@@ -144,6 +146,11 @@ export class Button extends Html {
             new HumanMessage([new Paragraph(this.element.textContent! + '.')]).replace()
             callback(event)
         })
+    }
+
+    public disabled(disabled: boolean): Button {
+        this.button.disabled = disabled
+        return this
     }
 }
 
@@ -233,22 +240,29 @@ export class HumanMessage extends Message {
         this.addClass('human')
     }
 
-    public show(): void {
+    public show(): HumanMessage {
         super.show()
-        this.setFocus()
+        return this
     }
 
-    public replace(): void {
+    public replace(): HumanMessage {
         const lastMessage = document.querySelector('#messages')!.lastElementChild!
         this.id(lastMessage.id)
         this.replaceExisting()
-        this.setFocus()
         this.scrollIntoView()
+        return this
     }
 
-    private setFocus(): void {
-        const firstFocusable = this.element.querySelector('button, input') as HTMLElement
-        firstFocusable?.focus()
+    public focusFirst(): void {
+        const focusables = this.element.querySelectorAll('button:enabled, input:enabled') as NodeListOf<HTMLElement>
+        if (focusables.length > 0)
+            focusables[0].focus()
+    }
+
+    public focusLast(): void {
+        const focusables = this.element.querySelectorAll('button:enabled, input:enabled') as NodeListOf<HTMLElement>
+        if (focusables.length > 0)
+            focusables[focusables.length - 1].focus()
     }
 }
 

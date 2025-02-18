@@ -1,16 +1,16 @@
-import { Game } from './game.js';
+import { Level } from './level.js';
 import { Paragraph, Panel } from './html.js';
 import { CheckboxVariable, NumberVariable } from './variable.js';
 import { UnitTest } from './unit_test.js';
-export class EvenOdd extends Game {
-    constructor() {
-        super();
-        this.description = 'EvenOdd: separate the numbers';
+export class EvenOdd extends Level {
+    constructor(index) {
+        super(index);
+        this.description = 'separate the numbers';
     }
-    specificationPanel() {
-        return new Panel('Specification', [
+    showSpecificationPanel() {
+        new Panel('Specification', [
             new Paragraph('Return true if the number is even and false if it is odd.'),
-        ]);
+        ]).show('specification');
     }
     getParameters() {
         return [

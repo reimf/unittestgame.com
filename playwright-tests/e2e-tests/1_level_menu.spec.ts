@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 
-test.describe('game menu', () => {
+test.describe('level menu', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('http://localhost:5500/')
   })
@@ -19,32 +19,22 @@ test.describe('game menu', () => {
     await expect(link).toHaveText('feedback@unittestgame.com')
   })
 
-  test('has high scores panel', async ({ page }) => {
-    const highScoresPanel = page.locator('#high-scores')
-    await expect(highScoresPanel).toContainText('High Scores')
-  })
-
-  test('has no high scores', async ({ page }) => {
-    const highScoresPanel = page.locator('#high-scores')
-    await expect(highScoresPanel).toContainText('You have not played a game yet.')
-  })
-
   test('has welcome message', async ({ page }) => {
     const messages = page.locator('#messages')
     await expect(messages).toContainText('Welcome to UnitTestGame.com!')
   })
 
-  test('has theme menu message', async ({ page }) => {
+  test('has level menu message', async ({ page }) => {
     const messages = page.locator('#messages')
     const buttons = messages.locator('button')
     await expect(buttons).toHaveText([
-      'VotingAge: is someone allowed to vote',
-      'EvenOdd: separate the numbers',
-      'LeapYear: find the leap years',
-      'Triangle: name the triangle type',
-      'Float: check the format',
-      'Password: see if a password is strong',
-      'Speed: display the speed of a car',
+      '👉 Level 1: VotingAge - are you allowed to vote (Play now)',
+      '🔒 Level 2: EvenOdd - separate the numbers (Locked)',
+      '🔒 Level 3: LeapYear - find the leap years (Locked)',
+      '🔒 Level 4: Triangle - name the triangle type (Locked)',
+      '🔒 Level 5: Float - check the format (Locked)',
+      '🔒 Level 6: Password - see if a password is strong (Locked)',
+      '🔒 Level 7: Speed - display the speed of a car (Locked)',
     ])
   })
 })

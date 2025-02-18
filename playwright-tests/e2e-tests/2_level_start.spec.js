@@ -1,16 +1,12 @@
 import { test, expect } from '@playwright/test';
-test.describe('game start', () => {
+test.describe('level start', () => {
     test.beforeEach(async ({ page }) => {
         await page.goto('http://localhost:5500/');
-        page.getByText('VotingAge: is someone allowed to vote').click();
+        await page.getByRole('button', { name: /VotingAge/i }).click();
     });
     test('has no about panel', async ({ page }) => {
         const aboutPanel = page.locator('#about');
         await expect(aboutPanel).not.toBeAttached();
-    });
-    test('has no high scores panel', async ({ page }) => {
-        const highScoresPanel = page.locator('#high-scores');
-        await expect(highScoresPanel).not.toBeAttached();
     });
     test('has specification panel', async ({ page }) => {
         const specificationPanel = page.locator('#specification');
@@ -43,7 +39,7 @@ test.describe('game start', () => {
             'I want to add a unit test',
             'I want to see a hint for a unit test (-10%)',
             'I want to submit the unit tests (-20%?)',
-            'I want to end the game (-100%?)',
+            'I want to exit this level (-100%?)',
         ]);
     });
 });

@@ -1,17 +1,18 @@
-import { Game } from './game.js'
+import { Level } from './level.js'
+import { Random } from './random.js'
 import { Paragraph, Panel } from './html.js'
 import { Variable, CheckboxVariable, TextVariable } from './variable.js'
 import { UnitTest } from './unit_test.js'
 
-export class Password extends Game {
-    public readonly description = 'Password: see if a password is strong'
+export class Password extends Level {
+    public readonly description = 'see if a password is strong'
 
-    public constructor() {
-        super()
+    public constructor(index: number) {
+        super(index)
     }
 
-    protected specificationPanel(): Panel {
-        return new Panel('Specification', [
+    public showSpecificationPanel(): void {
+        new Panel('Specification', [
             new Paragraph(
                 'Return true if the password is strong and return false if the password is not strong. ' +
                 'A password is strong if it contains at least 5 characters, ' +
@@ -19,23 +20,23 @@ export class Password extends Game {
                 'a lowercase letter and ' +
                 'a special character ("#" or "@").'
             ),
-        ])
+        ]).show('specification')
     }
 
-    protected getParameters(): Variable[] {
+    public getParameters(): Variable[] {
         return [
             new TextVariable('Wachtwoord', 'password')
         ]
     }
 
-    protected getUnit(): Variable {
+    public getUnit(): Variable {
         return new CheckboxVariable(
             'Is het wachtwoord sterk?',
             'isStrong'
         )
     }
 
-    protected getCandidateElements(): string[][] {
+    public getCandidateElements(): string[][] {
         return [
             [
                 'if (password.length < 4) return false',
@@ -72,7 +73,7 @@ export class Password extends Game {
         ]
     }
 
-    protected getMinimalUnitTests(): UnitTest[] {
+    public getMinimalUnitTests(): UnitTest[] {
         return [
             new UnitTest(['A3a6#'], true),
             new UnitTest(['@251Bc'], true),
@@ -131,32 +132,32 @@ export class Password extends Game {
         }
     }
 
-    protected *hintGenerator(): Generator<string[]> {
+    public *hintGenerator(): Generator<string[]> {
         const digits = [...this.generateDigits()]
         const uppercase = [...this.generateUppercase()]
         const lowercase = [...this.generateLowercase()]
         const specialChars = [...this.generateSpecialCharacters()]
 
         for (let i = 0; i < 100; i++) {
-            const ds = this.randomElementFrom(digits)
-            const us = this.randomElementFrom(uppercase)
-            const ls = this.randomElementFrom(lowercase)
-            const scs = this.randomElementFrom(specialChars)
+            const ds = Random.elementFrom(digits)
+            const us = Random.elementFrom(uppercase)
+            const ls = Random.elementFrom(lowercase)
+            const scs = Random.elementFrom(specialChars)
 
             const chars = [...ds, ...us, ...ls, ...scs]
             this.shuffleArray(chars)
 
             yield [chars.join('')]
 
-            const pos = this.randomInt(chars.length)
-            chars[pos] = this.randomInt(10).toString()
+            const pos = Random.randomInt(chars.length)
+            chars[pos] = Random.randomInt(10).toString()
             yield [chars.join('')]
         }
     }
 
     private shuffleArray(array: string[]): void {
         for (let i = array.length - 1; i > 0; i--) {
-            const j = this.randomInt(i + 1)
+            const j = Random.randomInt(i + 1)
             const swap = array[i]
             array[i] = array[j]
             array[j] = swap

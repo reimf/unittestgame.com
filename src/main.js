@@ -1,70 +1,57 @@
-import { Button, Paragraph, Anchor, Div, UnorderedList, Panel, HumanMenuMessage, ComputerMessage } from './html.js';
-import { VotingAge } from './game_voting_age.js';
-import { EvenOdd } from './game_even_odd.js';
-import { LeapYear } from './game_leap_year.js';
-import { Triangle } from './game_triangle.js';
-import { Speed } from './game_speed.js';
-import { Float } from './game_float.js';
-import { Password } from './game_password.js';
+import { Button, Paragraph, Anchor, Panel, HumanMenuMessage, ComputerMessage } from './html.js';
+import { VotingAge } from './level_voting_age.js';
+import { EvenOdd } from './level_even_odd.js';
+import { LeapYear } from './level_leap_year.js';
+import { Triangle } from './level_triangle.js';
+import { Speed } from './level_speed.js';
+import { Float } from './level_float.js';
+import { Password } from './level_password.js';
 export class Main {
     constructor() {
-        this.games = [
-            new VotingAge(),
-            new EvenOdd(),
-            new LeapYear(),
-            new Triangle(),
-            new Float(),
-            new Password(),
-            new Speed(),
+        this.levels = [
+            new VotingAge(1),
+            new EvenOdd(2),
+            new LeapYear(3),
+            new Triangle(4),
+            new Float(5),
+            new Password(6),
+            new Speed(7),
         ];
     }
-    aboutPanel() {
+    showAboutPanel() {
         const learnParagraph = new Paragraph('Learn Unit Testing with UnitTestGame.com');
         const anchor = new Anchor('mailto:feedback@unittestgame.com');
         anchor.appendText('feedback@unittestgame.com');
         const feedbackParagraph = new Paragraph('Please send us ');
         feedbackParagraph.appendChild(anchor);
-        return new Panel('About', [
+        new Panel('About', [
             learnParagraph,
             feedbackParagraph
-        ]);
+        ]).show('about');
     }
-    highScorePanel() {
-        return new Panel('High Scores', [
-            new UnorderedList(this.games.
-                map(game => game.highScore()).
-                filter(highScore => highScore !== null).
-                map(highScore => new Div().appendText(highScore.toString()))).ifEmpty('You have not played a game yet.'),
-        ]);
-    }
-    welcomeMessage() {
-        return new ComputerMessage([
+    showWelcomeMessage() {
+        new ComputerMessage([
             new Paragraph('Welcome to UnitTestGame.com! ' +
                 'I am an AI-bot and I am hired as your co-developer. ' +
                 'Your task is to prevent me from hallucinating. ' +
                 'What are we going to do now?'),
-        ]);
+        ]).show();
     }
     start() {
-        this.aboutPanel().show('about');
-        this.welcomeMessage().show();
-        this.highScorePanel().show('high-scores');
-        this.gameMenu();
+        this.showAboutPanel();
+        this.showWelcomeMessage();
+        this.showLevelMenu();
     }
-    gameMenu() {
-        new HumanMenuMessage(this.games.map(game => new Button(game.description, () => this.playGame(game)))).show();
+    showLevelMenu() {
+        var _a;
+        const unlockedIndex = ((_a = this.levels.find(level => !level.hasHighScore(localStorage))) === null || _a === void 0 ? void 0 : _a.index) || this.levels.length;
+        new HumanMenuMessage(this.levels.map(level => new Button(level.buttonText(localStorage, unlockedIndex), () => this.playLevel(level))
+            .disabled(level.index > unlockedIndex))).show().focusLast();
     }
-    playGame(game) {
+    playLevel(level) {
         Panel.remove('about');
         Panel.remove('high-scores');
-        game.play();
-    }
-    restart() {
-        this.highScorePanel().show('high-scores');
-        new HumanMenuMessage([
-            new Button('Pick another task', () => this.gameMenu()),
-            new Button('Close UnitTestGame.com', () => window.close()),
-        ]).show();
+        level.play();
     }
 }
 Main.instance = new Main();

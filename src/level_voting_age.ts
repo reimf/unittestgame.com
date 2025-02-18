@@ -1,24 +1,24 @@
-import { Game } from './game.js'
+import { Level } from './level.js'
 import { Paragraph, Panel } from './html.js'
 import { Variable, CheckboxVariable, NumberVariable } from './variable.js'
 import { UnitTest } from './unit_test.js'
 
-export class VotingAge extends Game {
-    public readonly description = 'VotingAge: is someone allowed to vote'
+export class VotingAge extends Level {
+    public readonly description = 'are you allowed to vote'
 
-    public constructor() {
-        super()
+    public constructor(index: number) {
+        super(index)
     }
 
-    protected specificationPanel(): Panel {
-        return new Panel('Specification', [
+    public showSpecificationPanel(): void {
+        new Panel('Specification', [
             new Paragraph(
                 'Return true if the age is 18 years or over and return false if the age is under 18.'
             ),
-        ])
+        ]).show('specification')
     }
 
-    protected getParameters(): Variable[] {
+    public getParameters(): Variable[] {
         return [
             new NumberVariable(
                 'Age',
@@ -27,14 +27,14 @@ export class VotingAge extends Game {
         ]
     }
 
-    protected getUnit(): Variable {
+    public getUnit(): Variable {
         return new CheckboxVariable(
             'Allowed to vote?',
             'isAllowedToVote'
         )
     }
 
-    protected getCandidateElements(): string[][] {
+    public getCandidateElements(): string[][] {
         return [
             [
                 'return age >= 16',
@@ -49,14 +49,14 @@ export class VotingAge extends Game {
         ]
     }
 
-    protected getMinimalUnitTests(): UnitTest[] {
+    public getMinimalUnitTests(): UnitTest[] {
         return [
             new UnitTest([17], false),
             new UnitTest([18], true),
         ]
     }
 
-    protected *hintGenerator(): Generator<any[]> {
+    public *hintGenerator(): Generator<any[]> {
         for (let age = 1; age <= 40; age += 1)
             yield [age]
     }

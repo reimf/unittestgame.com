@@ -1,14 +1,14 @@
-import { Game } from './game.js';
+import { Level } from './level.js';
 import { Paragraph, Panel, Code } from './html.js';
 import { TextVariable, NumberVariable } from './variable.js';
 import { UnitTest } from './unit_test.js';
-export class Speed extends Game {
-    constructor() {
-        super();
-        this.description = 'Speed: display the speed of a car';
+export class Speed extends Level {
+    constructor(index) {
+        super(index);
+        this.description = 'display the speed of a car';
     }
-    specificationPanel() {
-        return new Panel('Specification', [
+    showSpecificationPanel() {
+        new Panel('Specification', [
             new Paragraph('Return the correct display output. ' +
                 'The function receives the speed in meters per hour and must display the speed in kilometers per hour.'),
             new Code('+-------------------+\n' +
@@ -24,7 +24,7 @@ export class Speed extends Game {
                 'Otherwise, round to whole kilometers per hour, such as "49". ' +
                 'If the speed no longer fits on the display, ' +
                 'then the function must return "DANGER" and the display will start blinking rapidly.'),
-        ]);
+        ]).show('specification');
     }
     getParameters() {
         return [

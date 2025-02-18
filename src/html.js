@@ -115,11 +115,16 @@ export class Menu extends Html {
 export class Button extends Html {
     constructor(text, callback) {
         super('button');
+        this.button = this.element;
         this.appendText(text);
         this.on('click', event => {
             new HumanMessage([new Paragraph(this.element.textContent + '.')]).replace();
             callback(event);
         });
+    }
+    disabled(disabled) {
+        this.button.disabled = disabled;
+        return this;
     }
 }
 export class Label extends Html {
@@ -196,18 +201,24 @@ export class HumanMessage extends Message {
     }
     show() {
         super.show();
-        this.setFocus();
+        return this;
     }
     replace() {
         const lastMessage = document.querySelector('#messages').lastElementChild;
         this.id(lastMessage.id);
         this.replaceExisting();
-        this.setFocus();
         this.scrollIntoView();
+        return this;
     }
-    setFocus() {
-        const firstFocusable = this.element.querySelector('button, input');
-        firstFocusable === null || firstFocusable === void 0 ? void 0 : firstFocusable.focus();
+    focusFirst() {
+        const focusables = this.element.querySelectorAll('button:enabled, input:enabled');
+        if (focusables.length > 0)
+            focusables[0].focus();
+    }
+    focusLast() {
+        const focusables = this.element.querySelectorAll('button:enabled, input:enabled');
+        if (focusables.length > 0)
+            focusables[focusables.length - 1].focus();
     }
 }
 export class HumanMenuMessage extends HumanMessage {
