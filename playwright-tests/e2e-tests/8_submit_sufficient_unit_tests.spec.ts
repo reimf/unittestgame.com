@@ -25,7 +25,7 @@ test.describe('submit insufficient unit test', () => {
     const buttons = messages.locator('button')
     await expect(buttons).toHaveText([
       '🥇 Level 1: VotingAge - are you allowed to vote (Score 100%)',
-      '👉 Level 2: EvenOdd - separate the numbers (Play now)',
+      '👉 Level 2: EvenOdd - separate the numbers (Play Now)',
       '🔒 Level 3: LeapYear - find the leap years (Locked)',
       '🔒 Level 4: Triangle - name the triangle type (Locked)',
       '🔒 Level 5: Float - check the format (Locked)',

@@ -54,8 +54,8 @@ export abstract class Level {
         if (this.index > highestPlayableLevelIndex)
             return 'Locked'
         if (this.index === highestPlayableLevelIndex)
-            return 'Play now'
-        return `Score ${this.getHighScore(storage)}%`
+            return 'Play Now'
+        return `${this.getHighScore(storage)}%`
     }
 
     public buttonText(storage: Storage, highestPlayableLevelIndex: number): string {

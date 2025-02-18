@@ -1,13 +1,13 @@
 :root {
     --dark-text: #333333;
-    --light-text: #F5F5F5;
-    --panel-heading-background: #800080;
-    --input-background: #6497b1;
+    --light-text: #FFFFFF;
+    --panel-heading-background: #880088;
+    --input-background: #6699CC;
     --human-message-background: #FFEECC;
     --general-background: #ECE5DD;
     --computer-message-background: #FFFFFF;
     --panel-background: #FFFFFF;
-    --focus-background: #FF6F20;
+    --focus-background: #FF6600;
 }
 
 input:focus, button:enabled:focus, label:has(input[type="checkbox"]:focus), label:has(input[type="radio"]:focus) {

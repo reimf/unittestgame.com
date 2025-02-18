@@ -28,7 +28,7 @@ test.describe('level menu', () => {
     const messages = page.locator('#messages')
     const buttons = messages.locator('button')
     await expect(buttons).toHaveText([
-      '👉 Level 1: VotingAge - are you allowed to vote (Play now)',
+      '👉 Level 1: VotingAge - are you allowed to vote (Play Now)',
       '🔒 Level 2: EvenOdd - separate the numbers (Locked)',
       '🔒 Level 3: LeapYear - find the leap years (Locked)',
       '🔒 Level 4: Triangle - name the triangle type (Locked)',

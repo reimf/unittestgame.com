@@ -33,36 +33,36 @@ test.describe('class Level', () => {
     test('has button text with play now', () => {
         const storage = new MockStorage();
         const level = new VotingAge(1);
-        expect(level.buttonText(storage, 1)).toBe('👉 Level 1: VotingAge - are you allowed to vote (Play now)');
+        expect(level.buttonText(storage, 1)).toBe('👉 Level 1: VotingAge - are you allowed to vote (Play Now)');
     });
     test('has button text with perfect high score', () => {
         const storage = new MockStorage();
         storage.setItem('VotingAge.score', '100');
         const level = new VotingAge(1);
-        expect(level.buttonText(storage, 2)).toBe('🥇 Level 1: VotingAge - are you allowed to vote (Score 100%)');
+        expect(level.buttonText(storage, 2)).toBe('🥇 Level 1: VotingAge - are you allowed to vote (100%)');
     });
     test('has button text with highest sufficient high score', () => {
         const storage = new MockStorage();
         storage.setItem('VotingAge.score', '99');
         const level = new VotingAge(1);
-        expect(level.buttonText(storage, 2)).toBe('🥈 Level 1: VotingAge - are you allowed to vote (Score 99%)');
+        expect(level.buttonText(storage, 2)).toBe('🥈 Level 1: VotingAge - are you allowed to vote (99%)');
     });
     test('has button text with lowest sufficient high score', () => {
         const storage = new MockStorage();
         storage.setItem('VotingAge.score', '60');
         const level = new VotingAge(1);
-        expect(level.buttonText(storage, 2)).toBe('🥈 Level 1: VotingAge - are you allowed to vote (Score 60%)');
+        expect(level.buttonText(storage, 2)).toBe('🥈 Level 1: VotingAge - are you allowed to vote (60%)');
     });
     test('has button text with highest insufficient high score', () => {
         const storage = new MockStorage();
         storage.setItem('VotingAge.score', '59');
         const level = new VotingAge(1);
-        expect(level.buttonText(storage, 2)).toBe('🥉 Level 1: VotingAge - are you allowed to vote (Score 59%)');
+        expect(level.buttonText(storage, 2)).toBe('🥉 Level 1: VotingAge - are you allowed to vote (59%)');
     });
     test('has button text with lowest insufficient high score', () => {
         const storage = new MockStorage();
-        storage.setItem('VotingAge.score', '0');
+        storage.setItem('VotingAge.score', '1');
         const level = new VotingAge(1);
-        expect(level.buttonText(storage, 2)).toBe('🥉 Level 1: VotingAge - are you allowed to vote (Score 0%)');
+        expect(level.buttonText(storage, 2)).toBe('🥉 Level 1: VotingAge - are you allowed to vote (1%)');
     });
 });

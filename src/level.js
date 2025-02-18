@@ -40,8 +40,8 @@ export class Level {
         if (this.index > highestPlayableLevelIndex)
             return 'Locked';
         if (this.index === highestPlayableLevelIndex)
-            return 'Play now';
-        return `Score ${this.getHighScore(storage)}%`;
+            return 'Play Now';
+        return `${this.getHighScore(storage)}%`;
     }
     buttonText(storage, highestPlayableLevelIndex) {
         return `${this.emoji(storage, highestPlayableLevelIndex)} Level ${this.index}: ${this.name} - ${this.description} (${this.state(storage, highestPlayableLevelIndex)})`;
