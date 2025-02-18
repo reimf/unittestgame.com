@@ -192,7 +192,6 @@ export abstract class Level {
 
     private showFormUnitTestMessage(): void {
         new HumanMessage([
-            new Paragraph('I want to add a unit test.'),
             new Form(
                 [...this.parameters, this.unit].map(variable => variable.toHtml()),
                 'I want to add this unit test',

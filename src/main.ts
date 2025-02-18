@@ -40,7 +40,7 @@ export class Main {
                 'Welcome to UnitTestGame.com! ' +
                 'I am an AI-bot and I am hired as your co-developer. ' +
                 'Your task is to prevent me from hallucinating. ' +
-                'What are we going to do now?'
+                'Let\'s go next level!'
             ),
         ]).show()
     }
@@ -51,7 +51,7 @@ export class Main {
         this.showLevelMenu()
     }
 
-    public showLevelMenu(): void {
+    private showLevelMenu(): void {
         const highestPlayableLevelIndex = this.levels.find(level => !level.hasHighScore(localStorage))?.index || this.levels.length
         new HumanMenuMessage(
             this.levels.map(level =>

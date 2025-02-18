@@ -34,7 +34,7 @@ export class Main {
             new Paragraph('Welcome to UnitTestGame.com! ' +
                 'I am an AI-bot and I am hired as your co-developer. ' +
                 'Your task is to prevent me from hallucinating. ' +
-                'What are we going to do now?'),
+                'Let\'s go next level!'),
         ]).show();
     }
     start() {

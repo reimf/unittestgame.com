@@ -11,8 +11,6 @@
 }
 
 input:focus, button:enabled:focus, label:has(input[type="checkbox"]:focus), label:has(input[type="radio"]:focus) {
-    background-color: var(--focus-background) !important;
-    color: var(--light-text) !important;
     outline: 0.25rem solid var(--focus-background);
     outline-offset: 0.25rem;
 }

@@ -153,7 +153,6 @@ export class Level {
     }
     showFormUnitTestMessage() {
         new HumanMessage([
-            new Paragraph('I want to add a unit test.'),
             new Form([...this.parameters, this.unit].map(variable => variable.toHtml()), 'I want to add this unit test', () => this.addUnitTest(), 'I don\'t want to add a unit test now', () => this.menu())
         ]).replace().focusFirst();
     }
