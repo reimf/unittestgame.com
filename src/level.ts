@@ -1,31 +1,30 @@
 import { UnitTest } from './unit_test.js'
 import { Variable } from './variable.js'
-import { Main } from './main.js'
 import { Random } from './random.js'
 import { Button, Form, Paragraph, UnorderedList, Div, Code, Panel, HumanMessage, HumanMenuMessage, ComputerMessage } from './html.js'
 import { Candidate } from './candidate.js'
 import { TestResult } from './test_result.js'
 
 export abstract class Level {
-    private readonly INITIALSCORE = 100
+    private readonly PERFECTSCORE = 100
+    private readonly SUFFICIENTSCORE = 60
     private readonly PENALTYHINT = 10
     private readonly PENALTYBUG = 20
     private readonly PENALTYEND = 100
-    private readonly PERFECTSCORE = 100
-    private readonly SUFFICIENTSCORE = 60
 
     public readonly name: string = this.constructor.name
     public readonly abstract description: string
-    private parameters: Variable[] = this.getParameters()
-    private unit: Variable = this.getUnit()
-    private candidates: Candidate[] = [...this.generateCandidates(this.getCandidateElements())]
-    private minimalUnitTests: UnitTest[] = this.getMinimalUnitTests()
-    private perfectCandidates: Candidate[] = this.findPerfectCandidates(this.candidates, this.minimalUnitTests)
-    private perfectCandidate: Candidate = Random.elementFrom(this.perfectCandidates)
-    private hints: UnitTest[] = [...this.hintGenerator()].map(argumentList => new UnitTest(argumentList, this.perfectCandidate.execute(argumentList)))
-    private userdefinedUnitTests: UnitTest[] = []
-    private score: number = this.INITIALSCORE
+    private readonly parameters: Variable[] = this.getParameters()
+    private readonly unit: Variable = this.getUnit()
+    private readonly candidates: Candidate[] = [...this.generateCandidates(this.getCandidateElements())]
+    private readonly minimalUnitTests: UnitTest[] = this.getMinimalUnitTests()
+    private readonly perfectCandidates: Candidate[] = this.findPerfectCandidates(this.candidates, this.minimalUnitTests)
+    private readonly perfectCandidate: Candidate = Random.elementFrom(this.perfectCandidates)
+    private readonly hints: UnitTest[] = [...this.hintGenerator()].map(argumentList => new UnitTest(argumentList, this.perfectCandidate.execute(argumentList)))
+    private readonly userdefinedUnitTests: UnitTest[] = []
+    private score: number = this.PERFECTSCORE
     private failingTestResult: TestResult | undefined = undefined
+    private callback?: () => void
 
     protected abstract getParameters(): Variable[]
     protected abstract getUnit(): Variable
@@ -38,32 +37,32 @@ export abstract class Level {
         this.checkUnitTestsAreNeeded(this.candidates, this.minimalUnitTests)
     }
 
-    private emoji(storage: Storage, unlockedIndex: number): string {
-        if (this.index > unlockedIndex)
+    private emoji(storage: Storage, highestPlayableLevelIndex: number): string {
+        if (this.index > highestPlayableLevelIndex)
             return '🔒'
-        if (this.index === unlockedIndex)
+        if (this.index === highestPlayableLevelIndex)
             return '👉'
         const highScore = this.getHighScore(storage)
-        if (highScore === this.INITIALSCORE)
+        if (highScore === this.PERFECTSCORE)
             return '🥇'
         if (highScore >= this.SUFFICIENTSCORE)
             return '🥈'
         return '🥉'
     }
 
-    private state(storage: Storage, unlockedIndex: number): string {
-        if (this.index > unlockedIndex)
+    private state(storage: Storage, highestPlayableLevelIndex: number): string {
+        if (this.index > highestPlayableLevelIndex)
             return 'Locked'
-        if (this.index === unlockedIndex)
+        if (this.index === highestPlayableLevelIndex)
             return 'Play now'
         return `Score ${this.getHighScore(storage)}%`
     }
 
-    public buttonText(storage: Storage, unlockedIndex: number): string {
-        return `${this.emoji(storage, unlockedIndex)} Level ${this.index}: ${this.name} - ${this.description} (${this.state(storage, unlockedIndex)})`
+    public buttonText(storage: Storage, highestPlayableLevelIndex: number): string {
+        return `${this.emoji(storage, highestPlayableLevelIndex)} Level ${this.index}: ${this.name} - ${this.description} (${this.state(storage, highestPlayableLevelIndex)})`
     }
 
-    public getHighScore(storage: Storage): number {
+    private getHighScore(storage: Storage): number {
         return Number(storage.getItem(`${this.name}.score`))
     }
 
@@ -166,7 +165,8 @@ export abstract class Level {
         ]).show().focusFirst()
     }
 
-    public play(): void {
+    public play(callback: () => void): void {
+        this.callback = callback
         this.showSpecificationPanel()
         this.showContractMessage()
         this.menu()
@@ -348,6 +348,6 @@ export abstract class Level {
         else
             this.showSuccessfulEndMessage()
         this.saveScore(localStorage)
-        Main.instance.showLevelMenu()
+        this.callback!()
     }
 }

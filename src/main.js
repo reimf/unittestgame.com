@@ -44,14 +44,14 @@ export class Main {
     }
     showLevelMenu() {
         var _a;
-        const unlockedIndex = ((_a = this.levels.find(level => !level.hasHighScore(localStorage))) === null || _a === void 0 ? void 0 : _a.index) || this.levels.length;
-        new HumanMenuMessage(this.levels.map(level => new Button(level.buttonText(localStorage, unlockedIndex), () => this.playLevel(level))
-            .disabled(level.index > unlockedIndex))).show().focusLast();
+        const highestPlayableLevelIndex = ((_a = this.levels.find(level => !level.hasHighScore(localStorage))) === null || _a === void 0 ? void 0 : _a.index) || this.levels.length;
+        new HumanMenuMessage(this.levels.map(level => new Button(level.buttonText(localStorage, highestPlayableLevelIndex), () => this.playLevel(level))
+            .disabled(level.index > highestPlayableLevelIndex))).show().focusLast();
     }
     playLevel(level) {
         Panel.remove('about');
         Panel.remove('high-scores');
-        level.play();
+        level.play(() => this.showLevelMenu());
     }
 }
 Main.instance = new Main();

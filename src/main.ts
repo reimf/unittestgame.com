@@ -1,5 +1,5 @@
 import { Level } from './level.js'
-import { Button, Paragraph, Anchor, Div, UnorderedList, Panel, HumanMenuMessage, ComputerMessage } from './html.js'
+import { Button, Paragraph, Anchor, Panel, HumanMenuMessage, ComputerMessage } from './html.js'
 import { VotingAge } from './level_voting_age.js'
 import { EvenOdd } from './level_even_odd.js'
 import { LeapYear } from './level_leap_year.js'
@@ -52,11 +52,11 @@ export class Main {
     }
 
     public showLevelMenu(): void {
-        const unlockedIndex = this.levels.find(level => !level.hasHighScore(localStorage))?.index || this.levels.length
+        const highestPlayableLevelIndex = this.levels.find(level => !level.hasHighScore(localStorage))?.index || this.levels.length
         new HumanMenuMessage(
             this.levels.map(level =>
-                new Button(level.buttonText(localStorage, unlockedIndex), () => this.playLevel(level))
-                .disabled(level.index > unlockedIndex)
+                new Button(level.buttonText(localStorage, highestPlayableLevelIndex), () => this.playLevel(level))
+                .disabled(level.index > highestPlayableLevelIndex)
             ),
         ).show().focusLast()
     }
@@ -64,6 +64,6 @@ export class Main {
     private playLevel(level: Level): void {
         Panel.remove('about')
         Panel.remove('high-scores')
-        level.play()
+        level.play(() => this.showLevelMenu())
     }
 }

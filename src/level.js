@@ -1,5 +1,4 @@
 import { UnitTest } from './unit_test.js';
-import { Main } from './main.js';
 import { Random } from './random.js';
 import { Button, Form, Paragraph, UnorderedList, Div, Code, Panel, HumanMessage, HumanMenuMessage, ComputerMessage } from './html.js';
 import { Candidate } from './candidate.js';
@@ -7,12 +6,11 @@ import { TestResult } from './test_result.js';
 export class Level {
     constructor(index) {
         this.index = index;
-        this.INITIALSCORE = 100;
+        this.PERFECTSCORE = 100;
+        this.SUFFICIENTSCORE = 60;
         this.PENALTYHINT = 10;
         this.PENALTYBUG = 20;
         this.PENALTYEND = 100;
-        this.PERFECTSCORE = 100;
-        this.SUFFICIENTSCORE = 60;
         this.name = this.constructor.name;
         this.parameters = this.getParameters();
         this.unit = this.getUnit();
@@ -22,31 +20,31 @@ export class Level {
         this.perfectCandidate = Random.elementFrom(this.perfectCandidates);
         this.hints = [...this.hintGenerator()].map(argumentList => new UnitTest(argumentList, this.perfectCandidate.execute(argumentList)));
         this.userdefinedUnitTests = [];
-        this.score = this.INITIALSCORE;
+        this.score = this.PERFECTSCORE;
         this.failingTestResult = undefined;
         this.checkUnitTestsAreNeeded(this.candidates, this.minimalUnitTests);
     }
-    emoji(storage, unlockedIndex) {
-        if (this.index > unlockedIndex)
+    emoji(storage, highestPlayableLevelIndex) {
+        if (this.index > highestPlayableLevelIndex)
             return '🔒';
-        if (this.index === unlockedIndex)
+        if (this.index === highestPlayableLevelIndex)
             return '👉';
         const highScore = this.getHighScore(storage);
-        if (highScore === this.INITIALSCORE)
+        if (highScore === this.PERFECTSCORE)
             return '🥇';
         if (highScore >= this.SUFFICIENTSCORE)
             return '🥈';
         return '🥉';
     }
-    state(storage, unlockedIndex) {
-        if (this.index > unlockedIndex)
+    state(storage, highestPlayableLevelIndex) {
+        if (this.index > highestPlayableLevelIndex)
             return 'Locked';
-        if (this.index === unlockedIndex)
+        if (this.index === highestPlayableLevelIndex)
             return 'Play now';
         return `Score ${this.getHighScore(storage)}%`;
     }
-    buttonText(storage, unlockedIndex) {
-        return `${this.emoji(storage, unlockedIndex)} Level ${this.index}: ${this.name} - ${this.description} (${this.state(storage, unlockedIndex)})`;
+    buttonText(storage, highestPlayableLevelIndex) {
+        return `${this.emoji(storage, highestPlayableLevelIndex)} Level ${this.index}: ${this.name} - ${this.description} (${this.state(storage, highestPlayableLevelIndex)})`;
     }
     getHighScore(storage) {
         return Number(storage.getItem(`${this.name}.score`));
@@ -133,7 +131,8 @@ export class Level {
             new Button(`I want to exit this level (-${this.PENALTYEND}%?)`, () => this.end()),
         ]).show().focusFirst();
     }
-    play() {
+    play(callback) {
+        this.callback = callback;
         this.showSpecificationPanel();
         this.showContractMessage();
         this.menu();
@@ -273,6 +272,6 @@ export class Level {
         else
             this.showSuccessfulEndMessage();
         this.saveScore(localStorage);
-        Main.instance.showLevelMenu();
+        this.callback();
     }
 }
