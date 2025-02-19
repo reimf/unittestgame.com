@@ -27,7 +27,7 @@ export class Float extends Level {
     getCandidateElements() {
         return [
             [
-                'let regex = ""',
+                'let regex = "^"',
             ],
             [
                 'regex += "[+-]?"',
@@ -60,7 +60,10 @@ export class Float extends Level {
                 '',
             ],
             [
-                'return new RegExp(`^${regex}$`).test(text)',
+                'regex += "$"',
+            ],
+            [
+                'return new RegExp(regex).test(text)',
                 'return true',
                 'return false',
             ]

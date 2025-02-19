@@ -8,13 +8,13 @@ test.describe('hint unit test', () => {
   })
 
   test('has hint unit test message', async ({ page }) => {
-    const messages = page.locator('#messages')
+    const messages = page.getByTestId('messages')
     await expect(messages).toContainText(/\d+ -> (true|false)/)
   })
 
   test('has action menu message', async ({ page }) => {
-    const messages = page.locator('#messages')
-    const buttons = messages.locator('button')
+    const messages = page.getByTestId('messages')
+    const buttons = messages.getByRole('button')
     await expect(buttons).toHaveText([
       'I want to add a unit test',
       'I want to see a hint for a unit test (-10%)',

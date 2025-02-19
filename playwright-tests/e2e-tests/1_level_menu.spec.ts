@@ -10,23 +10,23 @@ test.describe('level menu', () => {
   })
 
   test('has about panel', async ({ page }) => {
-    const aboutPanel = page.locator('#about')
+    const aboutPanel = page.getByTestId('about')
     await expect(aboutPanel).toContainText('About')
   })
 
   test('has feedback mail address', async ({ page }) => {
-    const link = page.locator('a')
+    const link = page.getByRole('link')
     await expect(link).toHaveText('feedback@unittestgame.com')
   })
 
   test('has welcome message', async ({ page }) => {
-    const messages = page.locator('#messages')
+    const messages = page.getByTestId('messages')
     await expect(messages).toContainText('Welcome to UnitTestGame.com!')
   })
 
   test('has level menu message', async ({ page }) => {
-    const messages = page.locator('#messages')
-    const buttons = messages.locator('button')
+    const messages = page.getByTestId('messages')
+    const buttons = messages.getByRole('button')
     await expect(buttons).toHaveText([
       '👉 Level 1: VotingAge - are you allowed to vote (Play Now)',
       '🔒 Level 2: EvenOdd - separate the numbers (Locked)',

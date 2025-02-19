@@ -7,43 +7,38 @@ test.describe('level start', () => {
   })
 
   test('has no about panel', async ({ page }) => {
-    const aboutPanel = page.locator('#about')
+    const aboutPanel = page.getByTestId('about')
     await expect(aboutPanel).not.toBeAttached()
   })
 
   test('has specification panel', async ({ page }) => {
-    const specificationPanel = page.locator('#specification')
-    await expect(specificationPanel).toContainText('Specification')
+    const specificationPanel = page.getByTestId('specification')
+    await expect(specificationPanel).toContainText('Return true if the age is 18 years or over and return false if the age is under 18 ')
   })
 
-  test('has unit tests panel', async ({ page }) => {
-    const unitTestsPanel = page.locator('#unit-tests')
-    await expect(unitTestsPanel).toContainText('Unit Tests')
-  })
-
-  test('has current candidate panel', async ({ page }) => {
-    const currentCandidatePanel = page.locator('#current-candidate')
-    await expect(currentCandidatePanel).toContainText('Current Function')
+  test('has no unit tests in the unit tests panel', async ({ page }) => {
+    const unitTestsPanel = page.getByTestId('unit-tests')
+    await expect(unitTestsPanel).toContainText('You have not written any unit tests yet')
   })
 
   test('has the simplest candidate in the current candidate panel', async ({ page }) => {
-    const currentCandidatePanel = page.locator('#current-candidate')
+    const currentCandidatePanel = page.getByTestId('current-candidate')
     await expect(currentCandidatePanel).toContainText(/function isAllowedToVote\(age\) \{\s+return (true|false)\s+\}/)
   })
 
-  test('has score panel', async ({ page }) => {
-    const scorePanel = page.locator('#score')
-    await expect(scorePanel).toContainText('Score')
+  test('has 100% in the score panel', async ({ page }) => {
+    const scorePanel = page.getByTestId('score')
+    await expect(scorePanel).toContainText('100%')
   })
 
   test('has contract message', async ({ page }) => {
-    const messages = page.locator('#messages')
+    const messages = page.getByTestId('messages')
     await expect(messages).toContainText('In the sidebar you see the specification, the unit tests you have written and the current function that passes all the unit tests.')
   })
 
   test('has action menu message', async ({ page }) => {
-    const messages = page.locator('#messages')
-    const buttons = messages.locator('button')
+    const messages = page.getByTestId('messages')
+    const buttons = messages.getByRole('button')
     await expect(buttons).toHaveText([
       'I want to add a unit test',
       'I want to see a hint for a unit test (-10%)',

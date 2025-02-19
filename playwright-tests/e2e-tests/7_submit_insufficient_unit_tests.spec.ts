@@ -8,18 +8,18 @@ test.describe('submit insufficient unit test', () => {
   })
 
   test('has bug found message', async ({ page }) => {
-    const messages = page.locator('#messages')
+    const messages = page.getByTestId('messages')
     await expect(messages).toContainText('The function is NOT according to the specification')
   })
 
   test('has unit test in bug found message', async ({ page }) => {
-    const messages = page.locator('#messages')
+    const messages = page.getByTestId('messages')
     await expect(messages).toContainText(/\d+ -> (true|false)/)
   })
 
   test('has action menu message', async ({ page }) => {
-    const messages = page.locator('#messages')
-    const buttons = messages.locator('button')
+    const messages = page.getByTestId('messages')
+    const buttons = messages.getByRole('button')
     await expect(buttons).toHaveText([
       'I want to add a unit test',
       'I want to see a hint for a unit test (-10%)',

@@ -14,14 +14,14 @@ test.describe('submit insufficient unit test', () => {
         await page.getByRole('button', { name: 'I want to submit the unit tests' }).click();
     });
     test('has end message', async ({ page }) => {
-        const messages = page.locator('#messages');
+        const messages = page.getByTestId('messages');
         await expect(messages).toContainText('The function is according to the specification');
     });
     test('has continue menu message', async ({ page }) => {
-        const messages = page.locator('#messages');
-        const buttons = messages.locator('button');
+        const messages = page.getByTestId('messages');
+        const buttons = messages.getByRole('button');
         await expect(buttons).toHaveText([
-            '🥇 Level 1: VotingAge - are you allowed to vote (Score 100%)',
+            '🥇 Level 1: VotingAge - are you allowed to vote (100%)',
             '👉 Level 2: EvenOdd - separate the numbers (Play Now)',
             '🔒 Level 3: LeapYear - find the leap years (Locked)',
             '🔒 Level 4: Triangle - name the triangle type (Locked)',
