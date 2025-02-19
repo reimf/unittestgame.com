@@ -9,21 +9,23 @@ export class Speed extends Level {
     }
     showSpecificationPanel() {
         new Panel('Specification', [
-            new Paragraph('Return the correct display output. ' +
-                'The function receives the speed in meters per hour and must display the speed in kilometers per hour.'),
-            new Code('+-------------------+\n' +
+            new Paragraph('The function receives the speed in meters per hour and must display the speed in kilometers per hour. ' +
+                'If something is wrong with the speed (e.g. negative speed), ' +
+                'then the function must return "ERROR". ' +
+                'If possible, show one decimal (e.g. "12.3"). ' +
+                'Otherwise, round to whole kilometers per hour (e.g. "49"). ' +
+                'If the speed no longer fits on the display, ' +
+                'then the function must return "DANGER".'),
+            new Code('The display looks like this:\n' +
+                '+-------------------+\n' +
                 '|  X   XXXX   XXXX  |\n' +
                 '|  X   X  X   X  X  |\n' +
                 '|  X   XXXX   XXXX  |\n' +
                 '|  X   X  X   X  X  |\n' +
                 '|  X   XXXX X XXXX  |\n' +
+                '|                   |\n' +
+                '|  ERROR    DANGER  |\n' +
                 '+-------------------+'),
-            new Paragraph('If something is wrong with the speed (for example, if it is negative), ' +
-                'then the function must return "ERROR" and the display will start blinking slowly. ' +
-                'If possible, show one decimal place, for example, "12.3". ' +
-                'Otherwise, round to whole kilometers per hour, such as "49". ' +
-                'If the speed no longer fits on the display, ' +
-                'then the function must return "DANGER" and the display will start blinking rapidly.'),
         ]).show('specification');
     }
     getParameters() {
@@ -57,7 +59,7 @@ export class Speed extends Level {
             ],
             [
                 'return Math.round(speed / 1000).toString()',
-                'return (speed / 1000).toFixed() // no decimals',
+                'return (speed / 1000).toFixed()',
                 'return (speed / 1000).toFixed(1)',
                 'return (speed / 1000).toString()',
                 'return ""',

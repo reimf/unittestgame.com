@@ -95,7 +95,7 @@ test.describe('class Level', () => {
 
   test('has the right amount of candidates', () => {
     const level = new FakeLevel(1)
-    expect(level.candidates.length).toBe(24)
+    expect(level.candidates.length).toBe(16)
   })
 
   test('has the right amount of perfect candidates', () => {

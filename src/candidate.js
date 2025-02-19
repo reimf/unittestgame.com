@@ -12,6 +12,8 @@ export class Candidate {
             replace(/\((.*?)\)/g, ' () $1 ').
             replace(/\[(.*?)\]/g, ' [] $1 ').
             replace(/\{(.*?)\}/g, ' {} $1 ').
+            replace(/(\d)0+ /g, '$1 '). // 199 is more complex than 200
+            replace(/(\d)(\d)/g, '$1 $2'). // 199 is more complex than 200
             trim().
             split(/\s+/);
         return chunks.length;

@@ -55,9 +55,10 @@ export class FizzBuzz extends Level {
                 ''
             ],
             [
-                'return ""',
+                'return "Fizz"',
+                'return "Buzz"',
+                'return "FizzBuzz"',
                 'return number.toString()',
-                ''
             ]
         ]
     }

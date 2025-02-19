@@ -54,7 +54,6 @@ export class FakeLevel extends Level {
             [
                 'return ""',
                 'return number.toString()',
-                ''
             ]
         ]
     }
