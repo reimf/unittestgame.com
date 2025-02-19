@@ -1,4 +1,4 @@
-export class MockStorage {
+export class FakeStorage {
     constructor() {
         this.storage = new Map();
     }

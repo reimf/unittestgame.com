@@ -12,6 +12,7 @@ export class Level {
         this.PENALTYBUG = 20;
         this.PENALTYEND = 100;
         this.name = this.constructor.name;
+        /* The following attributes are public for testing; otherwise they can be private */
         this.parameters = this.getParameters();
         this.unit = this.getUnit();
         this.candidates = [...this.generateCandidates(this.getCandidateElements())];
@@ -21,7 +22,6 @@ export class Level {
         this.hints = [...this.hintGenerator()].map(argumentList => new UnitTest(argumentList, this.perfectCandidate.execute(argumentList)));
         this.userdefinedUnitTests = [];
         this.score = this.PERFECTSCORE;
-        this.failingTestResult = undefined;
         this.checkUnitTestsAreNeeded(this.candidates, this.minimalUnitTests);
     }
     emoji(storage, highestPlayableLevelIndex) {

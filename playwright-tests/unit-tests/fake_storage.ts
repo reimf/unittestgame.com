@@ -1,4 +1,4 @@
-export class MockStorage {
+export class FakeStorage {
     private readonly storage = new Map<string, string>()
 
     get length(): number {

@@ -14,17 +14,18 @@ export abstract class Level {
 
     public readonly name: string = this.constructor.name
     public readonly abstract description: string
-    private readonly parameters: Variable[] = this.getParameters()
-    private readonly unit: Variable = this.getUnit()
-    private readonly candidates: Candidate[] = [...this.generateCandidates(this.getCandidateElements())]
-    private readonly minimalUnitTests: UnitTest[] = this.getMinimalUnitTests()
-    private readonly perfectCandidates: Candidate[] = this.findPerfectCandidates(this.candidates, this.minimalUnitTests)
-    private readonly perfectCandidate: Candidate = Random.elementFrom(this.perfectCandidates)
-    private readonly hints: UnitTest[] = [...this.hintGenerator()].map(argumentList => new UnitTest(argumentList, this.perfectCandidate.execute(argumentList)))
-    private readonly userdefinedUnitTests: UnitTest[] = []
-    private score: number = this.PERFECTSCORE
-    private failingTestResult: TestResult | undefined = undefined
-    private callback?: () => void
+    /* The following attributes are public for testing; otherwise they can be private */
+    public readonly parameters: Variable[] = this.getParameters()
+    public readonly unit: Variable = this.getUnit()
+    public readonly candidates: Candidate[] = [...this.generateCandidates(this.getCandidateElements())]
+    public readonly minimalUnitTests: UnitTest[] = this.getMinimalUnitTests()
+    public readonly perfectCandidates: Candidate[] = this.findPerfectCandidates(this.candidates, this.minimalUnitTests)
+    public readonly perfectCandidate: Candidate = Random.elementFrom(this.perfectCandidates)
+    public readonly hints: UnitTest[] = [...this.hintGenerator()].map(argumentList => new UnitTest(argumentList, this.perfectCandidate.execute(argumentList)))
+    public readonly userdefinedUnitTests: UnitTest[] = []
+    public score: number = this.PERFECTSCORE
+    public failingTestResult?: TestResult
+    public callback?: () => void
 
     protected abstract getParameters(): Variable[]
     protected abstract getUnit(): Variable
