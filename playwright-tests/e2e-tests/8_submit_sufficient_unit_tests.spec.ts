@@ -26,11 +26,12 @@ test.describe('submit insufficient unit test', () => {
     await expect(buttons).toHaveText([
       '🥇 Level 1: VotingAge - are you allowed to vote (100%)',
       '👉 Level 2: EvenOdd - separate the numbers (Play Now)',
-      '🔒 Level 3: LeapYear - find the leap years (Locked)',
-      '🔒 Level 4: Triangle - name the triangle type (Locked)',
-      '🔒 Level 5: Float - check the format (Locked)',
-      '🔒 Level 6: Password - see if a password is strong (Locked)',
-      '🔒 Level 7: Speed - display the speed of a car (Locked)',
+      '🔒 Level 3: FizzBuzz - is it fizz or buzz (Locked)',
+      '🔒 Level 4: LeapYear - find the leap years (Locked)',
+      '🔒 Level 5: Triangle - name the triangle type (Locked)',
+      '🔒 Level 6: Float - check the format (Locked)',
+      '🔒 Level 7: Password - see if a password is strong (Locked)',
+      '🔒 Level 8: Speed - display the speed of a car (Locked)',
     ])
   })
 })

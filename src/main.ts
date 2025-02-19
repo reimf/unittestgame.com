@@ -2,22 +2,24 @@ import { Level } from './level.js'
 import { Button, Paragraph, Anchor, Panel, HumanMenuMessage, ComputerMessage } from './html.js'
 import { VotingAge } from './level_voting_age.js'
 import { EvenOdd } from './level_even_odd.js'
+import { FizzBuzz } from './level_fizz_buzz.js'
 import { LeapYear } from './level_leap_year.js'
 import { Triangle } from './level_triangle.js'
-import { Speed } from './level_speed.js'
 import { Float } from './level_float.js'
 import { Password } from './level_password.js'
+import { Speed } from './level_speed.js'
 
 export class Main {
     public static readonly instance = new Main()
     private levels = [
         new VotingAge(1),
         new EvenOdd(2),
-        new LeapYear(3),
-        new Triangle(4),
-        new Float(5),
-        new Password(6),
-        new Speed(7),
+        new FizzBuzz(3),
+        new LeapYear(4),
+        new Triangle(5),
+        new Float(6),
+        new Password(7),
+        new Speed(8),
     ]
 
     private constructor() { }
