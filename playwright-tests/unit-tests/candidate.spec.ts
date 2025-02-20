@@ -12,6 +12,16 @@ test.describe('class Candidate', () => {
     expect(candidate.complexity).toBe(17)
   })
 
+  test('computes complexity for integer numbers in function', () => {
+    const candidate = new Candidate('function divide(a, b) { return 123400 }')
+    expect(candidate.complexity).toBe(11)
+  })
+
+  test('computes complexity for floating point numbers in function', () => {
+    const candidate = new Candidate('function divide(a, b) { return 100.56 }')
+    expect(candidate.complexity).toBe(13)
+  })
+
   test('executes function', () => {
     const candidate = new Candidate('function divide(a, b) { return a / b }')
     expect(candidate.execute([6, 2])).toBe(3)
