@@ -6,10 +6,6 @@ test.describe('class Level', () => {
         const level = new FakeLevel(1);
         expect(level.name).toBe('FakeLevel');
     });
-    test('has description', () => {
-        const level = new FakeLevel(1);
-        expect(level.description).toBe('is it fizz or buzz');
-    });
     test('has index', () => {
         const level = new FakeLevel(1);
         expect(level.index).toBe(1);
@@ -28,42 +24,42 @@ test.describe('class Level', () => {
     test('has button text with locked', () => {
         const storage = new FakeStorage();
         const level = new FakeLevel(1);
-        expect(level.buttonText(storage, 0)).toBe('🔒 Level 1: FakeLevel - is it fizz or buzz (Locked)');
+        expect(level.buttonText(storage, 0)).toBe('🔒 Level 1 - FakeLevel is locked');
     });
     test('has button text with play now', () => {
         const storage = new FakeStorage();
         const level = new FakeLevel(1);
-        expect(level.buttonText(storage, 1)).toBe('👉 Level 1: FakeLevel - is it fizz or buzz (Play Now)');
+        expect(level.buttonText(storage, 1)).toBe('👉 I want to play Level 1 - FakeLevel');
     });
     test('has button text with perfect high score', () => {
         const storage = new FakeStorage();
         storage.setItem('FakeLevel.score', '100');
         const level = new FakeLevel(1);
-        expect(level.buttonText(storage, 2)).toBe('🥇 Level 1: FakeLevel - is it fizz or buzz (100%)');
+        expect(level.buttonText(storage, 2)).toBe('🥇 I want to play Level 1 - FakeLevel again (100%)');
     });
     test('has button text with highest sufficient high score', () => {
         const storage = new FakeStorage();
         storage.setItem('FakeLevel.score', '99');
         const level = new FakeLevel(1);
-        expect(level.buttonText(storage, 2)).toBe('🥈 Level 1: FakeLevel - is it fizz or buzz (99%)');
+        expect(level.buttonText(storage, 2)).toBe('🥈 I want to improve Level 1 - FakeLevel (99%)');
     });
     test('has button text with lowest sufficient high score', () => {
         const storage = new FakeStorage();
         storage.setItem('FakeLevel.score', '60');
         const level = new FakeLevel(1);
-        expect(level.buttonText(storage, 2)).toBe('🥈 Level 1: FakeLevel - is it fizz or buzz (60%)');
+        expect(level.buttonText(storage, 2)).toBe('🥈 I want to improve Level 1 - FakeLevel (60%)');
     });
     test('has button text with highest insufficient high score', () => {
         const storage = new FakeStorage();
         storage.setItem('FakeLevel.score', '59');
         const level = new FakeLevel(1);
-        expect(level.buttonText(storage, 2)).toBe('🥉 Level 1: FakeLevel - is it fizz or buzz (59%)');
+        expect(level.buttonText(storage, 2)).toBe('🥉 I want to improve Level 1 - FakeLevel (59%)');
     });
     test('has button text with lowest insufficient high score', () => {
         const storage = new FakeStorage();
         storage.setItem('FakeLevel.score', '1');
         const level = new FakeLevel(1);
-        expect(level.buttonText(storage, 2)).toBe('🥉 Level 1: FakeLevel - is it fizz or buzz (1%)');
+        expect(level.buttonText(storage, 2)).toBe('🥉 I want to improve Level 1 - FakeLevel (1%)');
     });
     test('has the right amount of parameters', () => {
         const level = new FakeLevel(1);

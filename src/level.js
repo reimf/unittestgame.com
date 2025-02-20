@@ -24,27 +24,17 @@ export class Level {
         this.score = this.PERFECTSCORE;
         this.checkUnitTestsAreNeeded(this.candidates, this.minimalUnitTests);
     }
-    emoji(storage, highestPlayableLevelIndex) {
+    buttonText(storage, highestPlayableLevelIndex) {
         if (this.index > highestPlayableLevelIndex)
-            return '🔒';
+            return `🔒 Level ${this.index} - ${this.name} is locked`;
         if (this.index === highestPlayableLevelIndex)
-            return '👉';
+            return `👉 I want to play Level ${this.index} - ${this.name}`;
         const highScore = this.getHighScore(storage);
         if (highScore === this.PERFECTSCORE)
-            return '🥇';
+            return `🥇 I want to play Level ${this.index} - ${this.name} again (${highScore}%)`;
         if (highScore >= this.SUFFICIENTSCORE)
-            return '🥈';
-        return '🥉';
-    }
-    state(storage, highestPlayableLevelIndex) {
-        if (this.index > highestPlayableLevelIndex)
-            return 'Locked';
-        if (this.index === highestPlayableLevelIndex)
-            return 'Play Now';
-        return `${this.getHighScore(storage)}%`;
-    }
-    buttonText(storage, highestPlayableLevelIndex) {
-        return `${this.emoji(storage, highestPlayableLevelIndex)} Level ${this.index}: ${this.name} - ${this.description} (${this.state(storage, highestPlayableLevelIndex)})`;
+            return `🥈 I want to improve Level ${this.index} - ${this.name} (${highScore}%)`;
+        return `🥉 I want to improve Level ${this.index} - ${this.name} (${highScore}%)`;
     }
     getHighScore(storage) {
         return Number(storage.getItem(`${this.name}.score`));

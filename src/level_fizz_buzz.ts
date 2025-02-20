@@ -4,8 +4,6 @@ import { Variable, TextVariable, NumberVariable } from './variable.js'
 import { UnitTest } from './unit_test.js'
 
 export class FizzBuzz extends Level {
-    public readonly description = 'is it fizz or buzz'
-
     public constructor(index: number) {
         super(index)
     }

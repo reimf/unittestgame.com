@@ -3,10 +3,10 @@ import { VotingAge } from './level_voting_age.js';
 import { EvenOdd } from './level_even_odd.js';
 import { FizzBuzz } from './level_fizz_buzz.js';
 import { LeapYear } from './level_leap_year.js';
-import { Triangle } from './level_triangle.js';
-import { Float } from './level_float.js';
-import { Password } from './level_password.js';
-import { Speed } from './level_speed.js';
+import { TriangleType } from './level_triangle_type.js';
+import { FloatFormat } from './level_float_format.js';
+import { PasswordStrength } from './level_password_strength.js';
+import { SpeedDisplay } from './level_speed_display.js';
 export class Main {
     constructor() {
         this.levels = [
@@ -14,10 +14,10 @@ export class Main {
             new EvenOdd(2),
             new FizzBuzz(3),
             new LeapYear(4),
-            new Triangle(5),
-            new Float(6),
-            new Password(7),
-            new Speed(8),
+            new TriangleType(5),
+            new FloatFormat(6),
+            new PasswordStrength(7),
+            new SpeedDisplay(8),
         ];
     }
     showAboutPanel() {
@@ -46,9 +46,12 @@ export class Main {
     }
     showLevelMenu() {
         var _a;
-        const highestPlayableLevelIndex = ((_a = this.levels.find(level => !level.hasHighScore(localStorage))) === null || _a === void 0 ? void 0 : _a.index) || this.levels.length;
-        new HumanMenuMessage(this.levels.map(level => new Button(level.buttonText(localStorage, highestPlayableLevelIndex), () => this.playLevel(level))
-            .disabled(level.index > highestPlayableLevelIndex))).show().focusLast();
+        const highestPlayableLevelIndex = ((_a = this.levels.find(level => !level.hasHighScore(localStorage))) === null || _a === void 0 ? void 0 : _a.index) || this.levels.length + 1;
+        const levelButtons = this.levels.map(level => new Button(level.buttonText(localStorage, highestPlayableLevelIndex), () => this.playLevel(level))
+            .disabled(level.index > highestPlayableLevelIndex)
+            .addClass(level.index < highestPlayableLevelIndex ? 'played' : 'not-played'));
+        const quitButtons = highestPlayableLevelIndex > this.levels.length ? [new Button('Quit UnitTestGame.com', () => location.reload())] : [];
+        new HumanMenuMessage([...levelButtons, ...quitButtons]).show().focusLast();
     }
     playLevel(level) {
         Panel.remove('about');

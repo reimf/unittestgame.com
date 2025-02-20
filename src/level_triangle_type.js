@@ -2,10 +2,9 @@ import { Level } from './level.js';
 import { Paragraph, Panel } from './html.js';
 import { RadioVariable, NumberVariable } from './variable.js';
 import { UnitTest } from './unit_test.js';
-export class Triangle extends Level {
+export class TriangleType extends Level {
     constructor(index) {
         super(index);
-        this.description = 'name the triangle type';
     }
     showSpecificationPanel() {
         new Panel('Specification', [

@@ -53,6 +53,11 @@ button {
     &:disabled {
         opacity: 0.5;
     }
+
+    &.played {
+        background-color: var(--human-message-background);
+        color: var(--dark-text);
+    }
 }
 
 form {

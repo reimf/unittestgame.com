@@ -4,9 +4,7 @@ import { Paragraph, Panel } from './html.js'
 import { Variable, CheckboxVariable, TextVariable } from './variable.js'
 import { UnitTest } from './unit_test.js'
 
-export class Float extends Level {
-    public readonly description = 'check the format'
-
+export class FloatFormat extends Level {
     public constructor(index: number) {
         super(index)
     }
@@ -31,7 +29,7 @@ export class Float extends Level {
     public getUnit(): Variable {
         return new CheckboxVariable(
             'Does it represent a float?',
-            'isFloat'
+            'isFloatFormat'
         )
     }
 

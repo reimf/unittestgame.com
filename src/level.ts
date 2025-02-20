@@ -13,7 +13,6 @@ export abstract class Level {
     private readonly PENALTYEND = 100
 
     public readonly name: string = this.constructor.name
-    public readonly abstract description: string
     /* The following attributes are public for testing; otherwise they can be private */
     public readonly parameters: Variable[] = this.getParameters()
     public readonly unit: Variable = this.getUnit()
@@ -38,29 +37,17 @@ export abstract class Level {
         this.checkUnitTestsAreNeeded(this.candidates, this.minimalUnitTests)
     }
 
-    private emoji(storage: Storage, highestPlayableLevelIndex: number): string {
+    public buttonText(storage: Storage, highestPlayableLevelIndex: number): string {
         if (this.index > highestPlayableLevelIndex)
-            return '🔒'
+            return `🔒 Level ${this.index} - ${this.name} is locked`
         if (this.index === highestPlayableLevelIndex)
-            return '👉'
+            return `👉 I want to play Level ${this.index} - ${this.name}`
         const highScore = this.getHighScore(storage)
         if (highScore === this.PERFECTSCORE)
-            return '🥇'
+            return `🥇 I want to play Level ${this.index} - ${this.name} again (${highScore}%)`
         if (highScore >= this.SUFFICIENTSCORE)
-            return '🥈'
-        return '🥉'
-    }
-
-    private state(storage: Storage, highestPlayableLevelIndex: number): string {
-        if (this.index > highestPlayableLevelIndex)
-            return 'Locked'
-        if (this.index === highestPlayableLevelIndex)
-            return 'Play Now'
-        return `${this.getHighScore(storage)}%`
-    }
-
-    public buttonText(storage: Storage, highestPlayableLevelIndex: number): string {
-        return `${this.emoji(storage, highestPlayableLevelIndex)} Level ${this.index}: ${this.name} - ${this.description} (${this.state(storage, highestPlayableLevelIndex)})`
+            return `🥈 I want to improve Level ${this.index} - ${this.name} (${highScore}%)`
+        return `🥉 I want to improve Level ${this.index} - ${this.name} (${highScore}%)`
     }
 
     private getHighScore(storage: Storage): number {

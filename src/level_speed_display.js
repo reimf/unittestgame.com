@@ -2,10 +2,9 @@ import { Level } from './level.js';
 import { Paragraph, Panel, Code } from './html.js';
 import { TextVariable, NumberVariable } from './variable.js';
 import { UnitTest } from './unit_test.js';
-export class Speed extends Level {
+export class SpeedDisplay extends Level {
     constructor(index) {
         super(index);
-        this.description = 'display the speed of a car';
     }
     showSpecificationPanel() {
         new Panel('Specification', [
@@ -30,7 +29,7 @@ export class Speed extends Level {
     }
     getParameters() {
         return [
-            new NumberVariable('Speed in meters per hour', 'speed')
+            new NumberVariable('SpeedDisplay in meters per hour', 'speed')
         ];
     }
     getUnit() {

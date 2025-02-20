@@ -4,10 +4,10 @@ import { VotingAge } from './level_voting_age.js'
 import { EvenOdd } from './level_even_odd.js'
 import { FizzBuzz } from './level_fizz_buzz.js'
 import { LeapYear } from './level_leap_year.js'
-import { Triangle } from './level_triangle.js'
-import { Float } from './level_float.js'
-import { Password } from './level_password.js'
-import { Speed } from './level_speed.js'
+import { TriangleType } from './level_triangle_type.js'
+import { FloatFormat } from './level_float_format.js'
+import { PasswordStrength } from './level_password_strength.js'
+import { SpeedDisplay } from './level_speed_display.js'
 
 export class Main {
     public static readonly instance = new Main()
@@ -16,10 +16,10 @@ export class Main {
         new EvenOdd(2),
         new FizzBuzz(3),
         new LeapYear(4),
-        new Triangle(5),
-        new Float(6),
-        new Password(7),
-        new Speed(8),
+        new TriangleType(5),
+        new FloatFormat(6),
+        new PasswordStrength(7),
+        new SpeedDisplay(8),
     ]
 
     private constructor() { }
@@ -54,12 +54,15 @@ export class Main {
     }
 
     private showLevelMenu(): void {
-        const highestPlayableLevelIndex = this.levels.find(level => !level.hasHighScore(localStorage))?.index || this.levels.length
+        const highestPlayableLevelIndex = this.levels.find(level => !level.hasHighScore(localStorage))?.index || this.levels.length + 1
+        const levelButtons = this.levels.map(level =>
+            new Button(level.buttonText(localStorage, highestPlayableLevelIndex), () => this.playLevel(level))
+            .disabled(level.index > highestPlayableLevelIndex)
+            .addClass(level.index < highestPlayableLevelIndex ? 'played' : 'not-played')
+        )
+        const quitButtons = highestPlayableLevelIndex > this.levels.length ? [new Button('Quit UnitTestGame.com', () => location.reload())] : []
         new HumanMenuMessage(
-            this.levels.map(level =>
-                new Button(level.buttonText(localStorage, highestPlayableLevelIndex), () => this.playLevel(level))
-                .disabled(level.index > highestPlayableLevelIndex)
-            ),
+            [...levelButtons, ...quitButtons]
         ).show().focusLast()
     }
 

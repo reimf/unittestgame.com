@@ -5,7 +5,6 @@ import { UnitTest } from './unit_test.js';
 export class EvenOdd extends Level {
     constructor(index) {
         super(index);
-        this.description = 'separate the numbers';
     }
     showSpecificationPanel() {
         new Panel('Specification', [

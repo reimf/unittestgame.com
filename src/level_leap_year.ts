@@ -4,8 +4,6 @@ import { Variable, CheckboxVariable, NumberVariable } from './variable.js'
 import { UnitTest } from './unit_test.js'
 
 export class LeapYear extends Level {
-    public readonly description = 'find the leap years'
-
     public constructor(index: number) {
         super(index)
     }

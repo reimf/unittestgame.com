@@ -5,7 +5,6 @@ import { UnitTest } from '../../src/unit_test.js';
 export class FakeLevel extends Level {
     constructor(index) {
         super(index);
-        this.description = 'is it fizz or buzz';
     }
     showSpecificationPanel() {
         new Panel('Specification', [

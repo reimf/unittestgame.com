@@ -4,9 +4,7 @@ import { Paragraph, Panel } from './html.js'
 import { Variable, CheckboxVariable, TextVariable } from './variable.js'
 import { UnitTest } from './unit_test.js'
 
-export class Password extends Level {
-    public readonly description = 'see if a password is strong'
-
+export class PasswordStrength extends Level {
     public constructor(index: number) {
         super(index)
     }

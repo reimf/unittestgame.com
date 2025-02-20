@@ -3,10 +3,9 @@ import { Random } from './random.js';
 import { Paragraph, Panel } from './html.js';
 import { CheckboxVariable, TextVariable } from './variable.js';
 import { UnitTest } from './unit_test.js';
-export class Password extends Level {
+export class PasswordStrength extends Level {
     constructor(index) {
         super(index);
-        this.description = 'see if a password is strong';
     }
     showSpecificationPanel() {
         new Panel('Specification', [

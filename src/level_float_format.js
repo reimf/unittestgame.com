@@ -3,10 +3,9 @@ import { Random } from './random.js';
 import { Paragraph, Panel } from './html.js';
 import { CheckboxVariable, TextVariable } from './variable.js';
 import { UnitTest } from './unit_test.js';
-export class Float extends Level {
+export class FloatFormat extends Level {
     constructor(index) {
         super(index);
-        this.description = 'check the format';
     }
     showSpecificationPanel() {
         new Panel('Specification', [
@@ -22,7 +21,7 @@ export class Float extends Level {
         ];
     }
     getUnit() {
-        return new CheckboxVariable('Does it represent a float?', 'isFloat');
+        return new CheckboxVariable('Does it represent a float?', 'isFloatFormat');
     }
     getCandidateElements() {
         return [

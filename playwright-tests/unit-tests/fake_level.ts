@@ -4,8 +4,6 @@ import { Variable, TextVariable, NumberVariable } from '../../src/variable.js'
 import { UnitTest } from '../../src/unit_test.js'
 
 export class FakeLevel extends Level {
-    public readonly description = 'is it fizz or buzz'
-
     public constructor(index: number) {
         super(index)
     }

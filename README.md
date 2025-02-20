@@ -15,7 +15,7 @@ class Main {
 
 class Game {
     <<Abstract>>
-    +description: string*
+    +name: string*
     +play() void
     -menu() void
     -showFormUnitTest() void
@@ -28,14 +28,14 @@ class Game {
 class Evenodd
 Game <|-- Evenodd
 
-class Float
-Game <|-- Float
+class FloatFormat
+Game <|-- FloatFormat
 
-class Password
-Game <|-- Password
+class PasswordStrength
+Game <|-- PasswordStrength
 
-class Speed
-Game <|-- Speed
+class SpeedDisplay
+Game <|-- SpeedDisplay
 
 class VotingAge
 Game <|-- VotingAge
@@ -43,8 +43,8 @@ Game <|-- VotingAge
 class LeapYear
 Game <|-- LeapYear
 
-class Triangle
-Game <|-- Triangle
+class TriangleType
+Game <|-- TriangleType
 
 class Candidate {
     -function: Function

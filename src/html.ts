@@ -130,7 +130,7 @@ class ListItem extends Html {
 }
 
 export class Menu extends Html {
-    public constructor(buttons: Button[]) {
+    public constructor(buttons: Html[]) {
         super('menu')
         this.appendChildren(buttons.map(button => new ListItem(button)))
     }
@@ -267,7 +267,7 @@ export class HumanMessage extends Message {
 }
 
 export class HumanMenuMessage extends HumanMessage {
-    public constructor(buttons: Button[]) {
+    public constructor(buttons: Html[]) {
         super([
             new Menu(buttons),
         ])

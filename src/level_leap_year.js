@@ -5,7 +5,6 @@ import { UnitTest } from './unit_test.js';
 export class LeapYear extends Level {
     constructor(index) {
         super(index);
-        this.description = 'find the leap years';
     }
     showSpecificationPanel() {
         new Panel('Specification', [

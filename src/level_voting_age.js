@@ -5,7 +5,6 @@ import { UnitTest } from './unit_test.js';
 export class VotingAge extends Level {
     constructor(index) {
         super(index);
-        this.description = 'are you allowed to vote';
     }
     showSpecificationPanel() {
         new Panel('Specification', [

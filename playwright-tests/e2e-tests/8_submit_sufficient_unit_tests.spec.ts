@@ -24,14 +24,14 @@ test.describe('submit insufficient unit test', () => {
     const messages = page.getByTestId('messages')
     const buttons = messages.getByRole('button')
     await expect(buttons).toHaveText([
-      '🥇 Level 1: VotingAge - are you allowed to vote (100%)',
-      '👉 Level 2: EvenOdd - separate the numbers (Play Now)',
-      '🔒 Level 3: FizzBuzz - is it fizz or buzz (Locked)',
-      '🔒 Level 4: LeapYear - find the leap years (Locked)',
-      '🔒 Level 5: Triangle - name the triangle type (Locked)',
-      '🔒 Level 6: Float - check the format (Locked)',
-      '🔒 Level 7: Password - see if a password is strong (Locked)',
-      '🔒 Level 8: Speed - display the speed of a car (Locked)',
+      '🥇 I want to play Level 1 - VotingAge again (100%)',
+      '👉 I want to play Level 2 - EvenOdd',
+      '🔒 Level 3 - FizzBuzz is locked',
+      '🔒 Level 4 - LeapYear is locked',
+      '🔒 Level 5 - TriangleType is locked',
+      '🔒 Level 6 - FloatFormat is locked',
+      '🔒 Level 7 - PasswordStrength is locked',
+      '🔒 Level 8 - SpeedDisplay is locked',
     ])
   })
 })

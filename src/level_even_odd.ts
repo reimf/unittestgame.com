@@ -4,8 +4,6 @@ import { Variable, CheckboxVariable, NumberVariable } from './variable.js'
 import { UnitTest } from './unit_test.js'
 
 export class EvenOdd extends Level {
-    public readonly description = 'separate the numbers'
-
     public constructor(index: number) {
         super(index)
     }

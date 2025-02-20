@@ -3,9 +3,7 @@ import { Paragraph, Panel, Code } from './html.js'
 import { Variable, TextVariable, NumberVariable } from './variable.js'
 import { UnitTest } from './unit_test.js'
 
-export class Speed extends Level {
-    public readonly description = 'display the speed of a car'
-
+export class SpeedDisplay extends Level {
     public constructor(index: number) {
         super(index)
     }
@@ -38,7 +36,7 @@ export class Speed extends Level {
 
     public getParameters(): Variable[] {
         return [
-            new NumberVariable('Speed in meters per hour', 'speed')
+            new NumberVariable('SpeedDisplay in meters per hour', 'speed')
         ]
     }
 

@@ -3,9 +3,7 @@ import { Paragraph, Panel } from './html.js'
 import { Variable, RadioVariable, NumberVariable } from './variable.js'
 import { UnitTest } from './unit_test.js'
 
-export class Triangle extends Level {
-    public readonly description = 'name the triangle type'
-
+export class TriangleType extends Level {
     public constructor(index: number) {
         super(index)
     }
