@@ -4,8 +4,9 @@ import { Paragraph, Panel } from './html.js';
 import { CheckboxVariable, TextVariable } from './variable.js';
 import { UnitTest } from './unit_test.js';
 export class PasswordStrength extends Level {
-    constructor(index) {
-        super(index);
+    constructor() {
+        super(...arguments);
+        this.index = 7;
     }
     showSpecificationPanel() {
         new Panel('Specification', [

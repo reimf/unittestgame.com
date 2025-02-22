@@ -18,18 +18,13 @@ test.describe('level menu', () => {
         const messages = page.getByTestId('messages');
         await expect(messages).toContainText('Welcome to UnitTestGame.com!');
     });
+    test('has no high scores panel', async ({ page }) => {
+        const highScoresPanel = page.getByTestId('high-scores');
+        await expect(highScoresPanel).not.toBeAttached();
+    });
     test('has level menu message', async ({ page }) => {
         const messages = page.getByTestId('messages');
-        const buttons = messages.getByRole('button');
-        await expect(buttons).toHaveText([
-            '👉 I want to play Level 1 - VotingAge',
-            '🔒 Level 2 - EvenOdd is locked',
-            '🔒 Level 3 - FizzBuzz is locked',
-            '🔒 Level 4 - LeapYear is locked',
-            '🔒 Level 5 - TriangleType is locked',
-            '🔒 Level 6 - FloatFormat is locked',
-            '🔒 Level 7 - PasswordStrength is locked',
-            '🔒 Level 8 - SpeedDisplay is locked',
-        ]);
+        const button = messages.getByRole('button');
+        await expect(button).toHaveText('I want to play Level 1 - VotingAge');
     });
 });

@@ -5,9 +5,7 @@ import { Variable, CheckboxVariable, TextVariable } from './variable.js'
 import { UnitTest } from './unit_test.js'
 
 export class PasswordStrength extends Level {
-    public constructor(index: number) {
-        super(index)
-    }
+    public index = 7
 
     public showSpecificationPanel(): void {
         new Panel('Specification', [

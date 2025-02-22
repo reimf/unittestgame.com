@@ -1,21 +1,25 @@
-import { Level } from './level.js';
-import { Paragraph, Panel, Code } from './html.js';
-import { TextVariable, NumberVariable } from './variable.js';
-import { UnitTest } from './unit_test.js';
+import { Level } from './level.js'
+import { Paragraph, Panel, Code } from './html.js'
+import { Variable, TextVariable, NumberVariable } from './variable.js'
+import { UnitTest } from './unit_test.js'
+
 export class SpeedDisplay extends Level {
-    constructor(index) {
-        super(index);
-    }
-    showSpecificationPanel() {
+    public index = 8
+
+
+    public showSpecificationPanel(): void {
         new Panel('Specification', [
-            new Paragraph('The function receives the speed in meters per hour and must display the speed in kilometers per hour. ' +
+            new Paragraph(
+                'The function receives the speed in meters per hour and must display the speed in kilometers per hour. ' +
                 'If something is wrong with the speed (e.g. negative speed), ' +
                 'then the function must return "ERROR". ' +
                 'If possible, show one decimal (e.g. "12.3"). ' +
                 'Otherwise, round to whole kilometers per hour (e.g. "49"). ' +
                 'If the speed no longer fits on the display, ' +
-                'then the function must return "DANGER".'),
-            new Code('The display looks like this:\n' +
+                'then the function must return "DANGER".'
+            ),
+            new Code(
+                'The display looks like this:\n' +
                 '+-------------------+\n' +
                 '|  X   XXXX   XXXX  |\n' +
                 '|  X   X  X   X  X  |\n' +
@@ -24,18 +28,25 @@ export class SpeedDisplay extends Level {
                 '|  X   XXXX X XXXX  |\n' +
                 '|                   |\n' +
                 '|  ERROR    DANGER  |\n' +
-                '+-------------------+'),
-        ]).show('specification');
+                '+-------------------+'
+            ),
+        ]).show('specification')
     }
-    getParameters() {
+
+    public getParameters(): Variable[] {
         return [
             new NumberVariable('SpeedDisplay in meters per hour', 'speed')
-        ];
+        ]
     }
-    getUnit() {
-        return new TextVariable('Expected display output', 'display');
+
+    public getUnit(): Variable {
+        return new TextVariable(
+            'Expected display output',
+            'display'
+        )
     }
-    getCandidateElements() {
+
+    public getCandidateElements(): string[][] {
         return [
             [
                 'if (speed < 0) return "ERROR"',
@@ -63,9 +74,10 @@ export class SpeedDisplay extends Level {
                 'return (speed / 1000).toString()',
                 'return ""',
             ],
-        ];
+        ]
     }
-    getMinimalUnitTests() {
+
+    public getMinimalUnitTests(): UnitTest[] {
         return [
             new UnitTest([-1], 'ERROR'),
             new UnitTest([0], '0.0'),
@@ -73,13 +85,14 @@ export class SpeedDisplay extends Level {
             new UnitTest([19951], '20'),
             new UnitTest([199499], '199'),
             new UnitTest([199500], 'DANGER'),
-        ];
+        ]
     }
-    *hintGenerator() {
-        yield [-1000];
+
+    public *hintGenerator(): Generator<any[]> {
+        yield [-1000]
         for (let speed = 0; speed <= 27000; speed += 900)
-            yield [speed];
+            yield [speed]
         for (let speed = 30000; speed <= 220000; speed += 10000)
-            yield [speed];
+            yield [speed]
     }
 }

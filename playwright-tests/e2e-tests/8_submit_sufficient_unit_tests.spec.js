@@ -17,18 +17,13 @@ test.describe('submit insufficient unit test', () => {
         const messages = page.getByTestId('messages');
         await expect(messages).toContainText('The function is according to the specification');
     });
-    test('has continue menu message', async ({ page }) => {
+    test('has high scores panel', async ({ page }) => {
+        const highScores = page.getByTestId('high-scores');
+        await expect(highScores).toContainText('Level 1 - VotingAge: 100%');
+    });
+    test('has level menu message', async ({ page }) => {
         const messages = page.getByTestId('messages');
-        const buttons = messages.getByRole('button');
-        await expect(buttons).toHaveText([
-            '🥇 I want to play Level 1 - VotingAge again (100%)',
-            '👉 I want to play Level 2 - EvenOdd',
-            '🔒 Level 3 - FizzBuzz is locked',
-            '🔒 Level 4 - LeapYear is locked',
-            '🔒 Level 5 - TriangleType is locked',
-            '🔒 Level 6 - FloatFormat is locked',
-            '🔒 Level 7 - PasswordStrength is locked',
-            '🔒 Level 8 - SpeedDisplay is locked',
-        ]);
+        const button = messages.getByRole('button');
+        await expect(button).toHaveText('I want to play Level 2 - EvenOdd');
     });
 });

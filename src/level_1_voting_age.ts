@@ -4,9 +4,7 @@ import { Variable, CheckboxVariable, NumberVariable } from './variable.js'
 import { UnitTest } from './unit_test.js'
 
 export class VotingAge extends Level {
-    public constructor(index: number) {
-        super(index)
-    }
+    public index = 1
 
     public showSpecificationPanel(): void {
         new Panel('Specification', [

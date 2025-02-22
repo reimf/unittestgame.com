@@ -3,8 +3,9 @@ import { Paragraph, Panel } from './html.js';
 import { RadioVariable, NumberVariable } from './variable.js';
 import { UnitTest } from './unit_test.js';
 export class TriangleType extends Level {
-    constructor(index) {
-        super(index);
+    constructor() {
+        super(...arguments);
+        this.index = 4;
     }
     showSpecificationPanel() {
         new Panel('Specification', [

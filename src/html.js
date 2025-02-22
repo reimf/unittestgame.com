@@ -106,12 +106,6 @@ class ListItem extends Html {
         this.appendChild(child);
     }
 }
-export class Menu extends Html {
-    constructor(buttons) {
-        super('menu');
-        this.appendChildren(buttons.map(button => new ListItem(button)));
-    }
-}
 export class Button extends Html {
     constructor(text, callback) {
         super('button');
@@ -208,23 +202,12 @@ export class HumanMessage extends Message {
         this.id(lastMessage.id);
         this.replaceExisting();
         this.scrollIntoView();
+        this.focusFirst();
         return this;
     }
     focusFirst() {
         const focusables = this.element.querySelectorAll('button:enabled, input:enabled');
         if (focusables.length > 0)
             focusables[0].focus();
-    }
-    focusLast() {
-        const focusables = this.element.querySelectorAll('button:enabled, input:enabled');
-        if (focusables.length > 0)
-            focusables[focusables.length - 1].focus();
-    }
-}
-export class HumanMenuMessage extends HumanMessage {
-    constructor(buttons) {
-        super([
-            new Menu(buttons),
-        ]);
     }
 }

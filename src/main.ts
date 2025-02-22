@@ -1,25 +1,25 @@
 import { Level } from './level.js'
-import { Button, Paragraph, Anchor, Panel, HumanMenuMessage, ComputerMessage } from './html.js'
-import { VotingAge } from './level_voting_age.js'
-import { EvenOdd } from './level_even_odd.js'
-import { FizzBuzz } from './level_fizz_buzz.js'
-import { LeapYear } from './level_leap_year.js'
-import { TriangleType } from './level_triangle_type.js'
-import { FloatFormat } from './level_float_format.js'
-import { PasswordStrength } from './level_password_strength.js'
-import { SpeedDisplay } from './level_speed_display.js'
+import { Button, Paragraph, Anchor, Panel, HumanMessage, ComputerMessage } from './html.js'
+import { VotingAge } from './level_1_voting_age.js'
+import { EvenOdd } from './level_2_even_odd.js'
+import { FizzBuzz } from './level_3_fizz_buzz.js'
+import { LeapYear } from './level_5_leap_year.js'
+import { TriangleType } from './level_4_triangle_type.js'
+import { FloatFormat } from './level_6_float_format.js'
+import { PasswordStrength } from './level_7_password_strength.js'
+import { SpeedDisplay } from './level_8_speed_display.js'
 
 export class Main {
     public static readonly instance = new Main()
     private levels = [
-        new VotingAge(1),
-        new EvenOdd(2),
-        new FizzBuzz(3),
-        new LeapYear(4),
-        new TriangleType(5),
-        new FloatFormat(6),
-        new PasswordStrength(7),
-        new SpeedDisplay(8),
+        new VotingAge(),
+        new EvenOdd(),
+        new FizzBuzz(),
+        new TriangleType(),
+        new LeapYear(),
+        new FloatFormat(),
+        new PasswordStrength(),
+        new SpeedDisplay(),
     ]
 
     private constructor() { }
@@ -50,25 +50,37 @@ export class Main {
     public start(): void {
         this.showAboutPanel()
         this.showWelcomeMessage()
+        this.continue()
+    }
+
+    private continue(): void {
+        this.showHighScoresPanel()
         this.showLevelMenu()
     }
 
-    private showLevelMenu(): void {
-        const highestPlayableLevelIndex = this.levels.find(level => !level.hasHighScore(localStorage))?.index || this.levels.length + 1
-        const levelButtons = this.levels.map(level =>
-            new Button(level.buttonText(localStorage, highestPlayableLevelIndex), () => this.playLevel(level))
-            .disabled(level.index > highestPlayableLevelIndex)
-            .addClass(level.index < highestPlayableLevelIndex ? 'played' : 'not-played')
+    private showHighScoresPanel(): void {
+        const highScores = this.levels.filter(level => level.hasHighScore(localStorage)).map(level =>
+            new Paragraph(`Level ${level.index} - ${level.name}: ${level.getHighScore(localStorage)}%`)
         )
-        const quitButtons = highestPlayableLevelIndex > this.levels.length ? [new Button('Quit UnitTestGame.com', () => location.reload())] : []
-        new HumanMenuMessage(
-            [...levelButtons, ...quitButtons]
-        ).show().focusLast()
+        if (highScores.length > 0)
+            new Panel(
+                'High Scores',
+                highScores
+            ).show('high-scores')
+    }
+
+    private showLevelMenu(): void {
+        const level = this.levels.find(level => !level.hasHighScore(localStorage))
+        new HumanMessage([
+            level
+            ? new Button(`I want to play Level ${level.index} - ${level.name}`, () => this.playLevel(level))
+            : new Button('Quit UnitTestGame.com', () => window.close())
+        ]).show()
     }
 
     private playLevel(level: Level): void {
         Panel.remove('about')
         Panel.remove('high-scores')
-        level.play(() => this.showLevelMenu())
+        level.play(() => this.continue())
     }
 }

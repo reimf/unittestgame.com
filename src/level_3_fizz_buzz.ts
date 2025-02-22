@@ -4,9 +4,7 @@ import { Variable, TextVariable, NumberVariable } from './variable.js'
 import { UnitTest } from './unit_test.js'
 
 export class FizzBuzz extends Level {
-    public constructor(index: number) {
-        super(index)
-    }
+    public index = 3
 
     public showSpecificationPanel(): void {
         new Panel('Specification', [

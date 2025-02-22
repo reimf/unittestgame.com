@@ -3,8 +3,9 @@ import { Paragraph, Panel } from '../../src/html.js';
 import { TextVariable, NumberVariable } from '../../src/variable.js';
 import { UnitTest } from '../../src/unit_test.js';
 export class FakeLevel extends Level {
-    constructor(index) {
-        super(index);
+    constructor() {
+        super(...arguments);
+        this.index = 1;
     }
     showSpecificationPanel() {
         new Panel('Specification', [

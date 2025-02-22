@@ -1,7 +1,7 @@
 import { UnitTest } from './unit_test.js'
 import { Variable } from './variable.js'
 import { Random } from './random.js'
-import { Button, Form, Paragraph, UnorderedList, Div, Code, Panel, HumanMessage, HumanMenuMessage, ComputerMessage } from './html.js'
+import { Button, Form, Paragraph, UnorderedList, Div, Code, Panel, HumanMessage, ComputerMessage } from './html.js'
 import { Candidate } from './candidate.js'
 import { TestResult } from './test_result.js'
 
@@ -12,6 +12,7 @@ export abstract class Level {
     private readonly PENALTYBUG = 20
     private readonly PENALTYEND = 100
 
+    public abstract index: number
     public readonly name: string = this.constructor.name
     /* The following attributes are public for testing; otherwise they can be private */
     public readonly parameters: Variable[] = this.getParameters()
@@ -33,24 +34,11 @@ export abstract class Level {
     protected abstract hintGenerator(): Generator<any[]>
     protected abstract showSpecificationPanel(): void
 
-    protected constructor(public readonly index: number) {
+    public constructor() {
         this.checkUnitTestsAreNeeded(this.candidates, this.minimalUnitTests)
     }
 
-    public buttonText(storage: Storage, highestPlayableLevelIndex: number): string {
-        if (this.index > highestPlayableLevelIndex)
-            return `🔒 Level ${this.index} - ${this.name} is locked`
-        if (this.index === highestPlayableLevelIndex)
-            return `👉 I want to play Level ${this.index} - ${this.name}`
-        const highScore = this.getHighScore(storage)
-        if (highScore === this.PERFECTSCORE)
-            return `🥇 I want to play Level ${this.index} - ${this.name} again (${highScore}%)`
-        if (highScore >= this.SUFFICIENTSCORE)
-            return `🥈 I want to improve Level ${this.index} - ${this.name} (${highScore}%)`
-        return `🥉 I want to improve Level ${this.index} - ${this.name} (${highScore}%)`
-    }
-
-    private getHighScore(storage: Storage): number {
+    public getHighScore(storage: Storage): number {
         return Number(storage.getItem(`${this.name}.score`))
     }
 
@@ -146,12 +134,12 @@ export abstract class Level {
     }
 
     private showMenuMessage(): void {
-        new HumanMenuMessage([
+        new HumanMessage([
             new Button('I want to add a unit test', () => this.showFormUnitTestMessage()),
             new Button(`I want to see a hint for a unit test (-${this.PENALTYHINT}%)`, () => this.showHint()),
             new Button(`I want to submit the unit tests (-${this.PENALTYBUG}%?)`, () => this.submit()),
             new Button(`I want to exit this level (-${this.PENALTYEND}%?)`, () => this.end()),
-        ]).show().focusFirst()
+        ]).show()
     }
 
     public play(callback: () => void): void {
@@ -187,7 +175,7 @@ export abstract class Level {
                 'I don\'t want to add a unit test now',
                 () => this.menu()
             )
-        ]).replace().focusFirst()
+        ]).replace()
     }
 
     private showAddUnitTestMessage(unitTest: UnitTest): void {

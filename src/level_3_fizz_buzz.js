@@ -3,8 +3,9 @@ import { Paragraph, Panel } from './html.js';
 import { TextVariable, NumberVariable } from './variable.js';
 import { UnitTest } from './unit_test.js';
 export class FizzBuzz extends Level {
-    constructor(index) {
-        super(index);
+    constructor() {
+        super(...arguments);
+        this.index = 3;
     }
     showSpecificationPanel() {
         new Panel('Specification', [

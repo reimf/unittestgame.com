@@ -4,9 +4,7 @@ import { Variable, RadioVariable, NumberVariable } from './variable.js'
 import { UnitTest } from './unit_test.js'
 
 export class TriangleType extends Level {
-    public constructor(index: number) {
-        super(index)
-    }
+    public index = 4
 
     public showSpecificationPanel(): void {
         new Panel('Specification', [

@@ -1,11 +1,10 @@
 import { UnitTest } from './unit_test.js';
 import { Random } from './random.js';
-import { Button, Form, Paragraph, UnorderedList, Div, Code, Panel, HumanMessage, HumanMenuMessage, ComputerMessage } from './html.js';
+import { Button, Form, Paragraph, UnorderedList, Div, Code, Panel, HumanMessage, ComputerMessage } from './html.js';
 import { Candidate } from './candidate.js';
 import { TestResult } from './test_result.js';
 export class Level {
-    constructor(index) {
-        this.index = index;
+    constructor() {
         this.PERFECTSCORE = 100;
         this.SUFFICIENTSCORE = 60;
         this.PENALTYHINT = 10;
@@ -23,18 +22,6 @@ export class Level {
         this.userdefinedUnitTests = [];
         this.score = this.PERFECTSCORE;
         this.checkUnitTestsAreNeeded(this.candidates, this.minimalUnitTests);
-    }
-    buttonText(storage, highestPlayableLevelIndex) {
-        if (this.index > highestPlayableLevelIndex)
-            return `🔒 Level ${this.index} - ${this.name} is locked`;
-        if (this.index === highestPlayableLevelIndex)
-            return `👉 I want to play Level ${this.index} - ${this.name}`;
-        const highScore = this.getHighScore(storage);
-        if (highScore === this.PERFECTSCORE)
-            return `🥇 I want to play Level ${this.index} - ${this.name} again (${highScore}%)`;
-        if (highScore >= this.SUFFICIENTSCORE)
-            return `🥈 I want to improve Level ${this.index} - ${this.name} (${highScore}%)`;
-        return `🥉 I want to improve Level ${this.index} - ${this.name} (${highScore}%)`;
     }
     getHighScore(storage) {
         return Number(storage.getItem(`${this.name}.score`));
@@ -115,12 +102,12 @@ export class Level {
         ]).show('current-candidate');
     }
     showMenuMessage() {
-        new HumanMenuMessage([
+        new HumanMessage([
             new Button('I want to add a unit test', () => this.showFormUnitTestMessage()),
             new Button(`I want to see a hint for a unit test (-${this.PENALTYHINT}%)`, () => this.showHint()),
             new Button(`I want to submit the unit tests (-${this.PENALTYBUG}%?)`, () => this.submit()),
             new Button(`I want to exit this level (-${this.PENALTYEND}%?)`, () => this.end()),
-        ]).show().focusFirst();
+        ]).show();
     }
     play(callback) {
         this.callback = callback;
@@ -144,7 +131,7 @@ export class Level {
     showFormUnitTestMessage() {
         new HumanMessage([
             new Form([...this.parameters, this.unit].map(variable => variable.toHtml()), 'I want to add this unit test', () => this.addUnitTest(), 'I don\'t want to add a unit test now', () => this.menu())
-        ]).replace().focusFirst();
+        ]).replace();
     }
     showAddUnitTestMessage(unitTest) {
         new HumanMessage([

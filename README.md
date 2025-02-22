@@ -139,9 +139,6 @@ Html <|-- UnorderedList
 class ListItem
 Html <|-- ListItem
 
-class Menu
-Html <|-- Menu
-
 class Button
 Html <|-- Button
 
@@ -168,9 +165,6 @@ class HumanMessage {
     +replace() void
 }
 Message <|-- HumanMessage
-
-class HumanMenuMessage
-HumanMessage <|-- HumanMenuMessage
 
 class Panel {
     +show() void

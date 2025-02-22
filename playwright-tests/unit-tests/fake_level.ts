@@ -4,9 +4,7 @@ import { Variable, TextVariable, NumberVariable } from '../../src/variable.js'
 import { UnitTest } from '../../src/unit_test.js'
 
 export class FakeLevel extends Level {
-    public constructor(index: number) {
-        super(index)
-    }
+    public index = 1
 
     public showSpecificationPanel(): void {
         new Panel('Specification', [

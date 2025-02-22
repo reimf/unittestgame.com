@@ -4,9 +4,7 @@ import { Variable, CheckboxVariable, NumberVariable } from './variable.js'
 import { UnitTest } from './unit_test.js'
 
 export class EvenOdd extends Level {
-    public constructor(index: number) {
-        super(index)
-    }
+    public index = 2
 
     public showSpecificationPanel(): void {
         new Panel('Specification', [

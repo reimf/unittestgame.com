@@ -3,8 +3,9 @@ import { Paragraph, Panel } from './html.js';
 import { CheckboxVariable, NumberVariable } from './variable.js';
 import { UnitTest } from './unit_test.js';
 export class EvenOdd extends Level {
-    constructor(index) {
-        super(index);
+    constructor() {
+        super(...arguments);
+        this.index = 2;
     }
     showSpecificationPanel() {
         new Panel('Specification', [

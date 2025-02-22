@@ -1,40 +1,28 @@
-import { Level } from './level.js'
-import { Paragraph, Panel } from './html.js'
-import { Variable, CheckboxVariable, NumberVariable } from './variable.js'
-import { UnitTest } from './unit_test.js'
-
+import { Level } from './level.js';
+import { Paragraph, Panel } from './html.js';
+import { CheckboxVariable, NumberVariable } from './variable.js';
+import { UnitTest } from './unit_test.js';
 export class LeapYear extends Level {
-    public constructor(index: number) {
-        super(index)
+    constructor() {
+        super(...arguments);
+        this.index = 5;
     }
-
-    public showSpecificationPanel(): void {
+    showSpecificationPanel() {
         new Panel('Specification', [
-            new Paragraph(
-                'Return true if the year is a leap year and return false if the year is not a leap year. ' +
+            new Paragraph('Return true if the year is a leap year and return false if the year is not a leap year. ' +
                 'A year is a leap year if it is divisible by 4. ' +
-                'The exception is that years that are divisible by 100 are not leap years, unless they are also divisible by 400.'
-            ),
-        ]).show('specification')
+                'The exception is that years that are divisible by 100 are not leap years, unless they are also divisible by 400.'),
+        ]).show('specification');
     }
-
-    public getParameters(): Variable[] {
+    getParameters() {
         return [
-            new NumberVariable(
-                'Year',
-                'year'
-            ),
-        ]
+            new NumberVariable('Year', 'year'),
+        ];
     }
-
-    public getUnit(): Variable {
-        return new CheckboxVariable(
-            'Is it a leap year?',
-            'isLeapYear'
-        )
+    getUnit() {
+        return new CheckboxVariable('Is it a leap year?', 'isLeapYear');
     }
-
-    public getCandidateElements(): string[][] {
+    getCandidateElements() {
         return [
             [
                 'if (year % 400 == 0) return true',
@@ -59,23 +47,21 @@ export class LeapYear extends Level {
                 'return true',
                 'return false',
             ],
-        ]
+        ];
     }
-
-    public getMinimalUnitTests(): UnitTest[] {
+    getMinimalUnitTests() {
         return [
             new UnitTest([2001], false),
             new UnitTest([2002], false),
             new UnitTest([2004], true),
             new UnitTest([1800], false),
             new UnitTest([1600], true),
-        ]
+        ];
     }
-
-    public *hintGenerator(): Generator<any[]> {
+    *hintGenerator() {
         for (let year = 2001; year <= 2030; year += 1)
-            yield [year]
+            yield [year];
         for (let year = 1000; year <= 3000; year += 100)
-            yield [year]
+            yield [year];
     }
 }
