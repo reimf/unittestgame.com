@@ -12,6 +12,6 @@ export class TestResult {
     }
 
     public toString(): string {
-        return `${this.unitTest.argumentList} -> ${this.result}`
+        return this.unitTest.toStringWithResult(this.result)
     }
 }

@@ -195,6 +195,7 @@ export class HumanMessage extends Message {
     }
     show() {
         super.show();
+        this.focusFirst();
         return this;
     }
     replace() {

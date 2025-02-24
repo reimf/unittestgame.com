@@ -4,8 +4,6 @@ import { Variable, TextVariable, NumberVariable } from './variable.js'
 import { UnitTest } from './unit_test.js'
 
 export class SpeedDisplay extends Level {
-    public index = 8
-
 
     public showSpecificationPanel(): void {
         new Panel('Specification', [
@@ -77,14 +75,14 @@ export class SpeedDisplay extends Level {
         ]
     }
 
-    public getMinimalUnitTests(): UnitTest[] {
+    public getMinimalUnitTests(parameters: Variable[], unit: Variable): UnitTest[] {
         return [
-            new UnitTest([-1], 'ERROR'),
-            new UnitTest([0], '0.0'),
-            new UnitTest([19950], '19.9'),
-            new UnitTest([19951], '20'),
-            new UnitTest([199499], '199'),
-            new UnitTest([199500], 'DANGER'),
+            new UnitTest(parameters, [-1], unit, 'ERROR'),
+            new UnitTest(parameters, [0], unit, '0.0'),
+            new UnitTest(parameters, [19950], unit, '19.9'),
+            new UnitTest(parameters, [19951], unit, '20'),
+            new UnitTest(parameters, [199499], unit, '199'),
+            new UnitTest(parameters, [199500], unit, 'DANGER'),
         ]
     }
 

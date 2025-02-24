@@ -33,17 +33,17 @@ test.describe('level start', () => {
 
   test('has contract message', async ({ page }) => {
     const messages = page.getByTestId('messages')
-    await expect(messages).toContainText('In the sidebar you see the specification, the unit tests you have written and the current function that passes all the unit tests.')
+    await expect(messages).toContainText('In the sidebar you see the specification')
   })
 
   test('has action menu message', async ({ page }) => {
     const messages = page.getByTestId('messages')
     const buttons = messages.getByRole('button')
     await expect(buttons).toHaveText([
-      'I want to add a unit test',
-      'I want to see a hint for a unit test (-10%)',
-      'I want to submit the unit tests (-20%?)',
-      'I want to exit this level (-100%?)',
+      'I want to add a unit test (-10% on error)',
+      'I want to see a hint for a unit test (-20%)',
+      'I want to submit the unit tests (-30% on error)',
+      'I want to exit this level (0% on error)',
     ])
   })
 })

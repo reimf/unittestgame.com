@@ -3,10 +3,6 @@ import { Paragraph, Panel } from './html.js';
 import { CheckboxVariable, NumberVariable } from './variable.js';
 import { UnitTest } from './unit_test.js';
 export class VotingAge extends Level {
-    constructor() {
-        super(...arguments);
-        this.index = 1;
-    }
     showSpecificationPanel() {
         new Panel('Specification', [
             new Paragraph('Return true if the age is 18 years or over and return false if the age is under 18.'),
@@ -34,10 +30,10 @@ export class VotingAge extends Level {
             ],
         ];
     }
-    getMinimalUnitTests() {
+    getMinimalUnitTests(parameters, unit) {
         return [
-            new UnitTest([17], false),
-            new UnitTest([18], true),
+            new UnitTest(parameters, [17], unit, false),
+            new UnitTest(parameters, [18], unit, true),
         ];
     }
     *hintGenerator() {

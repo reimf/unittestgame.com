@@ -3,10 +3,6 @@ import { Paragraph, Panel } from './html.js';
 import { CheckboxVariable, NumberVariable } from './variable.js';
 import { UnitTest } from './unit_test.js';
 export class LeapYear extends Level {
-    constructor() {
-        super(...arguments);
-        this.index = 5;
-    }
     showSpecificationPanel() {
         new Panel('Specification', [
             new Paragraph('Return true if the year is a leap year and return false if the year is not a leap year. ' +
@@ -49,13 +45,13 @@ export class LeapYear extends Level {
             ],
         ];
     }
-    getMinimalUnitTests() {
+    getMinimalUnitTests(parameters, unit) {
         return [
-            new UnitTest([2001], false),
-            new UnitTest([2002], false),
-            new UnitTest([2004], true),
-            new UnitTest([1800], false),
-            new UnitTest([1600], true),
+            new UnitTest(parameters, [2001], unit, false),
+            new UnitTest(parameters, [2002], unit, false),
+            new UnitTest(parameters, [2004], unit, true),
+            new UnitTest(parameters, [1800], unit, false),
+            new UnitTest(parameters, [1600], unit, true),
         ];
     }
     *hintGenerator() {

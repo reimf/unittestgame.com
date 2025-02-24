@@ -235,6 +235,7 @@ export class HumanMessage extends Message {
 
     public show(): HumanMessage {
         super.show()
+        this.focusFirst()
         return this
     }
 

@@ -5,8 +5,6 @@ import { Variable, CheckboxVariable, TextVariable } from './variable.js'
 import { UnitTest } from './unit_test.js'
 
 export class FloatFormat extends Level {
-    public index = 6
-
     public showSpecificationPanel(): void {
         new Panel('Specification', [
             new Paragraph(
@@ -77,15 +75,15 @@ export class FloatFormat extends Level {
         ]
     }
 
-    public getMinimalUnitTests(): UnitTest[] {
+    public getMinimalUnitTests(parameters: Variable[], unit: Variable): UnitTest[] {
         return [
-            new UnitTest(['+123'], true),
-            new UnitTest(['-123.45'], true),
-            new UnitTest(['123.45'], true),
-            new UnitTest(['+-123'], false),
-            new UnitTest(['123.'], false),
-            new UnitTest(['.45'], false),
-            new UnitTest(['12.3.45'], false),
+            new UnitTest(parameters, ['+123'], unit, true),
+            new UnitTest(parameters, ['-123.45'], unit, true),
+            new UnitTest(parameters, ['123.45'], unit, true),
+            new UnitTest(parameters, ['+-123'], unit, false),
+            new UnitTest(parameters, ['123.'], unit, false),
+            new UnitTest(parameters, ['.45'], unit, false),
+            new UnitTest(parameters, ['12.3.45'], unit, false),
         ]
     }
 

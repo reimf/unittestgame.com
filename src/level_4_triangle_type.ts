@@ -4,8 +4,6 @@ import { Variable, RadioVariable, NumberVariable } from './variable.js'
 import { UnitTest } from './unit_test.js'
 
 export class TriangleType extends Level {
-    public index = 4
-
     public showSpecificationPanel(): void {
         new Panel('Specification', [
             new Paragraph(
@@ -62,13 +60,13 @@ export class TriangleType extends Level {
         ]
     }
 
-    public getMinimalUnitTests(): UnitTest[] {
+    public getMinimalUnitTests(parameters: Variable[], unit: Variable): UnitTest[] {
         return [
-            new UnitTest([5, 5, 5], 'equilateral'),
-            new UnitTest([3, 5, 5], 'isosceles'),
-            new UnitTest([5, 3, 5], 'isosceles'),
-            new UnitTest([5, 5, 3], 'isosceles'),
-            new UnitTest([3, 4, 5], 'scalene'),
+            new UnitTest(parameters, [5, 5, 5], unit, 'equilateral'),
+            new UnitTest(parameters, [3, 5, 5], unit, 'isosceles'),
+            new UnitTest(parameters, [5, 3, 5], unit, 'isosceles'),
+            new UnitTest(parameters, [5, 5, 3], unit, 'isosceles'),
+            new UnitTest(parameters, [3, 4, 5], unit, 'scalene'),
         ]
     }
 

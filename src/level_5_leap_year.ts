@@ -4,8 +4,6 @@ import { Variable, CheckboxVariable, NumberVariable } from './variable.js'
 import { UnitTest } from './unit_test.js'
 
 export class LeapYear extends Level {
-    public index = 5
-
     public showSpecificationPanel(): void {
         new Panel('Specification', [
             new Paragraph(
@@ -60,13 +58,13 @@ export class LeapYear extends Level {
         ]
     }
 
-    public getMinimalUnitTests(): UnitTest[] {
+    public getMinimalUnitTests(parameters: Variable[], unit: Variable): UnitTest[] {
         return [
-            new UnitTest([2001], false),
-            new UnitTest([2002], false),
-            new UnitTest([2004], true),
-            new UnitTest([1800], false),
-            new UnitTest([1600], true),
+            new UnitTest(parameters, [2001], unit, false),
+            new UnitTest(parameters, [2002], unit, false),
+            new UnitTest(parameters, [2004], unit, true),
+            new UnitTest(parameters, [1800], unit, false),
+            new UnitTest(parameters, [1600], unit, true),
         ]
     }
 

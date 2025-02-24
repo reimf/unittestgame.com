@@ -6,6 +6,6 @@ export class TestResult {
         this.passes = this.result === unitTest.expected;
     }
     toString() {
-        return `${this.unitTest.argumentList} -> ${this.result}`;
+        return this.unitTest.toStringWithResult(this.result);
     }
 }

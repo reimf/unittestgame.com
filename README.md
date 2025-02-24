@@ -7,15 +7,13 @@ classDiagram
 class Main {
     +instance: Main$
     +start() void
-    -themeMenu() void
-    -showLevelMenu() void
+    -showNextLevel() void
     -playLevel() void
     +continue() void
 }
 
-class Game {
+class Level {
     <<Abstract>>
-    +name: string*
     +play() void
     -menu() void
     -showFormUnitTest() void
@@ -24,27 +22,6 @@ class Game {
     -submit() void
     -end() void
 }
-
-class Evenodd
-Game <|-- Evenodd
-
-class FloatFormat
-Game <|-- FloatFormat
-
-class PasswordStrength
-Game <|-- PasswordStrength
-
-class SpeedDisplay
-Game <|-- SpeedDisplay
-
-class VotingAge
-Game <|-- VotingAge
-
-class LeapYear
-Game <|-- LeapYear
-
-class TriangleType
-Game <|-- TriangleType
 
 class Candidate {
     -function: Function
@@ -72,138 +49,40 @@ class UnitTest {
 }
 
 class Variable {
-    +name: string
-    +value() string | number | boolean*
-    +toHtml() Html*
-}
-
-class RadioVariable
-Variable <|-- RadioVariable
-
-class CheckboxVariable
-Variable <|-- CheckboxVariable
-
-class TextVariable
-Variable <|-- TextVariable
-
-class NumberVariable
-Variable <|-- NumberVariable
-
-class HighScore {
-    -name: string
-    -score: number
-    -achievement: string
-    +save() void
-    +toString() string
-    +fromStorage() HighScore$
-}
-
-class Html {
-    #HTMLElement element
-    +id() void
-    +addClass() void
-    +appendText() void
-    +appendChild() void
-    +appendChildren() void
-    +on() void
-}
-
-class Anchor{
-    +href() void
-}
-Html <|-- Anchor
-
-class Input{
-    +type() void
-    +name() void
-    +value() void
-    +autocomplete() void
-}
-Html <|-- Input
-
-class Section
-Html <|-- Section
-
-class Form
-Html <|-- Form
-
-class Header
-Html <|-- Header
-
-class Paragraph
-Html <|-- Paragraph
-
-class UnorderedList
-Html <|-- UnorderedList
-
-class ListItem
-Html <|-- ListItem
-
-class Button
-Html <|-- Button
-
-class Label
-Html <|-- Label
-
-class Div
-Html <|-- Div
-
-class Code
-Html <|-- Code
-
-class Message {
     <<Abstract>>
-    +show() void
+    +name: string
+    +value() string | number | boolean
+    +toHtml() Html
 }
-Section <|-- Message
 
-class ComputerMessage
-Message <|-- ComputerMessage
-
-class HumanMessage {
-    +show() void
-    +replace() void
-}
-Message <|-- HumanMessage
-
-class Panel {
-    +show() void
-    +remove() void$
-}
-Section <|-- Panel
-
-Game "1" <--> "*" Candidate
-Game "1" <--> "*" UnitTest
+Level "1" <--> "*" Candidate
+Level "1" <--> "*" UnitTest
 UnitTest "1" <--> "*" TestResult
+UnitTest "1" <--> "*" Variable
 Candidate "1" <--> "*" TestResult
-Game "1" <--> "*" Variable
-Main "1" <--> "*" Game
-Game "1" <--> "0..1" HighScore
-Game "1" <--> "*" Panel
-Game "1" <--> "*" Message
-Main "1" <--> "*" Panel
-Main "1" <--> "*" Message
+Level "1" <--> "*" Variable
+Main "1" <--> "*" Level
 ```
 
 ## State Diagram
 ```mermaid
 stateDiagram-v2
     [*] --> Main.start
-    Main.start --> Main.showLevelMenu
-    Main.showLevelMenu --> Main.playLevel
-    Main.playLevel --> Game.play
-    Main.continue --> Main.showLevelMenu
+    Main.start --> Main.showNextLevel
+    Main.showNextLevel --> Main.playLevel
+    Main.playLevel --> Level.play
+    Main.continue --> Main.showNextLevel
     Main.continue --> [*]
-    Game.play --> Game.menu
-    Game.menu --> Game.showUnitTestForm
-    Game.menu --> Game.showHint
-    Game.menu --> Game.submit
-    Game.menu --> Game.end
-    Game.showUnitTestForm --> Game.addUnitTest
-    Game.showUnitTestForm --> Game.menu
-    Game.addUnitTest --> Game.menu
-    Game.showHint --> Game.menu
-    Game.submit --> Game.menu
-    Game.submit --> Game.end
-    Game.end --> Main.continue
+    Level.play --> Level.menu
+    Level.menu --> Level.showUnitTestForm
+    Level.menu --> Level.showHint
+    Level.menu --> Level.submit
+    Level.menu --> Level.end
+    Level.showUnitTestForm --> Level.addUnitTest
+    Level.showUnitTestForm --> Level.menu
+    Level.addUnitTest --> Level.menu
+    Level.showHint --> Level.menu
+    Level.submit --> Level.menu
+    Level.submit --> Level.end
+    Level.end --> Main.continue
 ```

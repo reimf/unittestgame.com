@@ -30,6 +30,9 @@ export class RadioVariable extends Variable {
         div.appendChildren(radioButtons);
         return div;
     }
+    format(value) {
+        return `"${value}"`;
+    }
 }
 export class CheckboxVariable extends Variable {
     constructor(label, name) {
@@ -48,6 +51,9 @@ export class CheckboxVariable extends Variable {
         const div = new Div();
         div.appendChild(label);
         return div;
+    }
+    format(value) {
+        return value.toString();
     }
 }
 export class TextVariable extends Variable {
@@ -69,6 +75,9 @@ export class TextVariable extends Variable {
         div.appendChild(label);
         return div;
     }
+    format(value) {
+        return `"${value}"`;
+    }
 }
 export class NumberVariable extends Variable {
     constructor(label, name) {
@@ -88,5 +97,8 @@ export class NumberVariable extends Variable {
         const div = new Div();
         div.appendChild(label);
         return div;
+    }
+    format(value) {
+        return value.toString();
     }
 }

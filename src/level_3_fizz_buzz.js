@@ -3,10 +3,6 @@ import { Paragraph, Panel } from './html.js';
 import { TextVariable, NumberVariable } from './variable.js';
 import { UnitTest } from './unit_test.js';
 export class FizzBuzz extends Level {
-    constructor() {
-        super(...arguments);
-        this.index = 3;
-    }
     showSpecificationPanel() {
         new Panel('Specification', [
             new Paragraph('Return "Fizz" if the number is divisible by 3, ' +
@@ -48,12 +44,12 @@ export class FizzBuzz extends Level {
             ]
         ];
     }
-    getMinimalUnitTests() {
+    getMinimalUnitTests(parameters, unit) {
         return [
-            new UnitTest([6], "Fizz"),
-            new UnitTest([25], "Buzz"),
-            new UnitTest([30], "FizzBuzz"),
-            new UnitTest([1], "1"),
+            new UnitTest(parameters, [6], unit, "Fizz"),
+            new UnitTest(parameters, [25], unit, "Buzz"),
+            new UnitTest(parameters, [30], unit, "FizzBuzz"),
+            new UnitTest(parameters, [1], unit, "1"),
         ];
     }
     *hintGenerator() {

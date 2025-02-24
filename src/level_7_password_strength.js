@@ -4,10 +4,6 @@ import { Paragraph, Panel } from './html.js';
 import { CheckboxVariable, TextVariable } from './variable.js';
 import { UnitTest } from './unit_test.js';
 export class PasswordStrength extends Level {
-    constructor() {
-        super(...arguments);
-        this.index = 7;
-    }
     showSpecificationPanel() {
         new Panel('Specification', [
             new Paragraph('Return true if the password is strong and return false if the password is not strong. ' +
@@ -61,15 +57,15 @@ export class PasswordStrength extends Level {
             ],
         ];
     }
-    getMinimalUnitTests() {
+    getMinimalUnitTests(parameters, unit) {
         return [
-            new UnitTest(['A3a6#'], true),
-            new UnitTest(['@251Bc'], true),
-            new UnitTest(['c@34d52'], false),
-            new UnitTest(['1#36D0'], false),
-            new UnitTest(['n5EFG'], false),
-            new UnitTest(['@9#4@i'], false),
-            new UnitTest(['@6jB'], false),
+            new UnitTest(parameters, ['A3a6#'], unit, true),
+            new UnitTest(parameters, ['@251Bc'], unit, true),
+            new UnitTest(parameters, ['c@34d52'], unit, false),
+            new UnitTest(parameters, ['1#36D0'], unit, false),
+            new UnitTest(parameters, ['n5EFG'], unit, false),
+            new UnitTest(parameters, ['@9#4@i'], unit, false),
+            new UnitTest(parameters, ['@6jB'], unit, false),
         ];
     }
     *generateDigits() {

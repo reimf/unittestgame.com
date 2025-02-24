@@ -4,8 +4,6 @@ import { Variable, CheckboxVariable, NumberVariable } from './variable.js'
 import { UnitTest } from './unit_test.js'
 
 export class VotingAge extends Level {
-    public index = 1
-
     public showSpecificationPanel(): void {
         new Panel('Specification', [
             new Paragraph(
@@ -45,10 +43,10 @@ export class VotingAge extends Level {
         ]
     }
 
-    public getMinimalUnitTests(): UnitTest[] {
+    public getMinimalUnitTests(parameters: Variable[], unit: Variable): UnitTest[] {
         return [
-            new UnitTest([17], false),
-            new UnitTest([18], true),
+            new UnitTest(parameters, [17], unit, false),
+            new UnitTest(parameters, [18], unit, true),
         ]
     }
 

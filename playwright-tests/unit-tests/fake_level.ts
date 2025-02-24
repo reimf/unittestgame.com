@@ -4,8 +4,6 @@ import { Variable, TextVariable, NumberVariable } from '../../src/variable.js'
 import { UnitTest } from '../../src/unit_test.js'
 
 export class FakeLevel extends Level {
-    public index = 1
-
     public showSpecificationPanel(): void {
         new Panel('Specification', [
             new Paragraph(
@@ -54,12 +52,12 @@ export class FakeLevel extends Level {
         ]
     }
 
-    public getMinimalUnitTests(): UnitTest[] {
+    public getMinimalUnitTests(parameters: Variable[], unit: Variable): UnitTest[] {
         return [
-            new UnitTest([6], "Fizz"),
-            new UnitTest([25], "Buzz"),
-            new UnitTest([30], "FizzBuzz"),
-            new UnitTest([1], "1"),
+            new UnitTest(parameters, [6], unit, "Fizz"),
+            new UnitTest(parameters, [25], unit, "Buzz"),
+            new UnitTest(parameters, [30], unit, "FizzBuzz"),
+            new UnitTest(parameters, [1], unit, "1"),
         ]
     }
 

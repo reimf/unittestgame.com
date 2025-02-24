@@ -4,8 +4,6 @@ import { Variable, TextVariable, NumberVariable } from './variable.js'
 import { UnitTest } from './unit_test.js'
 
 export class FizzBuzz extends Level {
-    public index = 3
-
     public showSpecificationPanel(): void {
         new Panel('Specification', [
             new Paragraph(
@@ -59,12 +57,12 @@ export class FizzBuzz extends Level {
         ]
     }
 
-    public getMinimalUnitTests(): UnitTest[] {
+    public getMinimalUnitTests(parameters: Variable[], unit: Variable): UnitTest[] {
         return [
-            new UnitTest([6], "Fizz"),
-            new UnitTest([25], "Buzz"),
-            new UnitTest([30], "FizzBuzz"),
-            new UnitTest([1], "1"),
+            new UnitTest(parameters, [6], unit, "Fizz"),
+            new UnitTest(parameters, [25], unit, "Buzz"),
+            new UnitTest(parameters, [30], unit, "FizzBuzz"),
+            new UnitTest(parameters, [1], unit, "1"),
         ]
     }
 

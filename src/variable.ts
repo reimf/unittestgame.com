@@ -5,6 +5,7 @@ export abstract class Variable {
 
     public abstract value(): boolean | number | string
     public abstract toHtml(): Html
+    public abstract format(value: boolean | number | string): string
 }
 
 export class RadioVariable extends Variable {
@@ -33,6 +34,10 @@ export class RadioVariable extends Variable {
         div.appendChildren(radioButtons)
         return div
     }
+
+    public format(value: string): string {
+        return `"${value}"`
+    }
 }
 
 export class CheckboxVariable extends Variable {
@@ -54,6 +59,10 @@ export class CheckboxVariable extends Variable {
         const div = new Div()
         div.appendChild(label)
         return div
+    }
+
+    public format(value: boolean): string {
+        return value.toString()
     }
 }
 
@@ -78,6 +87,10 @@ export class TextVariable extends Variable {
         div.appendChild(label)
         return div
     }
+
+    public format(value: string): string {
+        return `"${value}"`
+    }
 }
 
 export class NumberVariable extends Variable {
@@ -100,5 +113,9 @@ export class NumberVariable extends Variable {
         const div = new Div()
         div.appendChild(label)
         return div
+    }
+
+    public format(value: number): string {
+        return value.toString()
     }
 }

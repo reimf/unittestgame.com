@@ -3,10 +3,6 @@ import { Paragraph, Panel } from './html.js';
 import { RadioVariable, NumberVariable } from './variable.js';
 import { UnitTest } from './unit_test.js';
 export class TriangleType extends Level {
-    constructor() {
-        super(...arguments);
-        this.index = 4;
-    }
     showSpecificationPanel() {
         new Panel('Specification', [
             new Paragraph('Return the type of the triangle: equilateral, isosceles or scalene. ' +
@@ -53,13 +49,13 @@ export class TriangleType extends Level {
             ],
         ];
     }
-    getMinimalUnitTests() {
+    getMinimalUnitTests(parameters, unit) {
         return [
-            new UnitTest([5, 5, 5], 'equilateral'),
-            new UnitTest([3, 5, 5], 'isosceles'),
-            new UnitTest([5, 3, 5], 'isosceles'),
-            new UnitTest([5, 5, 3], 'isosceles'),
-            new UnitTest([3, 4, 5], 'scalene'),
+            new UnitTest(parameters, [5, 5, 5], unit, 'equilateral'),
+            new UnitTest(parameters, [3, 5, 5], unit, 'isosceles'),
+            new UnitTest(parameters, [5, 3, 5], unit, 'isosceles'),
+            new UnitTest(parameters, [5, 5, 3], unit, 'isosceles'),
+            new UnitTest(parameters, [3, 4, 5], unit, 'scalene'),
         ];
     }
     *hintGenerator() {

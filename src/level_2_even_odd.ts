@@ -4,10 +4,8 @@ import { Variable, CheckboxVariable, NumberVariable } from './variable.js'
 import { UnitTest } from './unit_test.js'
 
 export class EvenOdd extends Level {
-    public index = 2
-
     public showSpecificationPanel(): void {
-        new Panel('Specification', [
+        new Panel(`Specification`, [
             new Paragraph(
                 'Return true if the number is even and false if it is odd.'
             ),
@@ -74,10 +72,10 @@ export class EvenOdd extends Level {
         ]
     }
 
-    public getMinimalUnitTests(): UnitTest[] {
+    public getMinimalUnitTests(parameters: Variable[], unit: Variable): UnitTest[] {
         return [
-            new UnitTest([17], false),
-            new UnitTest([24], true),
+            new UnitTest(parameters, [17], unit, false),
+            new UnitTest(parameters, [24], unit, true),
         ]
     }
 

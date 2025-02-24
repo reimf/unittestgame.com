@@ -12,7 +12,7 @@ test.describe('added unit test', () => {
 
   test('has add unit test message', async ({ page }) => {
     const messages = page.getByTestId('messages')
-    await expect(messages).toContainText('12 -> false')
+    await expect(messages).toContainText('isAllowedToVote(12) === false')
   })
 
   test('has added unit test message', async ({ page }) => {
@@ -22,7 +22,7 @@ test.describe('added unit test', () => {
 
   test('has added unit test in unit tests panel', async ({ page }) => {
     const unitTestsPanel = page.getByTestId('unit-tests')
-    await expect(unitTestsPanel).toContainText('12 -> false')
+    await expect(unitTestsPanel).toContainText('isAllowedToVote(12) === false')
   })
 
   test('has another candidate in the current candidate panel', async ({ page }) => {
@@ -34,10 +34,10 @@ test.describe('added unit test', () => {
     const messages = page.getByTestId('messages')
     const buttons = messages.getByRole('button')
     await expect(buttons).toHaveText([
-      'I want to add a unit test',
-      'I want to see a hint for a unit test (-10%)',
-      'I want to submit the unit tests (-20%?)',
-      'I want to exit this level (-100%?)',
+      'I want to add a unit test (-10% on error)',
+      'I want to see a hint for a unit test (-20%)',
+      'I want to submit the unit tests (-30% on error)',
+      'I want to exit this level (0% on error)',
     ])
   })
 })

@@ -3,12 +3,8 @@ import { Paragraph, Panel } from './html.js';
 import { CheckboxVariable, NumberVariable } from './variable.js';
 import { UnitTest } from './unit_test.js';
 export class EvenOdd extends Level {
-    constructor() {
-        super(...arguments);
-        this.index = 2;
-    }
     showSpecificationPanel() {
-        new Panel('Specification', [
+        new Panel(`Specification`, [
             new Paragraph('Return true if the number is even and false if it is odd.'),
         ]).show('specification');
     }
@@ -63,10 +59,10 @@ export class EvenOdd extends Level {
             ],
         ];
     }
-    getMinimalUnitTests() {
+    getMinimalUnitTests(parameters, unit) {
         return [
-            new UnitTest([17], false),
-            new UnitTest([24], true),
+            new UnitTest(parameters, [17], unit, false),
+            new UnitTest(parameters, [24], unit, true),
         ];
     }
     *hintGenerator() {

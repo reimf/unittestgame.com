@@ -7,49 +7,49 @@ import { TestResult } from './test_result.js'
 
 export abstract class Level {
     private readonly PERFECTSCORE = 100
-    private readonly SUFFICIENTSCORE = 60
-    private readonly PENALTYHINT = 10
-    private readonly PENALTYBUG = 20
-    private readonly PENALTYEND = 100
+    private readonly PENALTYINCORRECTUNITTEST = 10
+    private readonly PENALTYHINT = 20
+    private readonly PENALTYBUG = 30
+    private readonly MINIMUMSCORE = 0
 
-    public abstract index: number
-    public readonly name: string = this.constructor.name
-    /* The following attributes are public for testing; otherwise they can be private */
-    public readonly parameters: Variable[] = this.getParameters()
-    public readonly unit: Variable = this.getUnit()
-    public readonly candidates: Candidate[] = [...this.generateCandidates(this.getCandidateElements())]
-    public readonly minimalUnitTests: UnitTest[] = this.getMinimalUnitTests()
-    public readonly perfectCandidates: Candidate[] = this.findPerfectCandidates(this.candidates, this.minimalUnitTests)
-    public readonly perfectCandidate: Candidate = Random.elementFrom(this.perfectCandidates)
-    public readonly hints: UnitTest[] = [...this.hintGenerator()].map(argumentList => new UnitTest(argumentList, this.perfectCandidate.execute(argumentList)))
-    public readonly userdefinedUnitTests: UnitTest[] = []
-    public score: number = this.PERFECTSCORE
-    public failingTestResult?: TestResult
-    public callback?: () => void
+    private readonly name: string = this.constructor.name
+    private readonly parameters: Variable[] = this.getParameters()
+    private readonly unit: Variable = this.getUnit()
+    private readonly candidates: Candidate[] = [...this.generateCandidates(this.getCandidateElements())]
+    private readonly minimalUnitTests: UnitTest[] = this.getMinimalUnitTests(this.parameters, this.unit)
+    private readonly perfectCandidates: Candidate[] = this.findPerfectCandidates(this.candidates, this.minimalUnitTests)
+    private readonly perfectCandidate: Candidate = Random.elementFrom(this.perfectCandidates)
+    private readonly hints: UnitTest[] = [...this.hintGenerator()].map(argumentList => new UnitTest(this.parameters, argumentList, this.unit, this.perfectCandidate.execute(argumentList)))
+
+    // the following attributes are assigned a dummy value; the starting values are assigned in the play method
+    private userdefinedUnitTests: UnitTest[] = []
+    private currentCandidate: Candidate = this.candidates[0]
+    private failingTestResult?: TestResult = undefined
+    private score: number = this.MINIMUMSCORE
+    private callback: () => void = () => undefined
 
     protected abstract getParameters(): Variable[]
     protected abstract getUnit(): Variable
     protected abstract getCandidateElements(): string[][]
-    protected abstract getMinimalUnitTests(): UnitTest[]
+    protected abstract getMinimalUnitTests(parameters: Variable[], unit: Variable): UnitTest[]
     protected abstract hintGenerator(): Generator<any[]>
     protected abstract showSpecificationPanel(): void
 
-    public constructor() {
+    public constructor(private readonly index: number) {
         this.checkUnitTestsAreNeeded(this.candidates, this.minimalUnitTests)
+    }
+
+    public get description(): string {
+        return `Level ${this.index} - ${this.name}`
     }
 
     public getHighScore(storage: Storage): number {
         return Number(storage.getItem(`${this.name}.score`))
     }
 
-    public hasHighScore(storage: Storage): boolean {
-        return this.getHighScore(storage) > 0
-    }
-
     private saveScore(storage: Storage): void {
-        if (this.score <= this.getHighScore(storage))
-            return
-        storage.setItem(`${this.name}.score`, `${this.score}`)
+        if (this.score > this.getHighScore(storage))
+            storage.setItem(`${this.name}.score`, `${this.score}`)
     }
 
     private *generateCandidates(listOfListOfLines: string[][], lines: string[] = []): Generator<Candidate> {
@@ -66,7 +66,7 @@ export abstract class Level {
         const parameterList = this.parameters.map((parameter) => parameter.name).join(', ')
         const code = [
             `function ${this.unit.name}(${parameterList}) {`,
-            ...lines.filter((line) => line !== '').map((line) => '  ' + line),
+                ...lines.filter((line) => line !== '').map((line) => '  ' + line),
             '}',
         ].join('\n')
         return new Candidate(code)
@@ -79,7 +79,7 @@ export abstract class Level {
     private findPerfectCandidates(candidates: Candidate[], unitTests: UnitTest[]): Candidate[] {
         const perfectCandidates = this.findPassingCandidates(candidates, unitTests)
         if (perfectCandidates.length === 0)
-            throw new Error(`There is no perfect function for level ${this.constructor.name}.`)
+            throw new Error(`There is no perfect function for level ${this.name}.`)
         return perfectCandidates
     }
 
@@ -92,19 +92,20 @@ export abstract class Level {
         }
     }
 
-    private findSimplestPassingCandidate(candidates: Candidate[], userDefinedUnitTests: UnitTest[], perfectCandidates: Candidate[]): Candidate {
-        const nonPerfectCandidates = candidates.filter(candidate => !perfectCandidates.includes(candidate))
-        const nonPerfectPassingCandidates = this.findPassingCandidates(nonPerfectCandidates, userDefinedUnitTests)
-        if (nonPerfectPassingCandidates.length === 0)
-            return Random.elementFrom(perfectCandidates)
-        const minimumComplexity = Math.min(...nonPerfectPassingCandidates.map(candidate => candidate.complexity))
-        const candidatesWithMinimumComplexity = nonPerfectPassingCandidates.filter(candidate => candidate.complexity === minimumComplexity)
-        return Random.elementFrom(candidatesWithMinimumComplexity)
+    private findSimplestPassingCandidate(candidates: Candidate[], unitTests: UnitTest[]): Candidate {
+        const passingCandidates = this.findPassingCandidates(candidates, unitTests)
+        const minimumComplexity = Math.min(...passingCandidates.map(candidate => candidate.complexity))
+        const simplestCandidates = passingCandidates.filter(candidate => candidate.complexity === minimumComplexity)
+        return Random.elementFrom(simplestCandidates)
+    }
+
+    private findFailingTestResult(candidate: Candidate, hints: UnitTest[], minimalUnitTests: UnitTest[]): TestResult | undefined {
+        return Random.elementFrom(candidate.failingTestResults(hints)) || Random.elementFrom(candidate.failingTestResults(minimalUnitTests))
     }
 
     private showScorePanel(): void {
         new Panel('Score', [
-            new Paragraph(`${this.score}%`),
+            new Paragraph(`${this.description}: ${this.score}%`),
         ]).show('score')
     }
 
@@ -112,9 +113,10 @@ export abstract class Level {
         new ComputerMessage([
             new Paragraph(
                 'In the sidebar you see the specification, ' +
-                'the unit tests you have written and ' +
-                'the current function that passes all the unit tests. ' +
-                'Keep adding unit tests until the function is according to the specification.'
+                'the unit tests you have written (none yet) and ' +
+                'my take at the function. ' +
+                'Add failing unit tests and I will improve the function such that it passes. ' +
+                'Submit the unit tests if the function is according to the specification.'
             ),
         ]).show()
     }
@@ -127,43 +129,58 @@ export abstract class Level {
         ]).show('unit-tests')
     }
 
-    private showCurrentCandidatePanel(candidate: Candidate): void {
+    private showCurrentCandidatePanel(): void {
         new Panel('Current Function', [
-            new Code(candidate.toString()),
+            new Code(this.currentCandidate.toString()),
         ]).show('current-candidate')
     }
 
     private showMenuMessage(): void {
         new HumanMessage([
-            new Button('I want to add a unit test', () => this.showFormUnitTestMessage()),
+            new Button(`I want to add a unit test (-${this.PENALTYINCORRECTUNITTEST}% on error)`, () => this.showFormUnitTestMessage()),
             new Button(`I want to see a hint for a unit test (-${this.PENALTYHINT}%)`, () => this.showHint()),
-            new Button(`I want to submit the unit tests (-${this.PENALTYBUG}%?)`, () => this.submit()),
-            new Button(`I want to exit this level (-${this.PENALTYEND}%?)`, () => this.end()),
+            new Button(`I want to submit the unit tests (-${this.PENALTYBUG}% on error)`, () => this.submit()),
+            new Button(`I want to exit this level (${this.MINIMUMSCORE}% on error)`, () => this.end()),
+        ]).show()
+    }
+
+    private showScoreZeroMessage(): void {
+        new ComputerMessage([
+            new Paragraph(
+                'You have to retry this level, ' +
+                'because your score dropped to 0%.'
+            )
         ]).show()
     }
 
     public play(callback: () => void): void {
         this.callback = callback
+        this.score = this.PERFECTSCORE
+        this.userdefinedUnitTests = []
+        this.improveCurrentCandidate()
         this.showSpecificationPanel()
         this.showContractMessage()
         this.menu()
     }
 
+    private improveCurrentCandidate(): void {
+        this.currentCandidate = this.findSimplestPassingCandidate(this.candidates, this.userdefinedUnitTests)
+        this.failingTestResult = this.findFailingTestResult(this.currentCandidate, this.hints, this.minimalUnitTests)    
+    }
+    
     private menu(): void {
         this.showUnitTestsPanel()
-
-        const simplestPassingCandidate = this.findSimplestPassingCandidate(this.candidates, this.userdefinedUnitTests, this.perfectCandidates)
-        this.showCurrentCandidatePanel(simplestPassingCandidate)
-
-        const failingTestResultsHints = simplestPassingCandidate.failingTestResults(this.hints)
-        const failingTestResultsUnitTests = simplestPassingCandidate.failingTestResults(this.minimalUnitTests)
-        const failingTestResultsToChooseFrom = failingTestResultsHints ? failingTestResultsHints : failingTestResultsUnitTests
-        this.failingTestResult = failingTestResultsToChooseFrom
-            ? Random.elementFrom(failingTestResultsToChooseFrom)
-            : undefined
-
-        this.showScorePanel()
-        this.showMenuMessage()
+        this.showCurrentCandidatePanel()
+        if (this.score <= this.MINIMUMSCORE) {
+            this.showScoreZeroMessage()
+            this.score = this.MINIMUMSCORE
+            this.showScorePanel()
+            this.callback!()
+        }
+        else {
+            this.showScorePanel()
+            this.showMenuMessage()
+        }
     }
 
     private showFormUnitTestMessage(): void {
@@ -185,18 +202,10 @@ export abstract class Level {
         ]).replace()
     }
 
-    private showGeneralUselessUnitTestMessage(): void {
+    private showUselessUnitTestMessage(): void {
         new ComputerMessage([
             new Paragraph(
-                'I added the unit test, but it looks a lot like another unit test, so I didn\'t have to improve the function.'
-            ),
-        ]).show()
-    }
-
-    private showCurrentlyUselessUnitTestMessage(): void {
-        new ComputerMessage([
-            new Paragraph(
-                'I added the unit test, but my function already passed this unit test, so I didn\'t improve the function.'
+                'I added the unit test, but the current function already passes this unit test, so I didn\'t improve the function.'
             ),
         ]).show()
     }
@@ -212,29 +221,28 @@ export abstract class Level {
     private showIncorrectUnitTestMessage(): void {
         new ComputerMessage([
             new Paragraph(
-                'I did NOT add the unit test, because it is NOT according to the specification.'
+                'I did NOT add the unit test, because it is NOT according to the specification. ' +
+                `The cost for trying to add an incorrect unit test is ${this.PENALTYINCORRECTUNITTEST}%.`,
             ),
         ]).show()
+        this.score -= this.PENALTYINCORRECTUNITTEST
     }
 
     private addUnitTest(): void {
         const argumentList = this.parameters.map(parameter => parameter.value())
         const expected = this.unit.value()
-        const unitTest = new UnitTest(argumentList, expected)
+        const unitTest = new UnitTest(this.parameters, argumentList, this.unit, expected)
         this.showAddUnitTestMessage(unitTest)
-        const testResult = new TestResult(this.perfectCandidate, unitTest)
-        if (testResult.passes) {
-            const passingCandidatesBefore = this.findPassingCandidates(this.candidates, this.userdefinedUnitTests)
-            const simplestPassingCandidateBefore = this.findSimplestPassingCandidate(this.candidates, this.userdefinedUnitTests, this.perfectCandidates)
+        const unitTestIsCorrect = new TestResult(this.perfectCandidate, unitTest).passes
+        if (unitTestIsCorrect) {
             this.userdefinedUnitTests.push(unitTest)
-            const passingCandidatesAfter = this.findPassingCandidates(this.candidates, this.userdefinedUnitTests)
-            const simplestPassingCandidateAfter = this.findSimplestPassingCandidate(this.candidates, this.userdefinedUnitTests, this.perfectCandidates)
-            if (passingCandidatesAfter.length === passingCandidatesBefore.length)
-                this.showGeneralUselessUnitTestMessage()
-            else if (simplestPassingCandidateAfter === simplestPassingCandidateBefore)
-                this.showCurrentlyUselessUnitTestMessage()
-            else
+            const currentCandidateAlreadyPasses = new TestResult(this.currentCandidate, unitTest).passes
+            if (currentCandidateAlreadyPasses)
+                this.showUselessUnitTestMessage()
+            else {
                 this.showUsefulUnitTestMessage()
+                this.improveCurrentCandidate()
+            }
         }
         else
             this.showIncorrectUnitTestMessage()
@@ -243,17 +251,19 @@ export abstract class Level {
 
     private showHintMessage(unitTest: UnitTest): void {
         new ComputerMessage([
-            new Paragraph('A unit test that would fail for the function is the following.'),
+            new Paragraph('A unit test that would fail for the current function is the following.'),
             new Paragraph(unitTest.toString()),
             new Paragraph(`The cost for this hint is ${this.PENALTYHINT}%.`),
         ]).show()
+        this.score -= this.PENALTYHINT
     }
 
     private showNoHintMessage(): void {
         new ComputerMessage([
-            new Paragraph('I can\'t come up with a failing unit test. '),
-            new Paragraph(`The cost for this \'hint\' is ${this.PENALTYHINT}%.`),
+            new Paragraph('I can\'t think of a failing unit test for the current function. '),
+            new Paragraph(`The cost for this hint is ${this.PENALTYHINT}%.`),
         ]).show()
+        this.score -= this.PENALTYHINT
     }
 
     private showHint(): void {
@@ -261,25 +271,24 @@ export abstract class Level {
             this.showHintMessage(this.failingTestResult.unitTest)
         else
             this.showNoHintMessage()
-        this.score -= this.PENALTYHINT
         this.menu()
     }
 
     private showBugFoundMessage(testResult: TestResult): void {
         new ComputerMessage([
             new Paragraph(
-                'The function is NOT according to the specification. ' +
-                'The function produces the following incorrect output:'
+                'The current function is NOT according to the specification. ' +
+                'It produces the following incorrect output:'
             ),
             new Paragraph(testResult.toString()),
-            new Paragraph(`The cost for this submission is ${this.PENALTYBUG}%.`),
+            new Paragraph(`The cost for submitting when there is still an error is ${this.PENALTYBUG}%.`),
         ]).show()
+        this.score -= this.PENALTYBUG
     }
 
     private submit(): void {
         if (this.failingTestResult) {
             this.showBugFoundMessage(this.failingTestResult)
-            this.score -= this.PENALTYBUG
             this.menu()
         }
         else
@@ -289,17 +298,8 @@ export abstract class Level {
     private showUnsuccessfulEndMessage(): void {
         new ComputerMessage([
             new Paragraph(
-                'The function is NOT according to the specification. ' +
-                `Your final score is ${this.score}%.`
-            ),
-        ]).show()
-    }
-
-    private showPerfectEndMessage(): void {
-        new ComputerMessage([
-            new Paragraph(
-                'The function is according to the specification. ' +
-                `You achieved the maximum score of ${this.score}%.`
+                'The current function is NOT according to the specification. ' +
+                `Your score is ${this.score}%.`
             ),
         ]).show()
     }
@@ -307,20 +307,18 @@ export abstract class Level {
     private showSuccessfulEndMessage(): void {
         new ComputerMessage([
             new Paragraph(
-                'The function is according to the specification. ' +
-                `Your final score is ${this.score}%.`
+                'The current function is according to the specification. ' +
+                `Your score is ${this.score}%.`
             ),
         ]).show()
     }
 
     private end(): void {
         if (this.failingTestResult) {
-            this.score = 0
+            this.score = this.MINIMUMSCORE
             this.showScorePanel()
             this.showUnsuccessfulEndMessage()
         }
-        else if (this.score == this.PERFECTSCORE)
-            this.showPerfectEndMessage()
         else
             this.showSuccessfulEndMessage()
         this.saveScore(localStorage)

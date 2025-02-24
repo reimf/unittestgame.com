@@ -3,10 +3,6 @@ import { Paragraph, Panel, Code } from './html.js';
 import { TextVariable, NumberVariable } from './variable.js';
 import { UnitTest } from './unit_test.js';
 export class SpeedDisplay extends Level {
-    constructor() {
-        super(...arguments);
-        this.index = 8;
-    }
     showSpecificationPanel() {
         new Panel('Specification', [
             new Paragraph('The function receives the speed in meters per hour and must display the speed in kilometers per hour. ' +
@@ -66,14 +62,14 @@ export class SpeedDisplay extends Level {
             ],
         ];
     }
-    getMinimalUnitTests() {
+    getMinimalUnitTests(parameters, unit) {
         return [
-            new UnitTest([-1], 'ERROR'),
-            new UnitTest([0], '0.0'),
-            new UnitTest([19950], '19.9'),
-            new UnitTest([19951], '20'),
-            new UnitTest([199499], '199'),
-            new UnitTest([199500], 'DANGER'),
+            new UnitTest(parameters, [-1], unit, 'ERROR'),
+            new UnitTest(parameters, [0], unit, '0.0'),
+            new UnitTest(parameters, [19950], unit, '19.9'),
+            new UnitTest(parameters, [19951], unit, '20'),
+            new UnitTest(parameters, [199499], unit, '199'),
+            new UnitTest(parameters, [199500], unit, 'DANGER'),
         ];
     }
     *hintGenerator() {

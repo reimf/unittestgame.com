@@ -4,10 +4,6 @@ import { Paragraph, Panel } from './html.js';
 import { CheckboxVariable, TextVariable } from './variable.js';
 import { UnitTest } from './unit_test.js';
 export class FloatFormat extends Level {
-    constructor() {
-        super(...arguments);
-        this.index = 6;
-    }
     showSpecificationPanel() {
         new Panel('Specification', [
             new Paragraph('Return true if the text represents a float and returns false if it doesn\'t. ' +
@@ -69,15 +65,15 @@ export class FloatFormat extends Level {
             ]
         ];
     }
-    getMinimalUnitTests() {
+    getMinimalUnitTests(parameters, unit) {
         return [
-            new UnitTest(['+123'], true),
-            new UnitTest(['-123.45'], true),
-            new UnitTest(['123.45'], true),
-            new UnitTest(['+-123'], false),
-            new UnitTest(['123.'], false),
-            new UnitTest(['.45'], false),
-            new UnitTest(['12.3.45'], false),
+            new UnitTest(parameters, ['+123'], unit, true),
+            new UnitTest(parameters, ['-123.45'], unit, true),
+            new UnitTest(parameters, ['123.45'], unit, true),
+            new UnitTest(parameters, ['+-123'], unit, false),
+            new UnitTest(parameters, ['123.'], unit, false),
+            new UnitTest(parameters, ['.45'], unit, false),
+            new UnitTest(parameters, ['12.3.45'], unit, false),
         ];
     }
     *hintGenerator() {
