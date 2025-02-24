@@ -5,7 +5,9 @@ import { UnitTest } from './unit_test.js';
 export class VotingAge extends Level {
     showSpecificationPanel() {
         new Panel('Specification', [
-            new Paragraph('Return true if the age is 18 years or over and return false if the age is under 18.'),
+            new Paragraph([
+                'Return true if the age is 18 years or over and return false if the age is under 18.',
+            ]),
         ]).show('specification');
     }
     getParameters() {

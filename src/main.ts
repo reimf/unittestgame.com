@@ -25,9 +25,9 @@ export class Main {
     private constructor() { }
 
     private showAboutPanel(): void {
-        const learnParagraph = new Paragraph('Learn Unit Testing with UnitTestGame.com')
+        const learnParagraph = new Paragraph(['Learn Unit Testing with UnitTestGame.com'])
         const anchor = new Anchor('mailto:feedback@unittestgame.com').appendText('feedback@unittestgame.com')
-        const feedbackParagraph = new Paragraph('Please send us ').appendChild(anchor)
+        const feedbackParagraph = new Paragraph(['Please send us ']).appendChild(anchor)
         new Panel('About', [
             learnParagraph,
             feedbackParagraph
@@ -36,12 +36,12 @@ export class Main {
 
     private showWelcomeMessage(): void {
         new ComputerMessage([
-            new Paragraph(
-                'Welcome to UnitTestGame.com! ' +
-                'I am an AI-bot that does Test Driven Development. ' +
-                'You write unit tests and I write a function that passes. ' +
-                'Let\'s go next level!'
-            ),
+            new Paragraph([
+                'Welcome to UnitTestGame.com!',
+                'I am an AI-bot that does Test Driven Development.',
+                'You write failing unit tests and I write a function that passes.',
+                'Let\'s go next level!',
+            ]),
         ]).show()
     }
 
@@ -58,12 +58,8 @@ export class Main {
 
     private showHighScoresPanel(): void {
         const highScores = this.levels
-        .map(level => {
-            if (level.getHighScore(localStorage) > 0)
-                return new Paragraph(`${level.description}: ${level.getHighScore(localStorage)}%`)
-            return undefined
-        })
-        .filter(paragraph => paragraph instanceof Paragraph)
+            .filter(level => level.getHighScore(localStorage) > 0)
+            .map(level => new Paragraph([`${level.description}: ${level.getHighScore(localStorage)}%`]))
         if (highScores.length > 0)
             new Panel(
                 'High Scores',

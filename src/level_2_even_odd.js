@@ -5,7 +5,9 @@ import { UnitTest } from './unit_test.js';
 export class EvenOdd extends Level {
     showSpecificationPanel() {
         new Panel(`Specification`, [
-            new Paragraph('Return true if the number is even and false if it is odd.'),
+            new Paragraph([
+                'Return true if the number is even and false if it is odd.',
+            ]),
         ]).show('specification');
     }
     getParameters() {

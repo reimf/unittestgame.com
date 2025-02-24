@@ -79,25 +79,35 @@ export class Level {
         return Random.elementFrom(simplestCandidates);
     }
     findFailingTestResult(candidate, hints, minimalUnitTests) {
-        return Random.elementFrom(candidate.failingTestResults(hints)) || Random.elementFrom(candidate.failingTestResults(minimalUnitTests));
+        const failingHints = candidate.failingTestResults(hints);
+        if (failingHints.length > 0)
+            return Random.elementFrom(failingHints);
+        const failingMinimalUnitTests = candidate.failingTestResults(minimalUnitTests);
+        if (failingMinimalUnitTests.length > 0)
+            return Random.elementFrom(failingMinimalUnitTests);
+        return undefined;
     }
     showScorePanel() {
         new Panel('Score', [
-            new Paragraph(`${this.description}: ${this.score}%`),
+            new Paragraph([`${this.description}: ${this.score}%`]),
         ]).show('score');
     }
     showContractMessage() {
         new ComputerMessage([
-            new Paragraph('In the sidebar you see the specification, ' +
-                'the unit tests you have written (none yet) and ' +
-                'my take at the function. ' +
-                'Add failing unit tests and I will improve the function such that it passes. ' +
-                'Submit the unit tests if the function is according to the specification.'),
+            new Paragraph([
+                'In the sidebar you see the specification,',
+                'the unit tests you have written (none yet) and',
+                'my take at the function.',
+                'Add failing unit tests and I will improve the function such that it passes.',
+                'Submit the unit tests if the function is according to the specification.',
+            ]),
         ]).show();
     }
     showUnitTestsPanel() {
         new Panel('Unit Tests', [
-            new UnorderedList(this.userdefinedUnitTests.map(unitTest => new Div().appendText(unitTest.toString()))).ifEmpty('You have not written any unit tests yet.'),
+            this.userdefinedUnitTests.length === 0
+                ? new Paragraph(['You have not written any unit tests yet.'])
+                : new UnorderedList(this.userdefinedUnitTests.map(unitTest => new Div().appendText(unitTest.toString()))),
         ]).show('unit-tests');
     }
     showCurrentCandidatePanel() {
@@ -115,8 +125,10 @@ export class Level {
     }
     showScoreZeroMessage() {
         new ComputerMessage([
-            new Paragraph('You have to retry this level, ' +
-                'because your score dropped to 0%.')
+            new Paragraph([
+                'You have to retry this level,',
+                'because your score dropped to 0%.'
+            ])
         ]).show();
     }
     play(callback) {
@@ -153,24 +165,30 @@ export class Level {
     }
     showAddUnitTestMessage(unitTest) {
         new HumanMessage([
-            new Paragraph('I want to add the following unit test:'),
-            new Paragraph(unitTest.toString()),
+            new Paragraph(['I want to add the following unit test:']),
+            new Paragraph([unitTest.toString()]),
         ]).replace();
     }
     showUselessUnitTestMessage() {
         new ComputerMessage([
-            new Paragraph('I added the unit test, but the current function already passes this unit test, so I didn\'t improve the function.'),
+            new Paragraph([
+                'I added the unit test, but the current function already passes this unit test, so I didn\'t improve the function.'
+            ]),
         ]).show();
     }
     showUsefulUnitTestMessage() {
         new ComputerMessage([
-            new Paragraph('I added the unit test and I improved the function.'),
+            new Paragraph([
+                'I added the unit test and I improved the function.'
+            ]),
         ]).show();
     }
     showIncorrectUnitTestMessage() {
         new ComputerMessage([
-            new Paragraph('I did NOT add the unit test, because it is NOT according to the specification. ' +
-                `The cost for trying to add an incorrect unit test is ${this.PENALTYINCORRECTUNITTEST}%.`),
+            new Paragraph([
+                'I did NOT add the unit test, because it is NOT according to the specification.',
+                `The cost for trying to add an incorrect unit test is ${this.PENALTYINCORRECTUNITTEST}%.`,
+            ]),
         ]).show();
         this.score -= this.PENALTYINCORRECTUNITTEST;
     }
@@ -196,16 +214,16 @@ export class Level {
     }
     showHintMessage(unitTest) {
         new ComputerMessage([
-            new Paragraph('A unit test that would fail for the current function is the following.'),
-            new Paragraph(unitTest.toString()),
-            new Paragraph(`The cost for this hint is ${this.PENALTYHINT}%.`),
+            new Paragraph(['A unit test that would fail for the current function is the following.']),
+            new Paragraph([unitTest.toString()]),
+            new Paragraph([`The cost for this hint is ${this.PENALTYHINT}%.`]),
         ]).show();
         this.score -= this.PENALTYHINT;
     }
     showNoHintMessage() {
         new ComputerMessage([
-            new Paragraph('I can\'t think of a failing unit test for the current function. '),
-            new Paragraph(`The cost for this hint is ${this.PENALTYHINT}%.`),
+            new Paragraph(['I can\'t think of a failing unit test for the current function.']),
+            new Paragraph([`The cost for this hint is ${this.PENALTYHINT}%.`]),
         ]).show();
         this.score -= this.PENALTYHINT;
     }
@@ -218,10 +236,12 @@ export class Level {
     }
     showBugFoundMessage(testResult) {
         new ComputerMessage([
-            new Paragraph('The current function is NOT according to the specification. ' +
-                'It produces the following incorrect output:'),
-            new Paragraph(testResult.toString()),
-            new Paragraph(`The cost for submitting when there is still an error is ${this.PENALTYBUG}%.`),
+            new Paragraph([
+                'The current function is NOT according to the specification.',
+                'It produces the following incorrect output:'
+            ]),
+            new Paragraph([testResult.toString()]),
+            new Paragraph([`The cost for submitting when there is still an error is ${this.PENALTYBUG}%.`]),
         ]).show();
         this.score -= this.PENALTYBUG;
     }
@@ -235,14 +255,18 @@ export class Level {
     }
     showUnsuccessfulEndMessage() {
         new ComputerMessage([
-            new Paragraph('The current function is NOT according to the specification. ' +
-                `Your score is ${this.score}%.`),
+            new Paragraph([
+                'The current function is NOT according to the specification.',
+                `Your score is ${this.score}%.`
+            ]),
         ]).show();
     }
     showSuccessfulEndMessage() {
         new ComputerMessage([
-            new Paragraph('The current function is according to the specification. ' +
-                `Your score is ${this.score}%.`),
+            new Paragraph([
+                'The current function is according to the specification.',
+                `Your score is ${this.score}%.`
+            ]),
         ]).show();
     }
     end() {

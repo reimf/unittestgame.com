@@ -103,9 +103,9 @@ export class Header extends Html {
 }
 
 export class Paragraph extends Html {
-    public constructor(text: string) {
+    public constructor(texts: string[]) {
         super('p')
-        this.appendText(text)
+        this.appendText(texts.join(' '))
     }
 }
 
@@ -113,12 +113,6 @@ export class UnorderedList extends Html {
     public constructor(elements: Html[]) {
         super('ul')
         this.appendChildren(elements.map(element => new ListItem(element)))
-    }
-
-    public ifEmpty(text: string): Paragraph {
-        if (this.element.childElementCount > 0)
-            return this
-        return new Paragraph(text)
     }
 }
 
@@ -136,7 +130,7 @@ export class Button extends Html {
         super('button')
         this.appendText(text)
         this.on('click', event => {
-            new HumanMessage([new Paragraph(this.element.textContent! + '.')]).replace()
+            new HumanMessage([new Paragraph([this.element.textContent! + '.'])]).replace()
             callback(event)
         })
     }

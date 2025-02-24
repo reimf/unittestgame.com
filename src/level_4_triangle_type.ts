@@ -6,12 +6,12 @@ import { UnitTest } from './unit_test.js'
 export class TriangleType extends Level {
     public showSpecificationPanel(): void {
         new Panel('Specification', [
-            new Paragraph(
-                'Return the type of the triangle: equilateral, isosceles or scalene. ' +
-                'A triangle is equilateral if all three sides have the same length. ' +
-                'A triangle is isosceles if two sides have the same length and a third side has a different length. ' +
-                'A triangle is scalene if all three sides have different lengths.'
-            ),
+            new Paragraph([
+                'Return the type of the triangle: equilateral, isosceles or scalene.',
+                'A triangle is equilateral if all three sides have the same length.',
+                'A triangle is isosceles if two sides have the same length and a third side has a different length.',
+                'A triangle is scalene if all three sides have different lengths.',
+            ]),
         ]).show('specification')
     }
 

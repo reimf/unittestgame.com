@@ -1,7 +1,5 @@
 export class Random {
-    public static elementFrom(list: any[]): any {
-        if (list.length === 0)
-            return undefined
+    public static elementFrom<T>(list: T[]): T {
         return list[this.randomInt(list.length)]
     }
 

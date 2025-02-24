@@ -5,13 +5,15 @@ import { UnitTest } from './unit_test.js';
 export class SpeedDisplay extends Level {
     showSpecificationPanel() {
         new Panel('Specification', [
-            new Paragraph('The function receives the speed in meters per hour and must display the speed in kilometers per hour. ' +
-                'If something is wrong with the speed (e.g. negative speed), ' +
-                'then the function must return "ERROR". ' +
-                'If possible, show one decimal (e.g. "12.3"). ' +
-                'Otherwise, round to whole kilometers per hour (e.g. "49"). ' +
-                'If the speed no longer fits on the display, ' +
-                'then the function must return "DANGER".'),
+            new Paragraph([
+                'The function receives the speed in meters per hour and must display the speed in kilometers per hour.',
+                'If something is wrong with the speed (e.g. negative speed),',
+                'then the function must return "ERROR".',
+                'If possible, show one decimal (e.g. "12.3").',
+                'Otherwise, round to whole kilometers per hour (e.g. "49").',
+                'If the speed no longer fits on the display,',
+                'then the function must return "DANGER".'
+            ]),
             new Code('The display looks like this:\n' +
                 '+-------------------+\n' +
                 '|  X   XXXX   XXXX  |\n' +

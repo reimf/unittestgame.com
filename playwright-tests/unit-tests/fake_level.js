@@ -5,10 +5,12 @@ import { UnitTest } from '../../src/unit_test.js';
 export class FakeLevel extends Level {
     showSpecificationPanel() {
         new Panel('Specification', [
-            new Paragraph('Return "Fizz" if the number is divisible by 3, ' +
-                '"Buzz" if the number is divisible by 5, ' +
-                '"FizzBuzz" if the number is divisible by both 3 and 5, ' +
-                'and a string containing the number otherwise.'),
+            new Paragraph([
+                'Return "Fizz" if the number is divisible by 3,',
+                '"Buzz" if the number is divisible by 5,',
+                '"FizzBuzz" if the number is divisible by both 3 and 5,',
+                'and a string containing the number otherwise.'
+            ]),
         ]).show('specification');
     }
     getParameters() {

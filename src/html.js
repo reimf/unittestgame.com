@@ -84,20 +84,15 @@ export class Header extends Html {
     }
 }
 export class Paragraph extends Html {
-    constructor(text) {
+    constructor(texts) {
         super('p');
-        this.appendText(text);
+        this.appendText(texts.join(' '));
     }
 }
 export class UnorderedList extends Html {
     constructor(elements) {
         super('ul');
         this.appendChildren(elements.map(element => new ListItem(element)));
-    }
-    ifEmpty(text) {
-        if (this.element.childElementCount > 0)
-            return this;
-        return new Paragraph(text);
     }
 }
 class ListItem extends Html {
@@ -112,7 +107,7 @@ export class Button extends Html {
         this.button = this.element;
         this.appendText(text);
         this.on('click', event => {
-            new HumanMessage([new Paragraph(this.element.textContent + '.')]).replace();
+            new HumanMessage([new Paragraph([this.element.textContent + '.'])]).replace();
             callback(event);
         });
     }

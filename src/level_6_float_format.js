@@ -6,10 +6,12 @@ import { UnitTest } from './unit_test.js';
 export class FloatFormat extends Level {
     showSpecificationPanel() {
         new Panel('Specification', [
-            new Paragraph('Return true if the text represents a float and returns false if it doesn\'t. ' +
-                'A float may start with a plus or a minus sign. ' +
-                'This is followed by one or more digits. ' +
-                'If that is followed by a dot, one or more digit must follow.'),
+            new Paragraph([
+                'Return true if the text represents a float and returns false if it doesn\'t.',
+                'A float may start with a plus or a minus sign.',
+                'This is followed by one or more digits.',
+                'If that is followed by a dot, one or more digit must follow.',
+            ]),
         ]).show('specification');
     }
     getParameters() {
