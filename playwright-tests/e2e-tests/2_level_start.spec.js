@@ -17,7 +17,7 @@ test.describe('level start', () => {
         await expect(unitTestsPanel).toContainText('You have not written any unit tests yet');
     });
     test('has the simplest candidate in the current candidate panel', async ({ page }) => {
-        const currentCandidatePanel = page.getByTestId('current-candidate');
+        const currentCandidatePanel = page.getByTestId('current-function');
         await expect(currentCandidatePanel).toContainText(/function isAllowedToVote\(age\) \{\s+return (true|false)\s+\}/);
     });
     test('has 100% in the score panel', async ({ page }) => {

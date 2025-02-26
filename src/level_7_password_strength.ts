@@ -1,20 +1,21 @@
 import { Level } from './level.js'
 import { Random } from './random.js'
-import { Paragraph, Panel } from './html.js'
+import { Paragraph } from './html.js'
+import { Panel } from './frame.js'
 import { Variable, CheckboxVariable, TextVariable } from './variable.js'
 import { UnitTest } from './unit_test.js'
 
 export class PasswordStrength extends Level {
     public showSpecificationPanel(): void {
         new Panel('Specification', [
-            new Paragraph([
+            new Paragraph().appendLines([
                 'Return true if the password is strong and return false if the password is not strong.',
                 'A password is strong if it contains at least 5 characters,',
                 'an uppercase letter,',
                 'a lowercase letter and',
                 'a special character ("#" or "@").',
             ]),
-        ]).show('specification')
+        ]).show()
     }
 
     public getParameters(): Variable[] {

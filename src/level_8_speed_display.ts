@@ -1,5 +1,6 @@
 import { Level } from './level.js'
-import { Paragraph, Panel, Code } from './html.js'
+import { Code, Paragraph } from './html.js'
+import { Panel } from './frame.js'
 import { Variable, TextVariable, NumberVariable } from './variable.js'
 import { UnitTest } from './unit_test.js'
 
@@ -7,7 +8,7 @@ export class SpeedDisplay extends Level {
 
     public showSpecificationPanel(): void {
         new Panel('Specification', [
-            new Paragraph([
+            new Paragraph().appendLines([
                 'The function receives the speed in meters per hour and must display the speed in kilometers per hour.',
                 'If something is wrong with the speed (e.g. negative speed),',
                 'then the function must return "ERROR".',
@@ -16,7 +17,7 @@ export class SpeedDisplay extends Level {
                 'If the speed no longer fits on the display,',
                 'then the function must return "DANGER".'
             ]),
-            new Code(
+            new Code().appendText(
                 'The display looks like this:\n' +
                 '+-------------------+\n' +
                 '|  X   XXXX   XXXX  |\n' +
@@ -28,7 +29,7 @@ export class SpeedDisplay extends Level {
                 '|  ERROR    DANGER  |\n' +
                 '+-------------------+'
             ),
-        ]).show('specification')
+        ]).show()
     }
 
     public getParameters(): Variable[] {

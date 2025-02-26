@@ -1,14 +1,13 @@
 import { Level } from './level.js';
-import { Paragraph, Panel } from './html.js';
+import { Paragraph } from './html.js';
+import { Panel } from './frame.js';
 import { CheckboxVariable, NumberVariable } from './variable.js';
 import { UnitTest } from './unit_test.js';
 export class VotingAge extends Level {
     showSpecificationPanel() {
         new Panel('Specification', [
-            new Paragraph([
-                'Return true if the age is 18 years or over and return false if the age is under 18.',
-            ]),
-        ]).show('specification');
+            new Paragraph().appendText('Return true if the age is 18 years or over and return false if the age is under 18.'),
+        ]).show();
     }
     getParameters() {
         return [

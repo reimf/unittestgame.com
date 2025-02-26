@@ -22,7 +22,7 @@ test.describe('level start', () => {
   })
 
   test('has the simplest candidate in the current candidate panel', async ({ page }) => {
-    const currentCandidatePanel = page.getByTestId('current-candidate')
+    const currentCandidatePanel = page.getByTestId('current-function')
     await expect(currentCandidatePanel).toContainText(/function isAllowedToVote\(age\) \{\s+return (true|false)\s+\}/)
   })
 

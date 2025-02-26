@@ -26,7 +26,7 @@ test.describe('added unit test', () => {
   })
 
   test('has another candidate in the current candidate panel', async ({ page }) => {
-    const currentCandidatePanel = page.getByTestId('current-candidate')
+    const currentCandidatePanel = page.getByTestId('current-function')
     await expect(currentCandidatePanel).toContainText('function isAllowedToVote(age) { return false }')
   })
 

@@ -1,15 +1,16 @@
 import { UnitTest } from './unit_test.js';
 import { Random } from './random.js';
-import { Button, Form, Paragraph, UnorderedList, Div, Code, Panel, HumanMessage, ComputerMessage } from './html.js';
+import { Button, Code, Form, Input, Paragraph } from './html.js';
+import { Panel, HumanMessage, ComputerMessage } from './frame.js';
 import { Candidate } from './candidate.js';
 import { TestResult } from './test_result.js';
 export class Level {
     constructor(index) {
         this.index = index;
         this.PERFECTSCORE = 100;
-        this.PENALTYINCORRECTUNITTEST = 10;
-        this.PENALTYHINT = 20;
-        this.PENALTYBUG = 30;
+        this.PENALTYINCORRECTUNITTEST = 5;
+        this.PENALTYHINT = 10;
+        this.PENALTYBUG = 20;
         this.MINIMUMSCORE = 0;
         this.name = this.constructor.name;
         this.parameters = this.getParameters();
@@ -23,7 +24,7 @@ export class Level {
         this.userdefinedUnitTests = [];
         this.currentCandidate = this.candidates[0];
         this.failingTestResult = undefined;
-        this.score = this.MINIMUMSCORE;
+        this.score = NaN;
         this.callback = () => undefined;
         this.checkUnitTestsAreNeeded(this.candidates, this.minimalUnitTests);
     }
@@ -89,12 +90,12 @@ export class Level {
     }
     showScorePanel() {
         new Panel('Score', [
-            new Paragraph([`${this.description}: ${this.score}%`]),
-        ]).show('score');
+            new Paragraph().appendText(`${this.description}: ${this.score}%`),
+        ]).show();
     }
     showContractMessage() {
         new ComputerMessage([
-            new Paragraph([
+            new Paragraph().appendLines([
                 'In the sidebar you see the specification,',
                 'the unit tests you have written (none yet) and',
                 'my take at the function.',
@@ -104,28 +105,26 @@ export class Level {
         ]).show();
     }
     showUnitTestsPanel() {
-        new Panel('Unit Tests', [
-            this.userdefinedUnitTests.length === 0
-                ? new Paragraph(['You have not written any unit tests yet.'])
-                : new UnorderedList(this.userdefinedUnitTests.map(unitTest => new Div().appendText(unitTest.toString()))),
-        ]).show('unit-tests');
+        new Panel('Unit Tests', this.userdefinedUnitTests.length === 0
+            ? [new Paragraph().appendText('You have not written any unit tests yet.')]
+            : this.userdefinedUnitTests.map(unitTest => new Paragraph().appendText(unitTest.toString()))).show();
     }
     showCurrentCandidatePanel() {
         new Panel('Current Function', [
-            new Code(this.currentCandidate.toString()),
-        ]).show('current-candidate');
+            new Code().appendText(this.currentCandidate.toString()),
+        ]).show();
     }
     showMenuMessage() {
         new HumanMessage([
-            new Button(`I want to add a unit test (-${this.PENALTYINCORRECTUNITTEST}% on error)`, () => this.showFormUnitTestMessage()),
-            new Button(`I want to see a hint for a unit test (-${this.PENALTYHINT}%)`, () => this.showHint()),
-            new Button(`I want to submit the unit tests (-${this.PENALTYBUG}% on error)`, () => this.submit()),
-            new Button(`I want to exit this level (${this.MINIMUMSCORE}% on error)`, () => this.end()),
+            new Button().onClick(() => this.startAddUnitTestFlow()).appendText(`I want to add a unit test (-${this.PENALTYINCORRECTUNITTEST}% on error)`),
+            new Button().onClick(() => this.showHint()).appendText(`I want to see a hint for a unit test (-${this.PENALTYHINT}%)`),
+            new Button().onClick(() => this.submit()).appendText(`I want to submit the unit tests (-${this.PENALTYBUG}% on error)`),
+            new Button().onClick(() => this.end()).appendText(`I want to exit this level (${this.MINIMUMSCORE}% on error)`),
         ]).show();
     }
     showScoreZeroMessage() {
         new ComputerMessage([
-            new Paragraph([
+            new Paragraph().appendLines([
                 'You have to retry this level,',
                 'because your score dropped to 0%.'
             ])
@@ -158,37 +157,59 @@ export class Level {
             this.showMenuMessage();
         }
     }
+    startAddUnitTestFlow() {
+        this.showConfirmStartUnitTestFlowMessage();
+        this.showFormUnitTestMessage();
+    }
+    showConfirmStartUnitTestFlowMessage() {
+        new ComputerMessage([
+            new Paragraph().appendText('Which unit test do you want to add?'),
+        ]).show();
+    }
     showFormUnitTestMessage() {
+        const submitButton = new Input().type('submit').value('I want to add this unit test');
+        const cancelButton = new Button().onClick(() => this.cancelAddUnitTestFlow()).appendText('I don\'t want to add a unit test now');
+        const buttonBlock = new Paragraph().appendChild(submitButton).appendChild(cancelButton);
         new HumanMessage([
-            new Form([...this.parameters, this.unit].map(variable => variable.toHtml()), 'I want to add this unit test', () => this.addUnitTest(), 'I don\'t want to add a unit test now', () => this.menu())
-        ]).replace();
+            new Form()
+                .onSubmit(() => this.addUnitTest())
+                .appendChildren([...this.parameters, this.unit].map(variable => variable.toHtml()))
+                .appendChild(buttonBlock)
+        ]).show();
     }
     showAddUnitTestMessage(unitTest) {
         new HumanMessage([
-            new Paragraph(['I want to add the following unit test:']),
-            new Paragraph([unitTest.toString()]),
+            new Paragraph().appendText('I want to add the following unit test:'),
+            new Paragraph().appendText(unitTest.toString()),
         ]).replace();
+    }
+    showConfirmCancelAddUnitTestFlowMessage() {
+        new ComputerMessage([
+            new Paragraph().appendText('Ok.'),
+        ]).show();
+    }
+    cancelAddUnitTestFlow() {
+        this.showConfirmCancelAddUnitTestFlowMessage();
+        this.menu();
     }
     showUselessUnitTestMessage() {
         new ComputerMessage([
-            new Paragraph([
-                'I added the unit test, but the current function already passes this unit test, so I didn\'t improve the function.'
+            new Paragraph().appendLines([
+                'I added the unit test,',
+                'but the current function already passed this unit test,',
+                'so I didn\'t improve the function.'
             ]),
         ]).show();
     }
     showUsefulUnitTestMessage() {
         new ComputerMessage([
-            new Paragraph([
-                'I added the unit test and I improved the function.'
-            ]),
+            new Paragraph().appendText('I added the unit test and I improved the function.'),
         ]).show();
     }
     showIncorrectUnitTestMessage() {
         new ComputerMessage([
-            new Paragraph([
-                'I did NOT add the unit test, because it is NOT according to the specification.',
-                `The cost for trying to add an incorrect unit test is ${this.PENALTYINCORRECTUNITTEST}%.`,
-            ]),
+            new Paragraph().appendText('I did NOT add the unit test, because it is NOT according to the specification.'),
+            new Paragraph().appendText(`The cost for trying to add an incorrect unit test is ${this.PENALTYINCORRECTUNITTEST}%.`),
         ]).show();
         this.score -= this.PENALTYINCORRECTUNITTEST;
     }
@@ -214,16 +235,16 @@ export class Level {
     }
     showHintMessage(unitTest) {
         new ComputerMessage([
-            new Paragraph(['A unit test that would fail for the current function is the following.']),
-            new Paragraph([unitTest.toString()]),
-            new Paragraph([`The cost for this hint is ${this.PENALTYHINT}%.`]),
+            new Paragraph().appendText('A unit test that would fail for the current function is the following.'),
+            new Paragraph().appendText(unitTest.toString()),
+            new Paragraph().appendText(`The cost for this hint is ${this.PENALTYHINT}%.`),
         ]).show();
         this.score -= this.PENALTYHINT;
     }
     showNoHintMessage() {
         new ComputerMessage([
-            new Paragraph(['I can\'t think of a failing unit test for the current function.']),
-            new Paragraph([`The cost for this hint is ${this.PENALTYHINT}%.`]),
+            new Paragraph().appendText('I can\'t think of a failing unit test for the current function.'),
+            new Paragraph().appendText(`The cost for this hint is ${this.PENALTYHINT}%.`),
         ]).show();
         this.score -= this.PENALTYHINT;
     }
@@ -236,12 +257,12 @@ export class Level {
     }
     showBugFoundMessage(testResult) {
         new ComputerMessage([
-            new Paragraph([
+            new Paragraph().appendLines([
                 'The current function is NOT according to the specification.',
                 'It produces the following incorrect output:'
             ]),
-            new Paragraph([testResult.toString()]),
-            new Paragraph([`The cost for submitting when there is still an error is ${this.PENALTYBUG}%.`]),
+            new Paragraph().appendText(testResult.toString()),
+            new Paragraph().appendText(`The cost for submitting when there is still an error is ${this.PENALTYBUG}%.`),
         ]).show();
         this.score -= this.PENALTYBUG;
     }
@@ -255,7 +276,7 @@ export class Level {
     }
     showUnsuccessfulEndMessage() {
         new ComputerMessage([
-            new Paragraph([
+            new Paragraph().appendLines([
                 'The current function is NOT according to the specification.',
                 `Your score is ${this.score}%.`
             ]),
@@ -263,7 +284,7 @@ export class Level {
     }
     showSuccessfulEndMessage() {
         new ComputerMessage([
-            new Paragraph([
+            new Paragraph().appendLines([
                 'The current function is according to the specification.',
                 `Your score is ${this.score}%.`
             ]),

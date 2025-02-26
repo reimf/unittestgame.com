@@ -1,4 +1,4 @@
-import { Html, Input, Label, Div } from './html.js'
+import { Html, Input, Label, Paragraph } from './html.js'
 
 export abstract class Variable {
     protected constructor(protected label: string, public name: string) { }
@@ -21,18 +21,12 @@ export class RadioVariable extends Variable {
 
     public toHtml(): Html {
         const radioButtons = this.texts.map(text => {
-            const input = new Input('radio')
-            input.name(this.name)
-            input.value(text)
-            const label = new Label()
-            label.appendChild(input)
-            label.appendText(text)
+            const input = new Input().type('radio').name(this.name).value(text)
+            const label = new Label().appendChild(input).appendText(text)
             return label
         })
-        const div = new Div()
-        div.appendText(this.label)
-        div.appendChildren(radioButtons)
-        return div
+        const paragraph = new Paragraph().appendText(this.label).appendChildren(radioButtons)
+        return paragraph
     }
 
     public format(value: string): string {
@@ -51,14 +45,10 @@ export class CheckboxVariable extends Variable {
     }
 
     public toHtml(): Html {
-        const input = new Input('checkbox')
-        input.name(this.name)
-        const label = new Label()
-        label.appendChild(input)
-        label.appendText(this.label)
-        const div = new Div()
-        div.appendChild(label)
-        return div
+        const input = new Input().type('checkbox').name(this.name)
+        const label = new Label().appendChild(input).appendText(this.label)
+        const paragraph = new Paragraph().appendChild(label)
+        return paragraph
     }
 
     public format(value: boolean): string {
@@ -77,15 +67,10 @@ export class TextVariable extends Variable {
     }
 
     public toHtml(): Html {
-        const input = new Input('text')
-        input.name(this.name)
-        input.autocomplete(false)
-        const label = new Label()
-        label.appendText(this.label)
-        label.appendChild(input)
-        const div = new Div()
-        div.appendChild(label)
-        return div
+        const input = new Input().type('text').name(this.name).autocomplete(false)
+        const label = new Label().appendText(this.label).appendChild(input)
+        const paragraph = new Paragraph().appendChild(label)
+        return paragraph
     }
 
     public format(value: string): string {
@@ -104,15 +89,10 @@ export class NumberVariable extends Variable {
     }
 
     public toHtml(): Html {
-        const input = new Input('number')
-        input.name(this.name)
-        input.autocomplete(false)
-        const label = new Label()
-        label.appendText(this.label)
-        label.appendChild(input)
-        const div = new Div()
-        div.appendChild(label)
-        return div
+        const input = new Input().type('number').name(this.name).autocomplete(false)
+        const label = new Label().appendText(this.label).appendChild(input)
+        const paragraph = new Paragraph().appendChild(label)
+        return paragraph
     }
 
     public format(value: number): string {

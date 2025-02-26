@@ -1,18 +1,19 @@
 import { Level } from './level.js'
-import { Paragraph, Panel } from './html.js'
+import { Paragraph } from './html.js'
+import { Panel } from './frame.js'
 import { Variable, TextVariable, NumberVariable } from './variable.js'
 import { UnitTest } from './unit_test.js'
 
 export class FizzBuzz extends Level {
     public showSpecificationPanel(): void {
         new Panel('Specification', [
-            new Paragraph([
+            new Paragraph().appendLines([
                 'Return "Fizz" if the number is divisible by 3,',
                 '"Buzz" if the number is divisible by 5,',
                 '"FizzBuzz" if the number is divisible by both 3 and 5,',
                 'and a string containing the number otherwise.',
             ]),
-        ]).show('specification')
+        ]).show()
     }
 
     public getParameters(): Variable[] {

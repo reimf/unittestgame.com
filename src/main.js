@@ -1,4 +1,5 @@
-import { Button, Paragraph, Anchor, Panel, HumanMessage, ComputerMessage } from './html.js';
+import { Button, Paragraph, Anchor } from './html.js';
+import { Panel, HumanMessage, ComputerMessage } from './frame.js';
 import { VotingAge } from './level_1_voting_age.js';
 import { EvenOdd } from './level_2_even_odd.js';
 import { FizzBuzz } from './level_3_fizz_buzz.js';
@@ -21,17 +22,17 @@ export class Main {
         ];
     }
     showAboutPanel() {
-        const learnParagraph = new Paragraph(['Learn Unit Testing with UnitTestGame.com']);
-        const anchor = new Anchor('mailto:feedback@unittestgame.com').appendText('feedback@unittestgame.com');
-        const feedbackParagraph = new Paragraph(['Please send us ']).appendChild(anchor);
+        const learnParagraph = new Paragraph().appendText('Learn Unit Testing with UnitTestGame.com');
+        const anchor = new Anchor().href('mailto:feedback@unittestgame.com').appendText('feedback@unittestgame.com');
+        const feedbackParagraph = new Paragraph().appendText('Please send us ').appendChild(anchor);
         new Panel('About', [
             learnParagraph,
             feedbackParagraph
-        ]).show('about');
+        ]).show();
     }
     showWelcomeMessage() {
         new ComputerMessage([
-            new Paragraph([
+            new Paragraph().appendLines([
                 'Welcome to UnitTestGame.com!',
                 'I am an AI-bot that does Test Driven Development.',
                 'You write failing unit tests and I write a function that passes.',
@@ -51,21 +52,21 @@ export class Main {
     showHighScoresPanel() {
         const highScores = this.levels
             .filter(level => level.getHighScore(localStorage) > 0)
-            .map(level => new Paragraph([`${level.description}: ${level.getHighScore(localStorage)}%`]));
+            .map(level => new Paragraph().appendText(`${level.description}: ${level.getHighScore(localStorage)}%`));
         if (highScores.length > 0)
-            new Panel('High Scores', highScores).show('high-scores');
+            new Panel('High Scores', highScores).show();
     }
     showNextLevel() {
         const level = this.levels.find(level => level.getHighScore(localStorage) === 0);
         new HumanMessage([
             level
-                ? new Button(`I want to play ${level.description}`, () => this.playLevel(level))
-                : new Button('Quit UnitTestGame.com', () => window.close())
+                ? new Button().onClick(() => this.playLevel(level)).appendText(`I want to play ${level.description}`)
+                : new Button().onClick(() => window.close()).appendText('Quit UnitTestGame.com')
         ]).show();
     }
     playLevel(level) {
-        Panel.remove('about');
-        Panel.remove('high-scores');
+        Panel.remove('About');
+        Panel.remove('High Scores');
         level.play(() => this.continue());
     }
 }

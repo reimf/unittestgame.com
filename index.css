@@ -49,15 +49,6 @@ button {
     padding: 0.75rem;
     text-align: left;
     width: 100%;
-
-    &:disabled {
-        opacity: 0.5;
-    }
-
-    &.played {
-        background-color: var(--human-message-background);
-        color: var(--dark-text);
-    }
 }
 
 form {
@@ -71,11 +62,7 @@ form {
         width: auto;
     }
 
-    div:not(:has(input[type="radio"])) {
-        margin: 0.75rem 0;
-    }
-
-    div:has(button) {
+    p:has(button) {
         display: flex;
         gap: 0.75rem;
     }

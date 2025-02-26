@@ -1,17 +1,18 @@
 import { Level } from '../../src/level.js';
-import { Paragraph, Panel } from '../../src/html.js';
+import { Paragraph } from '../../src/html.js';
+import { Panel } from '../../src/frame.js';
 import { TextVariable, NumberVariable } from '../../src/variable.js';
 import { UnitTest } from '../../src/unit_test.js';
 export class FakeLevel extends Level {
     showSpecificationPanel() {
         new Panel('Specification', [
-            new Paragraph([
+            new Paragraph().appendLines([
                 'Return "Fizz" if the number is divisible by 3,',
                 '"Buzz" if the number is divisible by 5,',
                 '"FizzBuzz" if the number is divisible by both 3 and 5,',
                 'and a string containing the number otherwise.'
             ]),
-        ]).show('specification');
+        ]).show();
     }
     getParameters() {
         return [

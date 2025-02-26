@@ -1,62 +1,65 @@
 export abstract class Html {
-    protected element: HTMLElement
+    protected readonly element: HTMLElement
 
     protected constructor(tagName: string) {
         this.element = document.createElement(tagName)
     }
 
-    public id(id: string): Html {
+    protected id(id: string): Html {
         this.element.id = id
         return this
     }
 
-    public addClass(value: string): Html {
+    protected addClass(value: string): Html {
         this.element.classList.add(value)
         return this
     }
 
-    public appendText(value: string): Html {
-        this.element.appendChild(document.createTextNode(value))
+    public appendText(text: string): Html {
+        this.element.appendChild(document.createTextNode(text))
         return this
     }
 
-    public appendChild(value: Html): Html {
-        this.element.appendChild(value.element)
+    public appendLines(lines: string[]): Html {
+        this.appendText(lines.join(' '))
         return this
     }
 
-    public appendChildren(values: Html[]): Html {
-        for (const value of values)
-            this.element.appendChild(value.element)
+    public appendChild(child: Html): Html {
+        this.element.appendChild(child.element)
         return this
     }
 
-    public on(eventType: string, callback: (event: Event) => void): Html {
+    public appendChildren(children: Html[]): Html {
+        for (const child of children)
+            this.element.appendChild(child.element)
+        return this
+    }
+
+    protected on(eventType: string, callback: (event: Event) => void): Html {
         this.element.addEventListener(eventType, callback)
         return this
     }
 }
 
 export class Anchor extends Html {
-    private anchor = this.element as HTMLAnchorElement
+    private readonly anchor = this.element as HTMLAnchorElement
 
-    public constructor(href: string) {
+    public constructor() {
         super('a')
-        this.href(href)
     }
 
-    public href(value: string): Html {
+    public href(value: string): Anchor {
         this.anchor.href = value
         return this
     }
 }
 
 export class Input extends Html {
-    private input = this.element as HTMLInputElement
+    private readonly input = this.element as HTMLInputElement
 
-    public constructor(type: string) {
+    public constructor() {
         super('input')
-        this.type(type)
     }
 
     public type(value: string): Input {
@@ -81,62 +84,35 @@ export class Input extends Html {
 }
 
 export class Form extends Html {
-    public constructor(inputs: Html[], submitButtonText: string, private callbackSubmit: () => void, cancelButtonText: string, callbackCancel: () => void) {
+    public constructor() {
         super('form')
-        const submitButton = new Input('submit')
-        submitButton.value(submitButtonText)
-        const cancelButton = new Button(cancelButtonText, () => callbackCancel())
-        const buttonBlock = new Div()
-        buttonBlock.appendChild(submitButton)
-        buttonBlock.appendChild(cancelButton)
-        this.appendChildren(inputs)
-        this.appendChild(buttonBlock)
-        this.on('submit', () => this.callbackSubmit())
+    }
+
+    public onSubmit(callback: (event: Event) => void): Form {
+        this.on('submit', event => callback(event))
+        return this
     }
 }
 
 export class Header extends Html {
-    public constructor(text: string) {
+    public constructor() {
         super('header')
-        this.appendText(text)
     }
 }
 
 export class Paragraph extends Html {
-    public constructor(texts: string[]) {
+    public constructor() {
         super('p')
-        this.appendText(texts.join(' '))
-    }
-}
-
-export class UnorderedList extends Html {
-    public constructor(elements: Html[]) {
-        super('ul')
-        this.appendChildren(elements.map(element => new ListItem(element)))
-    }
-}
-
-class ListItem extends Html {
-    public constructor(child: Html) {
-        super('li')
-        this.appendChild(child)
     }
 }
 
 export class Button extends Html {
-    private button = this.element as HTMLButtonElement
-
-    public constructor(text: string, callback: (event: Event) => void) {
+    public constructor() {
         super('button')
-        this.appendText(text)
-        this.on('click', event => {
-            new HumanMessage([new Paragraph([this.element.textContent! + '.'])]).replace()
-            callback(event)
-        })
     }
 
-    public disabled(disabled: boolean): Button {
-        this.button.disabled = disabled
+    public onClick(callback: (event: Event) => void): Button {
+        this.on('click', event => callback(event))
         return this
     }
 }
@@ -147,104 +123,14 @@ export class Label extends Html {
     }
 }
 
-export class Div extends Html {
-    public constructor() {
-        super('div')
-    }
-}
-
 export class Code extends Html {
-    public constructor(text: string) {
+    public constructor() {
         super('code')
-        this.appendText(text)
     }
 }
 
-export abstract class Section extends Html {
-    public constructor(children: Html[]) {
+export class Section extends Html {
+    public constructor() {
         super('section')
-        this.appendChildren(children)
-    }
-
-    protected existingElement(): HTMLElement | null {
-        return document.querySelector('#' + this.element.id)
-    }
-
-    protected replaceExisting(): void {
-        this.existingElement()!.replaceWith(this.element)
-    }
-
-    protected addTo(parentId: string): void {
-        document.querySelector('#' + parentId)!.appendChild(this.element)
-    }
-}
-
-export class Panel extends Section {
-    public constructor(header: string, children: Html[]) {
-        super([new Header(header), ...children])
-    }
-
-    public show(id: string): void {
-        this.id(id)
-        if (this.existingElement())
-            this.replaceExisting()
-        else
-            this.addTo('panels')
-    }
-
-    public static remove(id: string): void {
-        document.querySelector('#' + id)?.remove()
-    }
-}
-
-export abstract class Message extends Section {
-    protected constructor(children: Html[]) {
-        super(children)
-    }
-
-    public show(): void {
-        const count = document.querySelector('#messages')!.childElementCount
-        this.id(`message-${count}`)
-        this.addTo('messages')
-        this.scrollIntoView()
-    }
-
-    protected scrollIntoView(): void {
-        this.element.scrollIntoView()
-    }
-}
-
-export class ComputerMessage extends Message {
-    public constructor(children: Html[]) {
-        super(children)
-        this.addClass('computer')
-    }
-}
-
-export class HumanMessage extends Message {
-    public constructor(children: Html[]) {
-        super(children)
-        this.addClass('human')
-    }
-
-    public show(): HumanMessage {
-        super.show()
-        this.focusFirst()
-        return this
-    }
-
-    public replace(): HumanMessage {
-        const lastMessage = document.querySelector('#messages')!.lastElementChild!
-        this.id(lastMessage.id)
-        this.replaceExisting()
-        this.scrollIntoView()
-        this.focusFirst()
-        return this
-    }
-
-    private focusFirst(): void {
-        const focusables = this.element.querySelectorAll('button:enabled, input:enabled') as NodeListOf<HTMLElement>
-        if (focusables.length > 0)
-            focusables[0].focus()
     }
 }

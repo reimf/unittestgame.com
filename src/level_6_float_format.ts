@@ -1,19 +1,20 @@
 import { Level } from './level.js'
 import { Random } from './random.js'
-import { Paragraph, Panel } from './html.js'
+import { Paragraph } from './html.js'
+import { Panel } from './frame.js'
 import { Variable, CheckboxVariable, TextVariable } from './variable.js'
 import { UnitTest } from './unit_test.js'
 
 export class FloatFormat extends Level {
     public showSpecificationPanel(): void {
         new Panel('Specification', [
-            new Paragraph([
+            new Paragraph().appendLines([
                 'Return true if the text represents a float and returns false if it doesn\'t.',
                 'A float may start with a plus or a minus sign.',
                 'This is followed by one or more digits.',
                 'If that is followed by a dot, one or more digit must follow.',
             ]),
-        ]).show('specification')
+        ]).show()
     }
 
     public getParameters(): Variable[] {
@@ -89,16 +90,17 @@ export class FloatFormat extends Level {
 
     public *hintGenerator(): Generator<any[]> {
         for (let i = 0; i < 100; i++) {
-            const number = Math.random() * 1000
+            const integerPart = Random.randomInt(1000).toString()
             const precision = Random.randomInt(4)
+            const fractionalPart = Random.randomInt(10 ** precision).toString().padStart(precision, '0')
             const sign = Random.elementFrom(['-', '+', ''])
-            const rounded = number.toFixed(precision)
-            const text1 = sign + rounded
-            yield [text1]
+            const correctFormat = sign + integerPart + '.' + fractionalPart
+            yield [correctFormat]
 
-            const pos = Random.randomInt(text1.length)
-            const text2 = text1.substring(0, pos) + Random.elementFrom(['0', '+', '-', '.']) + text1.substring(pos + 1)
-            yield [text2]
+            const pos = Random.randomInt(correctFormat.length)
+            const substitution = Random.elementFrom(['0', '+', '-', '.'])
+            const probablyIncorrectFormat = correctFormat.substring(0, pos) + substitution + correctFormat.substring(pos + 1)
+            yield [probablyIncorrectFormat]
         }
     }
 }

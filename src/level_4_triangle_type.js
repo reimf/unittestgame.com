@@ -1,17 +1,18 @@
 import { Level } from './level.js';
-import { Paragraph, Panel } from './html.js';
+import { Paragraph } from './html.js';
+import { Panel } from './frame.js';
 import { RadioVariable, NumberVariable } from './variable.js';
 import { UnitTest } from './unit_test.js';
 export class TriangleType extends Level {
     showSpecificationPanel() {
         new Panel('Specification', [
-            new Paragraph([
+            new Paragraph().appendLines([
                 'Return the type of the triangle: equilateral, isosceles or scalene.',
                 'A triangle is equilateral if all three sides have the same length.',
                 'A triangle is isosceles if two sides have the same length and a third side has a different length.',
                 'A triangle is scalene if all three sides have different lengths.',
             ]),
-        ]).show('specification');
+        ]).show();
     }
     getParameters() {
         return [

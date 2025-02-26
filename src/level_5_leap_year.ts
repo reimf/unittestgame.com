@@ -1,19 +1,20 @@
 import { Level } from './level.js'
-import { Paragraph, Panel } from './html.js'
+import { Paragraph } from './html.js'
+import { Panel } from './frame.js'
 import { Variable, CheckboxVariable, NumberVariable } from './variable.js'
 import { UnitTest } from './unit_test.js'
 
 export class LeapYear extends Level {
     public showSpecificationPanel(): void {
         new Panel('Specification', [
-            new Paragraph([
+            new Paragraph().appendLines([
                 'Return true if the year is a leap year and',
                 'return false if the year is not a leap year.',
                 'A year is a leap year if it is divisible by 4.',
                 'The exception is that years that are divisible by 100 are not leap years,',
                 'unless they are also divisible by 400.'
             ]),
-        ]).show('specification')
+        ]).show()
     }
 
     public getParameters(): Variable[] {
