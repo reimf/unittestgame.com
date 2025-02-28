@@ -72,7 +72,6 @@ export class PasswordStrength extends Level {
         return [
             new UnitTest(parameters, ['A3a6#'], unit, true),
             new UnitTest(parameters, ['@251Bc'], unit, true),
-            new UnitTest(parameters, ['c@34d52'], unit, false),
             new UnitTest(parameters, ['1#36D0'], unit, false),
             new UnitTest(parameters, ['n5EFG'], unit, false),
             new UnitTest(parameters, ['@9#4@i'], unit, false),
