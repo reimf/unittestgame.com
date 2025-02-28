@@ -17,16 +17,16 @@ export class Level {
         this.unit = this.getUnit();
         this.candidates = [...this.generateCandidates(this.getCandidateElements())];
         this.minimalUnitTests = this.getMinimalUnitTests(this.parameters, this.unit);
-        this.perfectCandidates = this.findPerfectCandidates(this.candidates, this.minimalUnitTests);
+        this.perfectCandidates = this.findPerfectCandidates();
         this.perfectCandidate = Random.elementFrom(this.perfectCandidates);
-        this.hints = [...this.hintGenerator()].map(argumentList => new UnitTest(this.parameters, argumentList, this.unit, this.perfectCandidate.execute(argumentList)));
+        this.hints = [...this.generateHints()];
         // the following attributes are assigned a dummy value; the starting values are assigned in the play method
         this.userdefinedUnitTests = [];
-        this.currentCandidate = this.candidates[0];
-        this.failingTestResult = undefined;
-        this.score = NaN;
+        this.currentCandidate = this.findSimplestPassingCandidate();
+        this.failingTestResult = this.findFailingTestResult();
+        this.score = this.PERFECTSCORE;
         this.callback = () => undefined;
-        this.checkUnitTestsAreNeeded(this.candidates, this.minimalUnitTests);
+        this.checkAllMinimumUnitTestsAreNeeded();
     }
     get description() {
         return `Level ${this.index} - ${this.name}`;
@@ -56,34 +56,40 @@ export class Level {
         ].join('\n');
         return new Candidate(code);
     }
-    findPassingCandidates(candidates, unitTests) {
-        return candidates.filter(candidate => candidate.failCount(unitTests) == 0);
+    *generateHints() {
+        for (const argumentList of this.hintGenerator())
+            yield new UnitTest(this.parameters, argumentList, this.unit, this.perfectCandidate.execute(argumentList));
     }
-    findPerfectCandidates(candidates, unitTests) {
-        const perfectCandidates = this.findPassingCandidates(candidates, unitTests);
+    findPassingCandidates(unitTests) {
+        return this.candidates.filter(candidate => candidate.failCount(unitTests) == 0);
+    }
+    findPerfectCandidates() {
+        const perfectCandidates = this.findPassingCandidates(this.minimalUnitTests);
         if (perfectCandidates.length === 0)
             throw new Error(`There is no perfect function for level ${this.name}.`);
         return perfectCandidates;
     }
-    checkUnitTestsAreNeeded(candidates, unitTests) {
-        for (const unitTest of unitTests) {
-            const allMinusOneUnitTests = unitTests.filter(otherUnitTest => otherUnitTest !== unitTest);
-            const almostPerfectCandidates = this.findPassingCandidates(candidates, allMinusOneUnitTests);
-            if (almostPerfectCandidates.length === 1)
+    checkAllMinimumUnitTestsAreNeeded() {
+        for (const unitTest of this.minimalUnitTests) {
+            const allMinusOneUnitTests = this.minimalUnitTests.filter(otherUnitTest => otherUnitTest !== unitTest);
+            const almostPerfectCandidates = this.findPassingCandidates(allMinusOneUnitTests);
+            if (almostPerfectCandidates.length === this.perfectCandidates.length) {
                 throw new Error(`Unit test ${unitTest} is not needed.\n${almostPerfectCandidates[0]}`);
+            }
         }
     }
-    findSimplestPassingCandidate(candidates, unitTests) {
-        const passingCandidates = this.findPassingCandidates(candidates, unitTests);
-        const minimumComplexity = Math.min(...passingCandidates.map(candidate => candidate.complexity));
+    findSimplestPassingCandidate() {
+        const passingCandidates = this.findPassingCandidates(this.userdefinedUnitTests);
+        const complexities = passingCandidates.map(candidate => candidate.complexity);
+        const minimumComplexity = Math.min(...complexities);
         const simplestCandidates = passingCandidates.filter(candidate => candidate.complexity === minimumComplexity);
         return Random.elementFrom(simplestCandidates);
     }
-    findFailingTestResult(candidate, hints, minimalUnitTests) {
-        const failingHints = candidate.failingTestResults(hints);
+    findFailingTestResult() {
+        const failingHints = this.currentCandidate.failingTestResults(this.hints);
         if (failingHints.length > 0)
             return Random.elementFrom(failingHints);
-        const failingMinimalUnitTests = candidate.failingTestResults(minimalUnitTests);
+        const failingMinimalUnitTests = this.currentCandidate.failingTestResults(this.minimalUnitTests);
         if (failingMinimalUnitTests.length > 0)
             return Random.elementFrom(failingMinimalUnitTests);
         return undefined;
@@ -140,8 +146,8 @@ export class Level {
         this.menu();
     }
     improveCurrentCandidate() {
-        this.currentCandidate = this.findSimplestPassingCandidate(this.candidates, this.userdefinedUnitTests);
-        this.failingTestResult = this.findFailingTestResult(this.currentCandidate, this.hints, this.minimalUnitTests);
+        this.currentCandidate = this.findSimplestPassingCandidate();
+        this.failingTestResult = this.findFailingTestResult();
     }
     menu() {
         this.showUnitTestsPanel();
@@ -235,7 +241,7 @@ export class Level {
     }
     showHintMessage(unitTest) {
         new ComputerMessage([
-            new Paragraph().appendText('A unit test that would fail for the current function is the following.'),
+            new Paragraph().appendText('A failing unit test for the current function is the following.'),
             new Paragraph().appendText(unitTest.toString()),
             new Paragraph().appendText(`The cost for this hint is ${this.PENALTYHINT}%.`),
         ]).show();

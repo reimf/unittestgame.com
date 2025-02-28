@@ -25,19 +25,19 @@ export abstract class Level {
     private readonly unit: Variable = this.getUnit()
     private readonly candidates: Candidate[] = [...this.generateCandidates(this.getCandidateElements())]
     private readonly minimalUnitTests: UnitTest[] = this.getMinimalUnitTests(this.parameters, this.unit)
-    private readonly perfectCandidates: Candidate[] = this.findPerfectCandidates(this.candidates, this.minimalUnitTests)
+    private readonly perfectCandidates: Candidate[] = this.findPerfectCandidates()
     private readonly perfectCandidate: Candidate = Random.elementFrom(this.perfectCandidates)
-    private readonly hints: UnitTest[] = [...this.hintGenerator()].map(argumentList => new UnitTest(this.parameters, argumentList, this.unit, this.perfectCandidate.execute(argumentList)))
+    private readonly hints: UnitTest[] = [...this.generateHints()]
 
     // the following attributes are assigned a dummy value; the starting values are assigned in the play method
     private userdefinedUnitTests: UnitTest[] = []
-    private currentCandidate: Candidate = this.candidates[0]
-    private failingTestResult?: TestResult = undefined
-    private score: number = NaN
+    private currentCandidate: Candidate = this.findSimplestPassingCandidate()
+    private failingTestResult?: TestResult = this.findFailingTestResult()
+    private score: number = this.PERFECTSCORE
     private callback: () => void = () => undefined
 
     public constructor(private readonly index: number) {
-        this.checkUnitTestsAreNeeded(this.candidates, this.minimalUnitTests)
+        this.checkAllMinimumUnitTestsAreNeeded()
     }
 
     public get description(): string {
@@ -73,38 +73,45 @@ export abstract class Level {
         return new Candidate(code)
     }
 
-    private findPassingCandidates(candidates: Candidate[], unitTests: UnitTest[]): Candidate[] {
-        return candidates.filter(candidate => candidate.failCount(unitTests) == 0)
+    private *generateHints(): Generator<UnitTest> {
+        for (const argumentList of this.hintGenerator())
+            yield new UnitTest(this.parameters, argumentList, this.unit, this.perfectCandidate.execute(argumentList))
     }
 
-    private findPerfectCandidates(candidates: Candidate[], unitTests: UnitTest[]): Candidate[] {
-        const perfectCandidates = this.findPassingCandidates(candidates, unitTests)
+    private findPassingCandidates(unitTests: UnitTest[]): Candidate[] {
+        return this.candidates.filter(candidate => candidate.failCount(unitTests) == 0)
+    }
+
+    private findPerfectCandidates(): Candidate[] {
+        const perfectCandidates = this.findPassingCandidates(this.minimalUnitTests)
         if (perfectCandidates.length === 0)
             throw new Error(`There is no perfect function for level ${this.name}.`)
         return perfectCandidates
     }
 
-    private checkUnitTestsAreNeeded(candidates: Candidate[], unitTests: UnitTest[]): void {
-        for (const unitTest of unitTests) {
-            const allMinusOneUnitTests = unitTests.filter(otherUnitTest => otherUnitTest !== unitTest)
-            const almostPerfectCandidates = this.findPassingCandidates(candidates, allMinusOneUnitTests)
-            if (almostPerfectCandidates.length === 1)
+    private checkAllMinimumUnitTestsAreNeeded(): void {
+        for (const unitTest of this.minimalUnitTests) {
+            const allMinusOneUnitTests = this.minimalUnitTests.filter(otherUnitTest => otherUnitTest !== unitTest)
+            const almostPerfectCandidates = this.findPassingCandidates(allMinusOneUnitTests)
+            if (almostPerfectCandidates.length === this.perfectCandidates.length) {
                 throw new Error(`Unit test ${unitTest} is not needed.\n${almostPerfectCandidates[0]}`)
+            }
         }
     }
 
-    private findSimplestPassingCandidate(candidates: Candidate[], unitTests: UnitTest[]): Candidate {
-        const passingCandidates = this.findPassingCandidates(candidates, unitTests)
-        const minimumComplexity = Math.min(...passingCandidates.map(candidate => candidate.complexity))
+    private findSimplestPassingCandidate(): Candidate {
+        const passingCandidates = this.findPassingCandidates(this.userdefinedUnitTests)
+        const complexities = passingCandidates.map(candidate => candidate.complexity)
+        const minimumComplexity = Math.min(...complexities)
         const simplestCandidates = passingCandidates.filter(candidate => candidate.complexity === minimumComplexity)
         return Random.elementFrom(simplestCandidates)
     }
 
-    private findFailingTestResult(candidate: Candidate, hints: UnitTest[], minimalUnitTests: UnitTest[]): TestResult | undefined {
-        const failingHints = candidate.failingTestResults(hints)
+    private findFailingTestResult(): TestResult | undefined {
+        const failingHints = this.currentCandidate.failingTestResults(this.hints)
         if (failingHints.length > 0)
             return Random.elementFrom(failingHints)
-        const failingMinimalUnitTests = candidate.failingTestResults(minimalUnitTests)
+        const failingMinimalUnitTests = this.currentCandidate.failingTestResults(this.minimalUnitTests)
         if (failingMinimalUnitTests.length > 0)
             return Random.elementFrom(failingMinimalUnitTests)
         return undefined
@@ -171,10 +178,10 @@ export abstract class Level {
     }
 
     private improveCurrentCandidate(): void {
-        this.currentCandidate = this.findSimplestPassingCandidate(this.candidates, this.userdefinedUnitTests)
-        this.failingTestResult = this.findFailingTestResult(this.currentCandidate, this.hints, this.minimalUnitTests)    
+        this.currentCandidate = this.findSimplestPassingCandidate()
+        this.failingTestResult = this.findFailingTestResult()
     }
-    
+
     private menu(): void {
         this.showUnitTestsPanel()
         this.showCurrentCandidatePanel()
@@ -209,7 +216,7 @@ export abstract class Level {
             new Form()
             .onSubmit(() => this.addUnitTest())
             .appendChildren([...this.parameters, this.unit].map(variable => variable.toHtml()))
-            .appendChild(buttonBlock)                
+            .appendChild(buttonBlock)
         ]).show()
     }
 
@@ -278,7 +285,7 @@ export abstract class Level {
 
     private showHintMessage(unitTest: UnitTest): void {
         new ComputerMessage([
-            new Paragraph().appendText('A unit test that would fail for the current function is the following.'),
+            new Paragraph().appendText('A failing unit test for the current function is the following.'),
             new Paragraph().appendText(unitTest.toString()),
             new Paragraph().appendText(`The cost for this hint is ${this.PENALTYHINT}%.`),
         ]).show()
