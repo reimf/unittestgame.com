@@ -1,8 +1,7 @@
 import { Level } from './level.js';
-import { Code, Paragraph } from './html.js';
+import { Paragraph } from './html.js';
 import { Panel } from './frame.js';
 import { TextVariable, NumberVariable } from './variable.js';
-import { UnitTest } from './unit_test.js';
 export class SpeedDisplay extends Level {
     showSpecificationPanel() {
         new Panel('Specification', [
@@ -15,7 +14,7 @@ export class SpeedDisplay extends Level {
                 'If the speed no longer fits on the display,',
                 'then the function must return "DANGER".'
             ]),
-            new Code().appendText('The display looks like this:\n' +
+            new Paragraph().appendText('The display looks like this:\n' +
                 '+-------------------+\n' +
                 '|  X   XXXX   XXXX  |\n' +
                 '|  X   X  X   X  X  |\n' +
@@ -65,15 +64,13 @@ export class SpeedDisplay extends Level {
             ],
         ];
     }
-    getMinimalUnitTests(parameters, unit) {
-        return [
-            new UnitTest(parameters, [-1], unit, 'ERROR'),
-            new UnitTest(parameters, [0], unit, '0.0'),
-            new UnitTest(parameters, [19950], unit, '19.9'),
-            new UnitTest(parameters, [19951], unit, '20'),
-            new UnitTest(parameters, [199499], unit, '199'),
-            new UnitTest(parameters, [199500], unit, 'DANGER'),
-        ];
+    *minimalUnitTestGenerator() {
+        yield [[-1], 'ERROR'];
+        yield [[0], '0.0'];
+        yield [[19950], '19.9'];
+        yield [[19951], '20'];
+        yield [[199499], '199'];
+        yield [[199500], 'DANGER'];
     }
     *hintGenerator() {
         yield [-1000];

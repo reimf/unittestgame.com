@@ -2,7 +2,6 @@ import { Level } from './level.js';
 import { Paragraph } from './html.js';
 import { Panel } from './frame.js';
 import { RadioVariable, NumberVariable } from './variable.js';
-import { UnitTest } from './unit_test.js';
 export class TriangleType extends Level {
     showSpecificationPanel() {
         new Panel('Specification', [
@@ -52,14 +51,12 @@ export class TriangleType extends Level {
             ],
         ];
     }
-    getMinimalUnitTests(parameters, unit) {
-        return [
-            new UnitTest(parameters, [5, 5, 5], unit, 'equilateral'),
-            new UnitTest(parameters, [3, 5, 5], unit, 'isosceles'),
-            new UnitTest(parameters, [5, 3, 5], unit, 'isosceles'),
-            new UnitTest(parameters, [5, 5, 3], unit, 'isosceles'),
-            new UnitTest(parameters, [3, 4, 5], unit, 'scalene'),
-        ];
+    *minimalUnitTestGenerator() {
+        yield [[5, 5, 5], 'equilateral'];
+        yield [[3, 5, 5], 'isosceles'];
+        yield [[5, 3, 5], 'isosceles'];
+        yield [[5, 5, 3], 'isosceles'];
+        yield [[3, 4, 5], 'scalene'];
     }
     *hintGenerator() {
         for (let a = 6; a < 9; a++)

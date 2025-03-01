@@ -10,7 +10,7 @@ export abstract class Level {
     protected abstract getParameters(): Variable[]
     protected abstract getUnit(): Variable
     protected abstract getCandidateElements(): string[][]
-    protected abstract getMinimalUnitTests(parameters: Variable[], unit: Variable): UnitTest[]
+    protected abstract minimalUnitTestGenerator(): Generator<any[]>
     protected abstract hintGenerator(): Generator<any[]>
     protected abstract showSpecificationPanel(): void
 
@@ -24,7 +24,7 @@ export abstract class Level {
     private readonly parameters: Variable[] = this.getParameters()
     private readonly unit: Variable = this.getUnit()
     private readonly candidates: Candidate[] = [...this.generateCandidates(this.getCandidateElements())]
-    private readonly minimalUnitTests: UnitTest[] = this.getMinimalUnitTests(this.parameters, this.unit)
+    private readonly minimalUnitTests: UnitTest[] = [...this.generateMinimalUnitTests()]
     private readonly perfectCandidates: Candidate[] = this.findPerfectCandidates()
     private readonly perfectCandidate: Candidate = Random.elementFrom(this.perfectCandidates)
     private readonly hints: UnitTest[] = [...this.generateHints()]
@@ -37,7 +37,7 @@ export abstract class Level {
     private callback: () => void = () => undefined
 
     public constructor(private readonly index: number) {
-        this.checkAllMinimumUnitTestsAreNeeded()
+        this.checkAllMinimalUnitTestsAreNeeded()
     }
 
     public get description(): string {
@@ -73,6 +73,11 @@ export abstract class Level {
         return new Candidate(code)
     }
 
+    private *generateMinimalUnitTests(): Generator<UnitTest> {
+        for (const tuple of this.minimalUnitTestGenerator())
+            yield new UnitTest(this.parameters, tuple[0], this.unit, tuple[1])
+    }
+
     private *generateHints(): Generator<UnitTest> {
         for (const argumentList of this.hintGenerator())
             yield new UnitTest(this.parameters, argumentList, this.unit, this.perfectCandidate.execute(argumentList))
@@ -89,7 +94,7 @@ export abstract class Level {
         return perfectCandidates
     }
 
-    private checkAllMinimumUnitTestsAreNeeded(): void {
+    private checkAllMinimalUnitTestsAreNeeded(): void {
         for (const unitTest of this.minimalUnitTests) {
             const allMinusOneUnitTests = this.minimalUnitTests.filter(otherUnitTest => otherUnitTest !== unitTest)
             const almostPerfectCandidates = this.findPassingCandidates(allMinusOneUnitTests)
@@ -158,15 +163,6 @@ export abstract class Level {
         ]).show()
     }
 
-    private showScoreZeroMessage(): void {
-        new ComputerMessage([
-            new Paragraph().appendLines([
-                'You have to retry this level,',
-                'because your score dropped to 0%.'
-            ])
-        ]).show()
-    }
-
     public play(callback: () => void): void {
         this.callback = callback
         this.score = this.PERFECTSCORE
@@ -185,16 +181,15 @@ export abstract class Level {
     private menu(): void {
         this.showUnitTestsPanel()
         this.showCurrentCandidatePanel()
-        if (this.score <= this.MINIMUMSCORE) {
-            this.showScoreZeroMessage()
-            this.score = this.MINIMUMSCORE
-            this.showScorePanel()
-            this.callback!()
-        }
-        else {
-            this.showScorePanel()
+        this.showScorePanel()
+        if (this.score === this.MINIMUMSCORE)
+            this.end()
+        else
             this.showMenuMessage()
-        }
+    }
+
+    private subtractPenalty(penalty: number): void {
+        this.score = Math.max(this.score - penalty, this.MINIMUMSCORE)
     }
 
     private startAddUnitTestFlow(): void {
@@ -259,7 +254,7 @@ export abstract class Level {
             new Paragraph().appendText('I did NOT add the unit test, because it is NOT according to the specification.'),
             new Paragraph().appendText(`The cost for trying to add an incorrect unit test is ${this.PENALTYINCORRECTUNITTEST}%.`),
         ]).show()
-        this.score -= this.PENALTYINCORRECTUNITTEST
+        this.subtractPenalty(this.PENALTYINCORRECTUNITTEST)
     }
 
     private addUnitTest(): void {
@@ -289,7 +284,7 @@ export abstract class Level {
             new Paragraph().appendText(unitTest.toString()),
             new Paragraph().appendText(`The cost for this hint is ${this.PENALTYHINT}%.`),
         ]).show()
-        this.score -= this.PENALTYHINT
+        this.subtractPenalty(this.PENALTYHINT)
     }
 
     private showNoHintMessage(): void {
@@ -297,7 +292,7 @@ export abstract class Level {
             new Paragraph().appendText('I can\'t think of a failing unit test for the current function.'),
             new Paragraph().appendText(`The cost for this hint is ${this.PENALTYHINT}%.`),
         ]).show()
-        this.score -= this.PENALTYHINT
+        this.subtractPenalty(this.PENALTYHINT)
     }
 
     private showHint(): void {
@@ -317,7 +312,7 @@ export abstract class Level {
             new Paragraph().appendText(testResult.toString()),
             new Paragraph().appendText(`The cost for submitting when there is still an error is ${this.PENALTYBUG}%.`),
         ]).show()
-        this.score -= this.PENALTYBUG
+        this.subtractPenalty(this.PENALTYBUG)
     }
 
     private submit(): void {
@@ -327,6 +322,15 @@ export abstract class Level {
         }
         else
             this.end()
+    }
+
+    private showMinimumScoreEndMessage(): void {
+        new ComputerMessage([
+            new Paragraph().appendLines([
+                'You have to retry this level,',
+                'because your score dropped to 0%.'
+            ])
+        ]).show()
     }
 
     private showUnsuccessfulEndMessage(): void {
@@ -348,7 +352,9 @@ export abstract class Level {
     }
 
     private end(): void {
-        if (this.failingTestResult) {
+        if (this.score === this.MINIMUMSCORE)
+            this.showMinimumScoreEndMessage()
+        else if (this.failingTestResult) {
             this.score = this.MINIMUMSCORE
             this.showScorePanel()
             this.showUnsuccessfulEndMessage()

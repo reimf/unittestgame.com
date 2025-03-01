@@ -2,7 +2,6 @@ import { Level } from './level.js';
 import { Paragraph } from './html.js';
 import { Panel } from './frame.js';
 import { CheckboxVariable, NumberVariable } from './variable.js';
-import { UnitTest } from './unit_test.js';
 export class LeapYear extends Level {
     showSpecificationPanel() {
         new Panel('Specification', [
@@ -50,14 +49,12 @@ export class LeapYear extends Level {
             ],
         ];
     }
-    getMinimalUnitTests(parameters, unit) {
-        return [
-            new UnitTest(parameters, [2001], unit, false),
-            new UnitTest(parameters, [2002], unit, false),
-            new UnitTest(parameters, [2004], unit, true),
-            new UnitTest(parameters, [1800], unit, false),
-            new UnitTest(parameters, [1600], unit, true),
-        ];
+    *minimalUnitTestGenerator() {
+        yield [[2001], false];
+        yield [[2002], false];
+        yield [[2004], true];
+        yield [[1800], false];
+        yield [[1600], true];
     }
     *hintGenerator() {
         for (let year = 2001; year <= 2030; year += 1)

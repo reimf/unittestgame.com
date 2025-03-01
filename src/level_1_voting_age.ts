@@ -2,7 +2,6 @@ import { Level } from './level.js'
 import { Paragraph } from './html.js'
 import { Panel } from './frame.js'
 import { Variable, CheckboxVariable, NumberVariable } from './variable.js'
-import { UnitTest } from './unit_test.js'
 
 export class VotingAge extends Level {
     public showSpecificationPanel(): void {
@@ -42,11 +41,9 @@ export class VotingAge extends Level {
         ]
     }
 
-    public getMinimalUnitTests(parameters: Variable[], unit: Variable): UnitTest[] {
-        return [
-            new UnitTest(parameters, [17], unit, false),
-            new UnitTest(parameters, [18], unit, true),
-        ]
+    public *minimalUnitTestGenerator(): Generator<any[]> {
+        yield [[17], false]
+        yield [[18], true]
     }
 
     public *hintGenerator(): Generator<any[]> {

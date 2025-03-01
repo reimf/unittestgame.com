@@ -2,7 +2,6 @@ import { Level } from '../../src/level.js';
 import { Paragraph } from '../../src/html.js';
 import { Panel } from '../../src/frame.js';
 import { TextVariable, NumberVariable } from '../../src/variable.js';
-import { UnitTest } from '../../src/unit_test.js';
 export class FakeLevel extends Level {
     showSpecificationPanel() {
         new Panel('Specification', [
@@ -42,13 +41,11 @@ export class FakeLevel extends Level {
             ]
         ];
     }
-    getMinimalUnitTests(parameters, unit) {
-        return [
-            new UnitTest(parameters, [6], unit, "Fizz"),
-            new UnitTest(parameters, [25], unit, "Buzz"),
-            new UnitTest(parameters, [30], unit, "FizzBuzz"),
-            new UnitTest(parameters, [1], unit, "1"),
-        ];
+    *minimalUnitTestGenerator() {
+        yield [[6], "Fizz"];
+        yield [[25], "Buzz"];
+        yield [[30], "FizzBuzz"];
+        yield [[1], "1"];
     }
     *hintGenerator() {
         for (let number = 0; number < 100; number += 1)

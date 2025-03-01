@@ -3,7 +3,6 @@ import { Random } from './random.js'
 import { Paragraph } from './html.js'
 import { Panel } from './frame.js'
 import { Variable, CheckboxVariable, TextVariable } from './variable.js'
-import { UnitTest } from './unit_test.js'
 
 export class FloatFormat extends Level {
     public showSpecificationPanel(): void {
@@ -76,16 +75,14 @@ export class FloatFormat extends Level {
         ]
     }
 
-    public getMinimalUnitTests(parameters: Variable[], unit: Variable): UnitTest[] {
-        return [
-            new UnitTest(parameters, ['+123'], unit, true),
-            new UnitTest(parameters, ['-123.45'], unit, true),
-            new UnitTest(parameters, ['123.45'], unit, true),
-            new UnitTest(parameters, ['+-123'], unit, false),
-            new UnitTest(parameters, ['123.'], unit, false),
-            new UnitTest(parameters, ['.45'], unit, false),
-            new UnitTest(parameters, ['12.3.45'], unit, false),
-        ]
+    public *minimalUnitTestGenerator(): Generator<any[]> {
+        yield [['+123'], true]
+        yield [['-123.45'], true]
+        yield [['123.45'], true]
+        yield [['+-123'], false]
+        yield [['123.'], false]
+        yield [['.45'], false]
+        yield [['12.3.45'], false]
     }
 
     public *hintGenerator(): Generator<any[]> {

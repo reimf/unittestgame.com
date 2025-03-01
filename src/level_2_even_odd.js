@@ -2,7 +2,6 @@ import { Level } from './level.js';
 import { Paragraph } from './html.js';
 import { Panel } from './frame.js';
 import { CheckboxVariable, NumberVariable } from './variable.js';
-import { UnitTest } from './unit_test.js';
 export class EvenOdd extends Level {
     showSpecificationPanel() {
         new Panel('Specification', [
@@ -60,11 +59,9 @@ export class EvenOdd extends Level {
             ],
         ];
     }
-    getMinimalUnitTests(parameters, unit) {
-        return [
-            new UnitTest(parameters, [17], unit, false),
-            new UnitTest(parameters, [24], unit, true),
-        ];
+    *minimalUnitTestGenerator() {
+        yield [[17], false];
+        yield [[24], true];
     }
     *hintGenerator() {
         for (let number = 0; number <= 40; number += 1)

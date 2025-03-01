@@ -3,7 +3,6 @@ import { Random } from './random.js'
 import { Paragraph } from './html.js'
 import { Panel } from './frame.js'
 import { Variable, CheckboxVariable, TextVariable } from './variable.js'
-import { UnitTest } from './unit_test.js'
 
 export class PasswordStrength extends Level {
     public showSpecificationPanel(): void {
@@ -68,15 +67,13 @@ export class PasswordStrength extends Level {
         ]
     }
 
-    public getMinimalUnitTests(parameters: Variable[], unit: Variable): UnitTest[] {
-        return [
-            new UnitTest(parameters, ['A3a6#'], unit, true),
-            new UnitTest(parameters, ['@251Bc'], unit, true),
-            new UnitTest(parameters, ['1#36D0'], unit, false),
-            new UnitTest(parameters, ['n5EFG'], unit, false),
-            new UnitTest(parameters, ['@9#4@i'], unit, false),
-            new UnitTest(parameters, ['@6jB'], unit, false),
-        ]
+    public *minimalUnitTestGenerator(): Generator<any[]> {
+        yield [['A3a6#'], true]
+        yield [['@251Bc'], true]
+        yield [['1#36D0'], false]
+        yield [['n5EFG'], false]
+        yield [['@9#4@i'], false]
+        yield [['@6jB'], false]
     }
 
     private *generateDigits(): Generator<string[]> {
