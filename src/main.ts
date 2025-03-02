@@ -9,6 +9,8 @@ import { LeapYear } from './level_5_leap_year.js'
 import { FloatFormat } from './level_6_float_format.js'
 import { PasswordStrength } from './level_7_password_strength.js'
 import { SpeedDisplay } from './level_8_speed_display.js'
+import { TddRound } from './round_tdd.js'
+import { MtRound } from './round_mt.js'
 
 export class Main {
     public static readonly instance = new Main()
@@ -79,6 +81,6 @@ export class Main {
     private playLevel(level: Level): void {
         Panel.remove('About')
         Panel.remove('High Scores')
-        level.play(() => this.continue())
+        new TddRound(level, () => this.continue()).play()
     }
 }

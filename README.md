@@ -31,7 +31,6 @@ class Candidate {
     +testResults() TestResult[]
     +failingTestResults() TestResult[]
     +failCount() number
-    +passCount() number
     +toString() string
 }
 

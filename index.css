@@ -159,10 +159,7 @@ section {
     }
 
     code {
-        border: 0.1rem dotted var(--general-background);
-        border-radius: 0.5rem;
         display: block;
-        padding: 0.25rem;
         white-space: pre;
     }
 }

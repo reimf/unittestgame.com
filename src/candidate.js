@@ -1,7 +1,6 @@
 import { TestResult } from './test_result.js';
 export class Candidate {
     constructor(code) {
-        this.code = code;
         this.function = new Function('return ' + code)();
         this.complexity = this.computeComplexity(code);
     }
@@ -37,9 +36,6 @@ export class Candidate {
     }
     failCount(unitTests) {
         return this.failingTestResults(unitTests).length;
-    }
-    passCount(unitTests) {
-        return unitTests.length - this.failCount(unitTests);
     }
     toString() {
         return this.function.toString();

@@ -4,8 +4,6 @@ export class UnitTest {
         this.argumentList = argumentList;
         this.unit = unit;
         this.expected = expected;
-        this.argumentList = argumentList;
-        this.expected = expected;
     }
     toStringWithResult(result) {
         const argumentsText = this.argumentList.map((value, index) => {

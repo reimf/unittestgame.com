@@ -5,7 +5,7 @@ export class Candidate {
     private readonly function: Function
     public readonly complexity: number
 
-    public constructor(private code: string) {
+    public constructor(code: string) {
         this.function = new Function('return ' + code)()
         this.complexity = this.computeComplexity(code)
     }
@@ -45,10 +45,6 @@ export class Candidate {
 
     public failCount(unitTests: UnitTest[]): number {
         return this.failingTestResults(unitTests).length
-    }
-
-    public passCount(unitTests: UnitTest[]): number {
-        return unitTests.length - this.failCount(unitTests)
     }
 
     public toString(): string {

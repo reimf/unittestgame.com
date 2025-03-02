@@ -1,7 +1,13 @@
 import { Html, Input, Label, Paragraph } from './html.js'
 
 export abstract class Variable {
-    protected constructor(protected label: string, public name: string) { }
+    protected readonly label: string
+    public readonly name: string
+
+    protected constructor(label: string, name: string) {
+        this.label = label
+        this.name = name
+    }
 
     public abstract value(): boolean | number | string
     public abstract toHtml(): Html

@@ -1,8 +1,15 @@
 import { Variable } from "./variable.js"
 
 export class UnitTest {
-    public constructor(readonly parameters: Variable[], readonly argumentList: any[], readonly unit: Variable, readonly expected: any) {
+    private readonly parameters: Variable[]
+    public readonly argumentList: any[]
+    private readonly unit: Variable
+    public readonly expected: any
+
+    public constructor(parameters: Variable[], argumentList: any[], unit: Variable, expected: any) {
+        this.parameters = parameters
         this.argumentList = argumentList
+        this.unit = unit
         this.expected = expected
     }
 
