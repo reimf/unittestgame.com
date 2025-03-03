@@ -43,7 +43,7 @@ export abstract class Round {
     }
 
     public play(): void {
-        this.showPanelsOnPlay
+        this.showPanelsOnPlay()
         this.showContractMessage()
         this.menu()
     }

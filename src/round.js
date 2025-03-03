@@ -18,7 +18,7 @@ export class Round {
         this.callback = callback;
     }
     play() {
-        this.showPanelsOnPlay;
+        this.showPanelsOnPlay();
         this.showContractMessage();
         this.menu();
     }
