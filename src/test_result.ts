@@ -2,10 +2,11 @@ import { Candidate } from './candidate.js'
 import { UnitTest } from './unit_test.js'
 
 export class TestResult {
-    private result: any
-    readonly passes: boolean
+    public readonly unitTest: UnitTest
+    private readonly result: any
+    public readonly passes: boolean
 
-    public constructor(candidate: Candidate, readonly unitTest: UnitTest) {
+    public constructor(candidate: Candidate, unitTest: UnitTest) {
         this.unitTest = unitTest
         this.result = candidate.execute(unitTest.argumentList)
         this.passes = this.result === unitTest.expected

@@ -64,7 +64,8 @@ export class FloatFormat extends Level {
                 'return new RegExp(regex).test(text)',
                 'return true',
                 'return false',
-            ]
+                'return undefined',
+            ],
         ];
     }
     *minimalUnitTestGenerator() {

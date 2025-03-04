@@ -43,7 +43,8 @@ export class FizzBuzz extends Level {
                 'return "Buzz"',
                 'return "FizzBuzz"',
                 'return number.toString()',
-            ]
+                'return undefined',
+            ],
         ];
     }
     *minimalUnitTestGenerator() {

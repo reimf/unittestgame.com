@@ -56,6 +56,7 @@ export class LeapYear extends Level {
                 'return year % 2 != 0',
                 'return true',
                 'return false',
+                'return undefined',
             ],
         ]
     }

@@ -11,11 +11,13 @@ export abstract class Variable {
 
     public abstract value(): boolean | number | string
     public abstract toHtml(): Html
-    public abstract format(value: boolean | number | string): string
+    public abstract format(value: boolean | number | string | undefined): string
 }
 
 export class RadioVariable extends Variable {
-    public constructor(label: string, name: string, private texts: string[]) {
+    private readonly texts: string[]
+
+    public constructor(label: string, name: string, texts: string[]) {
         super(label, name)
         this.texts = texts
     }
@@ -36,7 +38,7 @@ export class RadioVariable extends Variable {
     }
 
     public format(value: string): string {
-        return `"${value}"`
+        return value === undefined ? 'undefined' : `"${value}"`
     }
 }
 
@@ -58,7 +60,7 @@ export class CheckboxVariable extends Variable {
     }
 
     public format(value: boolean): string {
-        return value.toString()
+        return value === undefined ? 'undefined' : value.toString()
     }
 }
 
@@ -80,7 +82,7 @@ export class TextVariable extends Variable {
     }
 
     public format(value: string): string {
-        return `"${value}"`
+        return value === undefined ? 'undefined' : `"${value}"`
     }
 }
 
@@ -102,6 +104,6 @@ export class NumberVariable extends Variable {
     }
 
     public format(value: number): string {
-        return value.toString()
+        return value === undefined ? 'undefined' : value.toString()
     }
 }

@@ -1,6 +1,6 @@
 import { Level } from './level.js'
 import { Button, Paragraph, Anchor } from './html.js'
-import { Panel, HumanMessage, ComputerMessage } from './frame.js'
+import { Panel, HumanMessage } from './frame.js'
 import { VotingAge } from './level_1_voting_age.js'
 import { EvenOdd } from './level_2_even_odd.js'
 import { FizzBuzz } from './level_3_fizz_buzz.js'
@@ -13,7 +13,6 @@ import { TddRound } from './round_tdd.js'
 import { MtRound } from './round_mt.js'
 
 export class Main {
-    public static readonly instance = new Main()
     private levels = [
         new VotingAge(1),
         new EvenOdd(2),
@@ -24,8 +23,11 @@ export class Main {
         new PasswordStrength(7),
         new SpeedDisplay(8),
     ]
+    private RoundType: typeof TddRound | typeof MtRound
 
-    private constructor() { }
+    public constructor(RoundType: typeof TddRound | typeof MtRound) {
+        this.RoundType = RoundType
+    }
 
     private showAboutPanel(): void {
         const learnParagraph = new Paragraph().appendText('Learn Unit Testing with UnitTestGame.com')
@@ -37,20 +39,9 @@ export class Main {
         ]).show()
     }
 
-    private showWelcomeMessage(): void {
-        new ComputerMessage([
-            new Paragraph().appendLines([
-                'Welcome to UnitTestGame.com!',
-                'I am an AI-bot that does Test Driven Development.',
-                'You write failing unit tests and I write a function that passes.',
-                'Let\'s go next level!',
-            ]),
-        ]).show()
-    }
-
     public start(): void {
         this.showAboutPanel()
-        this.showWelcomeMessage()
+        this.RoundType.showWelcomeMessage()
         this.continue()
     }
 
@@ -81,6 +72,6 @@ export class Main {
     private playLevel(level: Level): void {
         Panel.remove('About')
         Panel.remove('High Scores')
-        new TddRound(level, () => this.continue()).play()
+        new this.RoundType(level, () => this.continue()).play()
     }
 }

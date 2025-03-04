@@ -15,10 +15,11 @@ export abstract class Level {
     private readonly name: string = this.constructor.name
     public readonly parameters: Variable[] = this.getParameters()
     public readonly unit: Variable = this.getUnit()
-    public readonly candidates: Candidate[] = [...this.generateCandidates(this.getCandidateElements())]
+    public readonly candidates: Candidate[] = [...this.generateCandidates(this.getCandidateElements(), [], [])]
     public readonly minimalUnitTests: UnitTest[] = [...this.generateMinimalUnitTests()]
     public readonly perfectCandidates: Candidate[] = this.findPerfectCandidates()
     public readonly perfectCandidate: Candidate = Random.elementFrom(this.perfectCandidates)
+    public readonly descendantsOfPerfectCandidate: Candidate[] = this.findDescendantsOfPerfectCandidate()
     public readonly hints: UnitTest[] = [...this.generateHints()]
 
     public constructor(index: number) {
@@ -43,29 +44,41 @@ export abstract class Level {
         return this.candidates.filter(candidate => candidate.failCount(unitTests) == 0)
     }
 
-    private *generateCandidates(listOfListOfLines: string[][], lines: string[] = []): Generator<Candidate> {
+    private *generateCandidates(listOfListOfLines: string[][], lines: string[], indices: number[]): Generator<Candidate> {
         if (listOfListOfLines.length > 0) {
             const [firstListOfLines, ...remainingListOfListOfLines] = listOfListOfLines
-            for (const line of firstListOfLines)
-                yield* this.generateCandidates(remainingListOfListOfLines, [...lines, line])
+            for (const line of firstListOfLines) {
+                const newLines = [...lines, line]
+                const newIndices = [...indices, line === '' ? 0 : firstListOfLines.indexOf(line) + 1]
+                yield* this.generateCandidates(remainingListOfListOfLines, newLines, newIndices)
+            }
         }
         else
-            yield this.createCandidate(lines)
+            yield this.createCandidate(lines, indices)
     }
 
-    private createCandidate(lines: string[]): Candidate {
+    private createCandidate(lines: string[], indices: number[]): Candidate {
         const parameterList = this.parameters.map((parameter) => parameter.name).join(', ')
-        const code = [
+        const indentedLines = [
             `function ${this.unit.name}(${parameterList}) {`,
-                ...lines.filter((line) => line !== '').map((line) => '  ' + line),
+                ...lines.filter(line => line !== '').map(line => '  ' + line),
             '}',
-        ].join('\n')
-        return new Candidate(code)
+        ]
+        return new Candidate(indentedLines, indices)
+    }
+
+    private findDescendantsOfPerfectCandidate(): Candidate[] {
+        const perfectIndices = this.perfectCandidate.indices
+        return this.candidates.filter(candidate =>
+            candidate.indices.every((index, i) => index === 0 || index === perfectIndices[i])
+        )
     }
 
     private *generateMinimalUnitTests(): Generator<UnitTest> {
-        for (const tuple of this.minimalUnitTestGenerator())
-            yield new UnitTest(this.parameters, tuple[0], this.unit, tuple[1])
+        for (const tuple of this.minimalUnitTestGenerator()) {
+            const [argumentList, expected] = tuple
+            yield new UnitTest(this.parameters, argumentList, this.unit, expected)
+        }
     }
 
     private *generateHints(): Generator<UnitTest> {

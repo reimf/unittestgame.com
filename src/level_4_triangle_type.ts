@@ -55,7 +55,7 @@ export class TriangleType extends Level {
                 'return "equilateral"',
                 'return "isosceles"',
                 'return "scalene"',
-                'return ""',
+                'return undefined',
             ],
         ]
     }

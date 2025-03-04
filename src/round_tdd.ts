@@ -1,8 +1,20 @@
-import { Code, Paragraph } from './html.js'
+import { Paragraph } from './html.js'
 import { Panel, ComputerMessage } from './frame.js'
 import { Round } from './round.js'
 
 export class TddRound extends Round {
+    public static showWelcomeMessage(): void {
+        new ComputerMessage([
+            new Paragraph().appendLines([
+                'Welcome to UnitTestGame.com!',
+                'I am an AI-bot that does Test Driven Development.',
+                'You write failing unit tests.',
+                'And adding a unit test I write a function that passes.',
+                'Let\'s go next level!',
+            ]),
+        ]).show()
+    }
+
     protected showPanelsOnPlay(): void {
         this.level.showSpecificationPanel()
     }
@@ -21,7 +33,7 @@ export class TddRound extends Round {
 
     protected showCurrentCandidatePanel(): void {
         new Panel('Current Function', [
-            new Code().appendText(this.currentCandidate.toString()),
+            this.currentCandidate.toHtml(),
         ]).show()
     }
 
@@ -95,7 +107,7 @@ export class TddRound extends Round {
         new ComputerMessage([
             new Paragraph().appendLines([
                 'The current function is NOT according to the specification.',
-                `Your score is ${this.score}%.`
+                `Your final score is ${this.score}%.`
             ]),
         ]).show()
     }
@@ -104,7 +116,7 @@ export class TddRound extends Round {
         new ComputerMessage([
             new Paragraph().appendLines([
                 'The current function is according to the specification.',
-                `Your score is ${this.score}%.`
+                `Your final score is ${this.score}%.`
             ]),
         ]).show()
     }

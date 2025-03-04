@@ -6,7 +6,8 @@ export class SpeedDisplay extends Level {
     showSpecificationPanel() {
         new Panel('Specification', [
             new Paragraph().appendLines([
-                'The function receives the speed in meters per hour and must display the speed in kilometers per hour.',
+                'The function receives the speed in meters per hour and',
+                'must display the speed in kilometers per hour.',
                 'If something is wrong with the speed (e.g. negative speed),',
                 'then the function must return "ERROR".',
                 'If possible, show one decimal (e.g. "12.3").',
@@ -60,7 +61,7 @@ export class SpeedDisplay extends Level {
                 'return (speed / 1000).toFixed()',
                 'return (speed / 1000).toFixed(1)',
                 'return (speed / 1000).toString()',
-                'return ""',
+                'return undefined',
             ],
         ];
     }

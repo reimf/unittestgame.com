@@ -1,6 +1,10 @@
 import { TestResult } from './test_result.js';
+import { Code, Div } from './html.js';
 export class Candidate {
-    constructor(code) {
+    constructor(lines, indices) {
+        this.lines = lines;
+        this.indices = indices;
+        const code = lines.join('\n');
         this.function = new Function('return ' + code)();
         this.complexity = this.computeComplexity(code);
     }
@@ -16,6 +20,7 @@ export class Candidate {
             replace(/(?<=\d)0+ /g, ' '). // 200 is 1 point
             replace(/(?<=\d)(?=\d)/g, ' '). // 3199 is 4 points, 3200 only 2
             replace(/(?<=\d)\.(?=\d)/g, ' . '). // each float is 1 point extra
+            replace(/\bundefined\b/g, ''). // undefined does NOT count
             trim().
             split(/\s+/); // each token is 1 point
         return chunks.length;
@@ -39,5 +44,22 @@ export class Candidate {
     }
     toString() {
         return this.function.toString();
+    }
+    toHtml() {
+        const divs = this.lines.map(line => new Div().appendText(line));
+        return new Code().appendChildren(divs);
+    }
+    toHtmlWithCoverage(candidates) {
+        if (candidates.length === 0)
+            return this.toHtml();
+        const divs = this.lines.map(line => {
+            const isNotIndented = !line.startsWith('  ');
+            const isUsed = candidates.some(candidate => candidate.lines.includes(line));
+            const div = new Div().appendText(line);
+            if (isNotIndented || isUsed)
+                div.addClass('covered');
+            return div;
+        });
+        return new Code().appendChildren(divs);
     }
 }

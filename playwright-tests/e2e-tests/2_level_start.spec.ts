@@ -23,7 +23,7 @@ test.describe('level start', () => {
 
   test('has the simplest candidate in the current candidate panel', async ({ page }) => {
     const currentCandidatePanel = page.getByTestId('current-function')
-    await expect(currentCandidatePanel).toContainText(/function isAllowedToVote\(age\) \{\s+return (true|false)\s+\}/)
+    await expect(currentCandidatePanel).toContainText(/function isAllowedToVote\(age\) \{  return undefined\}/)
   })
 
   test('has 100% in the score panel', async ({ page }) => {
@@ -40,9 +40,9 @@ test.describe('level start', () => {
     const messages = page.getByTestId('messages')
     const buttons = messages.getByRole('button')
     await expect(buttons).toHaveText([
-      'I want to add a unit test (-10% on error)',
-      'I want to see a hint for a unit test (-20%)',
-      'I want to submit the unit tests (-30% on error)',
+      'I want to add a unit test (-5% on error)',
+      'I want to see a hint for a unit test (-10%)',
+      'I want to submit the unit tests (-20% on error)',
       'I want to exit this level (0% on error)',
     ])
   })

@@ -9,7 +9,6 @@ export class RadioVariable extends Variable {
     constructor(label, name, texts) {
         super(label, name);
         this.texts = texts;
-        this.texts = texts;
     }
     value() {
         const input = document.querySelector(`input[name="${this.name}"]:checked`);
@@ -25,7 +24,7 @@ export class RadioVariable extends Variable {
         return paragraph;
     }
     format(value) {
-        return `"${value}"`;
+        return value === undefined ? 'undefined' : `"${value}"`;
     }
 }
 export class CheckboxVariable extends Variable {
@@ -43,7 +42,7 @@ export class CheckboxVariable extends Variable {
         return paragraph;
     }
     format(value) {
-        return value.toString();
+        return value === undefined ? 'undefined' : value.toString();
     }
 }
 export class TextVariable extends Variable {
@@ -61,7 +60,7 @@ export class TextVariable extends Variable {
         return paragraph;
     }
     format(value) {
-        return `"${value}"`;
+        return value === undefined ? 'undefined' : `"${value}"`;
     }
 }
 export class NumberVariable extends Variable {
@@ -79,6 +78,6 @@ export class NumberVariable extends Variable {
         return paragraph;
     }
     format(value) {
-        return value.toString();
+        return value === undefined ? 'undefined' : value.toString();
     }
 }

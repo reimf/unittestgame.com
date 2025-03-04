@@ -107,3 +107,8 @@ export class Section extends Html {
         super('section');
     }
 }
+export class Div extends Html {
+    constructor() {
+        super('div');
+    }
+}

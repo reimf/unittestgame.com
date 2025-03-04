@@ -10,6 +10,7 @@ export class Round {
         this.PENALTYHINT = 10;
         this.PENALTYSUBMITWITHBUG = 20;
         this.MINIMUMSCORE = 0;
+        this.name = this.constructor.name;
         this.level = level;
         this.userdefinedUnitTests = [];
         this.currentCandidate = this.findSimplestPassingCandidate();
@@ -31,11 +32,14 @@ export class Round {
         else
             this.showMenuMessage();
     }
+    findSimplestCandidates(candidates) {
+        const attributes = candidates.map(candidate => candidate.complexity);
+        const minimum = Math.min(...attributes);
+        return candidates.filter(candidate => candidate.complexity === minimum);
+    }
     findSimplestPassingCandidate() {
         const passingCandidates = this.level.findPassingCandidates(this.userdefinedUnitTests);
-        const complexities = passingCandidates.map(candidate => candidate.complexity);
-        const minimumComplexity = Math.min(...complexities);
-        const simplestCandidates = passingCandidates.filter(candidate => candidate.complexity === minimumComplexity);
+        const simplestCandidates = this.findSimplestCandidates(passingCandidates);
         return Random.elementFrom(simplestCandidates);
     }
     findFailingTestResult() {

@@ -10,7 +10,7 @@ export abstract class Html {
         return this
     }
 
-    protected addClass(value: string): Html {
+    public addClass(value: string): Html {
         this.element.classList.add(value)
         return this
     }
@@ -132,5 +132,11 @@ export class Code extends Html {
 export class Section extends Html {
     public constructor() {
         super('section')
+    }
+}
+
+export class Div extends Html {
+    public constructor() {
+        super('div')
     }
 }

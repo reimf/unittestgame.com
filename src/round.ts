@@ -19,6 +19,7 @@ export abstract class Round {
     protected failingTestResult?: TestResult
     protected score: number
     private readonly callback: () => void
+    private readonly name: string = this.constructor.name
 
     protected abstract showPanelsOnPlay(): void
     protected abstract showContractMessage(): void
@@ -58,11 +59,15 @@ export abstract class Round {
             this.showMenuMessage()
     }
 
+    protected findSimplestCandidates(candidates: Candidate[]): Candidate[] {
+        const attributes = candidates.map(candidate => candidate.complexity)
+        const minimum = Math.min(...attributes)
+        return candidates.filter(candidate => candidate.complexity === minimum)
+    }
+
     protected findSimplestPassingCandidate(): Candidate {
         const passingCandidates = this.level.findPassingCandidates(this.userdefinedUnitTests)
-        const complexities = passingCandidates.map(candidate => candidate.complexity)
-        const minimumComplexity = Math.min(...complexities)
-        const simplestCandidates = passingCandidates.filter(candidate => candidate.complexity === minimumComplexity)
+        const simplestCandidates = this.findSimplestCandidates(passingCandidates)
         return Random.elementFrom(simplestCandidates)
     }
 

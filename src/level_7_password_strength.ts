@@ -63,6 +63,7 @@ export class PasswordStrength extends Level {
             [
                 'return true',
                 'return false',
+                'return undefined',
             ],
         ]
     }

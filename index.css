@@ -8,6 +8,7 @@
     --computer-message-background: #FFFFFF;
     --panel-background: #FFFFFF;
     --focus-background: #FF6600;
+    --emphasis-background: #FFFF00;
 }
 
 a:focus, input:focus, button:enabled:focus, label:has(input[type="checkbox"]:focus), label:has(input[type="radio"]:focus) {
@@ -161,6 +162,11 @@ section {
     code {
         display: block;
         white-space: pre;
+
+        .covered { 
+            background-color: var(--emphasis-background);
+            color: var(--dark-text);
+        }
     }
 }
 

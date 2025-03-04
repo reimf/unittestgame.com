@@ -1,11 +1,17 @@
 import { UnitTest } from './unit_test.js'
 import { TestResult } from './test_result.js'
+import { Code, Div, Html } from './html.js'
 
 export class Candidate {
+    private readonly lines: string[]
+    public readonly indices: number[]
     private readonly function: Function
     public readonly complexity: number
 
-    public constructor(code: string) {
+    public constructor(lines: string[], indices: number[]) {
+        this.lines = lines
+        this.indices = indices
+        const code = lines.join('\n')
         this.function = new Function('return ' + code)()
         this.complexity = this.computeComplexity(code)
     }
@@ -22,6 +28,7 @@ export class Candidate {
             replace(/(?<=\d)0+ /g, ' '). // 200 is 1 point
             replace(/(?<=\d)(?=\d)/g, ' '). // 3199 is 4 points, 3200 only 2
             replace(/(?<=\d)\.(?=\d)/g, ' . '). // each float is 1 point extra
+            replace(/\bundefined\b/g, ''). // undefined does NOT count
             trim().
             split(/\s+/) // each token is 1 point
         return chunks.length
@@ -49,5 +56,24 @@ export class Candidate {
 
     public toString(): string {
         return this.function.toString()
+    }
+
+    public toHtml(): Html {
+        const divs = this.lines.map(line => new Div().appendText(line))
+        return new Code().appendChildren(divs)
+    }
+
+    public toHtmlWithCoverage(candidates: Candidate[]): Html {
+        if (candidates.length === 0)
+            return this.toHtml()
+        const divs = this.lines.map(line => {
+            const isNotIndented = !line.startsWith('  ')
+            const isUsed = candidates.some(candidate => candidate.lines.includes(line))
+            const div = new Div().appendText(line)
+            if (isNotIndented || isUsed)
+                div.addClass('covered')
+            return div
+        })
+        return new Code().appendChildren(divs)
     }
 }

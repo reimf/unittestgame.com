@@ -67,6 +67,7 @@ export class EvenOdd extends Level {
             [
                 'return true',
                 'return false',
+                'return undefined',
             ],
         ]
     }
