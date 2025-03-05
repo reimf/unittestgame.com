@@ -25,6 +25,6 @@ test.describe('level menu', () => {
     test('has level menu message', async ({ page }) => {
         const messages = page.getByTestId('messages');
         const button = messages.getByRole('button');
-        await expect(button).toHaveText('I want to play Level 1 - VotingAge');
+        await expect(button).toHaveText('I want to play TestDrivenDevelopment - Level 1 = VotingAge');
     });
 });

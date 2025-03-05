@@ -3,6 +3,9 @@ import { Paragraph } from './html.js';
 import { Panel } from './frame.js';
 import { CheckboxVariable, NumberVariable } from './variable.js';
 export class LeapYear extends Level {
+    constructor() {
+        super(5);
+    }
     showSpecificationPanel() {
         new Panel('Specification', [
             new Paragraph().appendLines([
@@ -46,7 +49,7 @@ export class LeapYear extends Level {
                 'return year % 2 != 0',
                 'return true',
                 'return false',
-                'return undefined',
+                '',
             ],
         ];
     }

@@ -4,6 +4,10 @@ import { Panel } from './frame.js'
 import { Variable, CheckboxVariable, NumberVariable } from './variable.js'
 
 export class EvenOdd extends Level {
+    public constructor() {
+        super(2)
+    }
+
     public showSpecificationPanel(): void {
         new Panel('Specification', [
             new Paragraph().appendText('Return true if the number is even and false if it is odd.'),
@@ -67,14 +71,14 @@ export class EvenOdd extends Level {
             [
                 'return true',
                 'return false',
-                'return undefined',
+                '',
             ],
         ]
     }
 
     public *minimalUnitTestGenerator(): Generator<any[]> {
         yield [[17], false]
-        yield [[24], true]
+        yield [[18], true]
     }
 
     public *hintGenerator(): Generator<any[]> {

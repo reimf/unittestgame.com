@@ -24,20 +24,12 @@ export abstract class Level {
 
     public constructor(index: number) {
         this.index = index
+        this.checkPerfectCandidates()
         this.checkAllMinimalUnitTestsAreNeeded()
     }
 
     public get description(): string {
-        return `Level ${this.index} - ${this.name}`
-    }
-
-    public getHighScore(storage: Storage): number {
-        return Number(storage.getItem(`${this.name}.score`))
-    }
-
-    public saveScore(storage: Storage, score: number): void {
-        if (score > this.getHighScore(storage))
-            storage.setItem(`${this.name}.score`, `${score}`)
+        return `Level ${this.index} = ${this.name}`
     }
 
     public findPassingCandidates(unitTests: UnitTest[]): Candidate[] {
@@ -91,6 +83,12 @@ export abstract class Level {
         if (perfectCandidates.length === 0)
             throw new Error(`There is no perfect function for level ${this.name}.`)
         return perfectCandidates
+    }
+
+    private checkPerfectCandidates(): void {
+        const hintResults = this.perfectCandidates.map(candidate => candidate.failCount(this.hints))
+        if (hintResults.some(result => result > 0))
+            throw new Error(`Not all perfect functions for level ${this.name} pass all hints.\n${this.perfectCandidates.join('\n')}`)
     }
 
     private checkAllMinimalUnitTestsAreNeeded(): void {

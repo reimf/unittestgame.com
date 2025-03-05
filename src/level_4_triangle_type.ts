@@ -4,6 +4,10 @@ import { Panel } from './frame.js'
 import { Variable, RadioVariable, NumberVariable } from './variable.js'
 
 export class TriangleType extends Level {
+    public constructor() {
+        super(4)
+    }
+
     public showSpecificationPanel(): void {
         new Panel('Specification', [
             new Paragraph().appendLines([
@@ -55,7 +59,7 @@ export class TriangleType extends Level {
                 'return "equilateral"',
                 'return "isosceles"',
                 'return "scalene"',
-                'return undefined',
+                '',
             ],
         ]
     }

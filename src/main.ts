@@ -9,23 +9,24 @@ import { LeapYear } from './level_5_leap_year.js'
 import { FloatFormat } from './level_6_float_format.js'
 import { PasswordStrength } from './level_7_password_strength.js'
 import { SpeedDisplay } from './level_8_speed_display.js'
-import { TddRound } from './round_tdd.js'
-import { MtRound } from './round_mt.js'
+import { Round } from './round.js'
+import { TestDrivenDevelopment } from './round_test_driven_development.js'
+import { MutationTesting } from './round_mutation_testing.js'
 
 export class Main {
-    private levels = [
-        new VotingAge(1),
-        new EvenOdd(2),
-        new FizzBuzz(3),
-        new TriangleType(4),
-        new LeapYear(5),
-        new FloatFormat(6),
-        new PasswordStrength(7),
-        new SpeedDisplay(8),
+    private readonly levels = [
+        new VotingAge(),
+        new EvenOdd(),
+        new FizzBuzz(),
+        new TriangleType(),
+        new LeapYear(),
+        new FloatFormat(),
+        new PasswordStrength(),
+        new SpeedDisplay(),
     ]
-    private RoundType: typeof TddRound | typeof MtRound
+    private readonly RoundType: typeof TestDrivenDevelopment | typeof MutationTesting
 
-    public constructor(RoundType: typeof TddRound | typeof MtRound) {
+    public constructor(RoundType: typeof TestDrivenDevelopment | typeof MutationTesting) {
         this.RoundType = RoundType
     }
 
@@ -46,32 +47,33 @@ export class Main {
     }
 
     private continue(): void {
-        this.showHighScoresPanel()
-        this.showNextLevel()
+        const rounds = this.levels.map(level => new this.RoundType(level, () => this.continue()))
+        this.showHighScoresPanel(rounds)
+        this.showNextRound(rounds)
     }
 
-    private showHighScoresPanel(): void {
-        const highScores = this.levels
-            .filter(level => level.getHighScore(localStorage) > 0)
-            .map(level => new Paragraph().appendText(`${level.description}: ${level.getHighScore(localStorage)}%`))
+    private showHighScoresPanel(rounds: Round[]): void {
+        const highScores = rounds
+            .filter(round => round.getHighScore(localStorage) > 0)
+            .map(round => new Paragraph().appendText(`${round.description}: ${round.getHighScore(localStorage)}%`))
         if (highScores.length > 0)
             new Panel('High Scores',
                 highScores
             ).show()
     }
 
-    private showNextLevel(): void {
-        const level = this.levels.find(level => level.getHighScore(localStorage) === 0)
+    private showNextRound(rounds: Round[]): void {
+        const round = rounds.find(round => round.getHighScore(localStorage) === 0)
         new HumanMessage([
-            level
-            ? new Button().onClick(() => this.playLevel(level)).appendText(`I want to play ${level.description}`)
+            round
+            ? new Button().onClick(() => this.playRound(round)).appendText(`I want to play ${round.description}`)
             : new Button().onClick(() => window.close()).appendText('Quit UnitTestGame.com')
         ]).show()
     }
 
-    private playLevel(level: Level): void {
+    private playRound(round: Round): void {
         Panel.remove('About')
         Panel.remove('High Scores')
-        new this.RoundType(level, () => this.continue()).play()
+        round.play()
     }
 }

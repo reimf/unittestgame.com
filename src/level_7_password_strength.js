@@ -4,6 +4,9 @@ import { Paragraph } from './html.js';
 import { Panel } from './frame.js';
 import { CheckboxVariable, TextVariable } from './variable.js';
 export class PasswordStrength extends Level {
+    constructor() {
+        super(7);
+    }
     showSpecificationPanel() {
         new Panel('Specification', [
             new Paragraph().appendLines([
@@ -56,7 +59,7 @@ export class PasswordStrength extends Level {
             [
                 'return true',
                 'return false',
-                'return undefined',
+                '',
             ],
         ];
     }

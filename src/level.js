@@ -13,17 +13,11 @@ export class Level {
         this.descendantsOfPerfectCandidate = this.findDescendantsOfPerfectCandidate();
         this.hints = [...this.generateHints()];
         this.index = index;
+        this.checkPerfectCandidates();
         this.checkAllMinimalUnitTestsAreNeeded();
     }
     get description() {
-        return `Level ${this.index} - ${this.name}`;
-    }
-    getHighScore(storage) {
-        return Number(storage.getItem(`${this.name}.score`));
-    }
-    saveScore(storage, score) {
-        if (score > this.getHighScore(storage))
-            storage.setItem(`${this.name}.score`, `${score}`);
+        return `Level ${this.index} = ${this.name}`;
     }
     findPassingCandidates(unitTests) {
         return this.candidates.filter(candidate => candidate.failCount(unitTests) == 0);
@@ -68,6 +62,11 @@ export class Level {
         if (perfectCandidates.length === 0)
             throw new Error(`There is no perfect function for level ${this.name}.`);
         return perfectCandidates;
+    }
+    checkPerfectCandidates() {
+        const hintResults = this.perfectCandidates.map(candidate => candidate.failCount(this.hints));
+        if (hintResults.some(result => result > 0))
+            throw new Error(`Not all perfect functions for level ${this.name} pass all hints.\n${this.perfectCandidates.join('\n')}`);
     }
     checkAllMinimalUnitTestsAreNeeded() {
         for (const unitTest of this.minimalUnitTests) {

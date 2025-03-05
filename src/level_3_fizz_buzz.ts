@@ -4,6 +4,10 @@ import { Panel } from './frame.js'
 import { Variable, TextVariable, NumberVariable } from './variable.js'
 
 export class FizzBuzz extends Level {
+    public constructor() {
+        super(3)
+    }
+
     public showSpecificationPanel(): void {
         new Panel('Specification', [
             new Paragraph().appendLines([
@@ -53,7 +57,7 @@ export class FizzBuzz extends Level {
                 'return "Buzz"',
                 'return "FizzBuzz"',
                 'return number.toString()',
-                'return undefined',
+                '',
             ],
         ]
     }

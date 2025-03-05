@@ -4,6 +4,10 @@ import { Panel } from './frame.js'
 import { Variable, CheckboxVariable, NumberVariable } from './variable.js'
 
 export class VotingAge extends Level {
+    public constructor() {
+        super(1)
+    }
+
     public showSpecificationPanel(): void {
         new Panel('Specification', [
             new Paragraph().appendLines([
@@ -43,7 +47,7 @@ export class VotingAge extends Level {
             [
                 'return true',
                 'return false',
-                'return undefined',
+                '',
             ],
         ]
     }

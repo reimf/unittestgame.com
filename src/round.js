@@ -13,10 +13,20 @@ export class Round {
         this.name = this.constructor.name;
         this.level = level;
         this.userdefinedUnitTests = [];
-        this.currentCandidate = this.findSimplestPassingCandidate();
+        this.currentCandidate = this.findSimplestWorstPassingCandidate();
         this.failingTestResult = this.findFailingTestResult();
         this.score = this.PERFECTSCORE;
         this.callback = callback;
+    }
+    get description() {
+        return `${this.name} - ${this.level.description}`;
+    }
+    getHighScore(storage) {
+        return Number(storage.getItem(this.description));
+    }
+    saveScore(storage, score) {
+        if (score > this.getHighScore(storage))
+            storage.setItem(this.description, `${score}`);
     }
     play() {
         this.showPanelsOnPlay();
@@ -32,15 +42,19 @@ export class Round {
         else
             this.showMenuMessage();
     }
-    findSimplestCandidates(candidates) {
-        const attributes = candidates.map(candidate => candidate.complexity);
+    findWorstCandidates(candidates, attribute) {
+        const attributes = candidates.map(attribute);
         const minimum = Math.min(...attributes);
-        return candidates.filter(candidate => candidate.complexity === minimum);
+        return candidates.filter(candidate => attribute(candidate) === minimum);
     }
-    findSimplestPassingCandidate() {
+    findSimplestCandidates(candidates) {
+        return this.findWorstCandidates(candidates, candidate => candidate.complexity);
+    }
+    findSimplestWorstPassingCandidate() {
         const passingCandidates = this.level.findPassingCandidates(this.userdefinedUnitTests);
-        const simplestCandidates = this.findSimplestCandidates(passingCandidates);
-        return Random.elementFrom(simplestCandidates);
+        const worstPassingCandidates = this.findWorstCandidates(passingCandidates, candidate => candidate.passCount(this.level.minimalUnitTests));
+        const simplestPassingCandidates = this.findSimplestCandidates(worstPassingCandidates);
+        return Random.elementFrom(simplestPassingCandidates);
     }
     findFailingTestResult() {
         const failingHints = this.currentCandidate.failingTestResults(this.level.hints);
@@ -117,7 +131,7 @@ export class Round {
                 this.showUselessUnitTestMessage();
             else {
                 this.showUsefulUnitTestMessage();
-                this.currentCandidate = this.findSimplestPassingCandidate();
+                this.currentCandidate = this.findSimplestWorstPassingCandidate();
                 this.failingTestResult = this.findFailingTestResult();
             }
         }
@@ -150,7 +164,7 @@ export class Round {
         }
         else
             this.showSuccessfulEndMessage();
-        this.level.saveScore(localStorage, this.score);
+        this.saveScore(localStorage, this.score);
         this.callback();
     }
     subtractPenalty(penalty) {

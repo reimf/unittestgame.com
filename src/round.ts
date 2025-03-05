@@ -14,13 +14,13 @@ export abstract class Round {
     protected readonly MINIMUMSCORE = 0
 
     protected readonly level: Level
-    protected userdefinedUnitTests: UnitTest[]
+    protected readonly userdefinedUnitTests: UnitTest[]
     protected currentCandidate: Candidate
     protected failingTestResult?: TestResult
     protected score: number
     private readonly callback: () => void
-    private readonly name: string = this.constructor.name
 
+    protected readonly name: string = this.constructor.name
     protected abstract showPanelsOnPlay(): void
     protected abstract showContractMessage(): void
     protected abstract showPanelsOnMenu(): void
@@ -37,10 +37,23 @@ export abstract class Round {
     public constructor(level: Level, callback: () => void) {
         this.level = level
         this.userdefinedUnitTests = []
-        this.currentCandidate = this.findSimplestPassingCandidate()
+        this.currentCandidate = this.findSimplestWorstPassingCandidate()
         this.failingTestResult = this.findFailingTestResult()
         this.score = this.PERFECTSCORE
         this.callback = callback
+    }
+
+    public get description(): string {
+        return `${this.name} - ${this.level.description}`
+    }
+
+    public getHighScore(storage: Storage): number {
+        return Number(storage.getItem(this.description))
+    }
+
+    public saveScore(storage: Storage, score: number): void {
+        if (score > this.getHighScore(storage))
+            storage.setItem(this.description, `${score}`)
     }
 
     public play(): void {
@@ -59,16 +72,21 @@ export abstract class Round {
             this.showMenuMessage()
     }
 
-    protected findSimplestCandidates(candidates: Candidate[]): Candidate[] {
-        const attributes = candidates.map(candidate => candidate.complexity)
+    protected findWorstCandidates(candidates: Candidate[], attribute: (key: Candidate) => number): Candidate[] {
+        const attributes = candidates.map(attribute)
         const minimum = Math.min(...attributes)
-        return candidates.filter(candidate => candidate.complexity === minimum)
+        return candidates.filter(candidate => attribute(candidate) === minimum)
     }
 
-    protected findSimplestPassingCandidate(): Candidate {
+    protected findSimplestCandidates(candidates: Candidate[]): Candidate[] {
+        return this.findWorstCandidates(candidates, candidate => candidate.complexity)
+    }
+
+    protected findSimplestWorstPassingCandidate(): Candidate {
         const passingCandidates = this.level.findPassingCandidates(this.userdefinedUnitTests)
-        const simplestCandidates = this.findSimplestCandidates(passingCandidates)
-        return Random.elementFrom(simplestCandidates)
+        const worstPassingCandidates = this.findWorstCandidates(passingCandidates, candidate => candidate.passCount(this.level.minimalUnitTests))
+        const simplestPassingCandidates = this.findSimplestCandidates(worstPassingCandidates)
+        return Random.elementFrom(simplestPassingCandidates)
     }
 
     protected findFailingTestResult(): TestResult | undefined {
@@ -158,7 +176,7 @@ export abstract class Round {
                 this.showUselessUnitTestMessage()
             else {
                 this.showUsefulUnitTestMessage()
-                this.currentCandidate = this.findSimplestPassingCandidate()
+                this.currentCandidate = this.findSimplestWorstPassingCandidate()
                 this.failingTestResult = this.findFailingTestResult()
             }
         }
@@ -194,7 +212,7 @@ export abstract class Round {
         }
         else
             this.showSuccessfulEndMessage()
-        this.level.saveScore(localStorage, this.score)
+        this.saveScore(localStorage, this.score)
         this.callback!()
     }
 

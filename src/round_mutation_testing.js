@@ -2,7 +2,7 @@ import { Paragraph } from './html.js';
 import { Panel, ComputerMessage } from './frame.js';
 import { Round } from './round.js';
 import { Random } from './random.js';
-export class MtRound extends Round {
+export class MutationTesting extends Round {
     static showWelcomeMessage() {
         new ComputerMessage([
             new Paragraph().appendLines([
@@ -32,8 +32,9 @@ export class MtRound extends Round {
         const candidates = this.userdefinedUnitTests.map(unitTest => {
             const passingCandidates = this.level.descendantsOfPerfectCandidate
                 .filter(candidate => candidate.failCount([unitTest]) == 0);
-            const simplestPassingCandidate = this.findSimplestCandidates(passingCandidates);
-            return Random.elementFrom(simplestPassingCandidate);
+            const simplestPassingCandidates = this.findSimplestCandidates(passingCandidates);
+            const simplestPassingCandidate = Random.elementFrom(simplestPassingCandidates);
+            return simplestPassingCandidate;
         });
         new Panel('The Function', [
             this.level.perfectCandidate.toHtmlWithCoverage(candidates),
@@ -63,8 +64,6 @@ export class MtRound extends Round {
         new ComputerMessage([
             new Paragraph().appendText('A mutation that is NOT correct, but still passes your unit tests is the following.'),
             this.currentCandidate.toHtml(),
-            new Paragraph().appendText('The function is NOT correct, because the following unit test fails.'),
-            new Paragraph().appendText(this.failingTestResult.unitTest.toString()),
             new Paragraph().appendText(`The cost for this hint is ${this.PENALTYHINT}%.`),
         ]).show();
         this.subtractPenalty(this.PENALTYHINT);
@@ -83,8 +82,6 @@ export class MtRound extends Round {
                 'A mutation that is NOT correct, but still passes your unit tests is the following.',
             ]),
             this.currentCandidate.toHtml(),
-            new Paragraph().appendText('The function is NOT correct, because the following unit test fails.'),
-            new Paragraph().appendText(this.failingTestResult.unitTest.toString()),
             new Paragraph().appendText(`The cost for submitting when there is still an error is ${this.PENALTYSUBMITWITHBUG}%.`),
         ]).show();
         this.subtractPenalty(this.PENALTYSUBMITWITHBUG);

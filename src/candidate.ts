@@ -9,7 +9,7 @@ export class Candidate {
     public readonly complexity: number
 
     public constructor(lines: string[], indices: number[]) {
-        this.lines = lines
+        this.lines = lines.map(line => line.replace(/\\\\/g, '\\'))
         this.indices = indices
         const code = lines.join('\n')
         this.function = new Function('return ' + code)()
@@ -28,7 +28,6 @@ export class Candidate {
             replace(/(?<=\d)0+ /g, ' '). // 200 is 1 point
             replace(/(?<=\d)(?=\d)/g, ' '). // 3199 is 4 points, 3200 only 2
             replace(/(?<=\d)\.(?=\d)/g, ' . '). // each float is 1 point extra
-            replace(/\bundefined\b/g, ''). // undefined does NOT count
             trim().
             split(/\s+/) // each token is 1 point
         return chunks.length
@@ -52,6 +51,10 @@ export class Candidate {
 
     public failCount(unitTests: UnitTest[]): number {
         return this.failingTestResults(unitTests).length
+    }
+
+    public passCount(unitTests: UnitTest[]): number {
+        return unitTests.length - this.failCount(unitTests)
     }
 
     public toString(): string {

@@ -18,7 +18,7 @@ test.describe('level start', () => {
     });
     test('has the simplest candidate in the current candidate panel', async ({ page }) => {
         const currentCandidatePanel = page.getByTestId('current-function');
-        await expect(currentCandidatePanel).toContainText(/function isAllowedToVote\(age\) \{  return undefined\}/);
+        await expect(currentCandidatePanel).toContainText(/function isAllowedToVote\(age\) \{\}/);
     });
     test('has 100% in the score panel', async ({ page }) => {
         const scorePanel = page.getByTestId('score');

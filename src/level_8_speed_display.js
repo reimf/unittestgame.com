@@ -3,6 +3,9 @@ import { Paragraph } from './html.js';
 import { Panel } from './frame.js';
 import { TextVariable, NumberVariable } from './variable.js';
 export class SpeedDisplay extends Level {
+    constructor() {
+        super(8);
+    }
     showSpecificationPanel() {
         new Panel('Specification', [
             new Paragraph().appendLines([
@@ -61,7 +64,7 @@ export class SpeedDisplay extends Level {
                 'return (speed / 1000).toFixed()',
                 'return (speed / 1000).toFixed(1)',
                 'return (speed / 1000).toString()',
-                'return undefined',
+                '',
             ],
         ];
     }

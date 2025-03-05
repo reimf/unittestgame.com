@@ -11,14 +11,14 @@ import { SpeedDisplay } from './level_8_speed_display.js';
 export class Main {
     constructor(RoundType) {
         this.levels = [
-            new VotingAge(1),
-            new EvenOdd(2),
-            new FizzBuzz(3),
-            new TriangleType(4),
-            new LeapYear(5),
-            new FloatFormat(6),
-            new PasswordStrength(7),
-            new SpeedDisplay(8),
+            new VotingAge(),
+            new EvenOdd(),
+            new FizzBuzz(),
+            new TriangleType(),
+            new LeapYear(),
+            new FloatFormat(),
+            new PasswordStrength(),
+            new SpeedDisplay(),
         ];
         this.RoundType = RoundType;
     }
@@ -37,27 +37,28 @@ export class Main {
         this.continue();
     }
     continue() {
-        this.showHighScoresPanel();
-        this.showNextLevel();
+        const rounds = this.levels.map(level => new this.RoundType(level, () => this.continue()));
+        this.showHighScoresPanel(rounds);
+        this.showNextRound(rounds);
     }
-    showHighScoresPanel() {
-        const highScores = this.levels
-            .filter(level => level.getHighScore(localStorage) > 0)
-            .map(level => new Paragraph().appendText(`${level.description}: ${level.getHighScore(localStorage)}%`));
+    showHighScoresPanel(rounds) {
+        const highScores = rounds
+            .filter(round => round.getHighScore(localStorage) > 0)
+            .map(round => new Paragraph().appendText(`${round.description}: ${round.getHighScore(localStorage)}%`));
         if (highScores.length > 0)
             new Panel('High Scores', highScores).show();
     }
-    showNextLevel() {
-        const level = this.levels.find(level => level.getHighScore(localStorage) === 0);
+    showNextRound(rounds) {
+        const round = rounds.find(round => round.getHighScore(localStorage) === 0);
         new HumanMessage([
-            level
-                ? new Button().onClick(() => this.playLevel(level)).appendText(`I want to play ${level.description}`)
+            round
+                ? new Button().onClick(() => this.playRound(round)).appendText(`I want to play ${round.description}`)
                 : new Button().onClick(() => window.close()).appendText('Quit UnitTestGame.com')
         ]).show();
     }
-    playLevel(level) {
+    playRound(round) {
         Panel.remove('About');
         Panel.remove('High Scores');
-        new this.RoundType(level, () => this.continue()).play();
+        round.play();
     }
 }

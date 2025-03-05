@@ -4,6 +4,9 @@ import { Panel } from './frame.js'
 import { Variable, TextVariable, NumberVariable } from './variable.js'
 
 export class SpeedDisplay extends Level {
+    public constructor() {
+        super(8)
+    }
 
     public showSpecificationPanel(): void {
         new Panel('Specification', [
@@ -71,7 +74,7 @@ export class SpeedDisplay extends Level {
                 'return (speed / 1000).toFixed()',
                 'return (speed / 1000).toFixed(1)',
                 'return (speed / 1000).toString()',
-                'return undefined',
+                '',
             ],
         ]
     }

@@ -3,6 +3,9 @@ import { Paragraph } from './html.js';
 import { Panel } from './frame.js';
 import { RadioVariable, NumberVariable } from './variable.js';
 export class TriangleType extends Level {
+    constructor() {
+        super(4);
+    }
     showSpecificationPanel() {
         new Panel('Specification', [
             new Paragraph().appendLines([
@@ -47,7 +50,7 @@ export class TriangleType extends Level {
                 'return "equilateral"',
                 'return "isosceles"',
                 'return "scalene"',
-                'return undefined',
+                '',
             ],
         ];
     }

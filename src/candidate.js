@@ -2,7 +2,7 @@ import { TestResult } from './test_result.js';
 import { Code, Div } from './html.js';
 export class Candidate {
     constructor(lines, indices) {
-        this.lines = lines;
+        this.lines = lines.map(line => line.replace(/\\\\/g, '\\'));
         this.indices = indices;
         const code = lines.join('\n');
         this.function = new Function('return ' + code)();
@@ -20,7 +20,6 @@ export class Candidate {
             replace(/(?<=\d)0+ /g, ' '). // 200 is 1 point
             replace(/(?<=\d)(?=\d)/g, ' '). // 3199 is 4 points, 3200 only 2
             replace(/(?<=\d)\.(?=\d)/g, ' . '). // each float is 1 point extra
-            replace(/\bundefined\b/g, ''). // undefined does NOT count
             trim().
             split(/\s+/); // each token is 1 point
         return chunks.length;
@@ -41,6 +40,9 @@ export class Candidate {
     }
     failCount(unitTests) {
         return this.failingTestResults(unitTests).length;
+    }
+    passCount(unitTests) {
+        return unitTests.length - this.failCount(unitTests);
     }
     toString() {
         return this.function.toString();
