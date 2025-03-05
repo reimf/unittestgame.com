@@ -17,7 +17,7 @@ export class Level {
         this.checkAllMinimalUnitTestsAreNeeded();
     }
     get description() {
-        return `Level ${this.index} = ${this.name}`;
+        return `Level ${this.index} - ${this.name}`;
     }
     findPassingCandidates(unitTests) {
         return this.candidates.filter(candidate => candidate.failCount(unitTests) == 0);

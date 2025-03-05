@@ -1,8 +1,8 @@
 export class Random {
     static elementFrom(list) {
-        return list[this.randomInt(list.length)];
+        return list[this.integerUnder(list.length)];
     }
-    static randomInt(x) {
+    static integerUnder(x) {
         return Math.floor(Math.random() * x);
     }
 }

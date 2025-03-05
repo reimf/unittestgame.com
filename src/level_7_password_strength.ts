@@ -145,15 +145,15 @@ export class PasswordStrength extends Level {
 
             yield [chars.join('')]
 
-            const pos = Random.randomInt(chars.length)
-            chars[pos] = Random.randomInt(10).toString()
+            const pos = Random.integerUnder(chars.length)
+            chars[pos] = Random.integerUnder(10).toString()
             yield [chars.join('')]
         }
     }
 
     private shuffleArray(array: string[]): void {
         for (let i = array.length - 1; i > 0; i--) {
-            const j = Random.randomInt(i + 1)
+            const j = Random.integerUnder(i + 1)
             const swap = array[i]
             array[i] = array[j]
             array[j] = swap

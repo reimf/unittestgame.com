@@ -57,8 +57,8 @@ export class Main {
         ]).show();
     }
     playRound(round) {
-        Panel.remove('About');
-        Panel.remove('High Scores');
+        new Panel('About').remove();
+        new Panel('High Scores').remove();
         round.play();
     }
 }

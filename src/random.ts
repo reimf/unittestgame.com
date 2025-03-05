@@ -1,9 +1,9 @@
 export class Random {
     public static elementFrom<T>(list: T[]): T {
-        return list[this.randomInt(list.length)]
+        return list[this.integerUnder(list.length)]
     }
 
-    public static randomInt(x: number): number {
+    public static integerUnder(x: number): number {
         return Math.floor(Math.random() * x)
     }
 }

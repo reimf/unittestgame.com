@@ -19,11 +19,11 @@ test.describe('submit insufficient unit test', () => {
     });
     test('has high scores panel', async ({ page }) => {
         const highScores = page.getByTestId('high-scores');
-        await expect(highScores).toContainText('TestDrivenDevelopment - Level 1 = VotingAge: 100%');
+        await expect(highScores).toContainText('TestDrivenDevelopment - Level 1 - VotingAge: 100%');
     });
     test('has level menu message', async ({ page }) => {
         const messages = page.getByTestId('messages');
         const button = messages.getByRole('button');
-        await expect(button).toHaveText('I want to play TestDrivenDevelopment - Level 2 = EvenOdd');
+        await expect(button).toHaveText('I want to play TestDrivenDevelopment - Level 2 - EvenOdd');
     });
 });

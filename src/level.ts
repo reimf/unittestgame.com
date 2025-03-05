@@ -29,7 +29,7 @@ export abstract class Level {
     }
 
     public get description(): string {
-        return `Level ${this.index} = ${this.name}`
+        return `Level ${this.index} - ${this.name}`
     }
 
     public findPassingCandidates(unitTests: UnitTest[]): Candidate[] {

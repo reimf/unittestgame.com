@@ -82,13 +82,13 @@ export class FloatFormat extends Level {
     }
     *hintGenerator() {
         for (let i = 0; i < 100; i++) {
-            const integerPart = Random.randomInt(1000).toString();
-            const precision = Random.randomInt(4);
-            const fractionalPart = Random.randomInt(10 ** precision).toString().padStart(precision, '0');
+            const integerPart = Random.integerUnder(1000).toString();
+            const precision = Random.integerUnder(4);
+            const fractionalPart = Random.integerUnder(10 ** precision).toString().padStart(precision, '0');
             const sign = Random.elementFrom(['-', '+', '']);
             const correctFormat = sign + integerPart + '.' + fractionalPart;
             yield [correctFormat];
-            const pos = Random.randomInt(correctFormat.length);
+            const pos = Random.integerUnder(correctFormat.length);
             const substitution = Random.elementFrom(['0', '+', '-', '.']);
             const probablyIncorrectFormat = correctFormat.substring(0, pos) + substitution + correctFormat.substring(pos + 1);
             yield [probablyIncorrectFormat];

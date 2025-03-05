@@ -6,6 +6,8 @@ abstract class Frame extends Section {
         this.appendChildren(children)
     }
 
+    public abstract show(): void
+
     protected existingElement(): HTMLElement | null {
         return document.querySelector('#' + this.element.id)
     }
@@ -20,13 +22,10 @@ abstract class Frame extends Section {
 }
 
 export class Panel extends Frame {
-    public constructor(title: string, children: Html[]) {
+    public constructor(title: string, children: Html[] = []) {
         super([new Header().appendText(title), ...children])
-        this.id(Panel.idFromTitle(title))
-    }
-
-    private static idFromTitle(title: string): string {
-        return title.toLowerCase().replace(/ /g, '-')
+        const id = title.toLowerCase().replace(/ /g, '-')
+        this.id(id)
     }
 
     public show(): void {
@@ -36,8 +35,8 @@ export class Panel extends Frame {
             this.addTo('panels')
     }
 
-    public static remove(title: string): void {
-        document.querySelector('#' + Panel.idFromTitle(title))?.remove()
+    public remove(): void {
+        document.querySelector('#' + this.element.id)?.remove()
     }
 }
 
@@ -71,7 +70,8 @@ export class HumanMessage extends Message {
         this.addClass('human')
         this.on('click', event => {
             if (event.target instanceof HTMLButtonElement) {
-                const message = new HumanMessage([new Paragraph().appendText(event.target.textContent + '.')])
+                const paragraph = new Paragraph().appendText(event.target.textContent + '.')
+                const message = new HumanMessage([paragraph])
                 message.id(this.element.id)
                 message.replaceExisting()
             }
@@ -90,8 +90,10 @@ export class HumanMessage extends Message {
     }
 
     private focusFirst(): void {
-        const focusables = this.element.querySelectorAll('button:enabled, input:enabled') as NodeListOf<HTMLElement>
-        if (focusables.length > 0)
-            focusables[0].focus()
+        const focusables = this.element.querySelectorAll('button:enabled, input:enabled')
+        if (focusables.length > 0) {
+            const firstFocusable = focusables[0] as HTMLElement
+            firstFocusable.focus()
+        }
     }
 }

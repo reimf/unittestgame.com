@@ -15,12 +15,10 @@ class Frame extends Section {
     }
 }
 export class Panel extends Frame {
-    constructor(title, children) {
+    constructor(title, children = []) {
         super([new Header().appendText(title), ...children]);
-        this.id(Panel.idFromTitle(title));
-    }
-    static idFromTitle(title) {
-        return title.toLowerCase().replace(/ /g, '-');
+        const id = title.toLowerCase().replace(/ /g, '-');
+        this.id(id);
     }
     show() {
         if (this.existingElement())
@@ -28,9 +26,9 @@ export class Panel extends Frame {
         else
             this.addTo('panels');
     }
-    static remove(title) {
+    remove() {
         var _a;
-        (_a = document.querySelector('#' + Panel.idFromTitle(title))) === null || _a === void 0 ? void 0 : _a.remove();
+        (_a = document.querySelector('#' + this.element.id)) === null || _a === void 0 ? void 0 : _a.remove();
     }
 }
 class Message extends Frame {
@@ -59,7 +57,8 @@ export class HumanMessage extends Message {
         this.addClass('human');
         this.on('click', event => {
             if (event.target instanceof HTMLButtonElement) {
-                const message = new HumanMessage([new Paragraph().appendText(event.target.textContent + '.')]);
+                const paragraph = new Paragraph().appendText(event.target.textContent + '.');
+                const message = new HumanMessage([paragraph]);
                 message.id(this.element.id);
                 message.replaceExisting();
             }
@@ -76,7 +75,9 @@ export class HumanMessage extends Message {
     }
     focusFirst() {
         const focusables = this.element.querySelectorAll('button:enabled, input:enabled');
-        if (focusables.length > 0)
-            focusables[0].focus();
+        if (focusables.length > 0) {
+            const firstFocusable = focusables[0];
+            firstFocusable.focus();
+        }
     }
 }
