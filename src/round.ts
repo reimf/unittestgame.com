@@ -1,12 +1,13 @@
 import { UnitTest } from './unit_test.js'
 import { Random } from './random.js'
 import { Button, Form, Input, Paragraph } from './html.js'
-import { Panel, HumanMessage, ComputerMessage } from './frame.js'
+import { HumanMessage, ComputerMessage } from './frame.js'
 import { Candidate } from './candidate.js'
 import { TestResult } from './test_result.js'
 import { Level } from './level.js'
+import { Game } from './game.js'
 
-export abstract class Round {
+export class Round {
     protected readonly PERFECTSCORE = 100
     protected readonly PENALTYINCORRECTUNITTEST = 5
     protected readonly PENALTYHINT = 10
@@ -14,29 +15,21 @@ export abstract class Round {
     protected readonly MINIMUMSCORE = 0
 
     protected readonly level: Level
+    protected readonly game: Game
     protected readonly userdefinedUnitTests: UnitTest[]
+    protected readonly coveredCandidates: Candidate[]
     protected currentCandidate: Candidate
     protected failingTestResult?: TestResult
     protected score: number
     private readonly callback: () => void
 
     protected readonly name: string = this.constructor.name
-    protected abstract showPanelsOnPlay(): void
-    protected abstract showContractMessage(): void
-    protected abstract showPanelsOnMenu(): void
-    protected abstract showHintMessage(): void
-    protected abstract showNoHintMessage(): void
-    protected abstract showBugFoundMessage(): void
-    protected abstract showMinimumScoreEndMessage(): void
-    protected abstract showUnsuccessfulEndMessage(): void
-    protected abstract showSuccessfulEndMessage(): void
-    protected abstract showUselessUnitTestMessage(): void
-    protected abstract showUsefulUnitTestMessage(): void
-    protected abstract showIncorrectUnitTestMessage(): void
 
-    public constructor(level: Level, callback: () => void) {
+    public constructor(game: Game, level: Level, callback: () => void) {
+        this.game = game
         this.level = level
         this.userdefinedUnitTests = []
+        this.coveredCandidates = []
         this.currentCandidate = this.findSimplestWorstPassingCandidate()
         this.failingTestResult = this.findFailingTestResult()
         this.score = this.PERFECTSCORE
@@ -44,7 +37,7 @@ export abstract class Round {
     }
 
     public get description(): string {
-        return `${this.name} - ${this.level.description}`
+        return `${this.game.name} - Level ${this.level.index} - ${this.level.name}`
     }
 
     public getHighScore(storage: Storage): number {
@@ -53,23 +46,7 @@ export abstract class Round {
 
     public saveScore(storage: Storage, score: number): void {
         if (score > this.getHighScore(storage))
-            storage.setItem(this.description, `${score}`)
-    }
-
-    public play(): void {
-        this.showPanelsOnPlay()
-        this.showContractMessage()
-        this.menu()
-    }
-
-    protected menu(): void {
-        this.showUnitTestsPanel()
-        this.showPanelsOnMenu()
-        this.showScorePanel()
-        if (this.score === this.MINIMUMSCORE)
-            this.end()
-        else
-            this.showMenuMessage()
+            storage.setItem(this.description, score.toString())
     }
 
     protected findWorstCandidates(candidates: Candidate[], attribute: (key: Candidate) => number): Candidate[] {
@@ -89,6 +66,13 @@ export abstract class Round {
         return Random.elementFrom(simplestPassingCandidates)
     }
 
+    protected findCoveredCandidate(unitTest: UnitTest): Candidate {
+        const passingCandidates = this.level.descendantsOfPerfectCandidate
+            .filter(candidate => candidate.failCount([unitTest]) == 0)
+        const simplestPassingCandidates = this.findSimplestCandidates(passingCandidates)
+        return Random.elementFrom(simplestPassingCandidates)
+    }
+
     protected findFailingTestResult(): TestResult | undefined {
         const failingHints = this.currentCandidate.failingTestResults(this.level.hints)
         if (failingHints.length > 0)
@@ -99,18 +83,20 @@ export abstract class Round {
         return undefined
     }
 
-    protected showScorePanel(): void {
-        new Panel('Score', [
-            new Paragraph().appendText(`${this.level.description}: ${this.score}%`),
-        ]).show()
+    public play(): void {
+        this.game.showPanelsOnPlay(this.level.perfectCandidate, this.coveredCandidates, this.level.showSpecificationPanel)
+        this.game.showContractMessage()
+        this.menu()
     }
 
-    protected showUnitTestsPanel(): void {
-        new Panel('Unit Tests',
-            this.userdefinedUnitTests.length === 0
-            ? [new Paragraph().appendText('You have not written any unit tests yet.')]
-            : this.userdefinedUnitTests.map(unitTest => new Paragraph().appendText(unitTest.toString())),
-        ).show()
+    protected menu(): void {
+        this.game.showUnitTestsPanel(this.userdefinedUnitTests)
+        this.game.showPanelsOnMenu(this.currentCandidate, this.level.perfectCandidate, this.coveredCandidates)
+        this.game.showScorePanel(this.description, this.score)
+        if (this.score === this.MINIMUMSCORE)
+            this.end()
+        else
+            this.showMenuMessage()
     }
 
     protected showMenuMessage(): void {
@@ -171,31 +157,36 @@ export abstract class Round {
         const unitTestIsCorrect = new TestResult(this.level.perfectCandidate, unitTest).passes
         if (unitTestIsCorrect) {
             this.userdefinedUnitTests.push(unitTest)
+            this.coveredCandidates.push(this.findCoveredCandidate(unitTest))
             const currentCandidateAlreadyPasses = new TestResult(this.currentCandidate, unitTest).passes
             if (currentCandidateAlreadyPasses)
-                this.showUselessUnitTestMessage()
+                this.game.showUselessUnitTestMessage()
             else {
-                this.showUsefulUnitTestMessage()
+                this.game.showUsefulUnitTestMessage()
                 this.currentCandidate = this.findSimplestWorstPassingCandidate()
                 this.failingTestResult = this.findFailingTestResult()
             }
         }
-        else
-            this.showIncorrectUnitTestMessage()
+        else {
+            this.game.showIncorrectUnitTestMessage(this.PENALTYINCORRECTUNITTEST)
+            this.subtractPenalty(this.PENALTYINCORRECTUNITTEST)
+        }
         this.menu()
     }
 
     protected showHint(): void {
         if (this.failingTestResult)
-            this.showHintMessage()
+            this.game.showHintMessage(this.currentCandidate, this.failingTestResult, this.PENALTYHINT)
         else
-            this.showNoHintMessage()
+            this.game.showNoHintMessage(this.PENALTYHINT)
+        this.subtractPenalty(this.PENALTYHINT)
         this.menu()
     }
 
     protected submit(): void {
         if (this.failingTestResult) {
-            this.showBugFoundMessage()
+            this.game.showBugFoundMessage(this.currentCandidate, this.failingTestResult, this.PENALTYSUBMITWITHBUG)
+            this.subtractPenalty(this.PENALTYSUBMITWITHBUG)
             this.menu()
         }
         else
@@ -204,14 +195,14 @@ export abstract class Round {
 
     protected end(): void {
         if (this.score === this.MINIMUMSCORE)
-            this.showMinimumScoreEndMessage()
+            this.game.showMinimumScoreEndMessage(this.score)
         else if (this.failingTestResult) {
             this.score = this.MINIMUMSCORE
-            this.showScorePanel()
-            this.showUnsuccessfulEndMessage()
+            this.game.showScorePanel(this.description, this.score)
+            this.game.showUnsuccessfulEndMessage(this.score)
         }
         else
-            this.showSuccessfulEndMessage()
+            this.game.showSuccessfulEndMessage(this.score)
         this.saveScore(localStorage, this.score)
         this.callback!()
     }

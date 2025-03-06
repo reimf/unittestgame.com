@@ -1,25 +1,25 @@
 import { Paragraph } from './html.js'
 import { Panel, ComputerMessage } from './frame.js'
-import { Round } from './round.js'
+import { Game } from './game.js'
+import { TestResult } from './test_result.js'
+import { Candidate } from './candidate.js'
 
-export class TestDrivenDevelopment extends Round {
-    public static showWelcomeMessage(): void {
+export class TestDrivenDevelopment extends Game {
+    public showWelcomeMessage(): void {
         new ComputerMessage([
             new Paragraph().appendLines([
-                'Welcome to UnitTestGame.com!',
-                'I am an AI-bot that does Test Driven Development.',
                 'You write failing unit tests.',
-                'And adding a unit test I write a function that passes.',
+                'After adding each unit test I write a function that passes.',
                 'Let\'s go next level!',
             ]),
         ]).show()
     }
 
-    protected showPanelsOnPlay(): void {
-        this.level.showSpecificationPanel()
+    public showPanelsOnPlay(perfectCandidate: Candidate, coveredCandidates: Candidate[],showSpecificationPanel: () => void): void {
+        showSpecificationPanel()
     }
 
-    protected showContractMessage(): void {
+    public showContractMessage(): void {
         new ComputerMessage([
             new Paragraph().appendLines([
                 'In the sidebar you see the specification,',
@@ -31,17 +31,17 @@ export class TestDrivenDevelopment extends Round {
         ]).show()
     }
 
-    protected showCurrentCandidatePanel(): void {
+    public showCurrentCandidatePanel(currentCandidate: Candidate): void {
         new Panel('Current Function', [
-            this.currentCandidate.toHtml(),
+            currentCandidate.toHtml(),
         ]).show()
     }
 
-    protected showPanelsOnMenu(): void {
-        this.showCurrentCandidatePanel()
+    public showPanelsOnMenu(currentCandidate: Candidate, perfectCandidate: Candidate, coveredCandidates: Candidate[]): void {
+        this.showCurrentCandidatePanel(currentCandidate)
     }
 
-    protected showUselessUnitTestMessage(): void {
+    public showUselessUnitTestMessage(): void {
         new ComputerMessage([
             new Paragraph().appendLines([
                 'I added the unit test,',
@@ -51,72 +51,68 @@ export class TestDrivenDevelopment extends Round {
         ]).show()
     }
 
-    protected showUsefulUnitTestMessage(): void {
+    public showUsefulUnitTestMessage(): void {
         new ComputerMessage([
             new Paragraph().appendText('I added the unit test and I improved the function.'),
         ]).show()
     }
 
-    protected showIncorrectUnitTestMessage(): void {
+    public showIncorrectUnitTestMessage(penaltyIncorrectUnitTest: number): void {
         new ComputerMessage([
             new Paragraph().appendText('I did NOT add the unit test, because it is NOT correct.'),
-            new Paragraph().appendText(`The cost for trying to add an incorrect unit test is ${this.PENALTYINCORRECTUNITTEST}%.`),
+            new Paragraph().appendText(`The cost for trying to add an incorrect unit test is ${penaltyIncorrectUnitTest}%.`),
         ]).show()
-        this.subtractPenalty(this.PENALTYINCORRECTUNITTEST)
     }
 
-    protected showHintMessage(): void {
+    public showHintMessage(currentCandidate: Candidate, failingTestResult: TestResult, penaltyHint: number): void {
         new ComputerMessage([
             new Paragraph().appendText('A failing unit test for the current function is the following.'),
-            new Paragraph().appendText(this.failingTestResult!.unitTest.toString()),
-            new Paragraph().appendText(`The cost for this hint is ${this.PENALTYHINT}%.`),
+            new Paragraph().appendText(failingTestResult.unitTest.toString()),
+            new Paragraph().appendText(`The cost for this hint is ${penaltyHint}%.`),
         ]).show()
-        this.subtractPenalty(this.PENALTYHINT)
     }
 
-    protected showNoHintMessage(): void {
+    public showNoHintMessage(penaltyHint: number): void {
         new ComputerMessage([
             new Paragraph().appendText('I can\'t think of a failing unit test for the current function.'),
-            new Paragraph().appendText(`The cost for this hint is ${this.PENALTYHINT}%.`),
+            new Paragraph().appendText(`The cost for this hint is ${penaltyHint}%.`),
         ]).show()
-        this.subtractPenalty(this.PENALTYHINT)
     }
 
-    protected showBugFoundMessage(): void {
+    public showBugFoundMessage(currentCandidate: Candidate, failingTestResult: TestResult, penaltySubmitWithBug: number): void {
         new ComputerMessage([
             new Paragraph().appendLines([
                 'The current function is NOT according to the specification.',
                 'It produces the following incorrect output:'
             ]),
-            new Paragraph().appendText(this.failingTestResult!.toString()),
-            new Paragraph().appendText(`The cost for submitting when there is still an error is ${this.PENALTYSUBMITWITHBUG}%.`),
+            new Paragraph().appendText(failingTestResult.toString()),
+            new Paragraph().appendText(`The cost for submitting when there is still an error is ${penaltySubmitWithBug}%.`),
         ]).show()
-        this.subtractPenalty(this.PENALTYSUBMITWITHBUG)
     }
 
-    protected showMinimumScoreEndMessage(): void {
+    public showMinimumScoreEndMessage(score: number): void {
         new ComputerMessage([
             new Paragraph().appendLines([
                 'You have to retry this level,',
-                'because your score dropped to 0%.'
+                `because your score dropped to ${score}%.`
             ])
         ]).show()
     }
 
-    protected showUnsuccessfulEndMessage(): void {
+    public showUnsuccessfulEndMessage(score: number): void {
         new ComputerMessage([
             new Paragraph().appendLines([
                 'The current function is NOT according to the specification.',
-                `Your final score is ${this.score}%.`
+                `Your final score is ${score}%.`
             ]),
         ]).show()
     }
 
-    protected showSuccessfulEndMessage(): void {
+    public showSuccessfulEndMessage(score: number): void {
         new ComputerMessage([
             new Paragraph().appendLines([
                 'The current function is according to the specification.',
-                `Your final score is ${this.score}%.`
+                `Your final score is ${score}%.`
             ]),
         ]).show()
     }

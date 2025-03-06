@@ -1,87 +1,38 @@
 # UnitTestGame.com
 
-## Class Diagram
-```mermaid
-classDiagram
+Learn to write **effective unit tests** with an interactive game where you collaborate with an AI bot to improve your skills in **Test-Driven Development** and **Mutation Testing**.
 
-class Main {
-    +instance: Main$
-    +start() void
-    -showNextLevel() void
-    -playLevel() void
-    +continue() void
-}
+Try this AI-powered feedback loop at **<https://unittestgame.com>**.
 
-class Level {
-    <<Abstract>>
-    +play() void
-    -menu() void
-    -showFormUnitTest() void
-    -addUnitTest() void
-    -showHint() void
-    -submit() void
-    -end() void
-}
+## 🚀 Test-Driven Development
 
-class Candidate {
-    -function: Function
-    -complexity: number
-    -code: string
-    +execute() any
-    +testResults() TestResult[]
-    +failingTestResults() TestResult[]
-    +failCount() number
-    +toString() string
-}
+The goal: **Write a function that meets the given specification.**
 
-class TestResult {
-    -result: any
-    +passes: boolean
-    +unitTest: UnitTest
-    +toString() string
-}
+### How it works:
+1. **You write unit tests** to define the expected behavior of the function.
+2. **The AI bot writes a function** that passes the unit tests.
+3. **Repeat** until you think the function is correct. 
+4. **Submit** the unit tests.
+5. **Validation**: The AI bot checks if the function meets the specification.
+   - ✅ If correct, you’ve successfully implemented the function!
+   - ❌ If incorrect, the AI bot shows **a valid unit test** that the function fails.
 
-class UnitTest {
-    +argumentList: any[]
-    +expected: any
-    +toString() string
-}
+---
 
-class Variable {
-    <<Abstract>>
-    +name: string
-    +value() string | number | boolean
-    +toHtml() Html
-}
+## 🧪 Mutation Testing
 
-Level "1" <--> "*" Candidate
-Level "1" <--> "*" UnitTest
-UnitTest "1" <--> "*" TestResult
-UnitTest "1" <--> "*" Variable
-Candidate "1" <--> "*" TestResult
-Level "1" <--> "*" Variable
-Main "1" <--> "*" Level
-```
+The goal: **Test a function thoroughly.**
 
-## State Diagram
-```mermaid
-stateDiagram-v2
-    [*] --> Main.start
-    Main.start --> Main.showNextLevel
-    Main.showNextLevel --> Main.playLevel
-    Main.playLevel --> Level.play
-    Main.continue --> Main.showNextLevel
-    Main.continue --> [*]
-    Level.play --> Level.menu
-    Level.menu --> Level.showUnitTestForm
-    Level.menu --> Level.showHint
-    Level.menu --> Level.submit
-    Level.menu --> Level.end
-    Level.showUnitTestForm --> Level.addUnitTest
-    Level.showUnitTestForm --> Level.menu
-    Level.addUnitTest --> Level.menu
-    Level.showHint --> Level.menu
-    Level.submit --> Level.menu
-    Level.submit --> Level.end
-    Level.end --> Main.continue
-```
+### How it works:
+1. **You write unit tests** to fully cover the function.
+2. **The AI bot highlights covered lines** in the function.
+3. **Repeat** until you think the unit tests fully cover the function.
+3. **Submit** the unit tests.
+4. **Validation**: The AI bot checks the function with Mutation Testing.
+   - ✅ If correct, you've fully tested the function!
+   - ❌ If incorrect, the AI bot generates **a mutated version** of the function that passes the unit tests.
+
+---
+
+Feedback? Errors? Improvements?
+Mail me at <feedback@unittestgame.com>.

@@ -1,20 +1,18 @@
 import { Paragraph } from './html.js';
 import { Panel, ComputerMessage } from './frame.js';
-import { Round } from './round.js';
-export class TestDrivenDevelopment extends Round {
-    static showWelcomeMessage() {
+import { Game } from './game.js';
+export class TestDrivenDevelopment extends Game {
+    showWelcomeMessage() {
         new ComputerMessage([
             new Paragraph().appendLines([
-                'Welcome to UnitTestGame.com!',
-                'I am an AI-bot that does Test Driven Development.',
                 'You write failing unit tests.',
-                'And adding a unit test I write a function that passes.',
+                'After adding each unit test I write a function that passes.',
                 'Let\'s go next level!',
             ]),
         ]).show();
     }
-    showPanelsOnPlay() {
-        this.level.showSpecificationPanel();
+    showPanelsOnPlay(perfectCandidate, coveredCandidates, showSpecificationPanel) {
+        showSpecificationPanel();
     }
     showContractMessage() {
         new ComputerMessage([
@@ -27,13 +25,13 @@ export class TestDrivenDevelopment extends Round {
             ]),
         ]).show();
     }
-    showCurrentCandidatePanel() {
+    showCurrentCandidatePanel(currentCandidate) {
         new Panel('Current Function', [
-            this.currentCandidate.toHtml(),
+            currentCandidate.toHtml(),
         ]).show();
     }
-    showPanelsOnMenu() {
-        this.showCurrentCandidatePanel();
+    showPanelsOnMenu(currentCandidate, perfectCandidate, coveredCandidates) {
+        this.showCurrentCandidatePanel(currentCandidate);
     }
     showUselessUnitTestMessage() {
         new ComputerMessage([
@@ -49,60 +47,56 @@ export class TestDrivenDevelopment extends Round {
             new Paragraph().appendText('I added the unit test and I improved the function.'),
         ]).show();
     }
-    showIncorrectUnitTestMessage() {
+    showIncorrectUnitTestMessage(penaltyIncorrectUnitTest) {
         new ComputerMessage([
             new Paragraph().appendText('I did NOT add the unit test, because it is NOT correct.'),
-            new Paragraph().appendText(`The cost for trying to add an incorrect unit test is ${this.PENALTYINCORRECTUNITTEST}%.`),
+            new Paragraph().appendText(`The cost for trying to add an incorrect unit test is ${penaltyIncorrectUnitTest}%.`),
         ]).show();
-        this.subtractPenalty(this.PENALTYINCORRECTUNITTEST);
     }
-    showHintMessage() {
+    showHintMessage(currentCandidate, failingTestResult, penaltyHint) {
         new ComputerMessage([
             new Paragraph().appendText('A failing unit test for the current function is the following.'),
-            new Paragraph().appendText(this.failingTestResult.unitTest.toString()),
-            new Paragraph().appendText(`The cost for this hint is ${this.PENALTYHINT}%.`),
+            new Paragraph().appendText(failingTestResult.unitTest.toString()),
+            new Paragraph().appendText(`The cost for this hint is ${penaltyHint}%.`),
         ]).show();
-        this.subtractPenalty(this.PENALTYHINT);
     }
-    showNoHintMessage() {
+    showNoHintMessage(penaltyHint) {
         new ComputerMessage([
             new Paragraph().appendText('I can\'t think of a failing unit test for the current function.'),
-            new Paragraph().appendText(`The cost for this hint is ${this.PENALTYHINT}%.`),
+            new Paragraph().appendText(`The cost for this hint is ${penaltyHint}%.`),
         ]).show();
-        this.subtractPenalty(this.PENALTYHINT);
     }
-    showBugFoundMessage() {
+    showBugFoundMessage(currentCandidate, failingTestResult, penaltySubmitWithBug) {
         new ComputerMessage([
             new Paragraph().appendLines([
                 'The current function is NOT according to the specification.',
                 'It produces the following incorrect output:'
             ]),
-            new Paragraph().appendText(this.failingTestResult.toString()),
-            new Paragraph().appendText(`The cost for submitting when there is still an error is ${this.PENALTYSUBMITWITHBUG}%.`),
+            new Paragraph().appendText(failingTestResult.toString()),
+            new Paragraph().appendText(`The cost for submitting when there is still an error is ${penaltySubmitWithBug}%.`),
         ]).show();
-        this.subtractPenalty(this.PENALTYSUBMITWITHBUG);
     }
-    showMinimumScoreEndMessage() {
+    showMinimumScoreEndMessage(score) {
         new ComputerMessage([
             new Paragraph().appendLines([
                 'You have to retry this level,',
-                'because your score dropped to 0%.'
+                `because your score dropped to ${score}%.`
             ])
         ]).show();
     }
-    showUnsuccessfulEndMessage() {
+    showUnsuccessfulEndMessage(score) {
         new ComputerMessage([
             new Paragraph().appendLines([
                 'The current function is NOT according to the specification.',
-                `Your final score is ${this.score}%.`
+                `Your final score is ${score}%.`
             ]),
         ]).show();
     }
-    showSuccessfulEndMessage() {
+    showSuccessfulEndMessage(score) {
         new ComputerMessage([
             new Paragraph().appendLines([
                 'The current function is according to the specification.',
-                `Your final score is ${this.score}%.`
+                `Your final score is ${score}%.`
             ]),
         ]).show();
     }

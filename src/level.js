@@ -3,7 +3,7 @@ import { Random } from './random.js';
 import { Candidate } from './candidate.js';
 export class Level {
     constructor(index) {
-        this.name = this.constructor.name;
+        this.name = this.constructor.name.replace(/(?=[A-Z])/g, ' ').trim();
         this.parameters = this.getParameters();
         this.unit = this.getUnit();
         this.candidates = [...this.generateCandidates(this.getCandidateElements(), [], [])];
@@ -15,9 +15,6 @@ export class Level {
         this.index = index;
         this.checkPerfectCandidates();
         this.checkAllMinimalUnitTestsAreNeeded();
-    }
-    get description() {
-        return `Level ${this.index} - ${this.name}`;
     }
     findPassingCandidates(unitTests) {
         return this.candidates.filter(candidate => candidate.failCount(unitTests) == 0);

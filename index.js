@@ -1,6 +1,4 @@
 import { Main } from './src/main.js';
-import { TestDrivenDevelopment } from './src/round_test_driven_development.js';
-import { MutationTesting } from './src/round_mutation_testing.js';
 window.onerror = (message, source, lineno, colno, error) => {
     alert(`${error === null || error === void 0 ? void 0 : error.name}: ${message}\n${source}:${lineno}:${colno}`);
 };
@@ -17,8 +15,5 @@ document.addEventListener('keydown', event => {
     newFocused.focus();
 });
 document.addEventListener('DOMContentLoaded', () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const round = urlParams.get('round');
-    const main = new Main(round === 'mt' ? MutationTesting : TestDrivenDevelopment);
-    main.start();
+    new Main().start();
 });

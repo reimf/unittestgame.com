@@ -1,14 +1,13 @@
 import { Paragraph } from './html.js'
 import { Panel, ComputerMessage } from './frame.js'
-import { Round } from './round.js'
-import { Random } from './random.js'
+import { Game } from './game.js'
+import { TestResult } from './test_result.js'
+import { Candidate } from './candidate.js'
 
-export class MutationTesting extends Round {
-    public static showWelcomeMessage(): void {
+export class MutationTesting extends Game {
+    public showWelcomeMessage(): void {
         new ComputerMessage([
             new Paragraph().appendLines([
-                'Welcome to UnitTestGame.com!',
-                'I am an AI-bot that does Mutation Testing.',
                 'You write passing unit tests for a function and I highlight the lines covered.',
                 'After submitting I check to see if the function is fully tested.',
                 'If not, I find a mutation of the function that is NOT correct, but passes your unit tests.',
@@ -17,11 +16,11 @@ export class MutationTesting extends Round {
         ]).show()
     }
 
-    protected showPanelsOnPlay(): void {
-        this.showCodeCoveragePanel()
+    public showPanelsOnPlay(perfectCandidate: Candidate, coveredCandidates: Candidate[],showSpecificationPanel: () => void): void {
+        this.showCodeCoveragePanel(perfectCandidate, coveredCandidates)
     }
 
-    protected showContractMessage(): void {
+    public showContractMessage(): void {
         new ComputerMessage([
             new Paragraph().appendLines([
                 'In the sidebar you see a function and',
@@ -32,95 +31,84 @@ export class MutationTesting extends Round {
         ]).show()
     }
 
-    protected showCodeCoveragePanel(): void {
-        const candidates = this.userdefinedUnitTests.map(unitTest => {
-            const passingCandidates = this.level.descendantsOfPerfectCandidate
-                .filter(candidate => candidate.failCount([unitTest]) == 0)
-            const simplestPassingCandidates = this.findSimplestCandidates(passingCandidates)
-            const simplestPassingCandidate = Random.elementFrom(simplestPassingCandidates)
-            return simplestPassingCandidate
-        })
+    public showCodeCoveragePanel(perfectCandidate: Candidate, coveredCandidates: Candidate[]): void {
         new Panel('The Function', [
-            this.level.perfectCandidate.toHtmlWithCoverage(candidates),
+            perfectCandidate.toHtmlWithCoverage(coveredCandidates),
         ]).show()
     }
 
-    protected showPanelsOnMenu(): void {
-        this.showCodeCoveragePanel()
+    public showPanelsOnMenu(currentCandidate: Candidate, perfectCandidate: Candidate, coveredCandidates: Candidate[]): void {
+        this.showCodeCoveragePanel(perfectCandidate, coveredCandidates)
     }
 
-    protected showUselessUnitTestMessage(): void {
+    public showUselessUnitTestMessage(): void {
         new ComputerMessage([
             new Paragraph().appendText('I added the unit test.'),
         ]).show()
     }
 
-    protected showUsefulUnitTestMessage(): void {
+    public showUsefulUnitTestMessage(): void {
         new ComputerMessage([
             new Paragraph().appendText('I added the unit test.'),
         ]).show()
     }
 
-    protected showIncorrectUnitTestMessage(): void {
+    public showIncorrectUnitTestMessage(penaltyIncorrectUnitTest: number): void {
         new ComputerMessage([
             new Paragraph().appendText('I did NOT add the unit test, because it is NOT correct.'),
-            new Paragraph().appendText(`The cost for trying to add an incorrect unit test is ${this.PENALTYINCORRECTUNITTEST}%.`),
+            new Paragraph().appendText(`The cost for trying to add an incorrect unit test is ${penaltyIncorrectUnitTest}%.`),
         ]).show()
-        this.subtractPenalty(this.PENALTYINCORRECTUNITTEST)
     }
 
-    protected showHintMessage(): void {
+    public showHintMessage(currentCandidate: Candidate, failingTestResult: TestResult, penaltyHint: number): void {
         new ComputerMessage([
             new Paragraph().appendText('A mutation that is NOT correct, but still passes your unit tests is the following.'),
-            this.currentCandidate.toHtml(),
-            new Paragraph().appendText(`The cost for this hint is ${this.PENALTYHINT}%.`),
+            currentCandidate.toHtml(),
+            new Paragraph().appendText(`The cost for this hint is ${penaltyHint}%.`),
         ]).show()
-        this.subtractPenalty(this.PENALTYHINT)
     }
 
-    protected showNoHintMessage(): void {
+    public showNoHintMessage(penaltyHint: number): void {
         new ComputerMessage([
             new Paragraph().appendText('I can only find mutations that fail at least one of your unit tests.'),
-            new Paragraph().appendText(`The cost for this hint is ${this.PENALTYHINT}%.`),
+            new Paragraph().appendText(`The cost for this hint is ${penaltyHint}%.`),
         ]).show()
-        this.subtractPenalty(this.PENALTYHINT)
     }
 
-    protected showBugFoundMessage(): void {
+    public showBugFoundMessage(currentCandidate: Candidate, failingTestResult: TestResult, penaltySubmitWithBug: number): void {
         new ComputerMessage([
             new Paragraph().appendLines([
                 'The function is NOT fully tested.',
                 'A mutation that is NOT correct, but still passes your unit tests is the following.',
             ]),
-            this.currentCandidate.toHtml(),
-            new Paragraph().appendText(`The cost for submitting when there is still an error is ${this.PENALTYSUBMITWITHBUG}%.`),
+            currentCandidate.toHtml(),
+            new Paragraph().appendText(`The cost for submitting when there is still an error is ${penaltySubmitWithBug}%.`),
         ]).show()
-        this.subtractPenalty(this.PENALTYSUBMITWITHBUG)
     }
 
-    protected showMinimumScoreEndMessage(): void {
+    public showMinimumScoreEndMessage(score: number): void {
         new ComputerMessage([
             new Paragraph().appendLines([
                 'You have to retry this level,',
-                'because your score dropped to 0%.'
+                `because your score dropped to ${score}%.`
             ])
         ]).show()
     }
 
-    protected showUnsuccessfulEndMessage(): void {
+    public showUnsuccessfulEndMessage(score: number): void {
         new ComputerMessage([
             new Paragraph().appendLines([
                 'The function is NOT fully tested.',
-                `Your final score is ${this.score}%.`
+                `Your final score is ${score}%.`
             ]),
         ]).show()
     }
 
-    protected showSuccessfulEndMessage(): void {
+    public showSuccessfulEndMessage(score: number): void {
         new ComputerMessage([
             new Paragraph().appendLines([
                 'The function is fully tested.',
-                `Your final score is ${this.score}%.`
+                `Your final score is ${score}%.`
             ]),
         ]).show()
     }

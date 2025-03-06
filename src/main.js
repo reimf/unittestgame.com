@@ -1,5 +1,5 @@
 import { Button, Paragraph, Anchor } from './html.js';
-import { Panel, HumanMessage } from './frame.js';
+import { Panel, ComputerMessage, HumanMessage } from './frame.js';
 import { VotingAge } from './level_1_voting_age.js';
 import { EvenOdd } from './level_2_even_odd.js';
 import { FizzBuzz } from './level_3_fizz_buzz.js';
@@ -8,8 +8,15 @@ import { LeapYear } from './level_5_leap_year.js';
 import { FloatFormat } from './level_6_float_format.js';
 import { PasswordStrength } from './level_7_password_strength.js';
 import { SpeedDisplay } from './level_8_speed_display.js';
+import { Round } from './round.js';
+import { TestDrivenDevelopment } from './game_test_driven_development.js';
+import { MutationTesting } from './game_mutation_testing.js';
 export class Main {
-    constructor(RoundType) {
+    constructor() {
+        this.games = [
+            new TestDrivenDevelopment(),
+            new MutationTesting(),
+        ];
         this.levels = [
             new VotingAge(),
             new EvenOdd(),
@@ -20,7 +27,11 @@ export class Main {
             new PasswordStrength(),
             new SpeedDisplay(),
         ];
-        this.RoundType = RoundType;
+    }
+    start() {
+        this.showAboutPanel();
+        this.showIntroductionMessage();
+        this.showGameMenuMessage();
     }
     showAboutPanel() {
         const learnParagraph = new Paragraph().appendText('Learn Unit Testing with UnitTestGame.com');
@@ -31,13 +42,26 @@ export class Main {
             feedbackParagraph
         ]).show();
     }
-    start() {
-        this.showAboutPanel();
-        this.RoundType.showWelcomeMessage();
-        this.continue();
+    showIntroductionMessage() {
+        new ComputerMessage([
+            new Paragraph().appendLines([
+                'Welcome to UnitTestGame.com!',
+                'I am an AI bot specialized in Test-Driven Development and Mutation Testing.',
+                'What do you want to improve?',
+            ]),
+        ]).show();
     }
-    continue() {
-        const rounds = this.levels.map(level => new this.RoundType(level, () => this.continue()));
+    showGameMenuMessage() {
+        new HumanMessage([
+            new Paragraph().appendChildren(this.games.map(game => new Button().onClick(() => this.showWelcomeMessage(game)).appendText(`I want to improve my ${game.name} skills`))),
+        ]).show();
+    }
+    showWelcomeMessage(game) {
+        game.showWelcomeMessage();
+        this.continue(game);
+    }
+    continue(game) {
+        const rounds = this.levels.map(level => new Round(game, level, () => this.continue(game)));
         this.showHighScoresPanel(rounds);
         this.showNextRound(rounds);
     }
