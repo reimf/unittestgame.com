@@ -1,39 +1,38 @@
-import { UnitTest } from './unit_test.js'
-import { Random } from './random.js'
-import { Button, Form, Input, Paragraph } from './html.js'
-import { HumanMessage, ComputerMessage } from './frame.js'
 import { Candidate } from './candidate.js'
-import { TestResult } from './test_result.js'
-import { Level } from './level.js'
+import { HumanMessage, ComputerMessage } from './frame.js'
 import { Game } from './game.js'
+import { Button, Form, Input, Paragraph } from './html.js'
+import { Level } from './level.js'
+import { Random } from './random.js'
+import { TestResult } from './test_result.js'
+import { UnitTest } from './unit_test.js'
 
 export class Round {
-    protected readonly PERFECTSCORE = 100
-    protected readonly PENALTYINCORRECTUNITTEST = 5
-    protected readonly PENALTYHINT = 10
-    protected readonly PENALTYSUBMITWITHBUG = 20
-    protected readonly MINIMUMSCORE = 0
+    private readonly PERFECTSCORE = 100
+    private readonly PENALTYINCORRECTUNITTEST = 5
+    private readonly PENALTYHINT = 10
+    private readonly PENALTYSUBMITWITHBUG = 20
+    private readonly MINIMUMSCORE = 0
 
-    protected readonly level: Level
-    protected readonly game: Game
-    protected readonly userdefinedUnitTests: UnitTest[]
-    protected readonly coveredCandidates: Candidate[]
-    protected currentCandidate: Candidate
-    protected failingTestResult?: TestResult
-    protected score: number
+    private readonly game: Game
+    private readonly level: Level
     private readonly callback: () => void
 
-    protected readonly name: string = this.constructor.name
+    private readonly userdefinedUnitTests: UnitTest[]
+    private readonly coveredCandidates: Candidate[]
+    private currentCandidate: Candidate
+    private failingTestResult?: TestResult
+    private score: number
 
     public constructor(game: Game, level: Level, callback: () => void) {
         this.game = game
         this.level = level
+        this.callback = callback
         this.userdefinedUnitTests = []
         this.coveredCandidates = []
         this.currentCandidate = this.findSimplestWorstPassingCandidate()
         this.failingTestResult = this.findFailingTestResult()
         this.score = this.PERFECTSCORE
-        this.callback = callback
     }
 
     public get description(): string {
@@ -44,36 +43,36 @@ export class Round {
         return Number(storage.getItem(this.description))
     }
 
-    public saveScore(storage: Storage, score: number): void {
+    private saveScore(storage: Storage, score: number): void {
         if (score > this.getHighScore(storage))
             storage.setItem(this.description, score.toString())
     }
 
-    protected findWorstCandidates(candidates: Candidate[], attribute: (key: Candidate) => number): Candidate[] {
+    private findWorstCandidates(candidates: Candidate[], attribute: (key: Candidate) => number): Candidate[] {
         const attributes = candidates.map(attribute)
         const minimum = Math.min(...attributes)
         return candidates.filter(candidate => attribute(candidate) === minimum)
     }
 
-    protected findSimplestCandidates(candidates: Candidate[]): Candidate[] {
+    private findSimplestCandidates(candidates: Candidate[]): Candidate[] {
         return this.findWorstCandidates(candidates, candidate => candidate.complexity)
     }
 
-    protected findSimplestWorstPassingCandidate(): Candidate {
-        const passingCandidates = this.level.findPassingCandidates(this.userdefinedUnitTests)
+    private findSimplestWorstPassingCandidate(): Candidate {
+        const passingCandidates = this.level.candidates.filter(candidate => candidate.failCount(this.userdefinedUnitTests) == 0)
         const worstPassingCandidates = this.findWorstCandidates(passingCandidates, candidate => candidate.passCount(this.level.minimalUnitTests))
         const simplestPassingCandidates = this.findSimplestCandidates(worstPassingCandidates)
         return Random.elementFrom(simplestPassingCandidates)
     }
 
-    protected findCoveredCandidate(unitTest: UnitTest): Candidate {
+    private findCoveredCandidate(unitTest: UnitTest): Candidate {
         const passingCandidates = this.level.descendantsOfPerfectCandidate
             .filter(candidate => candidate.failCount([unitTest]) == 0)
         const simplestPassingCandidates = this.findSimplestCandidates(passingCandidates)
         return Random.elementFrom(simplestPassingCandidates)
     }
 
-    protected findFailingTestResult(): TestResult | undefined {
+    private findFailingTestResult(): TestResult | undefined {
         const failingHints = this.currentCandidate.failingTestResults(this.level.hints)
         if (failingHints.length > 0)
             return Random.elementFrom(failingHints)
@@ -89,7 +88,7 @@ export class Round {
         this.menu()
     }
 
-    protected menu(): void {
+    private menu(): void {
         this.game.showUnitTestsPanel(this.userdefinedUnitTests)
         this.game.showPanelsOnMenu(this.currentCandidate, this.level.perfectCandidate, this.coveredCandidates)
         this.game.showScorePanel(this.description, this.score)
@@ -99,7 +98,7 @@ export class Round {
             this.showMenuMessage()
     }
 
-    protected showMenuMessage(): void {
+    private showMenuMessage(): void {
         new HumanMessage([
             new Button().onClick(() => this.startAddUnitTestFlow()).appendText(`I want to add a unit test (-${this.PENALTYINCORRECTUNITTEST}% on error)`),
             new Button().onClick(() => this.showHint()).appendText(`I want to see a hint for a unit test (-${this.PENALTYHINT}%)`),
@@ -108,18 +107,18 @@ export class Round {
         ]).show()
     }
 
-    protected startAddUnitTestFlow(): void {
+    private startAddUnitTestFlow(): void {
         this.showConfirmStartUnitTestFlowMessage()
         this.showFormUnitTestMessage()
     }
 
-    protected showConfirmStartUnitTestFlowMessage(): void {
+    private showConfirmStartUnitTestFlowMessage(): void {
         new ComputerMessage([
             new Paragraph().appendText('Which unit test do you want to add?'),
         ]).show()
     }
 
-    protected showFormUnitTestMessage(): void {
+    private showFormUnitTestMessage(): void {
         const submitButton = new Input().type('submit').value('I want to add this unit test')
         const cancelButton = new Button().onClick(() => this.cancelAddUnitTestFlow()).appendText('I don\'t want to add a unit test now')
         const buttonBlock = new Paragraph().appendChild(submitButton).appendChild(cancelButton)
@@ -131,25 +130,25 @@ export class Round {
         ]).show()
     }
 
-    protected showAddUnitTestMessage(unitTest: UnitTest): void {
+    private showAddUnitTestMessage(unitTest: UnitTest): void {
         new HumanMessage([
             new Paragraph().appendText('I want to add the following unit test:'),
             new Paragraph().appendText(unitTest.toString()),
         ]).replace()
     }
 
-    protected showConfirmCancelAddUnitTestFlowMessage(): void {
+    private showConfirmCancelAddUnitTestFlowMessage(): void {
         new ComputerMessage([
             new Paragraph().appendText('Ok.'),
         ]).show()
     }
 
-    protected cancelAddUnitTestFlow(): void {
+    private cancelAddUnitTestFlow(): void {
         this.showConfirmCancelAddUnitTestFlowMessage()
         this.menu()
     }
 
-    protected addUnitTest(): void {
+    private addUnitTest(): void {
         const argumentList = this.level.parameters.map(parameter => parameter.value())
         const expected = this.level.unit.value()
         const unitTest = new UnitTest(this.level.parameters, argumentList, this.level.unit, expected)
@@ -174,7 +173,7 @@ export class Round {
         this.menu()
     }
 
-    protected showHint(): void {
+    private showHint(): void {
         if (this.failingTestResult)
             this.game.showHintMessage(this.currentCandidate, this.failingTestResult, this.PENALTYHINT)
         else
@@ -183,7 +182,7 @@ export class Round {
         this.menu()
     }
 
-    protected submit(): void {
+    private submit(): void {
         if (this.failingTestResult) {
             this.game.showBugFoundMessage(this.currentCandidate, this.failingTestResult, this.PENALTYSUBMITWITHBUG)
             this.subtractPenalty(this.PENALTYSUBMITWITHBUG)
@@ -193,7 +192,7 @@ export class Round {
             this.end()
     }
 
-    protected end(): void {
+    private end(): void {
         if (this.score === this.MINIMUMSCORE)
             this.game.showMinimumScoreEndMessage(this.score)
         else if (this.failingTestResult) {
@@ -207,7 +206,7 @@ export class Round {
         this.callback!()
     }
 
-    protected subtractPenalty(penalty: number): void {
+    private subtractPenalty(penalty: number): void {
         this.score = Math.max(this.score - penalty, this.MINIMUMSCORE)
     }
 }

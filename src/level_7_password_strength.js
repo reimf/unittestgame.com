@@ -1,7 +1,7 @@
+import { Panel } from './frame.js';
+import { Paragraph } from './html.js';
 import { Level } from './level.js';
 import { Random } from './random.js';
-import { Paragraph } from './html.js';
-import { Panel } from './frame.js';
 import { CheckboxVariable, TextVariable } from './variable.js';
 export class PasswordStrength extends Level {
     constructor() {

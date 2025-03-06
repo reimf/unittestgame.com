@@ -1,8 +1,8 @@
-import { Paragraph } from './html.js'
+import { Candidate } from './candidate.js'
 import { Panel, ComputerMessage } from './frame.js'
 import { Game } from './game.js'
+import { Paragraph } from './html.js'
 import { TestResult } from './test_result.js'
-import { Candidate } from './candidate.js'
 
 export class MutationTesting extends Game {
     public showWelcomeMessage(): void {

@@ -1,7 +1,7 @@
-import { TestResult } from './test_result.js'
 import { Candidate } from './candidate.js'
 import { Panel } from './frame.js'
 import { Paragraph } from './html.js'
+import { TestResult } from './test_result.js'
 import { UnitTest } from './unit_test.js'
 
 export abstract class Game {

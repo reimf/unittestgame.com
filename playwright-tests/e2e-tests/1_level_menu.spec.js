@@ -22,9 +22,12 @@ test.describe('level menu', () => {
         const highScoresPanel = page.getByTestId('high-scores');
         await expect(highScoresPanel).not.toBeAttached();
     });
-    test('has level menu message', async ({ page }) => {
+    test('has game menu message', async ({ page }) => {
         const messages = page.getByTestId('messages');
         const button = messages.getByRole('button');
-        await expect(button).toHaveText('I want to play TestDrivenDevelopment - Level 1 - VotingAge');
+        await expect(button).toHaveText([
+            'I want to improve my Test Driven Development skills',
+            'I want to improve my Mutation Testing skills',
+        ]);
     });
 });

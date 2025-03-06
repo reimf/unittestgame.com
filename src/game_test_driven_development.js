@@ -1,6 +1,6 @@
-import { Paragraph } from './html.js';
 import { Panel, ComputerMessage } from './frame.js';
 import { Game } from './game.js';
+import { Paragraph } from './html.js';
 export class TestDrivenDevelopment extends Game {
     showWelcomeMessage() {
         new ComputerMessage([

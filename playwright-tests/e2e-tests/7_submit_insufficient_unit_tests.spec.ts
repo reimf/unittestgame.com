@@ -3,7 +3,8 @@ import { test, expect } from '@playwright/test'
 test.describe('submit insufficient unit test', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('http://localhost:5500/')
-    await page.getByRole('button', { name: /VotingAge/i }).click()
+    await page.getByRole('button', { name: 'I want to improve my Test Driven Development skills' }).click()
+    await page.getByRole('button', { name: 'I want to play Test Driven Development - Level 1 - Voting Age' }).click()
     await page.getByRole('button', { name: 'I want to submit the unit tests'}).click()
   })
 

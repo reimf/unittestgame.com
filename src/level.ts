@@ -1,7 +1,7 @@
+import { Candidate } from './candidate.js'
+import { Random } from './random.js'
 import { UnitTest } from './unit_test.js'
 import { Variable } from './variable.js'
-import { Random } from './random.js'
-import { Candidate } from './candidate.js'
 
 export abstract class Level {
     protected abstract getParameters(): Variable[]
@@ -26,10 +26,6 @@ export abstract class Level {
         this.index = index
         this.checkPerfectCandidates()
         this.checkAllMinimalUnitTestsAreNeeded()
-    }
-
-    public findPassingCandidates(unitTests: UnitTest[]): Candidate[] {
-        return this.candidates.filter(candidate => candidate.failCount(unitTests) == 0)
     }
 
     private *generateCandidates(listOfListOfLines: string[][], lines: string[], indices: number[]): Generator<Candidate> {
@@ -75,7 +71,7 @@ export abstract class Level {
     }
 
     private findPerfectCandidates(): Candidate[] {
-        const perfectCandidates = this.findPassingCandidates(this.minimalUnitTests)
+        const perfectCandidates = this.candidates.filter(candidate => candidate.failCount(this.minimalUnitTests) == 0)
         if (perfectCandidates.length === 0)
             throw new Error(`There is no perfect function for level ${this.name}.`)
         return perfectCandidates
@@ -90,7 +86,7 @@ export abstract class Level {
     private checkAllMinimalUnitTestsAreNeeded(): void {
         for (const unitTest of this.minimalUnitTests) {
             const allMinusOneUnitTests = this.minimalUnitTests.filter(otherUnitTest => otherUnitTest !== unitTest)
-            const almostPerfectCandidates = this.findPassingCandidates(allMinusOneUnitTests)
+            const almostPerfectCandidates = this.candidates.filter(candidate => candidate.failCount(allMinusOneUnitTests) == 0)
             if (almostPerfectCandidates.length === this.perfectCandidates.length) {
                 throw new Error(`Unit test ${unitTest} is not needed.\n${almostPerfectCandidates[0]}`)
             }

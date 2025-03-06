@@ -1,6 +1,6 @@
-import { Level } from './level.js'
-import { Paragraph } from './html.js'
 import { Panel } from './frame.js'
+import { Paragraph } from './html.js'
+import { Level } from './level.js'
 import { Variable, TextVariable, NumberVariable } from './variable.js'
 
 export class SpeedDisplay extends Level {

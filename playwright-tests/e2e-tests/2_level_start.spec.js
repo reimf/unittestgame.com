@@ -2,7 +2,8 @@ import { test, expect } from '@playwright/test';
 test.describe('level start', () => {
     test.beforeEach(async ({ page }) => {
         await page.goto('http://localhost:5500/');
-        await page.getByRole('button', { name: /VotingAge/i }).click();
+        await page.getByRole('button', { name: 'I want to improve my Test Driven Development skills' }).click();
+        await page.getByRole('button', { name: 'I want to play Test Driven Development - Level 1 - Voting Age' }).click();
     });
     test('has no about panel', async ({ page }) => {
         const aboutPanel = page.getByTestId('about');

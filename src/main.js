@@ -1,5 +1,7 @@
-import { Button, Paragraph, Anchor } from './html.js';
 import { Panel, ComputerMessage, HumanMessage } from './frame.js';
+import { MutationTesting } from './game_mutation_testing.js';
+import { TestDrivenDevelopment } from './game_test_driven_development.js';
+import { Button, Paragraph, Anchor } from './html.js';
 import { VotingAge } from './level_1_voting_age.js';
 import { EvenOdd } from './level_2_even_odd.js';
 import { FizzBuzz } from './level_3_fizz_buzz.js';
@@ -9,8 +11,6 @@ import { FloatFormat } from './level_6_float_format.js';
 import { PasswordStrength } from './level_7_password_strength.js';
 import { SpeedDisplay } from './level_8_speed_display.js';
 import { Round } from './round.js';
-import { TestDrivenDevelopment } from './game_test_driven_development.js';
-import { MutationTesting } from './game_mutation_testing.js';
 export class Main {
     constructor() {
         this.games = [

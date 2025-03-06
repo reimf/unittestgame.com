@@ -1,6 +1,6 @@
-import { Level } from './level.js';
-import { Paragraph } from './html.js';
 import { Panel } from './frame.js';
+import { Paragraph } from './html.js';
+import { Level } from './level.js';
 import { RadioVariable, NumberVariable } from './variable.js';
 export class TriangleType extends Level {
     constructor() {

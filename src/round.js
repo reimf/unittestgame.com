@@ -1,8 +1,8 @@
-import { UnitTest } from './unit_test.js';
-import { Random } from './random.js';
-import { Button, Form, Input, Paragraph } from './html.js';
 import { HumanMessage, ComputerMessage } from './frame.js';
+import { Button, Form, Input, Paragraph } from './html.js';
+import { Random } from './random.js';
 import { TestResult } from './test_result.js';
+import { UnitTest } from './unit_test.js';
 export class Round {
     constructor(game, level, callback) {
         this.PERFECTSCORE = 100;
@@ -10,15 +10,14 @@ export class Round {
         this.PENALTYHINT = 10;
         this.PENALTYSUBMITWITHBUG = 20;
         this.MINIMUMSCORE = 0;
-        this.name = this.constructor.name;
         this.game = game;
         this.level = level;
+        this.callback = callback;
         this.userdefinedUnitTests = [];
         this.coveredCandidates = [];
         this.currentCandidate = this.findSimplestWorstPassingCandidate();
         this.failingTestResult = this.findFailingTestResult();
         this.score = this.PERFECTSCORE;
-        this.callback = callback;
     }
     get description() {
         return `${this.game.name} - Level ${this.level.index} - ${this.level.name}`;
@@ -39,7 +38,7 @@ export class Round {
         return this.findWorstCandidates(candidates, candidate => candidate.complexity);
     }
     findSimplestWorstPassingCandidate() {
-        const passingCandidates = this.level.findPassingCandidates(this.userdefinedUnitTests);
+        const passingCandidates = this.level.candidates.filter(candidate => candidate.failCount(this.userdefinedUnitTests) == 0);
         const worstPassingCandidates = this.findWorstCandidates(passingCandidates, candidate => candidate.passCount(this.level.minimalUnitTests));
         const simplestPassingCandidates = this.findSimplestCandidates(worstPassingCandidates);
         return Random.elementFrom(simplestPassingCandidates);

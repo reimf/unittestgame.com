@@ -6,10 +6,7 @@ export class UnitTest {
         this.expected = expected;
     }
     toStringWithResult(result) {
-        const argumentsText = this.argumentList.map((value, index) => {
-            const parameter = this.parameters[index];
-            return parameter.format(value);
-        }).join(', ');
+        const argumentsText = this.argumentList.map((value, index) => this.parameters[index].format(value)).join(', ');
         return `${this.unit.name}(${argumentsText}) === ${this.unit.format(result)}`;
     }
     toString() {
