@@ -82,18 +82,14 @@ export class MutationTesting extends Game {
     }
     showUnsuccessfulEndMessage(score) {
         new ComputerMessage([
-            new Paragraph().appendLines([
-                'The function is NOT fully tested.',
-                `Your final score is ${score}%.`
-            ]),
+            new Paragraph().appendText('The function is NOT fully tested.'),
+            new Paragraph().appendText(`Your final score is ${score}%.`),
         ]).show();
     }
     showSuccessfulEndMessage(score) {
         new ComputerMessage([
-            new Paragraph().appendLines([
-                'The function is fully tested.',
-                `Your final score is ${score}%.`
-            ]),
+            new Paragraph().appendText('The function is fully tested.'),
+            new Paragraph().appendText(`Your final score is ${score}%.`),
         ]).show();
     }
 }

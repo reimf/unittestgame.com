@@ -9,6 +9,7 @@
     --panel-background: #FFFFFF;
     --focus-background: #FF6600;
     --emphasis-background: #FFFF00;
+    --shadow: #00000066;
 }
 
 * {
@@ -19,7 +20,7 @@ a {
     border-radius: 0.25rem;
     color: inherit;
     display: inline-block;
-    padding: 0.2rem;
+    padding: 0.25rem;
 }
 
 body {
@@ -33,7 +34,7 @@ button {
     background-color: var(--input-background);
     border: none;
     border-radius: 0.5rem;
-    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0.25rem 0.5rem var(--shadow);
     color: var(--light-text);
     display: block;
     font-family: inherit;
@@ -43,15 +44,17 @@ button {
     text-align: left;
     width: 100%;
 
-    &.cancel {
+    &.secondary {
         background-color: var(--general-background);
         color: var(--dark-text);
+    }
+
+    &.cancel {
         display: inline;
         height: 2.5rem;
         margin: 0;
         padding: 0 1rem;
         width: auto;
-
     }
 }
 
@@ -101,7 +104,7 @@ input {
         background-color: var(--input-background);
         border: none;
         border-radius: 0.5rem;
-        box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.4);
+        box-shadow: 0 0.25rem 0.5rem var(--shadow);
         color: var(--light-text);
         font-family: inherit;
         font-size: inherit;
@@ -143,7 +146,7 @@ label {
 p {
     white-space: pre-line;
 
-    &:has(button) {
+    .buttonrow {
         display: flex;
         gap: 0.75rem;
     }

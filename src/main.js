@@ -64,7 +64,7 @@ export class Main {
     continue(game) {
         const rounds = this.levels.map(level => new Round(game, level, () => this.continue(game)));
         this.showHighScoresPanel(rounds);
-        this.showNextRound(rounds);
+        this.showNextRound(rounds, this.games.filter(otherGame => otherGame !== game));
     }
     showHighScoresPanel(rounds) {
         const highScores = rounds
@@ -73,17 +73,23 @@ export class Main {
         if (highScores.length > 0)
             new Panel('High Scores', highScores).show();
     }
-    showNextRound(rounds) {
+    showNextRound(rounds, otherGames) {
         const round = rounds.find(round => round.getHighScore(localStorage) === 0);
+        const gameButtons = otherGames.map(game => new Button()
+            .onClick(() => this.continue(game))
+            .appendText(`I want to improve my ${game.name} skills`)
+            .addClass('secondary'));
         new HumanMessage([
             round
                 ? new Button().onClick(() => this.playRound(round)).appendText(`I want to play ${round.description}`)
-                : new Button().onClick(() => window.close()).appendText('Quit UnitTestGame.com')
+                : new Button().onClick(() => window.close()).appendText('Quit UnitTestGame.com'),
+            ...gameButtons,
         ]).show();
     }
     playRound(round) {
         new Panel('About').remove();
         new Panel('High Scores').remove();
+        new Panel('Switch Game').remove();
         round.play();
     }
 }

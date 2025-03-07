@@ -86,18 +86,14 @@ export class TestDrivenDevelopment extends Game {
     }
     showUnsuccessfulEndMessage(score) {
         new ComputerMessage([
-            new Paragraph().appendLines([
-                'The current function is NOT according to the specification.',
-                `Your final score is ${score}%.`
-            ]),
+            new Paragraph().appendText('The current function is NOT according to the specification.'),
+            new Paragraph().appendText(`Your final score is ${score}%.`),
         ]).show();
     }
     showSuccessfulEndMessage(score) {
         new ComputerMessage([
-            new Paragraph().appendLines([
-                'The current function is according to the specification.',
-                `Your final score is ${score}%.`
-            ]),
+            new Paragraph().appendText('The current function is according to the specification.'),
+            new Paragraph().appendText(`Your final score is ${score}%.`),
         ]).show();
     }
 }
