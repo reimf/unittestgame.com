@@ -31,7 +31,7 @@ export class Main {
     start() {
         this.showAboutPanel();
         this.showIntroductionMessage();
-        this.showGameMenuMessage();
+        this.showWelcomeMessage(this.games[0]);
     }
     showAboutPanel() {
         const learnParagraph = new Paragraph().appendText('Learn to write effective unit tests.');
@@ -50,11 +50,6 @@ export class Main {
                 'I am an AI bot specialized in Test-Driven Development and Mutation Testing.',
                 'What do you want to improve?',
             ]),
-        ]).show();
-    }
-    showGameMenuMessage() {
-        new HumanMessage([
-            new Paragraph().appendChildren(this.games.map(game => new Button().onClick(() => this.showWelcomeMessage(game)).appendText(`I want to improve my ${game.name} skills`))),
         ]).show();
     }
     showWelcomeMessage(game) {
@@ -86,10 +81,11 @@ export class Main {
             ...gameButtons,
         ]).show();
     }
+    removeAllPanels() {
+        document.querySelectorAll('#panels > section').forEach(panel => panel.remove());
+    }
     playRound(round) {
-        new Panel('About').remove();
-        new Panel('High Scores').remove();
-        new Panel('Switch Game').remove();
+        this.removeAllPanels();
         round.play();
     }
 }

@@ -84,11 +84,12 @@ input {
 
     &[type="checkbox"] {
         border-radius: 0.25rem;
-        margin: 0 0.75rem 0 0.25rem;
-        vertical-align: 0.1rem;
+        margin: 0 0.75rem 0 0.5rem;
+        vertical-align: 0.05rem;
 
         &:focus {
-            outline: none;
+            outline: none !important;
+            border: 1rem solid blue;
         }
     }
 
@@ -139,14 +140,14 @@ label {
     &:has(input[type="checkbox"]) {
         background-color: var(--input-background);
         color: var(--light-text);
-        padding-right: 0.25rem;
+        padding-right: 0.5rem;
     }
 }
 
 p {
     white-space: pre-line;
 
-    .buttonrow {
+    &.buttonrow {
         display: flex;
         gap: 0.75rem;
     }

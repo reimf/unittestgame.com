@@ -15,7 +15,7 @@ export class Round {
         this.callback = callback;
         this.userdefinedUnitTests = [];
         this.coveredCandidates = [];
-        this.currentCandidate = this.findSimplestWorstPassingCandidate();
+        this.currentCandidate = this.findSimplestPassingCandidate();
         this.failingTestResult = this.findFailingTestResult();
         this.score = this.PERFECTSCORE;
     }
@@ -37,14 +37,16 @@ export class Round {
     findSimplestCandidates(candidates) {
         return this.findWorstCandidates(candidates, candidate => candidate.complexity);
     }
-    findSimplestWorstPassingCandidate() {
+    findSimplestPassingCandidate() {
         const passingCandidates = this.level.candidates.filter(candidate => candidate.failCount(this.userdefinedUnitTests) == 0);
-        const worstPassingCandidates = this.findWorstCandidates(passingCandidates, candidate => candidate.passCount(this.level.minimalUnitTests));
-        const simplestPassingCandidates = this.findSimplestCandidates(worstPassingCandidates);
+        const passingImperfectCandidates = passingCandidates.filter(candidate => !this.level.perfectCandidates.includes(candidate));
+        if (passingImperfectCandidates.length === 0)
+            return Random.elementFrom(this.level.perfectCandidates);
+        const simplestPassingCandidates = this.findSimplestCandidates(passingImperfectCandidates);
         return Random.elementFrom(simplestPassingCandidates);
     }
     findCoveredCandidate(unitTest) {
-        const passingCandidates = this.level.descendantsOfPerfectCandidate
+        const passingCandidates = this.level.amputeesOfPerfectCandidate
             .filter(candidate => candidate.failCount([unitTest]) == 0);
         const simplestPassingCandidates = this.findSimplestCandidates(passingCandidates);
         return Random.elementFrom(simplestPassingCandidates);
@@ -129,7 +131,7 @@ export class Round {
                 this.game.showUselessUnitTestMessage();
             else {
                 this.game.showUsefulUnitTestMessage();
-                this.currentCandidate = this.findSimplestWorstPassingCandidate();
+                this.currentCandidate = this.findSimplestPassingCandidate();
                 this.failingTestResult = this.findFailingTestResult();
             }
         }

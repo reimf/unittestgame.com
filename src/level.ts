@@ -19,7 +19,7 @@ export abstract class Level {
     public readonly minimalUnitTests: UnitTest[] = [...this.generateMinimalUnitTests()]
     public readonly perfectCandidates: Candidate[] = this.findPerfectCandidates()
     public readonly perfectCandidate: Candidate = Random.elementFrom(this.perfectCandidates)
-    public readonly descendantsOfPerfectCandidate: Candidate[] = this.findDescendantsOfPerfectCandidate()
+    public readonly amputeesOfPerfectCandidate: Candidate[] = this.findamputeesOfPerfectCandidate()
     public readonly hints: UnitTest[] = [...this.generateHints()]
 
     public constructor(index: number) {
@@ -32,8 +32,10 @@ export abstract class Level {
         if (listOfListOfLines.length > 0) {
             const [firstListOfLines, ...remainingListOfListOfLines] = listOfListOfLines
             for (const line of firstListOfLines) {
-                const newLines = [...lines, line]
-                const newIndices = [...indices, line === '' ? 0 : firstListOfLines.indexOf(line) + 1]
+                const newLine = line === '' && remainingListOfListOfLines.length === 0 ? 'return undefined' : line
+                const newLines = [...lines, newLine]
+                const newIndex = line === '' ? 0 : firstListOfLines.indexOf(line) + 1
+                const newIndices = [...indices, newIndex]
                 yield* this.generateCandidates(remainingListOfListOfLines, newLines, newIndices)
             }
         }
@@ -51,7 +53,7 @@ export abstract class Level {
         return new Candidate(indentedLines, indices)
     }
 
-    private findDescendantsOfPerfectCandidate(): Candidate[] {
+    private findamputeesOfPerfectCandidate(): Candidate[] {
         const perfectIndices = this.perfectCandidate.indices
         return this.candidates.filter(candidate =>
             candidate.indices.every((index, i) => index === 0 || index === perfectIndices[i])

@@ -32,7 +32,7 @@ export class Main {
     public start(): void {
         this.showAboutPanel()
         this.showIntroductionMessage()
-        this.showGameMenuMessage()
+        this.showWelcomeMessage(this.games[0])
     }
 
     private showAboutPanel(): void {
@@ -53,14 +53,6 @@ export class Main {
                 'I am an AI bot specialized in Test-Driven Development and Mutation Testing.',
                 'What do you want to improve?',
             ]),
-        ]).show()
-    }
-
-    private showGameMenuMessage(): void {
-        new HumanMessage([
-            new Paragraph().appendChildren(
-                this.games.map(game => new Button().onClick(() => this.showWelcomeMessage(game)).appendText(`I want to improve my ${game.name} skills`)),
-            ),
         ]).show()
     }
 
@@ -101,10 +93,12 @@ export class Main {
         ]).show()
     }
 
+    private removeAllPanels(): void {
+        document.querySelectorAll('#panels > section').forEach(panel => panel.remove())
+    }
+
     private playRound(round: Round): void {
-        new Panel('About').remove()
-        new Panel('High Scores').remove()
-        new Panel('Switch Game').remove()
+        this.removeAllPanels()
         round.play()
     }
 }
