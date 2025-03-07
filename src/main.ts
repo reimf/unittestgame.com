@@ -36,9 +36,10 @@ export class Main {
     }
 
     private showAboutPanel(): void {
-        const learnParagraph = new Paragraph().appendText('Learn Unit Testing with UnitTestGame.com')
-        const anchor = new Anchor().href('mailto:feedback@unittestgame.com').appendText('feedback@unittestgame.com')
-        const feedbackParagraph = new Paragraph().appendText('Please send us ').appendChild(anchor)
+        const learnParagraph = new Paragraph().appendText('Learn to write effective unit tests.')
+        const mailto = new Anchor().href('mailto:feedback@unittestgame.com').appendText('feedback')
+        const site = new Anchor().href('https://unittestgame.com').appendText('UnitTestGame.com')
+        const feedbackParagraph = new Paragraph().appendText('Please send us ').appendChild(mailto).appendText(' at ').appendChild(site)
         new Panel('About', [
             learnParagraph,
             feedbackParagraph

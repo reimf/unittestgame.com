@@ -91,7 +91,7 @@ export class Round {
     }
     showFormUnitTestMessage() {
         const submitButton = new Input().type('submit').value('I want to add this unit test');
-        const cancelButton = new Button().onClick(() => this.cancelAddUnitTestFlow()).appendText('I don\'t want to add a unit test now');
+        const cancelButton = new Button().onClick(() => this.cancelAddUnitTestFlow()).appendText('I don\'t want to add a unit test now').addClass('cancel');
         const buttonBlock = new Paragraph().appendChild(submitButton).appendChild(cancelButton);
         new HumanMessage([
             new Form()

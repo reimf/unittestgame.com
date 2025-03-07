@@ -2,7 +2,7 @@
     --dark-text: #333333;
     --light-text: #FFFFFF;
     --panel-heading-background: #880088;
-    --input-background: #6699CC;
+    --input-background: #009933;
     --human-message-background: #FFEECC;
     --general-background: #ECE5DD;
     --computer-message-background: #FFFFFF;
@@ -11,18 +11,15 @@
     --emphasis-background: #FFFF00;
 }
 
-a:focus, input:focus, button:enabled:focus, label:has(input[type="checkbox"]:focus), label:has(input[type="radio"]:focus) {
-    outline: 0.25rem solid var(--focus-background);
-    outline-offset: 0.25rem;
-}
-
-a:hover, input:hover, button:enabled:hover, label:has(input[type="checkbox"]:hover), label:has(input[type="radio"]:hover) {
-    background-color: var(--focus-background) !important;
-    color: var(--light-text) !important;
-}
-
 * {
     box-sizing: border-box;
+}
+
+a {
+    border-radius: 0.25rem;
+    color: inherit;
+    display: inline-block;
+    padding: 0.2rem;
 }
 
 body {
@@ -30,11 +27,6 @@ body {
     color: var(--dark-text);
     font-family: monospace;
     margin: 0;
-}
-
-a {
-    border-radius: 0.25rem;
-    color: inherit;
 }
 
 button {
@@ -50,10 +42,8 @@ button {
     padding: 0.75rem;
     text-align: left;
     width: 100%;
-}
 
-form {
-    button {
+    &.cancel {
         background-color: var(--general-background);
         color: var(--dark-text);
         display: inline;
@@ -61,15 +51,22 @@ form {
         margin: 0;
         padding: 0 1rem;
         width: auto;
-    }
 
-    p:has(button) {
-        display: flex;
-        gap: 0.75rem;
     }
+}
 
-    input[type="text"],
-    input[type="number"] {
+code {
+    display: block;
+    white-space: pre;
+
+    .covered { 
+        background-color: var(--emphasis-background);
+        color: var(--dark-text);
+    }
+}
+
+input {
+    &[type="text"], &[type="number"] {
         background-color: var(--input-background);
         border: none;
         border-radius: 0.5rem;
@@ -82,7 +79,7 @@ form {
         width: 8rem;
     }
 
-    input[type="checkbox"] {
+    &[type="checkbox"] {
         border-radius: 0.25rem;
         margin: 0 0.75rem 0 0.25rem;
         vertical-align: 0.1rem;
@@ -92,18 +89,19 @@ form {
         }
     }
 
-    input[type="radio"] {
+    &[type="radio"] {
         margin: 0 0.5rem 0 0.75rem;
 
         &:focus {
-            outline: none;
+            outline: none !important;
         }
     }
 
-    input[type="submit"] {
+    &[type="submit"] {
         background-color: var(--input-background);
         border: none;
         border-radius: 0.5rem;
+        box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.4);
         color: var(--light-text);
         font-family: inherit;
         font-size: inherit;
@@ -111,34 +109,44 @@ form {
         margin: 0;
         padding: 0 1rem;
     }
+}
 
-    label {
-        border-radius: 0.5rem;
-        display: inline-block;
-        height: 2rem;
-        line-height: 2rem;
+label {
+    border-radius: 0.5rem;
+    display: inline-block;
+    height: 2rem;
+    line-height: 2rem;
 
-        &:has(input[type="radio"]) {
+    &:has(input[type="radio"]) {
+        background-color: var(--general-background);
+        color: var(--dark-text);
+        margin-left: 0.75rem;
+        padding-right: 0.75rem;
+
+        &:has(input:checked) {
             background-color: var(--input-background);
             color: var(--light-text);
-            margin-left: 0.75rem;
-            padding-right: 0.75rem;
-
-            &:hover {
-                cursor: pointer;
-            }
         }
 
-        &:has(input[type="checkbox"]) {
-            background-color: var(--input-background);
-            color: var(--light-text);
-            padding-right: 0.25rem;
+        &:hover {
+            cursor: pointer;
         }
+    }
+
+    &:has(input[type="checkbox"]) {
+        background-color: var(--input-background);
+        color: var(--light-text);
+        padding-right: 0.25rem;
     }
 }
 
 p {
     white-space: pre-line;
+
+    &:has(button) {
+        display: flex;
+        gap: 0.75rem;
+    }
 }
 
 section {
@@ -158,15 +166,17 @@ section {
         margin: 0 -0.75rem 0.75rem -0.75rem;
         padding: 0.75rem;
     }
+}
 
-    code {
-        display: block;
-        white-space: pre;
+a, button, input, label:has(input[type="checkbox"]), label:has(input[type="radio"]) {
+    &:focus-within {
+        outline: 0.25rem solid var(--focus-background);
+        outline-offset: 0.25rem;
+    }
 
-        .covered { 
-            background-color: var(--emphasis-background);
-            color: var(--dark-text);
-        }
+    &:hover {
+        background-color: var(--focus-background) !important;
+        color: var(--light-text) !important;
     }
 }
 
