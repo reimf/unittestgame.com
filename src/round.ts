@@ -12,6 +12,7 @@ export class Round {
     private readonly PENALTYINCORRECTUNITTEST = 5
     private readonly PENALTYHINT = 10
     private readonly PENALTYSUBMITWITHBUG = 20
+    private readonly PENALTYREDUNDANTUNITTEST = 5
     private readonly MINIMUMSCORE = 0
 
     private readonly game: Game
@@ -86,7 +87,7 @@ export class Round {
 
     public play(): void {
         this.game.showPanelsOnPlay(this.level.perfectCandidate, this.coveredCandidates, this.level.showSpecificationPanel)
-        this.game.showContractMessage()
+        this.game.showWelcomeMessage()
         this.menu()
     }
 
@@ -102,10 +103,10 @@ export class Round {
 
     private showMenuMessage(): void {
         new HumanMessage([
-            new Button().onClick(() => this.startAddUnitTestFlow()).appendText(`I want to add a unit test (-${this.PENALTYINCORRECTUNITTEST}% on error)`),
-            new Button().onClick(() => this.showHint()).appendText(`I want to see a hint for a unit test (-${this.PENALTYHINT}%)`),
-            new Button().onClick(() => this.submit()).appendText(`I want to submit the unit tests (-${this.PENALTYSUBMITWITHBUG}% on error)`),
-            new Button().onClick(() => this.end()).appendText(`I want to exit this level (${this.MINIMUMSCORE}% on error)`),
+            new Button().onClick(() => this.startAddUnitTestFlow()).appendText(`I want to add a unit test`),
+            new Button().onClick(() => this.showHint()).appendText(`I want to see a hint for a unit test`),
+            new Button().onClick(() => this.submit()).appendText(`I want to submit the unit tests`),
+            new Button().onClick(() => this.end()).appendText(`I want to exit this level`),
         ]).show()
     }
 
@@ -202,8 +203,15 @@ export class Round {
             this.game.showScorePanel(this.description, this.score)
             this.game.showUnsuccessfulEndMessage(this.score)
         }
-        else
-            this.game.showSuccessfulEndMessage(this.score)
+        else {
+            const numberOfRedundantUnitTests = this.userdefinedUnitTests.length - this.level.minimalUnitTests.length
+            if (numberOfRedundantUnitTests > 0) {
+                this.subtractPenalty(numberOfRedundantUnitTests * this.PENALTYREDUNDANTUNITTEST)
+                this.game.showRedundantUnitTestsEndMessage(this.score, numberOfRedundantUnitTests, this.PENALTYREDUNDANTUNITTEST)
+            }
+            else
+                this.game.showSuccessfulEndMessage(this.score)
+        }
         this.saveScore(localStorage, this.score)
         this.callback!()
     }

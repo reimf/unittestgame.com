@@ -1,29 +1,24 @@
 import { Panel, ComputerMessage } from './frame.js';
 import { Game } from './game.js';
-import { Paragraph } from './html.js';
+import { Em, Paragraph } from './html.js';
 export class TestDrivenDevelopment extends Game {
     showWelcomeMessage() {
         new ComputerMessage([
-            new Paragraph().appendLines([
-                'You write failing unit tests.',
-                'After adding each unit test I write a function that passes.',
-                'Let\'s go next level!',
-            ]),
+            new Paragraph()
+                .appendText('You read the ')
+                .appendChild(new Em().appendText('Specification'))
+                .appendText(' and write ')
+                .appendChild(new Em().appendText('Unit Tests'))
+                .appendText(' that fail the ')
+                .appendChild(new Em().appendText('Current Function'))
+                .appendText('. ')
+                .appendText('After adding a unit test, I rewrite the function such that it passes. ')
+                .appendText('Submit the unit tests when you think the function is according to the specification. ')
+                .appendText('If you are wrong, I show a unit test that is correct, but does NOT pass the function.')
         ]).show();
     }
     showPanelsOnPlay(perfectCandidate, coveredCandidates, showSpecificationPanel) {
         showSpecificationPanel();
-    }
-    showContractMessage() {
-        new ComputerMessage([
-            new Paragraph().appendLines([
-                'In the sidebar you see the specification,',
-                'the unit tests you have written (none yet) and',
-                'my take at the function.',
-                'Add failing unit tests and I will improve the function such that it passes.',
-                'Submit the unit tests if the function is according to the specification.',
-            ]),
-        ]).show();
     }
     showCurrentCandidatePanel(currentCandidate) {
         new Panel('Current Function', [
@@ -87,6 +82,14 @@ export class TestDrivenDevelopment extends Game {
     showUnsuccessfulEndMessage(score) {
         new ComputerMessage([
             new Paragraph().appendText('The current function is NOT according to the specification.'),
+            new Paragraph().appendText(`Your final score is ${score}%.`),
+        ]).show();
+    }
+    showRedundantUnitTestsEndMessage(score, numberOfRedundantUnitTests, penaltyRedundantUnitTest) {
+        new ComputerMessage([
+            new Paragraph().appendText('The current function is according to the specification.'),
+            new Paragraph().appendText(`You needed ${numberOfRedundantUnitTests} more unit tests than needed.`),
+            new Paragraph().appendText(`The cost for an extra unit test is ${penaltyRedundantUnitTest}%.`),
             new Paragraph().appendText(`Your final score is ${score}%.`),
         ]).show();
     }

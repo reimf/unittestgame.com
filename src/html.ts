@@ -140,3 +140,9 @@ export class Div extends Html {
         super('div')
     }
 }
+
+export class Em extends Html {
+    public constructor() {
+        super('em')
+    }
+}

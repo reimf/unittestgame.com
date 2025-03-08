@@ -31,10 +31,10 @@ export class Main {
     start() {
         this.showAboutPanel();
         this.showIntroductionMessage();
-        this.showWelcomeMessage(this.games[0]);
+        this.continue();
     }
     showAboutPanel() {
-        const learnParagraph = new Paragraph().appendText('Learn to write effective unit tests.');
+        const learnParagraph = new Paragraph().appendText('Learn to write effective unit tests using Test Driven Development and Mutation Testing.');
         const mailto = new Anchor().href('mailto:feedback@unittestgame.com').appendText('feedback');
         const site = new Anchor().href('https://unittestgame.com').appendText('UnitTestGame.com');
         const feedbackParagraph = new Paragraph().appendText('Please send us ').appendChild(mailto).appendText(' at ').appendChild(site);
@@ -52,34 +52,26 @@ export class Main {
             ]),
         ]).show();
     }
-    showWelcomeMessage(game) {
-        game.showWelcomeMessage();
-        this.continue(game);
-    }
-    continue(game) {
-        const rounds = this.levels.map(level => new Round(game, level, () => this.continue(game)));
+    continue() {
+        const rounds = this.games.map(game => this.levels.map(level => new Round(game, level, () => this.continue())));
         this.showHighScoresPanel(rounds);
-        this.showNextRound(rounds, this.games.filter(otherGame => otherGame !== game));
+        this.showNextRound(rounds);
     }
     showHighScoresPanel(rounds) {
-        const highScores = rounds
+        const highScores = rounds.flatMap(roundsPerGame => roundsPerGame
             .filter(round => round.getHighScore(localStorage) > 0)
-            .map(round => new Paragraph().appendText(`${round.description}: ${round.getHighScore(localStorage)}%`));
+            .map(round => new Paragraph().appendText(`${round.description}: ${round.getHighScore(localStorage)}%`)));
         if (highScores.length > 0)
             new Panel('High Scores', highScores).show();
     }
-    showNextRound(rounds, otherGames) {
-        const round = rounds.find(round => round.getHighScore(localStorage) === 0);
-        const gameButtons = otherGames.map(game => new Button()
-            .onClick(() => this.continue(game))
-            .appendText(`I want to improve my ${game.name} skills`)
-            .addClass('secondary'));
-        new HumanMessage([
-            round
-                ? new Button().onClick(() => this.playRound(round)).appendText(`I want to play ${round.description}`)
-                : new Button().onClick(() => window.close()).appendText('Quit UnitTestGame.com'),
-            ...gameButtons,
-        ]).show();
+    showNextRound(rounds) {
+        const nextRoundButtons = rounds
+            .map(roundsPerGame => roundsPerGame.find(round => round.getHighScore(localStorage) === 0))
+            .filter(round => round !== undefined)
+            .map(round => new Button().onClick(() => this.playRound(round)).appendText(`I want to play ${round.description}`));
+        new HumanMessage(nextRoundButtons.length > 0
+            ? nextRoundButtons
+            : [new Button().onClick(() => window.close()).appendText('Quit UnitTestGame.com')]).show();
     }
     removeAllPanels() {
         document.querySelectorAll('#panels > section').forEach(panel => panel.remove());

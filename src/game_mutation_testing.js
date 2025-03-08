@@ -1,29 +1,22 @@
 import { Panel, ComputerMessage } from './frame.js';
 import { Game } from './game.js';
-import { Paragraph } from './html.js';
+import { Em, Paragraph } from './html.js';
 export class MutationTesting extends Game {
     showWelcomeMessage() {
         new ComputerMessage([
-            new Paragraph().appendLines([
-                'You write passing unit tests for a function and I highlight the lines covered.',
-                'After submitting I check to see if the function is fully tested.',
-                'If not, I find a mutation of the function that is NOT correct, but passes your unit tests.',
-                'Let\'s go next level!',
-            ]),
+            new Paragraph()
+                .appendText('You study ')
+                .appendChild(new Em().appendText('The Function'))
+                .appendText(' and write ')
+                .appendChild(new Em().appendText('Unit Tests'))
+                .appendText(' that pass the function. ')
+                .appendText('After adding a unit test, I highlight the lines covered. ')
+                .appendText('Submit the unit tests when you think the function is fully covered. ')
+                .appendText('If you are wrong, I show a mutation of the function that is NOT correct, but passes your unit tests.')
         ]).show();
     }
     showPanelsOnPlay(perfectCandidate, coveredCandidates, showSpecificationPanel) {
         this.showCodeCoveragePanel(perfectCandidate, coveredCandidates);
-    }
-    showContractMessage() {
-        new ComputerMessage([
-            new Paragraph().appendLines([
-                'In the sidebar you see a function and',
-                'the unit tests you have written (none yet).',
-                'Add passing unit tests until you think the function is fully tested.',
-                'Submit the unit tests and I will do some mutation testing to see if you were right.',
-            ]),
-        ]).show();
     }
     showCodeCoveragePanel(perfectCandidate, coveredCandidates) {
         new Panel('The Function', [
@@ -83,6 +76,14 @@ export class MutationTesting extends Game {
     showUnsuccessfulEndMessage(score) {
         new ComputerMessage([
             new Paragraph().appendText('The function is NOT fully tested.'),
+            new Paragraph().appendText(`Your final score is ${score}%.`),
+        ]).show();
+    }
+    showRedundantUnitTestsEndMessage(score, numberOfRedundantUnitTests, penaltyRedundantUnitTest) {
+        new ComputerMessage([
+            new Paragraph().appendText('The function is fully tested.'),
+            new Paragraph().appendText(`You needed ${numberOfRedundantUnitTests} more unit tests than needed.`),
+            new Paragraph().appendText(`The cost for an extra unit test is ${penaltyRedundantUnitTest}%.`),
             new Paragraph().appendText(`Your final score is ${score}%.`),
         ]).show();
     }

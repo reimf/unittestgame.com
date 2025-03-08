@@ -112,3 +112,8 @@ export class Div extends Html {
         super('div');
     }
 }
+export class Em extends Html {
+    constructor() {
+        super('em');
+    }
+}

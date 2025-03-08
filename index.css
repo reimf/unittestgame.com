@@ -20,13 +20,13 @@ a {
     border-radius: 0.25rem;
     color: inherit;
     display: inline-block;
-    padding: 0.25rem;
 }
 
 body {
     background-color: var(--general-background);
     color: var(--dark-text);
     font-family: monospace;
+    line-height: 1.1rem;
     margin: 0;
 }
 
@@ -66,6 +66,15 @@ code {
         background-color: var(--emphasis-background);
         color: var(--dark-text);
     }
+}
+
+em {
+    background-color: var(--panel-heading-background);
+    border-radius: 0.25rem 0.25rem;
+    color: var(--light-text);
+    display: inline-block;
+    font-style: normal;
+    padding: 0 0.25rem;
 }
 
 input {

@@ -14,9 +14,9 @@ test.describe('hint unit test', () => {
         const messages = page.getByTestId('messages');
         const buttons = messages.getByRole('button');
         await expect(buttons).toHaveText([
-            'I want to add a unit test (-5% on error)',
-            'I want to see a hint for a unit test (-10%)',
-            'I want to submit the unit tests (-20% on error)',
+            'I want to add a unit test',
+            'I want to see a hint for a unit test',
+            'I want to submit the unit tests',
             'I want to exit this level (0% on error)',
         ]);
     });
