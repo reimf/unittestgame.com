@@ -11,8 +11,7 @@ export abstract class Level {
     protected abstract hintGenerator(): Generator<any[]>
     public abstract showSpecificationPanel(): void
 
-    public readonly index: number
-    public readonly name: string = this.constructor.name.replace(/(?=[A-Z])/g, ' ').trim()
+    public readonly name: string = this.constructor.name.replace(/(?<=[a-z])(?=[A-Z])/g, ' ')
     public readonly parameters: Variable[] = this.getParameters()
     public readonly unit: Variable = this.getUnit()
     public readonly candidates: Candidate[] = [...this.generateCandidates(this.getCandidateElements(), [], [])]
@@ -22,8 +21,7 @@ export abstract class Level {
     public readonly amputeesOfPerfectCandidate: Candidate[] = this.findamputeesOfPerfectCandidate()
     public readonly hints: UnitTest[] = [...this.generateHints()]
 
-    public constructor(index: number) {
-        this.index = index
+    public constructor() {
         this.checkPerfectCandidates()
         this.checkAllMinimalUnitTestsAreNeeded()
     }

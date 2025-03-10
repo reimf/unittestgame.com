@@ -12,7 +12,11 @@ test.describe('level menu', () => {
     });
     test('has feedback mail address', async ({ page }) => {
         const link = page.getByRole('link');
-        await expect(link).toHaveText('feedback@unittestgame.com');
+        expect(await link.nth(0).getAttribute('href')).toBe('mailto:feedback@unittestgame.com');
+    });
+    test('has url', async ({ page }) => {
+        const link = page.getByRole('link');
+        expect(await link.nth(1).getAttribute('href')).toBe('https://unittestgame.com');
     });
     test('has welcome message', async ({ page }) => {
         const messages = page.getByTestId('messages');
@@ -22,12 +26,9 @@ test.describe('level menu', () => {
         const highScoresPanel = page.getByTestId('high-scores');
         await expect(highScoresPanel).not.toBeAttached();
     });
-    test('has game menu message', async ({ page }) => {
+    test('has next round message', async ({ page }) => {
         const messages = page.getByTestId('messages');
         const button = messages.getByRole('button');
-        await expect(button).toHaveText([
-            'I want to improve my Test Driven Development skills',
-            'I want to improve my Mutation Testing skills',
-        ]);
+        await expect(button).toHaveText('I want to play Round 1 - Test Driven Development - Voting Age');
     });
 });

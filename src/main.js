@@ -13,19 +13,34 @@ import { SpeedDisplay } from './level_8_speed_display.js';
 import { Round } from './round.js';
 export class Main {
     constructor() {
-        this.games = [
-            new TestDrivenDevelopment(),
-            new MutationTesting(),
-        ];
-        this.levels = [
-            new VotingAge(),
-            new EvenOdd(),
-            new FizzBuzz(),
-            new TriangleType(),
-            new LeapYear(),
-            new FloatFormat(),
-            new PasswordStrength(),
-            new SpeedDisplay(),
+        this.testDrivenDevelopment = new TestDrivenDevelopment();
+        this.mutationTesting = new MutationTesting();
+        this.votingAge = new VotingAge();
+        this.evenOdd = new EvenOdd();
+        this.fizzBuzz = new FizzBuzz();
+        this.triangleType = new TriangleType();
+        this.leapYear = new LeapYear();
+        this.floatFormat = new FloatFormat();
+        this.passwordStrength = new PasswordStrength();
+        this.speedDisplay = new SpeedDisplay();
+        this.callback = () => this.continue();
+        this.rounds = [
+            new Round(1, this.testDrivenDevelopment, this.votingAge, this.callback),
+            new Round(2, this.mutationTesting, this.evenOdd, this.callback),
+            new Round(3, this.testDrivenDevelopment, this.fizzBuzz, this.callback),
+            new Round(4, this.mutationTesting, this.triangleType, this.callback),
+            new Round(5, this.testDrivenDevelopment, this.evenOdd, this.callback),
+            new Round(6, this.mutationTesting, this.votingAge, this.callback),
+            new Round(7, this.testDrivenDevelopment, this.triangleType, this.callback),
+            new Round(8, this.mutationTesting, this.fizzBuzz, this.callback),
+            new Round(9, this.testDrivenDevelopment, this.leapYear, this.callback),
+            new Round(10, this.mutationTesting, this.passwordStrength, this.callback),
+            new Round(11, this.testDrivenDevelopment, this.speedDisplay, this.callback),
+            new Round(12, this.mutationTesting, this.floatFormat, this.callback),
+            new Round(13, this.testDrivenDevelopment, this.passwordStrength, this.callback),
+            new Round(14, this.mutationTesting, this.leapYear, this.callback),
+            new Round(15, this.testDrivenDevelopment, this.floatFormat, this.callback),
+            new Round(16, this.mutationTesting, this.speedDisplay, this.callback),
         ];
     }
     start() {
@@ -48,36 +63,32 @@ export class Main {
             new Paragraph().appendLines([
                 'Welcome to UnitTestGame.com!',
                 'I am an AI bot specialized in Test-Driven Development and Mutation Testing.',
-                'What do you want to improve?',
             ]),
         ]).show();
     }
     continue() {
-        const rounds = this.games.map(game => this.levels.map(level => new Round(game, level, () => this.continue())));
-        this.showHighScoresPanel(rounds);
-        this.showNextRound(rounds);
+        this.showHighScoresPanel();
+        this.showNextRound();
     }
-    showHighScoresPanel(rounds) {
-        const highScores = rounds.flatMap(roundsPerGame => roundsPerGame
-            .filter(round => round.getHighScore(localStorage) > 0)
-            .map(round => new Paragraph().appendText(`${round.description}: ${round.getHighScore(localStorage)}%`)));
-        if (highScores.length > 0)
-            new Panel('High Scores', highScores).show();
+    showHighScoresPanel() {
+        const roundsWithHighScore = this.rounds.filter(round => round.getHighScore(localStorage) > 0);
+        if (roundsWithHighScore.length > 0)
+            new Panel('High Scores', roundsWithHighScore
+                .map(round => new Paragraph().appendText(`${round.description}: ${round.getHighScore(localStorage)}%`))).show();
     }
-    showNextRound(rounds) {
-        const nextRoundButtons = rounds
-            .map(roundsPerGame => roundsPerGame.find(round => round.getHighScore(localStorage) === 0))
-            .filter(round => round !== undefined)
-            .map(round => new Button().onClick(() => this.playRound(round)).appendText(`I want to play ${round.description}`));
-        new HumanMessage(nextRoundButtons.length > 0
-            ? nextRoundButtons
-            : [new Button().onClick(() => window.close()).appendText('Quit UnitTestGame.com')]).show();
+    showNextRound() {
+        const nextRound = this.rounds.find(round => round.getHighScore(localStorage) === 0);
+        new HumanMessage([
+            nextRound
+                ? new Button().onClick(() => this.playNextRound(nextRound)).appendText(`I want to play ${nextRound.description}`)
+                : new Button().onClick(() => window.close()).appendText('Quit UnitTestGame.com'),
+        ]).show();
     }
     removeAllPanels() {
         document.querySelectorAll('#panels > section').forEach(panel => panel.remove());
     }
-    playRound(round) {
-        this.removeAllPanels();
+    playNextRound(round) {
+        this.removeAllPanels(); // We don't know the names of the panels created by the previous round, so we simply remove all panels
         round.play();
     }
 }

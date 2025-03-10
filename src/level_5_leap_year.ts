@@ -4,10 +4,6 @@ import { Level } from './level.js'
 import { Variable, CheckboxVariable, NumberVariable } from './variable.js'
 
 export class LeapYear extends Level {
-    public constructor() {
-        super(5)
-    }
-
     public showSpecificationPanel(): void {
         new Panel('Specification', [
             new Paragraph().appendLines([

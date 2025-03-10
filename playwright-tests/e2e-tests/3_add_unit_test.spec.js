@@ -2,8 +2,7 @@ import { test, expect } from '@playwright/test';
 test.describe('add unit test', () => {
     test.beforeEach(async ({ page }) => {
         await page.goto('http://localhost:5500/');
-        await page.getByRole('button', { name: 'I want to improve my Test Driven Development skills' }).click();
-        await page.getByRole('button', { name: 'I want to play Test Driven Development - Level 1 - Voting Age' }).click();
+        await page.getByRole('button', { name: 'I want to play Round 1 - Test Driven Development - Voting Age' }).click();
         await page.getByRole('button', { name: 'I want to add a unit test' }).click();
     });
     test('has age number field', async ({ page }) => {

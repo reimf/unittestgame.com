@@ -2,7 +2,7 @@ import { Panel } from './frame.js';
 import { Paragraph } from './html.js';
 export class Game {
     constructor() {
-        this.name = this.constructor.name.replace(/(?=[A-Z])/g, ' ').trim();
+        this.name = this.constructor.name.replace(/(?<=[a-z])(?=[A-Z])/g, ' ');
     }
     showUnitTestsPanel(unitTests) {
         new Panel('Unit Tests', unitTests.length === 0

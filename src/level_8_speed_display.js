@@ -3,9 +3,6 @@ import { Paragraph } from './html.js';
 import { Level } from './level.js';
 import { TextVariable, NumberVariable } from './variable.js';
 export class SpeedDisplay extends Level {
-    constructor() {
-        super(8);
-    }
     showSpecificationPanel() {
         new Panel('Specification', [
             new Paragraph().appendLines([

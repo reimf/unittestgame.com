@@ -3,9 +3,6 @@ import { Paragraph } from './html.js';
 import { Level } from './level.js';
 import { CheckboxVariable, NumberVariable } from './variable.js';
 export class VotingAge extends Level {
-    constructor() {
-        super(1);
-    }
     showSpecificationPanel() {
         new Panel('Specification', [
             new Paragraph().appendLines([

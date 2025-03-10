@@ -5,10 +5,6 @@ import { Random } from './random.js'
 import { Variable, CheckboxVariable, TextVariable } from './variable.js'
 
 export class PasswordStrength extends Level {
-    public constructor() {
-        super(7)
-    }
-
     public showSpecificationPanel(): void {
         new Panel('Specification', [
             new Paragraph().appendLines([

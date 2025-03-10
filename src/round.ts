@@ -15,6 +15,7 @@ export class Round {
     private readonly PENALTYREDUNDANTUNITTEST = 5
     private readonly MINIMUMSCORE = 0
 
+    private readonly index: number
     private readonly game: Game
     private readonly level: Level
     private readonly callback: () => void
@@ -25,7 +26,8 @@ export class Round {
     private failingTestResult?: TestResult
     private score: number
 
-    public constructor(game: Game, level: Level, callback: () => void) {
+    public constructor(index: number, game: Game, level: Level, callback: () => void) {
+        this.index = index
         this.game = game
         this.level = level
         this.callback = callback
@@ -37,7 +39,7 @@ export class Round {
     }
 
     public get description(): string {
-        return `${this.game.name} - Level ${this.level.index} - ${this.level.name}`
+        return `Round ${this.index} - ${this.game.name} - ${this.level.name}`
     }
 
     public getHighScore(storage: Storage): number {
@@ -104,7 +106,7 @@ export class Round {
     private showMenuMessage(): void {
         new HumanMessage([
             new Button().onClick(() => this.startAddUnitTestFlow()).appendText(`I want to add a unit test`),
-            new Button().onClick(() => this.showHint()).appendText(`I want to see a hint for a unit test`),
+            new Button().onClick(() => this.showHint()).appendText(`I want to see a hint`),
             new Button().onClick(() => this.submit()).appendText(`I want to submit the unit tests`),
             new Button().onClick(() => this.end()).appendText(`I want to exit this level`),
         ]).show()

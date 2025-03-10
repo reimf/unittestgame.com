@@ -4,10 +4,6 @@ import { Level } from './level.js'
 import { Variable, RadioVariable, NumberVariable } from './variable.js'
 
 export class TriangleType extends Level {
-    public constructor() {
-        super(4)
-    }
-
     public showSpecificationPanel(): void {
         new Panel('Specification', [
             new Paragraph().appendLines([

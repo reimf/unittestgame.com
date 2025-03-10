@@ -2,8 +2,8 @@ import { Candidate } from './candidate.js';
 import { Random } from './random.js';
 import { UnitTest } from './unit_test.js';
 export class Level {
-    constructor(index) {
-        this.name = this.constructor.name.replace(/(?=[A-Z])/g, ' ').trim();
+    constructor() {
+        this.name = this.constructor.name.replace(/(?<=[a-z])(?=[A-Z])/g, ' ');
         this.parameters = this.getParameters();
         this.unit = this.getUnit();
         this.candidates = [...this.generateCandidates(this.getCandidateElements(), [], [])];
@@ -12,7 +12,6 @@ export class Level {
         this.perfectCandidate = Random.elementFrom(this.perfectCandidates);
         this.amputeesOfPerfectCandidate = this.findamputeesOfPerfectCandidate();
         this.hints = [...this.generateHints()];
-        this.index = index;
         this.checkPerfectCandidates();
         this.checkAllMinimalUnitTestsAreNeeded();
     }

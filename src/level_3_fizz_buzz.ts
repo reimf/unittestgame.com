@@ -4,10 +4,6 @@ import { Level } from './level.js'
 import { Variable, TextVariable, NumberVariable } from './variable.js'
 
 export class FizzBuzz extends Level {
-    public constructor() {
-        super(3)
-    }
-
     public showSpecificationPanel(): void {
         new Panel('Specification', [
             new Paragraph().appendLines([

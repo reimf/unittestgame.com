@@ -4,9 +4,6 @@ import { Level } from './level.js';
 import { Random } from './random.js';
 import { CheckboxVariable, TextVariable } from './variable.js';
 export class FloatFormat extends Level {
-    constructor() {
-        super(6);
-    }
     showSpecificationPanel() {
         new Panel('Specification', [
             new Paragraph().appendLines([

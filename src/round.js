@@ -4,13 +4,14 @@ import { Random } from './random.js';
 import { TestResult } from './test_result.js';
 import { UnitTest } from './unit_test.js';
 export class Round {
-    constructor(game, level, callback) {
+    constructor(index, game, level, callback) {
         this.PERFECTSCORE = 100;
         this.PENALTYINCORRECTUNITTEST = 5;
         this.PENALTYHINT = 10;
         this.PENALTYSUBMITWITHBUG = 20;
         this.PENALTYREDUNDANTUNITTEST = 5;
         this.MINIMUMSCORE = 0;
+        this.index = index;
         this.game = game;
         this.level = level;
         this.callback = callback;
@@ -21,7 +22,7 @@ export class Round {
         this.score = this.PERFECTSCORE;
     }
     get description() {
-        return `${this.game.name} - Level ${this.level.index} - ${this.level.name}`;
+        return `Round ${this.index} - ${this.game.name} - ${this.level.name}`;
     }
     getHighScore(storage) {
         return Number(storage.getItem(this.description));
@@ -78,7 +79,7 @@ export class Round {
     showMenuMessage() {
         new HumanMessage([
             new Button().onClick(() => this.startAddUnitTestFlow()).appendText(`I want to add a unit test`),
-            new Button().onClick(() => this.showHint()).appendText(`I want to see a hint for a unit test`),
+            new Button().onClick(() => this.showHint()).appendText(`I want to see a hint`),
             new Button().onClick(() => this.submit()).appendText(`I want to submit the unit tests`),
             new Button().onClick(() => this.end()).appendText(`I want to exit this level`),
         ]).show();

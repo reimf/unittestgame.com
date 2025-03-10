@@ -3,9 +3,6 @@ import { Paragraph } from './html.js';
 import { Level } from './level.js';
 import { CheckboxVariable, NumberVariable } from './variable.js';
 export class EvenOdd extends Level {
-    constructor() {
-        super(2);
-    }
     showSpecificationPanel() {
         new Panel('Specification', [
             new Paragraph().appendText('Return true if the number is even and false if it is odd.'),

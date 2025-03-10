@@ -3,9 +3,6 @@ import { Paragraph } from './html.js';
 import { Level } from './level.js';
 import { TextVariable, NumberVariable } from './variable.js';
 export class FizzBuzz extends Level {
-    constructor() {
-        super(3);
-    }
     showSpecificationPanel() {
         new Panel('Specification', [
             new Paragraph().appendLines([

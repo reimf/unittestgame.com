@@ -4,10 +4,6 @@ import { Level } from './level.js'
 import { Variable, TextVariable, NumberVariable } from './variable.js'
 
 export class SpeedDisplay extends Level {
-    public constructor() {
-        super(8)
-    }
-
     public showSpecificationPanel(): void {
         new Panel('Specification', [
             new Paragraph().appendLines([

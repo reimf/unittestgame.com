@@ -3,8 +3,7 @@ import { test, expect } from '@playwright/test'
 test.describe('added unit test', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('http://localhost:5500/')
-    await page.getByRole('button', { name: 'I want to improve my Test Driven Development skills' }).click()
-    await page.getByRole('button', { name: 'I want to play Test Driven Development - Level 1 - Voting Age' }).click()
+    await page.getByRole('button', { name: 'I want to play Round 1 - Test Driven Development - Voting Age' }).click()
     await page.getByRole('button', { name: 'I want to add a unit test' }).click()
     await page.getByLabel('Age').fill('12')
     await page.getByLabel('Allowed to vote?').uncheck()
@@ -36,9 +35,9 @@ test.describe('added unit test', () => {
     const buttons = messages.getByRole('button')
     await expect(buttons).toHaveText([
       'I want to add a unit test',
-      'I want to see a hint for a unit test',
+      'I want to see a hint',
       'I want to submit the unit tests',
-      'I want to exit this level (0% on error)',
+      'I want to exit this level',
     ])
   })
 })

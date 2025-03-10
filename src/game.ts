@@ -5,7 +5,7 @@ import { TestResult } from './test_result.js'
 import { UnitTest } from './unit_test.js'
 
 export abstract class Game {
-    public readonly name: string = this.constructor.name.replace(/(?=[A-Z])/g, ' ').trim()
+    public readonly name: string = this.constructor.name.replace(/(?<=[a-z])(?=[A-Z])/g, ' ')
 
     public abstract showWelcomeMessage(): void
     public abstract showPanelsOnPlay(perfectCandidate: Candidate, coveredCandidates: Candidate[], showSpecificationPanel: () => void): void
