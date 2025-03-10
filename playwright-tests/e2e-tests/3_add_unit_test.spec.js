@@ -10,7 +10,7 @@ test.describe('add unit test', () => {
         await expect(age).toBeInViewport();
     });
     test('has allowed to vote checkbox', async ({ page }) => {
-        const isAllowedToVote = page.getByLabel('Allowed to vote?');
+        const isAllowedToVote = page.getByLabel('Is allowed to vote');
         await expect(isAllowedToVote).toBeInViewport();
     });
     test('has submit button', async ({ page }) => {

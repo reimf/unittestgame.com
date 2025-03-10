@@ -5,7 +5,7 @@ test.describe('incorrect unit test', () => {
         await page.getByRole('button', { name: 'I want to play Round 1 - Test Driven Development - Voting Age' }).click();
         await page.getByRole('button', { name: 'I want to add a unit test' }).click();
         await page.getByLabel('Age').fill('15');
-        await page.getByLabel('Allowed to vote?').check();
+        await page.getByLabel('Is allowed to vote').check();
         await page.getByRole('button', { name: 'I want to add this unit test' }).click();
     });
     test('has add unit test message', async ({ page }) => {

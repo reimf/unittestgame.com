@@ -24,7 +24,7 @@ export class FloatFormat extends Level {
 
     public getUnit(): Variable {
         return new CheckboxVariable(
-            'Does it represent a float?',
+            'Represents a float',
             'isFloatFormat'
         )
     }

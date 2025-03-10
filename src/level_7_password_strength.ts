@@ -19,14 +19,14 @@ export class PasswordStrength extends Level {
 
     public getParameters(): Variable[] {
         return [
-            new TextVariable('Wachtwoord', 'password')
+            new TextVariable('Password', 'password')
         ]
     }
 
     public getUnit(): Variable {
         return new CheckboxVariable(
-            'Is het wachtwoord sterk?',
-            'isStrong'
+            'Is a strong password',
+            'isStrongPassword'
         )
     }
 

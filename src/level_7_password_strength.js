@@ -17,11 +17,11 @@ export class PasswordStrength extends Level {
     }
     getParameters() {
         return [
-            new TextVariable('Wachtwoord', 'password')
+            new TextVariable('Password', 'password')
         ];
     }
     getUnit() {
-        return new CheckboxVariable('Is het wachtwoord sterk?', 'isStrong');
+        return new CheckboxVariable('Is a strong password', 'isStrongPassword');
     }
     getCandidateElements() {
         return [

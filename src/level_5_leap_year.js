@@ -20,7 +20,7 @@ export class LeapYear extends Level {
         ];
     }
     getUnit() {
-        return new CheckboxVariable('Is it a leap year?', 'isLeapYear');
+        return new CheckboxVariable('Is a leap year', 'isLeapYear');
     }
     getCandidateElements() {
         return [

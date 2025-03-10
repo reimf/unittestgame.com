@@ -24,7 +24,7 @@ export class VotingAge extends Level {
 
     public getUnit(): Variable {
         return new CheckboxVariable(
-            'Allowed to vote?',
+            'Is allowed to vote',
             'isAllowedToVote'
         )
     }

@@ -13,7 +13,7 @@ test.describe('add unit test', () => {
   })
 
   test('has allowed to vote checkbox', async ({ page }) => {
-    const isAllowedToVote = page.getByLabel('Allowed to vote?')
+    const isAllowedToVote = page.getByLabel('Is allowed to vote')
     await expect(isAllowedToVote).toBeInViewport()
   })
 

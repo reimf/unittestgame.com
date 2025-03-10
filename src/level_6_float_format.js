@@ -20,7 +20,7 @@ export class FloatFormat extends Level {
         ];
     }
     getUnit() {
-        return new CheckboxVariable('Does it represent a float?', 'isFloatFormat');
+        return new CheckboxVariable('Represents a float', 'isFloatFormat');
     }
     getCandidateElements() {
         return [

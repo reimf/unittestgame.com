@@ -17,7 +17,7 @@ export class VotingAge extends Level {
         ];
     }
     getUnit() {
-        return new CheckboxVariable('Allowed to vote?', 'isAllowedToVote');
+        return new CheckboxVariable('Is allowed to vote', 'isAllowedToVote');
     }
     getCandidateElements() {
         return [

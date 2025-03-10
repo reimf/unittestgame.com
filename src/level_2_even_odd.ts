@@ -21,7 +21,7 @@ export class EvenOdd extends Level {
 
     public getUnit(): Variable {
         return new CheckboxVariable(
-            'Is the number even?',
+            'Is even',
             'isEven'
         )
     }

@@ -14,7 +14,7 @@ export class MutationTesting extends Game {
             .appendChild(new Em().appendText('Unit Tests'))
             .appendText(' that pass the function. ')
             .appendText('After adding a unit test, I highlight the lines covered. ')
-            .appendText('Submit the unit tests when you think the function is fully covered. ')
+            .appendText('Submit the unit tests when you think the function is fully tested. ')
             .appendText('If you are wrong, I show a mutation of the function that is NOT correct, but passes your unit tests.')
         ]).show()
     }
@@ -89,14 +89,14 @@ export class MutationTesting extends Game {
 
     public showUnsuccessfulEndMessage(score: number): void {
         new ComputerMessage([
-            new Paragraph().appendText('The function is NOT fully tested.'),
+            new Paragraph().appendText('I checked the function, but it is NOT fully tested.'),
             new Paragraph().appendText(`Your final score is ${score}%.`),
         ]).show()
     }
 
     public showRedundantUnitTestsEndMessage(score: number, numberOfRedundantUnitTests: number, penaltyRedundantUnitTest: number): void {
         new ComputerMessage([
-            new Paragraph().appendText('The function is fully tested.'),
+            new Paragraph().appendText('I checked the function and it is indeed fully tested.'),
             new Paragraph().appendText(`You needed ${numberOfRedundantUnitTests} more unit tests than needed.`),
             new Paragraph().appendText(`The cost for an extra unit test is ${penaltyRedundantUnitTest}%.`),
             new Paragraph().appendText(`Your final score is ${score}%.`),
@@ -105,7 +105,7 @@ export class MutationTesting extends Game {
 
     public showSuccessfulEndMessage(score: number): void {
         new ComputerMessage([
-            new Paragraph().appendText('The function is fully tested.'),
+            new Paragraph().appendText('I checked the function and it is indeed fully tested.'),
             new Paragraph().appendText(`Your final score is ${score}%.`),
         ]).show()
     }

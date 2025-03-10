@@ -27,7 +27,7 @@ export class LeapYear extends Level {
 
     public getUnit(): Variable {
         return new CheckboxVariable(
-            'Is it a leap year?',
+            'Is a leap year',
             'isLeapYear'
         )
     }

@@ -14,7 +14,7 @@ export class EvenOdd extends Level {
         ];
     }
     getUnit() {
-        return new CheckboxVariable('Is the number even?', 'isEven');
+        return new CheckboxVariable('Is even', 'isEven');
     }
     getCandidateElements() {
         return [

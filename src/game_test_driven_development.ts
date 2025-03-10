@@ -95,14 +95,14 @@ export class TestDrivenDevelopment extends Game {
 
     public showUnsuccessfulEndMessage(score: number): void {
         new ComputerMessage([
-            new Paragraph().appendText('The current function is NOT according to the specification.'),
+            new Paragraph().appendText('I checked the current function, but it is NOT according to the specification.'),
             new Paragraph().appendText(`Your final score is ${score}%.`),
         ]).show()
     }
 
     public showRedundantUnitTestsEndMessage(score: number, numberOfRedundantUnitTests: number, penaltyRedundantUnitTest: number): void {
         new ComputerMessage([
-            new Paragraph().appendText('The current function is according to the specification.'),
+            new Paragraph().appendText('I checked the current function and it is according to the specification.'),
             new Paragraph().appendText(`You needed ${numberOfRedundantUnitTests} more unit tests than needed.`),
             new Paragraph().appendText(`The cost for an extra unit test is ${penaltyRedundantUnitTest}%.`),
             new Paragraph().appendText(`Your final score is ${score}%.`),
@@ -111,7 +111,7 @@ export class TestDrivenDevelopment extends Game {
 
     public showSuccessfulEndMessage(score: number): void {
         new ComputerMessage([
-            new Paragraph().appendText('The current function is according to the specification.'),
+            new Paragraph().appendText('I checked the current function and it is according to the specification.'),
             new Paragraph().appendText(`Your final score is ${score}%.`),
         ]).show()
     }
