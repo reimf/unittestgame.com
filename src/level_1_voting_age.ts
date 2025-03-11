@@ -6,7 +6,7 @@ import { Variable, CheckboxVariable, NumberVariable } from './variable.js'
 export class VotingAge extends Level {
     public showSpecificationPanel(): void {
         new Panel('Specification', [
-            new Paragraph().appendLines([
+            new Paragraph().lines([
                 'Return true if the age is 18 years or over and',
                 'return false if the age is under 18.'
             ]),

@@ -88,7 +88,7 @@ export class Round {
     }
 
     public play(): void {
-        this.game.showPanelsOnPlay(this.level.perfectCandidate, this.coveredCandidates, this.level.showSpecificationPanel)
+        this.game.showPanelsOnPlay(this.level.showSpecificationPanel)
         this.game.showWelcomeMessage()
         this.menu()
     }
@@ -105,10 +105,10 @@ export class Round {
 
     private showMenuMessage(): void {
         new HumanMessage([
-            new Button().onClick(() => this.startAddUnitTestFlow()).appendText(`I want to add a unit test`),
-            new Button().onClick(() => this.showHint()).appendText(`I want to see a hint`),
-            new Button().onClick(() => this.submit()).appendText(`I want to submit the unit tests`),
-            new Button().onClick(() => this.end()).appendText(`I want to exit this level`),
+            new Button().onClick(() => this.startAddUnitTestFlow()).text(`I want to add a unit test`),
+            new Button().onClick(() => this.showHint()).text(`I want to see a hint for a unit test`),
+            new Button().onClick(() => this.submit()).text(`I want to submit the unit tests`),
+            new Button().onClick(() => this.end()).text(`I want to exit this level`),
         ]).show()
     }
 
@@ -119,32 +119,32 @@ export class Round {
 
     private showConfirmStartUnitTestFlowMessage(): void {
         new ComputerMessage([
-            new Paragraph().appendText('Which unit test do you want to add?'),
+            new Paragraph().text('Which unit test do you want to add?'),
         ]).show()
     }
 
     private showFormUnitTestMessage(): void {
         const submitButton = new Input().type('submit').value('I want to add this unit test')
-        const cancelButton = new Button().onClick(() => this.cancelAddUnitTestFlow()).appendText('I don\'t want to add a unit test now').addClass('secondary').addClass('cancel')
-        const buttonBlock = new Paragraph().appendChild(submitButton).appendChild(cancelButton).addClass('buttonrow')
+        const cancelButton = new Button().onClick(() => this.cancelAddUnitTestFlow()).text('I don\'t want to add a unit test now').addClass('secondary').addClass('cancel')
+        const buttonBlock = new Paragraph().child(submitButton).child(cancelButton).addClass('buttonrow')
         new HumanMessage([
             new Form()
             .onSubmit(() => this.addUnitTest())
-            .appendChildren([...this.level.parameters, this.level.unit].map(variable => variable.toHtml()))
-            .appendChild(buttonBlock)
+            .children([...this.level.parameters, this.level.unit].map(variable => variable.toHtml()))
+            .child(buttonBlock)
         ]).show()
     }
 
     private showAddUnitTestMessage(unitTest: UnitTest): void {
         new HumanMessage([
-            new Paragraph().appendText('I want to add the following unit test:'),
-            new Paragraph().appendText(unitTest.toString()),
+            new Paragraph().text('I want to add the following unit test.'),
+            new Paragraph().text(unitTest.toString()),
         ]).replace()
     }
 
     private showConfirmCancelAddUnitTestFlowMessage(): void {
         new ComputerMessage([
-            new Paragraph().appendText('Ok.'),
+            new Paragraph().text('Ok.'),
         ]).show()
     }
 

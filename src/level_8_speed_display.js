@@ -5,7 +5,7 @@ import { TextVariable, NumberVariable } from './variable.js';
 export class SpeedDisplay extends Level {
     showSpecificationPanel() {
         new Panel('Specification', [
-            new Paragraph().appendLines([
+            new Paragraph().lines([
                 'The function receives the speed in meters per hour and',
                 'must display the speed in kilometers per hour.',
                 'If something is wrong with the speed (e.g. negative speed),',
@@ -15,7 +15,7 @@ export class SpeedDisplay extends Level {
                 'If the speed no longer fits on the display,',
                 'then the function must return "DANGER".'
             ]),
-            new Paragraph().appendText('The display looks like this:\n' +
+            new Paragraph().text('The display looks like this:\n' +
                 '+-------------------+\n' +
                 '|  X   XXXX   XXXX  |\n' +
                 '|  X   X  X   X  X  |\n' +

@@ -7,7 +7,7 @@ import { Variable, CheckboxVariable, TextVariable } from './variable.js'
 export class FloatFormat extends Level {
     public showSpecificationPanel(): void {
         new Panel('Specification', [
-            new Paragraph().appendLines([
+            new Paragraph().lines([
                 'Return true if the text represents a float and returns false if it doesn\'t.',
                 'A float may start with a plus or a minus sign.',
                 'This is followed by one or more digits.',

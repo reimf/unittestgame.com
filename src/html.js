@@ -10,19 +10,31 @@ export class Html {
         this.element.classList.add(value);
         return this;
     }
-    appendText(text) {
+    text(text) {
         this.element.appendChild(document.createTextNode(text));
         return this;
     }
-    appendLines(lines) {
-        this.appendText(lines.join(' '));
+    markdown(text) {
+        while (text !== '') {
+            const startPos = text.indexOf('*');
+            const endPos = text.indexOf('*', startPos + 1);
+            if (endPos === -1)
+                return this.text(text);
+            const em = new Em().text(text.slice(startPos + 1, endPos));
+            this.text(text.slice(0, startPos)).child(em);
+            text = text.slice(endPos + 1);
+        }
         return this;
     }
-    appendChild(child) {
+    lines(lines) {
+        this.text(lines.join(' '));
+        return this;
+    }
+    child(child) {
         this.element.appendChild(child.element);
         return this;
     }
-    appendChildren(children) {
+    children(children) {
         for (const child of children)
             this.element.appendChild(child.element);
         return this;
@@ -112,7 +124,7 @@ export class Div extends Html {
         super('div');
     }
 }
-export class Em extends Html {
+class Em extends Html {
     constructor() {
         super('em');
     }

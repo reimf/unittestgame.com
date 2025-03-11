@@ -7,7 +7,7 @@ import { Variable, CheckboxVariable, TextVariable } from './variable.js'
 export class PasswordStrength extends Level {
     public showSpecificationPanel(): void {
         new Panel('Specification', [
-            new Paragraph().appendLines([
+            new Paragraph().lines([
                 'Return true if the password is strong and return false if the password is not strong.',
                 'A password is strong if it contains at least 5 characters,',
                 'an uppercase letter,',

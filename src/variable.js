@@ -17,10 +17,10 @@ export class RadioVariable extends Variable {
     toHtml() {
         const radioButtons = this.texts.map(text => {
             const input = new Input().type('radio').name(this.name).value(text);
-            const label = new Label().appendChild(input).appendText(text);
+            const label = new Label().child(input).text(text);
             return label;
         });
-        const paragraph = new Paragraph().appendText(this.label).appendChildren(radioButtons);
+        const paragraph = new Paragraph().text(this.label).children(radioButtons);
         return paragraph;
     }
     format(value) {
@@ -37,8 +37,8 @@ export class CheckboxVariable extends Variable {
     }
     toHtml() {
         const input = new Input().type('checkbox').name(this.name);
-        const label = new Label().appendChild(input).appendText(this.label);
-        const paragraph = new Paragraph().appendChild(label);
+        const label = new Label().child(input).text(this.label);
+        const paragraph = new Paragraph().child(label);
         return paragraph;
     }
     format(value) {
@@ -55,8 +55,8 @@ export class TextVariable extends Variable {
     }
     toHtml() {
         const input = new Input().type('text').name(this.name).autocomplete(false);
-        const label = new Label().appendText(this.label).appendChild(input);
-        const paragraph = new Paragraph().appendChild(label);
+        const label = new Label().text(this.label).child(input);
+        const paragraph = new Paragraph().child(label);
         return paragraph;
     }
     format(value) {
@@ -73,8 +73,8 @@ export class NumberVariable extends Variable {
     }
     toHtml() {
         const input = new Input().type('number').name(this.name).autocomplete(false);
-        const label = new Label().appendText(this.label).appendChild(input);
-        const paragraph = new Paragraph().appendChild(label);
+        const label = new Label().text(this.label).child(input);
+        const paragraph = new Paragraph().child(label);
         return paragraph;
     }
     format(value) {

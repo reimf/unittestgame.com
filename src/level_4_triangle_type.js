@@ -5,7 +5,7 @@ import { RadioVariable, NumberVariable } from './variable.js';
 export class TriangleType extends Level {
     showSpecificationPanel() {
         new Panel('Specification', [
-            new Paragraph().appendLines([
+            new Paragraph().lines([
                 'Return the type of the triangle: equilateral, isosceles or scalene.',
                 'A triangle is equilateral if all three sides have the same length.',
                 'A triangle is isosceles if two sides have the same length and a third side has a different length.',

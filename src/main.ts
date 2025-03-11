@@ -52,10 +52,10 @@ export class Main {
     }
 
     private showAboutPanel(): void {
-        const learnParagraph = new Paragraph().appendText('Learn to write effective unit tests using Test Driven Development and Mutation Testing.')
-        const mailto = new Anchor().href('mailto:feedback@unittestgame.com').appendText('feedback')
-        const site = new Anchor().href('https://unittestgame.com').appendText('UnitTestGame.com')
-        const feedbackParagraph = new Paragraph().appendText('Please send us ').appendChild(mailto).appendText(' at ').appendChild(site)
+        const learnParagraph = new Paragraph().text('Learn to write effective unit tests using Test Driven Development and Mutation Testing.')
+        const mailto = new Anchor().href('mailto:feedback@unittestgame.com').text('feedback')
+        const site = new Anchor().href('https://unittestgame.com').text('UnitTestGame.com')
+        const feedbackParagraph = new Paragraph().text('Please send us ').child(mailto).text(' at ').child(site)
         new Panel('About', [
             learnParagraph,
             feedbackParagraph
@@ -64,7 +64,7 @@ export class Main {
 
     private showIntroductionMessage(): void {
         new ComputerMessage([
-            new Paragraph().appendLines([
+            new Paragraph().lines([
                 'Welcome to UnitTestGame.com!',
                 'I am an AI bot specialized in Test-Driven Development and Mutation Testing.',
             ]),
@@ -81,7 +81,7 @@ export class Main {
         if (roundsWithHighScore.length > 0)
             new Panel('High Scores',
                 roundsWithHighScore
-                .map(round => new Paragraph().appendText(`${round.description}: ${round.getHighScore(localStorage)}%`))
+                .map(round => new Paragraph().text(`${round.description}: ${round.getHighScore(localStorage)}%`))
             ).show()
     }
 
@@ -89,8 +89,8 @@ export class Main {
         const nextRound = this.rounds.find(round => round.getHighScore(localStorage) === 0)
         new HumanMessage([
             nextRound
-            ? new Button().onClick(() => this.playNextRound(nextRound)).appendText(`I want to play ${nextRound.description}`)
-            : new Button().onClick(() => window.close()).appendText('Quit UnitTestGame.com'),
+            ? new Button().onClick(() => this.playNextRound(nextRound)).text(`I want to play ${nextRound.description}`)
+            : new Button().onClick(() => window.close()).text('Quit UnitTestGame.com'),
         ]).show()
     }
 

@@ -15,22 +15,35 @@ export abstract class Html {
         return this
     }
 
-    public appendText(text: string): Html {
+    public text(text: string): Html {
         this.element.appendChild(document.createTextNode(text))
         return this
     }
 
-    public appendLines(lines: string[]): Html {
-        this.appendText(lines.join(' '))
+    public markdown(text: string): Html {
+        while (text !== '') {
+            const startPos = text.indexOf('*')
+            const endPos = text.indexOf('*', startPos + 1)
+            if (endPos === -1)
+                return this.text(text)
+            const em = new Em().text(text.slice(startPos + 1, endPos))
+            this.text(text.slice(0, startPos)).child(em)
+            text = text.slice(endPos + 1)
+        }
         return this
     }
 
-    public appendChild(child: Html): Html {
+    public lines(lines: string[]): Html {
+        this.text(lines.join(' '))
+        return this
+    }
+
+    public child(child: Html): Html {
         this.element.appendChild(child.element)
         return this
     }
 
-    public appendChildren(children: Html[]): Html {
+    public children(children: Html[]): Html {
         for (const child of children)
             this.element.appendChild(child.element)
         return this
@@ -141,7 +154,7 @@ export class Div extends Html {
     }
 }
 
-export class Em extends Html {
+class Em extends Html {
     public constructor() {
         super('em')
     }

@@ -3,7 +3,7 @@ import { Html, Header, Paragraph, Section } from './html.js'
 abstract class Frame extends Section {
     protected constructor(children: Html[]) {
         super()
-        this.appendChildren(children)
+        this.children(children)
     }
 
     public abstract show(): void
@@ -23,7 +23,7 @@ abstract class Frame extends Section {
 
 export class Panel extends Frame {
     public constructor(title: string, children: Html[] = []) {
-        super([new Header().appendText(title), ...children])
+        super([new Header().text(title), ...children])
         const id = title.toLowerCase().replace(/ /g, '-')
         this.id(id)
     }
@@ -70,7 +70,7 @@ export class HumanMessage extends Message {
         this.addClass('human')
         this.on('click', event => {
             if (event.target instanceof HTMLButtonElement) {
-                const paragraph = new Paragraph().appendText(event.target.textContent + '.')
+                const paragraph = new Paragraph().text(event.target.textContent + '.')
                 const message = new HumanMessage([paragraph])
                 message.id(this.element.id)
                 message.replaceExisting()

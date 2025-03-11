@@ -48,8 +48,8 @@ export class Candidate {
         return this.function.toString();
     }
     toHtml() {
-        const divs = this.lines.map(line => new Div().appendText(line));
-        return new Code().appendChildren(divs);
+        const divs = this.lines.map(line => new Div().text(line));
+        return new Code().children(divs);
     }
     toHtmlWithCoverage(coveredCandidates) {
         if (coveredCandidates.length === 0)
@@ -57,11 +57,11 @@ export class Candidate {
         const divs = this.lines.map(line => {
             const isNotIndented = !line.startsWith('  ');
             const isUsed = coveredCandidates.some(candidate => candidate.lines.includes(line));
-            const div = new Div().appendText(line);
+            const div = new Div().text(line);
             if (isNotIndented || isUsed)
                 div.addClass('covered');
             return div;
         });
-        return new Code().appendChildren(divs);
+        return new Code().children(divs);
     }
 }
