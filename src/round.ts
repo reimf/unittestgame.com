@@ -88,14 +88,13 @@ export class Round {
     }
 
     public play(): void {
-        this.game.showPanelsOnPlay(this.level.showSpecificationPanel)
         this.game.showWelcomeMessage()
         this.menu()
     }
 
     private menu(): void {
+        this.game.showPanelsOnMenu(this.level.getSpecification(), this.currentCandidate, this.level.perfectCandidate, this.coveredCandidates)
         this.game.showUnitTestsPanel(this.userdefinedUnitTests)
-        this.game.showPanelsOnMenu(this.currentCandidate, this.level.perfectCandidate, this.coveredCandidates)
         this.game.showScorePanel(this.description, this.score)
         if (this.score === this.MINIMUMSCORE)
             this.end()

@@ -1,12 +1,10 @@
-import { Panel } from './frame.js';
-import { Paragraph } from './html.js';
 import { Level } from './level.js';
 import { CheckboxVariable, NumberVariable } from './variable.js';
 export class EvenOdd extends Level {
-    showSpecificationPanel() {
-        new Panel('Specification', [
-            new Paragraph().text('Return true if the number is even and false if it is odd.'),
-        ]).show();
+    getSpecification() {
+        return [
+            'Return true if the number is even and false if it is odd.'
+        ];
     }
     getParameters() {
         return [

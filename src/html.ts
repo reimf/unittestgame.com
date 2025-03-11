@@ -20,21 +20,21 @@ export abstract class Html {
         return this
     }
 
-    public markdown(text: string): Html {
-        while (text !== '') {
-            const startPos = text.indexOf('*')
-            const endPos = text.indexOf('*', startPos + 1)
+    public markdown(markdown: string): Html {
+        while (markdown !== '') {
+            const startPos = markdown.indexOf('*')
+            const endPos = markdown.indexOf('*', startPos + 1)
             if (endPos === -1)
-                return this.text(text)
-            const em = new Em().text(text.slice(startPos + 1, endPos))
-            this.text(text.slice(0, startPos)).child(em)
-            text = text.slice(endPos + 1)
+                return this.text(markdown)
+            const em = new Em().text(markdown.slice(startPos + 1, endPos))
+            this.text(markdown.slice(0, startPos)).child(em)
+            markdown = markdown.slice(endPos + 1)
         }
         return this
     }
 
     public lines(lines: string[]): Html {
-        this.text(lines.join(' '))
+        this.text(lines.join(' ').replace(/\n /g, '\n'))
         return this
     }
 

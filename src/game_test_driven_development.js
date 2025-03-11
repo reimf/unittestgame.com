@@ -11,11 +11,14 @@ export class TestDrivenDevelopment extends Game {
                 .text('If you are wrong, I show a unit test that is correct, but does NOT pass the function.')
         ]).show();
     }
-    showPanelsOnPlay(showSpecificationPanel) {
-        showSpecificationPanel();
-    }
-    showPanelsOnMenu(currentCandidate, perfectCandidate, coveredCandidates) {
+    showPanelsOnMenu(specification, currentCandidate, perfectCandidate, coveredCandidates) {
+        this.showSpecificationPanel(specification);
         this.showCurrentCandidatePanel(currentCandidate);
+    }
+    showSpecificationPanel(specification) {
+        new Panel('Specification', [
+            new Paragraph().lines(specification),
+        ]).show();
     }
     showCurrentCandidatePanel(currentCandidate) {
         new Panel('Current Function', [

@@ -1,18 +1,14 @@
-import { Panel } from './frame.js';
-import { Paragraph } from './html.js';
 import { Level } from './level.js';
 import { Random } from './random.js';
 import { CheckboxVariable, TextVariable } from './variable.js';
 export class FloatFormat extends Level {
-    showSpecificationPanel() {
-        new Panel('Specification', [
-            new Paragraph().lines([
-                'Return true if the text represents a float and returns false if it doesn\'t.',
-                'A float may start with a plus or a minus sign.',
-                'This is followed by one or more digits.',
-                'If that is followed by a dot, one or more digits must follow.',
-            ]),
-        ]).show();
+    getSpecification() {
+        return [
+            'Return true if the text represents a float and returns false if it doesn\'t.',
+            'A float may start with a plus or a minus sign.',
+            'This is followed by one or more digits.',
+            'If that is followed by a dot, one or more digits must follow.',
+        ];
     }
     getParameters() {
         return [

@@ -14,20 +14,20 @@ export class Html {
         this.element.appendChild(document.createTextNode(text));
         return this;
     }
-    markdown(text) {
-        while (text !== '') {
-            const startPos = text.indexOf('*');
-            const endPos = text.indexOf('*', startPos + 1);
+    markdown(markdown) {
+        while (markdown !== '') {
+            const startPos = markdown.indexOf('*');
+            const endPos = markdown.indexOf('*', startPos + 1);
             if (endPos === -1)
-                return this.text(text);
-            const em = new Em().text(text.slice(startPos + 1, endPos));
-            this.text(text.slice(0, startPos)).child(em);
-            text = text.slice(endPos + 1);
+                return this.text(markdown);
+            const em = new Em().text(markdown.slice(startPos + 1, endPos));
+            this.text(markdown.slice(0, startPos)).child(em);
+            markdown = markdown.slice(endPos + 1);
         }
         return this;
     }
     lines(lines) {
-        this.text(lines.join(' '));
+        this.text(lines.join(' ').replace(/\n /g, '\n'));
         return this;
     }
     child(child) {

@@ -15,14 +15,17 @@ export class TestDrivenDevelopment extends Game {
         ]).show()
     }
 
-    public showPanelsOnPlay(showSpecificationPanel: () => void): void {
-        showSpecificationPanel()
-    }
-
-    public showPanelsOnMenu(currentCandidate: Candidate, perfectCandidate: Candidate, coveredCandidates: Candidate[]): void {
+    public showPanelsOnMenu(specification: string[], currentCandidate: Candidate, perfectCandidate: Candidate, coveredCandidates: Candidate[]): void {
+        this.showSpecificationPanel(specification)
         this.showCurrentCandidatePanel(currentCandidate)
     }
 
+    private showSpecificationPanel(specification: string[]): void {
+        new Panel('Specification', [
+            new Paragraph().lines(specification),
+        ]).show()
+    }
+    
     public showCurrentCandidatePanel(currentCandidate: Candidate): void {
         new Panel('Current Function', [
             currentCandidate.toHtml(),

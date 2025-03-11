@@ -1,34 +1,28 @@
-import { Panel } from './frame.js'
-import { Paragraph } from './html.js'
 import { Level } from './level.js'
 import { Variable, TextVariable, NumberVariable } from './variable.js'
 
 export class SpeedDisplay extends Level {
-    public showSpecificationPanel(): void {
-        new Panel('Specification', [
-            new Paragraph().lines([
-                'The function receives the speed in meters per hour and',
-                'must display the speed in kilometers per hour.',
-                'If something is wrong with the speed (e.g. negative speed),',
-                'then the function must return "ERROR".',
-                'If possible, show one decimal (e.g. "12.3").',
-                'Otherwise, round to whole kilometers per hour (e.g. "49").',
-                'If the speed no longer fits on the display,',
-                'then the function must return "DANGER".'
-            ]),
-            new Paragraph().text(
-                'The display looks like this:\n' +
-                '+-------------------+\n' +
-                '|  X   XXXX   XXXX  |\n' +
-                '|  X   X  X   X  X  |\n' +
-                '|  X   XXXX   XXXX  |\n' +
-                '|  X   X  X   X  X  |\n' +
-                '|  X   XXXX X XXXX  |\n' +
-                '|                   |\n' +
-                '|  ERROR    DANGER  |\n' +
-                '+-------------------+'
-            ),
-        ]).show()
+    public getSpecification(): string[] {
+        return [
+            'The function receives the speed in meters per hour and',
+            'must display the speed in kilometers per hour.',
+            'If something is wrong with the speed,',
+            'then the function must return "ERROR" (e.g. -1000 becomes "ERROR").',
+            'If possible, show one decimal (e.g. 12345 becomes "12.3").',
+            'Otherwise, round to whole kilometers per hour (e.g. 87654 becomes "87.7").',
+            'If the speed no longer fits on the display,',
+            'then the function must return "DANGER" (e.g. 300000 becomes "DANGER").\n',
+            'The display looks like this, where every X is a LED light:\n',
+            '+-------------------+\n',
+            '|  X   XXXX   XXXX  |\n',
+            '|  X   X  X   X  X  |\n',
+            '|  X   XXXX   XXXX  |\n',
+            '|  X   X  X   X  X  |\n',
+            '|  X   XXXX X XXXX  |\n',
+            '|                   |\n',
+            '| X ERROR  DANGER X |\n',
+            '+-------------------+'
+        ]
     }
 
     public getParameters(): Variable[] {

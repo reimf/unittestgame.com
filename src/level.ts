@@ -9,7 +9,7 @@ export abstract class Level {
     protected abstract getCandidateElements(): string[][]
     protected abstract minimalUnitTestGenerator(): Generator<any[]>
     protected abstract hintGenerator(): Generator<any[]>
-    public abstract showSpecificationPanel(): void
+    public abstract getSpecification(): string[]
 
     public readonly name: string = this.constructor.name.replace(/(?<=[a-z])(?=[A-Z])/g, ' ')
     public readonly parameters: Variable[] = this.getParameters()

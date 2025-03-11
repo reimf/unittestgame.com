@@ -154,7 +154,7 @@ label {
 }
 
 p {
-    white-space: pre-line;
+    white-space: pre-wrap;
 
     &.buttonrow {
         display: flex;

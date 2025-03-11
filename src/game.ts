@@ -8,8 +8,7 @@ export abstract class Game {
     public readonly name: string = this.constructor.name.replace(/(?<=[a-z])(?=[A-Z])/g, ' ')
 
     public abstract showWelcomeMessage(): void
-    public abstract showPanelsOnPlay(showSpecificationPanel: () => void): void
-    public abstract showPanelsOnMenu(currentCandidate: Candidate, perfectCandidate: Candidate, coveredCandidates: Candidate[]): void
+    public abstract showPanelsOnMenu(specification: string[], currentCandidate: Candidate, perfectCandidate: Candidate, coveredCandidates: Candidate[]): void
     public abstract showHintMessage(currentCandidate: Candidate, failingTestResult: TestResult, penaltyHint: number): void
     public abstract showNoHintMessage(penaltyHint: number): void
     public abstract showBugFoundMessage(currentCandidate: Candidate, failingTestResult: TestResult, penaltySubmitWithBug: number): void

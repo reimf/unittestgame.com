@@ -1,17 +1,13 @@
-import { Panel } from './frame.js';
-import { Paragraph } from './html.js';
 import { Level } from './level.js';
 import { TextVariable, NumberVariable } from './variable.js';
 export class FizzBuzz extends Level {
-    showSpecificationPanel() {
-        new Panel('Specification', [
-            new Paragraph().lines([
-                'Return "Fizz" if the number is divisible by 3,',
-                '"Buzz" if the number is divisible by 5,',
-                '"FizzBuzz" if the number is divisible by both 3 and 5,',
-                'and a string containing the number otherwise.',
-            ]),
-        ]).show();
+    getSpecification() {
+        return [
+            'Return "Fizz" if the number is divisible by 3,',
+            '"Buzz" if the number is divisible by 5,',
+            '"FizzBuzz" if the number is divisible by both 3 and 5,',
+            'and a string containing the number otherwise.',
+        ];
     }
     getParameters() {
         return [

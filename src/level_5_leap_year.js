@@ -1,18 +1,14 @@
-import { Panel } from './frame.js';
-import { Paragraph } from './html.js';
 import { Level } from './level.js';
 import { CheckboxVariable, NumberVariable } from './variable.js';
 export class LeapYear extends Level {
-    showSpecificationPanel() {
-        new Panel('Specification', [
-            new Paragraph().lines([
-                'Return true if the year is a leap year and',
-                'return false if the year is not a leap year.',
-                'A year is a leap year if it is divisible by 4.',
-                'The exception is that years that are divisible by 100 are not leap years,',
-                'unless they are also divisible by 400.'
-            ]),
-        ]).show();
+    getSpecification() {
+        return [
+            'Return true if the year is a leap year and',
+            'return false if the year is not a leap year.',
+            'A year is a leap year if it is divisible by 4.',
+            'The exception is that years that are divisible by 100 are not leap years,',
+            'unless they are also divisible by 400.'
+        ];
     }
     getParameters() {
         return [

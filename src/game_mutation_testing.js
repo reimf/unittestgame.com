@@ -11,10 +11,7 @@ export class MutationTesting extends Game {
                 .text('If you are wrong, I show a mutation of the function that is NOT correct, but passes your unit tests.')
         ]).show();
     }
-    showPanelsOnPlay(showSpecificationPanel) {
-        //nothing
-    }
-    showPanelsOnMenu(currentCandidate, perfectCandidate, coveredCandidates) {
+    showPanelsOnMenu(specification, currentCandidate, perfectCandidate, coveredCandidates) {
         this.showCodeCoveragePanel(perfectCandidate, coveredCandidates);
     }
     showCodeCoveragePanel(perfectCandidate, coveredCandidates) {

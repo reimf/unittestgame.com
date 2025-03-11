@@ -63,13 +63,12 @@ export class Round {
         return undefined;
     }
     play() {
-        this.game.showPanelsOnPlay(this.level.showSpecificationPanel);
         this.game.showWelcomeMessage();
         this.menu();
     }
     menu() {
+        this.game.showPanelsOnMenu(this.level.getSpecification(), this.currentCandidate, this.level.perfectCandidate, this.coveredCandidates);
         this.game.showUnitTestsPanel(this.userdefinedUnitTests);
-        this.game.showPanelsOnMenu(this.currentCandidate, this.level.perfectCandidate, this.coveredCandidates);
         this.game.showScorePanel(this.description, this.score);
         if (this.score === this.MINIMUMSCORE)
             this.end();

@@ -15,11 +15,7 @@ export class MutationTesting extends Game {
         ]).show()
     }
 
-    public showPanelsOnPlay(showSpecificationPanel: () => void): void {
-        //nothing
-    }
-
-    public showPanelsOnMenu(currentCandidate: Candidate, perfectCandidate: Candidate, coveredCandidates: Candidate[]): void {
+    public showPanelsOnMenu(specification: string[], currentCandidate: Candidate, perfectCandidate: Candidate, coveredCandidates: Candidate[]): void {
         this.showCodeCoveragePanel(perfectCandidate, coveredCandidates)
     }
 
