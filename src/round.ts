@@ -12,7 +12,7 @@ export class Round {
     private readonly PENALTYINCORRECTUNITTEST = 5
     private readonly PENALTYHINT = 10
     private readonly PENALTYSUBMITWITHBUG = 20
-    private readonly PENALTYREDUNDANTUNITTEST = 5
+    private readonly PENALTYREDUNDANTUNITTEST = 1
     private readonly MINIMUMSCORE = 0
 
     private readonly index: number

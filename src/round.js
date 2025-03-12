@@ -9,7 +9,7 @@ export class Round {
         this.PENALTYINCORRECTUNITTEST = 5;
         this.PENALTYHINT = 10;
         this.PENALTYSUBMITWITHBUG = 20;
-        this.PENALTYREDUNDANTUNITTEST = 5;
+        this.PENALTYREDUNDANTUNITTEST = 1;
         this.MINIMUMSCORE = 0;
         this.index = index;
         this.game = game;
