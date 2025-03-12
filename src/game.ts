@@ -8,7 +8,7 @@ export abstract class Game {
     public readonly name: string = this.constructor.name.replace(/(?<=[a-z])(?=[A-Z])/g, ' ')
 
     public abstract showWelcomeMessage(): void
-    public abstract showPanelsOnMenu(specification: string[], currentCandidate: Candidate, perfectCandidate: Candidate, coveredCandidates: Candidate[]): void
+    public abstract showPanelsOnMenu(specification: string, currentCandidate: Candidate, perfectCandidate: Candidate, coveredCandidates: Candidate[]): void
     public abstract showHintMessage(currentCandidate: Candidate, failingTestResult: TestResult, penaltyHint: number): void
     public abstract showNoHintMessage(penaltyHint: number): void
     public abstract showBugFoundMessage(currentCandidate: Candidate, failingTestResult: TestResult, penaltySubmitWithBug: number): void
@@ -21,9 +21,8 @@ export abstract class Game {
     public showUnitTestsPanel(unitTests: UnitTest[]): void {
         new Panel('Unit Tests',
             unitTests.length === 0
-            ? [new Paragraph().text('You have not written any unit tests yet.')]
-            : unitTests.map(unitTest => new Paragraph().text(unitTest.toString())),
-        ).show()
+                ? [new Paragraph().text('You have not written any unit tests yet.')]
+                : unitTests.map(unitTest => new Paragraph().text(unitTest.toString()))).show()
     }
 
     public showIncorrectUnitTestMessage(penaltyIncorrectUnitTest: number): void {
@@ -34,17 +33,15 @@ export abstract class Game {
     }
 
     public showScorePanel(description: string, score: number): void {
-        new Panel('Score', [
-            new Paragraph().text(`${description}: ${score}%`),
-        ]).show()
+        new Panel('Score', [new Paragraph().text(`${description}: ${score}%`)]).show()
     }
 
     public showMinimumScoreEndMessage(score: number): void {
         new ComputerMessage([
-            new Paragraph().lines([
-                'You have to retry this level,',
+            new Paragraph().text(
+                'You have to retry this level, ' + 
                 `because your score dropped to ${score}%.`
-            ])
+            ),
         ]).show()
     }
 }

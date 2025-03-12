@@ -6,7 +6,7 @@ export class FakeStorage {
     }
 
     getItem(key: string): string | null {
-        return this.storage.get(key) || null
+        return this.storage.get(key) ?? null
     }
 
     setItem(key: string, value: string): this {
@@ -20,7 +20,7 @@ export class FakeStorage {
     }
 
     key(index: number): string | null {
-        return Array.from(this.storage.keys())[index] || null
+        return Array.from(this.storage.keys())[index] ?? null
     }
 
     clear(): this {

@@ -3,12 +3,10 @@ import { Random } from './random.js';
 import { CheckboxVariable, TextVariable } from './variable.js';
 export class FloatFormat extends Level {
     getSpecification() {
-        return [
-            'Return true if the text represents a float and returns false if it doesn\'t.',
-            'A float may start with a plus or a minus sign.',
-            'This is followed by one or more digits.',
-            'If that is followed by a dot, one or more digits must follow.',
-        ];
+        return ('Return true if the text represents a float and returns false if it doesn\'t. ' +
+            'A float may start with a plus or a minus sign. ' +
+            'This is followed by one or more digits. ' +
+            'If that is followed by a dot, one or more digits must follow.');
     }
     getParameters() {
         return [

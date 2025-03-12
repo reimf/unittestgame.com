@@ -9,19 +9,19 @@ export class Candidate {
         this.complexity = this.computeComplexity(code);
     }
     computeComplexity(code) {
-        const chunks = code.
-            replace(/,/g, ' '). // each argument is 1 point
-            replace(/;/g, ' '). // each statement is 1 point
-            replace(/\((.*?)\)/g, ' () $1 '). // each function call is 1 extra point
-            replace(/\[(.*?)\]/g, ' [] $1 '). // each array index is 1 extra point
-            replace(/\{(.*?)\}/g, ' {} $1 '). // each block of commands is 1 extra point
-            replace(/"(.*?)"/g, ' "" $1 '). // each non-empty string is 1 extra point
-            replace(/\.(?=[a-z])/g, ' . '). // each method call is 1 point
-            replace(/(?<=\d)0+ /g, ' '). // 200 is 1 point
-            replace(/(?<=\d)(?=\d)/g, ' '). // 3199 is 4 points, 3200 only 2
-            replace(/(?<=\d)\.(?=\d)/g, ' . '). // each float is 1 point extra
-            trim().
-            split(/\s+/); // each token is 1 point
+        const chunks = code
+            .replace(/,/g, ' ') // each argument is 1 point
+            .replace(/;/g, ' ') // each statement is 1 point
+            .replace(/\((.*?)\)/g, ' () $1 ') // each function call is 1 extra point
+            .replace(/\[(.*?)\]/g, ' [] $1 ') // each array index is 1 extra point
+            .replace(/\{(.*?)\}/g, ' {} $1 ') // each block of commands is 1 extra point
+            .replace(/"(.*?)"/g, ' "" $1 ') // each non-empty string is 1 extra point
+            .replace(/\.(?=[a-z])/g, ' . ') // each method call is 1 point
+            .replace(/(?<=\d)0+ /g, ' ') // 200 is 1 point
+            .replace(/(?<=\d)(?=\d)/g, ' ') // 3199 is 4 points, 3200 only 2
+            .replace(/(?<=\d)\.(?=\d)/g, ' . ') // each float is 1 point extra
+            .trim()
+            .split(/\s+/); // each token is 1 point
         return chunks.length;
     }
     execute(argumentsList) {

@@ -93,21 +93,25 @@ export class Round {
     }
 
     private menu(): void {
-        this.game.showPanelsOnMenu(this.level.getSpecification(), this.currentCandidate, this.level.perfectCandidate, this.coveredCandidates)
+        this.game.showPanelsOnMenu(this.level.getSpecification(),
+            this.currentCandidate,
+            this.level.perfectCandidate,
+            this.coveredCandidates)
         this.game.showUnitTestsPanel(this.userdefinedUnitTests)
         this.game.showScorePanel(this.description, this.score)
         if (this.score === this.MINIMUMSCORE)
             this.end()
         else
             this.showMenuMessage()
+
     }
 
     private showMenuMessage(): void {
         new HumanMessage([
-            new Button().onClick(() => this.startAddUnitTestFlow()).text(`I want to add a unit test`),
-            new Button().onClick(() => this.showHint()).text(`I want to see a hint for a unit test`),
-            new Button().onClick(() => this.submit()).text(`I want to submit the unit tests`),
-            new Button().onClick(() => this.end()).text(`I want to exit this level`),
+            new Button().onClick(() => this.startAddUnitTestFlow()).text('I want to add a unit test'),
+            new Button().onClick(() => this.showHint()).text('I want to see a hint for a unit test'),
+            new Button().onClick(() => this.submit()).text('I want to submit the unit tests'),
+            new Button().onClick(() => this.end()).text('I want to exit this level'),
         ]).show()
     }
 
@@ -117,20 +121,22 @@ export class Round {
     }
 
     private showConfirmStartUnitTestFlowMessage(): void {
-        new ComputerMessage([
-            new Paragraph().text('Which unit test do you want to add?'),
-        ]).show()
+        new ComputerMessage([new Paragraph().text('Which unit test do you want to add?')]).show()
     }
 
     private showFormUnitTestMessage(): void {
         const submitButton = new Input().type('submit').value('I want to add this unit test')
-        const cancelButton = new Button().onClick(() => this.cancelAddUnitTestFlow()).text('I don\'t want to add a unit test now').addClass('secondary').addClass('cancel')
+        const cancelButton = new Button()
+            .onClick(() => this.cancelAddUnitTestFlow())
+            .text('I don\'t want to add a unit test now')
+            .addClass('secondary')
+            .addClass('cancel')
         const buttonBlock = new Paragraph().child(submitButton).child(cancelButton).addClass('buttonrow')
         new HumanMessage([
             new Form()
-            .onSubmit(() => this.addUnitTest())
-            .children([...this.level.parameters, this.level.unit].map(variable => variable.toHtml()))
-            .child(buttonBlock)
+                .onSubmit(() => this.addUnitTest())
+                .children([...this.level.parameters, this.level.unit].map(variable => variable.toHtml()))
+                .child(buttonBlock),
         ]).show()
     }
 
@@ -142,9 +148,7 @@ export class Round {
     }
 
     private showConfirmCancelAddUnitTestFlowMessage(): void {
-        new ComputerMessage([
-            new Paragraph().text('Ok.'),
-        ]).show()
+        new ComputerMessage([new Paragraph().text('Ok.')]).show()
     }
 
     private cancelAddUnitTestFlow(): void {
@@ -169,8 +173,7 @@ export class Round {
                 this.currentCandidate = this.findSimplestPassingCandidate()
                 this.failingTestResult = this.findFailingTestResult()
             }
-        }
-        else {
+        } else {
             this.game.showIncorrectUnitTestMessage(this.PENALTYINCORRECTUNITTEST)
             this.subtractPenalty(this.PENALTYINCORRECTUNITTEST)
         }
@@ -191,9 +194,9 @@ export class Round {
             this.game.showBugFoundMessage(this.currentCandidate, this.failingTestResult, this.PENALTYSUBMITWITHBUG)
             this.subtractPenalty(this.PENALTYSUBMITWITHBUG)
             this.menu()
-        }
-        else
+        } else
             this.end()
+
     }
 
     private end(): void {
@@ -203,15 +206,16 @@ export class Round {
             this.score = this.MINIMUMSCORE
             this.game.showScorePanel(this.description, this.score)
             this.game.showUnsuccessfulEndMessage(this.score)
-        }
-        else {
+        } else {
             const numberOfRedundantUnitTests = this.userdefinedUnitTests.length - this.level.minimalUnitTests.length
             if (numberOfRedundantUnitTests > 0) {
                 this.subtractPenalty(numberOfRedundantUnitTests * this.PENALTYREDUNDANTUNITTEST)
-                this.game.showRedundantUnitTestsEndMessage(this.score, numberOfRedundantUnitTests, this.PENALTYREDUNDANTUNITTEST)
-            }
-            else
+                this.game.showRedundantUnitTestsEndMessage(this.score,
+                    numberOfRedundantUnitTests,
+                    this.PENALTYREDUNDANTUNITTEST)
+            } else
                 this.game.showSuccessfulEndMessage(this.score)
+
         }
         this.saveScore(localStorage, this.score)
         this.callback!()

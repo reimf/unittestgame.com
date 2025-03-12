@@ -2,27 +2,27 @@ import { Level } from './level.js'
 import { Variable, TextVariable, NumberVariable } from './variable.js'
 
 export class SpeedDisplay extends Level {
-    public getSpecification(): string[] {
-        return [
-            'The function receives the speed in meters per hour and',
-            'must display the speed in kilometers per hour.',
-            'If something is wrong with the speed,',
-            'then the function must return "ERROR" (e.g. -1000 becomes "ERROR").',
-            'If possible, show one decimal (e.g. 12345 becomes "12.3").',
-            'Otherwise, round to whole kilometers per hour (e.g. 87654 becomes "87.7").',
-            'If the speed no longer fits on the display,',
-            'then the function must return "DANGER" (e.g. 300000 becomes "DANGER").\n',
-            'The display looks like this, where every X is a LED light:\n',
-            '+-------------------+\n',
-            '|  X   XXXX   XXXX  |\n',
-            '|  X   X  X   X  X  |\n',
-            '|  X   XXXX   XXXX  |\n',
-            '|  X   X  X   X  X  |\n',
-            '|  X   XXXX X XXXX  |\n',
-            '|                   |\n',
-            '| X ERROR  DANGER X |\n',
+    public getSpecification(): string {
+        return (
+            'The function receives the speed in meters per hour and ' +
+            'must display the speed in kilometers per hour. ' +
+            'If something is wrong with the speed, ' +
+            'then the function must return "ERROR" (e.g. -1000 becomes "ERROR"). ' +
+            'If possible, show one decimal (e.g. 12345 becomes "12.3"). ' +
+            'Otherwise, round to whole kilometers per hour (e.g. 87654 becomes "87.7"). ' +
+            'If the speed no longer fits on the display, ' +
+            'then the function must return "DANGER" (e.g. 300000 becomes "DANGER").\n' +
+            'The display looks like this, where every X is a LED light:\n' +
+            '+-------------------+\n' +
+            '|  X   XXXX   XXXX  |\n' +
+            '|  X   X  X   X  X  |\n' +
+            '|  X   XXXX   XXXX  |\n' +
+            '|  X   X  X   X  X  |\n' +
+            '|  X   XXXX X XXXX  |\n' +
+            '|                   |\n' +
+            '| X ERROR  DANGER X |\n' +
             '+-------------------+'
-        ]
+        )
     }
 
     public getParameters(): Variable[] {

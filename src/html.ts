@@ -33,11 +33,6 @@ export abstract class Html {
         return this
     }
 
-    public lines(lines: string[]): Html {
-        this.text(lines.join(' ').replace(/\n /g, '\n'))
-        return this
-    }
-
     public child(child: Html): Html {
         this.element.appendChild(child.element)
         return this

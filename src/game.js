@@ -16,16 +16,12 @@ export class Game {
         ]).show();
     }
     showScorePanel(description, score) {
-        new Panel('Score', [
-            new Paragraph().text(`${description}: ${score}%`),
-        ]).show();
+        new Panel('Score', [new Paragraph().text(`${description}: ${score}%`)]).show();
     }
     showMinimumScoreEndMessage(score) {
         new ComputerMessage([
-            new Paragraph().lines([
-                'You have to retry this level,',
-                `because your score dropped to ${score}%.`
-            ])
+            new Paragraph().text('You have to retry this level, ' +
+                `because your score dropped to ${score}%.`),
         ]).show();
     }
 }

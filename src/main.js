@@ -53,17 +53,12 @@ export class Main {
         const mailto = new Anchor().href('mailto:feedback@unittestgame.com').text('feedback');
         const site = new Anchor().href('https://unittestgame.com').text('UnitTestGame.com');
         const feedbackParagraph = new Paragraph().text('Please send us ').child(mailto).text(' at ').child(site);
-        new Panel('About', [
-            learnParagraph,
-            feedbackParagraph
-        ]).show();
+        new Panel('About', [learnParagraph, feedbackParagraph]).show();
     }
     showIntroductionMessage() {
         new ComputerMessage([
-            new Paragraph().lines([
-                'Welcome to UnitTestGame.com!',
-                'I am an AI bot specialized in Test-Driven Development and Mutation Testing.',
-            ]),
+            new Paragraph().text('Welcome to UnitTestGame.com! ' +
+                'I am an AI bot specialized in Test-Driven Development and Mutation Testing.'),
         ]).show();
     }
     continue() {
@@ -72,9 +67,9 @@ export class Main {
     }
     showHighScoresPanel() {
         const roundsWithHighScore = this.rounds.filter(round => round.getHighScore(localStorage) > 0);
-        if (roundsWithHighScore.length > 0)
-            new Panel('High Scores', roundsWithHighScore
-                .map(round => new Paragraph().text(`${round.description}: ${round.getHighScore(localStorage)}%`))).show();
+        if (roundsWithHighScore.length > 0) {
+            new Panel('High Scores', roundsWithHighScore.map(round => new Paragraph().text(`${round.description}: ${round.getHighScore(localStorage)}%`))).show();
+        }
     }
     showNextRound() {
         const nextRound = this.rounds.find(round => round.getHighScore(localStorage) === 0);
@@ -88,7 +83,8 @@ export class Main {
         document.querySelectorAll('#panels > section').forEach(panel => panel.remove());
     }
     playNextRound(round) {
-        this.removeAllPanels(); // We don't know the names of the panels created by the previous round, so we simply remove all panels
+        // We don't know the names of the panels created by the previous round, so we simply remove all panels
+        this.removeAllPanels();
         round.play();
     }
 }

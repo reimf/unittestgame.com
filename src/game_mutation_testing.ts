@@ -8,14 +8,15 @@ export class MutationTesting extends Game {
     public showWelcomeMessage(): void {
         new ComputerMessage([
             new Paragraph()
-            .markdown('You study *The Function* and write *Unit Tests* that pass the function. ')
-            .text('After adding a unit test, I highlight the lines covered. ')
-            .text('Submit the unit tests when you think the function is fully tested. ')
-            .text('If you are wrong, I show a mutation of the function that is NOT correct, but passes your unit tests.')
+                .markdown('You study *The Function* and write *Unit Tests* that pass the function. ')
+                .text('After adding a unit test, I highlight the lines covered. ')
+                .text('Submit the unit tests when you think the function is fully tested. ')
+                .text('If you are wrong, I show a mutation of the function that is NOT correct, ')
+                .text('but passes your unit tests.'),
         ]).show()
     }
 
-    public showPanelsOnMenu(specification: string[], currentCandidate: Candidate, perfectCandidate: Candidate, coveredCandidates: Candidate[]): void {
+    public showPanelsOnMenu(specification: string, currentCandidate: Candidate, perfectCandidate: Candidate, coveredCandidates: Candidate[]): void {
         this.showCodeCoveragePanel(perfectCandidate, coveredCandidates)
     }
 
@@ -52,7 +53,7 @@ export class MutationTesting extends Game {
         ]).show()
     }
 
-    public showBugFoundMessage(currentCandidate: Candidate, failingTestResult: TestResult, penaltySubmitWithBug: number): void {
+    public showBugFoundMessage(currentCandidate: Candidate, _failingTestResult: TestResult, penaltySubmitWithBug: number): void {
         new ComputerMessage([
             new Paragraph().text('I checked the function, but it is NOT fully tested.'),
             new Paragraph().text('A mutation that is NOT correct, but still passes your unit tests is the following.'),

@@ -8,21 +8,21 @@ export class TestDrivenDevelopment extends Game {
     public showWelcomeMessage(): void {
         new ComputerMessage([
             new Paragraph()
-            .markdown('You read the *Specification* and write *Unit Tests* that fail the *Current Function*. ')
-            .text('After adding a unit test, I rewrite the function such that it passes. ')
-            .text('Submit the unit tests when you think the function is according to the specification. ')
-            .text('If you are wrong, I show a unit test that is correct, but does NOT pass the function.')
+                .markdown('You read the *Specification* and write *Unit Tests* that fail the *Current Function*. ')
+                .text('After adding a unit test, I rewrite the function such that it passes. ')
+                .text('Submit the unit tests when you think the function is according to the specification. ')
+                .text('If you are wrong, I show a unit test that is correct, but does NOT pass the function.'),
         ]).show()
     }
 
-    public showPanelsOnMenu(specification: string[], currentCandidate: Candidate, perfectCandidate: Candidate, coveredCandidates: Candidate[]): void {
+    public showPanelsOnMenu(specification: string, currentCandidate: Candidate, _perfectCandidate: Candidate, _coveredCandidates: Candidate[]): void {
         this.showSpecificationPanel(specification)
         this.showCurrentCandidatePanel(currentCandidate)
     }
 
-    private showSpecificationPanel(specification: string[]): void {
+    private showSpecificationPanel(specification: string): void {
         new Panel('Specification', [
-            new Paragraph().lines(specification),
+            new Paragraph().text(specification),
         ]).show()
     }
     
@@ -34,18 +34,16 @@ export class TestDrivenDevelopment extends Game {
 
     public showUselessUnitTestMessage(): void {
         new ComputerMessage([
-            new Paragraph().lines([
-                'I added the unit test,',
-                'but the current function already passed this unit test,',
-                'so I didn\'t improve the function.'
-            ]),
+            new Paragraph().text(
+                    'I added the unit test, ' +
+                    'but the current function already passed this unit test, ' +
+                    'so I didn\'t improve the function.'
+            ),
         ]).show()
     }
 
     public showUsefulUnitTestMessage(): void {
-        new ComputerMessage([
-            new Paragraph().text('I added the unit test and I improved the function.'),
-        ]).show()
+        new ComputerMessage([new Paragraph().text('I added the unit test and I improved the function.')]).show()
     }
 
     public showHintMessage(currentCandidate: Candidate, failingTestResult: TestResult, penaltyHint: number): void {
@@ -63,7 +61,9 @@ export class TestDrivenDevelopment extends Game {
         ]).show()
     }
 
-    public showBugFoundMessage(currentCandidate: Candidate, failingTestResult: TestResult, penaltySubmitWithBug: number): void {
+    public showBugFoundMessage(currentCandidate: Candidate,
+        failingTestResult: TestResult,
+        penaltySubmitWithBug: number): void {
         new ComputerMessage([
             new Paragraph().text('I checked the current function, but it is NOT according to the specification.'),
             new Paragraph().text('It produces the following incorrect output.'),
@@ -79,7 +79,9 @@ export class TestDrivenDevelopment extends Game {
         ]).show()
     }
 
-    public showRedundantUnitTestsEndMessage(score: number, numberOfRedundantUnitTests: number, penaltyRedundantUnitTest: number): void {
+    public showRedundantUnitTestsEndMessage(score: number,
+        numberOfRedundantUnitTests: number,
+        penaltyRedundantUnitTest: number): void {
         new ComputerMessage([
             new Paragraph().text('I checked the current function and it is indeed according to the specification.'),
             new Paragraph().text(`You needed ${numberOfRedundantUnitTests} more unit tests than needed.`),

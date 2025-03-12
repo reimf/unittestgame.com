@@ -77,10 +77,10 @@ export class Round {
     }
     showMenuMessage() {
         new HumanMessage([
-            new Button().onClick(() => this.startAddUnitTestFlow()).text(`I want to add a unit test`),
-            new Button().onClick(() => this.showHint()).text(`I want to see a hint for a unit test`),
-            new Button().onClick(() => this.submit()).text(`I want to submit the unit tests`),
-            new Button().onClick(() => this.end()).text(`I want to exit this level`),
+            new Button().onClick(() => this.startAddUnitTestFlow()).text('I want to add a unit test'),
+            new Button().onClick(() => this.showHint()).text('I want to see a hint for a unit test'),
+            new Button().onClick(() => this.submit()).text('I want to submit the unit tests'),
+            new Button().onClick(() => this.end()).text('I want to exit this level'),
         ]).show();
     }
     startAddUnitTestFlow() {
@@ -88,19 +88,21 @@ export class Round {
         this.showFormUnitTestMessage();
     }
     showConfirmStartUnitTestFlowMessage() {
-        new ComputerMessage([
-            new Paragraph().text('Which unit test do you want to add?'),
-        ]).show();
+        new ComputerMessage([new Paragraph().text('Which unit test do you want to add?')]).show();
     }
     showFormUnitTestMessage() {
         const submitButton = new Input().type('submit').value('I want to add this unit test');
-        const cancelButton = new Button().onClick(() => this.cancelAddUnitTestFlow()).text('I don\'t want to add a unit test now').addClass('secondary').addClass('cancel');
+        const cancelButton = new Button()
+            .onClick(() => this.cancelAddUnitTestFlow())
+            .text('I don\'t want to add a unit test now')
+            .addClass('secondary')
+            .addClass('cancel');
         const buttonBlock = new Paragraph().child(submitButton).child(cancelButton).addClass('buttonrow');
         new HumanMessage([
             new Form()
                 .onSubmit(() => this.addUnitTest())
                 .children([...this.level.parameters, this.level.unit].map(variable => variable.toHtml()))
-                .child(buttonBlock)
+                .child(buttonBlock),
         ]).show();
     }
     showAddUnitTestMessage(unitTest) {
@@ -110,9 +112,7 @@ export class Round {
         ]).replace();
     }
     showConfirmCancelAddUnitTestFlowMessage() {
-        new ComputerMessage([
-            new Paragraph().text('Ok.'),
-        ]).show();
+        new ComputerMessage([new Paragraph().text('Ok.')]).show();
     }
     cancelAddUnitTestFlow() {
         this.showConfirmCancelAddUnitTestFlowMessage();

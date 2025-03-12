@@ -2,13 +2,13 @@ import { Level } from './level.js'
 import { Variable, RadioVariable, NumberVariable } from './variable.js'
 
 export class TriangleType extends Level {
-    public getSpecification(): string[] {
-        return [
-            'Return the type of the triangle: equilateral, isosceles or scalene.',
-            'A triangle is equilateral if all three sides have the same length.',
-            'A triangle is isosceles if two sides have the same length and a third side has a different length.',
-            'A triangle is scalene if all three sides have different lengths.',
-        ]
+    public getSpecification(): string {
+        return (
+            'Return the type of the triangle: equilateral, isosceles or scalene. ' +
+            'A triangle is equilateral if all three sides have the same length. ' +
+            'A triangle is isosceles if two sides have the same length and a third side has a different length. ' +
+            'A triangle is scalene if all three sides have different lengths.'
+        )
     }
 
     public getParameters(): Variable[] {

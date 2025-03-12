@@ -30,7 +30,7 @@ export class Level {
             yield this.createCandidate(lines, indices);
     }
     createCandidate(lines, indices) {
-        const parameterList = this.parameters.map((parameter) => parameter.name).join(', ');
+        const parameterList = this.parameters.map(parameter => parameter.name).join(', ');
         const indentedLines = [
             `function ${this.unit.name}(${parameterList}) {`,
             ...lines.filter(line => line !== '').map(line => '  ' + line),
@@ -60,16 +60,17 @@ export class Level {
     }
     checkPerfectCandidates() {
         const hintResults = this.perfectCandidates.map(candidate => candidate.failCount(this.hints));
-        if (hintResults.some(result => result > 0))
-            throw new Error(`Not all perfect functions for level ${this.name} pass all hints.\n${this.perfectCandidates.join('\n')}`);
+        if (hintResults.some(result => result > 0)) {
+            throw new Error(`Not all perfect functions for level ${this.name} pass all hints.\n` +
+                `${this.perfectCandidates.join('\n')}`);
+        }
     }
     checkAllMinimalUnitTestsAreNeeded() {
         for (const unitTest of this.minimalUnitTests) {
             const allMinusOneUnitTests = this.minimalUnitTests.filter(otherUnitTest => otherUnitTest !== unitTest);
             const almostPerfectCandidates = this.candidates.filter(candidate => candidate.failCount(allMinusOneUnitTests) == 0);
-            if (almostPerfectCandidates.length === this.perfectCandidates.length) {
+            if (almostPerfectCandidates.length === this.perfectCandidates.length)
                 throw new Error(`Unit test ${unitTest} is not needed.\n${almostPerfectCandidates[0]}`);
-            }
         }
     }
 }

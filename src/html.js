@@ -26,10 +26,6 @@ export class Html {
         }
         return this;
     }
-    lines(lines) {
-        this.text(lines.join(' ').replace(/\n /g, '\n'));
-        return this;
-    }
     child(child) {
         this.element.appendChild(child.element);
         return this;

@@ -27,15 +27,15 @@ export class Main {
     private readonly speedDisplay: Level = new SpeedDisplay()
     private readonly callback = () => this.continue()
     private readonly rounds: Round[] = [
-        new Round( 1, this.testDrivenDevelopment, this.votingAge, this.callback),
-        new Round( 2, this.mutationTesting, this.evenOdd, this.callback),
-        new Round( 3, this.testDrivenDevelopment, this.fizzBuzz, this.callback),
-        new Round( 4, this.mutationTesting, this.triangleType, this.callback),
-        new Round( 5, this.testDrivenDevelopment, this.evenOdd, this.callback),
-        new Round( 6, this.mutationTesting, this.votingAge, this.callback),
-        new Round( 7, this.testDrivenDevelopment, this.triangleType, this.callback),
-        new Round( 8, this.mutationTesting, this.fizzBuzz, this.callback),
-        new Round( 9, this.testDrivenDevelopment, this.leapYear, this.callback),
+        new Round(1, this.testDrivenDevelopment, this.votingAge, this.callback),
+        new Round(2, this.mutationTesting, this.evenOdd, this.callback),
+        new Round(3, this.testDrivenDevelopment, this.fizzBuzz, this.callback),
+        new Round(4, this.mutationTesting, this.triangleType, this.callback),
+        new Round(5, this.testDrivenDevelopment, this.evenOdd, this.callback),
+        new Round(6, this.mutationTesting, this.votingAge, this.callback),
+        new Round(7, this.testDrivenDevelopment, this.triangleType, this.callback),
+        new Round(8, this.mutationTesting, this.fizzBuzz, this.callback),
+        new Round(9, this.testDrivenDevelopment, this.leapYear, this.callback),
         new Round(10, this.mutationTesting, this.passwordStrength, this.callback),
         new Round(11, this.testDrivenDevelopment, this.speedDisplay, this.callback),
         new Round(12, this.mutationTesting, this.floatFormat, this.callback),
@@ -56,18 +56,13 @@ export class Main {
         const mailto = new Anchor().href('mailto:feedback@unittestgame.com').text('feedback')
         const site = new Anchor().href('https://unittestgame.com').text('UnitTestGame.com')
         const feedbackParagraph = new Paragraph().text('Please send us ').child(mailto).text(' at ').child(site)
-        new Panel('About', [
-            learnParagraph,
-            feedbackParagraph
-        ]).show()
+        new Panel('About', [learnParagraph, feedbackParagraph]).show()
     }
 
     private showIntroductionMessage(): void {
         new ComputerMessage([
-            new Paragraph().lines([
-                'Welcome to UnitTestGame.com!',
-                'I am an AI bot specialized in Test-Driven Development and Mutation Testing.',
-            ]),
+            new Paragraph().text('Welcome to UnitTestGame.com! ' +
+                'I am an AI bot specialized in Test-Driven Development and Mutation Testing.'),
         ]).show()
     }
 
@@ -78,19 +73,19 @@ export class Main {
 
     private showHighScoresPanel(): void {
         const roundsWithHighScore = this.rounds.filter(round => round.getHighScore(localStorage) > 0)
-        if (roundsWithHighScore.length > 0)
+        if (roundsWithHighScore.length > 0) {
             new Panel('High Scores',
-                roundsWithHighScore
-                .map(round => new Paragraph().text(`${round.description}: ${round.getHighScore(localStorage)}%`))
-            ).show()
+                roundsWithHighScore.map(round =>
+                    new Paragraph().text(`${round.description}: ${round.getHighScore(localStorage)}%`))).show()
+        }
     }
 
     private showNextRound(): void {
         const nextRound = this.rounds.find(round => round.getHighScore(localStorage) === 0)
         new HumanMessage([
             nextRound
-            ? new Button().onClick(() => this.playNextRound(nextRound)).text(`I want to play ${nextRound.description}`)
-            : new Button().onClick(() => window.close()).text('Quit UnitTestGame.com'),
+                ? new Button().onClick(() => this.playNextRound(nextRound)).text(`I want to play ${nextRound.description}`)
+                : new Button().onClick(() => window.close()).text('Quit UnitTestGame.com'),
         ]).show()
     }
 
@@ -99,7 +94,8 @@ export class Main {
     }
 
     private playNextRound(round: Round): void {
-        this.removeAllPanels() // We don't know the names of the panels created by the previous round, so we simply remove all panels
+        // We don't know the names of the panels created by the previous round, so we simply remove all panels
+        this.removeAllPanels()
         round.play()
     }
 }

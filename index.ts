@@ -6,7 +6,8 @@ window.onerror = (message, source, lineno, colno, error) => {
 
 document.addEventListener('keydown', event => {
     const direction = event.key === 'ArrowDown' ? +1 : event.key === 'ArrowUp' ? -1 : 0
-    if (direction === 0) return
+    if (direction === 0)
+        return
     event.preventDefault()
     const focusables = document.querySelectorAll('input, button')
     const oldFocused = document.activeElement as HTMLElement

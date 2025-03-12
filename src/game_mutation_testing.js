@@ -8,7 +8,8 @@ export class MutationTesting extends Game {
                 .markdown('You study *The Function* and write *Unit Tests* that pass the function. ')
                 .text('After adding a unit test, I highlight the lines covered. ')
                 .text('Submit the unit tests when you think the function is fully tested. ')
-                .text('If you are wrong, I show a mutation of the function that is NOT correct, but passes your unit tests.')
+                .text('If you are wrong, I show a mutation of the function that is NOT correct, ')
+                .text('but passes your unit tests.'),
         ]).show();
     }
     showPanelsOnMenu(specification, currentCandidate, perfectCandidate, coveredCandidates) {
@@ -42,7 +43,7 @@ export class MutationTesting extends Game {
             new Paragraph().text(`The cost for this hint is ${penaltyHint}%.`),
         ]).show();
     }
-    showBugFoundMessage(currentCandidate, failingTestResult, penaltySubmitWithBug) {
+    showBugFoundMessage(currentCandidate, _failingTestResult, penaltySubmitWithBug) {
         new ComputerMessage([
             new Paragraph().text('I checked the function, but it is NOT fully tested.'),
             new Paragraph().text('A mutation that is NOT correct, but still passes your unit tests is the following.'),

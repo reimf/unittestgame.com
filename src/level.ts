@@ -9,7 +9,7 @@ export abstract class Level {
     protected abstract getCandidateElements(): string[][]
     protected abstract minimalUnitTestGenerator(): Generator<any[]>
     protected abstract hintGenerator(): Generator<any[]>
-    public abstract getSpecification(): string[]
+    public abstract getSpecification(): string
 
     public readonly name: string = this.constructor.name.replace(/(?<=[a-z])(?=[A-Z])/g, ' ')
     public readonly parameters: Variable[] = this.getParameters()
@@ -26,7 +26,9 @@ export abstract class Level {
         this.checkAllMinimalUnitTestsAreNeeded()
     }
 
-    private *generateCandidates(listOfListOfLines: string[][], lines: string[], indices: number[]): Generator<Candidate> {
+    private *generateCandidates(listOfListOfLines: string[][],
+        lines: string[],
+        indices: number[]): Generator<Candidate> {
         if (listOfListOfLines.length > 0) {
             const [firstListOfLines, ...remainingListOfListOfLines] = listOfListOfLines
             for (const line of firstListOfLines) {
@@ -36,16 +38,16 @@ export abstract class Level {
                 const newIndices = [...indices, newIndex]
                 yield* this.generateCandidates(remainingListOfListOfLines, newLines, newIndices)
             }
-        }
-        else
+        } else
             yield this.createCandidate(lines, indices)
+
     }
 
     private createCandidate(lines: string[], indices: number[]): Candidate {
-        const parameterList = this.parameters.map((parameter) => parameter.name).join(', ')
+        const parameterList = this.parameters.map(parameter => parameter.name).join(', ')
         const indentedLines = [
             `function ${this.unit.name}(${parameterList}) {`,
-                ...lines.filter(line => line !== '').map(line => '  ' + line),
+            ...lines.filter(line => line !== '').map(line => '  ' + line),
             '}',
         ]
         return new Candidate(indentedLines, indices)
@@ -54,8 +56,7 @@ export abstract class Level {
     private findamputeesOfPerfectCandidate(): Candidate[] {
         const perfectIndices = this.perfectCandidate.indices
         return this.candidates.filter(candidate =>
-            candidate.indices.every((index, i) => index === 0 || index === perfectIndices[i])
-        )
+            candidate.indices.every((index, i) => index === 0 || index === perfectIndices[i]))
     }
 
     private *generateMinimalUnitTests(): Generator<UnitTest> {
@@ -68,6 +69,7 @@ export abstract class Level {
     private *generateHints(): Generator<UnitTest> {
         for (const argumentList of this.hintGenerator())
             yield new UnitTest(this.parameters, argumentList, this.unit, this.perfectCandidate.execute(argumentList))
+
     }
 
     private findPerfectCandidates(): Candidate[] {
@@ -79,17 +81,19 @@ export abstract class Level {
 
     private checkPerfectCandidates(): void {
         const hintResults = this.perfectCandidates.map(candidate => candidate.failCount(this.hints))
-        if (hintResults.some(result => result > 0))
-            throw new Error(`Not all perfect functions for level ${this.name} pass all hints.\n${this.perfectCandidates.join('\n')}`)
+        if (hintResults.some(result => result > 0)) {
+            throw new Error(`Not all perfect functions for level ${this.name} pass all hints.\n` +
+                `${this.perfectCandidates.join('\n')}`)
+        }
     }
 
     private checkAllMinimalUnitTestsAreNeeded(): void {
         for (const unitTest of this.minimalUnitTests) {
             const allMinusOneUnitTests = this.minimalUnitTests.filter(otherUnitTest => otherUnitTest !== unitTest)
             const almostPerfectCandidates = this.candidates.filter(candidate => candidate.failCount(allMinusOneUnitTests) == 0)
-            if (almostPerfectCandidates.length === this.perfectCandidates.length) {
+            if (almostPerfectCandidates.length === this.perfectCandidates.length)
                 throw new Error(`Unit test ${unitTest} is not needed.\n${almostPerfectCandidates[0]}`)
-            }
+
         }
     }
 }

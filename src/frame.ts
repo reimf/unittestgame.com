@@ -52,7 +52,7 @@ abstract class Message extends Frame {
         this.scrollIntoView()
     }
 
-    protected scrollIntoView(): void {
+    private scrollIntoView(): void {
         this.element.scrollIntoView()
     }
 }

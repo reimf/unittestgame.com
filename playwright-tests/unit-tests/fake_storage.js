@@ -6,7 +6,8 @@ export class FakeStorage {
         return this.storage.size;
     }
     getItem(key) {
-        return this.storage.get(key) || null;
+        var _a;
+        return (_a = this.storage.get(key)) !== null && _a !== void 0 ? _a : null;
     }
     setItem(key, value) {
         this.storage.set(key, value);
@@ -17,7 +18,8 @@ export class FakeStorage {
         return this;
     }
     key(index) {
-        return Array.from(this.storage.keys())[index] || null;
+        var _a;
+        return (_a = Array.from(this.storage.keys())[index]) !== null && _a !== void 0 ? _a : null;
     }
     clear() {
         this.storage.clear();
