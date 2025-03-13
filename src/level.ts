@@ -1,99 +1,225 @@
 import { Candidate } from './candidate.js'
+import { HumanMessage, ComputerMessage } from './frame.js'
+import { Methodology } from './methodology.js'
+import { Button, Form, Input, Paragraph } from './html.js'
 import { Random } from './random.js'
+import { TestResult } from './test_result.js'
 import { UnitTest } from './unit_test.js'
-import { Variable } from './variable.js'
+import { UseCase } from './use_case.js'
 
-export abstract class Level {
-    protected abstract getParameters(): Variable[]
-    protected abstract getUnit(): Variable
-    protected abstract getCandidateElements(): string[][]
-    protected abstract minimalUnitTestGenerator(): Generator<any[]>
-    protected abstract hintGenerator(): Generator<any[]>
-    public abstract getSpecification(): string
+export class Level {
+    private readonly PERFECTSCORE = 100
+    private readonly PENALTYINCORRECTUNITTEST = 5
+    private readonly PENALTYHINT = 10
+    private readonly PENALTYSUBMITWITHBUG = 20
+    private readonly PENALTYREDUNDANTUNITTEST = 1
+    private readonly MINIMUMSCORE = 0
 
-    public readonly name: string = this.constructor.name.replace(/(?<=[a-z])(?=[A-Z])/g, ' ')
-    public readonly parameters: Variable[] = this.getParameters()
-    public readonly unit: Variable = this.getUnit()
-    public readonly candidates: Candidate[] = [...this.generateCandidates(this.getCandidateElements(), [], [])]
-    public readonly minimalUnitTests: UnitTest[] = [...this.generateMinimalUnitTests()]
-    public readonly perfectCandidates: Candidate[] = this.findPerfectCandidates()
-    public readonly perfectCandidate: Candidate = Random.elementFrom(this.perfectCandidates)
-    public readonly amputeesOfPerfectCandidate: Candidate[] = this.findamputeesOfPerfectCandidate()
-    public readonly hints: UnitTest[] = [...this.generateHints()]
+    private readonly methodology: Methodology
+    private readonly useCase: UseCase
 
-    public constructor() {
-        this.checkPerfectCandidates()
-        this.checkAllMinimalUnitTestsAreNeeded()
+    private callback?: () => void
+    private userdefinedUnitTests: UnitTest[] = []
+    private coveredCandidates: Candidate[] = []
+    private currentCandidate: Candidate = new Candidate([], [])
+    private failingTestResult?: TestResult = undefined
+    private score: number = this.PERFECTSCORE
+
+    public constructor(methodology: Methodology, useCase: UseCase) {
+        this.methodology = methodology
+        this.useCase = useCase
     }
 
-    private *generateCandidates(listOfListOfLines: string[][],
-        lines: string[],
-        indices: number[]): Generator<Candidate> {
-        if (listOfListOfLines.length > 0) {
-            const [firstListOfLines, ...remainingListOfListOfLines] = listOfListOfLines
-            for (const line of firstListOfLines) {
-                const newLine = line === '' && remainingListOfListOfLines.length === 0 ? 'return undefined' : line
-                const newLines = [...lines, newLine]
-                const newIndex = line === '' ? 0 : firstListOfLines.indexOf(line) + 1
-                const newIndices = [...indices, newIndex]
-                yield* this.generateCandidates(remainingListOfListOfLines, newLines, newIndices)
+    public get description(): string {
+        return `${this.methodology.name} - ${this.useCase.name}`
+    }
+
+    public getHighScore(storage: Storage): number {
+        return Number(storage.getItem(this.description))
+    }
+
+    private saveScore(storage: Storage, score: number): void {
+        if (score > this.getHighScore(storage))
+            storage.setItem(this.description, score.toString())
+    }
+
+    public play(callback: () => void): void {
+        this.callback = callback
+        this.userdefinedUnitTests = []
+        this.coveredCandidates = []
+        this.currentCandidate = this.findSimplestPassingCandidate()
+        this.failingTestResult = this.findFailingTestResult()
+        this.score = this.PERFECTSCORE
+        this.methodology.showWelcomeMessage()
+        this.menu()
+    }
+
+    private findWorstCandidates(candidates: Candidate[], attribute: (key: Candidate) => number): Candidate[] {
+        const attributes = candidates.map(attribute)
+        const minimum = Math.min(...attributes)
+        return candidates.filter(candidate => attribute(candidate) === minimum)
+    }
+
+    private findSimplestCandidates(candidates: Candidate[]): Candidate[] {
+        return this.findWorstCandidates(candidates, candidate => candidate.complexity)
+    }
+
+    private findSimplestPassingCandidate(): Candidate {
+        const passingCandidates = this.useCase.candidates.filter(candidate => candidate.failCount(this.userdefinedUnitTests) === 0)
+        const passingImperfectCandidates = passingCandidates.filter(candidate => !this.useCase.perfectCandidates.includes(candidate))
+        if (passingImperfectCandidates.length === 0)
+            return Random.elementFrom(this.useCase.perfectCandidates)
+        const simplestPassingCandidates = this.findSimplestCandidates(passingImperfectCandidates)
+        return Random.elementFrom(simplestPassingCandidates)
+    }
+
+    private findCoveredCandidate(unitTest: UnitTest): Candidate {
+        const passingCandidates = this.useCase.amputeesOfPerfectCandidate
+            .filter(candidate => candidate.failCount([unitTest]) === 0)
+        const simplestPassingCandidates = this.findSimplestCandidates(passingCandidates)
+        return Random.elementFrom(simplestPassingCandidates)
+    }
+
+    private findFailingTestResult(): TestResult | undefined {
+        const failingHints = this.currentCandidate.failingTestResults(this.useCase.hints)
+        if (failingHints.length > 0)
+            return Random.elementFrom(failingHints)
+        const failingMinimalUnitTests = this.currentCandidate.failingTestResults(this.useCase.minimalUnitTests)
+        if (failingMinimalUnitTests.length > 0)
+            return Random.elementFrom(failingMinimalUnitTests)
+        return undefined
+    }
+
+    private menu(): void {
+        this.methodology.showPanelsOnMenu(this.useCase.getSpecification(),
+            this.currentCandidate,
+            this.useCase.perfectCandidate,
+            this.coveredCandidates)
+        this.methodology.showUnitTestsPanel(this.userdefinedUnitTests)
+        this.methodology.showScorePanel(this.score)
+        if (this.score === this.MINIMUMSCORE)
+            this.end()
+        else
+            this.showMenuMessage()
+
+    }
+
+    private showMenuMessage(): void {
+        new HumanMessage([
+            new Button().onClick(() => this.startAddUnitTestFlow()).text('I want to add a unit test'),
+            new Button().onClick(() => this.showHint()).text('I want to see a hint for a unit test'),
+            new Button().onClick(() => this.submit()).text('I want to submit the unit tests'),
+            new Button().onClick(() => this.end()).text('I want to exit this level'),
+        ]).show()
+    }
+
+    private startAddUnitTestFlow(): void {
+        this.showConfirmStartUnitTestFlowMessage()
+        this.showFormUnitTestMessage()
+    }
+
+    private showConfirmStartUnitTestFlowMessage(): void {
+        new ComputerMessage([new Paragraph().text('Which unit test do you want to add?')]).show()
+    }
+
+    private showFormUnitTestMessage(): void {
+        const submitButton = new Input().type('submit').value('I want to add this unit test')
+        const cancelButton = new Button()
+            .onClick(() => this.cancelAddUnitTestFlow())
+            .text('I don\'t want to add a unit test now')
+            .addClass('secondary')
+            .addClass('cancel')
+        const buttonBlock = new Paragraph().child(submitButton).child(cancelButton).addClass('buttonrow')
+        new HumanMessage([
+            new Form()
+                .onSubmit(() => this.addUnitTest())
+                .children([...this.useCase.parameters, this.useCase.unit].map(variable => variable.toHtml()))
+                .child(buttonBlock),
+        ]).show()
+    }
+
+    private showAddUnitTestMessage(unitTest: UnitTest): void {
+        new HumanMessage([
+            new Paragraph().text('I want to add the following unit test.'),
+            new Paragraph().text(unitTest.toString()),
+        ]).replace()
+    }
+
+    private showConfirmCancelAddUnitTestFlowMessage(): void {
+        new ComputerMessage([new Paragraph().text('Ok.')]).show()
+    }
+
+    private cancelAddUnitTestFlow(): void {
+        this.showConfirmCancelAddUnitTestFlowMessage()
+        this.menu()
+    }
+
+    private addUnitTest(): void {
+        const argumentList = this.useCase.parameters.map(parameter => parameter.value())
+        const expected = this.useCase.unit.value()
+        const unitTest = new UnitTest(this.useCase.parameters, argumentList, this.useCase.unit, expected)
+        this.showAddUnitTestMessage(unitTest)
+        const unitTestIsCorrect = new TestResult(this.useCase.perfectCandidate, unitTest).passes
+        if (unitTestIsCorrect) {
+            this.userdefinedUnitTests.push(unitTest)
+            this.coveredCandidates.push(this.findCoveredCandidate(unitTest))
+            const currentCandidateAlreadyPasses = new TestResult(this.currentCandidate, unitTest).passes
+            if (currentCandidateAlreadyPasses)
+                this.methodology.showUselessUnitTestMessage()
+            else {
+                this.methodology.showUsefulUnitTestMessage()
+                this.currentCandidate = this.findSimplestPassingCandidate()
+                this.failingTestResult = this.findFailingTestResult()
             }
+        } else {
+            this.methodology.showIncorrectUnitTestMessage(this.PENALTYINCORRECTUNITTEST)
+            this.subtractPenalty(this.PENALTYINCORRECTUNITTEST)
+        }
+        this.menu()
+    }
+
+    private showHint(): void {
+        if (this.failingTestResult)
+            this.methodology.showHintMessage(this.currentCandidate, this.failingTestResult, this.PENALTYHINT)
+        else
+            this.methodology.showNoHintMessage(this.PENALTYHINT)
+        this.subtractPenalty(this.PENALTYHINT)
+        this.menu()
+    }
+
+    private submit(): void {
+        if (this.failingTestResult) {
+            this.methodology.showBugFoundMessage(this.currentCandidate, this.failingTestResult, this.PENALTYSUBMITWITHBUG)
+            this.subtractPenalty(this.PENALTYSUBMITWITHBUG)
+            this.menu()
         } else
-            yield this.createCandidate(lines, indices)
+            this.end()
 
     }
 
-    private createCandidate(lines: string[], indices: number[]): Candidate {
-        const parameterList = this.parameters.map(parameter => parameter.name).join(', ')
-        const indentedLines = [
-            `function ${this.unit.name}(${parameterList}) {`,
-            ...lines.filter(line => line !== '').map(line => '  ' + line),
-            '}',
-        ]
-        return new Candidate(indentedLines, indices)
-    }
-
-    private findamputeesOfPerfectCandidate(): Candidate[] {
-        const perfectIndices = this.perfectCandidate.indices
-        return this.candidates.filter(candidate =>
-            candidate.indices.every((index, i) => index === 0 || index === perfectIndices[i]))
-    }
-
-    private *generateMinimalUnitTests(): Generator<UnitTest> {
-        for (const tuple of this.minimalUnitTestGenerator()) {
-            const [argumentList, expected] = tuple
-            yield new UnitTest(this.parameters, argumentList, this.unit, expected)
-        }
-    }
-
-    private *generateHints(): Generator<UnitTest> {
-        for (const argumentList of this.hintGenerator())
-            yield new UnitTest(this.parameters, argumentList, this.unit, this.perfectCandidate.execute(argumentList))
-
-    }
-
-    private findPerfectCandidates(): Candidate[] {
-        const perfectCandidates = this.candidates.filter(candidate => candidate.failCount(this.minimalUnitTests) == 0)
-        if (perfectCandidates.length === 0)
-            throw new Error(`There is no perfect function for level ${this.name}.`)
-        return perfectCandidates
-    }
-
-    private checkPerfectCandidates(): void {
-        const hintResults = this.perfectCandidates.map(candidate => candidate.failCount(this.hints))
-        if (hintResults.some(result => result > 0)) {
-            throw new Error(`Not all perfect functions for level ${this.name} pass all hints.\n` +
-                `${this.perfectCandidates.join('\n')}`)
-        }
-    }
-
-    private checkAllMinimalUnitTestsAreNeeded(): void {
-        for (const unitTest of this.minimalUnitTests) {
-            const allMinusOneUnitTests = this.minimalUnitTests.filter(otherUnitTest => otherUnitTest !== unitTest)
-            const almostPerfectCandidates = this.candidates.filter(candidate => candidate.failCount(allMinusOneUnitTests) == 0)
-            if (almostPerfectCandidates.length === this.perfectCandidates.length)
-                throw new Error(`Unit test ${unitTest} is not needed.\n${almostPerfectCandidates[0]}`)
+    private end(): void {
+        if (this.score === this.MINIMUMSCORE)
+            this.methodology.showMinimumScoreEndMessage(this.score)
+        else if (this.failingTestResult) {
+            this.score = this.MINIMUMSCORE
+            this.methodology.showScorePanel(this.score)
+            this.methodology.showUnsuccessfulEndMessage(this.score)
+        } else {
+            const numberOfRedundantUnitTests = this.userdefinedUnitTests.length - this.useCase.minimalUnitTests.length
+            if (numberOfRedundantUnitTests > 0) {
+                this.subtractPenalty(numberOfRedundantUnitTests * this.PENALTYREDUNDANTUNITTEST)
+                this.methodology.showRedundantUnitTestsEndMessage(this.score,
+                    numberOfRedundantUnitTests,
+                    this.PENALTYREDUNDANTUNITTEST)
+            } else
+                this.methodology.showSuccessfulEndMessage(this.score)
 
         }
+        this.saveScore(localStorage, this.score)
+        this.callback!()
+    }
+
+    private subtractPenalty(penalty: number): void {
+        this.score = Math.max(this.score - penalty, this.MINIMUMSCORE)
     }
 }

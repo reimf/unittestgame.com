@@ -4,7 +4,7 @@ import { Paragraph } from './html.js'
 import { TestResult } from './test_result.js'
 import { UnitTest } from './unit_test.js'
 
-export abstract class Game {
+export abstract class Methodology {
     public readonly name: string = this.constructor.name.replace(/(?<=[a-z])(?=[A-Z])/g, ' ')
 
     public abstract showWelcomeMessage(): void
@@ -27,13 +27,15 @@ export abstract class Game {
 
     public showIncorrectUnitTestMessage(penaltyIncorrectUnitTest: number): void {
         new ComputerMessage([
-            new Paragraph().text('I did NOT add the unit test, because it is NOT correct.'),
-            new Paragraph().text(`The cost for trying to add an incorrect unit test is ${penaltyIncorrectUnitTest}%.`),
+            new Paragraph().text(
+                'I did NOT add the unit test, because it is NOT correct. ' +
+                `The cost for trying to add an incorrect unit test is ${penaltyIncorrectUnitTest}%.`
+            ),
         ]).show()
     }
 
-    public showScorePanel(description: string, score: number): void {
-        new Panel('Score', [new Paragraph().text(`${description}: ${score}%`)]).show()
+    public showScorePanel(score: number): void {
+        new Panel('Score', [new Paragraph().text(`${score}%`)]).show()
     }
 
     public showMinimumScoreEndMessage(score: number): void {

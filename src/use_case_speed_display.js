@@ -1,6 +1,6 @@
-import { Level } from './level.js';
+import { UseCase } from './use_case.js';
 import { TextVariable, NumberVariable } from './variable.js';
-export class SpeedDisplay extends Level {
+export class SpeedDisplay extends UseCase {
     getSpecification() {
         return ('The function receives the speed in meters per hour and ' +
             'must display the speed in kilometers per hour. ' +
@@ -33,20 +33,21 @@ export class SpeedDisplay extends Level {
         return [
             [
                 'if (speed < 0) return "ERROR"',
+                'if (speed < 1000) return "ERROR"',
                 'if (speed <= 0) return "ERROR"',
                 '',
             ],
             [
                 'if (speed <= 19900) return (speed / 1000).toFixed(1)',
-                'if (speed < 19950) return (speed / 1000).toFixed(1)',
                 'if (speed <= 19950) return (speed / 1000).toFixed(1)',
+                'if (speed < 19950) return (speed / 1000).toFixed(1)',
                 'if (speed < 20000) return (speed / 1000).toFixed(1)',
                 '',
             ],
             [
                 'if (speed >= 200000) return "DANGER"',
-                'if (speed > 199500) return "DANGER"',
                 'if (speed >= 199500) return "DANGER"',
+                'if (speed > 199500) return "DANGER"',
                 'if (speed > 199000) return "DANGER"',
                 '',
             ],

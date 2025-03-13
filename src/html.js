@@ -10,18 +10,18 @@ export class Html {
         this.element.classList.add(value);
         return this;
     }
-    text(text) {
+    textNode(text) {
         this.element.appendChild(document.createTextNode(text));
         return this;
     }
-    markdown(markdown) {
+    text(markdown) {
         while (markdown !== '') {
             const startPos = markdown.indexOf('*');
             const endPos = markdown.indexOf('*', startPos + 1);
             if (endPos === -1)
-                return this.text(markdown);
-            const em = new Em().text(markdown.slice(startPos + 1, endPos));
-            this.text(markdown.slice(0, startPos)).child(em);
+                return this.textNode(markdown);
+            const em = new Em().textNode(markdown.slice(startPos + 1, endPos));
+            this.textNode(markdown.slice(0, startPos)).child(em);
             markdown = markdown.slice(endPos + 1);
         }
         return this;

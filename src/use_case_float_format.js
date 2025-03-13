@@ -1,7 +1,7 @@
-import { Level } from './level.js';
+import { UseCase } from './use_case.js';
 import { Random } from './random.js';
 import { CheckboxVariable, TextVariable } from './variable.js';
-export class FloatFormat extends Level {
+export class FloatFormat extends UseCase {
     getSpecification() {
         return ('Return true if the text represents a float and returns false if it doesn\'t. ' +
             'A float may start with a plus or a minus sign. ' +

@@ -1,13 +1,13 @@
-import { Level } from './level.js'
+import { UseCase } from './use_case.js'
 import { Variable, TextVariable, NumberVariable } from './variable.js'
 
-export class FizzBuzz extends Level {
+export class FizzBuzz extends UseCase {
     public getSpecification(): string {
         return (
             'Return "Fizz" if the number is divisible by 3, ' +
             '"Buzz" if the number is divisible by 5, ' +
-            '"FizzBuzz" if the number is divisible by both 3 and 5, ' +
-            'and a string containing the number otherwise.'
+            '"FizzBuzz" if the number is divisible by both 3 and 5, and ' +
+            'a string containing the number otherwise.'
         )
     }
 

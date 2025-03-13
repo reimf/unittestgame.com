@@ -1,76 +1,190 @@
 import { Candidate } from './candidate.js';
+import { HumanMessage, ComputerMessage } from './frame.js';
+import { Button, Form, Input, Paragraph } from './html.js';
 import { Random } from './random.js';
+import { TestResult } from './test_result.js';
 import { UnitTest } from './unit_test.js';
 export class Level {
-    constructor() {
-        this.name = this.constructor.name.replace(/(?<=[a-z])(?=[A-Z])/g, ' ');
-        this.parameters = this.getParameters();
-        this.unit = this.getUnit();
-        this.candidates = [...this.generateCandidates(this.getCandidateElements(), [], [])];
-        this.minimalUnitTests = [...this.generateMinimalUnitTests()];
-        this.perfectCandidates = this.findPerfectCandidates();
-        this.perfectCandidate = Random.elementFrom(this.perfectCandidates);
-        this.amputeesOfPerfectCandidate = this.findamputeesOfPerfectCandidate();
-        this.hints = [...this.generateHints()];
-        this.checkPerfectCandidates();
-        this.checkAllMinimalUnitTestsAreNeeded();
+    constructor(methodology, useCase) {
+        this.PERFECTSCORE = 100;
+        this.PENALTYINCORRECTUNITTEST = 5;
+        this.PENALTYHINT = 10;
+        this.PENALTYSUBMITWITHBUG = 20;
+        this.PENALTYREDUNDANTUNITTEST = 1;
+        this.MINIMUMSCORE = 0;
+        this.userdefinedUnitTests = [];
+        this.coveredCandidates = [];
+        this.currentCandidate = new Candidate([], []);
+        this.failingTestResult = undefined;
+        this.score = this.PERFECTSCORE;
+        this.methodology = methodology;
+        this.useCase = useCase;
     }
-    *generateCandidates(listOfListOfLines, lines, indices) {
-        if (listOfListOfLines.length > 0) {
-            const [firstListOfLines, ...remainingListOfListOfLines] = listOfListOfLines;
-            for (const line of firstListOfLines) {
-                const newLine = line === '' && remainingListOfListOfLines.length === 0 ? 'return undefined' : line;
-                const newLines = [...lines, newLine];
-                const newIndex = line === '' ? 0 : firstListOfLines.indexOf(line) + 1;
-                const newIndices = [...indices, newIndex];
-                yield* this.generateCandidates(remainingListOfListOfLines, newLines, newIndices);
+    get description() {
+        return `${this.methodology.name} - ${this.useCase.name}`;
+    }
+    getHighScore(storage) {
+        return Number(storage.getItem(this.description));
+    }
+    saveScore(storage, score) {
+        if (score > this.getHighScore(storage))
+            storage.setItem(this.description, score.toString());
+    }
+    play(callback) {
+        this.callback = callback;
+        this.userdefinedUnitTests = [];
+        this.coveredCandidates = [];
+        this.currentCandidate = this.findSimplestPassingCandidate();
+        this.failingTestResult = this.findFailingTestResult();
+        this.score = this.PERFECTSCORE;
+        this.methodology.showWelcomeMessage();
+        this.menu();
+    }
+    findWorstCandidates(candidates, attribute) {
+        const attributes = candidates.map(attribute);
+        const minimum = Math.min(...attributes);
+        return candidates.filter(candidate => attribute(candidate) === minimum);
+    }
+    findSimplestCandidates(candidates) {
+        return this.findWorstCandidates(candidates, candidate => candidate.complexity);
+    }
+    findSimplestPassingCandidate() {
+        const passingCandidates = this.useCase.candidates.filter(candidate => candidate.failCount(this.userdefinedUnitTests) === 0);
+        const passingImperfectCandidates = passingCandidates.filter(candidate => !this.useCase.perfectCandidates.includes(candidate));
+        if (passingImperfectCandidates.length === 0)
+            return Random.elementFrom(this.useCase.perfectCandidates);
+        const simplestPassingCandidates = this.findSimplestCandidates(passingImperfectCandidates);
+        return Random.elementFrom(simplestPassingCandidates);
+    }
+    findCoveredCandidate(unitTest) {
+        const passingCandidates = this.useCase.amputeesOfPerfectCandidate
+            .filter(candidate => candidate.failCount([unitTest]) === 0);
+        const simplestPassingCandidates = this.findSimplestCandidates(passingCandidates);
+        return Random.elementFrom(simplestPassingCandidates);
+    }
+    findFailingTestResult() {
+        const failingHints = this.currentCandidate.failingTestResults(this.useCase.hints);
+        if (failingHints.length > 0)
+            return Random.elementFrom(failingHints);
+        const failingMinimalUnitTests = this.currentCandidate.failingTestResults(this.useCase.minimalUnitTests);
+        if (failingMinimalUnitTests.length > 0)
+            return Random.elementFrom(failingMinimalUnitTests);
+        return undefined;
+    }
+    menu() {
+        this.methodology.showPanelsOnMenu(this.useCase.getSpecification(), this.currentCandidate, this.useCase.perfectCandidate, this.coveredCandidates);
+        this.methodology.showUnitTestsPanel(this.userdefinedUnitTests);
+        this.methodology.showScorePanel(this.score);
+        if (this.score === this.MINIMUMSCORE)
+            this.end();
+        else
+            this.showMenuMessage();
+    }
+    showMenuMessage() {
+        new HumanMessage([
+            new Button().onClick(() => this.startAddUnitTestFlow()).text('I want to add a unit test'),
+            new Button().onClick(() => this.showHint()).text('I want to see a hint for a unit test'),
+            new Button().onClick(() => this.submit()).text('I want to submit the unit tests'),
+            new Button().onClick(() => this.end()).text('I want to exit this level'),
+        ]).show();
+    }
+    startAddUnitTestFlow() {
+        this.showConfirmStartUnitTestFlowMessage();
+        this.showFormUnitTestMessage();
+    }
+    showConfirmStartUnitTestFlowMessage() {
+        new ComputerMessage([new Paragraph().text('Which unit test do you want to add?')]).show();
+    }
+    showFormUnitTestMessage() {
+        const submitButton = new Input().type('submit').value('I want to add this unit test');
+        const cancelButton = new Button()
+            .onClick(() => this.cancelAddUnitTestFlow())
+            .text('I don\'t want to add a unit test now')
+            .addClass('secondary')
+            .addClass('cancel');
+        const buttonBlock = new Paragraph().child(submitButton).child(cancelButton).addClass('buttonrow');
+        new HumanMessage([
+            new Form()
+                .onSubmit(() => this.addUnitTest())
+                .children([...this.useCase.parameters, this.useCase.unit].map(variable => variable.toHtml()))
+                .child(buttonBlock),
+        ]).show();
+    }
+    showAddUnitTestMessage(unitTest) {
+        new HumanMessage([
+            new Paragraph().text('I want to add the following unit test.'),
+            new Paragraph().text(unitTest.toString()),
+        ]).replace();
+    }
+    showConfirmCancelAddUnitTestFlowMessage() {
+        new ComputerMessage([new Paragraph().text('Ok.')]).show();
+    }
+    cancelAddUnitTestFlow() {
+        this.showConfirmCancelAddUnitTestFlowMessage();
+        this.menu();
+    }
+    addUnitTest() {
+        const argumentList = this.useCase.parameters.map(parameter => parameter.value());
+        const expected = this.useCase.unit.value();
+        const unitTest = new UnitTest(this.useCase.parameters, argumentList, this.useCase.unit, expected);
+        this.showAddUnitTestMessage(unitTest);
+        const unitTestIsCorrect = new TestResult(this.useCase.perfectCandidate, unitTest).passes;
+        if (unitTestIsCorrect) {
+            this.userdefinedUnitTests.push(unitTest);
+            this.coveredCandidates.push(this.findCoveredCandidate(unitTest));
+            const currentCandidateAlreadyPasses = new TestResult(this.currentCandidate, unitTest).passes;
+            if (currentCandidateAlreadyPasses)
+                this.methodology.showUselessUnitTestMessage();
+            else {
+                this.methodology.showUsefulUnitTestMessage();
+                this.currentCandidate = this.findSimplestPassingCandidate();
+                this.failingTestResult = this.findFailingTestResult();
             }
         }
+        else {
+            this.methodology.showIncorrectUnitTestMessage(this.PENALTYINCORRECTUNITTEST);
+            this.subtractPenalty(this.PENALTYINCORRECTUNITTEST);
+        }
+        this.menu();
+    }
+    showHint() {
+        if (this.failingTestResult)
+            this.methodology.showHintMessage(this.currentCandidate, this.failingTestResult, this.PENALTYHINT);
         else
-            yield this.createCandidate(lines, indices);
+            this.methodology.showNoHintMessage(this.PENALTYHINT);
+        this.subtractPenalty(this.PENALTYHINT);
+        this.menu();
     }
-    createCandidate(lines, indices) {
-        const parameterList = this.parameters.map(parameter => parameter.name).join(', ');
-        const indentedLines = [
-            `function ${this.unit.name}(${parameterList}) {`,
-            ...lines.filter(line => line !== '').map(line => '  ' + line),
-            '}',
-        ];
-        return new Candidate(indentedLines, indices);
-    }
-    findamputeesOfPerfectCandidate() {
-        const perfectIndices = this.perfectCandidate.indices;
-        return this.candidates.filter(candidate => candidate.indices.every((index, i) => index === 0 || index === perfectIndices[i]));
-    }
-    *generateMinimalUnitTests() {
-        for (const tuple of this.minimalUnitTestGenerator()) {
-            const [argumentList, expected] = tuple;
-            yield new UnitTest(this.parameters, argumentList, this.unit, expected);
+    submit() {
+        if (this.failingTestResult) {
+            this.methodology.showBugFoundMessage(this.currentCandidate, this.failingTestResult, this.PENALTYSUBMITWITHBUG);
+            this.subtractPenalty(this.PENALTYSUBMITWITHBUG);
+            this.menu();
         }
+        else
+            this.end();
     }
-    *generateHints() {
-        for (const argumentList of this.hintGenerator())
-            yield new UnitTest(this.parameters, argumentList, this.unit, this.perfectCandidate.execute(argumentList));
-    }
-    findPerfectCandidates() {
-        const perfectCandidates = this.candidates.filter(candidate => candidate.failCount(this.minimalUnitTests) == 0);
-        if (perfectCandidates.length === 0)
-            throw new Error(`There is no perfect function for level ${this.name}.`);
-        return perfectCandidates;
-    }
-    checkPerfectCandidates() {
-        const hintResults = this.perfectCandidates.map(candidate => candidate.failCount(this.hints));
-        if (hintResults.some(result => result > 0)) {
-            throw new Error(`Not all perfect functions for level ${this.name} pass all hints.\n` +
-                `${this.perfectCandidates.join('\n')}`);
+    end() {
+        if (this.score === this.MINIMUMSCORE)
+            this.methodology.showMinimumScoreEndMessage(this.score);
+        else if (this.failingTestResult) {
+            this.score = this.MINIMUMSCORE;
+            this.methodology.showScorePanel(this.score);
+            this.methodology.showUnsuccessfulEndMessage(this.score);
         }
-    }
-    checkAllMinimalUnitTestsAreNeeded() {
-        for (const unitTest of this.minimalUnitTests) {
-            const allMinusOneUnitTests = this.minimalUnitTests.filter(otherUnitTest => otherUnitTest !== unitTest);
-            const almostPerfectCandidates = this.candidates.filter(candidate => candidate.failCount(allMinusOneUnitTests) == 0);
-            if (almostPerfectCandidates.length === this.perfectCandidates.length)
-                throw new Error(`Unit test ${unitTest} is not needed.\n${almostPerfectCandidates[0]}`);
+        else {
+            const numberOfRedundantUnitTests = this.userdefinedUnitTests.length - this.useCase.minimalUnitTests.length;
+            if (numberOfRedundantUnitTests > 0) {
+                this.subtractPenalty(numberOfRedundantUnitTests * this.PENALTYREDUNDANTUNITTEST);
+                this.methodology.showRedundantUnitTestsEndMessage(this.score, numberOfRedundantUnitTests, this.PENALTYREDUNDANTUNITTEST);
+            }
+            else
+                this.methodology.showSuccessfulEndMessage(this.score);
         }
+        this.saveScore(localStorage, this.score);
+        this.callback();
+    }
+    subtractPenalty(penalty) {
+        this.score = Math.max(this.score - penalty, this.MINIMUMSCORE);
     }
 }

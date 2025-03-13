@@ -1,6 +1,6 @@
-import { Level } from './level.js';
+import { UseCase } from './use_case.js';
 import { CheckboxVariable, NumberVariable } from './variable.js';
-export class LeapYear extends Level {
+export class LeapYear extends UseCase {
     getSpecification() {
         return ('Return true if the year is a leap year and ' +
             'return false if the year is not a leap year. ' +
@@ -19,25 +19,28 @@ export class LeapYear extends Level {
     getCandidateElements() {
         return [
             [
-                'if (year % 400 == 0) return true',
-                'if (year % 200 == 0) return true',
-                'if (year == 2000) return true',
+                'if (year % 400 === 0) return true',
+                'if (year % 200 === 0) return true',
+                'if (year === 2000) return true',
                 '',
             ],
             [
-                'if (year % 100 == 0) return false',
-                'if (year == 1900) return false',
-                'if (year == 2100) return false',
+                'if (year % 100 === 0) return false',
+                'if (year === 1900) return false',
+                'if (year === 2100) return false',
                 '',
             ],
             [
-                'if (year % 4 != 0) return true',
-                'if (year % 4 == 0) return true',
+                'if (year % 4 !== 0) return true',
+                'if (year % 4 === 0) return true',
                 '',
             ],
             [
-                'return year % 2 == 0',
-                'return year % 2 != 0',
+                'if (year % 2 !== 0) return true',
+                'if (year % 2 === 0) return true',
+                '',
+            ],
+            [
                 'return true',
                 'return false',
                 '',

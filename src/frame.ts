@@ -49,10 +49,6 @@ abstract class Message extends Frame {
         const count = document.querySelector('#messages')!.childElementCount
         this.id(`message-${count}`)
         this.addTo('messages')
-        this.scrollIntoView()
-    }
-
-    private scrollIntoView(): void {
         this.element.scrollIntoView()
     }
 }
@@ -90,7 +86,7 @@ export class HumanMessage extends Message {
     }
 
     private focusFirst(): void {
-        const focusables = this.element.querySelectorAll('button:enabled, input:enabled')
+        const focusables = this.element.querySelectorAll('button, input')
         if (focusables.length > 0) {
             const firstFocusable = focusables[0] as HTMLElement
             firstFocusable.focus()

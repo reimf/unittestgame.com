@@ -1,7 +1,7 @@
-import { Level } from './level.js';
+import { UseCase } from './use_case.js';
 import { Random } from './random.js';
 import { CheckboxVariable, TextVariable } from './variable.js';
-export class PasswordStrength extends Level {
+export class PasswordStrength extends UseCase {
     getSpecification() {
         return ('Return true if the password is strong and return false if the password is not strong. ' +
             'A password is strong if it contains at least 5 characters, ' +

@@ -1,11 +1,11 @@
-import { Level } from '../../src/level.js';
+import { UseCase } from '../../src/use_case.js';
 import { TextVariable, NumberVariable } from '../../src/variable.js';
-export class FakeLevel extends Level {
+export class FakeUseCase extends UseCase {
     getSpecification() {
         return ('Return "Fizz" if the number is divisible by 3, ' +
             '"Buzz" if the number is divisible by 5, ' +
-            '"FizzBuzz" if the number is divisible by both 3 and 5, ' +
-            'and a string containing the number otherwise.');
+            '"FizzBuzz" if the number is divisible by both 3 and 5, and ' +
+            'a string containing the number otherwise.');
     }
     getParameters() {
         return [new NumberVariable('Number', 'number')];

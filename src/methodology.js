@@ -11,8 +11,8 @@ export class Methodology {
     }
     showIncorrectUnitTestMessage(penaltyIncorrectUnitTest) {
         new ComputerMessage([
-            new Paragraph().text('I did NOT add the unit test, because it is NOT correct.'),
-            new Paragraph().text(`The cost for trying to add an incorrect unit test is ${penaltyIncorrectUnitTest}%.`),
+            new Paragraph().text('I did NOT add the unit test, because it is NOT correct. ' +
+                `The cost for trying to add an incorrect unit test is ${penaltyIncorrectUnitTest}%.`),
         ]).show();
     }
     showScorePanel(score) {

@@ -1,22 +1,23 @@
 import { Candidate } from './candidate.js'
 import { Panel, ComputerMessage } from './frame.js'
-import { Game } from './game.js'
+import { Methodology } from './methodology.js'
 import { Paragraph } from './html.js'
 import { TestResult } from './test_result.js'
 
-export class MutationTesting extends Game {
+export class MutationTesting extends Methodology {
     public showWelcomeMessage(): void {
         new ComputerMessage([
-            new Paragraph()
-                .markdown('You study *The Function* and write *Unit Tests* that pass the function. ')
-                .text('After adding a unit test, I highlight the lines covered. ')
-                .text('Submit the unit tests when you think the function is fully tested. ')
-                .text('If you are wrong, I show a mutation of the function that is NOT correct, ')
-                .text('but passes your unit tests.'),
+            new Paragraph().text(
+                'You write *Unit Tests* that pass *The Function*. ' +
+                'After adding a unit test, I highlight the lines covered. ' +
+                'Submit the unit tests when you think the function is fully tested. ' +
+                'If you are wrong, I show a mutation of the function that is NOT correct, ' +
+                'but passes your unit tests.'
+            ),
         ]).show()
     }
 
-    public showPanelsOnMenu(specification: string, currentCandidate: Candidate, perfectCandidate: Candidate, coveredCandidates: Candidate[]): void {
+    public showPanelsOnMenu(_specification: string, _currentCandidate: Candidate, perfectCandidate: Candidate, coveredCandidates: Candidate[]): void {
         this.showCodeCoveragePanel(perfectCandidate, coveredCandidates)
     }
 
@@ -38,7 +39,7 @@ export class MutationTesting extends Game {
         ]).show()
     }
 
-    public showHintMessage(currentCandidate: Candidate, failingTestResult: TestResult, penaltyHint: number): void {
+    public showHintMessage(currentCandidate: Candidate, _failingTestResult: TestResult, penaltyHint: number): void {
         new ComputerMessage([
             new Paragraph().text('A mutation that is NOT correct, but still passes your unit tests is the following.'),
             currentCandidate.toHtml(),

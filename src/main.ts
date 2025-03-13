@@ -1,48 +1,47 @@
 import { Panel, ComputerMessage, HumanMessage } from './frame.js'
-import { MutationTesting } from './game_mutation_testing.js'
-import { Game } from './game.js'
-import { TestDrivenDevelopment } from './game_test_driven_development.js'
+import { MutationTesting } from './methodology_mutation_testing.js'
+import { Methodology } from './methodology.js'
+import { TestDrivenDevelopment } from './methodology_test_driven_development.js'
 import { Button, Paragraph, Anchor } from './html.js'
 import { Level } from './level.js'
-import { VotingAge } from './level_1_voting_age.js'
-import { EvenOdd } from './level_2_even_odd.js'
-import { FizzBuzz } from './level_3_fizz_buzz.js'
-import { TriangleType } from './level_4_triangle_type.js'
-import { LeapYear } from './level_5_leap_year.js'
-import { FloatFormat } from './level_6_float_format.js'
-import { PasswordStrength } from './level_7_password_strength.js'
-import { SpeedDisplay } from './level_8_speed_display.js'
-import { Round } from './round.js'
+import { UseCase } from './use_case.js'
+import { VotingAge } from './use_case_voting_age.js'
+import { EvenOdd } from './use_case_even_odd.js'
+import { FizzBuzz } from './use_case_fizz_buzz.js'
+import { TriangleType } from './use_case_triangle_type.js'
+import { LeapYear } from './use_case_leap_year.js'
+import { FloatFormat } from './use_case_float_format.js'
+import { PasswordStrength } from './use_case_password_strength.js'
+import { SpeedDisplay } from './use_case_speed_display.js'
 
 export class Main {
-    private readonly testDrivenDevelopment: Game = new TestDrivenDevelopment()
-    private readonly mutationTesting: Game = new MutationTesting()
-    private readonly votingAge: Level = new VotingAge()
-    private readonly evenOdd: Level = new EvenOdd()
-    private readonly fizzBuzz: Level = new FizzBuzz()
-    private readonly triangleType: Level = new TriangleType()
-    private readonly leapYear: Level = new LeapYear()
-    private readonly floatFormat: Level = new FloatFormat()
-    private readonly passwordStrength: Level = new PasswordStrength()
-    private readonly speedDisplay: Level = new SpeedDisplay()
-    private readonly callback = () => this.continue()
-    private readonly rounds: Round[] = [
-        new Round(1, this.testDrivenDevelopment, this.votingAge, this.callback),
-        new Round(2, this.mutationTesting, this.evenOdd, this.callback),
-        new Round(3, this.testDrivenDevelopment, this.fizzBuzz, this.callback),
-        new Round(4, this.mutationTesting, this.triangleType, this.callback),
-        new Round(5, this.testDrivenDevelopment, this.evenOdd, this.callback),
-        new Round(6, this.mutationTesting, this.votingAge, this.callback),
-        new Round(7, this.testDrivenDevelopment, this.triangleType, this.callback),
-        new Round(8, this.mutationTesting, this.fizzBuzz, this.callback),
-        new Round(9, this.testDrivenDevelopment, this.leapYear, this.callback),
-        new Round(10, this.mutationTesting, this.passwordStrength, this.callback),
-        new Round(11, this.testDrivenDevelopment, this.speedDisplay, this.callback),
-        new Round(12, this.mutationTesting, this.floatFormat, this.callback),
-        new Round(13, this.testDrivenDevelopment, this.passwordStrength, this.callback),
-        new Round(14, this.mutationTesting, this.leapYear, this.callback),
-        new Round(15, this.testDrivenDevelopment, this.floatFormat, this.callback),
-        new Round(16, this.mutationTesting, this.speedDisplay, this.callback),
+    private readonly testDrivenDevelopment: Methodology = new TestDrivenDevelopment()
+    private readonly mutationTesting: Methodology = new MutationTesting()
+    private readonly votingAge: UseCase = new VotingAge()
+    private readonly evenOdd: UseCase = new EvenOdd()
+    private readonly fizzBuzz: UseCase = new FizzBuzz()
+    private readonly triangleType: UseCase = new TriangleType()
+    private readonly leapYear: UseCase = new LeapYear()
+    private readonly floatFormat: UseCase = new FloatFormat()
+    private readonly passwordStrength: UseCase = new PasswordStrength()
+    private readonly speedDisplay: UseCase = new SpeedDisplay()
+    private readonly levels: Level[] = [
+        new Level(this.testDrivenDevelopment, this.votingAge),
+        new Level(this.mutationTesting, this.evenOdd),
+        new Level(this.testDrivenDevelopment, this.fizzBuzz),
+        new Level(this.mutationTesting, this.triangleType),
+        new Level(this.testDrivenDevelopment, this.evenOdd),
+        new Level(this.mutationTesting, this.votingAge),
+        new Level(this.testDrivenDevelopment, this.triangleType),
+        new Level(this.mutationTesting, this.fizzBuzz),
+        new Level(this.testDrivenDevelopment, this.leapYear),
+        new Level(this.mutationTesting, this.passwordStrength),
+        new Level(this.testDrivenDevelopment, this.speedDisplay),
+        new Level(this.mutationTesting, this.floatFormat),
+        new Level(this.testDrivenDevelopment, this.passwordStrength),
+        new Level(this.mutationTesting, this.leapYear),
+        new Level(this.testDrivenDevelopment, this.floatFormat),
+        new Level(this.mutationTesting, this.speedDisplay),
     ]
 
     public start(): void {
@@ -68,34 +67,46 @@ export class Main {
 
     private continue(): void {
         this.showHighScoresPanel()
-        this.showNextRound()
+        this.showNextLevel()
     }
 
+    private levelDescription(level: Level): string {
+        const index = this.levels.findIndex(otherLevel => otherLevel === level)
+        return `Level ${index + 1} - ${level.description}`
+
+    }
     private showHighScoresPanel(): void {
-        const roundsWithHighScore = this.rounds.filter(round => round.getHighScore(localStorage) > 0)
-        if (roundsWithHighScore.length > 0) {
+        const highScores = this.levels
+            .filter(level => level.getHighScore(localStorage) !== 0)
+            .map(level => `${this.levelDescription(level)}: ${level.getHighScore(localStorage)}%`)
+        if (highScores.length > 0) {
             new Panel('High Scores',
-                roundsWithHighScore.map(round =>
-                    new Paragraph().text(`${round.description}: ${round.getHighScore(localStorage)}%`))).show()
+                highScores.map(highScore => new Paragraph().text(highScore))
+            ).show()
         }
     }
 
-    private showNextRound(): void {
-        const nextRound = this.rounds.find(round => round.getHighScore(localStorage) === 0)
+    private showNextLevel(): void {
+        const nextLevel = this.levels.find(level => level.getHighScore(localStorage) === 0)
         new HumanMessage([
-            nextRound
-                ? new Button().onClick(() => this.playNextRound(nextRound)).text(`I want to play ${nextRound.description}`)
+            nextLevel
+                ? new Button().onClick(() => this.playNextLevel(nextLevel)).text(`I want to play ${this.levelDescription(nextLevel)}`)
                 : new Button().onClick(() => window.close()).text('Quit UnitTestGame.com'),
         ]).show()
+    }
+
+    private showCurrentLevelPanel(level: Level): void {
+        new Panel('Current Level', [new Paragraph().text(this.levelDescription(level))]).show()
     }
 
     private removeAllPanels(): void {
         document.querySelectorAll('#panels > section').forEach(panel => panel.remove())
     }
 
-    private playNextRound(round: Round): void {
-        // We don't know the names of the panels created by the previous round, so we simply remove all panels
+    private playNextLevel(level: Level): void {
+        // We don't know the names of the panels created by the previous level, so we simply remove all panels
         this.removeAllPanels()
-        round.play()
+        this.showCurrentLevelPanel(level)
+        level.play(() => this.continue())
     }
 }

@@ -1,33 +1,23 @@
-import { Level } from './level.js'
-import { Variable, RadioVariable, NumberVariable } from './variable.js'
-
-export class TriangleType extends Level {
-    public getSpecification(): string {
-        return (
-            'Return the type of the triangle: equilateral, isosceles or scalene. ' +
+import { UseCase } from './use_case.js';
+import { RadioVariable, NumberVariable } from './variable.js';
+export class TriangleType extends UseCase {
+    getSpecification() {
+        return ('Return the type of the triangle: equilateral, isosceles or scalene. ' +
             'A triangle is equilateral if all three sides have the same length. ' +
             'A triangle is isosceles if two sides have the same length and a third side has a different length. ' +
-            'A triangle is scalene if all three sides have different lengths.'
-        )
+            'A triangle is scalene if all three sides have different lengths.');
     }
-
-    public getParameters(): Variable[] {
+    getParameters() {
         return [
             new NumberVariable('Side A', 'a'),
             new NumberVariable('Side B', 'b'),
             new NumberVariable('Side C', 'c'),
-        ]
+        ];
     }
-
-    public getUnit(): Variable {
-        return new RadioVariable(
-            'Type of triangle',
-            'triangleType',
-            ['equilateral', 'isosceles', 'scalene']
-        )
+    getUnit() {
+        return new RadioVariable('Type of triangle', 'triangleType', ['equilateral', 'isosceles', 'scalene']);
     }
-
-    public getCandidateElements(): string[][] {
+    getCandidateElements() {
         return [
             [
                 'if (a === b && b === c) return "equilateral"',
@@ -53,21 +43,19 @@ export class TriangleType extends Level {
                 'return "scalene"',
                 '',
             ],
-        ]
+        ];
     }
-
-    public *minimalUnitTestGenerator(): Generator<any[]> {
-        yield [[5, 5, 5], 'equilateral']
-        yield [[3, 5, 5], 'isosceles']
-        yield [[5, 3, 5], 'isosceles']
-        yield [[5, 5, 3], 'isosceles']
-        yield [[3, 4, 5], 'scalene']
+    *minimalUnitTestGenerator() {
+        yield [[5, 5, 5], 'equilateral'];
+        yield [[3, 5, 5], 'isosceles'];
+        yield [[5, 3, 5], 'isosceles'];
+        yield [[5, 5, 3], 'isosceles'];
+        yield [[3, 4, 5], 'scalene'];
     }
-
-    public *hintGenerator(): Generator<any[]> {
+    *hintGenerator() {
         for (let a = 6; a < 9; a++)
             for (let b = 6; b < 9; b++)
                 for (let c = 6; c < 9; c++)
-                    yield [a, b, c]
+                    yield [a, b, c];
     }
 }

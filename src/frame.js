@@ -39,9 +39,6 @@ class Message extends Frame {
         const count = document.querySelector('#messages').childElementCount;
         this.id(`message-${count}`);
         this.addTo('messages');
-        this.scrollIntoView();
-    }
-    scrollIntoView() {
         this.element.scrollIntoView();
     }
 }
@@ -74,7 +71,7 @@ export class HumanMessage extends Message {
         this.replaceExisting();
     }
     focusFirst() {
-        const focusables = this.element.querySelectorAll('button:enabled, input:enabled');
+        const focusables = this.element.querySelectorAll('button, input');
         if (focusables.length > 0) {
             const firstFocusable = focusables[0];
             firstFocusable.focus();

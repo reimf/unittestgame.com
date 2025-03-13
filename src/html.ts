@@ -15,19 +15,19 @@ export abstract class Html {
         return this
     }
 
-    public text(text: string): Html {
+    private textNode(text: string): Html {
         this.element.appendChild(document.createTextNode(text))
         return this
     }
 
-    public markdown(markdown: string): Html {
+    public text(markdown: string): Html {
         while (markdown !== '') {
             const startPos = markdown.indexOf('*')
             const endPos = markdown.indexOf('*', startPos + 1)
             if (endPos === -1)
-                return this.text(markdown)
-            const em = new Em().text(markdown.slice(startPos + 1, endPos))
-            this.text(markdown.slice(0, startPos)).child(em)
+                return this.textNode(markdown)
+            const em = new Em().textNode(markdown.slice(startPos + 1, endPos))
+            this.textNode(markdown.slice(0, startPos)).child(em)
             markdown = markdown.slice(endPos + 1)
         }
         return this

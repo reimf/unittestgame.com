@@ -1,8 +1,8 @@
-import { Level } from './level.js'
+import { UseCase } from './use_case.js'
 import { Random } from './random.js'
 import { Variable, CheckboxVariable, TextVariable } from './variable.js'
 
-export class FloatFormat extends Level {
+export class FloatFormat extends UseCase {
     public getSpecification(): string {
         return (
             'Return true if the text represents a float and returns false if it doesn\'t. ' +

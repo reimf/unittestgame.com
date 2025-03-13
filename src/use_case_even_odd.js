@@ -1,28 +1,18 @@
-import { Level } from './level.js'
-import { Variable, CheckboxVariable, NumberVariable } from './variable.js'
-
-export class EvenOdd extends Level {
-    public getSpecification(): string {
-        return 'Return true if the number is even and false if it is odd.'
+import { UseCase } from './use_case.js';
+import { CheckboxVariable, NumberVariable } from './variable.js';
+export class EvenOdd extends UseCase {
+    getSpecification() {
+        return 'Return true if a positive number is even and false if it is odd.';
     }
-
-    public getParameters(): Variable[] {
+    getParameters() {
         return [
-            new NumberVariable(
-                'Number',
-                'number'
-            ),
-        ]
+            new NumberVariable('Number', 'number'),
+        ];
     }
-
-    public getUnit(): Variable {
-        return new CheckboxVariable(
-            'Is even',
-            'isEven'
-        )
+    getUnit() {
+        return new CheckboxVariable('Is even', 'isEven');
     }
-
-    public getCandidateElements(): string[][] {
+    getCandidateElements() {
         return [
             [
                 'if (number === 1) return false',
@@ -45,16 +35,14 @@ export class EvenOdd extends Level {
                 'return false',
                 '',
             ],
-        ]
+        ];
     }
-
-    public *minimalUnitTestGenerator(): Generator<any[]> {
-        yield [[17], false]
-        yield [[18], true]
+    *minimalUnitTestGenerator() {
+        yield [[17], false];
+        yield [[18], true];
     }
-
-    public *hintGenerator(): Generator<any[]> {
+    *hintGenerator() {
         for (let number = 0; number <= 40; number += 1)
-            yield [number]
+            yield [number];
     }
 }

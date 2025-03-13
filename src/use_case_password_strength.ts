@@ -1,8 +1,8 @@
-import { Level } from './level.js'
+import { UseCase } from './use_case.js'
 import { Random } from './random.js'
 import { Variable, CheckboxVariable, TextVariable } from './variable.js'
 
-export class PasswordStrength extends Level {
+export class PasswordStrength extends UseCase {
     public getSpecification(): string {
         return (
             'Return true if the password is strong and return false if the password is not strong. ' +

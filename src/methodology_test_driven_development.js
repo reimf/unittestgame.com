@@ -1,14 +1,13 @@
 import { Panel, ComputerMessage } from './frame.js';
-import { Game } from './game.js';
+import { Methodology } from './methodology.js';
 import { Paragraph } from './html.js';
-export class TestDrivenDevelopment extends Game {
+export class TestDrivenDevelopment extends Methodology {
     showWelcomeMessage() {
         new ComputerMessage([
-            new Paragraph()
-                .markdown('You read the *Specification* and write *Unit Tests* that fail the *Current Function*. ')
-                .text('After adding a unit test, I rewrite the function such that it passes. ')
-                .text('Submit the unit tests when you think the function is according to the specification. ')
-                .text('If you are wrong, I show a unit test that is correct, but does NOT pass the function.'),
+            new Paragraph().text('You write *Unit Tests* according to the *Specification* and that fail the *Current Function*. ' +
+                'After adding a unit test, I rewrite the function such that it passes. ' +
+                'Submit the unit tests when you think the function is according to the specification. ' +
+                'If you are wrong, I show a unit test that is correct, but does NOT pass the function.'),
         ]).show();
     }
     showPanelsOnMenu(specification, currentCandidate, _perfectCandidate, _coveredCandidates) {
@@ -33,9 +32,12 @@ export class TestDrivenDevelopment extends Game {
         ]).show();
     }
     showUsefulUnitTestMessage() {
-        new ComputerMessage([new Paragraph().text('I added the unit test and I improved the function.')]).show();
+        new ComputerMessage([
+            new Paragraph().text('I added the unit test and ' +
+                'I improved the function.')
+        ]).show();
     }
-    showHintMessage(currentCandidate, failingTestResult, penaltyHint) {
+    showHintMessage(_currentCandidate, failingTestResult, penaltyHint) {
         new ComputerMessage([
             new Paragraph().text('A failing unit test for the current function is the following.'),
             new Paragraph().text(failingTestResult.unitTest.toString()),
@@ -48,7 +50,7 @@ export class TestDrivenDevelopment extends Game {
             new Paragraph().text(`The cost for this hint is ${penaltyHint}%.`),
         ]).show();
     }
-    showBugFoundMessage(currentCandidate, failingTestResult, penaltySubmitWithBug) {
+    showBugFoundMessage(_currentCandidate, failingTestResult, penaltySubmitWithBug) {
         new ComputerMessage([
             new Paragraph().text('I checked the current function, but it is NOT according to the specification.'),
             new Paragraph().text('It produces the following incorrect output.'),
