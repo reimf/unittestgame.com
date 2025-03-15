@@ -1,9 +1,11 @@
-import { Html, Header, Paragraph, Section } from './html.js'
+import { Div, Html, Header, Paragraph, Section } from './html.js'
 
 abstract class Frame extends Section {
     protected constructor(children: Html[]) {
         super()
-        this.children(children)
+        const div = new Div()
+        div.children(children)
+        this.child(div)
     }
 
     public abstract show(): void

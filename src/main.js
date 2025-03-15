@@ -60,8 +60,14 @@ export class Main {
                 'I am an AI bot specialized in Test-Driven Development and Mutation Testing.'),
         ]).show();
     }
+    showInvitationMessage() {
+        new ComputerMessage([
+            new Paragraph().text('What do you want to play?'),
+        ]).show();
+    }
     continue() {
         this.showHighScoresPanel();
+        this.showInvitationMessage();
         this.showNextLevel();
     }
     levelDescription(level) {

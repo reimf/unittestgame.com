@@ -60,13 +60,22 @@ export class Main {
 
     private showIntroductionMessage(): void {
         new ComputerMessage([
-            new Paragraph().text('Welcome to UnitTestGame.com! ' +
-                'I am an AI bot specialized in Test-Driven Development and Mutation Testing.'),
+            new Paragraph().text(
+                'Welcome to UnitTestGame.com! ' +
+                'I am an AI bot specialized in Test-Driven Development and Mutation Testing.'
+            ),
+        ]).show()
+    }
+
+    private showInvitationMessage(): void {
+        new ComputerMessage([
+            new Paragraph().text('What do you want to play?'),
         ]).show()
     }
 
     private continue(): void {
         this.showHighScoresPanel()
+        this.showInvitationMessage()
         this.showNextLevel()
     }
 

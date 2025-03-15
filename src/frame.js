@@ -1,8 +1,10 @@
-import { Header, Paragraph, Section } from './html.js';
+import { Div, Header, Paragraph, Section } from './html.js';
 class Frame extends Section {
     constructor(children) {
         super();
-        this.children(children);
+        const div = new Div();
+        div.children(children);
+        this.child(div);
     }
     existingElement() {
         return document.querySelector('#' + this.element.id);
