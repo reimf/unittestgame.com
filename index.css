@@ -16,11 +16,10 @@
     box-sizing: border-box;
 }
 
-a {
+a { // markdown: [text](url)
     border-radius: 0.25rem;
     color: inherit;
     display: inline-block;
-    padding: 0 0.1rem;
 }
 
 body {
@@ -59,14 +58,12 @@ button {
     }
 }
 
-b {
+b { // markdown: **bold**
     background-color: var(--emphasis-background);
     border-radius: 0.25rem;
     color: var(--dark-text);
     display: inline-block;
     font-weight: normal;
-    margin-left: -0.25rem;
-    padding: 0 0.25rem;
 }
 
 code {
@@ -74,13 +71,12 @@ code {
     white-space: pre;
 }
 
-i {
+i { // markdown: *italic*
     background-color: var(--panel-heading-background);
     border-radius: 0.25rem;
     color: var(--light-text);
     display: inline-block;
     font-style: normal;
-    padding: 0 0.25rem;
 }
 
 input {
