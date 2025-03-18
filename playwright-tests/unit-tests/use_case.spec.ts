@@ -5,12 +5,12 @@ import { FakeUseCase } from './fake_use_case.js'
 test.describe('class UseCase', () => {
     test('has a specification', () => {
         const useCase = new FakeUseCase()
-        expect(useCase.getSpecification()).toBe('The usual FizzBuzz leet code challenge.')
+        expect(useCase.specification()).toBe('The usual FizzBuzz leet code challenge.')
     })
 
     test('has a name', () => {
         const useCase = new FakeUseCase()
-        expect(useCase.name).toBe('Fake Use Case')
+        expect(useCase.name()).toBe('Fake Use Case')
     })
 
     test('has parameters', () => {

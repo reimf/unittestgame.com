@@ -1,7 +1,10 @@
 import { UseCase } from './use_case.js';
 import { TextVariable, NumberVariable } from './variable.js';
 export class FizzBuzz extends UseCase {
-    getSpecification() {
+    name() {
+        return 'FizzBuzz';
+    }
+    specification() {
         return ('Return "Fizz" if the number is divisible by 3, ' +
             '"Buzz" if the number is divisible by 5, ' +
             '"FizzBuzz" if the number is divisible by both 3 and 5, and ' +

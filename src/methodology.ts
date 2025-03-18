@@ -4,8 +4,7 @@ import { TestResult } from './test_result.js'
 import { UnitTest } from './unit_test.js'
 
 export abstract class Methodology {
-    public readonly name: string = this.constructor.name.replace(/(?<=[a-z])(?=[A-Z])/g, ' ')
-
+    public abstract name(): string
     public abstract showWelcomeMessage(): void
     public abstract showPanelsOnMenu(specification: string, currentCandidate: Candidate, perfectCandidate: Candidate, coveredCandidates: Candidate[]): void
     public abstract showHintMessage(currentCandidate: Candidate, failingTestResult: TestResult, penaltyHint: number): void

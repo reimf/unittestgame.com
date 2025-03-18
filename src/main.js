@@ -1,8 +1,8 @@
 import { Panel, ComputerMessage, HumanMessage } from './frame.js';
-import { MutationTesting } from './methodology_mutation_testing.js';
-import { TestDrivenDevelopment } from './methodology_test_driven_development.js';
 import { Button } from './html.js';
 import { Level } from './level.js';
+import { MutationTesting } from './methodology_mutation_testing.js';
+import { TestDrivenDevelopment } from './methodology_test_driven_development.js';
 import { VotingAge } from './use_case_voting_age.js';
 import { EvenOdd } from './use_case_even_odd.js';
 import { FizzBuzz } from './use_case_fizz_buzz.js';

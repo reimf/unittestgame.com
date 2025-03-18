@@ -1,8 +1,5 @@
 import { Panel, ComputerMessage } from './frame.js';
 export class Methodology {
-    constructor() {
-        this.name = this.constructor.name.replace(/(?<=[a-z])(?=[A-Z])/g, ' ');
-    }
     showUnitTestsPanel(unitTests) {
         new Panel('Unit Tests', unitTests.length === 0
             ? ['You have not written any unit tests yet.']

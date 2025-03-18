@@ -3,7 +3,11 @@ import { Random } from './random.js'
 import { Variable, CheckboxVariable, TextVariable } from './variable.js'
 
 export class FloatFormat extends UseCase {
-    public getSpecification(): string {
+    public name(): string {
+        return 'Float Format'
+    }
+    
+    public specification(): string {
         return (
             'Return true if the text represents a float and returns false if it doesn\'t. ' +
             'A float may start with a plus or a minus sign. ' +

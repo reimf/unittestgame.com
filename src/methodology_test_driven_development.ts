@@ -4,6 +4,10 @@ import { Methodology } from './methodology.js'
 import { TestResult } from './test_result.js'
 
 export class TestDrivenDevelopment extends Methodology {
+    public name(): string {
+        return 'Test-Driven Development'
+    }
+    
     public showWelcomeMessage(): void {
         new ComputerMessage([
             'You write *Unit Tests* according to the *Specification* and that fail the *Current Function*. ' +

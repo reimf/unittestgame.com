@@ -31,7 +31,7 @@ export class Level {
     }
 
     public get description(): string {
-        return `${this.methodology.name} - ${this.useCase.name}`
+        return `${this.methodology.name()} - ${this.useCase.name()}`
     }
 
     public getHighScore(storage: Storage): number {
@@ -94,7 +94,7 @@ export class Level {
     }
 
     private menu(): void {
-        this.methodology.showPanelsOnMenu(this.useCase.getSpecification(),
+        this.methodology.showPanelsOnMenu(this.useCase.specification(),
             this.currentCandidate,
             this.useCase.perfectCandidate,
             this.coveredCandidates)

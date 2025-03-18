@@ -1,7 +1,10 @@
 import { UseCase } from './use_case.js';
 import { TextVariable, NumberVariable } from './variable.js';
 export class SpeedDisplay extends UseCase {
-    getSpecification() {
+    name() {
+        return 'Speed Display';
+    }
+    specification() {
         return ('The function receives the speed in meters per hour and ' +
             'must display the speed in kilometers per hour. ' +
             'If something is wrong with the speed, ' +

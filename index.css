@@ -16,7 +16,7 @@
     box-sizing: border-box;
 }
 
-a { // markdown: [text](url)
+a { /* markdown: [text](url) */
     border-radius: 0.25rem;
     color: inherit;
     display: inline-block;
@@ -58,7 +58,7 @@ button {
     }
 }
 
-b { // markdown: **bold**
+b { /* markdown: **bold** */
     background-color: var(--emphasis-background);
     border-radius: 0.25rem;
     color: var(--dark-text);
@@ -71,7 +71,7 @@ code {
     white-space: pre;
 }
 
-i { // markdown: *italic*
+i { /* markdown: *italic* */
     background-color: var(--panel-heading-background);
     border-radius: 0.25rem;
     color: var(--light-text);

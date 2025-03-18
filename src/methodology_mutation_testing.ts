@@ -4,6 +4,10 @@ import { Methodology } from './methodology.js'
 import { TestResult } from './test_result.js'
 
 export class MutationTesting extends Methodology {
+    public name(): string {
+        return 'Mutation Testing'
+    }
+    
     public showWelcomeMessage(): void {
         new ComputerMessage([
             'You write *Unit Tests* that pass *The Function*. ' +

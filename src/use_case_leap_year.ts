@@ -2,7 +2,10 @@ import { UseCase } from './use_case.js'
 import { Variable, CheckboxVariable, NumberVariable } from './variable.js'
 
 export class LeapYear extends UseCase {
-    public getSpecification(): string {
+    public name(): string {
+        return 'Leap Year'
+    }
+    public specification(): string {
         return (
             'Return true if the year is a leap year and ' +
             'return false if the year is not a leap year. ' +

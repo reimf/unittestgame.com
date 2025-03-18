@@ -1,6 +1,9 @@
 import { Panel, ComputerMessage } from './frame.js';
 import { Methodology } from './methodology.js';
 export class TestDrivenDevelopment extends Methodology {
+    name() {
+        return 'Test-Driven Development';
+    }
     showWelcomeMessage() {
         new ComputerMessage([
             'You write *Unit Tests* according to the *Specification* and that fail the *Current Function*. ' +

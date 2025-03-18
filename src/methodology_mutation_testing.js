@@ -1,6 +1,9 @@
 import { Panel, ComputerMessage } from './frame.js';
 import { Methodology } from './methodology.js';
 export class MutationTesting extends Methodology {
+    name() {
+        return 'Mutation Testing';
+    }
     showWelcomeMessage() {
         new ComputerMessage([
             'You write *Unit Tests* that pass *The Function*. ' +

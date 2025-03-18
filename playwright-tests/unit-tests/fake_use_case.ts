@@ -2,7 +2,11 @@ import { UseCase } from '../../src/use_case.js'
 import { Variable, TextVariable, NumberVariable } from '../../src/variable.js'
 
 export class FakeUseCase extends UseCase {
-    public getSpecification(): string {
+    public name(): string {
+        return 'Fake Use Case'
+    }
+    
+    public specification(): string {
         return (
             'The usual FizzBuzz leet code challenge.'
         )

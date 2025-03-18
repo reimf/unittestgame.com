@@ -2,7 +2,10 @@ import { UseCase } from './use_case.js'
 import { Variable, CheckboxVariable, NumberVariable } from './variable.js'
 
 export class EvenOdd extends UseCase {
-    public getSpecification(): string {
+    public name(): string {
+        return 'Even or Odd'
+    }
+    public specification(): string {
         return 'Return true if a positive number is even and false if it is odd.'
     }
 

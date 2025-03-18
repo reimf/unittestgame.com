@@ -4,14 +4,14 @@ import { UnitTest } from './unit_test.js'
 import { Variable } from './variable.js'
 
 export abstract class UseCase {
+    public abstract name(): string
+    public abstract specification(): string
     protected abstract getParameters(): Variable[]
     protected abstract getUnit(): Variable
     protected abstract getCandidateElements(): string[][]
     protected abstract minimalUnitTestGenerator(): Generator<any[]>
     protected abstract hintGenerator(): Generator<any[]>
-    public abstract getSpecification(): string
 
-    public readonly name: string = this.constructor.name.replace(/(?<=[a-z])(?=[A-Z])/g, ' ')
     public readonly parameters: Variable[] = this.getParameters()
     public readonly unit: Variable = this.getUnit()
     public readonly candidates: Candidate[] = [...this.generateCandidates(this.getCandidateElements(), [], [])]

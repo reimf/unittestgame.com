@@ -1,7 +1,10 @@
 import { UseCase } from './use_case.js';
 import { CheckboxVariable, NumberVariable } from './variable.js';
 export class VotingAge extends UseCase {
-    getSpecification() {
+    name() {
+        return 'Voting Age';
+    }
+    specification() {
         return 'Return true if the age is 18 years or over and return false if the age is under 18.';
     }
     getParameters() {

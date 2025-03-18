@@ -2,7 +2,11 @@ import { UseCase } from './use_case.js'
 import { Variable, RadioVariable, NumberVariable } from './variable.js'
 
 export class TriangleType extends UseCase {
-    public getSpecification(): string {
+    public name(): string {
+        return 'Triangle Type'
+    }
+    
+    public specification(): string {
         return (
             'Return the type of the triangle: equilateral, isosceles or scalene. ' +
             'A triangle is equilateral if all three sides have the same length. ' +

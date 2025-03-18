@@ -21,7 +21,7 @@ export class Level {
         this.useCase = useCase;
     }
     get description() {
-        return `${this.methodology.name} - ${this.useCase.name}`;
+        return `${this.methodology.name()} - ${this.useCase.name()}`;
     }
     getHighScore(storage) {
         return Number(storage.getItem(this.description));
@@ -76,7 +76,7 @@ export class Level {
         return undefined;
     }
     menu() {
-        this.methodology.showPanelsOnMenu(this.useCase.getSpecification(), this.currentCandidate, this.useCase.perfectCandidate, this.coveredCandidates);
+        this.methodology.showPanelsOnMenu(this.useCase.specification(), this.currentCandidate, this.useCase.perfectCandidate, this.coveredCandidates);
         this.methodology.showUnitTestsPanel(this.userdefinedUnitTests);
         this.methodology.showScorePanel(this.score);
         if (this.score === this.MINIMUMSCORE)

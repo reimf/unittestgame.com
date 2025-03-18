@@ -3,7 +3,6 @@ import { Random } from './random.js';
 import { UnitTest } from './unit_test.js';
 export class UseCase {
     constructor() {
-        this.name = this.constructor.name.replace(/(?<=[a-z])(?=[A-Z])/g, ' ');
         this.parameters = this.getParameters();
         this.unit = this.getUnit();
         this.candidates = [...this.generateCandidates(this.getCandidateElements(), [], [])];
