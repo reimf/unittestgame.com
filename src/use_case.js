@@ -10,7 +10,7 @@ export class UseCase {
         this.minimalUnitTests = [...this.generateMinimalUnitTests()];
         this.perfectCandidates = this.findPerfectCandidates();
         this.perfectCandidate = Random.elementFrom(this.perfectCandidates);
-        this.amputeesOfPerfectCandidate = this.findamputeesOfPerfectCandidate();
+        this.amputeesOfPerfectCandidate = this.findAmputeesOfPerfectCandidate();
         this.hints = [...this.generateHints()];
         this.checkPerfectCandidates();
         this.checkAllMinimalUnitTestsAreNeeded();
@@ -38,9 +38,8 @@ export class UseCase {
         ];
         return new Candidate(indentedLines, indices);
     }
-    findamputeesOfPerfectCandidate() {
-        const perfectIndices = this.perfectCandidate.indices;
-        return this.candidates.filter(candidate => candidate.indices.every((index, i) => index === 0 || index === perfectIndices[i]));
+    findAmputeesOfPerfectCandidate() {
+        return this.candidates.filter(candidate => candidate.isAmputeeOf(this.perfectCandidate));
     }
     *generateMinimalUnitTests() {
         for (const tuple of this.minimalUnitTestGenerator()) {

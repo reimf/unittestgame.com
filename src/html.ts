@@ -15,30 +15,35 @@ export abstract class Html {
         return this
     }
 
-    private textNode(text: string): Html {
+    public markdown(markdown: string): Html {
+        const html = markdown
+            // PASS 0: Escape HTML to prevent injection issues
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#39;")
+            // PASS 1: Handle **bold**
+            .replace(/\*\*(.+?)\*\*/g, (_, text) => `<b>${text}</b>`)
+            // PASS 2: Handle *italic*
+            .replace(/\*(.+?)\*/g, (_, text) => `<i>${text}</i>`)
+            // PASS 3: Handle [text](url)
+            .replace(/\[(.+?)\]\((.+?)\)/g, (_, text, url) => `<a href="${url}">${text}</a>`)
+        this.element.insertAdjacentHTML('beforeend', html)
+        return this
+    }
+
+    public text(text: string): Html {
         this.element.appendChild(document.createTextNode(text))
         return this
     }
 
-    public text(markdown: string): Html {
-        while (markdown !== '') {
-            const startPos = markdown.indexOf('*')
-            const endPos = markdown.indexOf('*', startPos + 1)
-            if (endPos === -1)
-                return this.textNode(markdown)
-            const em = new Em().textNode(markdown.slice(startPos + 1, endPos))
-            this.textNode(markdown.slice(0, startPos)).child(em)
-            markdown = markdown.slice(endPos + 1)
-        }
+    public prependChild(child: Html): Html {
+        this.element.prepend(child.element)
         return this
     }
 
-    public child(child: Html): Html {
-        this.element.appendChild(child.element)
-        return this
-    }
-
-    public children(children: Html[]): Html {
+    public appendChildren(children: Html[]): Html {
         for (const child of children)
             this.element.appendChild(child.element)
         return this
@@ -46,19 +51,6 @@ export abstract class Html {
 
     protected on(eventType: string, callback: (event: Event) => void): Html {
         this.element.addEventListener(eventType, callback)
-        return this
-    }
-}
-
-export class Anchor extends Html {
-    private readonly anchor = this.element as HTMLAnchorElement
-
-    public constructor() {
-        super('a')
-    }
-
-    public href(value: string): Anchor {
-        this.anchor.href = value
         return this
     }
 }
@@ -146,11 +138,5 @@ export class Section extends Html {
 export class Div extends Html {
     public constructor() {
         super('div')
-    }
-}
-
-class Em extends Html {
-    public constructor() {
-        super('em')
     }
 }

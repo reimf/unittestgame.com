@@ -40,13 +40,17 @@ export class Level {
         this.methodology.showWelcomeMessage();
         this.menu();
     }
-    findWorstCandidates(candidates, attribute) {
-        const attributes = candidates.map(attribute);
-        const minimum = Math.min(...attributes);
-        return candidates.filter(candidate => attribute(candidate) === minimum);
-    }
     findSimplestCandidates(candidates) {
-        return this.findWorstCandidates(candidates, candidate => candidate.complexity);
+        return candidates.reduce((simplestCandidatesSoFar, candidate) => {
+            if (simplestCandidatesSoFar.length === 0)
+                return [candidate];
+            const sign = candidate.compareComplexity(simplestCandidatesSoFar[0]);
+            if (sign < 0)
+                return [candidate];
+            if (sign > 0)
+                return simplestCandidatesSoFar;
+            return [...simplestCandidatesSoFar, candidate];
+        }, []);
     }
     findSimplestPassingCandidate() {
         const passingCandidates = this.useCase.candidates.filter(candidate => candidate.failCount(this.userdefinedUnitTests) === 0);
@@ -83,7 +87,7 @@ export class Level {
     showMenuMessage() {
         new HumanMessage([
             new Button().onClick(() => this.startAddUnitTestFlow()).text('I want to add a unit test'),
-            new Button().onClick(() => this.showHint()).text('I want to see a hint for a unit test'),
+            new Button().onClick(() => this.showHint()).text('I want to see a hint'),
             new Button().onClick(() => this.submit()).text('I want to submit the unit tests'),
             new Button().onClick(() => this.end()).text('I want to exit this level'),
         ]).show();
@@ -93,31 +97,32 @@ export class Level {
         this.showFormUnitTestMessage();
     }
     showConfirmStartUnitTestFlowMessage() {
-        new ComputerMessage([new Paragraph().text('Which unit test do you want to add?')]).show();
+        new ComputerMessage(['Which unit test do you want to add?']).show();
     }
     showFormUnitTestMessage() {
+        const parameterFields = this.useCase.parameters.map(variable => variable.toHtml());
+        const unitField = this.useCase.unit.toHtml();
         const submitButton = new Input().type('submit').value('I want to add this unit test');
         const cancelButton = new Button()
             .onClick(() => this.cancelAddUnitTestFlow())
             .text('I don\'t want to add a unit test now')
             .addClass('secondary')
             .addClass('cancel');
-        const buttonBlock = new Paragraph().child(submitButton).child(cancelButton).addClass('buttonrow');
+        const buttonBlock = new Paragraph().appendChildren([submitButton, cancelButton]).addClass('buttonrow');
         new HumanMessage([
             new Form()
                 .onSubmit(() => this.addUnitTest())
-                .children([...this.useCase.parameters, this.useCase.unit].map(variable => variable.toHtml()))
-                .child(buttonBlock),
+                .appendChildren([...parameterFields, unitField, buttonBlock]),
         ]).show();
     }
     showAddUnitTestMessage(unitTest) {
         new HumanMessage([
-            new Paragraph().text('I want to add the following unit test.'),
-            new Paragraph().text(unitTest.toString()),
+            'I want to add the following unit test.',
+            unitTest.toString(),
         ]).replace();
     }
     showConfirmCancelAddUnitTestFlowMessage() {
-        new ComputerMessage([new Paragraph().text('Ok.')]).show();
+        new ComputerMessage(['Ok.']).show();
     }
     cancelAddUnitTestFlow() {
         this.showConfirmCancelAddUnitTestFlowMessage();

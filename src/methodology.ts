@@ -1,6 +1,5 @@
 import { Candidate } from './candidate.js'
 import { Panel, ComputerMessage } from './frame.js'
-import { Paragraph } from './html.js'
 import { TestResult } from './test_result.js'
 import { UnitTest } from './unit_test.js'
 
@@ -21,29 +20,26 @@ export abstract class Methodology {
     public showUnitTestsPanel(unitTests: UnitTest[]): void {
         new Panel('Unit Tests',
             unitTests.length === 0
-                ? [new Paragraph().text('You have not written any unit tests yet.')]
-                : unitTests.map(unitTest => new Paragraph().text(unitTest.toString()))).show()
+                ? ['You have not written any unit tests yet.']
+                : unitTests.map(unitTest => unitTest.toString())
+        ).show()
     }
 
     public showIncorrectUnitTestMessage(penaltyIncorrectUnitTest: number): void {
         new ComputerMessage([
-            new Paragraph().text(
-                'I did NOT add the unit test, because it is NOT correct. ' +
-                `The cost for trying to add an incorrect unit test is ${penaltyIncorrectUnitTest}%.`
-            ),
+            'I did NOT add the unit test, because it is NOT correct. ' +
+            `The cost for trying to add an incorrect unit test is ${penaltyIncorrectUnitTest}%.`,
         ]).show()
     }
 
     public showScorePanel(score: number): void {
-        new Panel('Score', [new Paragraph().text(`${score}%`)]).show()
+        new Panel('Score', [`${score}%`]).show()
     }
 
     public showMinimumScoreEndMessage(score: number): void {
         new ComputerMessage([
-            new Paragraph().text(
-                'You have to retry this level, ' + 
-                `because your score dropped to ${score}%.`
-            ),
+            'You have to retry this level, ' +
+            `because your score dropped to ${score}%.`,
         ]).show()
     }
 }

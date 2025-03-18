@@ -1,11 +1,9 @@
 import { test, expect } from '@playwright/test'
 
-test.describe('level start', () => {
+test.describe('tdd level start', () => {
     test.beforeEach(async({ page }) => {
         await page.goto('http://localhost:5500/')
-        await page
-            .getByRole('button', { name: 'I want to play Round 1 - Test Driven Development - Voting Age' })
-            .click()
+        await page.getByRole('button', { name: 'I want to play Level 1 - Test Driven Development - Voting Age' }).click()
     })
 
     test('has no about panel', async({ page }) => {
@@ -23,9 +21,14 @@ test.describe('level start', () => {
         await expect(unitTestsPanel).toContainText('You have not written any unit tests yet')
     })
 
-    test('has the simplest candidate in the current candidate panel', async({ page }) => {
-        const currentCandidatePanel = page.getByTestId('current-function')
-        await expect(currentCandidatePanel).toContainText(/function isAllowedToVote\(age\) \{  return (undefined|false|true)\}/)
+    test('has the simplest candidate in the current function panel', async({ page }) => {
+        const currentFunctionPanel = page.getByTestId('current-function')
+        await expect(currentFunctionPanel).toContainText(/function isAllowedToVote\(age\) \{\n  return (undefined|false|true)\n\}/)
+    })
+
+    test('has no the function panel', async({ page }) => {
+        const theFunctionPanel = page.getByTestId('the-function')
+        await expect(theFunctionPanel).not.toBeAttached()
     })
 
     test('has 100% in the score panel', async({ page }) => {
@@ -35,7 +38,7 @@ test.describe('level start', () => {
 
     test('has contract message', async({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('You read the Specification')
+        await expect(messages).toContainText('You write Unit Tests according to the Specification')
     })
 
     test('has action menu message', async({ page }) => {

@@ -30,10 +30,10 @@ export class RadioVariable extends Variable {
     public toHtml(): Html {
         const radioButtons = this.texts.map(text => {
             const input = new Input().type('radio').name(this.name).value(text)
-            const label = new Label().child(input).text(text)
+            const label = new Label().appendChildren([input]).text(text)
             return label
         })
-        const paragraph = new Paragraph().text(this.label).children(radioButtons)
+        const paragraph = new Paragraph().text(this.label).appendChildren(radioButtons)
         return paragraph
     }
 
@@ -54,8 +54,8 @@ export class CheckboxVariable extends Variable {
 
     public toHtml(): Html {
         const input = new Input().type('checkbox').name(this.name)
-        const label = new Label().child(input).text(this.label)
-        const paragraph = new Paragraph().child(label)
+        const label = new Label().appendChildren([input]).text(this.label)
+        const paragraph = new Paragraph().appendChildren([label])
         return paragraph
     }
 
@@ -76,8 +76,8 @@ export class TextVariable extends Variable {
 
     public toHtml(): Html {
         const input = new Input().type('text').name(this.name).autocomplete(false)
-        const label = new Label().text(this.label).child(input)
-        const paragraph = new Paragraph().child(label)
+        const label = new Label().text(this.label).appendChildren([input])
+        const paragraph = new Paragraph().appendChildren([label])
         return paragraph
     }
 
@@ -98,8 +98,8 @@ export class NumberVariable extends Variable {
 
     public toHtml(): Html {
         const input = new Input().type('number').name(this.name).autocomplete(false)
-        const label = new Label().text(this.label).child(input)
-        const paragraph = new Paragraph().child(label)
+        const label = new Label().text(this.label).appendChildren([input])
+        const paragraph = new Paragraph().appendChildren([label])
         return paragraph
     }
 

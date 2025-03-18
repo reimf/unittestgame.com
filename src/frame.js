@@ -1,10 +1,9 @@
-import { Div, Header, Paragraph, Section } from './html.js';
+import { Div, Html, Header, Paragraph, Section } from './html.js';
 class Frame extends Section {
-    constructor(children) {
+    constructor(elements) {
         super();
-        const div = new Div();
-        div.children(children);
-        this.child(div);
+        const children = elements.map(element => element instanceof Html ? element : new Paragraph().markdown(element));
+        this.appendChildren([new Div().appendChildren(children)]);
     }
     existingElement() {
         return document.querySelector('#' + this.element.id);
@@ -17,8 +16,9 @@ class Frame extends Section {
     }
 }
 export class Panel extends Frame {
-    constructor(title, children = []) {
-        super([new Header().text(title), ...children]);
+    constructor(title, elements = []) {
+        super(elements);
+        this.prependChild(new Header().text(title));
         const id = title.toLowerCase().replace(/ /g, '-');
         this.id(id);
     }
@@ -34,8 +34,8 @@ export class Panel extends Frame {
     }
 }
 class Message extends Frame {
-    constructor(children) {
-        super(children);
+    constructor(elements) {
+        super(elements);
     }
     show() {
         const count = document.querySelector('#messages').childElementCount;
@@ -45,8 +45,8 @@ class Message extends Frame {
     }
 }
 export class ComputerMessage extends Message {
-    constructor(children) {
-        super(children);
+    constructor(elements) {
+        super(elements);
         this.addClass('computer');
     }
 }
@@ -56,8 +56,7 @@ export class HumanMessage extends Message {
         this.addClass('human');
         this.on('click', event => {
             if (event.target instanceof HTMLButtonElement) {
-                const paragraph = new Paragraph().text(event.target.textContent + '.');
-                const message = new HumanMessage([paragraph]);
+                const message = new HumanMessage([event.target.textContent + '.']);
                 message.id(this.element.id);
                 message.replaceExisting();
             }

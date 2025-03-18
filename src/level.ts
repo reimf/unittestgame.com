@@ -54,14 +54,17 @@ export class Level {
         this.menu()
     }
 
-    private findWorstCandidates(candidates: Candidate[], attribute: (key: Candidate) => number): Candidate[] {
-        const attributes = candidates.map(attribute)
-        const minimum = Math.min(...attributes)
-        return candidates.filter(candidate => attribute(candidate) === minimum)
-    }
-
     private findSimplestCandidates(candidates: Candidate[]): Candidate[] {
-        return this.findWorstCandidates(candidates, candidate => candidate.complexity)
+        return candidates.reduce((simplestCandidatesSoFar: Candidate[], candidate) => {
+            if (simplestCandidatesSoFar.length === 0)
+                return [candidate]
+            const sign = candidate.compareComplexity(simplestCandidatesSoFar[0])
+            if (sign < 0)
+                return [candidate]
+            if (sign > 0)
+                return simplestCandidatesSoFar
+            return [...simplestCandidatesSoFar, candidate]
+        }, [])
     }
 
     private findSimplestPassingCandidate(): Candidate {
@@ -101,13 +104,12 @@ export class Level {
             this.end()
         else
             this.showMenuMessage()
-
     }
 
     private showMenuMessage(): void {
         new HumanMessage([
             new Button().onClick(() => this.startAddUnitTestFlow()).text('I want to add a unit test'),
-            new Button().onClick(() => this.showHint()).text('I want to see a hint for a unit test'),
+            new Button().onClick(() => this.showHint()).text('I want to see a hint'),
             new Button().onClick(() => this.submit()).text('I want to submit the unit tests'),
             new Button().onClick(() => this.end()).text('I want to exit this level'),
         ]).show()
@@ -119,34 +121,35 @@ export class Level {
     }
 
     private showConfirmStartUnitTestFlowMessage(): void {
-        new ComputerMessage([new Paragraph().text('Which unit test do you want to add?')]).show()
+        new ComputerMessage(['Which unit test do you want to add?']).show()
     }
 
     private showFormUnitTestMessage(): void {
+        const parameterFields = this.useCase.parameters.map(variable => variable.toHtml())
+        const unitField = this.useCase.unit.toHtml()
         const submitButton = new Input().type('submit').value('I want to add this unit test')
         const cancelButton = new Button()
             .onClick(() => this.cancelAddUnitTestFlow())
             .text('I don\'t want to add a unit test now')
             .addClass('secondary')
             .addClass('cancel')
-        const buttonBlock = new Paragraph().child(submitButton).child(cancelButton).addClass('buttonrow')
+        const buttonBlock = new Paragraph().appendChildren([submitButton, cancelButton]).addClass('buttonrow')
         new HumanMessage([
             new Form()
                 .onSubmit(() => this.addUnitTest())
-                .children([...this.useCase.parameters, this.useCase.unit].map(variable => variable.toHtml()))
-                .child(buttonBlock),
+                .appendChildren([...parameterFields, unitField, buttonBlock]),
         ]).show()
     }
 
     private showAddUnitTestMessage(unitTest: UnitTest): void {
         new HumanMessage([
-            new Paragraph().text('I want to add the following unit test.'),
-            new Paragraph().text(unitTest.toString()),
+            'I want to add the following unit test.',
+            unitTest.toString(),
         ]).replace()
     }
 
     private showConfirmCancelAddUnitTestFlowMessage(): void {
-        new ComputerMessage([new Paragraph().text('Ok.')]).show()
+        new ComputerMessage(['Ok.']).show()
     }
 
     private cancelAddUnitTestFlow(): void {
@@ -171,7 +174,8 @@ export class Level {
                 this.currentCandidate = this.findSimplestPassingCandidate()
                 this.failingTestResult = this.findFailingTestResult()
             }
-        } else {
+        }
+        else {
             this.methodology.showIncorrectUnitTestMessage(this.PENALTYINCORRECTUNITTEST)
             this.subtractPenalty(this.PENALTYINCORRECTUNITTEST)
         }
@@ -192,9 +196,9 @@ export class Level {
             this.methodology.showBugFoundMessage(this.currentCandidate, this.failingTestResult, this.PENALTYSUBMITWITHBUG)
             this.subtractPenalty(this.PENALTYSUBMITWITHBUG)
             this.menu()
-        } else
+        }
+        else
             this.end()
-
     }
 
     private end(): void {
@@ -204,16 +208,15 @@ export class Level {
             this.score = this.MINIMUMSCORE
             this.methodology.showScorePanel(this.score)
             this.methodology.showUnsuccessfulEndMessage(this.score)
-        } else {
+        }
+        else {
             const numberOfRedundantUnitTests = this.userdefinedUnitTests.length - this.useCase.minimalUnitTests.length
             if (numberOfRedundantUnitTests > 0) {
                 this.subtractPenalty(numberOfRedundantUnitTests * this.PENALTYREDUNDANTUNITTEST)
-                this.methodology.showRedundantUnitTestsEndMessage(this.score,
-                    numberOfRedundantUnitTests,
-                    this.PENALTYREDUNDANTUNITTEST)
-            } else
+                this.methodology.showRedundantUnitTestsEndMessage(this.score, numberOfRedundantUnitTests, this.PENALTYREDUNDANTUNITTEST)
+            }
+            else
                 this.methodology.showSuccessfulEndMessage(this.score)
-
         }
         this.saveScore(localStorage, this.score)
         this.callback!()

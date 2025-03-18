@@ -1,7 +1,7 @@
 import { Panel, ComputerMessage, HumanMessage } from './frame.js';
 import { MutationTesting } from './methodology_mutation_testing.js';
 import { TestDrivenDevelopment } from './methodology_test_driven_development.js';
-import { Button, Paragraph, Anchor } from './html.js';
+import { Button } from './html.js';
 import { Level } from './level.js';
 import { VotingAge } from './use_case_voting_age.js';
 import { EvenOdd } from './use_case_even_odd.js';
@@ -48,21 +48,20 @@ export class Main {
         this.continue();
     }
     showAboutPanel() {
-        const learnParagraph = new Paragraph().text('Learn to write effective unit tests using Test Driven Development and Mutation Testing.');
-        const mailto = new Anchor().href('mailto:feedback@unittestgame.com').text('feedback');
-        const site = new Anchor().href('https://unittestgame.com').text('UnitTestGame.com');
-        const feedbackParagraph = new Paragraph().text('Please send us ').child(mailto).text(' at ').child(site);
-        new Panel('About', [learnParagraph, feedbackParagraph]).show();
+        new Panel('About', [
+            'Learn to write effective unit tests using Test Driven Development and Mutation Testing.',
+            'Please send us [feedback](mailto:feedback@unittestgame.com) at [UnitTestGame.com](https://unittestgame.com)',
+        ]).show();
     }
     showIntroductionMessage() {
         new ComputerMessage([
-            new Paragraph().text('Welcome to UnitTestGame.com! ' +
-                'I am an AI bot specialized in Test-Driven Development and Mutation Testing.'),
+            'Welcome to UnitTestGame.com! ' +
+                'I am an AI bot specialized in Test-Driven Development and Mutation Testing.',
         ]).show();
     }
     showInvitationMessage() {
         new ComputerMessage([
-            new Paragraph().text('What do you want to play?'),
+            'What do you want to play?',
         ]).show();
     }
     continue() {
@@ -79,7 +78,7 @@ export class Main {
             .filter(level => level.getHighScore(localStorage) !== 0)
             .map(level => `${this.levelDescription(level)}: ${level.getHighScore(localStorage)}%`);
         if (highScores.length > 0) {
-            new Panel('High Scores', highScores.map(highScore => new Paragraph().text(highScore))).show();
+            new Panel('High Scores', highScores).show();
         }
     }
     showNextLevel() {
@@ -91,7 +90,7 @@ export class Main {
         ]).show();
     }
     showCurrentLevelPanel(level) {
-        new Panel('Current Level', [new Paragraph().text(this.levelDescription(level))]).show();
+        new Panel('Current Level', [this.levelDescription(level)]).show();
     }
     removeAllPanels() {
         document.querySelectorAll('#panels > section').forEach(panel => panel.remove());

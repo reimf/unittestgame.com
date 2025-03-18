@@ -35,9 +35,9 @@ export class EvenOdd extends UseCase {
                 'if (number > 2) return true',
                 'if (number > 1) return false',
                 'if (number > 2) return false',
-                'if (number % 1) return false',
-                'if (number % 2) return false',
-                'if (number % 4) return false',
+                'if (number % 1 !== 0) return false',
+                'if (number % 2 !== 0) return false',
+                'if (number % 4 !== 0) return false',
                 '',
             ],
             [

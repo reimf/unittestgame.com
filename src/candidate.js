@@ -1,4 +1,4 @@
-import { Code, Div } from './html.js';
+import { Code } from './html.js';
 import { TestResult } from './test_result.js';
 export class Candidate {
     constructor(lines, indices) {
@@ -10,17 +10,14 @@ export class Candidate {
     }
     computeComplexity(code) {
         const chunks = code
-            .replace(/,/g, ' ') // each argument is 1 point
-            .replace(/;/g, ' ') // each statement is 1 point
+            .replace(/\n/g, ' ') // simplify white space
             .replace(/\((.*?)\)/g, ' () $1 ') // each function call is 1 extra point
-            .replace(/\[(.*?)\]/g, ' [] $1 ') // each array index is 1 extra point
-            .replace(/\{(.*?)\}/g, ' {} $1 ') // each block of commands is 1 extra point
-            .replace(/"(.*?)"/g, ' "" $1 ') // each non-empty string is 1 extra point
-            .replace(/\.(?=[a-z])/g, ' . ') // each method call is 1 point
+            .replace(/"(.*?)"/g, ' "" $1 ') // each string is 1 extra point
+            .replace(/\.(?=[a-z])/g, ' ') // each class mention is 1 point
             .replace(/(?<=\d)0+ /g, ' ') // 200 is 1 point
             .replace(/(?<=\d)(?=\d)/g, ' ') // 3199 is 4 points, 3200 only 2
             .replace(/(?<=\d)\.(?=\d)/g, ' . ') // each float is 1 point extra
-            .trim()
+            .trim() // remove trailing white space
             .split(/\s+/); // each token is 1 point
         return chunks.length;
     }
@@ -44,24 +41,25 @@ export class Candidate {
     passCount(unitTests) {
         return unitTests.length - this.failCount(unitTests);
     }
-    toString() {
-        return this.function.toString();
+    isAmputeeOf(candidate) {
+        return this.indices.every((index, i) => index === 0 || index === candidate.indices[i]);
+    }
+    compareComplexity(candidate) {
+        return Math.sign(this.complexity - candidate.complexity);
     }
     toHtml() {
-        const divs = this.lines.map(line => new Div().text(line));
-        return new Code().children(divs);
+        return new Code().markdown(this.lines.join('\n'));
     }
     toHtmlWithCoverage(coveredCandidates) {
         if (coveredCandidates.length === 0)
             return this.toHtml();
-        const divs = this.lines.map(line => {
+        const covered = this.lines.map(line => {
             const isNotIndented = !line.startsWith('  ');
             const isUsed = coveredCandidates.some(candidate => candidate.lines.includes(line));
-            const div = new Div().text(line);
             if (isNotIndented || isUsed)
-                div.addClass('covered');
-            return div;
+                return `**${line}**`;
+            return line;
         });
-        return new Code().children(divs);
+        return new Code().markdown(covered.join('\n'));
     }
 }

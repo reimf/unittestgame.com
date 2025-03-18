@@ -3,7 +3,7 @@
     --light-text: #FFFFFF;
     --panel-heading-background: #880088;
     --input-background: #009933;
-    --human-message-background: #eef8ee;
+    --human-message-background: #ddf8dd;
     --general-background: #ECE5DD;
     --computer-message-background: #FFFFFF;
     --panel-background: #FFFFFF;
@@ -20,7 +20,7 @@ a {
     border-radius: 0.25rem;
     color: inherit;
     display: inline-block;
-    padding: 0 0.25rem;
+    padding: 0 0.1rem;
 }
 
 body {
@@ -59,17 +59,22 @@ button {
     }
 }
 
+b {
+    background-color: var(--emphasis-background);
+    border-radius: 0.25rem;
+    color: var(--dark-text);
+    display: inline-block;
+    font-weight: normal;
+    margin-left: -0.25rem;
+    padding: 0 0.25rem;
+}
+
 code {
     display: block;
     white-space: pre;
-
-    .covered { 
-        background-color: var(--emphasis-background);
-        color: var(--dark-text);
-    }
 }
 
-em {
+i {
     background-color: var(--panel-heading-background);
     border-radius: 0.25rem;
     color: var(--light-text);
@@ -194,7 +199,7 @@ a, button, input, label:has(input[type="checkbox"]), label:has(input[type="radio
                 color: var(--dark-text);
                 margin: 0.75rem;
                 overflow: hidden;
-                padding: 0 0.75rem;    
+                padding: 0 0.75rem;
             }
 
             &:before {
@@ -206,7 +211,7 @@ a, button, input, label:has(input[type="checkbox"]), label:has(input[type="radio
                 position: absolute;
                 bottom: 0;
             }
-            
+
             &.human {
                 margin-left: 20%;
 
@@ -214,7 +219,7 @@ a, button, input, label:has(input[type="checkbox"]), label:has(input[type="radio
                     background-image: url('avatar_human.png');
                     right: 0.5rem;
                 }
-                
+
                 > div {
                     background-color: var(--human-message-background);
                     border-bottom-right-radius: 0;
@@ -223,14 +228,14 @@ a, button, input, label:has(input[type="checkbox"]), label:has(input[type="radio
                 }
             }
 
-            &.computer {    
+            &.computer {
                 margin-right: 20%;
 
                 &:before {
                     background-image: url('avatar_computer.png');
                     left: 0.5rem;
                 }
-                
+
                 > div {
                     background-color: var(--computer-message-background);
                     border-bottom-left-radius: 0;
@@ -246,24 +251,22 @@ a, button, input, label:has(input[type="checkbox"]), label:has(input[type="radio
 
         section {
             background-color: var(--computer-message-background);
-            border-radius: 1.25rem;
+            border-radius: 0.5rem;
             color: var(--dark-text);
             margin: 0.75rem;
             overflow: hidden;
             padding: 0 0.75rem;
-        
+
+            header {
+                background-color: var(--panel-heading-background);
+                border-radius: 0.5rem 0.5rem 0 0;
+                color: var(--light-text);
+                margin: 0 -0.75rem;
+                padding: 0.75rem;
+            }
+
             > div {
-                > * {
-                    margin: 0.75rem 0;
-                }
-            
-                header {
-                    background-color: var(--panel-heading-background);
-                    border-radius: 0.5rem 0.5rem 0 0;
-                    color: var(--light-text);
-                    margin: 0 -0.75rem 0.75rem -0.75rem;
-                    padding: 0.75rem;
-                }
+                margin: 0.75rem 0;
             }
         }
     }

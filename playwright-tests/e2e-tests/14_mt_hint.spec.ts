@@ -3,15 +3,15 @@ import { test, expect } from '@playwright/test'
 test.describe('hint unit test', () => {
     test.beforeEach(async({ page }) => {
         await page.goto('http://localhost:5500/')
-        await page
-            .getByRole('button', { name: 'I want to play Round 1 - Test Driven Development - Voting Age' })
-            .click()
+        await page.evaluate(_ => localStorage.setItem('Test Driven Development - Voting Age', '100%'))
+        await page.goto('http://localhost:5500/')
+        await page.getByRole('button', { name: 'I want to play Level 2 - Mutation Testing - Even Odd' }).click()
         await page.getByRole('button', { name: 'I want to see a hint' }).click()
     })
 
-    test('has hint unit test message', async({ page }) => {
+    test('has hint function message', async({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText(/isAllowedToVote\(\d+\) === (true|false)/)
+        await expect(messages).toContainText(/function isEven\(number\) \{\n  return (true|false|undefined)\n\}/)
     })
 
     test('has action menu message', async({ page }) => {

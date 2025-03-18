@@ -18,7 +18,7 @@ export abstract class UseCase {
     public readonly minimalUnitTests: UnitTest[] = [...this.generateMinimalUnitTests()]
     public readonly perfectCandidates: Candidate[] = this.findPerfectCandidates()
     public readonly perfectCandidate: Candidate = Random.elementFrom(this.perfectCandidates)
-    public readonly amputeesOfPerfectCandidate: Candidate[] = this.findamputeesOfPerfectCandidate()
+    public readonly amputeesOfPerfectCandidate: Candidate[] = this.findAmputeesOfPerfectCandidate()
     public readonly hints: UnitTest[] = [...this.generateHints()]
 
     public constructor() {
@@ -38,9 +38,9 @@ export abstract class UseCase {
                 const newIndices = [...indices, newIndex]
                 yield* this.generateCandidates(remainingListOfListOfLines, newLines, newIndices)
             }
-        } else
+        }
+        else
             yield this.createCandidate(lines, indices)
-
     }
 
     private createCandidate(lines: string[], indices: number[]): Candidate {
@@ -53,10 +53,8 @@ export abstract class UseCase {
         return new Candidate(indentedLines, indices)
     }
 
-    private findamputeesOfPerfectCandidate(): Candidate[] {
-        const perfectIndices = this.perfectCandidate.indices
-        return this.candidates.filter(candidate =>
-            candidate.indices.every((index, i) => index === 0 || index === perfectIndices[i]))
+    private findAmputeesOfPerfectCandidate(): Candidate[] {
+        return this.candidates.filter(candidate => candidate.isAmputeeOf(this.perfectCandidate))
     }
 
     private *generateMinimalUnitTests(): Generator<UnitTest> {
@@ -69,7 +67,6 @@ export abstract class UseCase {
     private *generateHints(): Generator<UnitTest> {
         for (const argumentList of this.hintGenerator())
             yield new UnitTest(this.parameters, argumentList, this.unit, this.perfectCandidate.execute(argumentList))
-
     }
 
     private findPerfectCandidates(): Candidate[] {
@@ -93,7 +90,6 @@ export abstract class UseCase {
             const almostPerfectCandidates = this.candidates.filter(candidate => candidate.failCount(allMinusOneUnitTests) === 0)
             if (almostPerfectCandidates.length === this.perfectCandidates.length)
                 throw new Error(`Unit test ${unitTest} is not needed.\n${almostPerfectCandidates[0]}`)
-
         }
     }
 }

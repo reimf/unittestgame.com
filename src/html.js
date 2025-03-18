@@ -10,43 +10,38 @@ export class Html {
         this.element.classList.add(value);
         return this;
     }
-    textNode(text) {
+    markdown(markdown) {
+        const html = markdown
+            // PASS 0: Escape HTML to prevent injection issues
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#39;")
+            // PASS 1: Handle **bold**
+            .replace(/\*\*(.+?)\*\*/g, (_, text) => `<b>${text}</b>`)
+            // PASS 2: Handle *italic*
+            .replace(/\*(.+?)\*/g, (_, text) => `<i>${text}</i>`)
+            // PASS 3: Handle [text](url)
+            .replace(/\[(.+?)\]\((.+?)\)/g, (_, text, url) => `<a href="${url}">${text}</a>`);
+        this.element.insertAdjacentHTML('beforeend', html);
+        return this;
+    }
+    text(text) {
         this.element.appendChild(document.createTextNode(text));
         return this;
     }
-    text(markdown) {
-        while (markdown !== '') {
-            const startPos = markdown.indexOf('*');
-            const endPos = markdown.indexOf('*', startPos + 1);
-            if (endPos === -1)
-                return this.textNode(markdown);
-            const em = new Em().textNode(markdown.slice(startPos + 1, endPos));
-            this.textNode(markdown.slice(0, startPos)).child(em);
-            markdown = markdown.slice(endPos + 1);
-        }
+    prependChild(child) {
+        this.element.prepend(child.element);
         return this;
     }
-    child(child) {
-        this.element.appendChild(child.element);
-        return this;
-    }
-    children(children) {
+    appendChildren(children) {
         for (const child of children)
             this.element.appendChild(child.element);
         return this;
     }
     on(eventType, callback) {
         this.element.addEventListener(eventType, callback);
-        return this;
-    }
-}
-export class Anchor extends Html {
-    constructor() {
-        super('a');
-        this.anchor = this.element;
-    }
-    href(value) {
-        this.anchor.href = value;
         return this;
     }
 }
@@ -118,10 +113,5 @@ export class Section extends Html {
 export class Div extends Html {
     constructor() {
         super('div');
-    }
-}
-class Em extends Html {
-    constructor() {
-        super('em');
     }
 }

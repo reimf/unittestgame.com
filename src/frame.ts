@@ -1,11 +1,10 @@
 import { Div, Html, Header, Paragraph, Section } from './html.js'
 
 abstract class Frame extends Section {
-    protected constructor(children: Html[]) {
+    protected constructor(elements: (Html|string)[]) {
         super()
-        const div = new Div()
-        div.children(children)
-        this.child(div)
+        const children = elements.map(element => element instanceof Html ? element : new Paragraph().markdown(element))
+        this.appendChildren([new Div().appendChildren(children)])
     }
 
     public abstract show(): void
@@ -24,8 +23,9 @@ abstract class Frame extends Section {
 }
 
 export class Panel extends Frame {
-    public constructor(title: string, children: Html[] = []) {
-        super([new Header().text(title), ...children])
+    public constructor(title: string, elements: (Html|string)[] = []) {
+        super(elements)
+        this.prependChild(new Header().text(title))
         const id = title.toLowerCase().replace(/ /g, '-')
         this.id(id)
     }
@@ -43,8 +43,8 @@ export class Panel extends Frame {
 }
 
 abstract class Message extends Frame {
-    protected constructor(children: Html[]) {
-        super(children)
+    protected constructor(elements: (Html|string)[]) {
+        super(elements)
     }
 
     public show(): void {
@@ -56,20 +56,19 @@ abstract class Message extends Frame {
 }
 
 export class ComputerMessage extends Message {
-    public constructor(children: Html[]) {
-        super(children)
+    public constructor(elements: (Html|string)[]) {
+        super(elements)
         this.addClass('computer')
     }
 }
 
 export class HumanMessage extends Message {
-    public constructor(children: Html[]) {
+    public constructor(children: (Html|string)[]) {
         super(children)
         this.addClass('human')
         this.on('click', event => {
             if (event.target instanceof HTMLButtonElement) {
-                const paragraph = new Paragraph().text(event.target.textContent + '.')
-                const message = new HumanMessage([paragraph])
+                const message = new HumanMessage([event.target.textContent + '.'])
                 message.id(this.element.id)
                 message.replaceExisting()
             }

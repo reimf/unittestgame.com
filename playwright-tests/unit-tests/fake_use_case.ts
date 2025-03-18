@@ -4,10 +4,7 @@ import { Variable, TextVariable, NumberVariable } from '../../src/variable.js'
 export class FakeUseCase extends UseCase {
     public getSpecification(): string {
         return (
-            'Return "Fizz" if the number is divisible by 3, ' +
-            '"Buzz" if the number is divisible by 5, ' +
-            '"FizzBuzz" if the number is divisible by both 3 and 5, and ' +
-            'a string containing the number otherwise.'
+            'The usual FizzBuzz leet code challenge.'
         )
     }
 
@@ -21,10 +18,22 @@ export class FakeUseCase extends UseCase {
 
     public getCandidateElements(): string[][] {
         return [
-            ['if (number % 15 === 0) return "FizzBuzz"', ''],
-            ['if (number % 3 === 0) return "Fizz"', ''],
-            ['if (number % 5 === 0) return "Buzz"', ''],
-            ['return ""', 'return number.toString()'],
+            [
+                'if (number % 15 === 0) return "FizzBuzz"',
+                ''
+            ],
+            [
+                'if (number % 3 === 0) return "Fizz"',
+                ''
+            ],
+            [
+                'if (number % 5 === 0) return "Buzz"',
+                ''
+            ],
+            [
+                'return ""',
+                'return number.toString()'
+            ],
         ]
     }
 
@@ -38,6 +47,5 @@ export class FakeUseCase extends UseCase {
     public *hintGenerator(): Generator<any[]> {
         for (let number = 0; number < 100; number += 1)
             yield [number]
-
     }
 }
