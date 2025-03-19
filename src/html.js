@@ -19,11 +19,11 @@ export class Html {
             .replace(/"/g, "&quot;")
             .replace(/'/g, "&#39;")
             // PASS 1: Handle **bold**
-            .replace(/\*\*(\S.*?)\*\*/g, (_, text) => `<b>${text}</b>`)
+            .replace(/\*\*(.+?)\*\*/g, (_, text) => `<b>${text}</b>`)
             // PASS 2: Handle *italic*
-            .replace(/\*(\S.*?)\*/g, (_, text) => `<i>${text}</i>`)
+            .replace(/\*(.+?)\*/g, (_, text) => `<i>${text}</i>`)
             // PASS 3: Handle [text](url)
-            .replace(/\[(\S.*?)\]\((\S.*?)\)/g, (_, text, url) => `<a href="${url}">${text}</a>`);
+            .replace(/\[(.+?)\]\((.+?)\)/g, (_, text, url) => `<a href="${url}">${text}</a>`);
         this.element.insertAdjacentHTML('beforeend', html);
         return this;
     }

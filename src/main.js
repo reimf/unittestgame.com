@@ -15,6 +15,7 @@ export class Main {
     constructor() {
         this.testDrivenDevelopment = new TestDrivenDevelopment();
         this.mutationTesting = new MutationTesting();
+        this.methodologies = [this.testDrivenDevelopment, this.mutationTesting];
         this.votingAge = new VotingAge();
         this.evenOdd = new EvenOdd();
         this.fizzBuzz = new FizzBuzz();
@@ -44,14 +45,15 @@ export class Main {
     }
     start() {
         this.showAboutPanel();
+        for (const methodology of this.methodologies)
+            methodology.showBasicDefinition();
         this.showIntroductionMessage();
         this.continue();
     }
     showAboutPanel() {
+        const methodologies = this.methodologies.map(methodology => `**${methodology.name()}**`).join(' and ');
         new Panel('About', [
-            'Learn to write effective unit tests using **Test-Driven Development** and **Mutation Testing**.',
-            '[Test-Driven Development](https://en.wikipedia.org/wiki/Test-driven_development): write a failing unit test, then write just enough code to make the unit tests pass; repeat.',
-            '[Mutation Testing](https://en.wikipedia.org/wiki/Mutation_testing): after writing unit tests, each mutation of the code should make at least one unit test fail.',
+            `Learn to write effective unit tests using ${methodologies}.`,
             'Please send us [feedback](mailto:feedback@unittestgame.com) at [UnitTestGame.com](https://unittestgame.com)',
         ]).show();
     }

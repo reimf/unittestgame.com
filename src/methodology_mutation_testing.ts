@@ -7,7 +7,14 @@ export class MutationTesting extends Methodology {
     public name(): string {
         return 'Mutation Testing'
     }
-    
+
+    public showBasicDefinition(): void {
+        new Panel('The Basics of Mutation Testing', [
+            'After writing unit tests for a function, each mutation of the function should make at least one unit test fail.',
+            'Read more about [Mutation Testing on Wikipedia](https://en.wikipedia.org/wiki/Mutation_testing).',
+        ]).show()
+    }
+
     public showWelcomeMessage(): void {
         new ComputerMessage([
             'You write *Unit Tests* that pass *The Function*. ' +

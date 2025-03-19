@@ -19,7 +19,6 @@ export class Candidate {
             .replace(/(?<=\d)\.(?=\d)/g, ' dot ') // each float is 1 point extra
             .trim() // remove trailing white space
             .split(/\s+/); // each token is 1 point
-        console.log(chunks);
         return chunks.length;
     }
     execute(argumentsList) {

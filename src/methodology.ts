@@ -5,6 +5,7 @@ import { UnitTest } from './unit_test.js'
 
 export abstract class Methodology {
     public abstract name(): string
+    public abstract showBasicDefinition(): void
     public abstract showWelcomeMessage(): void
     public abstract showPanelsOnMenu(specification: string, currentCandidate: Candidate, perfectCandidate: Candidate, coveredCandidates: Candidate[]): void
     public abstract showHintMessage(currentCandidate: Candidate, failingTestResult: TestResult, penaltyHint: number): void

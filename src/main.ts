@@ -13,10 +13,12 @@ import { LeapYear } from './use_case_leap_year.js'
 import { FloatFormat } from './use_case_float_format.js'
 import { PasswordStrength } from './use_case_password_strength.js'
 import { SpeedDisplay } from './use_case_speed_display.js'
+import test from 'node:test'
 
 export class Main {
     private readonly testDrivenDevelopment: Methodology = new TestDrivenDevelopment()
     private readonly mutationTesting: Methodology = new MutationTesting()
+    private readonly methodologies = [this.testDrivenDevelopment, this.mutationTesting]
     private readonly votingAge: UseCase = new VotingAge()
     private readonly evenOdd: UseCase = new EvenOdd()
     private readonly fizzBuzz: UseCase = new FizzBuzz()
@@ -46,15 +48,16 @@ export class Main {
 
     public start(): void {
         this.showAboutPanel()
+        for (const methodology of this.methodologies)
+            methodology.showBasicDefinition()
         this.showIntroductionMessage()
         this.continue()
     }
 
     private showAboutPanel(): void {
+        const methodologies = this.methodologies.map(methodology => `**${methodology.name()}**`).join(' and ')
         new Panel('About', [
-            'Learn to write effective unit tests using **Test-Driven Development** and **Mutation Testing**.',
-            '[Test-Driven Development](https://en.wikipedia.org/wiki/Test-driven_development): write a failing unit test, then write just enough code to make the unit tests pass; repeat.',
-            '[Mutation Testing](https://en.wikipedia.org/wiki/Mutation_testing): after writing unit tests, each mutation of the code should make at least one unit test fail.',
+            `Learn to write effective unit tests using ${methodologies}.`,
             'Please send us [feedback](mailto:feedback@unittestgame.com) at [UnitTestGame.com](https://unittestgame.com)',
         ]).show()
     }

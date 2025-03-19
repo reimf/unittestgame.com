@@ -4,6 +4,7 @@ import { TestResult } from '../../src/test_result.js'
 
 export class FakeMethodology extends Methodology {
     public name(): string { return 'Fake Methodology' }
+    public showBasicDefinition(): void { }
     public showWelcomeMessage(): void { }
     public showPanelsOnMenu(_specification: string, _currentCandidate: Candidate, _perfectCandidate: Candidate, _coveredCandidates: Candidate[]): void { }
     public showUselessUnitTestMessage(): void { }
