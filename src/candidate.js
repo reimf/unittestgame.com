@@ -11,14 +11,15 @@ export class Candidate {
     computeComplexity(code) {
         const chunks = code
             .replace(/\n/g, ' ') // simplify white space
-            .replace(/\((.*?)\)/g, ' () $1 ') // each function call is 1 extra point
-            .replace(/"(.*?)"/g, ' "" $1 ') // each string is 1 extra point
+            .replace(/\(([^(]*?)\)/g, ' function $1 ') // each function definition/call is 1 extra point
+            .replace(/"(.*?)"/g, ' string $1 ') // each string is 1 extra point
             .replace(/\.(?=[a-z])/g, ' ') // each class mention is 1 point
             .replace(/(?<=\d)0+ /g, ' ') // 200 is 1 point
             .replace(/(?<=\d)(?=\d)/g, ' ') // 3199 is 4 points, 3200 only 2
-            .replace(/(?<=\d)\.(?=\d)/g, ' . ') // each float is 1 point extra
+            .replace(/(?<=\d)\.(?=\d)/g, ' dot ') // each float is 1 point extra
             .trim() // remove trailing white space
             .split(/\s+/); // each token is 1 point
+        console.log(chunks);
         return chunks.length;
     }
     execute(argumentsList) {
@@ -26,7 +27,7 @@ export class Candidate {
             return this.function(...argumentsList);
         }
         catch (error) {
-            return error.name;
+            return undefined;
         }
     }
     testResults(unitTests) {
@@ -42,17 +43,17 @@ export class Candidate {
         return unitTests.length - this.failCount(unitTests);
     }
     isAmputeeOf(candidate) {
-        return this.indices.every((index, i) => index === 0 || index === candidate.indices[i]);
+        return this.indices.every((index, pos) => index === 0 || index === candidate.indices[pos]);
     }
     compareComplexity(candidate) {
         return Math.sign(this.complexity - candidate.complexity);
     }
     toHtml() {
-        return new Code().markdown(this.lines.join('\n'));
+        return this.toHtmlWithCoverage([]);
     }
     toHtmlWithCoverage(coveredCandidates) {
         if (coveredCandidates.length === 0)
-            return this.toHtml();
+            return new Code().markdown(this.lines.join('\n'));
         const covered = this.lines.map(line => {
             const isNotIndented = !line.startsWith('  ');
             const isUsed = coveredCandidates.some(candidate => candidate.lines.includes(line));

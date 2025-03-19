@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { NumberVariable, TextVariable } from '../../src/variable.js';
-import { FakeUseCase } from './fake_use_case.js';
+import { FakeUseCase } from '../mocks/fake_use_case.js';
 test.describe('class UseCase', () => {
     test('has a specification', () => {
         const useCase = new FakeUseCase();

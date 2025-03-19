@@ -14,14 +14,24 @@ test.describe('level menu', () => {
         await expect(aboutPanel).toContainText('About')
     })
 
-    test('has feedback mail address', async({ page }) => {
-        const link = page.getByRole('link')
-        expect(await link.nth(0).getAttribute('href')).toBe('mailto:feedback@unittestgame.com')
+    test('has link to feedback mail address', async({ page }) => {
+        const link = page.getByRole('link', { name: 'feedback' })
+        expect(await link.getAttribute('href')).toBe('mailto:feedback@unittestgame.com')
     })
 
-    test('has url', async({ page }) => {
-        const link = page.getByRole('link')
-        expect(await link.nth(1).getAttribute('href')).toBe('https://unittestgame.com')
+    test('has link to website', async({ page }) => {
+        const link = page.getByRole('link', { name: 'UnitTestGame.com' })
+        expect(await link.getAttribute('href')).toBe('https://unittestgame.com')
+    })
+
+    test('has more info on Test-Driven Development', async({ page }) => {
+        const link = page.getByRole('link', { name: 'Test-Driven Development' })
+        expect(await link.getAttribute('href')).toBe('https://en.wikipedia.org/wiki/Test-driven_development')
+    })
+
+    test('has more info on Mutation Testing', async({ page }) => {
+        const link = page.getByRole('link', { name: 'Mutation Testing' })
+        expect(await link.getAttribute('href')).toBe('https://en.wikipedia.org/wiki/Mutation_testing')
     })
 
     test('has welcome message', async({ page }) => {
@@ -37,6 +47,6 @@ test.describe('level menu', () => {
     test('has next level message', async({ page }) => {
         const messages = page.getByTestId('messages')
         const button = messages.getByRole('button')
-        await expect(button).toHaveText('I want to play Level 1 - Test Driven Development - Voting Age')
+        await expect(button).toHaveText('I want to play Level 1 - Test-Driven Development - Voting Age')
     })
 })

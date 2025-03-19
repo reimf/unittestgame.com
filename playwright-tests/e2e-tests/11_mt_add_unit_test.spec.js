@@ -2,9 +2,9 @@ import { test, expect } from '@playwright/test';
 test.describe('mt add unit test', () => {
     test.beforeEach(async ({ page }) => {
         await page.goto('http://localhost:5500/');
-        await page.evaluate(_ => localStorage.setItem('Test Driven Development - Voting Age', '100%'));
+        await page.evaluate(_ => localStorage.setItem('Test-Driven Development - Voting Age', '100%'));
         await page.goto('http://localhost:5500/');
-        await page.getByRole('button', { name: 'I want to play Level 2 - Mutation Testing - Even Odd' }).click();
+        await page.getByRole('button', { name: 'I want to play Level 2 - Mutation Testing - Even or Odd' }).click();
         await page.getByRole('button', { name: 'I want to add a unit test' }).click();
     });
     test('has number field', async ({ page }) => {

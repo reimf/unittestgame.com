@@ -57,6 +57,6 @@ test.describe('class Candidate', () => {
 
     test('executes function with syntax error', () => {
         const candidate = new Candidate(['function divide(a, b) {', '  return c', '}'], [])
-        expect(candidate.execute([6, 2])).toBe('ReferenceError')
+        expect(candidate.execute([6, 2])).toBe(undefined)
     })
 })

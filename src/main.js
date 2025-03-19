@@ -49,9 +49,9 @@ export class Main {
     }
     showAboutPanel() {
         new Panel('About', [
-            'Learn to write effective unit tests using Test Driven Development and Mutation Testing.',
-            '**[Test Driven Development](https://en.wikipedia.org/wiki/Test-driven_development)**: write a failing unit test, then write just enough code to make the unit tests pass; repeat.',
-            '**[Mutation Testing](https://en.wikipedia.org/wiki/Mutation_testing)**: a mutation of the tested function should cause a bug, so at least one unit test should fail.',
+            'Learn to write effective unit tests using **Test-Driven Development** and **Mutation Testing**.',
+            '[Test-Driven Development](https://en.wikipedia.org/wiki/Test-driven_development): write a failing unit test, then write just enough code to make the unit tests pass; repeat.',
+            '[Mutation Testing](https://en.wikipedia.org/wiki/Mutation_testing): after writing unit tests, each mutation of the code should make at least one unit test fail.',
             'Please send us [feedback](mailto:feedback@unittestgame.com) at [UnitTestGame.com](https://unittestgame.com)',
         ]).show();
     }

@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 test.describe('tdd added unit test', () => {
     test.beforeEach(async ({ page }) => {
         await page.goto('http://localhost:5500/');
-        await page.getByRole('button', { name: 'I want to play Level 1 - Test Driven Development - Voting Age' }).click();
+        await page.getByRole('button', { name: 'I want to play Level 1 - Test-Driven Development - Voting Age' }).click();
         await page.getByRole('button', { name: 'I want to add a unit test' }).click();
         await page.getByLabel('Age').fill('12');
         await page.getByLabel('Is allowed to vote').uncheck();
