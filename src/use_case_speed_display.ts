@@ -5,7 +5,7 @@ export class SpeedDisplay extends UseCase {
     public name(): string {
         return 'Speed Display'
     }
-    
+
     public specification(): string {
         return (
             'The function receives the speed in meters per hour and ' +

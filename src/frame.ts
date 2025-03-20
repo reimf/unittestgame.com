@@ -26,8 +26,7 @@ export class Panel extends Frame {
     public constructor(title: string, elements: (Html|string)[] = []) {
         super(elements)
         this.prependChild(new Header().text(title))
-        const id = title.toLowerCase().replace(/ /g, '-')
-        this.id(id)
+        this.id(title)
     }
 
     public show(): void {

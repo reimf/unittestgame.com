@@ -58,20 +58,20 @@ export class Main {
         const methodologies = this.methodologies.map(methodology => `**${methodology.name()}**`).join(' and ')
         new Panel('About', [
             `Learn to write effective unit tests using ${methodologies}.`,
-            'Please send us [feedback](mailto:feedback@unittestgame.com) at [UnitTestGame.com](https://unittestgame.com)',
+            'Please send us [feedback](mailto:feedback@unittestgame.com) on [UnitTestGame.com](https://unittestgame.com)',
         ]).show()
     }
 
     private showIntroductionMessage(): void {
         new ComputerMessage([
             'Welcome to UnitTestGame.com! ' +
-            'I am an AI bot specialized in Test-Driven Development and Mutation Testing.',
+            'I am an AI bot specialized in *Test-Driven Development* and *Mutation Testing*.',
         ]).show()
     }
 
     private showInvitationMessage(): void {
         new ComputerMessage([
-            'What do you want to play?',
+            'What do you want to do?',
         ]).show()
     }
 
@@ -85,7 +85,7 @@ export class Main {
         const index = this.levels.findIndex(otherLevel => otherLevel === level)
         return `Level ${index + 1} - ${level.description}`
     }
-    
+
     private showHighScoresPanel(): void {
         const highScores = this.levels
             .filter(level => level.getHighScore(localStorage) !== 0)
@@ -115,7 +115,6 @@ export class Main {
     }
 
     private playNextLevel(level: Level): void {
-        // We don't know the names of the panels created by the previous level, so we simply remove all panels
         this.removeAllPanels()
         this.showCurrentLevelPanel(level)
         level.play(() => this.continue())

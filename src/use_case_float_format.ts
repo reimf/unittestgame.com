@@ -6,7 +6,7 @@ export class FloatFormat extends UseCase {
     public name(): string {
         return 'Float Format'
     }
-    
+
     public specification(): string {
         return (
             'Return true if the text represents a float and returns false if it doesn\'t. ' +

@@ -11,12 +11,12 @@ test.describe('level menu', () => {
         await expect(aboutPanel).toContainText('About');
     });
     test('has basics of test-driven development panel', async ({ page }) => {
-        const basicsTestDrivenDevelopmentPanel = page.getByTestId('the-basics-of-test-driven-development');
-        await expect(basicsTestDrivenDevelopmentPanel).toContainText('The Basics of Test-Driven Development');
+        const basicsTestDrivenDevelopmentPanel = page.getByTestId('test-driven-development');
+        await expect(basicsTestDrivenDevelopmentPanel).toContainText('Test-Driven Development');
     });
     test('has basics of mutation testing panel', async ({ page }) => {
-        const basicsMutationTestingPanel = page.getByTestId('the-basics-of-mutation-testing');
-        await expect(basicsMutationTestingPanel).toContainText('The Basics of Mutation Testing');
+        const basicsMutationTestingPanel = page.getByTestId('mutation-testing');
+        await expect(basicsMutationTestingPanel).toContainText('Mutation Testing');
     });
     test('has link to feedback mail address', async ({ page }) => {
         const link = page.getByRole('link', { name: 'feedback' });

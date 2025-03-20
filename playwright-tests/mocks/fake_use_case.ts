@@ -5,7 +5,7 @@ export class FakeUseCase extends UseCase {
     public name(): string {
         return 'Fake Use Case'
     }
-    
+
     public specification(): string {
         return (
             'The usual FizzBuzz leet code challenge.'

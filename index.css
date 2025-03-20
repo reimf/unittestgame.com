@@ -3,7 +3,7 @@
     --light-text: #FFFFFF;
     --panel-heading-background: #880088;
     --input-background: #009933;
-    --human-message-background: #ddf8dd;
+    --human-message-background: #DDF8DD;
     --general-background: #ECE5DD;
     --computer-message-background: #FFFFFF;
     --panel-background: #FFFFFF;
@@ -19,6 +19,8 @@
 a { /* markdown: [text](url) */
     border-radius: 0.25rem;
     color: inherit;
+    padding: 0.1rem 0.25rem;
+    white-space: nowrap;
 }
 
 body {
@@ -62,6 +64,8 @@ b { /* markdown: **bold** */
     border-radius: 0.25rem;
     color: var(--dark-text);
     font-weight: normal;
+    padding: 0.1rem 0.25rem;
+    white-space: nowrap;
 }
 
 code {
@@ -74,6 +78,8 @@ i { /* markdown: *italic* */
     border-radius: 0.25rem;
     color: var(--light-text);
     font-style: normal;
+    padding: 0.1rem 0.25rem;
+    white-space: nowrap;
 }
 
 input {

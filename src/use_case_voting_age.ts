@@ -5,7 +5,7 @@ export class VotingAge extends UseCase {
     public name(): string {
         return 'Voting Age'
     }
-    
+
     public specification(): string {
         return 'Return true if the age is 18 years or over and return false if the age is under 18.'
     }

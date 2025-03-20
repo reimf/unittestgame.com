@@ -7,6 +7,10 @@ export abstract class Html {
 
     protected id(id: string): Html {
         this.element.id = id
+            .toLowerCase()
+            .replace(/[^a-z0-9-]/g, ' ')
+            .trim()
+            .replace(/ +/g, '-')
         return this
     }
 
@@ -62,13 +66,13 @@ export class Input extends Html {
         super('input')
     }
 
-    public type(value: string): Input {
-        this.input.type = value
+    public type(type: string): Input {
+        this.input.type = type
         return this
     }
 
-    public name(value: string): Input {
-        this.input.name = value
+    public name(name: string): Input {
+        this.input.name = name
         return this
     }
 
@@ -77,8 +81,8 @@ export class Input extends Html {
         return this
     }
 
-    public autocomplete(value: boolean): Input {
-        this.input.autocomplete = value ? 'on' : 'off'
+    public autocomplete(autocomplete: boolean): Input {
+        this.input.autocomplete = autocomplete ? 'on' : 'off'
         return this
     }
 }

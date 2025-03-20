@@ -5,7 +5,7 @@ export class TriangleType extends UseCase {
     public name(): string {
         return 'Triangle Type'
     }
-    
+
     public specification(): string {
         return (
             'Return the type of the triangle: equilateral, isosceles or scalene. ' +

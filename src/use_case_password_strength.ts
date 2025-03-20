@@ -6,7 +6,7 @@ export class PasswordStrength extends UseCase {
     public name(): string {
         return 'Password Strength'
     }
-    
+
     public specification(): string {
         return (
             'Return true if the password is strong and return false if the password is not strong. ' +

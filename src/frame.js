@@ -19,8 +19,7 @@ export class Panel extends Frame {
     constructor(title, elements = []) {
         super(elements);
         this.prependChild(new Header().text(title));
-        const id = title.toLowerCase().replace(/ /g, '-');
-        this.id(id);
+        this.id(title);
     }
     show() {
         if (this.existingElement())

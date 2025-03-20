@@ -3,7 +3,11 @@ export class Html {
         this.element = document.createElement(tagName);
     }
     id(id) {
-        this.element.id = id;
+        this.element.id = id
+            .toLowerCase()
+            .replace(/[^a-z0-9-]/g, ' ')
+            .trim()
+            .replace(/ +/g, '-');
         return this;
     }
     addClass(value) {
@@ -50,20 +54,20 @@ export class Input extends Html {
         super('input');
         this.input = this.element;
     }
-    type(value) {
-        this.input.type = value;
+    type(type) {
+        this.input.type = type;
         return this;
     }
-    name(value) {
-        this.input.name = value;
+    name(name) {
+        this.input.name = name;
         return this;
     }
     value(value) {
         this.input.value = value;
         return this;
     }
-    autocomplete(value) {
-        this.input.autocomplete = value ? 'on' : 'off';
+    autocomplete(autocomplete) {
+        this.input.autocomplete = autocomplete ? 'on' : 'off';
         return this;
     }
 }
