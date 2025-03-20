@@ -13,7 +13,6 @@ import { LeapYear } from './use_case_leap_year.js'
 import { FloatFormat } from './use_case_float_format.js'
 import { PasswordStrength } from './use_case_password_strength.js'
 import { SpeedDisplay } from './use_case_speed_display.js'
-import test from 'node:test'
 
 export class Main {
     private readonly testDrivenDevelopment: Methodology = new TestDrivenDevelopment()
@@ -55,7 +54,7 @@ export class Main {
     }
 
     private showAboutPanel(): void {
-        const methodologies = this.methodologies.map(methodology => `**${methodology.name()}**`).join(' and ')
+        const methodologies = this.methodologies.map(methodology => methodology.name()).join(' and ')
         new Panel('About', [
             `Learn to write effective unit tests using ${methodologies}.`,
             'Please send us [feedback](mailto:feedback@unittestgame.com) on [UnitTestGame.com](https://unittestgame.com)',
