@@ -12,7 +12,6 @@ export abstract class Methodology {
     public abstract showNoHintMessage(penaltyHint: number): void
     public abstract showBugFoundMessage(currentCandidate: Candidate, failingTestResult: TestResult, penaltySubmitWithBug: number): void
     public abstract showUnsuccessfulEndMessage(score: number): void
-    public abstract showRedundantUnitTestsEndMessage(score: number, numberOfRedundantUnitTests: number, penaltyRedundantUnitTest: number): void
     public abstract showSuccessfulEndMessage(score: number): void
     public abstract showUselessUnitTestMessage(): void
     public abstract showUsefulUnitTestMessage(): void

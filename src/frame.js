@@ -16,7 +16,7 @@ class Frame extends Section {
     }
 }
 export class Panel extends Frame {
-    constructor(title, elements = []) {
+    constructor(title, elements) {
         super(elements);
         this.prependChild(new Header().text(title));
         this.id(title);

@@ -23,19 +23,13 @@ export class MutationTesting extends Methodology {
         this.showCodeCoveragePanel(perfectCandidate, coveredCandidates);
     }
     showCodeCoveragePanel(perfectCandidate, coveredCandidates) {
-        new Panel('The Function', [
-            perfectCandidate.toHtmlWithCoverage(coveredCandidates),
-        ]).show();
+        new Panel('The Function', [perfectCandidate.toHtmlWithCoverage(coveredCandidates)]).show();
     }
     showUselessUnitTestMessage() {
-        new ComputerMessage([
-            'I added the unit test.',
-        ]).show();
+        new ComputerMessage(['I added the unit test.']).show();
     }
     showUsefulUnitTestMessage() {
-        new ComputerMessage([
-            'I added the unit test.',
-        ]).show();
+        new ComputerMessage(['I added the unit test.']).show();
     }
     showHintMessage(currentCandidate, _failingTestResult, penaltyHint) {
         new ComputerMessage([
@@ -61,14 +55,6 @@ export class MutationTesting extends Methodology {
     showUnsuccessfulEndMessage(score) {
         new ComputerMessage([
             'I checked the function, but it is NOT fully tested.',
-            `Your final score is ${score}%.`,
-        ]).show();
-    }
-    showRedundantUnitTestsEndMessage(score, numberOfRedundantUnitTests, penaltyRedundantUnitTest) {
-        new ComputerMessage([
-            'I checked the function and it is indeed fully tested.',
-            `You needed ${numberOfRedundantUnitTests} more unit tests than needed.`,
-            `The cost for an extra unit test is ${penaltyRedundantUnitTest}%.`,
             `Your final score is ${score}%.`,
         ]).show();
     }

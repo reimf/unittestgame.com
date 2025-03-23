@@ -51,7 +51,7 @@ export class Main {
         this.continue();
     }
     showAboutPanel() {
-        const methodologies = this.methodologies.map(methodology => `**${methodology.name()}**`).join(' and ');
+        const methodologies = this.methodologies.map(methodology => methodology.name()).join(' and ');
         new Panel('About', [
             `Learn to write effective unit tests using ${methodologies}.`,
             'Please send us [feedback](mailto:feedback@unittestgame.com) on [UnitTestGame.com](https://unittestgame.com)',
@@ -64,9 +64,7 @@ export class Main {
         ]).show();
     }
     showInvitationMessage() {
-        new ComputerMessage([
-            'What do you want to do?',
-        ]).show();
+        new ComputerMessage(['What do you want to do?']).show();
     }
     continue() {
         this.showHighScoresPanel();
@@ -79,7 +77,7 @@ export class Main {
     }
     showHighScoresPanel() {
         const highScores = this.levels
-            .filter(level => level.getHighScore(localStorage) !== 0)
+            .filter(level => level.getHighScore(localStorage) > 0)
             .map(level => `${this.levelDescription(level)}: ${level.getHighScore(localStorage)}%`);
         if (highScores.length > 0) {
             new Panel('High Scores', highScores).show();

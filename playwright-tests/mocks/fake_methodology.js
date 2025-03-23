@@ -10,6 +10,5 @@ export class FakeMethodology extends Methodology {
     showNoHintMessage(_penaltyHint) { }
     showBugFoundMessage(_currentCandidate, _failingTestResult, _penaltySubmitWithBug) { }
     showUnsuccessfulEndMessage(_score) { }
-    showRedundantUnitTestsEndMessage(_score, _numberOfRedundantUnitTests, _penaltyRedundantUnitTest) { }
     showSuccessfulEndMessage(_score) { }
 }

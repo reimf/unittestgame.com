@@ -3,7 +3,8 @@ default:
 
 pages:
   script:
-    - rm *.config.{js,ts}
+    - rm *.js
+    - rm *.config.ts
     - rm -rf playwright-tests
     - npm install typescript
     - npx tsc --build --verbose

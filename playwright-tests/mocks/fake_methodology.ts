@@ -13,6 +13,5 @@ export class FakeMethodology extends Methodology {
     public showNoHintMessage(_penaltyHint: number): void { }
     public showBugFoundMessage(_currentCandidate: Candidate, _failingTestResult: TestResult, _penaltySubmitWithBug: number): void { }
     public showUnsuccessfulEndMessage(_score: number): void { }
-    public showRedundantUnitTestsEndMessage(_score: number, _numberOfRedundantUnitTests: number, _penaltyRedundantUnitTest: number): void { }
     public showSuccessfulEndMessage(_score: number): void { }
 }

@@ -12,7 +12,6 @@ export class Level {
     private readonly PENALTYINCORRECTUNITTEST = 5
     private readonly PENALTYHINT = 10
     private readonly PENALTYSUBMITWITHBUG = 20
-    private readonly PENALTYREDUNDANTUNITTEST = 1
     private readonly MINIMUMSCORE = 0
 
     private readonly methodology: Methodology
@@ -209,15 +208,8 @@ export class Level {
             this.methodology.showScorePanel(this.score)
             this.methodology.showUnsuccessfulEndMessage(this.score)
         }
-        else {
-            const numberOfRedundantUnitTests = this.userdefinedUnitTests.length - this.useCase.minimalUnitTests.length
-            if (numberOfRedundantUnitTests > 0) {
-                this.subtractPenalty(numberOfRedundantUnitTests * this.PENALTYREDUNDANTUNITTEST)
-                this.methodology.showRedundantUnitTestsEndMessage(this.score, numberOfRedundantUnitTests, this.PENALTYREDUNDANTUNITTEST)
-            }
-            else
-                this.methodology.showSuccessfulEndMessage(this.score)
-        }
+        else
+            this.methodology.showSuccessfulEndMessage(this.score)
         this.saveScore(localStorage, this.score)
         this.callback!()
     }

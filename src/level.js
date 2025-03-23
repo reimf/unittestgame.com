@@ -10,7 +10,6 @@ export class Level {
         this.PENALTYINCORRECTUNITTEST = 5;
         this.PENALTYHINT = 10;
         this.PENALTYSUBMITWITHBUG = 20;
-        this.PENALTYREDUNDANTUNITTEST = 1;
         this.MINIMUMSCORE = 0;
         this.userdefinedUnitTests = [];
         this.coveredCandidates = [];
@@ -177,15 +176,8 @@ export class Level {
             this.methodology.showScorePanel(this.score);
             this.methodology.showUnsuccessfulEndMessage(this.score);
         }
-        else {
-            const numberOfRedundantUnitTests = this.userdefinedUnitTests.length - this.useCase.minimalUnitTests.length;
-            if (numberOfRedundantUnitTests > 0) {
-                this.subtractPenalty(numberOfRedundantUnitTests * this.PENALTYREDUNDANTUNITTEST);
-                this.methodology.showRedundantUnitTestsEndMessage(this.score, numberOfRedundantUnitTests, this.PENALTYREDUNDANTUNITTEST);
-            }
-            else
-                this.methodology.showSuccessfulEndMessage(this.score);
-        }
+        else
+            this.methodology.showSuccessfulEndMessage(this.score);
         this.saveScore(localStorage, this.score);
         this.callback();
     }

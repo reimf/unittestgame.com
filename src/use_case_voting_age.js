@@ -24,6 +24,7 @@ export class VotingAge extends UseCase {
                 'if (age >= 19) return true',
                 'if (age >= 20) return true',
                 'if (age >= 21) return true',
+                'if (age === 18) return true',
                 '',
             ],
             [

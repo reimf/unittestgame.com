@@ -69,9 +69,7 @@ export class Main {
     }
 
     private showInvitationMessage(): void {
-        new ComputerMessage([
-            'What do you want to do?',
-        ]).show()
+        new ComputerMessage(['What do you want to do?']).show()
     }
 
     private continue(): void {
@@ -87,12 +85,10 @@ export class Main {
 
     private showHighScoresPanel(): void {
         const highScores = this.levels
-            .filter(level => level.getHighScore(localStorage) !== 0)
+            .filter(level => level.getHighScore(localStorage) > 0)
             .map(level => `${this.levelDescription(level)}: ${level.getHighScore(localStorage)}%`)
         if (highScores.length > 0) {
-            new Panel('High Scores',
-                highScores
-            ).show()
+            new Panel('High Scores', highScores).show()
         }
     }
 

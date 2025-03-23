@@ -68,14 +68,6 @@ export class TestDrivenDevelopment extends Methodology {
             `Your final score is ${score}%.`,
         ]).show();
     }
-    showRedundantUnitTestsEndMessage(score, numberOfRedundantUnitTests, penaltyRedundantUnitTest) {
-        new ComputerMessage([
-            'I checked the current function and it is indeed according to the specification.',
-            `You needed ${numberOfRedundantUnitTests} more unit tests than needed.`,
-            `The cost for an extra unit test is ${penaltyRedundantUnitTest}%.`,
-            `Your final score is ${score}%.`,
-        ]).show();
-    }
     showSuccessfulEndMessage(score) {
         new ComputerMessage([
             'I checked the current function and it is indeed according to the specification.',

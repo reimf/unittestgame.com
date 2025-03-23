@@ -23,7 +23,7 @@ abstract class Frame extends Section {
 }
 
 export class Panel extends Frame {
-    public constructor(title: string, elements: (Html|string)[] = []) {
+    public constructor(title: string, elements: (Html|string)[]) {
         super(elements)
         this.prependChild(new Header().text(title))
         this.id(title)
