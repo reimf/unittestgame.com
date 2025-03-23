@@ -44,11 +44,7 @@ export class Level {
             if (simplestCandidatesSoFar.length === 0)
                 return [candidate];
             const sign = candidate.compareComplexity(simplestCandidatesSoFar[0]);
-            if (sign < 0)
-                return [candidate];
-            if (sign > 0)
-                return simplestCandidatesSoFar;
-            return [...simplestCandidatesSoFar, candidate];
+            return (sign >= 0 ? simplestCandidatesSoFar : []).concat(sign <= 0 ? [candidate] : []);
         }, []);
     }
     findSimplestPassingCandidate() {
@@ -136,8 +132,7 @@ export class Level {
         if (unitTestIsCorrect) {
             this.userdefinedUnitTests.push(unitTest);
             this.coveredCandidates.push(this.findCoveredCandidate(unitTest));
-            const currentCandidateAlreadyPasses = new TestResult(this.currentCandidate, unitTest).passes;
-            if (currentCandidateAlreadyPasses)
+            if (new TestResult(this.currentCandidate, unitTest).passes)
                 this.methodology.showUselessUnitTestMessage();
             else {
                 this.methodology.showUsefulUnitTestMessage();

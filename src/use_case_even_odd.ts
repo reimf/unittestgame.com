@@ -41,6 +41,9 @@ export class EvenOdd extends UseCase {
                 'if (number % 1 !== 0) return false',
                 'if (number % 2 !== 0) return false',
                 'if (number % 4 !== 0) return false',
+                'if (number % 1 === 0) return true',
+                'if (number % 2 === 0) return true',
+                'if (number % 4 === 0) return true',
                 '',
             ],
             [

@@ -47,6 +47,9 @@ export class Candidate {
     compareComplexity(candidate) {
         return Math.sign(this.complexity - candidate.complexity);
     }
+    toString() {
+        return this.lines.join('\n');
+    }
     toHtml() {
         return this.toHtmlWithCoverage([]);
     }

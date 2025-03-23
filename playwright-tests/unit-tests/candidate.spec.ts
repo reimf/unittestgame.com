@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test'
 import { Candidate } from '../../src/candidate.js'
+import { Code } from '../../src/html.js'
 
 test.describe('class Candidate', () => {
     test('compares complexity of simple and complex function', () => {
@@ -58,5 +59,10 @@ test.describe('class Candidate', () => {
     test('executes function with syntax error', () => {
         const candidate = new Candidate(['function divide(a, b) {', '  return c', '}'], [])
         expect(candidate.execute([6, 2])).toBe(undefined)
+    })
+
+    test('converts to a string', () => {
+        const candidate = new Candidate(['function divide(a, b) {', '  return a / b', '}'], [])
+        expect(candidate.toString()).toBe('function divide(a, b) {\n  return a / b\n}')
     })
 })

@@ -63,6 +63,10 @@ export class Candidate {
         return Math.sign(this.complexity - candidate.complexity)
     }
 
+    public toString(): string {
+        return this.lines.join('\n')
+    }
+    
     public toHtml(): Html {
         return this.toHtmlWithCoverage([])
     }

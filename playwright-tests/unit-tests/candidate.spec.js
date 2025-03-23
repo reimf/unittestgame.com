@@ -50,4 +50,8 @@ test.describe('class Candidate', () => {
         const candidate = new Candidate(['function divide(a, b) {', '  return c', '}'], []);
         expect(candidate.execute([6, 2])).toBe(undefined);
     });
+    test('converts to a string', () => {
+        const candidate = new Candidate(['function divide(a, b) {', '  return a / b', '}'], []);
+        expect(candidate.toString()).toBe('function divide(a, b) {\n  return a / b\n}');
+    });
 });
