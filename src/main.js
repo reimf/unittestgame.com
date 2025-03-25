@@ -64,7 +64,7 @@ export class Main {
         ]).show();
     }
     showInvitationMessage() {
-        new ComputerMessage(['What do you want to do?']).show();
+        new ComputerMessage(['What do you want to do now?']).show();
     }
     continue() {
         this.showHighScoresPanel();
@@ -87,8 +87,8 @@ export class Main {
         const nextLevel = this.levels.find(level => level.getHighScore(localStorage) === 0);
         new HumanMessage([
             nextLevel
-                ? new Button().onClick(() => this.playNextLevel(nextLevel)).text(`I want to play ${this.levelDescription(nextLevel)}`)
-                : new Button().onClick(() => window.close()).text('Quit UnitTestGame.com'),
+                ? new Button().onClick(() => this.playNextLevel(nextLevel)).text(`I want to play ${this.levelDescription(nextLevel)}`).addClass('wide')
+                : new Button().onClick(() => window.close()).text('Quit').addClass('wide'),
         ]).show();
     }
     showCurrentLevelPanel(level) {

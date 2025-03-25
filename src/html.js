@@ -98,6 +98,10 @@ export class Button extends Html {
         this.on('click', event => callback(event));
         return this;
     }
+    title(title) {
+        this.element.title = title;
+        return this;
+    }
 }
 export class Label extends Html {
     constructor() {

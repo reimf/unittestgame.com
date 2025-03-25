@@ -81,10 +81,10 @@ export class Level {
     }
     showMenuMessage() {
         new HumanMessage([
-            new Button().onClick(() => this.startAddUnitTestFlow()).text('I want to add a unit test'),
-            new Button().onClick(() => this.showHint()).text('I want to see a hint'),
-            new Button().onClick(() => this.submit()).text('I want to submit the unit tests'),
-            new Button().onClick(() => this.end()).text('I want to exit this level'),
+            new Button().onClick(() => this.startAddUnitTestFlow()).title('I want to add a unit test').text('Add unit test').addClass('narrow'),
+            new Button().onClick(() => this.showHint()).title('I want to see a hint').text('Show hint').addClass('narrow'),
+            new Button().onClick(() => this.submit()).title('I want to submit the unit tests').text('Submit unit tests').addClass('narrow'),
+            new Button().onClick(() => this.end()).title('I want to exit this level').text('Exit level').addClass('narrow'),
         ]).show();
     }
     startAddUnitTestFlow() {

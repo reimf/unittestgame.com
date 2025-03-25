@@ -37,13 +37,20 @@ button {
     border-radius: 0.5rem;
     box-shadow: 0 0.25rem 0.5rem var(--shadow);
     color: var(--light-text);
-    display: block;
     font-family: inherit;
     font-size: inherit;
     margin: 0.75rem 0;
     padding: 0.75rem;
     text-align: left;
-    width: 100%;
+
+    &.narrow {
+        margin-right: 0.75rem;
+    }
+
+    &.wide {
+        display: block;
+        width: 100%;
+    }
 
     &.secondary {
         background-color: var(--general-background);

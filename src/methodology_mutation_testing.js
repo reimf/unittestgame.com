@@ -15,7 +15,8 @@ export class MutationTesting extends Methodology {
             'You write *Unit Tests* that pass *The Function*. ' +
                 'After adding a unit test, I highlight the lines covered. ' +
                 'Submit the unit tests when you think the function is fully tested. ' +
-                'If you are wrong, I show a mutation of the function that is NOT correct, ' +
+                'Then I check if you are right and if not ' +
+                'I show a mutation of the function that is NOT correct, ' +
                 'but passes your unit tests.',
         ]).show();
     }

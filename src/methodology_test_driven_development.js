@@ -15,7 +15,8 @@ export class TestDrivenDevelopment extends Methodology {
             'You write *Unit Tests* according to the *Specification* and that fail the *Current Function*. ' +
                 'After adding a unit test, I rewrite the function such that it passes. ' +
                 'Submit the unit tests when you think the function is according to the specification. ' +
-                'If you are wrong, I show a unit test that is correct, but does NOT pass the function.',
+                'Then I check if you are right and if not ' +
+                'I show a unit test that is correct, but does NOT pass the function.',
         ]).show();
     }
     showPanelsOnMenu(specification, currentCandidate, _perfectCandidate, _coveredCandidates) {

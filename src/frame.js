@@ -55,7 +55,8 @@ export class HumanMessage extends Message {
         this.addClass('human');
         this.on('click', event => {
             if (event.target instanceof HTMLButtonElement) {
-                const message = new HumanMessage([event.target.textContent + '.']);
+                const text = event.target.title || event.target.textContent;
+                const message = new HumanMessage([text + '.']);
                 message.id(this.element.id);
                 message.replaceExisting();
             }

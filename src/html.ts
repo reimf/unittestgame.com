@@ -119,6 +119,11 @@ export class Button extends Html {
         this.on('click', event => callback(event))
         return this
     }
+
+    public title(title: string): Button {
+        this.element.title = title
+        return this
+    }
 }
 
 export class Label extends Html {
