@@ -80,7 +80,7 @@ export class Main {
 
     private levelDescription(level: Level): string {
         const index = this.levels.findIndex(otherLevel => otherLevel === level)
-        return `Level ${index + 1} - ${level.description}`
+        return `Level ${index + 1} - ${level.description()}`
     }
 
     private showHighScoresPanel(): void {

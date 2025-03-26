@@ -48,11 +48,6 @@ export class FizzBuzz extends UseCase {
                 ''
             ],
             [
-                'if (number % 3 !== 0) return number.toString()',
-                'if (number % 5 !== 0) return number.toString()',
-                ''
-            ],
-            [
                 'return "Fizz"',
                 'return "Buzz"',
                 'return "FizzBuzz"',

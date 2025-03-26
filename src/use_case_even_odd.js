@@ -5,7 +5,7 @@ export class EvenOdd extends UseCase {
         return 'Even or Odd';
     }
     specification() {
-        return 'Return true if a positive number is even and false if it is odd.';
+        return 'Return true if a number is even and false if it is odd.';
     }
     getParameters() {
         return [

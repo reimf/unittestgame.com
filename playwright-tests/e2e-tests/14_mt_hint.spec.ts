@@ -6,7 +6,7 @@ test.describe('hint unit test', () => {
         await page.evaluate(_ => localStorage.setItem('Test-Driven Development - Voting Age', '100%'))
         await page.goto('http://localhost:5500/')
         await page.getByRole('button', { name: 'I want to play Level 2 - Mutation Testing - Even or Odd' }).click()
-        await page.getByRole('button', { name: 'I want to see a hint' }).click()
+        await page.getByRole('button', { name: 'Show hint' }).click()
     })
 
     test('has hint function message', async({ page }) => {
@@ -18,10 +18,10 @@ test.describe('hint unit test', () => {
         const messages = page.getByTestId('messages')
         const buttons = messages.getByRole('button')
         await expect(buttons).toHaveText([
-            'I want to add a unit test',
-            'I want to see a hint',
-            'I want to submit the unit tests',
-            'I want to exit this level',
+            'Add unit test',
+            'Show hint',
+            'Submit unit tests',
+            'Exit level',
         ])
     })
 })

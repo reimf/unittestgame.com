@@ -19,15 +19,15 @@ export class Level {
         this.methodology = methodology;
         this.useCase = useCase;
     }
-    get description() {
+    description() {
         return `${this.methodology.name()} - ${this.useCase.name()}`;
     }
     getHighScore(storage) {
-        return Number(storage.getItem(this.description));
+        return Number(storage.getItem(this.description()));
     }
     saveScore(storage, score) {
         if (score > this.getHighScore(storage))
-            storage.setItem(this.description, score.toString());
+            storage.setItem(this.description(), score.toString());
     }
     play(callback) {
         this.callback = callback;
@@ -44,7 +44,11 @@ export class Level {
             if (simplestCandidatesSoFar.length === 0)
                 return [candidate];
             const sign = candidate.compareComplexity(simplestCandidatesSoFar[0]);
-            return (sign >= 0 ? simplestCandidatesSoFar : []).concat(sign <= 0 ? [candidate] : []);
+            if (sign < 0)
+                return [candidate];
+            if (sign > 0)
+                return simplestCandidatesSoFar;
+            return [...simplestCandidatesSoFar, candidate];
         }, []);
     }
     findSimplestPassingCandidate() {

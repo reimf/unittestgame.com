@@ -59,8 +59,8 @@ export class UseCase {
     checkPerfectCandidates() {
         const hintResults = this.perfectCandidates.map(candidate => candidate.failCount(this.hints));
         if (hintResults.some(result => result > 0)) {
-            throw new Error(`Not all perfect functions for use case ${this.name()} pass all hints.\n` +
-                `${this.perfectCandidates.map(candidate => candidate.toString()).join('\n')}`);
+            throw new Error(`Not all perfect functions for use case ${this.name()} pass all hints.\n\n` +
+                `${this.perfectCandidates.join('\n\n')}`);
         }
     }
     checkAllMinimalUnitTestsAreNeeded() {

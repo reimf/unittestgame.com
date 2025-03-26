@@ -5,7 +5,7 @@ test.describe('mt add unit test', () => {
         await page.evaluate(_ => localStorage.setItem('Test-Driven Development - Voting Age', '100%'));
         await page.goto('http://localhost:5500/');
         await page.getByRole('button', { name: 'I want to play Level 2 - Mutation Testing - Even or Odd' }).click();
-        await page.getByRole('button', { name: 'I want to add a unit test' }).click();
+        await page.getByRole('button', { name: 'Add unit test' }).click();
     });
     test('has number field', async ({ page }) => {
         const number = page.getByLabel('Number');

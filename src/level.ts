@@ -29,17 +29,17 @@ export class Level {
         this.useCase = useCase
     }
 
-    public get description(): string {
+    public description(): string {
         return `${this.methodology.name()} - ${this.useCase.name()}`
     }
 
     public getHighScore(storage: Storage): number {
-        return Number(storage.getItem(this.description))
+        return Number(storage.getItem(this.description()))
     }
 
     private saveScore(storage: Storage, score: number): void {
         if (score > this.getHighScore(storage))
-            storage.setItem(this.description, score.toString())
+            storage.setItem(this.description(), score.toString())
     }
 
     public play(callback: () => void): void {
@@ -58,7 +58,11 @@ export class Level {
             if (simplestCandidatesSoFar.length === 0)
                 return [candidate]
             const sign = candidate.compareComplexity(simplestCandidatesSoFar[0])
-            return (sign >= 0 ? simplestCandidatesSoFar : []).concat(sign <= 0 ? [candidate] : [])
+            if (sign < 0)
+                return [candidate]
+            if (sign > 0)
+                return simplestCandidatesSoFar
+            return [...simplestCandidatesSoFar, candidate]
         }, [])
     }
 

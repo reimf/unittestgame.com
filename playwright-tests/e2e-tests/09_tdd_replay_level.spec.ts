@@ -4,7 +4,7 @@ test.describe('tdd replay level', () => {
     test.beforeEach(async({ page }) => {
         await page.goto('http://localhost:5500/')
         await page.getByRole('button', { name: 'I want to play Level 1 - Test-Driven Development - Voting Age' }).click()
-        await page.getByRole('button', { name: 'I want to exit this level' }).click()
+        await page.getByRole('button', { name: 'Exit level' }).click()
         await page.getByRole('button', { name: 'I want to play Level 1 - Test-Driven Development - Voting Age' }).click()
     })
 

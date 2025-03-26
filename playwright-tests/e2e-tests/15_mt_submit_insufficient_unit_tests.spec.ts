@@ -6,12 +6,12 @@ test.describe('mt submit insufficient unit test', () => {
         await page.evaluate(_ => localStorage.setItem('Test-Driven Development - Voting Age', '100%'))
         await page.goto('http://localhost:5500/')
         await page.getByRole('button', { name: 'I want to play Level 2 - Mutation Testing - Even or Odd' }).click()
-        await page.getByRole('button', { name: 'I want to submit the unit tests' }).click()
+        await page.getByRole('button', { name: 'Submit unit tests' }).click()
     })
 
     test('has bug found message', async({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('I checked the function, but it is NOT fully tested')
+        await expect(messages).toContainText('I checked The Function, but it is NOT fully tested')
     })
 
     test('has a function in bug found message', async({ page }) => {
@@ -23,10 +23,10 @@ test.describe('mt submit insufficient unit test', () => {
         const messages = page.getByTestId('messages')
         const buttons = messages.getByRole('button')
         await expect(buttons).toHaveText([
-            'I want to add a unit test',
-            'I want to see a hint',
-            'I want to submit the unit tests',
-            'I want to exit this level',
+            'Add unit test',
+            'Show hint',
+            'Submit unit tests',
+            'Exit level',
         ])
     })
 })

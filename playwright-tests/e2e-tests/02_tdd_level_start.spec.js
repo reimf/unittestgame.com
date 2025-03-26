@@ -36,10 +36,10 @@ test.describe('tdd level start', () => {
         const messages = page.getByTestId('messages');
         const buttons = messages.getByRole('button');
         await expect(buttons).toHaveText([
-            'I want to add a unit test',
-            'I want to see a hint',
-            'I want to submit the unit tests',
-            'I want to exit this level',
+            'Add unit test',
+            'Show hint',
+            'Submit unit tests',
+            'Exit level',
         ]);
     });
 });

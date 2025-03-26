@@ -73,7 +73,7 @@ export class Main {
     }
     levelDescription(level) {
         const index = this.levels.findIndex(otherLevel => otherLevel === level);
-        return `Level ${index + 1} - ${level.description}`;
+        return `Level ${index + 1} - ${level.description()}`;
     }
     showHighScoresPanel() {
         const highScores = this.levels

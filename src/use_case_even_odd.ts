@@ -6,7 +6,7 @@ export class EvenOdd extends UseCase {
         return 'Even or Odd'
     }
     public specification(): string {
-        return 'Return true if a positive number is even and false if it is odd.'
+        return 'Return true if a number is even and false if it is odd.'
     }
 
     public getParameters(): Variable[] {

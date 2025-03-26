@@ -8,7 +8,7 @@ test.describe('class Level', () => {
         const methodology = new FakeMethodology();
         const useCase = new FakeUseCase();
         const level = new Level(methodology, useCase);
-        expect(level.description).toBe('Fake Methodology - Fake Use Case');
+        expect(level.description()).toBe('Fake Methodology - Fake Use Case');
     });
     test('has high score 0 by default', () => {
         const methodology = new FakeMethodology();

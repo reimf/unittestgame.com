@@ -68,11 +68,9 @@ button {
 
 b { /* markdown: **bold** */
     background-color: var(--emphasis-background);
-    border-radius: 0.25rem;
     color: var(--dark-text);
     font-weight: normal;
-    padding: 0.1rem 0.25rem;
-    white-space: nowrap;
+    padding: 0.1rem 0;
 }
 
 code {
@@ -82,11 +80,20 @@ code {
 
 i { /* markdown: *italic* */
     background-color: var(--panel-heading-background);
-    border-radius: 0.25rem;
+    border-radius: 0.25rem 0.25rem 0 0;
     color: var(--light-text);
     font-style: normal;
     padding: 0.1rem 0.25rem;
     white-space: nowrap;
+
+    &:after {
+        content: "⇨";
+        display: inline-block;
+        font-size: 2rem;
+        margin-left: 0.5rem;
+        position: relative;
+        top: 0.25rem;
+    }
 }
 
 input {

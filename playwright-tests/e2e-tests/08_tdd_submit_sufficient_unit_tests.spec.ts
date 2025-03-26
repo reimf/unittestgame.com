@@ -5,26 +5,26 @@ test.describe('tdd submit sufficient unit test', () => {
         await page.goto('http://localhost:5500/')
         await page.getByRole('button', { name: 'I want to play Level 1 - Test-Driven Development - Voting Age' }).click()
 
-        await page.getByRole('button', { name: 'I want to add a unit test' }).click()
+        await page.getByRole('button', { name: 'Add unit test' }).click()
         await page.getByLabel('Age').fill('16')
         await page.getByLabel('Is allowed to vote').uncheck()
         await page.getByRole('button', { name: 'I want to add this unit test' }).click()
 
-        await page.getByRole('button', { name: 'I want to add a unit test' }).click()
+        await page.getByRole('button', { name: 'Add unit test' }).click()
         await page.getByLabel('Age').fill('17')
         await page.getByLabel('Is allowed to vote').uncheck()
         await page.getByRole('button', { name: 'I want to add this unit test' }).click()
 
-        await page.getByRole('button', { name: 'I want to add a unit test' }).click()
+        await page.getByRole('button', { name: 'Add unit test' }).click()
         await page.getByLabel('Age').fill('18')
         await page.getByLabel('Is allowed to vote').check()
         await page.getByRole('button', { name: 'I want to add this unit test' }).click()
 
-        await page.getByRole('button', { name: 'I want to add a unit test' }).click()
+        await page.getByRole('button', { name: 'Add unit test' }).click()
         await page.getByLabel('Age').fill('19')
         await page.getByLabel('Is allowed to vote').check()
         await page.getByRole('button', { name: 'I want to add this unit test' }).click()
-        await page.getByRole('button', { name: 'I want to submit the unit tests' }).click()
+        await page.getByRole('button', { name: 'Submit unit tests' }).click()
     })
 
     test('has end message', async({ page }) => {
