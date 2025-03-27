@@ -11,9 +11,9 @@ export class TestDrivenDevelopment extends Methodology {
         ]).show();
     }
     showWelcomeMessage() {
-        new ComputerMessage(['You write *Unit Tests* according to the *Specification* and that fail the *Current Function*.']).show();
-        new ComputerMessage(['After adding a unit test, I (the AI bot) rewrite the current function such that it passes.']).show();
-        new ComputerMessage(['When you think the current function is according to the specification, you submit the unit tests.']).show();
+        new ComputerMessage(['You read the *Specification* and write *Unit Tests* that fail the *Current Function*.']).show();
+        new ComputerMessage(['After adding a unit test I (the AI bot) rewrite the *Current Function* such that it passes the *Unit Tests*.']).show();
+        new ComputerMessage(['When you think the *Current Function* is according to the *Specification*, you submit the *Unit Tests*.']).show();
     }
     showPanelsOnMenu(specification, currentCandidate, _perfectCandidate, _coveredCandidates) {
         this.showSpecificationPanel(specification);
@@ -28,35 +28,35 @@ export class TestDrivenDevelopment extends Methodology {
     showUselessUnitTestMessage() {
         new ComputerMessage([
             'I added the unit test, ' +
-                'but the current function already passed this unit test, ' +
+                'but the *Current Function* already passed this unit test, ' +
                 'so I did NOT improve the *Current Function*.',
-        ]).show();
+        ]).replace();
     }
     showUsefulUnitTestMessage() {
         new ComputerMessage([
             'I added the unit test and ' +
                 'I improved the *Current Function*.',
-        ]).show();
+        ]).replace();
     }
     showHintMessage(_currentCandidate, failingTestResult, penaltyHint) {
-        new ComputerMessage(['A failing unit test for the current function is the following.', failingTestResult.unitTest.toString()]).show();
+        new ComputerMessage(['A failing unit test for the *Current Function* is the following.', failingTestResult.unitTest.toString()]).show();
         new ComputerMessage([`The cost for this hint is ${penaltyHint}%.`]).show();
     }
     showNoHintMessage(penaltyHint) {
-        new ComputerMessage(['I can\'t think of a failing unit test for the current function.']).show();
+        new ComputerMessage(['I can\'t think of a failing unit test for the *Current Function*.']).show();
         new ComputerMessage([`The cost for this hint is ${penaltyHint}%.`]).show();
     }
     showBugFoundMessage(_currentCandidate, failingTestResult, penaltySubmitWithBug) {
-        new ComputerMessage(['I checked the current function, but it is NOT according to the specification.']).show();
+        new ComputerMessage(['I checked the *Current Function*, but it is NOT according to the *Specification*.']).show();
         new ComputerMessage(['It produces the following incorrect output.', failingTestResult.toString()]).show();
         new ComputerMessage([`The cost for submitting when there is still an error is ${penaltySubmitWithBug}%.`]).show();
     }
     showUnsuccessfulEndMessage(score) {
-        new ComputerMessage(['I checked the current function, but it is NOT according to the specification.']).show();
-        new ComputerMessage([`Your final score is ${score}%.`]).show();
+        new ComputerMessage(['I checked the *Current Function*, but it is NOT according to the *Specification*.']).show();
+        new ComputerMessage([`Your final *Score* is ${score}%.`]).show();
     }
     showSuccessfulEndMessage(score) {
-        new ComputerMessage(['I checked the current function and it is indeed according to the specification.']).show();
-        new ComputerMessage([`Your final score is ${score}%.`]).show();
+        new ComputerMessage(['I checked the *Current Function* and it is indeed according to the *Specification*.']).show();
+        new ComputerMessage([`Your final *Score* is ${score}%.`]).show();
     }
 }

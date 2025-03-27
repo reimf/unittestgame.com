@@ -12,8 +12,8 @@ export class MutationTesting extends Methodology {
     }
     showWelcomeMessage() {
         new ComputerMessage(['You write *Unit Tests* that pass *The Function*.']).show();
-        new ComputerMessage(['After adding a unit test, I highlight the lines covered in *The Function*.']).show();
-        new ComputerMessage(['When you think the function is fully tested, you submit the unit tests.']).show();
+        new ComputerMessage(['After adding a unit test, I highlight the lines of *The Function* that are covered by the *Unit Tests*.']).show();
+        new ComputerMessage(['When you think *The Function* is fully tested, you submit the *Unit Tests*.']).show();
     }
     showPanelsOnMenu(_specification, _currentCandidate, perfectCandidate, coveredCandidates) {
         this.showCodeCoveragePanel(perfectCandidate, coveredCandidates);
@@ -22,10 +22,10 @@ export class MutationTesting extends Methodology {
         new Panel('The Function', [perfectCandidate.toHtmlWithCoverage(coveredCandidates)]).show();
     }
     showUselessUnitTestMessage() {
-        new ComputerMessage(['I added the unit test to the *Unit Tests*.']).show();
+        new ComputerMessage(['I added the unit test to the *Unit Tests*.']).replace();
     }
     showUsefulUnitTestMessage() {
-        new ComputerMessage(['I added the unit test to the *Unit Tests*.']).show();
+        new ComputerMessage(['I added the unit test to the *Unit Tests*.']).replace();
     }
     showHintMessage(currentCandidate, _failingTestResult, penaltyHint) {
         new ComputerMessage(['A mutation of *The Function* that is NOT correct, but still passes the *Unit Tests* is the following.', currentCandidate.toHtml()]).show();
@@ -41,11 +41,11 @@ export class MutationTesting extends Methodology {
         new ComputerMessage([`The cost for submitting when there is still an error is ${penaltySubmitWithBug}%.`]).show();
     }
     showUnsuccessfulEndMessage(score) {
-        new ComputerMessage(['I checked the function, but it is NOT fully tested.']).show();
-        new ComputerMessage([`Your final score is ${score}%.`]).show();
+        new ComputerMessage(['I checked *The Function*, but it is NOT fully tested.']).show();
+        new ComputerMessage([`Your final *Score* is ${score}%.`]).show();
     }
     showSuccessfulEndMessage(score) {
-        new ComputerMessage(['I checked the function and it is indeed fully tested.']).show();
-        new ComputerMessage([`Your final score is ${score}%.`]).show();
+        new ComputerMessage(['I checked *The Function* and it is indeed fully tested.']).show();
+        new ComputerMessage([`Your final *Score* is ${score}%.`]).show();
     }
 }

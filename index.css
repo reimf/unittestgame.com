@@ -27,7 +27,7 @@ body {
     background-color: var(--general-background);
     color: var(--dark-text);
     font-family: monospace;
-    line-height: 1.1rem;
+    line-height: 1.25rem;
     margin: 0;
 }
 
@@ -37,32 +37,16 @@ button {
     border-radius: 0.5rem;
     box-shadow: 0 0.25rem 0.5rem var(--shadow);
     color: var(--light-text);
+    flex-grow: 1;
     font-family: inherit;
     font-size: inherit;
-    margin: 0.75rem 0;
     padding: 0.75rem;
     text-align: left;
 
-    &.narrow {
-        margin-right: 0.75rem;
-    }
-
-    &.wide {
-        display: block;
-        width: 100%;
-    }
-
-    &.secondary {
+    &.cancel {
         background-color: var(--general-background);
         color: var(--dark-text);
-    }
-
-    &.cancel {
-        display: inline;
-        height: 2.5rem;
-        margin: 0;
-        padding: 0 1rem;
-        width: auto;
+        flex-grow: 0;
     }
 }
 
@@ -85,15 +69,6 @@ i { /* markdown: *italic* */
     font-style: normal;
     padding: 0.1rem 0.25rem;
     white-space: nowrap;
-
-    &:after {
-        content: "⇨";
-        display: inline-block;
-        font-size: 2rem;
-        margin-left: 0.5rem;
-        position: relative;
-        top: 0.25rem;
-    }
 }
 
 input {
@@ -175,10 +150,10 @@ label {
 p {
     white-space: pre-wrap;
 
-    &.buttonrow {
+    &:has(> button) {
         display: flex;
         gap: 0.75rem;
-    }
+    }                
 }
 
 a, button, input, label:has(input[type="checkbox"]), label:has(input[type="radio"]) {
@@ -283,4 +258,24 @@ a, button, input, label:has(input[type="checkbox"]), label:has(input[type="radio
             }
         }
     }
+}
+
+.working {
+    animation: threedots 1s infinite linear;
+    aspect-ratio: 2;
+    --gradient: radial-gradient(circle closest-side, var(--panel-heading-background) 90%, var(--computer-message-background));
+    background: 
+        no-repeat var(--gradient)   0% 50%,
+        no-repeat var(--gradient)  50% 50%,
+        no-repeat var(--gradient) 100% 50%;
+    background-size: calc(100% / 3) 40%;
+    margin: 1rem auto;
+    width: 3rem;
+}
+      
+@keyframes threedots {
+    20% { background-position: 0%   0%, 50%  50%, 100%  50%; }
+    40% { background-position: 0% 100%, 50%   0%, 100%  50%; }
+    60% { background-position: 0%  50%, 50% 100%, 100%   0%; }
+    80% { background-position: 0%  50%, 50%  50%, 100% 100%; }
 }

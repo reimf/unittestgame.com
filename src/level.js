@@ -1,5 +1,5 @@
 import { Candidate } from './candidate.js';
-import { HumanMessage, ComputerMessage } from './frame.js';
+import { HumanMessage, ComputerMessage, Panel } from './frame.js';
 import { Button, Form, Input, Paragraph } from './html.js';
 import { Random } from './random.js';
 import { TestResult } from './test_result.js';
@@ -74,10 +74,13 @@ export class Level {
             return Random.elementFrom(failingMinimalUnitTests);
         return undefined;
     }
+    showScorePanel(score) {
+        new Panel('Score', [`${this.description()}: ${score}%`]).show();
+    }
     menu() {
         this.methodology.showPanelsOnMenu(this.useCase.specification(), this.currentCandidate, this.useCase.perfectCandidate, this.coveredCandidates);
         this.methodology.showUnitTestsPanel(this.userdefinedUnitTests);
-        this.methodology.showScorePanel(this.score);
+        this.showScorePanel(this.score);
         if (this.score === this.MINIMUMSCORE)
             this.end();
         else
@@ -85,10 +88,12 @@ export class Level {
     }
     showMenuMessage() {
         new HumanMessage([
-            new Button().onClick(() => this.startAddUnitTestFlow()).title('I want to add a unit test').text('Add unit test').addClass('narrow'),
-            new Button().onClick(() => this.showHint()).title('I want to see a hint').text('Show hint').addClass('narrow'),
-            new Button().onClick(() => this.submit()).title('I want to submit the unit tests').text('Submit unit tests').addClass('narrow'),
-            new Button().onClick(() => this.end()).title('I want to exit this level').text('Exit level').addClass('narrow'),
+            new Paragraph().appendChildren([
+                new Button().onClick(() => this.startAddUnitTestFlow()).title('I want to add a unit test').text('Add unit test'),
+                new Button().onClick(() => this.showHint()).title('I want to see a hint').text('Show hint'),
+                new Button().onClick(() => this.submit()).title('I want to submit the unit tests').text('Submit unit tests'),
+                new Button().onClick(() => this.end()).title('I want to exit this level').text('Exit level'),
+            ]),
         ]).show();
     }
     startAddUnitTestFlow() {
@@ -104,10 +109,10 @@ export class Level {
         const submitButton = new Input().type('submit').value('I want to add this unit test');
         const cancelButton = new Button()
             .onClick(() => this.cancelAddUnitTestFlow())
-            .text('I don\'t want to add a unit test now')
-            .addClass('secondary')
+            .title('I don\'t want to add a unit test now')
+            .text('Cancel')
             .addClass('cancel');
-        const buttonBlock = new Paragraph().appendChildren([submitButton, cancelButton]).addClass('buttonrow');
+        const buttonBlock = new Paragraph().appendChildren([submitButton, cancelButton]);
         new HumanMessage([
             new Form()
                 .onSubmit(() => this.addUnitTest())
@@ -127,11 +132,21 @@ export class Level {
         this.showConfirmCancelAddUnitTestFlowMessage();
         this.menu();
     }
+    working(callback) {
+        new ComputerMessage([
+            'Working...',
+            new Paragraph().addClass('working'),
+        ]).show();
+        setTimeout(callback, 3000);
+    }
     addUnitTest() {
         const argumentList = this.useCase.parameters.map(parameter => parameter.value());
         const expected = this.useCase.unit.value();
         const unitTest = new UnitTest(this.useCase.parameters, argumentList, this.useCase.unit, expected);
         this.showAddUnitTestMessage(unitTest);
+        this.working(() => this.processUnitTest(unitTest));
+    }
+    processUnitTest(unitTest) {
         const unitTestIsCorrect = new TestResult(this.useCase.perfectCandidate, unitTest).passes;
         if (unitTestIsCorrect) {
             this.userdefinedUnitTests.push(unitTest);
@@ -172,7 +187,7 @@ export class Level {
             this.methodology.showMinimumScoreEndMessage(this.score);
         else if (this.failingTestResult) {
             this.score = this.MINIMUMSCORE;
-            this.methodology.showScorePanel(this.score);
+            this.showScorePanel(this.score);
             this.methodology.showUnsuccessfulEndMessage(this.score);
         }
         else

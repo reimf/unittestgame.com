@@ -1,5 +1,5 @@
 import { Panel, ComputerMessage, HumanMessage } from './frame.js';
-import { Button } from './html.js';
+import { Button, Paragraph } from './html.js';
 import { Level } from './level.js';
 import { MutationTesting } from './methodology_mutation_testing.js';
 import { TestDrivenDevelopment } from './methodology_test_driven_development.js';
@@ -58,10 +58,8 @@ export class Main {
         ]).show();
     }
     showIntroductionMessage() {
-        new ComputerMessage([
-            'Welcome to UnitTestGame.com! ' +
-                'I am an AI bot specialized in *Test-Driven Development* and *Mutation Testing*.',
-        ]).show();
+        new ComputerMessage(['Welcome to UnitTestGame.com!']).show();
+        new ComputerMessage(['I am an AI bot specialized in *Test-Driven Development* and *Mutation Testing*.']).show();
     }
     showInvitationMessage() {
         new ComputerMessage(['What do you want to do now?']).show();
@@ -86,20 +84,18 @@ export class Main {
     showNextLevel() {
         const nextLevel = this.levels.find(level => level.getHighScore(localStorage) === 0);
         new HumanMessage([
-            nextLevel
-                ? new Button().onClick(() => this.playNextLevel(nextLevel)).text(`I want to play ${this.levelDescription(nextLevel)}`).addClass('wide')
-                : new Button().onClick(() => window.close()).text('Quit').addClass('wide'),
+            new Paragraph().appendChildren([
+                nextLevel
+                    ? new Button().onClick(() => this.playNextLevel(nextLevel)).text(`I want to play ${this.levelDescription(nextLevel)}`)
+                    : new Button().onClick(() => window.close()).text('Quit'),
+            ]),
         ]).show();
-    }
-    showCurrentLevelPanel(level) {
-        new Panel('Current Level', [this.levelDescription(level)]).show();
     }
     removeAllPanels() {
         document.querySelectorAll('#panels > section').forEach(panel => panel.remove());
     }
     playNextLevel(level) {
         this.removeAllPanels();
-        this.showCurrentLevelPanel(level);
         level.play(() => this.continue());
     }
 }

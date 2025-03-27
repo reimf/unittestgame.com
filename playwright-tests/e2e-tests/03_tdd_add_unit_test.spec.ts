@@ -23,7 +23,7 @@ test.describe('tdd add unit test', () => {
     })
 
     test('has cancel button', async({ page }) => {
-        const cancelButton = page.getByRole('button', { name: 'I don\'t want to add a unit test now' })
+        const cancelButton = page.getByRole('button', { name: 'Cancel' })
         await expect(cancelButton).toBeInViewport()
     })
 })

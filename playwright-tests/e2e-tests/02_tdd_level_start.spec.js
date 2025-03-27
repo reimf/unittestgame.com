@@ -30,7 +30,7 @@ test.describe('tdd level start', () => {
     });
     test('has contract message', async ({ page }) => {
         const messages = page.getByTestId('messages');
-        await expect(messages).toContainText('You write Unit Tests according to the Specification');
+        await expect(messages).toContainText('You read the Specification and write Unit Tests');
     });
     test('has action menu message', async ({ page }) => {
         const messages = page.getByTestId('messages');

@@ -1,5 +1,5 @@
 import { Panel, ComputerMessage, HumanMessage } from './frame.js'
-import { Button } from './html.js'
+import { Button, Paragraph } from './html.js'
 import { Level } from './level.js'
 import { Methodology } from './methodology.js'
 import { MutationTesting } from './methodology_mutation_testing.js'
@@ -62,10 +62,8 @@ export class Main {
     }
 
     private showIntroductionMessage(): void {
-        new ComputerMessage([
-            'Welcome to UnitTestGame.com! ' +
-            'I am an AI bot specialized in *Test-Driven Development* and *Mutation Testing*.',
-        ]).show()
+        new ComputerMessage(['Welcome to UnitTestGame.com!']).show()
+        new ComputerMessage(['I am an AI bot specialized in *Test-Driven Development* and *Mutation Testing*.']).show()
     }
 
     private showInvitationMessage(): void {
@@ -95,14 +93,12 @@ export class Main {
     private showNextLevel(): void {
         const nextLevel = this.levels.find(level => level.getHighScore(localStorage) === 0)
         new HumanMessage([
-            nextLevel
-                ? new Button().onClick(() => this.playNextLevel(nextLevel)).text(`I want to play ${this.levelDescription(nextLevel)}`).addClass('wide')
-                : new Button().onClick(() => window.close()).text('Quit').addClass('wide'),
+            new Paragraph().appendChildren([
+                nextLevel
+                ? new Button().onClick(() => this.playNextLevel(nextLevel)).text(`I want to play ${this.levelDescription(nextLevel)}`)
+                : new Button().onClick(() => window.close()).text('Quit'),
+            ]),
         ]).show()
-    }
-
-    private showCurrentLevelPanel(level: Level): void {
-        new Panel('Current Level', [this.levelDescription(level)]).show()
     }
 
     private removeAllPanels(): void {
@@ -111,7 +107,6 @@ export class Main {
 
     private playNextLevel(level: Level): void {
         this.removeAllPanels()
-        this.showCurrentLevelPanel(level)
         level.play(() => this.continue())
     }
 }

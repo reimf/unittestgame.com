@@ -17,8 +17,8 @@ export class MutationTesting extends Methodology {
 
     public showWelcomeMessage(): void {
         new ComputerMessage(['You write *Unit Tests* that pass *The Function*.']).show()
-        new ComputerMessage(['After adding a unit test, I highlight the lines covered in *The Function*.']).show()
-        new ComputerMessage(['When you think the function is fully tested, you submit the unit tests.']).show()
+        new ComputerMessage(['After adding a unit test, I highlight the lines of *The Function* that are covered by the *Unit Tests*.']).show()
+        new ComputerMessage(['When you think *The Function* is fully tested, you submit the *Unit Tests*.']).show()
     }
 
     public showPanelsOnMenu(_specification: string, _currentCandidate: Candidate, perfectCandidate: Candidate, coveredCandidates: Candidate[]): void {
@@ -30,11 +30,11 @@ export class MutationTesting extends Methodology {
     }
 
     public showUselessUnitTestMessage(): void {
-        new ComputerMessage(['I added the unit test to the *Unit Tests*.']).show()
+        new ComputerMessage(['I added the unit test to the *Unit Tests*.']).replace()
     }
 
     public showUsefulUnitTestMessage(): void {
-        new ComputerMessage(['I added the unit test to the *Unit Tests*.']).show()
+        new ComputerMessage(['I added the unit test to the *Unit Tests*.']).replace()
     }
 
     public showHintMessage(currentCandidate: Candidate, _failingTestResult: TestResult, penaltyHint: number): void {
@@ -54,12 +54,12 @@ export class MutationTesting extends Methodology {
     }
 
     public showUnsuccessfulEndMessage(score: number): void {
-        new ComputerMessage(['I checked the function, but it is NOT fully tested.']).show()
-        new ComputerMessage([`Your final score is ${score}%.`]).show()
+        new ComputerMessage(['I checked *The Function*, but it is NOT fully tested.']).show()
+        new ComputerMessage([`Your final *Score* is ${score}%.`]).show()
     }
 
     public showSuccessfulEndMessage(score: number): void {
-        new ComputerMessage(['I checked the function and it is indeed fully tested.']).show()
-        new ComputerMessage([`Your final score is ${score}%.`]).show()
+        new ComputerMessage(['I checked *The Function* and it is indeed fully tested.']).show()
+        new ComputerMessage([`Your final *Score* is ${score}%.`]).show()
     }
 }

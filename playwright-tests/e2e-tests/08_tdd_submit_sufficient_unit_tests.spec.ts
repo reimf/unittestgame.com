@@ -29,7 +29,7 @@ test.describe('tdd submit sufficient unit test', () => {
 
     test('has end message', async({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('I checked the current function and it is indeed according to the specification')
+        await expect(messages).toContainText('I checked the Current Function and it is indeed according to the Specification')
     })
 
     test('has high scores panel', async({ page }) => {

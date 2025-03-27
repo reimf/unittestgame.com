@@ -19,7 +19,7 @@ test.describe('mt submit insufficient unit test', () => {
 
     test('has end message', async({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('I checked the function and it is indeed fully tested')
+        await expect(messages).toContainText('I checked The Function and it is indeed fully tested')
     })
 
     test('has high scores panel', async({ page }) => {

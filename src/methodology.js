@@ -6,13 +6,8 @@ export class Methodology {
             : unitTests.map(unitTest => unitTest.toString())).show();
     }
     showIncorrectUnitTestMessage(penaltyIncorrectUnitTest) {
-        new ComputerMessage([
-            'I did NOT add the unit test, because it is NOT correct. ' +
-                `The cost for trying to add an incorrect unit test is ${penaltyIncorrectUnitTest}%.`,
-        ]).show();
-    }
-    showScorePanel(score) {
-        new Panel('Score', [`${score}%`]).show();
+        new ComputerMessage(['I did NOT add the unit test, because it is NOT correct.']).replace();
+        new ComputerMessage([`The cost for trying to add an incorrect unit test is ${penaltyIncorrectUnitTest}%.`]).show();
     }
     showMinimumScoreEndMessage(score) {
         new ComputerMessage([

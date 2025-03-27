@@ -42,6 +42,11 @@ class Message extends Frame {
         this.addTo('messages');
         this.element.scrollIntoView();
     }
+    replace() {
+        const id = document.querySelector('#messages').lastElementChild.id;
+        this.id(id);
+        this.replaceExisting();
+    }
 }
 export class ComputerMessage extends Message {
     constructor(elements) {
@@ -65,11 +70,6 @@ export class HumanMessage extends Message {
     show() {
         super.show();
         this.focusFirst();
-    }
-    replace() {
-        const id = document.querySelector('#messages').lastElementChild.id;
-        this.id(id);
-        this.replaceExisting();
     }
     focusFirst() {
         const focusables = this.element.querySelectorAll('button, input');

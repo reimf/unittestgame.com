@@ -20,7 +20,7 @@ test.describe('mt add unit test', () => {
         await expect(submitButton).toBeInViewport();
     });
     test('has cancel button', async ({ page }) => {
-        const cancelButton = page.getByRole('button', { name: 'I don\'t want to add a unit test now' });
+        const cancelButton = page.getByRole('button', { name: 'Cancel' });
         await expect(cancelButton).toBeInViewport();
     });
 });

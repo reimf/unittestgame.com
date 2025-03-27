@@ -52,6 +52,12 @@ abstract class Message extends Frame {
         this.addTo('messages')
         this.element.scrollIntoView()
     }
+
+    public replace(): void {
+        const id = document.querySelector('#messages')!.lastElementChild!.id
+        this.id(id)
+        this.replaceExisting()
+    }
 }
 
 export class ComputerMessage extends Message {
@@ -78,12 +84,6 @@ export class HumanMessage extends Message {
     public show(): void {
         super.show()
         this.focusFirst()
-    }
-
-    public replace(): void {
-        const id = document.querySelector('#messages')!.lastElementChild!.id
-        this.id(id)
-        this.replaceExisting()
     }
 
     private focusFirst(): void {

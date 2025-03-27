@@ -9,7 +9,7 @@ test.describe('tdd submit insufficient unit test', () => {
 
     test('has bug found message', async({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('I checked the current function, but it is NOT according to the specification')
+        await expect(messages).toContainText('I checked the Current Function, but it is NOT according to the Specification')
     })
 
     test('has unit test in bug found message', async({ page }) => {

@@ -25,14 +25,8 @@ export abstract class Methodology {
     }
 
     public showIncorrectUnitTestMessage(penaltyIncorrectUnitTest: number): void {
-        new ComputerMessage([
-            'I did NOT add the unit test, because it is NOT correct. ' +
-            `The cost for trying to add an incorrect unit test is ${penaltyIncorrectUnitTest}%.`,
-        ]).show()
-    }
-
-    public showScorePanel(score: number): void {
-        new Panel('Score', [`${score}%`]).show()
+        new ComputerMessage(['I did NOT add the unit test, because it is NOT correct.']).replace()
+        new ComputerMessage([`The cost for trying to add an incorrect unit test is ${penaltyIncorrectUnitTest}%.`]).show()
     }
 
     public showMinimumScoreEndMessage(score: number): void {
