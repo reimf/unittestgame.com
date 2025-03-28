@@ -3,6 +3,7 @@ test.describe('tdd incorrect unit test', () => {
     test.beforeEach(async ({ page }) => {
         await page.addInitScript({ path: './playwright-tests/e2e-tests/init_script.js' });
         await page.goto('http://localhost:5500/');
+        await page.getByRole('button', { name: 'I want a sidebar for terms with a purple background' }).click();
         await page.getByRole('button', { name: 'I want to play Level 1 - Test-Driven Development - Voting Age' }).click();
         await page.getByRole('button', { name: 'Add unit test' }).click();
         await page.getByLabel('Age').fill('15');

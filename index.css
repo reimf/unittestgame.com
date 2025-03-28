@@ -20,7 +20,7 @@
 a { /* markdown: [text](url) */
     border-radius: 0.25rem;
     color: inherit;
-    padding: 0.1rem 0.25rem;
+    padding: 0.1rem 0;
     white-space: nowrap;
 }
 

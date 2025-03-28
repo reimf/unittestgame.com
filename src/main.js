@@ -44,52 +44,64 @@ export class Main {
         ];
     }
     start() {
-        this.showAboutPanel();
-        for (const methodology of this.methodologies)
-            methodology.showBasicDefinition();
-        this.showIntroductionMessage();
+        this.showWelcomeMessage();
+        if (this.getLevelsWithHighScore().length === 0)
+            this.showQuestionSidebar();
+        else
+            this.sidebar();
+    }
+    sidebar() {
+        this.showSidebar();
         this.continue();
-    }
-    showAboutPanel() {
-        const methodologies = this.methodologies.map(methodology => methodology.name()).join(' and ');
-        new Panel('About', [
-            `Learn to write effective unit tests using ${methodologies}.`,
-            'Please send us [feedback](mailto:feedback@unittestgame.com) on [UnitTestGame.com](https://unittestgame.com)',
-        ]).show();
-    }
-    showIntroductionMessage() {
-        new ComputerMessage(['Welcome to UnitTestGame.com!']).add();
-        new ComputerMessage(['I am an AI bot specialized in *Test-Driven Development* and *Mutation Testing*.']).add();
-        new ComputerMessage(['💡 Text with purple background refers to a panel in the sidebar on the right.']).add();
-    }
-    showInvitationMessage() {
-        new ComputerMessage(['What do you want to do now?']).add();
     }
     continue() {
         this.showHighScoresPanel();
         this.showInvitationMessage();
         this.showNextLevel();
     }
+    getLevelsWithHighScore() {
+        return this.levels.filter(level => level.getHighScore(localStorage) > 0);
+    }
+    showWelcomeMessage() {
+        new ComputerMessage(['Welcome to *UnitTestGame*!']).add();
+        new ComputerMessage(['I am an AI bot specialized in *Test-Driven Development* and *Mutation Testing*.']).add();
+    }
+    showQuestionSidebar() {
+        new HumanMessage([
+            new Paragraph().appendChild(new Button().onClick(() => this.sidebar()).text('I want a sidebar for terms with a purple background')),
+        ]).add();
+    }
+    showSidebar() {
+        this.showUnittestgamePanel();
+        for (const methodology of this.methodologies)
+            methodology.showBasicDefinition();
+    }
+    showUnittestgamePanel() {
+        const methodologies = this.methodologies.map(methodology => methodology.name()).join(' and ');
+        new Panel('UnitTestGame', [
+            `Learn to write effective unit tests using ${methodologies}. ` +
+                '[feedback](mailto:feedback@unittestgame.com)',
+        ]).show();
+    }
+    showInvitationMessage() {
+        new ComputerMessage(['What do you want to do now?']).add();
+    }
     levelDescription(level) {
         const index = this.levels.findIndex(otherLevel => otherLevel === level);
         return `Level ${index + 1} - ${level.description()}`;
     }
     showHighScoresPanel() {
-        const highScores = this.levels
-            .filter(level => level.getHighScore(localStorage) > 0)
-            .map(level => `${this.levelDescription(level)}: ${level.getHighScore(localStorage)}%`);
-        if (highScores.length > 0) {
-            new Panel('High Scores', highScores).show();
+        const levels = this.getLevelsWithHighScore();
+        if (levels.length > 0) {
+            new Panel('High Scores', levels.map(level => `${this.levelDescription(level)}: ${level.getHighScore(localStorage)}%`)).show();
         }
     }
     showNextLevel() {
         const nextLevel = this.levels.find(level => level.getHighScore(localStorage) === 0);
         new HumanMessage([
-            new Paragraph().appendChildren([
-                nextLevel
-                    ? new Button().onClick(() => this.playNextLevel(nextLevel)).text(`I want to play ${this.levelDescription(nextLevel)}`)
-                    : new Button().onClick(() => window.close()).text('Quit'),
-            ]),
+            new Paragraph().appendChild(nextLevel
+                ? new Button().onClick(() => this.playNextLevel(nextLevel)).text(`I want to play ${this.levelDescription(nextLevel)}`)
+                : new Button().onClick(() => window.close()).text('Quit')),
         ]).add();
     }
     removeAllPanels() {

@@ -46,29 +46,16 @@ export class Main {
     ]
 
     public start(): void {
-        this.showAboutPanel()
-        for (const methodology of this.methodologies)
-            methodology.showBasicDefinition()
-        this.showIntroductionMessage()
+        this.showWelcomeMessage()
+        if (this.getLevelsWithHighScore().length === 0)
+            this.showQuestionSidebar()
+        else
+            this.sidebar()
+    }
+
+    private sidebar(): void {
+        this.showSidebar()
         this.continue()
-    }
-
-    private showAboutPanel(): void {
-        const methodologies = this.methodologies.map(methodology => methodology.name()).join(' and ')
-        new Panel('About', [
-            `Learn to write effective unit tests using ${methodologies}.`,
-            'Please send us [feedback](mailto:feedback@unittestgame.com) on [UnitTestGame.com](https://unittestgame.com)',
-        ]).show()
-    }
-
-    private showIntroductionMessage(): void {
-        new ComputerMessage(['Welcome to UnitTestGame.com!']).add()
-        new ComputerMessage(['I am an AI bot specialized in *Test-Driven Development* and *Mutation Testing*.']).add()
-        new ComputerMessage(['💡 Text with purple background refers to a panel in the sidebar on the right.']).add()
-    }
-
-    private showInvitationMessage(): void {
-        new ComputerMessage(['What do you want to do now?']).add()
     }
 
     private continue(): void {
@@ -77,28 +64,63 @@ export class Main {
         this.showNextLevel()
     }
 
+    private getLevelsWithHighScore(): Level[] {
+        return this.levels.filter(level => level.getHighScore(localStorage) > 0)
+    }
+
+    private showWelcomeMessage(): void {
+        new ComputerMessage(['Welcome to *UnitTestGame*!']).add()
+        new ComputerMessage(['I am an AI bot specialized in *Test-Driven Development* and *Mutation Testing*.']).add()
+    }
+
+    private showQuestionSidebar(): void {
+        new HumanMessage([
+            new Paragraph().appendChild(
+                new Button().onClick(() => this.sidebar()).text('I want a sidebar for terms with a purple background'),
+            ),
+        ]).add()
+    }
+
+    private showSidebar(): void {
+        this.showUnittestgamePanel()
+        for (const methodology of this.methodologies)
+            methodology.showBasicDefinition()
+    }
+
+    private showUnittestgamePanel(): void {
+        const methodologies = this.methodologies.map(methodology => methodology.name()).join(' and ')
+        new Panel('UnitTestGame', [
+            `Learn to write effective unit tests using ${methodologies}. ` +
+            '[feedback](mailto:feedback@unittestgame.com)',
+        ]).show()
+    }
+
+    private showInvitationMessage(): void {
+        new ComputerMessage(['What do you want to do now?']).add()
+    }
+
     private levelDescription(level: Level): string {
         const index = this.levels.findIndex(otherLevel => otherLevel === level)
         return `Level ${index + 1} - ${level.description()}`
     }
 
     private showHighScoresPanel(): void {
-        const highScores = this.levels
-            .filter(level => level.getHighScore(localStorage) > 0)
-            .map(level => `${this.levelDescription(level)}: ${level.getHighScore(localStorage)}%`)
-        if (highScores.length > 0) {
-            new Panel('High Scores', highScores).show()
+        const levels = this.getLevelsWithHighScore()
+        if (levels.length > 0) {
+            new Panel('High Scores',
+                levels.map(level => `${this.levelDescription(level)}: ${level.getHighScore(localStorage)}%`)
+        ).show()
         }
     }
 
     private showNextLevel(): void {
         const nextLevel = this.levels.find(level => level.getHighScore(localStorage) === 0)
         new HumanMessage([
-            new Paragraph().appendChildren([
+            new Paragraph().appendChild(
                 nextLevel
                 ? new Button().onClick(() => this.playNextLevel(nextLevel)).text(`I want to play ${this.levelDescription(nextLevel)}`)
                 : new Button().onClick(() => window.close()).text('Quit'),
-            ]),
+            ),
         ]).add()
     }
 

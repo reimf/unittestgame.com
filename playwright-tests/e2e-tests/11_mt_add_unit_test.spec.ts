@@ -6,6 +6,7 @@ test.describe('mt add unit test', () => {
         await page.goto('http://localhost:5500/')
         await page.evaluate(_ => localStorage.setItem('Test-Driven Development - Voting Age', '100%'))
         await page.goto('http://localhost:5500/')
+        await page.getByRole('button', { name: 'I want a sidebar for terms with a purple background' }).click()
         await page.getByRole('button', { name: 'I want to play Level 2 - Mutation Testing - Even or Odd' }).click()
         await page.getByRole('button', { name: 'Add unit test' }).click()
     })

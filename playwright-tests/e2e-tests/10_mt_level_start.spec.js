@@ -5,11 +5,12 @@ test.describe('mt level start', () => {
         await page.goto('http://localhost:5500/');
         await page.evaluate(_ => localStorage.setItem('Test-Driven Development - Voting Age', '100%'));
         await page.goto('http://localhost:5500/');
+        await page.getByRole('button', { name: 'I want a sidebar for terms with a purple background' }).click();
         await page.getByRole('button', { name: 'I want to play Level 2 - Mutation Testing - Even or Odd' }).click();
     });
-    test('has no about panel', async ({ page }) => {
-        const aboutPanel = page.getByTestId('about');
-        await expect(aboutPanel).not.toBeAttached();
+    test('has no unittestgame panel', async ({ page }) => {
+        const unittestgamePanel = page.getByTestId('unittestgame');
+        await expect(unittestgamePanel).not.toBeAttached();
     });
     test('has no specification panel', async ({ page }) => {
         const specificationPanel = page.getByTestId('specification');

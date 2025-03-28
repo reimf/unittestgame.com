@@ -3,11 +3,12 @@ test.describe('tdd level start', () => {
     test.beforeEach(async ({ page }) => {
         await page.addInitScript({ path: './playwright-tests/e2e-tests/init_script.js' });
         await page.goto('http://localhost:5500/');
+        await page.getByRole('button', { name: 'I want a sidebar for terms with a purple background' }).click();
         await page.getByRole('button', { name: 'I want to play Level 1 - Test-Driven Development - Voting Age' }).click();
     });
-    test('has no about panel', async ({ page }) => {
-        const aboutPanel = page.getByTestId('about');
-        await expect(aboutPanel).not.toBeAttached();
+    test('has no unittestgame panel', async ({ page }) => {
+        const unittestgamePanel = page.getByTestId('unittestgame');
+        await expect(unittestgamePanel).not.toBeAttached();
     });
     test('has specification panel', async ({ page }) => {
         const specificationPanel = page.getByTestId('specification');

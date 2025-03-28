@@ -6,8 +6,8 @@ export class TestDrivenDevelopment extends Methodology {
     }
     showBasicDefinition() {
         new Panel('Test-Driven Development', [
-            'Write a failing unit test for a function, then write just enough code to make the unit test pass; repeat.',
-            'Read more about [Test-Driven Development on Wikipedia](https://en.wikipedia.org/wiki/Test-driven_development).',
+            'Write a failing unit test for a function, then write just enough code to make the unit test pass; repeat. ' +
+                '[more](https://en.wikipedia.org/wiki/Test-driven_development)',
         ]).show();
     }
     showWelcomeMessage() {
