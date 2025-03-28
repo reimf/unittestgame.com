@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test'
 
 test.describe('mt level start', () => {
     test.beforeEach(async({ page }) => {
+        await page.addInitScript({ path: './playwright-tests/e2e-tests/init_script.js' })
         await page.goto('http://localhost:5500/')
         await page.evaluate(_ => localStorage.setItem('Test-Driven Development - Voting Age', '100%'))
         await page.goto('http://localhost:5500/')
@@ -30,7 +31,7 @@ test.describe('mt level start', () => {
 
     test('has the perfect candidate in the function panel', async({ page }) => {
         const theFunctionPanel = page.getByTestId('the-function')
-        await expect(theFunctionPanel).toContainText(/function isEven\(number\) \{\n  if \(number % 2 (!==|===) 0\) return (false|true)\n  return (false|true)\n\}/)
+        await expect(theFunctionPanel).toContainText('function isEven(number) {\n  if (number % 2 !== 0) return false\n  return true\n}')
     })
 
     test('has 100% in the score panel', async({ page }) => {

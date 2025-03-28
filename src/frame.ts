@@ -1,10 +1,10 @@
-import { Div, Html, Header, Paragraph, Section } from './html.js'
+import { Div, Html, Header, Paragraph, Section, Span } from './html.js'
 
 abstract class Frame extends Section {
     protected constructor(elements: (Html|string)[]) {
         super()
         const children = elements.map(element => element instanceof Html ? element : new Paragraph().markdown(element))
-        this.appendChildren([new Div().appendChildren(children)])
+        this.appendChild(new Div().appendChildren(children))
     }
 
     protected existingElement(): HTMLElement | null {
@@ -34,7 +34,7 @@ export class Panel extends Frame {
     public static addWorkingTo(title: string): void {
         const header = document.querySelector(`#${Html.getIdFromTitle(title)} > header`)
         if (header)
-            header.insertAdjacentHTML('beforeend', '<span class="working"></span>');
+            new Html(header as HTMLElement).appendChild(new Span().addClass('working'))
     }
 
     public show(): void {
@@ -46,12 +46,6 @@ export class Panel extends Frame {
 
     public remove(): void {
         document.querySelector('#' + this.element.id)?.remove()
-    }
-
-    public addWorking(working: boolean): Panel {
-        if (working)
-            this.appendChildren([new Paragraph().addClass('working')])
-        return this
     }
 }
 

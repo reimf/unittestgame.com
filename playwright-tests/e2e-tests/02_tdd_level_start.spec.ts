@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test'
 
 test.describe('tdd level start', () => {
     test.beforeEach(async({ page }) => {
+        await page.addInitScript({ path: './playwright-tests/e2e-tests/init_script.js' })
         await page.goto('http://localhost:5500/')
         await page.getByRole('button', { name: 'I want to play Level 1 - Test-Driven Development - Voting Age' }).click()
     })
@@ -23,7 +24,7 @@ test.describe('tdd level start', () => {
 
     test('has the simplest candidate in the current function panel', async({ page }) => {
         const currentFunctionPanel = page.getByTestId('current-function')
-        await expect(currentFunctionPanel).toContainText(/function isAllowedToVote\(age\) \{\n  return (undefined|false|true)\n\}/)
+        await expect(currentFunctionPanel).toContainText('function isAllowedToVote(age) {\n  return true\n}')
     })
 
     test('has no the function panel', async({ page }) => {

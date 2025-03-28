@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 test.describe('mt incorrect unit test', () => {
     test.beforeEach(async ({ page }) => {
+        await page.addInitScript({ path: './playwright-tests/e2e-tests/init_script.js' });
         await page.goto('http://localhost:5500/');
         await page.evaluate(_ => localStorage.setItem('Test-Driven Development - Voting Age', '100%'));
         await page.goto('http://localhost:5500/');

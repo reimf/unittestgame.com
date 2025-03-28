@@ -52,6 +52,6 @@ export class MutationTesting extends Methodology {
     }
     showSuccessfulEndMessage(score) {
         new ComputerMessage(['I checked *The Function* and it is indeed fully tested.']).add();
-        new ComputerMessage([`Your final *Score* is ${score}%.`]).add();
+        new ComputerMessage([`🎉 Your final *Score* is ${score}%.`]).add();
     }
 }

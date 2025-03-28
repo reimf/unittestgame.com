@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 test.describe('mt submit insufficient unit test', () => {
     test.beforeEach(async ({ page }) => {
+        await page.addInitScript({ path: './playwright-tests/e2e-tests/init_script.js' });
         await page.goto('http://localhost:5500/');
         await page.evaluate(_ => localStorage.setItem('Test-Driven Development - Voting Age', '100%'));
         await page.goto('http://localhost:5500/');
@@ -13,7 +14,7 @@ test.describe('mt submit insufficient unit test', () => {
     });
     test('has a function in bug found message', async ({ page }) => {
         const messages = page.getByTestId('messages');
-        await expect(messages).toContainText(/function isEven\(number\) \{\n  return (true|false|undefined)\n\}/);
+        await expect(messages).toContainText('function isEven(number) {\n  return true\n}');
     });
     test('has action menu message', async ({ page }) => {
         const messages = page.getByTestId('messages');

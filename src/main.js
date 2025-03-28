@@ -60,6 +60,7 @@ export class Main {
     showIntroductionMessage() {
         new ComputerMessage(['Welcome to UnitTestGame.com!']).add();
         new ComputerMessage(['I am an AI bot specialized in *Test-Driven Development* and *Mutation Testing*.']).add();
+        new ComputerMessage(['💡 Text with purple background refers to a panel in the sidebar on the right.']).add();
     }
     showInvitationMessage() {
         new ComputerMessage(['What do you want to do now?']).add();

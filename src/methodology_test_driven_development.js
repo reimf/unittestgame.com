@@ -27,15 +27,15 @@ export class TestDrivenDevelopment extends Methodology {
     }
     showUselessUnitTestMessage() {
         new ComputerMessage([
-            'I added the unit test, ' +
+            'I added the unit test to the *Unit Tests*, ' +
                 'but the *Current Function* already passed this unit test, ' +
                 'so I did NOT improve the *Current Function*.',
         ]).add();
     }
     showUsefulUnitTestMessage() {
         new ComputerMessage([
-            'I added the unit test and ' +
-                'I improved the *Current Function* to pass the *Unit Tests*.',
+            'I added the unit test to the *Unit Tests* and ' +
+                'I improved the *Current Function* such that it now also passes the new unit test.',
         ]).add();
     }
     showHintMessage(_currentCandidate, failingTestResult, penaltyHint) {
@@ -57,6 +57,6 @@ export class TestDrivenDevelopment extends Methodology {
     }
     showSuccessfulEndMessage(score) {
         new ComputerMessage(['I checked the *Current Function* and it is indeed according to the *Specification*.']).add();
-        new ComputerMessage([`Your final *Score* is ${score}%.`]).add();
+        new ComputerMessage([`🎉 Your final *Score* is ${score}%.`]).add();
     }
 }

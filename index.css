@@ -173,7 +173,7 @@ a, button, input, label:has(input[type="checkbox"]), label:has(input[type="radio
     display: flex;
 
     #conversation {
-        box-shadow: 0.25em 0 0.5em var(--line-shadow);
+        box-shadow: 0.25rem 0 0.5rem var(--line-shadow);
         display: flex;
         flex-direction: column;
         height: 100vh;

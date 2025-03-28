@@ -17,7 +17,7 @@ export class RadioVariable extends Variable {
     toHtml() {
         const radioButtons = this.texts.map(text => {
             const input = new Input().type('radio').name(this.name).value(text);
-            const label = new Label().appendChildren([input]).text(text);
+            const label = new Label().appendChild(input).text(text);
             return label;
         });
         const paragraph = new Paragraph().text(this.label).appendChildren(radioButtons);
@@ -37,8 +37,8 @@ export class CheckboxVariable extends Variable {
     }
     toHtml() {
         const input = new Input().type('checkbox').name(this.name);
-        const label = new Label().appendChildren([input]).text(this.label);
-        const paragraph = new Paragraph().appendChildren([label]);
+        const label = new Label().appendChild(input).text(this.label);
+        const paragraph = new Paragraph().appendChild(label);
         return paragraph;
     }
     format(value) {
@@ -55,8 +55,8 @@ export class TextVariable extends Variable {
     }
     toHtml() {
         const input = new Input().type('text').name(this.name).autocomplete(false);
-        const label = new Label().text(this.label).appendChildren([input]);
-        const paragraph = new Paragraph().appendChildren([label]);
+        const label = new Label().text(this.label).appendChild(input);
+        const paragraph = new Paragraph().appendChild(label);
         return paragraph;
     }
     format(value) {
@@ -73,8 +73,8 @@ export class NumberVariable extends Variable {
     }
     toHtml() {
         const input = new Input().type('number').name(this.name).autocomplete(false);
-        const label = new Label().text(this.label).appendChildren([input]);
-        const paragraph = new Paragraph().appendChildren([label]);
+        const label = new Label().text(this.label).appendChild(input);
+        const paragraph = new Paragraph().appendChild(label);
         return paragraph;
     }
     format(value) {

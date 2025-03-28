@@ -1,8 +1,8 @@
-export abstract class Html {
+export class Html {
     protected readonly element: HTMLElement
 
-    protected constructor(tagName: string) {
-        this.element = document.createElement(tagName)
+    public constructor(element: HTMLElement) {
+        this.element = element
     }
 
     static getIdFromTitle(title: string): string {
@@ -47,6 +47,11 @@ export abstract class Html {
         return this
     }
 
+    public appendChild(child: Html): Html {
+        this.element.appendChild(child.element)
+        return this
+    }
+
     public appendChildren(children: Html[]): Html {
         for (const child of children)
             this.element.appendChild(child.element)
@@ -63,7 +68,7 @@ export class Input extends Html {
     private readonly input = this.element as HTMLInputElement
 
     public constructor() {
-        super('input')
+        super(document.createElement('input'))
     }
 
     public type(type: string): Input {
@@ -89,7 +94,7 @@ export class Input extends Html {
 
 export class Form extends Html {
     public constructor() {
-        super('form')
+        super(document.createElement('form'))
     }
 
     public onSubmit(callback: (event: Event) => void): Form {
@@ -100,19 +105,19 @@ export class Form extends Html {
 
 export class Header extends Html {
     public constructor() {
-        super('header')
+        super(document.createElement('header'))
     }
 }
 
 export class Paragraph extends Html {
     public constructor() {
-        super('p')
+        super(document.createElement('p'))
     }
 }
 
 export class Button extends Html {
     public constructor() {
-        super('button')
+        super(document.createElement('button'))
     }
 
     public onClick(callback: (event: Event) => void): Button {
@@ -128,24 +133,30 @@ export class Button extends Html {
 
 export class Label extends Html {
     public constructor() {
-        super('label')
+        super(document.createElement('label'))
     }
 }
 
 export class Code extends Html {
     public constructor() {
-        super('code')
+        super(document.createElement('code'))
     }
 }
 
 export class Section extends Html {
     public constructor() {
-        super('section')
+        super(document.createElement('section'))
     }
 }
 
 export class Div extends Html {
     public constructor() {
-        super('div')
+        super(document.createElement('div'))
+    }
+}
+
+export class Span extends Html {
+    public constructor() {
+        super(document.createElement('span'))
     }
 }

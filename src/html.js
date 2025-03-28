@@ -1,6 +1,6 @@
 export class Html {
-    constructor(tagName) {
-        this.element = document.createElement(tagName);
+    constructor(element) {
+        this.element = element;
     }
     static getIdFromTitle(title) {
         return title.toLowerCase().replace(/[^a-z0-9-]/g, ' ').trim().replace(/ +/g, '-');
@@ -38,6 +38,10 @@ export class Html {
         this.element.prepend(child.element);
         return this;
     }
+    appendChild(child) {
+        this.element.appendChild(child.element);
+        return this;
+    }
     appendChildren(children) {
         for (const child of children)
             this.element.appendChild(child.element);
@@ -50,7 +54,7 @@ export class Html {
 }
 export class Input extends Html {
     constructor() {
-        super('input');
+        super(document.createElement('input'));
         this.input = this.element;
     }
     type(type) {
@@ -72,7 +76,7 @@ export class Input extends Html {
 }
 export class Form extends Html {
     constructor() {
-        super('form');
+        super(document.createElement('form'));
     }
     onSubmit(callback) {
         this.on('submit', event => callback(event));
@@ -81,17 +85,17 @@ export class Form extends Html {
 }
 export class Header extends Html {
     constructor() {
-        super('header');
+        super(document.createElement('header'));
     }
 }
 export class Paragraph extends Html {
     constructor() {
-        super('p');
+        super(document.createElement('p'));
     }
 }
 export class Button extends Html {
     constructor() {
-        super('button');
+        super(document.createElement('button'));
     }
     onClick(callback) {
         this.on('click', event => callback(event));
@@ -104,21 +108,26 @@ export class Button extends Html {
 }
 export class Label extends Html {
     constructor() {
-        super('label');
+        super(document.createElement('label'));
     }
 }
 export class Code extends Html {
     constructor() {
-        super('code');
+        super(document.createElement('code'));
     }
 }
 export class Section extends Html {
     constructor() {
-        super('section');
+        super(document.createElement('section'));
     }
 }
 export class Div extends Html {
     constructor() {
-        super('div');
+        super(document.createElement('div'));
+    }
+}
+export class Span extends Html {
+    constructor() {
+        super(document.createElement('span'));
     }
 }

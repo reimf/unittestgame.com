@@ -1,9 +1,9 @@
-import { Div, Html, Header, Paragraph, Section } from './html.js';
+import { Div, Html, Header, Paragraph, Section, Span } from './html.js';
 class Frame extends Section {
     constructor(elements) {
         super();
         const children = elements.map(element => element instanceof Html ? element : new Paragraph().markdown(element));
-        this.appendChildren([new Div().appendChildren(children)]);
+        this.appendChild(new Div().appendChildren(children));
     }
     existingElement() {
         return document.querySelector('#' + this.element.id);
@@ -27,7 +27,7 @@ export class Panel extends Frame {
     static addWorkingTo(title) {
         const header = document.querySelector(`#${Html.getIdFromTitle(title)} > header`);
         if (header)
-            header.insertAdjacentHTML('beforeend', '<span class="working"></span>');
+            new Html(header).appendChild(new Span().addClass('working'));
     }
     show() {
         if (this.existingElement())
@@ -38,11 +38,6 @@ export class Panel extends Frame {
     remove() {
         var _a;
         (_a = document.querySelector('#' + this.element.id)) === null || _a === void 0 ? void 0 : _a.remove();
-    }
-    addWorking(working) {
-        if (working)
-            this.appendChildren([new Paragraph().addClass('working')]);
-        return this;
     }
 }
 class Message extends Frame {
