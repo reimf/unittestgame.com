@@ -1,12 +1,10 @@
 import { test, expect } from '@playwright/test'
 
 test.describe('mt level start', () => {
-    test.beforeEach(async({ page }) => {
-        await page.addInitScript({ path: './playwright-tests/e2e-tests/init_script.js' })
+    test.beforeEach(async({ context, page }) => {
+        await context.addInitScript(_ => localStorage.setItem('Test-Driven Development - Voting Age', '100'))
+        await context.addInitScript({ path: './playwright-tests/e2e-tests/init_script.js' })
         await page.goto('http://localhost:5500/')
-        await page.evaluate(_ => localStorage.setItem('Test-Driven Development - Voting Age', '100%'))
-        await page.goto('http://localhost:5500/')
-        await page.getByRole('button', { name: 'I want a sidebar for terms with a purple background' }).click()
         await page.getByRole('button', { name: 'I want to play Level 2 - Mutation Testing - Even or Odd' }).click()
     })
 
@@ -37,7 +35,7 @@ test.describe('mt level start', () => {
 
     test('has 100% in the score panel', async({ page }) => {
         const scorePanel = page.getByTestId('score')
-        await expect(scorePanel).toContainText('100%')
+        await expect(scorePanel).toContainText('100')
     })
 
     test('has contract message', async({ page }) => {

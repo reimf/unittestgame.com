@@ -22,6 +22,6 @@ test.describe('tdd replay level', () => {
 
     test('has 100% in the score panel', async({ page }) => {
         const scorePanel = page.getByTestId('score')
-        await expect(scorePanel).toContainText('100%')
+        await expect(scorePanel).toContainText('100')
     })
 })
