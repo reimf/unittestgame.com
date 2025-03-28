@@ -4,6 +4,7 @@ test.describe('mt added unit test', () => {
         await page.goto('http://localhost:5500/');
         await page.evaluate(_ => localStorage.setItem('Test-Driven Development - Voting Age', '100%'));
         await page.goto('http://localhost:5500/');
+        await page.addInitScript({ path: './playwright-tests/e2e-tests/init_script.js' });
         await page.getByRole('button', { name: 'I want to play Level 2 - Mutation Testing - Even or Odd' }).click();
         await page.getByRole('button', { name: 'Add unit test' }).click();
         await page.getByLabel('Number').fill('42');
@@ -23,6 +24,7 @@ test.describe('mt added unit test', () => {
         await expect(unitTestsPanel).toContainText('isEven(42) === true');
     });
     test('has at least 3 covered lines in the function panel', async ({ page }) => {
+        await page.waitForFunction(() => !document.querySelector('.working'));
         const theFunctionPanel = page.getByTestId('the-function');
         const covered = theFunctionPanel.locator('b');
         expect(await covered.count()).toBeGreaterThanOrEqual(3);

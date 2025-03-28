@@ -58,11 +58,11 @@ export class Main {
         ]).show();
     }
     showIntroductionMessage() {
-        new ComputerMessage(['Welcome to UnitTestGame.com!']).show();
-        new ComputerMessage(['I am an AI bot specialized in *Test-Driven Development* and *Mutation Testing*.']).show();
+        new ComputerMessage(['Welcome to UnitTestGame.com!']).add();
+        new ComputerMessage(['I am an AI bot specialized in *Test-Driven Development* and *Mutation Testing*.']).add();
     }
     showInvitationMessage() {
-        new ComputerMessage(['What do you want to do now?']).show();
+        new ComputerMessage(['What do you want to do now?']).add();
     }
     continue() {
         this.showHighScoresPanel();
@@ -89,7 +89,7 @@ export class Main {
                     ? new Button().onClick(() => this.playNextLevel(nextLevel)).text(`I want to play ${this.levelDescription(nextLevel)}`)
                     : new Button().onClick(() => window.close()).text('Quit'),
             ]),
-        ]).show();
+        ]).add();
     }
     removeAllPanels() {
         document.querySelectorAll('#panels > section').forEach(panel => panel.remove());

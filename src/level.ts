@@ -96,12 +96,17 @@ export class Level {
         new Panel('Score', [`${this.description()}: ${score}%`]).show()
     }
 
+    private showUnitTestsPanel(unitTests: UnitTest[]): void {
+        new Panel('Unit Tests',
+            unitTests.length === 0
+            ? ['You have not written any unit tests yet.']
+            : unitTests.map(unitTest => unitTest.toString())
+        ).show()
+    }
+
     private menu(): void {
-        this.methodology.showPanelsOnMenu(this.useCase.specification(),
-            this.currentCandidate,
-            this.useCase.perfectCandidate,
-            this.coveredCandidates)
-        this.methodology.showUnitTestsPanel(this.userdefinedUnitTests)
+        this.methodology.showPanelsOnMenu(this.useCase.specification(), this.currentCandidate, this.useCase.perfectCandidate, this.coveredCandidates)
+        this.showUnitTestsPanel(this.userdefinedUnitTests)
         this.showScorePanel(this.score)
         if (this.score === this.MINIMUMSCORE)
             this.end()
@@ -117,7 +122,7 @@ export class Level {
                 new Button().onClick(() => this.submit()).title('I want to submit the unit tests').text('Submit unit tests'),
                 new Button().onClick(() => this.end()).title('I want to exit this level').text('Exit level'),
             ]),
-        ]).show()
+        ]).add()
     }
 
     private startAddUnitTestFlow(): void {
@@ -126,7 +131,7 @@ export class Level {
     }
 
     private showConfirmStartUnitTestFlowMessage(): void {
-        new ComputerMessage(['Which unit test do you want to add?']).show()
+        new ComputerMessage(['Which unit test do you want to add?']).add()
     }
 
     private showFormUnitTestMessage(): void {
@@ -143,7 +148,7 @@ export class Level {
             new Form()
                 .onSubmit(() => this.addUnitTest())
                 .appendChildren([...parameterFields, unitField, buttonBlock]),
-        ]).show()
+        ]).add()
     }
 
     private showAddUnitTestMessage(unitTest: UnitTest): void {
@@ -154,7 +159,7 @@ export class Level {
     }
 
     private showConfirmCancelAddUnitTestFlowMessage(): void {
-        new ComputerMessage(['Ok.']).show()
+        new ComputerMessage(['Ok.']).add()
     }
 
     private cancelAddUnitTestFlow(): void {
@@ -162,23 +167,24 @@ export class Level {
         this.menu()
     }
 
-    private working(callback: () => void): void {
-        new ComputerMessage([
-            'Working...',
-            new Paragraph().addClass('working'),
-        ]).show()
-        setTimeout(callback, 3000)
-    }
-
     private addUnitTest(): void {
         const argumentList = this.useCase.parameters.map(parameter => parameter.value())
         const expected = this.useCase.unit.value()
         const unitTest = new UnitTest(this.useCase.parameters, argumentList, this.useCase.unit, expected)
         this.showAddUnitTestMessage(unitTest)
-        this.working(() => this.processUnitTest(unitTest))
+        this.showWorking(unitTest)
+    }
+
+    private showWorking(unitTest: UnitTest): void {
+        Panel.addWorkingTo('Unit Tests')
+        Panel.addWorkingTo('Current Function')
+        Panel.addWorkingTo('The Function')
+        new ComputerMessage(['I\'m working on it.']).add()
+        window.setTimeout(() => this.processUnitTest(unitTest), 3000)
     }
 
     private processUnitTest(unitTest: UnitTest): void {
+        new ComputerMessage([]).remove()
         const unitTestIsCorrect = new TestResult(this.useCase.perfectCandidate, unitTest).passes
         if (unitTestIsCorrect) {
             this.userdefinedUnitTests.push(unitTest)

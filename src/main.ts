@@ -62,12 +62,12 @@ export class Main {
     }
 
     private showIntroductionMessage(): void {
-        new ComputerMessage(['Welcome to UnitTestGame.com!']).show()
-        new ComputerMessage(['I am an AI bot specialized in *Test-Driven Development* and *Mutation Testing*.']).show()
+        new ComputerMessage(['Welcome to UnitTestGame.com!']).add()
+        new ComputerMessage(['I am an AI bot specialized in *Test-Driven Development* and *Mutation Testing*.']).add()
     }
 
     private showInvitationMessage(): void {
-        new ComputerMessage(['What do you want to do now?']).show()
+        new ComputerMessage(['What do you want to do now?']).add()
     }
 
     private continue(): void {
@@ -98,7 +98,7 @@ export class Main {
                 ? new Button().onClick(() => this.playNextLevel(nextLevel)).text(`I want to play ${this.levelDescription(nextLevel)}`)
                 : new Button().onClick(() => window.close()).text('Quit'),
             ]),
-        ]).show()
+        ]).add()
     }
 
     private removeAllPanels(): void {

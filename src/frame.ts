@@ -7,14 +7,16 @@ abstract class Frame extends Section {
         this.appendChildren([new Div().appendChildren(children)])
     }
 
-    public abstract show(): void
-
     protected existingElement(): HTMLElement | null {
         return document.querySelector('#' + this.element.id)
     }
 
     protected replaceExisting(): void {
         this.existingElement()!.replaceWith(this.element)
+    }
+
+    protected removeExisting(): void {
+        this.existingElement()!.remove()
     }
 
     protected addTo(parentId: string): void {
@@ -29,6 +31,12 @@ export class Panel extends Frame {
         this.id(title)
     }
 
+    public static addWorkingTo(title: string): void {
+        const header = document.querySelector(`#${Html.getIdFromTitle(title)} > header`)
+        if (header)
+            header.insertAdjacentHTML('beforeend', '<span class="working"></span>');
+    }
+
     public show(): void {
         if (this.existingElement())
             this.replaceExisting()
@@ -39,6 +47,12 @@ export class Panel extends Frame {
     public remove(): void {
         document.querySelector('#' + this.element.id)?.remove()
     }
+
+    public addWorking(working: boolean): Panel {
+        if (working)
+            this.appendChildren([new Paragraph().addClass('working')])
+        return this
+    }
 }
 
 abstract class Message extends Frame {
@@ -46,17 +60,11 @@ abstract class Message extends Frame {
         super(elements)
     }
 
-    public show(): void {
+    public add(): void {
         const count = document.querySelector('#messages')!.childElementCount
         this.id(`message-${count}`)
         this.addTo('messages')
         this.element.scrollIntoView()
-    }
-
-    public replace(): void {
-        const id = document.querySelector('#messages')!.lastElementChild!.id
-        this.id(id)
-        this.replaceExisting()
     }
 }
 
@@ -64,6 +72,12 @@ export class ComputerMessage extends Message {
     public constructor(elements: (Html|string)[]) {
         super(elements)
         this.addClass('computer')
+    }
+
+    public remove(): void {
+        const id = document.querySelector('#messages')!.lastElementChild!.id
+        this.id(id)
+        this.removeExisting()
     }
 }
 
@@ -81,9 +95,15 @@ export class HumanMessage extends Message {
         })
     }
 
-    public show(): void {
-        super.show()
+    public add(): void {
+        super.add()
         this.focusFirst()
+    }
+
+    public replace(): void {
+        const id = document.querySelector('#messages')!.lastElementChild!.id
+        this.id(id)
+        this.replaceExisting()
     }
 
     private focusFirst(): void {

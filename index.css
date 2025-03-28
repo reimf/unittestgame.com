@@ -9,7 +9,8 @@
     --panel-background: #FFFFFF;
     --focus-background: #FF6600;
     --emphasis-background: #FFFF00;
-    --shadow: #00000066;
+    --button-shadow: #00000066;
+    --line-shadow: #00000033;
 }
 
 * {
@@ -35,7 +36,7 @@ button {
     background-color: var(--input-background);
     border: none;
     border-radius: 0.5rem;
-    box-shadow: 0 0.25rem 0.5rem var(--shadow);
+    box-shadow: 0 0.25rem 0.5rem var(--button-shadow);
     color: var(--light-text);
     flex-grow: 1;
     font-family: inherit;
@@ -54,7 +55,7 @@ b { /* markdown: **bold** */
     background-color: var(--emphasis-background);
     color: var(--dark-text);
     font-weight: normal;
-    padding: 0.1rem 0;
+    padding: 0.15rem 0;
 }
 
 code {
@@ -108,7 +109,7 @@ input {
         background-color: var(--input-background);
         border: none;
         border-radius: 0.5rem;
-        box-shadow: 0 0.25rem 0.5rem var(--shadow);
+        box-shadow: 0 0.25rem 0.5rem var(--button-shadow);
         color: var(--light-text);
         font-family: inherit;
         font-size: inherit;
@@ -172,6 +173,7 @@ a, button, input, label:has(input[type="checkbox"]), label:has(input[type="radio
     display: flex;
 
     #conversation {
+        box-shadow: 0.25em 0 0.5em var(--line-shadow);
         display: flex;
         flex-direction: column;
         height: 100vh;
@@ -263,14 +265,15 @@ a, button, input, label:has(input[type="checkbox"]), label:has(input[type="radio
 .working {
     animation: threedots 1s infinite linear;
     aspect-ratio: 2;
-    --gradient: radial-gradient(circle closest-side, var(--panel-heading-background) 90%, var(--computer-message-background));
+    display: inline-block;
+    --gradient: radial-gradient(circle closest-side, var(--computer-message-background) 90%, var(--panel-heading-background));
     background: 
         no-repeat var(--gradient)   0% 50%,
         no-repeat var(--gradient)  50% 50%,
         no-repeat var(--gradient) 100% 50%;
     background-size: calc(100% / 3) 40%;
-    margin: 1rem auto;
-    width: 3rem;
+    margin: -1rem 0 0 0.5rem;
+    width: 2rem;
 }
       
 @keyframes threedots {

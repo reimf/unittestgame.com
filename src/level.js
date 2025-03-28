@@ -77,9 +77,14 @@ export class Level {
     showScorePanel(score) {
         new Panel('Score', [`${this.description()}: ${score}%`]).show();
     }
+    showUnitTestsPanel(unitTests) {
+        new Panel('Unit Tests', unitTests.length === 0
+            ? ['You have not written any unit tests yet.']
+            : unitTests.map(unitTest => unitTest.toString())).show();
+    }
     menu() {
         this.methodology.showPanelsOnMenu(this.useCase.specification(), this.currentCandidate, this.useCase.perfectCandidate, this.coveredCandidates);
-        this.methodology.showUnitTestsPanel(this.userdefinedUnitTests);
+        this.showUnitTestsPanel(this.userdefinedUnitTests);
         this.showScorePanel(this.score);
         if (this.score === this.MINIMUMSCORE)
             this.end();
@@ -94,14 +99,14 @@ export class Level {
                 new Button().onClick(() => this.submit()).title('I want to submit the unit tests').text('Submit unit tests'),
                 new Button().onClick(() => this.end()).title('I want to exit this level').text('Exit level'),
             ]),
-        ]).show();
+        ]).add();
     }
     startAddUnitTestFlow() {
         this.showConfirmStartUnitTestFlowMessage();
         this.showFormUnitTestMessage();
     }
     showConfirmStartUnitTestFlowMessage() {
-        new ComputerMessage(['Which unit test do you want to add?']).show();
+        new ComputerMessage(['Which unit test do you want to add?']).add();
     }
     showFormUnitTestMessage() {
         const parameterFields = this.useCase.parameters.map(variable => variable.toHtml());
@@ -117,7 +122,7 @@ export class Level {
             new Form()
                 .onSubmit(() => this.addUnitTest())
                 .appendChildren([...parameterFields, unitField, buttonBlock]),
-        ]).show();
+        ]).add();
     }
     showAddUnitTestMessage(unitTest) {
         new HumanMessage([
@@ -126,27 +131,28 @@ export class Level {
         ]).replace();
     }
     showConfirmCancelAddUnitTestFlowMessage() {
-        new ComputerMessage(['Ok.']).show();
+        new ComputerMessage(['Ok.']).add();
     }
     cancelAddUnitTestFlow() {
         this.showConfirmCancelAddUnitTestFlowMessage();
         this.menu();
-    }
-    working(callback) {
-        new ComputerMessage([
-            'Working...',
-            new Paragraph().addClass('working'),
-        ]).show();
-        setTimeout(callback, 3000);
     }
     addUnitTest() {
         const argumentList = this.useCase.parameters.map(parameter => parameter.value());
         const expected = this.useCase.unit.value();
         const unitTest = new UnitTest(this.useCase.parameters, argumentList, this.useCase.unit, expected);
         this.showAddUnitTestMessage(unitTest);
-        this.working(() => this.processUnitTest(unitTest));
+        this.showWorking(unitTest);
+    }
+    showWorking(unitTest) {
+        Panel.addWorkingTo('Unit Tests');
+        Panel.addWorkingTo('Current Function');
+        Panel.addWorkingTo('The Function');
+        new ComputerMessage(['I\'m working on it.']).add();
+        window.setTimeout(() => this.processUnitTest(unitTest), 3000);
     }
     processUnitTest(unitTest) {
+        new ComputerMessage([]).remove();
         const unitTestIsCorrect = new TestResult(this.useCase.perfectCandidate, unitTest).passes;
         if (unitTestIsCorrect) {
             this.userdefinedUnitTests.push(unitTest);

@@ -2,12 +2,11 @@ export class Html {
     constructor(tagName) {
         this.element = document.createElement(tagName);
     }
-    id(id) {
-        this.element.id = id
-            .toLowerCase()
-            .replace(/[^a-z0-9-]/g, ' ')
-            .trim()
-            .replace(/ +/g, '-');
+    static getIdFromTitle(title) {
+        return title.toLowerCase().replace(/[^a-z0-9-]/g, ' ').trim().replace(/ +/g, '-');
+    }
+    id(title) {
+        this.element.id = Html.getIdFromTitle(title);
         return this;
     }
     addClass(value) {

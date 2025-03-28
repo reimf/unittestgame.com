@@ -16,23 +16,15 @@ export abstract class Methodology {
     public abstract showUselessUnitTestMessage(): void
     public abstract showUsefulUnitTestMessage(): void
 
-    public showUnitTestsPanel(unitTests: UnitTest[]): void {
-        new Panel('Unit Tests',
-            unitTests.length === 0
-                ? ['You have not written any unit tests yet.']
-                : unitTests.map(unitTest => unitTest.toString())
-        ).show()
-    }
-
     public showIncorrectUnitTestMessage(penaltyIncorrectUnitTest: number): void {
-        new ComputerMessage(['I did NOT add the unit test, because it is NOT correct.']).replace()
-        new ComputerMessage([`The cost for trying to add an incorrect unit test is ${penaltyIncorrectUnitTest}%.`]).show()
+        new ComputerMessage(['I did NOT add the unit test, because it is NOT correct.']).add()
+        new ComputerMessage([`The cost for trying to add an incorrect unit test is ${penaltyIncorrectUnitTest}%.`]).add()
     }
 
     public showMinimumScoreEndMessage(score: number): void {
         new ComputerMessage([
             'You have to retry this level, ' +
             `because your score dropped to ${score}%.`,
-        ]).show()
+        ]).add()
     }
 }

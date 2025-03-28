@@ -5,12 +5,12 @@ export abstract class Html {
         this.element = document.createElement(tagName)
     }
 
-    protected id(id: string): Html {
-        this.element.id = id
-            .toLowerCase()
-            .replace(/[^a-z0-9-]/g, ' ')
-            .trim()
-            .replace(/ +/g, '-')
+    static getIdFromTitle(title: string): string {
+        return title.toLowerCase().replace(/[^a-z0-9-]/g, ' ').trim().replace(/ +/g, '-')
+    }
+
+    protected id(title: string): Html {
+        this.element.id = Html.getIdFromTitle(title)
         return this
     }
 

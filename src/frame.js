@@ -11,6 +11,9 @@ class Frame extends Section {
     replaceExisting() {
         this.existingElement().replaceWith(this.element);
     }
+    removeExisting() {
+        this.existingElement().remove();
+    }
     addTo(parentId) {
         document.querySelector('#' + parentId).appendChild(this.element);
     }
@@ -20,6 +23,11 @@ export class Panel extends Frame {
         super(elements);
         this.prependChild(new Header().text(title));
         this.id(title);
+    }
+    static addWorkingTo(title) {
+        const header = document.querySelector(`#${Html.getIdFromTitle(title)} > header`);
+        if (header)
+            header.insertAdjacentHTML('beforeend', '<span class="working"></span>');
     }
     show() {
         if (this.existingElement())
@@ -31,27 +39,32 @@ export class Panel extends Frame {
         var _a;
         (_a = document.querySelector('#' + this.element.id)) === null || _a === void 0 ? void 0 : _a.remove();
     }
+    addWorking(working) {
+        if (working)
+            this.appendChildren([new Paragraph().addClass('working')]);
+        return this;
+    }
 }
 class Message extends Frame {
     constructor(elements) {
         super(elements);
     }
-    show() {
+    add() {
         const count = document.querySelector('#messages').childElementCount;
         this.id(`message-${count}`);
         this.addTo('messages');
         this.element.scrollIntoView();
-    }
-    replace() {
-        const id = document.querySelector('#messages').lastElementChild.id;
-        this.id(id);
-        this.replaceExisting();
     }
 }
 export class ComputerMessage extends Message {
     constructor(elements) {
         super(elements);
         this.addClass('computer');
+    }
+    remove() {
+        const id = document.querySelector('#messages').lastElementChild.id;
+        this.id(id);
+        this.removeExisting();
     }
 }
 export class HumanMessage extends Message {
@@ -67,9 +80,14 @@ export class HumanMessage extends Message {
             }
         });
     }
-    show() {
-        super.show();
+    add() {
+        super.add();
         this.focusFirst();
+    }
+    replace() {
+        const id = document.querySelector('#messages').lastElementChild.id;
+        this.id(id);
+        this.replaceExisting();
     }
     focusFirst() {
         const focusables = this.element.querySelectorAll('button, input');
