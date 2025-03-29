@@ -16,7 +16,7 @@ export class MutationTesting extends Methodology {
     }
 
     public showWelcomeMessage(): void {
-        new ComputerMessage(['You write *Unit Tests* that pass *The Function*.']).add()
+        new ComputerMessage(['You read *The Function* and write *Unit Tests* that pass.']).add()
         new ComputerMessage(['After adding a unit test, I show the line coverage of *The Function*.']).add()
         new ComputerMessage(['When you think *The Function* is fully tested, you submit the *Unit Tests*.']).add()
     }
@@ -66,6 +66,6 @@ export class MutationTesting extends Methodology {
 
     public showSuccessfulEndMessage(score: number): void {
         new ComputerMessage(['I checked *The Function* and it is indeed fully tested.']).add()
-        new ComputerMessage([`🎉 Your final *Score* is ${score}%.`]).add()
+        new ComputerMessage([`Your final *Score* is ${score}%.`]).add()
     }
 }

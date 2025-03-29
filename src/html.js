@@ -47,6 +47,9 @@ export class Html {
             this.element.appendChild(child.element);
         return this;
     }
+    appendSpinner() {
+        return this.appendChild(new Span().addClass('working'));
+    }
     on(eventType, callback) {
         this.element.addEventListener(eventType, callback);
         return this;
@@ -129,5 +132,10 @@ export class Div extends Html {
 export class Span extends Html {
     constructor() {
         super(document.createElement('span'));
+    }
+}
+export class Italic extends Html {
+    constructor() {
+        super(document.createElement('i'));
     }
 }

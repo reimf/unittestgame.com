@@ -265,15 +265,14 @@ a, button, input, label:has(input[type="checkbox"]), label:has(input[type="radio
 .working {
     animation: threedots 1s infinite linear;
     aspect-ratio: 2;
-    display: inline-block;
     --gradient: radial-gradient(circle closest-side, var(--computer-message-background) 90%, var(--panel-heading-background));
     background: 
         no-repeat var(--gradient)   0% 50%,
         no-repeat var(--gradient)  50% 50%,
         no-repeat var(--gradient) 100% 50%;
-    background-size: calc(100% / 3) 40%;
-    margin: -1rem 0 0 0.5rem;
-    width: 2rem;
+    background-size: 30% 40%;
+    display: inline-block;
+    width: 1.5rem;
 }
       
 @keyframes threedots {

@@ -48,20 +48,27 @@ export class Main {
     public start(): void {
         this.showWelcomeMessage()
         if (this.getLevelsWithHighScore().length === 0)
-            this.showQuestionSidebar()
+            this.showQuestionSidebar(() => this.sidebar())
         else
             this.sidebar()
     }
 
     private sidebar(): void {
-        this.showSidebar()
+        this.showUnittestgamePanel()
+        for (const methodology of this.methodologies)
+            methodology.showBasicDefinition()
         this.continue()
     }
 
     private continue(): void {
         this.showHighScoresPanel()
         this.showInvitationMessage()
-        this.showNextLevel()
+        this.showNextLevel((level: Level) => this.play(level))
+    }
+
+    private play(level: Level): void {
+        Panel.removeAll()
+        level.play(() => this.continue())
     }
 
     private getLevelsWithHighScore(): Level[] {
@@ -73,18 +80,12 @@ export class Main {
         new ComputerMessage(['I am an AI bot specialized in *Test-Driven Development* and *Mutation Testing*.']).add()
     }
 
-    private showQuestionSidebar(): void {
+    private showQuestionSidebar(callback: () => void): void {
         new HumanMessage([
             new Paragraph().appendChild(
-                new Button().onClick(() => this.sidebar()).text('I want a sidebar for terms with a purple background'),
+                new Button().onClick(() => callback()).text('I want a sidebar for terms with a purple background'),
             ),
         ]).add()
-    }
-
-    private showSidebar(): void {
-        this.showUnittestgamePanel()
-        for (const methodology of this.methodologies)
-            methodology.showBasicDefinition()
     }
 
     private showUnittestgamePanel(): void {
@@ -113,23 +114,14 @@ export class Main {
         }
     }
 
-    private showNextLevel(): void {
+    private showNextLevel(callback: (level: Level) => void): void {
         const nextLevel = this.levels.find(level => level.getHighScore(localStorage) === 0)
         new HumanMessage([
             new Paragraph().appendChild(
                 nextLevel
-                ? new Button().onClick(() => this.playNextLevel(nextLevel)).text(`I want to play ${this.levelDescription(nextLevel)}`)
+                ? new Button().onClick(() => callback(nextLevel)).text(`I want to play ${this.levelDescription(nextLevel)}`)
                 : new Button().onClick(() => window.close()).text('Quit'),
             ),
         ]).add()
-    }
-
-    private removeAllPanels(): void {
-        document.querySelectorAll('#panels > section').forEach(panel => panel.remove())
-    }
-
-    private playNextLevel(level: Level): void {
-        this.removeAllPanels()
-        level.play(() => this.continue())
     }
 }

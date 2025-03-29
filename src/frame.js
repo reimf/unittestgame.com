@@ -1,4 +1,4 @@
-import { Div, Html, Header, Paragraph, Section, Span } from './html.js';
+import { Italic, Div, Html, Header, Paragraph, Section } from './html.js';
 class Frame extends Section {
     constructor(elements) {
         super();
@@ -24,10 +24,14 @@ export class Panel extends Frame {
         this.prependChild(new Header().text(title));
         this.id(title);
     }
-    static addWorkingTo(title) {
+    static appendWorkingTo(title) {
         const header = document.querySelector(`#${Html.getIdFromTitle(title)} > header`);
         if (header)
-            new Html(header).appendChild(new Span().addClass('working'));
+            new Html(header).appendSpinner();
+    }
+    static removeAll() {
+        var _a;
+        (_a = document.querySelector('#panels')) === null || _a === void 0 ? void 0 : _a.replaceChildren();
     }
     show() {
         if (this.existingElement())
@@ -56,10 +60,17 @@ export class ComputerMessage extends Message {
         super(elements);
         this.addClass('computer');
     }
-    remove() {
+    appendWorking() {
+        const paragraph = new Html(this.element.querySelector('p'));
+        const italic = new Italic().appendSpinner();
+        paragraph.appendChild(italic);
+        return this;
+    }
+    static removeLast() {
         const id = document.querySelector('#messages').lastElementChild.id;
-        this.id(id);
-        this.removeExisting();
+        const lastComputerMessage = new ComputerMessage([]);
+        lastComputerMessage.id(id);
+        lastComputerMessage.removeExisting();
     }
 }
 export class HumanMessage extends Message {

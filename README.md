@@ -36,3 +36,106 @@ The goal: **Test a function thoroughly.**
 
 Feedback? Errors? Improvements?
 Mail me at <feedback@unittestgame.com>.
+
+# Flowcharts
+
+## Main
+
+```mermaid
+flowchart TD
+    subgraph Main.start
+        Main.showWelcomeMessage -- has no level with high score --> Main.showQuestionSidebar
+    end
+    Main.showQuestionSidebar --> Main.sidebar
+    Main.showWelcomeMessage -- has level with high score --> Main.sidebar
+
+    subgraph Main.sidebar
+        Main.showUnittestgamePanel --> Methodology.showBasicDefinition
+    end
+    Methodology.showBasicDefinition --> Main.continue
+
+    subgraph Main.continue
+        Main.showHighScoresPanel --> Main.showInvitationMessage
+        Main.showInvitationMessage --> Main.showNextLevel
+    end
+    Main.showNextLevel -- has next level --> Main.play
+    Main.showNextLevel -- has no next level --> window.close
+
+    subgraph Main.play
+        Panel.removeAll --> Level.play
+    end
+    Level.play --> Main.continue
+```
+
+## Level
+
+```mermaid
+flowchart TD
+    subgraph Level.play
+        Level.showWelcomeMessage
+    end
+    Level.showWelcomeMessage --> Level.menu
+
+    subgraph Level.menu
+         Methodology.showPanelsOnMenu --> Level.showUnitTestsPanel
+         Level.showUnitTestsPanel --> Level.showScorePanel
+         Level.showScorePanel -- score > 0 --> Level.showMenuMessage
+    end
+    Level.showScorePanel -- score == 0 --> Level.end
+    Level.showMenuMessage --> Level.startAddUnitTestFlow
+    Level.showMenuMessage --> Level.showHint
+    Level.showMenuMessage --> Level.submit
+    Level.showMenuMessage --> Level.end
+
+    subgraph Level.startAddUnitTestFlow
+         Level.showConfirmStartUnitTestFlowMessage --> Level.showFormUnitTestMessage
+    end
+    Level.showFormUnitTestMessage --> Level.cancelAddUnitTestFlow
+    Level.showFormUnitTestMessage --> Level.addUnitTest
+
+    subgraph Level.cancelAddUnitTestFlow
+         Level.showConfirmCancelAddUnitTestFlowMessage
+    end
+    Level.showConfirmCancelAddUnitTestFlowMessage --> Level.menu
+
+    subgraph Level.addUnitTest
+         Level.showAddUnitTestMessage --> Level.showWorking
+    end
+         Level.showWorking --> Level.processUnitTest
+
+    subgraph Level.processUnitTest
+         X1@{ shape: circle, label: "Start" }
+         X1 -- unit test is correct and useless --> Methodology.showUselessUnitTestMessage
+         X1 -- unit test is correct and useful --> Methodology.showUsefulUnitTestMessage
+         X1 -- unit test is not correct --> Methodology.showIncorrectUnitTestMessage
+    end
+    Methodology.showUselessUnitTestMessage --> Level.menu
+    Methodology.showUsefulUnitTestMessage --> Level.menu
+    Methodology.showIncorrectUnitTestMessage --> Level.menu
+
+    subgraph Level.showHint
+         X2@{ shape: circle, label: "Start" }
+         X2 -- has hint --> Methodology.showHintMessage
+         X2 -- has no hint --> Methodology.showNoHintMessage
+    end
+    Methodology.showHintMessage --> Level.menu
+    Methodology.showNoHintMessage --> Level.menu
+
+    subgraph Level.submit
+         X3@{ shape: circle, label: "Start" }
+         X3 -- not ok --> Methodology.showBugFoundMessage
+    end
+    X3 -- ok --> Level.end
+    Methodology.showBugFoundMessage --> Level.menu
+
+    subgraph Level.end
+         X4@{ shape: circle, label: "Start" }
+         X4 -- score == 0 --> Methodology.showMinimumScoreEndMessage
+         X4 -- not ok --> Level.showScorePanel2
+         Level.showScorePanel2 --> Methodology.showUnsuccessfulEndMessage
+         X4 -- score > 0 --> Methodology.showSuccessfulEndMessage
+    end
+    Methodology.showMinimumScoreEndMessage --> Main.continue
+    Methodology.showUnsuccessfulEndMessage --> Main.continue
+    Methodology.showSuccessfulEndMessage --> Main.continue
+```

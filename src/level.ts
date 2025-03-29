@@ -176,15 +176,17 @@ export class Level {
     }
 
     private showWorking(unitTest: UnitTest): void {
-        Panel.addWorkingTo('Unit Tests')
-        Panel.addWorkingTo('Current Function')
-        Panel.addWorkingTo('The Function')
-        new ComputerMessage(['I\'m working on it.']).add()
-        window.setTimeout(() => this.processUnitTest(unitTest), 3000)
+        Panel.appendWorkingTo('Unit Tests')
+        Panel.appendWorkingTo('Current Function')
+        Panel.appendWorkingTo('The Function')
+        new ComputerMessage(['Processing your unit test... ']).appendWorking().add()
+        window.setTimeout(() => {
+            ComputerMessage.removeLast()
+            this.processUnitTest(unitTest)
+        }, 3000)
     }
 
     private processUnitTest(unitTest: UnitTest): void {
-        new ComputerMessage([]).remove()
         const unitTestIsCorrect = new TestResult(this.useCase.perfectCandidate, unitTest).passes
         if (unitTestIsCorrect) {
             this.userdefinedUnitTests.push(unitTest)

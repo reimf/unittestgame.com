@@ -58,6 +58,10 @@ export class Html {
         return this
     }
 
+    public appendSpinner(): Html {
+        return this.appendChild(new Span().addClass('working'))
+    }
+
     protected on(eventType: string, callback: (event: Event) => void): Html {
         this.element.addEventListener(eventType, callback)
         return this
@@ -158,5 +162,11 @@ export class Div extends Html {
 export class Span extends Html {
     public constructor() {
         super(document.createElement('span'))
+    }
+}
+
+export class Italic extends Html {
+    public constructor() {
+        super(document.createElement('i'))
     }
 }

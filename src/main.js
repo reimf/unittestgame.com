@@ -46,18 +46,24 @@ export class Main {
     start() {
         this.showWelcomeMessage();
         if (this.getLevelsWithHighScore().length === 0)
-            this.showQuestionSidebar();
+            this.showQuestionSidebar(() => this.sidebar());
         else
             this.sidebar();
     }
     sidebar() {
-        this.showSidebar();
+        this.showUnittestgamePanel();
+        for (const methodology of this.methodologies)
+            methodology.showBasicDefinition();
         this.continue();
     }
     continue() {
         this.showHighScoresPanel();
         this.showInvitationMessage();
-        this.showNextLevel();
+        this.showNextLevel((level) => this.play(level));
+    }
+    play(level) {
+        Panel.removeAll();
+        level.play(() => this.continue());
     }
     getLevelsWithHighScore() {
         return this.levels.filter(level => level.getHighScore(localStorage) > 0);
@@ -66,15 +72,10 @@ export class Main {
         new ComputerMessage(['Welcome to *UnitTestGame*!']).add();
         new ComputerMessage(['I am an AI bot specialized in *Test-Driven Development* and *Mutation Testing*.']).add();
     }
-    showQuestionSidebar() {
+    showQuestionSidebar(callback) {
         new HumanMessage([
-            new Paragraph().appendChild(new Button().onClick(() => this.sidebar()).text('I want a sidebar for terms with a purple background')),
+            new Paragraph().appendChild(new Button().onClick(() => callback()).text('I want a sidebar for terms with a purple background')),
         ]).add();
-    }
-    showSidebar() {
-        this.showUnittestgamePanel();
-        for (const methodology of this.methodologies)
-            methodology.showBasicDefinition();
     }
     showUnittestgamePanel() {
         const methodologies = this.methodologies.map(methodology => methodology.name()).join(' and ');
@@ -96,19 +97,12 @@ export class Main {
             new Panel('High Scores', levels.map(level => `${this.levelDescription(level)}: ${level.getHighScore(localStorage)}%`)).show();
         }
     }
-    showNextLevel() {
+    showNextLevel(callback) {
         const nextLevel = this.levels.find(level => level.getHighScore(localStorage) === 0);
         new HumanMessage([
             new Paragraph().appendChild(nextLevel
-                ? new Button().onClick(() => this.playNextLevel(nextLevel)).text(`I want to play ${this.levelDescription(nextLevel)}`)
+                ? new Button().onClick(() => callback(nextLevel)).text(`I want to play ${this.levelDescription(nextLevel)}`)
                 : new Button().onClick(() => window.close()).text('Quit')),
         ]).add();
-    }
-    removeAllPanels() {
-        document.querySelectorAll('#panels > section').forEach(panel => panel.remove());
-    }
-    playNextLevel(level) {
-        this.removeAllPanels();
-        level.play(() => this.continue());
     }
 }

@@ -57,6 +57,6 @@ export class TestDrivenDevelopment extends Methodology {
     }
     showSuccessfulEndMessage(score) {
         new ComputerMessage(['I checked the *Current Function* and it is indeed according to the *Specification*.']).add();
-        new ComputerMessage([`🎉 Your final *Score* is ${score}%.`]).add();
+        new ComputerMessage([`Your final *Score* is ${score}%.`]).add();
     }
 }

@@ -1,4 +1,4 @@
-import { Div, Html, Header, Paragraph, Section, Span } from './html.js'
+import { Italic, Div, Html, Header, Paragraph, Section, Span } from './html.js'
 
 abstract class Frame extends Section {
     protected constructor(elements: (Html|string)[]) {
@@ -31,10 +31,14 @@ export class Panel extends Frame {
         this.id(title)
     }
 
-    public static addWorkingTo(title: string): void {
+    public static appendWorkingTo(title: string): void {
         const header = document.querySelector(`#${Html.getIdFromTitle(title)} > header`)
         if (header)
-            new Html(header as HTMLElement).appendChild(new Span().addClass('working'))
+            new Html(header as HTMLElement).appendSpinner()
+    }
+
+    public static removeAll(): void {
+        document.querySelector('#panels')?.replaceChildren()
     }
 
     public show(): void {
@@ -68,10 +72,18 @@ export class ComputerMessage extends Message {
         this.addClass('computer')
     }
 
-    public remove(): void {
+    public appendWorking(): ComputerMessage {
+        const paragraph = new Html(this.element.querySelector('p') as HTMLElement)
+        const italic = new Italic().appendSpinner()
+        paragraph.appendChild(italic)
+        return this
+    }
+
+    public static removeLast(): void {
         const id = document.querySelector('#messages')!.lastElementChild!.id
-        this.id(id)
-        this.removeExisting()
+        const lastComputerMessage = new ComputerMessage([])
+        lastComputerMessage.id(id)
+        lastComputerMessage.removeExisting()
     }
 }
 
