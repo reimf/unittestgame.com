@@ -48,7 +48,7 @@ export class Html {
         return this;
     }
     appendSpinner() {
-        return this.appendChild(new Span().addClass('working'));
+        return this.appendChild(new Span().addClass('processing'));
     }
     on(eventType, callback) {
         this.element.addEventListener(eventType, callback);

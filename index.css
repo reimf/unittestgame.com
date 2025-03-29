@@ -262,7 +262,7 @@ a, button, input, label:has(input[type="checkbox"]), label:has(input[type="radio
     }
 }
 
-.working {
+.processing {
     animation: threedots 1s infinite linear;
     aspect-ratio: 2;
     --gradient: radial-gradient(circle closest-side, var(--computer-message-background) 90%, var(--panel-heading-background));

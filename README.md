@@ -84,26 +84,26 @@ flowchart TD
     Level.showScorePanel -- score == 0 --> Level.end
     Level.showMenuMessage --> Level.startAddUnitTestFlow
     Level.showMenuMessage --> Level.showHint
-    Level.showMenuMessage --> Level.submit
+    Level.showMenuMessage --> Level.prepareSubmitUnitTests
     Level.showMenuMessage --> Level.end
 
     subgraph Level.startAddUnitTestFlow
          Level.showConfirmStartUnitTestFlowMessage --> Level.showFormUnitTestMessage
     end
     Level.showFormUnitTestMessage --> Level.cancelAddUnitTestFlow
-    Level.showFormUnitTestMessage --> Level.addUnitTest
+    Level.showFormUnitTestMessage --> Level.prepareAddUnitTest
 
     subgraph Level.cancelAddUnitTestFlow
          Level.showConfirmCancelAddUnitTestFlowMessage
     end
     Level.showConfirmCancelAddUnitTestFlowMessage --> Level.menu
 
-    subgraph Level.addUnitTest
-         Level.showAddUnitTestMessage --> Level.showWorking
+    subgraph Level.prepareAddUnitTest
+         Level.showAddUnitTestMessage --> Level.showProcessing
     end
-         Level.showWorking --> Level.processUnitTest
+         Level.showProcessing --> Level.addUnitTest
 
-    subgraph Level.processUnitTest
+    subgraph Level.addUnitTest
          X1@{ shape: circle, label: "Start" }
          X1 -- unit test is correct and useless --> Methodology.showUselessUnitTestMessage
          X1 -- unit test is correct and useful --> Methodology.showUsefulUnitTestMessage
@@ -121,11 +121,16 @@ flowchart TD
     Methodology.showHintMessage --> Level.menu
     Methodology.showNoHintMessage --> Level.menu
 
-    subgraph Level.submit
-         X3@{ shape: circle, label: "Start" }
-         X3 -- not ok --> Methodology.showBugFoundMessage
+    subgraph Level.prepareSubmitUnitTests
+         X3@{ shape: rect, label: "Level.showProcessing" }
     end
-    X3 -- ok --> Level.end
+    X3 --> Level.submitUnitTests
+
+    subgraph Level.submitUnitTests
+         X4@{ shape: circle, label: "Start" }
+         X4 -- not ok --> Methodology.showBugFoundMessage
+    end
+    X4 -- ok --> Level.end
     Methodology.showBugFoundMessage --> Level.menu
 
     subgraph Level.end

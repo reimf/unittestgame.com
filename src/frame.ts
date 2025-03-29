@@ -31,7 +31,7 @@ export class Panel extends Frame {
         this.id(title)
     }
 
-    public static appendWorkingTo(title: string): void {
+    public static appendProcessingTo(title: string): void {
         const header = document.querySelector(`#${Html.getIdFromTitle(title)} > header`)
         if (header)
             new Html(header as HTMLElement).appendSpinner()
@@ -72,7 +72,7 @@ export class ComputerMessage extends Message {
         this.addClass('computer')
     }
 
-    public appendWorking(): ComputerMessage {
+    public appendProcessing(): ComputerMessage {
         const paragraph = new Html(this.element.querySelector('p') as HTMLElement)
         const italic = new Italic().appendSpinner()
         paragraph.appendChild(italic)

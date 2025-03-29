@@ -24,7 +24,7 @@ export class Panel extends Frame {
         this.prependChild(new Header().text(title));
         this.id(title);
     }
-    static appendWorkingTo(title) {
+    static appendProcessingTo(title) {
         const header = document.querySelector(`#${Html.getIdFromTitle(title)} > header`);
         if (header)
             new Html(header).appendSpinner();
@@ -60,7 +60,7 @@ export class ComputerMessage extends Message {
         super(elements);
         this.addClass('computer');
     }
-    appendWorking() {
+    appendProcessing() {
         const paragraph = new Html(this.element.querySelector('p'));
         const italic = new Italic().appendSpinner();
         paragraph.appendChild(italic);

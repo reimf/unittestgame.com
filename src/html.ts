@@ -59,7 +59,7 @@ export class Html {
     }
 
     public appendSpinner(): Html {
-        return this.appendChild(new Span().addClass('working'))
+        return this.appendChild(new Span().addClass('processing'))
     }
 
     protected on(eventType: string, callback: (event: Event) => void): Html {

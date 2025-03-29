@@ -83,20 +83,23 @@ export class Level {
             : unitTests.map(unitTest => unitTest.toString())).show();
     }
     menu() {
-        this.methodology.showPanelsOnMenu(this.useCase.specification(), this.currentCandidate, this.useCase.perfectCandidate, this.coveredCandidates);
-        this.showUnitTestsPanel(this.userdefinedUnitTests);
-        this.showScorePanel(this.score);
+        this.showPanels();
         if (this.score === this.MINIMUMSCORE)
             this.end();
         else
             this.showMenuMessage();
+    }
+    showPanels() {
+        this.methodology.showPanelsOnMenu(this.useCase.specification(), this.currentCandidate, this.useCase.perfectCandidate, this.coveredCandidates);
+        this.showUnitTestsPanel(this.userdefinedUnitTests);
+        this.showScorePanel(this.score);
     }
     showMenuMessage() {
         new HumanMessage([
             new Paragraph().appendChildren([
                 new Button().onClick(() => this.startAddUnitTestFlow()).title('I want to add a unit test').text('Add unit test'),
                 new Button().onClick(() => this.showHint()).title('I want to see a hint').text('Show hint'),
-                new Button().onClick(() => this.submit()).title('I want to submit the unit tests').text('Submit unit tests'),
+                new Button().onClick(() => this.prepareSubmitUnitTests()).title('I want to submit the unit tests').text('Submit unit tests'),
                 new Button().onClick(() => this.end()).title('I want to exit this level').text('Exit level'),
             ]),
         ]).add();
@@ -120,7 +123,7 @@ export class Level {
         const buttonBlock = new Paragraph().appendChildren([submitButton, cancelButton]);
         new HumanMessage([
             new Form()
-                .onSubmit(() => this.addUnitTest())
+                .onSubmit(() => this.prepareAddUnitTest())
                 .appendChildren([...parameterFields, unitField, buttonBlock]),
         ]).add();
     }
@@ -137,24 +140,24 @@ export class Level {
         this.showConfirmCancelAddUnitTestFlowMessage();
         this.menu();
     }
-    addUnitTest() {
+    prepareAddUnitTest() {
         const argumentList = this.useCase.parameters.map(parameter => parameter.value());
         const expected = this.useCase.unit.value();
         const unitTest = new UnitTest(this.useCase.parameters, argumentList, this.useCase.unit, expected);
         this.showAddUnitTestMessage(unitTest);
-        this.showWorking(unitTest);
+        this.showProcessing(() => this.addUnitTest(unitTest));
     }
-    showWorking(unitTest) {
-        Panel.appendWorkingTo('Unit Tests');
-        Panel.appendWorkingTo('Current Function');
-        Panel.appendWorkingTo('The Function');
-        new ComputerMessage(['Processing your unit test... ']).appendWorking().add();
+    showProcessing(callback) {
+        Panel.appendProcessingTo('Unit Tests');
+        Panel.appendProcessingTo('Current Function');
+        Panel.appendProcessingTo('The Function');
+        new ComputerMessage(['Processing... ']).appendProcessing().add();
         window.setTimeout(() => {
             ComputerMessage.removeLast();
-            this.processUnitTest(unitTest);
+            callback();
         }, 3000);
     }
-    processUnitTest(unitTest) {
+    addUnitTest(unitTest) {
         const unitTestIsCorrect = new TestResult(this.useCase.perfectCandidate, unitTest).passes;
         if (unitTestIsCorrect) {
             this.userdefinedUnitTests.push(unitTest);
@@ -181,7 +184,10 @@ export class Level {
         this.subtractPenalty(this.PENALTYHINT);
         this.menu();
     }
-    submit() {
+    prepareSubmitUnitTests() {
+        this.showProcessing(() => this.submitUnitTests());
+    }
+    submitUnitTests() {
         if (this.failingTestResult) {
             this.methodology.showBugFoundMessage(this.currentCandidate, this.failingTestResult, this.PENALTYSUBMITWITHBUG);
             this.subtractPenalty(this.PENALTYSUBMITWITHBUG);
@@ -195,11 +201,11 @@ export class Level {
             this.methodology.showMinimumScoreEndMessage(this.score);
         else if (this.failingTestResult) {
             this.score = this.MINIMUMSCORE;
-            this.showScorePanel(this.score);
             this.methodology.showUnsuccessfulEndMessage(this.score);
         }
         else
             this.methodology.showSuccessfulEndMessage(this.score);
+        this.showPanels();
         this.saveScore(localStorage, this.score);
         this.callback();
     }
