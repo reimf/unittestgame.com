@@ -1,6 +1,6 @@
 import { Candidate } from './candidate.js';
 import { HumanMessage, ComputerMessage, Panel } from './frame.js';
-import { Button, Form, Input, Paragraph } from './html.js';
+import { Button, Div, Form, Input, Paragraph } from './html.js';
 import { Random } from './random.js';
 import { TestResult } from './test_result.js';
 import { UnitTest } from './unit_test.js';
@@ -16,6 +16,8 @@ export class Level {
         this.currentCandidate = new Candidate([], []);
         this.failingTestResult = undefined;
         this.score = this.PERFECTSCORE;
+        this.newUnitTest = undefined;
+        this.previousCandidate = undefined;
         this.methodology = methodology;
         this.useCase = useCase;
     }
@@ -74,13 +76,14 @@ export class Level {
             return Random.elementFrom(failingMinimalUnitTests);
         return undefined;
     }
-    showScorePanel(score) {
-        new Panel('Score', [`${this.description()}: ${score}%`]).show();
+    showScorePanel() {
+        new Panel('Score', [`${this.description()}: ${this.score}%`]).show();
     }
-    showUnitTestsPanel(unitTests) {
-        new Panel('Unit Tests', unitTests.length === 0
+    showUnitTestsPanel() {
+        new Panel('Unit Tests', this.userdefinedUnitTests.length === 0
             ? ['You have not written any unit tests yet.']
-            : unitTests.map(unitTest => unitTest.toString())).show();
+            : this.userdefinedUnitTests.map(unitTest => new Div().text(unitTest.toString()).addClass('new', unitTest === this.newUnitTest))).show();
+        this.newUnitTest = undefined;
     }
     menu() {
         this.showPanels();
@@ -90,9 +93,9 @@ export class Level {
             this.showMenuMessage();
     }
     showPanels() {
-        this.methodology.showPanelsOnMenu(this.useCase.specification(), this.currentCandidate, this.useCase.perfectCandidate, this.coveredCandidates);
-        this.showUnitTestsPanel(this.userdefinedUnitTests);
-        this.showScorePanel(this.score);
+        this.methodology.showPanelsOnMenu(this.useCase.specification(), this.currentCandidate, this.previousCandidate, this.useCase.perfectCandidate, this.coveredCandidates);
+        this.showUnitTestsPanel();
+        this.showScorePanel();
     }
     showMenuMessage() {
         new HumanMessage([
@@ -155,17 +158,19 @@ export class Level {
         window.setTimeout(() => {
             ComputerMessage.removeLast();
             callback();
-        }, 3000);
+        }, Math.random() == 0 ? 0 : 1000 + this.userdefinedUnitTests.length * 500 * Math.random());
     }
     addUnitTest(unitTest) {
         const unitTestIsCorrect = new TestResult(this.useCase.perfectCandidate, unitTest).passes;
         if (unitTestIsCorrect) {
+            this.newUnitTest = unitTest;
             this.userdefinedUnitTests.push(unitTest);
             this.coveredCandidates.push(this.findCoveredCandidate(unitTest));
             if (new TestResult(this.currentCandidate, unitTest).passes)
                 this.methodology.showUselessUnitTestMessage();
             else {
                 this.methodology.showUsefulUnitTestMessage();
+                this.previousCandidate = this.currentCandidate;
                 this.currentCandidate = this.findSimplestPassingCandidate();
                 this.failingTestResult = this.findFailingTestResult();
             }

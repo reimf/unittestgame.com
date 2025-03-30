@@ -9,8 +9,9 @@ export class Html {
         this.element.id = Html.getIdFromTitle(title);
         return this;
     }
-    addClass(value) {
-        this.element.classList.add(value);
+    addClass(value, condition = true) {
+        if (condition)
+            this.element.classList.add(value);
         return this;
     }
     markdown(markdown) {

@@ -3,7 +3,7 @@ export class FakeMethodology extends Methodology {
     name() { return 'Fake Methodology'; }
     showBasicDefinition() { }
     showWelcomeMessage() { }
-    showPanelsOnMenu(_specification, _currentCandidate, _perfectCandidate, _coveredCandidates) { }
+    showPanelsOnMenu(_specification, _currentCandidate, _previousCandidate, _perfectCandidate, _coveredCandidates) { }
     showUselessUnitTestMessage() { }
     showUsefulUnitTestMessage() { }
     showHintMessage(_currentCandidate, _failingTestResult, _penaltyHint) { }

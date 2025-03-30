@@ -1,5 +1,3 @@
 "use strict";
-// make tests predictable
+// make tests predictable and faster (resulting in setTimeout(functionRef, 0))
 Math.random = () => 0;
-// make tests faster
-window.setTimeout = ((fn, _delay) => fn());

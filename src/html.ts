@@ -14,8 +14,9 @@ export class Html {
         return this
     }
 
-    public addClass(value: string): Html {
-        this.element.classList.add(value)
+    public addClass(value: string, condition: boolean = true): Html {
+        if (condition)
+            this.element.classList.add(value)
         return this
     }
 

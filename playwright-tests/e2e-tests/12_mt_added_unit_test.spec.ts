@@ -30,7 +30,7 @@ test.describe('mt added unit test', () => {
     test('has at least 3 covered lines in the function panel', async({ page }) => {
         await page.waitForFunction(() => !document.querySelector('.working'))
         const theFunctionPanel = page.getByTestId('the-function')
-        const covered = theFunctionPanel.locator('b')
+        const covered = theFunctionPanel.locator('div.covered')
         expect(await covered.count()).toBeGreaterThanOrEqual(3)
     })
 

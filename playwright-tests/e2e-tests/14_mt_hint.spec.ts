@@ -11,7 +11,8 @@ test.describe('hint unit test', () => {
 
     test('has hint function message', async({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('function isEven(number) {\n  return true\n}')
+        const codeLines = messages.locator('code > div')  
+        await expect(codeLines).toContainText(['function isEven(number) {', '  return true', '}'])
     })
 
     test('has action menu message', async({ page }) => {

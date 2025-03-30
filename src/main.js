@@ -1,5 +1,5 @@
 import { Panel, ComputerMessage, HumanMessage } from './frame.js';
-import { Button, Paragraph } from './html.js';
+import { Button, Div, Paragraph } from './html.js';
 import { Level } from './level.js';
 import { MutationTesting } from './methodology_mutation_testing.js';
 import { TestDrivenDevelopment } from './methodology_test_driven_development.js';
@@ -94,7 +94,7 @@ export class Main {
     showHighScoresPanel() {
         const levels = this.getLevelsWithHighScore();
         if (levels.length > 0) {
-            new Panel('High Scores', levels.map(level => `${this.levelDescription(level)}: ${level.getHighScore(localStorage)}%`)).show();
+            new Panel('High Scores', levels.map(level => new Div().text(`${this.levelDescription(level)}: ${level.getHighScore(localStorage)}%`))).show();
         }
     }
     showNextLevel(callback) {

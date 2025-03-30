@@ -1,4 +1,4 @@
-import { Code } from './html.js';
+import { Code, Div, Span } from './html.js';
 import { TestResult } from './test_result.js';
 export class Candidate {
     constructor(lines, indices) {
@@ -51,18 +51,42 @@ export class Candidate {
         return this.lines.join('\n');
     }
     toHtml() {
-        return this.toHtmlWithCoverage([]);
+        return new Code().appendChildren(this.lines.map(line => new Div().text(line)));
+    }
+    toHtmlWithPrevious(previousCandidate) {
+        if (!previousCandidate)
+            return this.toHtml();
+        const divs = [new Div().text(this.lines[0])];
+        let currentLine = 1;
+        let previousLine = 1;
+        for (let i = 0; i < this.indices.length; i++) {
+            const currentIndex = this.indices[i];
+            const previousIndex = previousCandidate.indices[i];
+            if (currentIndex === 0 && previousIndex === 0)
+                continue;
+            else if (currentIndex === previousIndex)
+                divs.push(new Div().text(this.lines[currentLine]));
+            else if (currentIndex === 0)
+                divs.push(new Div().text('').appendChild(new Span().text(`// was: ${previousCandidate.lines[previousLine].trim()}`).addClass('comment')).addClass('changed'));
+            else if (previousIndex === 0)
+                divs.push(new Div().text(this.lines[currentLine]).appendChild(new Span().text('// new').addClass('comment')).addClass('changed'));
+            else
+                divs.push(new Div().text(this.lines[currentLine]).appendChild(new Span().text(`// was: ${previousCandidate.lines[previousLine].trim()}`).addClass('comment')).addClass('changed'));
+            if (currentIndex > 0)
+                currentLine++;
+            if (previousIndex > 0)
+                previousLine++;
+        }
+        divs.push(new Div().text(this.lines[currentLine]));
+        return new Code().appendChildren(divs);
     }
     toHtmlWithCoverage(coveredCandidates) {
         if (coveredCandidates.length === 0)
-            return new Code().markdown(this.lines.join('\n'));
-        const covered = this.lines.map(line => {
+            return this.toHtml();
+        return new Code().appendChildren(this.lines.map(line => {
             const isNotIndented = !line.startsWith('  ');
             const isUsed = coveredCandidates.some(candidate => candidate.lines.includes(line));
-            if (isNotIndented || isUsed)
-                return `**${line}**`;
-            return line;
-        });
-        return new Code().markdown(covered.join('\n'));
+            return new Div().text(line).addClass('covered', isNotIndented || isUsed);
+        }));
     }
 }

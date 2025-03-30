@@ -21,7 +21,7 @@ export class MutationTesting extends Methodology {
         new ComputerMessage(['When you think *The Function* is fully tested, you submit the *Unit Tests*.']).add()
     }
 
-    public showPanelsOnMenu(_specification: string, _currentCandidate: Candidate, perfectCandidate: Candidate, coveredCandidates: Candidate[]): void {
+    public showPanelsOnMenu(_specification: string, _currentCandidate: Candidate, _previousCandidate: Candidate|undefined, perfectCandidate: Candidate, coveredCandidates: Candidate[]): void {
         this.showCodeCoveragePanel(perfectCandidate, coveredCandidates)
     }
 

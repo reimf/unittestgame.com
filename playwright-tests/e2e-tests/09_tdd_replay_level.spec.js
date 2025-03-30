@@ -14,7 +14,8 @@ test.describe('tdd replay level', () => {
     });
     test('has the simplest candidate in the current function panel', async ({ page }) => {
         const currentFunctionPanel = page.getByTestId('current-function');
-        await expect(currentFunctionPanel).toContainText('function isAllowedToVote(age) {\n  return true\n}');
+        const codeLines = currentFunctionPanel.locator('code > div');
+        await expect(codeLines).toContainText(['function isAllowedToVote(age) {', '  return true', '}']);
     });
     test('has 100% in the score panel', async ({ page }) => {
         const scorePanel = page.getByTestId('score');

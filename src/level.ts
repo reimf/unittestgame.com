@@ -1,7 +1,7 @@
 import { Candidate } from './candidate.js'
 import { HumanMessage, ComputerMessage, Panel } from './frame.js'
 import { Methodology } from './methodology.js'
-import { Button, Form, Input, Paragraph } from './html.js'
+import { Button, Div, Form, Input, Paragraph } from './html.js'
 import { Random } from './random.js'
 import { TestResult } from './test_result.js'
 import { UnitTest } from './unit_test.js'
@@ -23,6 +23,8 @@ export class Level {
     private currentCandidate: Candidate = new Candidate([], [])
     private failingTestResult?: TestResult = undefined
     private score: number = this.PERFECTSCORE
+    private newUnitTest?: UnitTest = undefined
+    private previousCandidate?: Candidate = undefined
 
     public constructor(methodology: Methodology, useCase: UseCase) {
         this.methodology = methodology
@@ -92,16 +94,17 @@ export class Level {
         return undefined
     }
 
-    public showScorePanel(score: number): void {
-        new Panel('Score', [`${this.description()}: ${score}%`]).show()
+    public showScorePanel(): void {
+        new Panel('Score', [`${this.description()}: ${this.score}%`]).show()
     }
 
-    private showUnitTestsPanel(unitTests: UnitTest[]): void {
+    private showUnitTestsPanel(): void {
         new Panel('Unit Tests',
-            unitTests.length === 0
+            this.userdefinedUnitTests.length === 0
             ? ['You have not written any unit tests yet.']
-            : unitTests.map(unitTest => unitTest.toString())
+            : this.userdefinedUnitTests.map(unitTest => new Div().text(unitTest.toString()).addClass('new', unitTest === this.newUnitTest))
         ).show()
+        this.newUnitTest = undefined
     }
 
     private menu(): void {
@@ -113,9 +116,9 @@ export class Level {
     }
 
     private showPanels(): void {
-        this.methodology.showPanelsOnMenu(this.useCase.specification(), this.currentCandidate, this.useCase.perfectCandidate, this.coveredCandidates)
-        this.showUnitTestsPanel(this.userdefinedUnitTests)
-        this.showScorePanel(this.score)
+        this.methodology.showPanelsOnMenu(this.useCase.specification(), this.currentCandidate, this.previousCandidate, this.useCase.perfectCandidate, this.coveredCandidates)
+        this.showUnitTestsPanel()
+        this.showScorePanel()
     }
 
     private showMenuMessage(): void {
@@ -187,18 +190,20 @@ export class Level {
         window.setTimeout(() => {
             ComputerMessage.removeLast()
             callback()
-        }, 3000)
+        }, Math.random() == 0 ? 0 : 1000 + this.userdefinedUnitTests.length * 500 * Math.random())
     }
 
     private addUnitTest(unitTest: UnitTest): void {
         const unitTestIsCorrect = new TestResult(this.useCase.perfectCandidate, unitTest).passes
         if (unitTestIsCorrect) {
+            this.newUnitTest = unitTest
             this.userdefinedUnitTests.push(unitTest)
             this.coveredCandidates.push(this.findCoveredCandidate(unitTest))
             if (new TestResult(this.currentCandidate, unitTest).passes)
                 this.methodology.showUselessUnitTestMessage()
             else {
                 this.methodology.showUsefulUnitTestMessage()
+                this.previousCandidate = this.currentCandidate
                 this.currentCandidate = this.findSimplestPassingCandidate()
                 this.failingTestResult = this.findFailingTestResult()
             }

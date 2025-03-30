@@ -1,5 +1,5 @@
 import { Panel, ComputerMessage, HumanMessage } from './frame.js'
-import { Button, Paragraph } from './html.js'
+import { Button, Div, Paragraph } from './html.js'
 import { Level } from './level.js'
 import { Methodology } from './methodology.js'
 import { MutationTesting } from './methodology_mutation_testing.js'
@@ -109,7 +109,7 @@ export class Main {
         const levels = this.getLevelsWithHighScore()
         if (levels.length > 0) {
             new Panel('High Scores',
-                levels.map(level => `${this.levelDescription(level)}: ${level.getHighScore(localStorage)}%`)
+                levels.map(level => new Div().text(`${this.levelDescription(level)}: ${level.getHighScore(localStorage)}%`))
         ).show()
         }
     }

@@ -24,7 +24,8 @@ test.describe('mt level start', () => {
     });
     test('has the perfect candidate in the function panel', async ({ page }) => {
         const theFunctionPanel = page.getByTestId('the-function');
-        await expect(theFunctionPanel).toContainText('function isEven(number) {\n  if (number % 2 !== 0) return false\n  return true\n}');
+        const codeLines = theFunctionPanel.locator('code > div');
+        await expect(codeLines).toContainText(['function isEven(number) {', '  if (number % 2 !== 0) return false', '  return true', '}']);
     });
     test('has 100% in the score panel', async ({ page }) => {
         const scorePanel = page.getByTestId('score');
@@ -32,7 +33,7 @@ test.describe('mt level start', () => {
     });
     test('has contract message', async ({ page }) => {
         const messages = page.getByTestId('messages');
-        await expect(messages).toContainText('You write Unit Tests that pass The Function');
+        await expect(messages).toContainText('You read The Function and write Unit Tests that pass');
     });
     test('has action menu message', async ({ page }) => {
         const messages = page.getByTestId('messages');

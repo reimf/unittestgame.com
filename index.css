@@ -60,7 +60,7 @@ b { /* markdown: **bold** */
 
 code {
     display: block;
-    white-space: pre;
+    white-space: preserve;
 }
 
 i { /* markdown: *italic* */
@@ -123,7 +123,7 @@ label {
     border-radius: 0.5rem;
     display: inline-block;
     height: 2rem;
-    line-height: 2rem;
+    padding: 0.5rem;
 
     &:has(input[type="radio"]) {
         background-color: var(--general-background);
@@ -167,6 +167,17 @@ a, button, input, label:has(input[type="checkbox"]), label:has(input[type="radio
         background-color: var(--focus-background) !important;
         color: var(--light-text) !important;
     }
+}
+
+.covered, .new, .changed {
+    background-color: var(--emphasis-background);
+    color: var(--dark-text);
+    padding: 0.15rem 0;
+}
+
+.comment {
+    margin-left: 1rem;
+    opacity: 0.25;
 }
 
 #screen {
@@ -260,6 +271,10 @@ a, button, input, label:has(input[type="checkbox"]), label:has(input[type="radio
             }
         }
     }
+}
+
+#conversation i:has(.processing), #panels .processing {
+    margin-left: 0.5rem;
 }
 
 .processing {
