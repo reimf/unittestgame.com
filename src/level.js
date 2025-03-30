@@ -94,6 +94,7 @@ export class Level {
     }
     showPanels() {
         this.methodology.showPanelsOnMenu(this.useCase.specification(), this.currentCandidate, this.previousCandidate, this.useCase.perfectCandidate, this.coveredCandidates);
+        this.previousCandidate = undefined;
         this.showUnitTestsPanel();
         this.showScorePanel();
     }

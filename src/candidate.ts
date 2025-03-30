@@ -74,29 +74,25 @@ export class Candidate {
     public toHtmlWithPrevious(previousCandidate: Candidate|undefined): Html {
         if (!previousCandidate)
             return this.toHtml()
-        const divs = [new Div().text(this.lines[0])]
-        let currentLine = 1
-        let previousLine = 1
-        for (let i = 0; i < this.indices.length; i++) {
-            const currentIndex = this.indices[i]
+        const firstLine = new Div().text(this.lines[0])
+        const bodyLines = this.indices.map((currentIndex, i) => {
             const previousIndex = previousCandidate.indices[i]
-            if (currentIndex === 0 && previousIndex === 0)
-                continue
-            else if (currentIndex === previousIndex)
-                divs.push(new Div().text(this.lines[currentLine]))
-            else if (currentIndex === 0)
-                divs.push(new Div().text('').appendChild(new Span().text(`// was: ${previousCandidate.lines[previousLine].trim()}`).addClass('comment')).addClass('changed'))
-            else if (previousIndex === 0)
-                divs.push(new Div().text(this.lines[currentLine]).appendChild(new Span().text('// new').addClass('comment')).addClass('changed'))
-            else
-                divs.push(new Div().text(this.lines[currentLine]).appendChild(new Span().text(`// was: ${previousCandidate.lines[previousLine].trim()}`).addClass('comment')).addClass('changed'))
-            if (currentIndex > 0)
-                currentLine++
-            if (previousIndex > 0)
-                previousLine++
-        }
-        divs.push(new Div().text(this.lines[currentLine]))
-        return new Code().appendChildren(divs)
+            const currentLineNumber = 1 + this.indices.filter((index, j) => j < i && index > 0).length
+            const previousLineNumber = 1 + previousCandidate.indices.filter((index, j) => j < i && index > 0).length
+            const currentLine = this.lines[currentLineNumber]
+            const previousLine = previousCandidate.lines[previousLineNumber].trim()
+            const texts = currentIndex === 0 && previousIndex === 0 ? ['', '']
+                : currentIndex === previousIndex ? [currentLine, '']
+                : currentIndex === 0 ? ['', `// was: ${previousLine}`]
+                : previousIndex === 0 ? [currentLine, '// new']
+                : [currentLine, `// was: ${previousLine}`]
+            return new Div()
+                .text(texts[0])
+                .addClass('changed', texts[1] !== '')
+                .appendChild(new Span().text(texts[1]).addClass('comment'))
+        })
+        const lastLine = new Div().text(this.lines[this.lines.length - 1])
+        return new Code().appendChild(firstLine).appendChildren(bodyLines).appendChild(lastLine)
     }
 
     public toHtmlWithCoverage(coveredCandidates: Candidate[]): Html {
