@@ -14,7 +14,7 @@ export abstract class UseCase {
 
     public readonly parameters: Variable[] = this.getParameters()
     public readonly unit: Variable = this.getUnit()
-    public readonly candidates: Candidate[] = [...this.generateCandidates(this.getCandidateElements(), [], [])]
+    public readonly candidates: Candidate[] = [...this.generateCandidates(this.getCandidateElements(), [])]
     public readonly minimalUnitTests: UnitTest[] = [...this.generateMinimalUnitTests()]
     public readonly perfectCandidates: Candidate[] = this.findPerfectCandidates()
     public readonly perfectCandidate: Candidate = Random.elementFrom(this.perfectCandidates)
@@ -26,31 +26,27 @@ export abstract class UseCase {
         this.checkAllMinimalUnitTestsAreNeeded()
     }
 
-    private *generateCandidates(listOfListOfLines: string[][],
-        lines: string[],
-        indices: number[]): Generator<Candidate> {
+    private *generateCandidates(listOfListOfLines: string[][], lines: string[]): Generator<Candidate> {
         if (listOfListOfLines.length > 0) {
             const [firstListOfLines, ...remainingListOfListOfLines] = listOfListOfLines
             for (const line of firstListOfLines) {
                 const newLine = line === '' && remainingListOfListOfLines.length === 0 ? 'return undefined' : line
                 const newLines = [...lines, newLine]
-                const newIndex = line === '' ? 0 : firstListOfLines.indexOf(line) + 1
-                const newIndices = [...indices, newIndex]
-                yield* this.generateCandidates(remainingListOfListOfLines, newLines, newIndices)
+                yield* this.generateCandidates(remainingListOfListOfLines, newLines)
             }
         }
         else
-            yield this.createCandidate(lines, indices)
+            yield this.createCandidate(lines)
     }
 
-    private createCandidate(lines: string[], indices: number[]): Candidate {
+    private createCandidate(lines: string[]): Candidate {
         const parameterList = this.parameters.map(parameter => parameter.name).join(', ')
         const indentedLines = [
             `function ${this.unit.name}(${parameterList}) {`,
-            ...lines.filter(line => line !== '').map(line => '  ' + line),
+                ...lines.map(line => line === '' ? '' : '  ' + line),
             '}',
         ]
-        return new Candidate(indentedLines, indices)
+        return new Candidate(indentedLines)
     }
 
     private findAmputeesOfPerfectCandidate(): Candidate[] {

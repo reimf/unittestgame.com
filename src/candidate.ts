@@ -4,13 +4,11 @@ import { UnitTest } from './unit_test.js'
 
 export class Candidate {
     private readonly lines: string[]
-    private readonly indices: number[]
     private readonly function: Function
     private readonly complexity: number
 
-    public constructor(lines: string[], indices: number[]) {
+    public constructor(lines: string[]) {
         this.lines = lines.map(line => line.replace(/\\\\/g, '\\'))
-        this.indices = indices
         const code = lines.join('\n')
         this.function = new Function('return ' + code)()
         this.complexity = this.computeComplexity(code)
@@ -56,7 +54,7 @@ export class Candidate {
     }
 
     public isAmputeeOf(candidate: Candidate): boolean {
-        return this.indices.every((index, pos) => index === 0 || index === candidate.indices[pos])
+        return this.lines.every((line, pos) => line === '' || line === candidate.lines[pos])
     }
 
     public compareComplexity(candidate: Candidate): number {
@@ -74,34 +72,30 @@ export class Candidate {
     public toHtmlWithPrevious(previousCandidate: Candidate|undefined): Html {
         if (!previousCandidate)
             return this.toHtml()
-        const firstLine = new Div().text(this.lines[0])
-        const bodyLines = this.indices.map((currentIndex, i) => {
-            const previousIndex = previousCandidate.indices[i]
-            const currentLineNumber = 1 + this.indices.filter((index, j) => j < i && index > 0).length
-            const previousLineNumber = 1 + previousCandidate.indices.filter((index, j) => j < i && index > 0).length
-            const currentLine = this.lines[currentLineNumber]
-            const previousLine = previousCandidate.lines[previousLineNumber].trim()
-            const texts = currentIndex === 0 && previousIndex === 0 ? ['', '']
-                : currentIndex === previousIndex ? [currentLine, '']
-                : currentIndex === 0 ? ['', `// was: ${previousLine}`]
-                : previousIndex === 0 ? [currentLine, '// new']
-                : [currentLine, `// was: ${previousLine}`]
-            return new Div()
-                .text(texts[0])
-                .addClass('changed', texts[1] !== '')
-                .appendChild(new Span().text(texts[1]).addClass('comment'))
-        })
-        const lastLine = new Div().text(this.lines[this.lines.length - 1])
-        return new Code().appendChild(firstLine).appendChildren(bodyLines).appendChild(lastLine)
+        const lines = this.lines.reduce((lines, currentLine, pos) => {
+            const previousLine = previousCandidate.lines[pos]
+            const comment = currentLine === '' && previousLine === '' ? ''
+                : currentLine === previousLine ? ''
+                : currentLine === '' ? `// was: ${previousLine.trim()}`
+                : previousLine === '' ? '// new'
+                : `// was: ${previousLine.trim()}`
+            const div = new Div()
+            if (currentLine !== '')
+                div.text(currentLine)
+            if (comment !== '')
+                div.appendChild(new Span().text(comment).addClass('comment'))
+            return [...lines, div]
+        }, [] as Div[])
+        return new Code().appendChildren(lines)
     }
 
     public toHtmlWithCoverage(coveredCandidates: Candidate[]): Html {
         if (coveredCandidates.length === 0)
             return this.toHtml()
         return new Code().appendChildren(
-            this.lines.map(line => {
+            this.lines.map((line, pos) => {
                 const isNotIndented = !line.startsWith('  ')
-                const isUsed = coveredCandidates.some(candidate => candidate.lines.includes(line))
+                const isUsed = coveredCandidates.some(candidate => candidate.lines[pos] === line)
                 return new Div().text(line).addClass('covered', isNotIndented || isUsed)
             })
         )

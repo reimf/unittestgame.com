@@ -1,9 +1,8 @@
 import { Code, Div, Span } from './html.js';
 import { TestResult } from './test_result.js';
 export class Candidate {
-    constructor(lines, indices) {
+    constructor(lines) {
         this.lines = lines.map(line => line.replace(/\\\\/g, '\\'));
-        this.indices = indices;
         const code = lines.join('\n');
         this.function = new Function('return ' + code)();
         this.complexity = this.computeComplexity(code);
@@ -42,7 +41,7 @@ export class Candidate {
         return unitTests.length - this.failCount(unitTests);
     }
     isAmputeeOf(candidate) {
-        return this.indices.every((index, pos) => index === 0 || index === candidate.indices[pos]);
+        return this.lines.every((line, pos) => line === '' || line === candidate.lines[pos]);
     }
     compareComplexity(candidate) {
         return Math.sign(this.complexity - candidate.complexity);
@@ -56,32 +55,28 @@ export class Candidate {
     toHtmlWithPrevious(previousCandidate) {
         if (!previousCandidate)
             return this.toHtml();
-        const firstLine = new Div().text(this.lines[0]);
-        const bodyLines = this.indices.map((currentIndex, i) => {
-            const previousIndex = previousCandidate.indices[i];
-            const currentLineNumber = 1 + this.indices.filter((index, j) => j < i && index > 0).length;
-            const previousLineNumber = 1 + previousCandidate.indices.filter((index, j) => j < i && index > 0).length;
-            const currentLine = this.lines[currentLineNumber];
-            const previousLine = previousCandidate.lines[previousLineNumber].trim();
-            const texts = currentIndex === 0 && previousIndex === 0 ? ['', '']
-                : currentIndex === previousIndex ? [currentLine, '']
-                    : currentIndex === 0 ? ['', `// was: ${previousLine}`]
-                        : previousIndex === 0 ? [currentLine, '// new']
-                            : [currentLine, `// was: ${previousLine}`];
-            return new Div()
-                .text(texts[0])
-                .addClass('changed', texts[1] !== '')
-                .appendChild(new Span().text(texts[1]).addClass('comment'));
-        });
-        const lastLine = new Div().text(this.lines[this.lines.length - 1]);
-        return new Code().appendChild(firstLine).appendChildren(bodyLines).appendChild(lastLine);
+        const lines = this.lines.reduce((lines, currentLine, pos) => {
+            const previousLine = previousCandidate.lines[pos];
+            const comment = currentLine === '' && previousLine === '' ? ''
+                : currentLine === previousLine ? ''
+                    : currentLine === '' ? `// was: ${previousLine.trim()}`
+                        : previousLine === '' ? '// new'
+                            : `// was: ${previousLine.trim()}`;
+            const div = new Div();
+            if (currentLine !== '')
+                div.text(currentLine);
+            if (comment !== '')
+                div.appendChild(new Span().text(comment).addClass('comment'));
+            return [...lines, div];
+        }, []);
+        return new Code().appendChildren(lines);
     }
     toHtmlWithCoverage(coveredCandidates) {
         if (coveredCandidates.length === 0)
             return this.toHtml();
-        return new Code().appendChildren(this.lines.map(line => {
+        return new Code().appendChildren(this.lines.map((line, pos) => {
             const isNotIndented = !line.startsWith('  ');
-            const isUsed = coveredCandidates.some(candidate => candidate.lines.includes(line));
+            const isUsed = coveredCandidates.some(candidate => candidate.lines[pos] === line);
             return new Div().text(line).addClass('covered', isNotIndented || isUsed);
         }));
     }

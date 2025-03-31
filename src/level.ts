@@ -20,7 +20,7 @@ export class Level {
     private callback?: () => void
     private userdefinedUnitTests: UnitTest[] = []
     private coveredCandidates: Candidate[] = []
-    private currentCandidate: Candidate = new Candidate([], [])
+    private currentCandidate: Candidate = new Candidate([])
     private failingTestResult?: TestResult = undefined
     private score: number = this.PERFECTSCORE
     private newUnitTest?: UnitTest = undefined

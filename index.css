@@ -123,7 +123,6 @@ label {
     border-radius: 0.5rem;
     display: inline-block;
     height: 2rem;
-    padding: 0.5rem;
 
     &:has(input[type="radio"]) {
         background-color: var(--general-background);
@@ -169,14 +168,14 @@ a, button, input, label:has(input[type="checkbox"]), label:has(input[type="radio
     }
 }
 
-.covered, .new, .changed {
+.covered, .new, div:has(.comment) {
     background-color: var(--emphasis-background);
     color: var(--dark-text);
     padding: 0.15rem 0;
 }
 
 .comment {
-    margin-left: 1rem;
+    margin-left: 0.5rem;
     opacity: 0.25;
 }
 

@@ -5,7 +5,7 @@ export class UseCase {
     constructor() {
         this.parameters = this.getParameters();
         this.unit = this.getUnit();
-        this.candidates = [...this.generateCandidates(this.getCandidateElements(), [], [])];
+        this.candidates = [...this.generateCandidates(this.getCandidateElements(), [])];
         this.minimalUnitTests = [...this.generateMinimalUnitTests()];
         this.perfectCandidates = this.findPerfectCandidates();
         this.perfectCandidate = Random.elementFrom(this.perfectCandidates);
@@ -14,28 +14,26 @@ export class UseCase {
         this.checkPerfectCandidates();
         this.checkAllMinimalUnitTestsAreNeeded();
     }
-    *generateCandidates(listOfListOfLines, lines, indices) {
+    *generateCandidates(listOfListOfLines, lines) {
         if (listOfListOfLines.length > 0) {
             const [firstListOfLines, ...remainingListOfListOfLines] = listOfListOfLines;
             for (const line of firstListOfLines) {
                 const newLine = line === '' && remainingListOfListOfLines.length === 0 ? 'return undefined' : line;
                 const newLines = [...lines, newLine];
-                const newIndex = line === '' ? 0 : firstListOfLines.indexOf(line) + 1;
-                const newIndices = [...indices, newIndex];
-                yield* this.generateCandidates(remainingListOfListOfLines, newLines, newIndices);
+                yield* this.generateCandidates(remainingListOfListOfLines, newLines);
             }
         }
         else
-            yield this.createCandidate(lines, indices);
+            yield this.createCandidate(lines);
     }
-    createCandidate(lines, indices) {
+    createCandidate(lines) {
         const parameterList = this.parameters.map(parameter => parameter.name).join(', ');
         const indentedLines = [
             `function ${this.unit.name}(${parameterList}) {`,
-            ...lines.filter(line => line !== '').map(line => '  ' + line),
+            ...lines.map(line => line === '' ? '' : '  ' + line),
             '}',
         ];
-        return new Candidate(indentedLines, indices);
+        return new Candidate(indentedLines);
     }
     findAmputeesOfPerfectCandidate() {
         return this.candidates.filter(candidate => candidate.isAmputeeOf(this.perfectCandidate));

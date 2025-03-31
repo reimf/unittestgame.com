@@ -6,7 +6,7 @@ import { NumberVariable } from '../../src/variable.js'
 
 test.describe('class TestResult', () => {
     test('passes', () => {
-        const candidate = new Candidate(['function divide(a, b) { return a / b }'], [])
+        const candidate = new Candidate(['function divide(a, b) { return a / b }'])
         const parameters = [new NumberVariable('A', 'a'), new NumberVariable('B', 'b')]
         const unit = new NumberVariable('Divide', 'divide')
         const unitTest = new UnitTest(parameters, [6, 3], unit, 2)
@@ -15,7 +15,7 @@ test.describe('class TestResult', () => {
     })
 
     test('fails', () => {
-        const candidate = new Candidate(['function divide(a, b) { return a / b }'], [])
+        const candidate = new Candidate(['function divide(a, b) { return a / b }'])
         const parameters = [new NumberVariable('A', 'a'), new NumberVariable('B', 'b')]
         const unit = new NumberVariable('Divide', 'divide')
         const unitTest = new UnitTest(parameters, [6, 3], unit, 5)
@@ -24,7 +24,7 @@ test.describe('class TestResult', () => {
     })
 
     test('converts to a string', () => {
-        const candidate = new Candidate(['function divide(a, b) { return a / b }'], [])
+        const candidate = new Candidate(['function divide(a, b) { return a / b }'])
         const parameters = [new NumberVariable('A', 'a'), new NumberVariable('B', 'b')]
         const unit = new NumberVariable('Divide', 'divide')
         const unitTest = new UnitTest(parameters, [6, 3], unit, 5)

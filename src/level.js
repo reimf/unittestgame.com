@@ -13,7 +13,7 @@ export class Level {
         this.MINIMUMSCORE = 0;
         this.userdefinedUnitTests = [];
         this.coveredCandidates = [];
-        this.currentCandidate = new Candidate([], []);
+        this.currentCandidate = new Candidate([]);
         this.failingTestResult = undefined;
         this.score = this.PERFECTSCORE;
         this.newUnitTest = undefined;
