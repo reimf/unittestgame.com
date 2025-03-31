@@ -167,11 +167,11 @@ export class Level {
             this.newUnitTest = unitTest;
             this.userdefinedUnitTests.push(unitTest);
             this.coveredCandidates.push(this.findCoveredCandidate(unitTest));
+            this.previousCandidate = this.currentCandidate;
             if (new TestResult(this.currentCandidate, unitTest).passes)
                 this.methodology.showUselessUnitTestMessage();
             else {
                 this.methodology.showUsefulUnitTestMessage();
-                this.previousCandidate = this.currentCandidate;
                 this.currentCandidate = this.findSimplestPassingCandidate();
                 this.failingTestResult = this.findFailingTestResult();
             }
