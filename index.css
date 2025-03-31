@@ -168,7 +168,7 @@ a, button, input, label:has(input[type="checkbox"]), label:has(input[type="radio
     }
 }
 
-.covered, .new, div:has(.comment) {
+.covered, .new, div:has(> .comment) {
     background-color: var(--emphasis-background);
     color: var(--dark-text);
     padding: 0.15rem 0;
