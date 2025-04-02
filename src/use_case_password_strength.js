@@ -27,27 +27,20 @@ export class PasswordStrength extends UseCase {
                 'if (password.length < 5) return false',
                 'if (password.length <= 5) return false',
                 'if (password.length < 8) return false',
-                'if (password.length >= 5) return true',
-                'if (password.length >= 6) return true',
                 '',
             ],
             [
                 'if (!/[A-Z]/.test(password)) return false',
-                'if (/[A-Z]/.test(password)) return true',
                 '',
             ],
             [
                 'if (!/[a-z]/.test(password)) return false',
-                'if (/[a-z]/.test(password)) return true',
                 '',
             ],
             [
-                'if (!password.includes("#")) return false',
-                'if (!password.includes("@")) return false',
-                'if (!password.includes("#") && !password.includes("@")) return false',
-                'if (password.includes("#")) return true',
-                'if (password.includes("@")) return true',
-                'if (password.includes("#") || password.includes("@")) return true',
+                'if (!/#/.test(password)) return false',
+                'if (!/@/.test(password)) return false',
+                'if (!/[#@]/.test(password)) return false',
                 '',
             ],
             [
@@ -59,7 +52,7 @@ export class PasswordStrength extends UseCase {
     }
     *minimalUnitTestGenerator() {
         yield [['A3a6#'], true];
-        yield [['@251Bc'], true];
+        yield [['@251Bz'], true];
         yield [['1#36D0'], false];
         yield [['n5EFG'], false];
         yield [['@9#4@i'], false];
