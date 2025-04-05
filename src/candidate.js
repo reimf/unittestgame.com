@@ -50,7 +50,7 @@ export class Candidate {
         return this.lines.join('\n');
     }
     toHtml() {
-        return new Code().appendChildren(this.lines.map(line => new Div().text(line)));
+        return new Code().appendChildren(this.lines.map(line => new Div().appendText(line)));
     }
     toHtmlWithPrevious(previousCandidate) {
         if (!previousCandidate)
@@ -64,9 +64,9 @@ export class Candidate {
                             : `// was: ${previousLine.trim()}`;
             const div = new Div();
             if (currentLine !== '')
-                div.text(currentLine);
+                div.appendText(currentLine);
             if (comment !== '')
-                div.appendChild(new Span().text(comment).addClass('comment'));
+                div.appendChild(new Span().appendText(comment).addClass('comment'));
             return [...lines, div];
         }, []);
         return new Code().appendChildren(lines);
@@ -74,10 +74,11 @@ export class Candidate {
     toHtmlWithCoverage(coveredCandidates) {
         if (coveredCandidates.length === 0)
             return this.toHtml();
-        return new Code().appendChildren(this.lines.map((line, pos) => {
+        const lines = this.lines.map((line, pos) => {
             const isNotIndented = !line.startsWith('  ');
             const isUsed = coveredCandidates.some(candidate => candidate.lines[pos] === line);
-            return new Div().text(line).addClass('covered', isNotIndented || isUsed);
-        }));
+            return new Div().appendText(line).addClass('covered', isNotIndented || isUsed);
+        });
+        return new Code().appendChildren(lines);
     }
 }

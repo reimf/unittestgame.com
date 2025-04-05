@@ -16,11 +16,11 @@ export class RadioVariable extends Variable {
     }
     toHtml() {
         const radioButtons = this.texts.map(text => {
-            const input = new Input().type('radio').name(this.name).value(text);
-            const label = new Label().appendChild(input).text(text);
+            const input = new Input().setType('radio').setName(this.name).setValue(text);
+            const label = new Label().appendChild(input).appendText(text);
             return label;
         });
-        const paragraph = new Paragraph().text(this.label).appendChildren(radioButtons);
+        const paragraph = new Paragraph().appendText(this.label).appendChildren(radioButtons);
         return paragraph;
     }
     format(value) {
@@ -36,8 +36,8 @@ export class CheckboxVariable extends Variable {
         return input.checked;
     }
     toHtml() {
-        const input = new Input().type('checkbox').name(this.name);
-        const label = new Label().appendChild(input).text(this.label);
+        const input = new Input().setType('checkbox').setName(this.name);
+        const label = new Label().appendChild(input).appendText(this.label);
         const paragraph = new Paragraph().appendChild(label);
         return paragraph;
     }
@@ -54,8 +54,8 @@ export class TextVariable extends Variable {
         return input.value;
     }
     toHtml() {
-        const input = new Input().type('text').name(this.name).autocomplete(false);
-        const label = new Label().text(this.label).appendChild(input);
+        const input = new Input().setType('text').setName(this.name).setAutocomplete(false);
+        const label = new Label().appendText(this.label).appendChild(input);
         const paragraph = new Paragraph().appendChild(label);
         return paragraph;
     }
@@ -72,8 +72,8 @@ export class NumberVariable extends Variable {
         return Number(input.value);
     }
     toHtml() {
-        const input = new Input().type('number').name(this.name).autocomplete(false);
-        const label = new Label().text(this.label).appendChild(input);
+        const input = new Input().setType('number').setName(this.name).setAutocomplete(false);
+        const label = new Label().appendText(this.label).appendChild(input);
         const paragraph = new Paragraph().appendChild(label);
         return paragraph;
     }

@@ -6,4 +6,8 @@ export class Random {
     public static integerUnder(x: number): number {
         return Math.floor(Math.random() * x)
     }
+
+    public static integerFromRange(start: number, length: number = 0): number {
+        return Math.random() == 0 ? 0 : Math.floor(start + Math.random() * length)
+    }
 }

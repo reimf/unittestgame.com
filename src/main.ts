@@ -83,7 +83,7 @@ export class Main {
     private showQuestionSidebar(callback: () => void): void {
         new HumanMessage([
             new Paragraph().appendChild(
-                new Button().onClick(() => callback()).text('I want a sidebar for terms with a purple background'),
+                new Button().onClick(() => callback()).appendText('I want a sidebar for terms with a purple background'),
             ),
         ]).add()
     }
@@ -109,7 +109,7 @@ export class Main {
         const levels = this.getLevelsWithHighScore()
         if (levels.length > 0) {
             new Panel('High Scores',
-                levels.map(level => new Div().text(`${this.levelDescription(level)}: ${level.getHighScore(localStorage)}%`))
+                levels.map(level => new Div().appendText(`${this.levelDescription(level)}: ${level.getHighScore(localStorage)}%`))
         ).show()
         }
     }
@@ -119,8 +119,8 @@ export class Main {
         new HumanMessage([
             new Paragraph().appendChild(
                 nextLevel
-                ? new Button().onClick(() => callback(nextLevel)).text(`I want to play ${this.levelDescription(nextLevel)}`)
-                : new Button().onClick(() => window.close()).text('Quit'),
+                ? new Button().onClick(() => callback(nextLevel)).appendText(`I want to play ${this.levelDescription(nextLevel)}`)
+                : new Button().onClick(() => window.close()).appendText('Quit'),
             ),
         ]).add()
     }

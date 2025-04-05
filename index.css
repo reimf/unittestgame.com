@@ -144,7 +144,7 @@ label {
         background-color: var(--input-background);
         color: var(--light-text);
         line-height: 2rem;
-        padding-right: 0.5rem; 
+        padding-right: 0.5rem;
     }
 }
 
@@ -154,7 +154,7 @@ p {
     &:has(> button) {
         display: flex;
         gap: 0.75rem;
-    }                
+    }
 }
 
 a, button, input, label:has(input[type="checkbox"]), label:has(input[type="radio"]) {
@@ -277,21 +277,14 @@ a, button, input, label:has(input[type="checkbox"]), label:has(input[type="radio
 }
 
 .processing {
-    animation: threedots 1s infinite linear;
-    aspect-ratio: 2;
-    --gradient: radial-gradient(circle closest-side, var(--computer-message-background) 90%, var(--panel-heading-background));
-    background: 
-        no-repeat var(--gradient)   0% 50%,
-        no-repeat var(--gradient)  50% 50%,
-        no-repeat var(--gradient) 100% 50%;
-    background-size: 30% 40%;
-    display: inline-block;
-    width: 1.5rem;
+    animation: pulseOpacity 0.5s infinite alternate;
 }
-      
-@keyframes threedots {
-    20% { background-position: 0%   0%, 50%  50%, 100%  50%; }
-    40% { background-position: 0% 100%, 50%   0%, 100%  50%; }
-    60% { background-position: 0%  50%, 50% 100%, 100%   0%; }
-    80% { background-position: 0%  50%, 50%  50%, 100% 100%; }
+
+@keyframes pulseOpacity {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
 }

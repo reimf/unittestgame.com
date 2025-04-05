@@ -102,7 +102,7 @@ export class Level {
         new Panel('Unit Tests',
             this.userdefinedUnitTests.length === 0
             ? ['You have not written any unit tests yet.']
-            : this.userdefinedUnitTests.map(unitTest => new Div().text(unitTest.toString()).addClass('new', unitTest === this.newUnitTest))
+            : this.userdefinedUnitTests.map(unitTest => new Div().appendText(unitTest.toString()).addClass('new', unitTest === this.newUnitTest))
         ).show()
         this.newUnitTest = undefined
     }
@@ -125,10 +125,10 @@ export class Level {
     private showMenuMessage(): void {
         new HumanMessage([
             new Paragraph().appendChildren([
-                new Button().onClick(() => this.startAddUnitTestFlow()).title('I want to add a unit test').text('Add unit test'),
-                new Button().onClick(() => this.showHint()).title('I want to see a hint').text('Show hint'),
-                new Button().onClick(() => this.prepareSubmitUnitTests()).title('I want to submit the unit tests').text('Submit unit tests'),
-                new Button().onClick(() => this.end()).title('I want to exit this level').text('Exit level'),
+                new Button().setTitle('I want to add a unit test').appendText('Add unit test').onClick(() => this.startAddUnitTestFlow()),
+                new Button().setTitle('I want to see a hint').appendText('Show hint').onClick(() => this.showHint()),
+                new Button().setTitle('I want to submit the unit tests').appendText('Submit unit tests').onClick(() => this.prepareSubmitUnitTests()),
+                new Button().setTitle('I want to exit this level').appendText('Exit level').onClick(() => this.end()),
             ]),
         ]).add()
     }
@@ -145,11 +145,11 @@ export class Level {
     private showFormUnitTestMessage(): void {
         const parameterFields = this.useCase.parameters.map(variable => variable.toHtml())
         const unitField = this.useCase.unit.toHtml()
-        const submitButton = new Input().type('submit').value('I want to add this unit test')
+        const submitButton = new Input().setType('submit').setValue('I want to add this unit test')
         const cancelButton = new Button()
+            .setTitle('I don\'t want to add a unit test now')
             .onClick(() => this.cancelAddUnitTestFlow())
-            .title('I don\'t want to add a unit test now')
-            .text('Cancel')
+            .appendText('Cancel')
             .addClass('cancel')
         const buttonBlock = new Paragraph().appendChildren([submitButton, cancelButton])
         new HumanMessage([
@@ -184,14 +184,11 @@ export class Level {
     }
 
     private showProcessing(callback: () => void): void {
-        Panel.appendProcessingTo('Unit Tests')
-        Panel.appendProcessingTo('Current Function')
-        Panel.appendProcessingTo('The Function')
         new ComputerMessage(['Processing... ']).appendProcessing().add()
         window.setTimeout(() => {
             ComputerMessage.removeLast()
             callback()
-        }, Math.random() == 0 ? 0 : 1000 + this.userdefinedUnitTests.length * 500 * Math.random())
+        }, Random.integerFromRange(1000, this.userdefinedUnitTests.length * 500))
     }
 
     private addUnitTest(unitTest: UnitTest): void {

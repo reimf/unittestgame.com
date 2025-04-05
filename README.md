@@ -11,7 +11,7 @@ The goal: **Write a function that meets the given specification.**
 ### How it works:
 1. **You write unit tests** to define the expected behavior of the function.
 2. **The AI bot writes a function** that passes the unit tests.
-3. **Repeat** until you think the function is correct. 
+3. **Repeat** until you think the function is correct.
 4. **Submit** the unit tests.
 5. **Validation**: The AI bot checks if the function meets the specification.
    - ✅ If correct, you’ve successfully implemented the function!

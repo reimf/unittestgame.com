@@ -1,142 +1,259 @@
 export class Html {
-    constructor(element) {
-        this.element = element;
+    constructor() {
+        this.tagName = '';
+        this.id = '';
+        this.classList = [];
+        this.children = [];
+        this.onClickCallback = undefined;
+        this.title = '';
     }
-    static getIdFromTitle(title) {
-        return title.toLowerCase().replace(/[^a-z0-9-]/g, ' ').trim().replace(/ +/g, '-');
+    setTagName(tagName) {
+        this.tagName = tagName;
+        return this;
     }
-    id(title) {
-        this.element.id = Html.getIdFromTitle(title);
+    setId(id) {
+        this.id = id;
+        return this;
+    }
+    getId() {
+        return this.id;
+    }
+    setTitle(title) {
+        this.title = title;
         return this;
     }
     addClass(value, condition = true) {
         if (condition)
-            this.element.classList.add(value);
+            this.classList.push(value);
         return this;
     }
-    markdown(markdown) {
-        const html = markdown
-            // PASS 0: Escape HTML to prevent injection issues
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#39;")
-            // PASS 1: Handle **bold**
-            .replace(/\*\*(.+?)\*\*/g, (_, text) => `<b>${text}</b>`)
-            // PASS 2: Handle *italic*
-            .replace(/\*(.+?)\*/g, (_, text) => `<i>${text}</i>`)
-            // PASS 3: Handle [text](url)
-            .replace(/\[(.+?)\]\((.+?)\)/g, (_, text, url) => `<a href="${url}">${text}</a>`);
-        this.element.insertAdjacentHTML('beforeend', html);
+    onClick(callback) {
+        this.onClickCallback = callback;
         return this;
     }
-    text(text) {
-        this.element.appendChild(document.createTextNode(text));
+    appendMarkdown(markdown) {
+        const buffer = [];
+        const flush = (buffer) => {
+            if (buffer.length > 0) {
+                this.appendText(buffer.join(''));
+                buffer.length = 0;
+            }
+        };
+        for (let pos = 0; pos < markdown.length; pos++) {
+            // Bold: **text**
+            if (markdown.slice(pos, pos + 2) === '**') {
+                const end = markdown.indexOf('**', pos + 2);
+                if (end > pos) {
+                    flush(buffer);
+                    const text = markdown.slice(pos + 2, end);
+                    const bold = new Bold().appendMarkdown(text);
+                    this.appendChild(bold);
+                    pos = end + 1;
+                    continue;
+                }
+            }
+            // Italic: *text*
+            if (markdown[pos] === '*') {
+                const end = markdown.indexOf('*', pos + 1);
+                if (end > pos) {
+                    flush(buffer);
+                    const text = markdown.slice(pos + 1, end);
+                    const italic = new Italic().appendMarkdown(text);
+                    this.appendChild(italic);
+                    pos = end;
+                    continue;
+                }
+            }
+            // Link: [text](url)
+            if (markdown[pos] === '[') {
+                const closeBracket = markdown.indexOf(']', pos);
+                const openParen = markdown.indexOf('(', closeBracket);
+                const closeParen = markdown.indexOf(')', openParen);
+                if (closeBracket > pos && openParen === closeBracket + 1 && closeParen > openParen) {
+                    flush(buffer);
+                    const text = markdown.slice(pos + 1, closeBracket);
+                    const url = markdown.slice(openParen + 1, closeParen);
+                    const anchor = new Anchor().setHref(url).appendMarkdown(text);
+                    this.appendChild(anchor);
+                    pos = closeParen;
+                    continue;
+                }
+            }
+            // Plain text
+            buffer.push(markdown[pos]);
+        }
+        flush(buffer);
+        return this;
+    }
+    appendText(text) {
+        this.children.push(new Text(text));
         return this;
     }
     prependChild(child) {
-        this.element.prepend(child.element);
+        this.children.unshift(child);
         return this;
     }
     appendChild(child) {
-        this.element.appendChild(child.element);
+        this.children.push(child);
         return this;
     }
     appendChildren(children) {
-        for (const child of children)
-            this.element.appendChild(child.element);
+        this.children.push(...children);
         return this;
     }
-    appendSpinner() {
-        return this.appendChild(new Span().addClass('processing'));
+    toNode() {
+        const node = document.createElement(this.tagName);
+        if (this.id)
+            node.id = this.id;
+        if (this.title)
+            node.title = this.title;
+        if (this.onClickCallback)
+            node.addEventListener('click', event => this.onClickCallback(event));
+        for (const klasse of this.classList)
+            node.classList.add(klasse);
+        for (const child of this.children)
+            node.appendChild(child.toNode());
+        return node;
     }
-    on(eventType, callback) {
-        this.element.addEventListener(eventType, callback);
-        return this;
+}
+export class Text extends Html {
+    constructor(text) {
+        super();
+        this.text = text;
+    }
+    toNode() {
+        return document.createTextNode(this.text);
     }
 }
 export class Input extends Html {
     constructor() {
-        super(document.createElement('input'));
-        this.input = this.element;
+        super();
+        this.type = '';
+        this.name = '';
+        this.value = '';
+        this.autocomplete = '';
+        this.setTagName('input');
     }
-    type(type) {
-        this.input.type = type;
+    setType(type) {
+        this.type = type;
         return this;
     }
-    name(name) {
-        this.input.name = name;
+    setName(name) {
+        this.name = name;
         return this;
     }
-    value(value) {
-        this.input.value = value;
+    setValue(value) {
+        this.value = value;
         return this;
     }
-    autocomplete(autocomplete) {
-        this.input.autocomplete = autocomplete ? 'on' : 'off';
+    setAutocomplete(autocomplete) {
+        this.autocomplete = autocomplete ? 'on' : 'off';
         return this;
+    }
+    toNode() {
+        const node = super.toNode();
+        if (this.type)
+            node.type = this.type;
+        if (this.name)
+            node.name = this.name;
+        if (this.value)
+            node.value = this.value;
+        if (this.autocomplete)
+            node.autocomplete = this.autocomplete;
+        return node;
     }
 }
 export class Form extends Html {
     constructor() {
-        super(document.createElement('form'));
+        super();
+        this.onSubmitCallback = undefined;
+        this.setTagName('form');
     }
     onSubmit(callback) {
-        this.on('submit', event => callback(event));
+        this.onSubmitCallback = callback;
         return this;
+    }
+    toNode() {
+        const node = super.toNode();
+        if (this.onSubmitCallback)
+            node.addEventListener('submit', event => this.onSubmitCallback(event));
+        return node;
     }
 }
 export class Header extends Html {
     constructor() {
-        super(document.createElement('header'));
+        super();
+        this.setTagName('header');
     }
 }
 export class Paragraph extends Html {
     constructor() {
-        super(document.createElement('p'));
+        super();
+        this.setTagName('p');
     }
 }
 export class Button extends Html {
     constructor() {
-        super(document.createElement('button'));
-    }
-    onClick(callback) {
-        this.on('click', event => callback(event));
-        return this;
-    }
-    title(title) {
-        this.element.title = title;
-        return this;
+        super();
+        this.setTagName('button');
     }
 }
 export class Label extends Html {
     constructor() {
-        super(document.createElement('label'));
+        super();
+        this.setTagName('label');
     }
 }
 export class Code extends Html {
     constructor() {
-        super(document.createElement('code'));
+        super();
+        this.setTagName('code');
     }
 }
 export class Section extends Html {
     constructor() {
-        super(document.createElement('section'));
+        super();
+        this.setTagName('section');
     }
 }
 export class Div extends Html {
     constructor() {
-        super(document.createElement('div'));
+        super();
+        this.setTagName('div');
     }
 }
 export class Span extends Html {
     constructor() {
-        super(document.createElement('span'));
+        super();
+        this.setTagName('span');
     }
 }
 export class Italic extends Html {
     constructor() {
-        super(document.createElement('i'));
+        super();
+        this.setTagName('i');
+    }
+}
+export class Bold extends Html {
+    constructor() {
+        super();
+        this.setTagName('b');
+    }
+}
+export class Anchor extends Html {
+    constructor() {
+        super();
+        this.href = '';
+        this.setTagName('a');
+    }
+    setHref(href) {
+        this.href = href;
+        return this;
+    }
+    toNode() {
+        const node = super.toNode();
+        if (this.href)
+            node.href = this.href;
+        return node;
     }
 }

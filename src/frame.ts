@@ -1,40 +1,38 @@
-import { Italic, Div, Html, Header, Paragraph, Section, Span } from './html.js'
+import { Div, Html, Header, Paragraph, Section } from './html.js'
+import { Random } from './random.js'
 
 abstract class Frame extends Section {
     protected constructor(elements: (Html|string)[]) {
         super()
-        const children = elements.map(element => element instanceof Html ? element : new Paragraph().markdown(element))
+        const children = elements.map(element => element instanceof Html ? element : new Paragraph().appendMarkdown(element))
         this.appendChild(new Div().appendChildren(children))
     }
 
     protected existingElement(): HTMLElement | null {
-        return document.querySelector('#' + this.element.id)
+        return document.querySelector('#' + this.getId())
     }
 
     protected replaceExisting(): void {
-        this.existingElement()!.replaceWith(this.element)
+        this.existingElement()!.replaceWith(this.toNode())
     }
 
     protected removeExisting(): void {
         this.existingElement()!.remove()
     }
 
-    protected addTo(parentId: string): void {
-        document.querySelector('#' + parentId)!.appendChild(this.element)
+    protected addTo(parentId: string): Node {
+        const node = this.toNode()
+        document.querySelector('#' + parentId)!.appendChild(node)
+        return node
     }
 }
 
 export class Panel extends Frame {
     public constructor(title: string, elements: (Html|string)[]) {
         super(elements)
-        this.prependChild(new Header().text(title))
-        this.id(title)
-    }
-
-    public static appendProcessingTo(title: string): void {
-        const header = document.querySelector(`#${Html.getIdFromTitle(title)} > header`)
-        if (header)
-            new Html(header as HTMLElement).appendSpinner()
+        this.prependChild(new Header().appendText(title))
+        const id = title.toLowerCase().replace(/[^a-z0-9-]/g, ' ').trim().replace(/ +/g, '-')
+        this.setId(id)
     }
 
     public static removeAll(): void {
@@ -49,7 +47,7 @@ export class Panel extends Frame {
     }
 
     public remove(): void {
-        document.querySelector('#' + this.element.id)?.remove()
+        document.querySelector('#' + this.getId())?.remove()
     }
 }
 
@@ -60,9 +58,9 @@ abstract class Message extends Frame {
 
     public add(): void {
         const count = document.querySelector('#messages')!.childElementCount
-        this.id(`message-${count}`)
-        this.addTo('messages')
-        this.element.scrollIntoView()
+        this.setId(`message-${count}`)
+        const node = this.addTo('messages') as HTMLElement
+        node.scrollIntoView()
     }
 }
 
@@ -73,16 +71,14 @@ export class ComputerMessage extends Message {
     }
 
     public appendProcessing(): ComputerMessage {
-        const paragraph = new Html(this.element.querySelector('p') as HTMLElement)
-        const italic = new Italic().appendSpinner()
-        paragraph.appendChild(italic)
+        this.children[0].children[0].addClass('processing')
         return this
     }
 
     public static removeLast(): void {
         const id = document.querySelector('#messages')!.lastElementChild!.id
         const lastComputerMessage = new ComputerMessage([])
-        lastComputerMessage.id(id)
+        lastComputerMessage.setId(id)
         lastComputerMessage.removeExisting()
     }
 }
@@ -91,11 +87,11 @@ export class HumanMessage extends Message {
     public constructor(children: (Html|string)[]) {
         super(children)
         this.addClass('human')
-        this.on('click', event => {
+        this.onClick(event => {
             if (event.target instanceof HTMLButtonElement) {
                 const text = event.target.title || event.target.textContent
                 const message = new HumanMessage([text + '.'])
-                message.id(this.element.id)
+                message.setId(this.getId())
                 message.replaceExisting()
             }
         })
@@ -108,15 +104,15 @@ export class HumanMessage extends Message {
 
     public replace(): void {
         const id = document.querySelector('#messages')!.lastElementChild!.id
-        this.id(id)
+        this.setId(id)
         this.replaceExisting()
     }
 
     private focusFirst(): void {
-        const focusables = this.element.querySelectorAll('button, input')
-        if (focusables.length > 0) {
-            const firstFocusable = focusables[0] as HTMLElement
-            firstFocusable.focus()
-        }
+        setTimeout(() => {
+            const focusable = document.querySelector('button, input')
+            if (focusable)
+                (focusable as HTMLElement).focus()
+        }, Random.integerFromRange(500))
     }
 }
