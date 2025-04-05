@@ -101,6 +101,15 @@ export class Html {
         this.children.push(...children);
         return this;
     }
+    toString() {
+        return '<' + this.tagName +
+            (this.classList.length > 0 ? ' class="' + this.classList.join(' ') + '"' : '') +
+            (this.id ? ` id="${this.id}"` : '') +
+            (this.title ? ` title="${this.title}"` : '') +
+            '>' +
+            this.children.map(child => child.toString()).join('') +
+            '</' + this.tagName + '>';
+    }
     toNode() {
         const node = document.createElement(this.tagName);
         if (this.id)
@@ -120,6 +129,9 @@ export class Text extends Html {
     constructor(text) {
         super();
         this.text = text;
+    }
+    toString() {
+        return this.text;
     }
     toNode() {
         return document.createTextNode(this.text);

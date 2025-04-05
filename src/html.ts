@@ -114,6 +114,16 @@ export class Html {
         return this
     }
 
+    public toString(): string {
+        return '<' + this.tagName +
+            (this.classList.length > 0 ? ' class="' + this.classList.join(' ') + '"' : '') +
+            (this.id ? ` id="${this.id}"` : '') +
+            (this.title ? ` title="${this.title}"` : '') +
+            '>' +
+            this.children.map(child => child.toString()).join('') +
+            '</' + this.tagName + '>'
+    }
+
     public toNode(): Node {
         const node = document.createElement(this.tagName)
         if (this.id)
@@ -122,7 +132,7 @@ export class Html {
             node.title = this.title
         if (this.onClickCallback)
             node.addEventListener('click', event => this.onClickCallback!(event))
-            for (const klasse of this.classList)
+        for (const klasse of this.classList)
             node.classList.add(klasse)
         for (const child of this.children)
             node.appendChild(child.toNode())
@@ -136,6 +146,10 @@ export class Text extends Html {
     public constructor(text: string) {
         super()
         this.text = text
+    }
+
+    public toString(): string {
+        return this.text
     }
 
     public toNode(): Node {
