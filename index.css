@@ -127,6 +127,7 @@ label {
     &:has(input[type="radio"]) {
         background-color: var(--general-background);
         color: var(--dark-text);
+        line-height: 2rem;
         margin-left: 0.75rem;
         padding-right: 0.75rem;
 
