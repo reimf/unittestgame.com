@@ -10,7 +10,8 @@ export class MutationTesting extends Methodology {
 
     public showBasicDefinition(): void {
         new Panel('Mutation Testing', [
-            'After writing unit tests for a function, each mutation of the function should make at least one unit test fail. ' +
+            'Each mutation of a fully tested function should make at least one unit test fail. ' +
+            'Mutations are created by replacing code like "n % 4 === 0" with "n === 4". ' +
             '[more](https://en.wikipedia.org/wiki/Mutation_testing)',
         ]).show()
     }
