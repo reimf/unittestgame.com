@@ -1,5 +1,5 @@
-import { Panel, ComputerMessage, HumanMessage } from './frame.js';
-import { Button, Div, Paragraph } from './html.js';
+import { Panel, ComputerMessage, ButtonMessage } from './frame.js';
+import { Div } from './html.js';
 import { Level } from './level.js';
 import { MutationTesting } from './methodology_mutation_testing.js';
 import { TestDrivenDevelopment } from './methodology_test_driven_development.js';
@@ -59,7 +59,7 @@ export class Main {
     continue() {
         this.showHighScoresPanel();
         this.showInvitationMessage();
-        this.showNextLevel((level) => this.play(level));
+        this.showNextLevel();
     }
     play(level) {
         Panel.removeAll();
@@ -73,15 +73,13 @@ export class Main {
         new ComputerMessage(['I am an AI bot specialized in *Test-Driven Development* and *Mutation Testing*.']).add();
     }
     showQuestionSidebar(callback) {
-        new HumanMessage([
-            new Paragraph().appendChild(new Button().onClick(() => callback()).appendText('I want a sidebar for terms with a purple background')),
-        ]).add();
+        new ButtonMessage('I want a sidebar for terms with a purple background', () => callback()).add();
     }
     showUnittestgamePanel() {
         const methodologies = this.methodologies.map(methodology => methodology.name()).join(' and ');
         new Panel('UnitTestGame', [
             `Learn to write effective unit tests using ${methodologies}. ` +
-                '[feedback](mailto:feedback@unittestgame.com)',
+                '[Give feedback](mailto:feedback@unittestgame.com)',
         ]).show();
     }
     showInvitationMessage() {
@@ -97,12 +95,15 @@ export class Main {
             new Panel('High Scores', levels.map(level => new Div().appendText(`${this.levelDescription(level)}: ${level.getHighScore(localStorage)}%`))).show();
         }
     }
-    showNextLevel(callback) {
+    showNextLevel() {
         const nextLevel = this.levels.find(level => level.getHighScore(localStorage) === 0);
-        new HumanMessage([
-            new Paragraph().appendChild(nextLevel
-                ? new Button().onClick(() => callback(nextLevel)).appendText(`I want to play ${this.levelDescription(nextLevel)}`)
-                : new Button().onClick(() => window.close()).appendText('Quit')),
-        ]).add();
+        if (nextLevel && !nextLevel.getExampleSeen(localStorage)) {
+            new ButtonMessage(`I want to see an example of ${nextLevel.methodologyName()}`, () => nextLevel.showExample(() => this.continue())).add();
+            nextLevel.setExampleSeen(localStorage);
+        }
+        else if (nextLevel)
+            new ButtonMessage(`I want to play ${this.levelDescription(nextLevel)}`, () => this.play(nextLevel)).add();
+        else
+            new ButtonMessage('I want to quit', () => window.close()).add();
     }
 }

@@ -24,6 +24,18 @@ export class Level {
     description() {
         return `${this.methodology.name()} - ${this.useCase.name()}`;
     }
+    methodologyName() {
+        return this.methodology.name();
+    }
+    getExampleSeen(storage) {
+        return this.methodology.getExampleSeen(storage);
+    }
+    setExampleSeen(storage) {
+        this.methodology.setExampleSeen(storage);
+    }
+    showExample(callback) {
+        this.methodology.showExample(callback);
+    }
     getHighScore(storage) {
         return Number(storage.getItem(this.description()));
     }

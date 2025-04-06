@@ -2,9 +2,15 @@ import { test, expect } from '@playwright/test'
 
 test.describe('mt level start', () => {
     test.beforeEach(async({ context, page }) => {
+        await context.addInitScript(_ => localStorage.setItem('Test-Driven Development', 'true'))
         await context.addInitScript(_ => localStorage.setItem('Test-Driven Development - Voting Age', '100'))
         await context.addInitScript({ path: './playwright-tests/e2e-tests/init_script.js' })
         await page.goto('http://localhost:5500/')
+        await page.getByRole('button', { name: 'I want to see an example of Mutation Testing' }).click()
+        await page.getByRole('button', { name: 'divide(4, 2) === 2' }).click()
+        await page.getByRole('button', { name: 'divide(9, 3) === 3' }).click()
+        await page.getByRole('button', { name: 'divide(6, 3) === 2' }).click()
+        await page.getByRole('button', { name: 'divide(5, 0) === NaN' }).click()
         await page.getByRole('button', { name: 'I want to play Level 2 - Mutation Testing - Even or Odd' }).click()
     })
 

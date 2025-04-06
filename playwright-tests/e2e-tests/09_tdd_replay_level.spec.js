@@ -1,7 +1,8 @@
 import { test, expect } from '@playwright/test';
 test.describe('tdd replay level', () => {
-    test.beforeEach(async ({ page }) => {
-        await page.addInitScript({ path: './playwright-tests/e2e-tests/init_script.js' });
+    test.beforeEach(async ({ context, page }) => {
+        await context.addInitScript(_ => localStorage.setItem('Test-Driven Development', 'true'));
+        await context.addInitScript({ path: './playwright-tests/e2e-tests/init_script.js' });
         await page.goto('http://localhost:5500/');
         await page.getByRole('button', { name: 'I want a sidebar for terms with a purple background' }).click();
         await page.getByRole('button', { name: 'I want to play Level 1 - Test-Driven Development - Voting Age' }).click();

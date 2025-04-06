@@ -1,5 +1,5 @@
-import { Panel, ComputerMessage, HumanMessage } from './frame.js'
-import { Button, Div, Paragraph } from './html.js'
+import { Panel, ComputerMessage, ButtonMessage } from './frame.js'
+import { Div } from './html.js'
 import { Level } from './level.js'
 import { Methodology } from './methodology.js'
 import { MutationTesting } from './methodology_mutation_testing.js'
@@ -63,7 +63,7 @@ export class Main {
     private continue(): void {
         this.showHighScoresPanel()
         this.showInvitationMessage()
-        this.showNextLevel((level: Level) => this.play(level))
+        this.showNextLevel()
     }
 
     private play(level: Level): void {
@@ -81,18 +81,17 @@ export class Main {
     }
 
     private showQuestionSidebar(callback: () => void): void {
-        new HumanMessage([
-            new Paragraph().appendChild(
-                new Button().onClick(() => callback()).appendText('I want a sidebar for terms with a purple background'),
-            ),
-        ]).add()
+        new ButtonMessage(
+            'I want a sidebar for terms with a purple background',
+            () => callback()
+        ).add()
     }
 
     private showUnittestgamePanel(): void {
         const methodologies = this.methodologies.map(methodology => methodology.name()).join(' and ')
         new Panel('UnitTestGame', [
             `Learn to write effective unit tests using ${methodologies}. ` +
-            '[feedback](mailto:feedback@unittestgame.com)',
+            '[Give feedback](mailto:feedback@unittestgame.com)',
         ]).show()
     }
 
@@ -114,14 +113,15 @@ export class Main {
         }
     }
 
-    private showNextLevel(callback: (level: Level) => void): void {
+    private showNextLevel(): void {
         const nextLevel = this.levels.find(level => level.getHighScore(localStorage) === 0)
-        new HumanMessage([
-            new Paragraph().appendChild(
-                nextLevel
-                ? new Button().onClick(() => callback(nextLevel)).appendText(`I want to play ${this.levelDescription(nextLevel)}`)
-                : new Button().onClick(() => window.close()).appendText('Quit'),
-            ),
-        ]).add()
+        if (nextLevel && !nextLevel.getExampleSeen(localStorage)) {
+            new ButtonMessage(`I want to see an example of ${nextLevel.methodologyName()}`, () => nextLevel.showExample(() => this.continue())).add()
+            nextLevel.setExampleSeen(localStorage)
+        }
+        else if (nextLevel)
+            new ButtonMessage(`I want to play ${this.levelDescription(nextLevel)}`, () => this.play(nextLevel)).add()
+        else
+            new ButtonMessage('I want to quit', () => window.close()).add()
     }
 }

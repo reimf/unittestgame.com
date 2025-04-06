@@ -42,9 +42,9 @@ test.describe('level menu', () => {
         await expect(highScoresPanel).not.toBeAttached()
     })
 
-    test('has next level message', async({ page }) => {
+    test('has see example message', async({ page }) => {
         const messages = page.getByTestId('messages')
         const button = messages.getByRole('button')
-        await expect(button).toHaveText('I want to play Level 1 - Test-Driven Development - Voting Age')
+        await expect(button).toHaveText('I want to see an example of Test-Driven Development')
     })
 })

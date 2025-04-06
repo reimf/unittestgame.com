@@ -1,4 +1,4 @@
-import { Div, Html, Header, Paragraph, Section } from './html.js'
+import { Button, Div, Html, Header, Paragraph, Section } from './html.js'
 import { Random } from './random.js'
 
 abstract class Frame extends Section {
@@ -114,5 +114,15 @@ export class HumanMessage extends Message {
             if (focusable)
                 (focusable as HTMLElement).focus()
         }, Random.integerFromRange(500))
+    }
+}
+
+export class ButtonMessage extends HumanMessage {
+    public constructor(text: string, callback: () => void) {
+        super([
+            new Paragraph().appendChild(
+                new Button().onClick(callback).appendText(text)
+            )
+        ])
     }
 }

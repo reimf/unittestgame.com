@@ -101,25 +101,31 @@ export class Html {
         this.children.push(...children);
         return this;
     }
+    toAttributes() {
+        const attributes = [];
+        if (this.classList.length > 0)
+            attributes.push(`class="${this.classList.join(' ')}"`);
+        if (this.id)
+            attributes.push(`id="${this.id}"`);
+        if (this.title)
+            attributes.push(`title="${this.title}"`);
+        return attributes;
+    }
     toString() {
-        return '<' + this.tagName +
-            (this.classList.length > 0 ? ' class="' + this.classList.join(' ') + '"' : '') +
-            (this.id ? ` id="${this.id}"` : '') +
-            (this.title ? ` title="${this.title}"` : '') +
-            '>' +
+        return '<' + this.tagName + this.toAttributes().sort().map(attribute => ' ' + attribute).join('') + '>' +
             this.children.map(child => child.toString()).join('') +
             '</' + this.tagName + '>';
     }
     toNode() {
         const node = document.createElement(this.tagName);
+        for (const klasse of this.classList)
+            node.classList.add(klasse);
         if (this.id)
             node.id = this.id;
         if (this.title)
             node.title = this.title;
         if (this.onClickCallback)
             node.addEventListener('click', event => this.onClickCallback(event));
-        for (const klasse of this.classList)
-            node.classList.add(klasse);
         for (const child of this.children)
             node.appendChild(child.toNode());
         return node;
@@ -161,6 +167,18 @@ export class Input extends Html {
     setAutocomplete(autocomplete) {
         this.autocomplete = autocomplete ? 'on' : 'off';
         return this;
+    }
+    toAttributes() {
+        const attributes = super.toAttributes();
+        if (this.type)
+            attributes.push(`type="${this.type}"`);
+        if (this.name)
+            attributes.push(`name="${this.name}"`);
+        if (this.value)
+            attributes.push(`value="${this.value}"`);
+        if (this.autocomplete)
+            attributes.push(`autocomplete="${this.autocomplete}"`);
+        return attributes;
     }
     toNode() {
         const node = super.toNode();
@@ -261,6 +279,12 @@ export class Anchor extends Html {
     setHref(href) {
         this.href = href;
         return this;
+    }
+    toAttributes() {
+        const attributes = super.toAttributes();
+        if (this.href)
+            attributes.push(`href="${this.href}"`);
+        return attributes;
     }
     toNode() {
         const node = super.toNode();

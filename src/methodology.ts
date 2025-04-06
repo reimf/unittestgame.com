@@ -1,11 +1,11 @@
 import { Candidate } from './candidate.js'
-import { Panel, ComputerMessage } from './frame.js'
+import { ComputerMessage } from './frame.js'
 import { TestResult } from './test_result.js'
-import { UnitTest } from './unit_test.js'
 
 export abstract class Methodology {
     public abstract name(): string
     public abstract showBasicDefinition(): void
+    public abstract showExample(callback: () => void): void
     public abstract showWelcomeMessage(): void
     public abstract showPanelsOnMenu(specification: string, currentCandidate: Candidate, previousCandidate: Candidate|undefined, perfectCandidate: Candidate, coveredCandidates: Candidate[]): void
     public abstract showHintMessage(currentCandidate: Candidate, failingTestResult: TestResult, penaltyHint: number): void
@@ -15,6 +15,14 @@ export abstract class Methodology {
     public abstract showSuccessfulEndMessage(score: number): void
     public abstract showUselessUnitTestMessage(): void
     public abstract showUsefulUnitTestMessage(): void
+
+    public getExampleSeen(storage: Storage): boolean {
+        return storage.getItem(this.name()) === 'true'
+    }
+
+    public setExampleSeen(storage: Storage): void {
+        storage.setItem(this.name(), 'true')
+    }
 
     public showIncorrectUnitTestMessage(penaltyIncorrectUnitTest: number): void {
         new ComputerMessage(['I did NOT add the unit test, because it is NOT correct.']).add()

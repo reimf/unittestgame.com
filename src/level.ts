@@ -35,6 +35,22 @@ export class Level {
         return `${this.methodology.name()} - ${this.useCase.name()}`
     }
 
+    public methodologyName(): string {
+        return this.methodology.name()
+    }
+
+    public getExampleSeen(storage: Storage): boolean {
+        return this.methodology.getExampleSeen(storage)
+    }
+
+    public setExampleSeen(storage: Storage): void {
+        this.methodology.setExampleSeen(storage)
+    }
+
+    public showExample(callback: () => void): void {
+        this.methodology.showExample(callback)
+    }
+
     public getHighScore(storage: Storage): number {
         return Number(storage.getItem(this.description()))
     }
