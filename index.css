@@ -89,7 +89,7 @@ input {
     &[type="checkbox"] {
         border-radius: 0.25rem;
         margin: 0 0.75rem 0 0.5rem;
-        vertical-align: 0.05rem;
+        vertical-align: middle;
 
         &:focus {
             outline: none !important;
