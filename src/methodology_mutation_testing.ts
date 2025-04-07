@@ -4,6 +4,8 @@ import { Methodology } from './methodology.js'
 import { TestResult } from './test_result.js'
 
 export class MutationTesting extends Methodology {
+    private callback: () => void = () => {}
+
     public name(): string {
         return 'Mutation Testing'
     }
@@ -17,42 +19,43 @@ export class MutationTesting extends Methodology {
     }
 
     public showExample(callback: () => void): void {
+        this.callback = callback
         new ComputerMessage([
-            'Suppose you have a function that implements division.',
-            'function divide(a, b) {\n  if (b === 0) return NaN\n  return a / b\n}',
+            'Suppose you have a function that implements a special version of division.',
+            'function divide(a, b) {\n  if (b === 0) return 0\n  return a / b\n}',
         ]).add()
         new ComputerMessage(['Can you give me a unit test?']).add()
-        new ButtonMessage('divide(4, 2) === 2', () => this.showExampleStep2(callback)).add()
+        this.showFormUnitTestMessage('4', '2', '2', () => this.showExampleStep2())
     }
 
-    private showExampleStep2(callback: () => void): void {
+    private showExampleStep2(): void {
         new ComputerMessage(['And another unit test?']).add()
-        new ButtonMessage('divide(9, 3) === 3', () => this.showExampleStep3(callback)).add()
+        this.showFormUnitTestMessage('9', '3', '3', () => this.showExampleStep3())
     }
 
-    private showExampleStep3(callback: () => void): void {
-        new ComputerMessage(['To check if the function is fully tested now, I will check many mutations.']).add()
+    private showExampleStep3(): void {
+        new ComputerMessage(['To check if the function is fully tested now, I checked many mutations.']).add()
         new ComputerMessage([
             'I found the following mutation that is NOT correct, but still passes both unit tests.',
-            'function divide(a, b) {\n  if (b === 0) return NaN\n  return b\n}',
+            'function divide(a, b) {\n  return b\n}',
         ]).add()
         new ComputerMessage(['Add a unit test that fails this mutation, but passes the function under test.']).add()
-        new ButtonMessage('divide(6, 3) === 2', () => this.showExampleStep4(callback)).add()
+        this.showFormUnitTestMessage('6', '3', '2', () => this.showExampleStep4())
     }
 
-    private showExampleStep4(callback: () => void): void {
+    private showExampleStep4(): void {
         new ComputerMessage([
             'I checked again, and I found the following mutation that is NOT correct, but passes all 3 unit tests.',
             'function divide(a, b) {\n  return a / b\n}'
         ]).add()
         new ComputerMessage(['Again, add a unit test that fails this mutation, but passes the function under test.']).add()
-        new ButtonMessage('divide(5, 0) === NaN', () => this.showExampleStep5(callback)).add()
+        this.showFormUnitTestMessage('5', '0', '0', () => this.showExampleStep5())
     }
 
-    private showExampleStep5(callback: () => void): void {
-        new ComputerMessage(['I checked again, and I could NOT find a mutation that passes all 3 unit tests, so the function is fully tested.']).add()
+    private showExampleStep5(): void {
+        new ComputerMessage(['I checked again, and I could NOT find a mutation that passes all 4 unit tests, so the function is fully tested.']).add()
         new ComputerMessage(['Well done, now you understand the basics of Mutation Testing!']).add()
-        callback()
+        this.callback()
     }
 
     public showWelcomeMessage(): void {

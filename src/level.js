@@ -157,8 +157,8 @@ export class Level {
         this.menu();
     }
     prepareAddUnitTest() {
-        const argumentList = this.useCase.parameters.map(parameter => parameter.value());
-        const expected = this.useCase.unit.value();
+        const argumentList = this.useCase.parameters.map(parameter => parameter.getValue());
+        const expected = this.useCase.unit.getValue();
         const unitTest = new UnitTest(this.useCase.parameters, argumentList, this.useCase.unit, expected);
         this.showAddUnitTestMessage(unitTest);
         this.showProcessing(() => this.addUnitTest(unitTest));

@@ -1,6 +1,10 @@
 import { Panel, ComputerMessage, ButtonMessage } from './frame.js';
 import { Methodology } from './methodology.js';
 export class TestDrivenDevelopment extends Methodology {
+    constructor() {
+        super(...arguments);
+        this.callback = () => { };
+    }
     name() {
         return 'Test-Driven Development';
     }
@@ -11,36 +15,41 @@ export class TestDrivenDevelopment extends Methodology {
         ]).show();
     }
     showExample(callback) {
-        new ComputerMessage(['Can you give me a unit test to start with?']).add();
-        new ButtonMessage('divide(4, 2) === 2', () => this.showExampleStep2(callback)).add();
+        this.callback = callback;
+        new ComputerMessage([
+            'Let\'s start with the following function.',
+            'function divide(a, b) {\n  return undefined\n}',
+            'Can you give me a unit test to start with?'
+        ]).add();
+        this.showFormUnitTestMessage('4', '2', '2', () => this.showExampleStep2());
     }
-    showExampleStep2(callback) {
+    showExampleStep2() {
         new ComputerMessage([
             'I wrote just enough code to pass the unit test.',
             'function divide(a, b) {\n  return 2\n}'
         ]).add();
         new ComputerMessage(['This function does NOT implement division yet, so add another unit test.']).add();
-        new ButtonMessage('divide(9, 3) === 3', () => this.showExampleStep3(callback)).add();
+        this.showFormUnitTestMessage('9', '3', '3', () => this.showExampleStep3());
     }
-    showExampleStep3(callback) {
+    showExampleStep3() {
         new ComputerMessage([
             'I rewrote the function with just enough code such that it passes both unit tests.',
             'function divide(a, b) {\n  return b\n}'
         ]).add();
         new ComputerMessage(['This function still does NOT implement division, so add another unit test.']).add();
-        new ButtonMessage('divide(6, 3) === 2', () => this.showExampleStep4(callback)).add();
+        this.showFormUnitTestMessage('6', '3', '2', () => this.showExampleStep4());
     }
-    showExampleStep4(callback) {
+    showExampleStep4() {
         new ComputerMessage([
             'I rewrote the function again with just enough code such that it passes all 3 unit tests.',
             'function divide(a, b) {\n  return a / b\n}'
         ]).add();
         new ComputerMessage(['This function implements division, so submit the unit tests.']).add();
-        new ButtonMessage('Submit unit tests', () => this.showExampleStep5(callback)).add();
+        new ButtonMessage('Submit unit tests', () => this.showExampleStep5()).add();
     }
-    showExampleStep5(callback) {
+    showExampleStep5() {
         new ComputerMessage(['Well done, now you understand the basics of Test-Driven Development!']).add();
-        callback();
+        this.callback();
     }
     showWelcomeMessage() {
         new ComputerMessage(['You read the *Specification* and write *Unit Tests* that fail the *Current Function*.']).add();

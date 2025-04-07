@@ -1,6 +1,9 @@
 import { Candidate } from './candidate.js'
-import { ComputerMessage } from './frame.js'
+import { ButtonMessage, ComputerMessage } from './frame.js'
 import { TestResult } from './test_result.js'
+import { NumberVariable } from './variable.js'
+import { Button, Form, Input, Paragraph } from './html.js'
+import { HumanMessage } from './frame.js'
 
 export abstract class Methodology {
     public abstract name(): string
@@ -35,4 +38,21 @@ export abstract class Methodology {
             `because your score dropped to ${score}%.`,
         ]).add()
     }
+
+    protected showFormUnitTestMessage(valueA: string, valueB: string, valueDivide: string, callback: () => void): void {
+        new ButtonMessage(`divide(${valueA}, ${valueB}) === ${valueDivide}`, () => callback()).add()
+        // const parameterA = new NumberVariable('a', 'a').setValue(valueA).setReadonly().toHtml()
+        // const parameterB = new NumberVariable('b', 'b').setValue(valueB).setReadonly().toHtml()
+        // const unit = new NumberVariable('a / b', 'divide').setValue(valueDivide).setReadonly().toHtml()
+        // const submitButton = new Input().setType('submit').setValue('I want to add this unit test')
+        // const cancelButton = new Button()
+        //     .setDisabled()
+        //     .setTitle('I don\'t want to add a unit test now')
+        //     .appendText('Cancel')
+        //     .addClass('cancel')
+        // const buttonBlock = new Paragraph().appendChildren([submitButton, cancelButton])
+        // new HumanMessage([
+        //     new Form().onSubmit((_event: Event) => callback()).appendChildren([parameterA, parameterB, unit, buttonBlock]),
+        // ]).add()
+    }    
 }

@@ -3,13 +3,25 @@ import { Html, Input, Label, Paragraph } from './html.js'
 export abstract class Variable {
     protected readonly label: string
     public readonly name: string
+    protected readonly: boolean = false
+    protected initialValue: string = ''
 
     protected constructor(label: string, name: string) {
         this.label = label
         this.name = name
     }
 
-    public abstract value(): boolean | number | string
+    public setReadonly(): Variable {
+        this.readonly = true
+        return this
+    }
+
+    public setValue(value: string): Variable {
+        this.initialValue = value
+        return this
+    }
+
+    public abstract getValue(): boolean | number | string
     public abstract toHtml(): Html
     public abstract format(value: boolean | number | string | undefined): string
 }
@@ -22,14 +34,14 @@ export class RadioVariable extends Variable {
         this.texts = texts
     }
 
-    public value(): string {
+    public getValue(): string {
         const input = document.querySelector(`input[name="${this.name}"]:checked`) as HTMLInputElement
         return input.value
     }
 
     public toHtml(): Html {
         const radioButtons = this.texts.map(text => {
-            const input = new Input().setType('radio').setName(this.name).setValue(text)
+            const input = new Input().setType('radio').setName(this.name).setValue(text).setChecked(text === this.initialValue).setReadonly(this.readonly)
             const label = new Label().appendChild(input).appendText(text)
             return label
         })
@@ -47,13 +59,13 @@ export class CheckboxVariable extends Variable {
         super(label, name)
     }
 
-    public value(): boolean {
+    public getValue(): boolean {
         const input = document.querySelector(`input[name="${this.name}"]`) as HTMLInputElement
         return input.checked
     }
 
     public toHtml(): Html {
-        const input = new Input().setType('checkbox').setName(this.name)
+        const input = new Input().setType('checkbox').setName(this.name).setValue(this.initialValue).setReadonly(this.readonly)
         const label = new Label().appendChild(input).appendText(this.label)
         const paragraph = new Paragraph().appendChild(label)
         return paragraph
@@ -69,13 +81,13 @@ export class TextVariable extends Variable {
         super(label, name)
     }
 
-    public value(): string {
+    public getValue(): string {
         const input = document.querySelector(`input[name="${this.name}"]`) as HTMLInputElement
         return input.value
     }
 
     public toHtml(): Html {
-        const input = new Input().setType('text').setName(this.name).setAutocomplete(false)
+        const input = new Input().setType('text').setName(this.name).setValue(this.initialValue).setAutocomplete(false).setReadonly(this.readonly)
         const label = new Label().appendText(this.label).appendChild(input)
         const paragraph = new Paragraph().appendChild(label)
         return paragraph
@@ -91,13 +103,13 @@ export class NumberVariable extends Variable {
         super(label, name)
     }
 
-    public value(): number {
+    public getValue(): number {
         const input = document.querySelector(`input[name="${this.name}"]`) as HTMLInputElement
         return Number(input.value)
     }
 
     public toHtml(): Html {
-        const input = new Input().setType('number').setName(this.name).setAutocomplete(false)
+        const input = new Input().setType('number').setName(this.name).setValue(this.initialValue).setAutocomplete(false).setReadonly(this.readonly)
         const label = new Label().appendText(this.label).appendChild(input)
         const paragraph = new Paragraph().appendChild(label)
         return paragraph
