@@ -150,8 +150,6 @@ export class Input extends Html {
         this.name = '';
         this.value = '';
         this.autocomplete = '';
-        this.readonly = '';
-        this.checked = '';
         this.setTagName('input');
     }
     setType(type) {
@@ -166,18 +164,8 @@ export class Input extends Html {
         this.value = value;
         return this;
     }
-    setChecked(checked) {
-        if (checked)
-            this.checked = 'checked';
-        return this;
-    }
     setAutocomplete(autocomplete) {
         this.autocomplete = autocomplete ? 'on' : 'off';
-        return this;
-    }
-    setReadonly(readonly) {
-        if (readonly)
-            this.readonly = 'readonly';
         return this;
     }
     toAttributes() {
@@ -190,10 +178,6 @@ export class Input extends Html {
             attributes.push(`value="${this.value}"`);
         if (this.autocomplete)
             attributes.push(`autocomplete="${this.autocomplete}"`);
-        if (this.readonly)
-            attributes.push(`readonly="${this.readonly}"`);
-        if (this.checked)
-            attributes.push(`checked="${this.checked}"`);
         return attributes;
     }
     toNode() {
@@ -206,10 +190,6 @@ export class Input extends Html {
             node.value = this.value;
         if (this.autocomplete)
             node.autocomplete = this.autocomplete;
-        if (this.readonly)
-            node.readOnly = true;
-        if (this.checked)
-            node.checked = true;
         return node;
     }
 }
@@ -245,24 +225,7 @@ export class Paragraph extends Html {
 export class Button extends Html {
     constructor() {
         super();
-        this.disabled = '';
         this.setTagName('button');
-    }
-    setDisabled() {
-        this.disabled = 'disabled';
-        return this;
-    }
-    toAttributes() {
-        const attributes = super.toAttributes();
-        if (this.disabled)
-            attributes.push(`disabled="${this.disabled}"`);
-        return attributes;
-    }
-    toNode() {
-        const node = super.toNode();
-        if (this.disabled)
-            node.disabled = true;
-        return node;
     }
 }
 export class Label extends Html {

@@ -169,8 +169,6 @@ export class Input extends Html {
     private name: string = ''
     private value: string = ''
     private autocomplete: string = ''
-    private readonly: string = ''
-    private checked: string = ''
 
     public constructor() {
         super()
@@ -192,20 +190,8 @@ export class Input extends Html {
         return this
     }
 
-    public setChecked(checked: boolean): Input {
-        if (checked)
-            this.checked = 'checked'
-        return this
-    }
-
     public setAutocomplete(autocomplete: boolean): Input {
         this.autocomplete = autocomplete ? 'on' : 'off'
-        return this
-    }
-
-    public setReadonly(readonly: boolean): Input {
-        if (readonly)
-            this.readonly = 'readonly'
         return this
     }
 
@@ -219,10 +205,6 @@ export class Input extends Html {
             attributes.push(`value="${this.value}"`)
         if (this.autocomplete)
             attributes.push(`autocomplete="${this.autocomplete}"`)
-        if (this.readonly)
-            attributes.push(`readonly="${this.readonly}"`)
-        if (this.checked)
-            attributes.push(`checked="${this.checked}"`)
         return attributes
     }
 
@@ -236,10 +218,6 @@ export class Input extends Html {
             node.value = this.value
         if (this.autocomplete)
             node.autocomplete = this.autocomplete as AutoFill
-        if (this.readonly)
-            node.readOnly = true
-        if (this.checked)
-            node.checked = true
         return node
     }
 }
@@ -280,30 +258,9 @@ export class Paragraph extends Html {
 }
 
 export class Button extends Html {
-    private disabled: string = ''
-
     public constructor() {
         super()
         this.setTagName('button')
-    }
-
-    public setDisabled(): Button {
-        this.disabled = 'disabled'
-        return this
-    }
-
-    public toAttributes(): string[] {
-        const attributes = super.toAttributes()
-        if (this.disabled)
-            attributes.push(`disabled="${this.disabled}"`)
-        return attributes
-    }
-
-    public toNode(): Node {
-        const node = super.toNode() as HTMLButtonElement
-        if (this.disabled)
-            node.disabled = true
-        return node
     }
 }
 

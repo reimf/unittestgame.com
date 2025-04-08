@@ -3,22 +3,10 @@ import { Html, Input, Label, Paragraph } from './html.js'
 export abstract class Variable {
     protected readonly label: string
     public readonly name: string
-    protected readonly: boolean = false
-    protected initialValue: string = ''
 
     protected constructor(label: string, name: string) {
         this.label = label
         this.name = name
-    }
-
-    public setReadonly(): Variable {
-        this.readonly = true
-        return this
-    }
-
-    public setValue(value: string): Variable {
-        this.initialValue = value
-        return this
     }
 
     public abstract getValue(): boolean | number | string
@@ -41,7 +29,7 @@ export class RadioVariable extends Variable {
 
     public toHtml(): Html {
         const radioButtons = this.texts.map(text => {
-            const input = new Input().setType('radio').setName(this.name).setValue(text).setChecked(text === this.initialValue).setReadonly(this.readonly)
+            const input = new Input().setType('radio').setName(this.name).setValue(text)
             const label = new Label().appendChild(input).appendText(text)
             return label
         })
@@ -65,7 +53,7 @@ export class CheckboxVariable extends Variable {
     }
 
     public toHtml(): Html {
-        const input = new Input().setType('checkbox').setName(this.name).setValue(this.initialValue).setReadonly(this.readonly)
+        const input = new Input().setType('checkbox').setName(this.name)
         const label = new Label().appendChild(input).appendText(this.label)
         const paragraph = new Paragraph().appendChild(label)
         return paragraph
@@ -87,7 +75,7 @@ export class TextVariable extends Variable {
     }
 
     public toHtml(): Html {
-        const input = new Input().setType('text').setName(this.name).setValue(this.initialValue).setAutocomplete(false).setReadonly(this.readonly)
+        const input = new Input().setType('text').setName(this.name).setAutocomplete(false)
         const label = new Label().appendText(this.label).appendChild(input)
         const paragraph = new Paragraph().appendChild(label)
         return paragraph
@@ -98,24 +86,4 @@ export class TextVariable extends Variable {
     }
 }
 
-export class NumberVariable extends Variable {
-    public constructor(label: string, name: string) {
-        super(label, name)
-    }
-
-    public getValue(): number {
-        const input = document.querySelector(`input[name="${this.name}"]`) as HTMLInputElement
-        return Number(input.value)
-    }
-
-    public toHtml(): Html {
-        const input = new Input().setType('number').setName(this.name).setValue(this.initialValue).setAutocomplete(false).setReadonly(this.readonly)
-        const label = new Label().appendText(this.label).appendChild(input)
-        const paragraph = new Paragraph().appendChild(label)
-        return paragraph
-    }
-
-    public format(value: number): string {
-        return value === undefined ? 'undefined' : value.toString()
-    }
-}
+export class NumberVariable extends TextVariable {}

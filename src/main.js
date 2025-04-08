@@ -98,12 +98,15 @@ export class Main {
     showNextLevel() {
         const nextLevel = this.levels.find(level => level.getHighScore(localStorage) === 0);
         if (nextLevel && !nextLevel.getExampleSeen(localStorage)) {
-            new ButtonMessage(`I want to see an example of ${nextLevel.methodologyName()}`, () => nextLevel.showExample(() => this.continue())).add();
-            nextLevel.setExampleSeen(localStorage);
+            new ButtonMessage(`I want to see an example of ${nextLevel.methodologyName()}`, () => nextLevel.showExample(() => this.setExampleSeen(localStorage, nextLevel))).add();
         }
         else if (nextLevel)
             new ButtonMessage(`I want to play ${this.levelDescription(nextLevel)}`, () => this.play(nextLevel)).add();
         else
             new ButtonMessage('I want to quit', () => window.close()).add();
+    }
+    setExampleSeen(storage, nextLevel) {
+        nextLevel.setExampleSeen(storage);
+        this.continue();
     }
 }

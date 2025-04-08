@@ -25,12 +25,12 @@ export class MutationTesting extends Methodology {
             'function divide(a, b) {\n  if (b === 0) return 0\n  return a / b\n}',
         ]).add()
         new ComputerMessage(['Can you give me a unit test?']).add()
-        this.showFormUnitTestMessage('4', '2', '2', () => this.showExampleStep2())
+        new ButtonMessage('divide(4, 2) === 2', () => this.showExampleStep2()).add()
     }
 
     private showExampleStep2(): void {
         new ComputerMessage(['And another unit test?']).add()
-        this.showFormUnitTestMessage('9', '3', '3', () => this.showExampleStep3())
+        new ButtonMessage('divide(9, 3) === 3', () => this.showExampleStep3()).add()
     }
 
     private showExampleStep3(): void {
@@ -40,7 +40,7 @@ export class MutationTesting extends Methodology {
             'function divide(a, b) {\n  return b\n}',
         ]).add()
         new ComputerMessage(['Add a unit test that fails this mutation, but passes the function under test.']).add()
-        this.showFormUnitTestMessage('6', '3', '2', () => this.showExampleStep4())
+        new ButtonMessage('divide(6, 3) === 2', () => this.showExampleStep4()).add()
     }
 
     private showExampleStep4(): void {
@@ -49,7 +49,7 @@ export class MutationTesting extends Methodology {
             'function divide(a, b) {\n  return a / b\n}'
         ]).add()
         new ComputerMessage(['Again, add a unit test that fails this mutation, but passes the function under test.']).add()
-        this.showFormUnitTestMessage('5', '0', '0', () => this.showExampleStep5())
+        new ButtonMessage('divide(5, 0) === 0', () => this.showExampleStep5()).add()
     }
 
     private showExampleStep5(): void {

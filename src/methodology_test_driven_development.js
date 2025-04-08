@@ -21,7 +21,7 @@ export class TestDrivenDevelopment extends Methodology {
             'function divide(a, b) {\n  return undefined\n}',
             'Can you give me a unit test to start with?'
         ]).add();
-        this.showFormUnitTestMessage('4', '2', '2', () => this.showExampleStep2());
+        new ButtonMessage('divide(4, 2) === 2', () => this.showExampleStep2()).add();
     }
     showExampleStep2() {
         new ComputerMessage([
@@ -29,7 +29,7 @@ export class TestDrivenDevelopment extends Methodology {
             'function divide(a, b) {\n  return 2\n}'
         ]).add();
         new ComputerMessage(['This function does NOT implement division yet, so add another unit test.']).add();
-        this.showFormUnitTestMessage('9', '3', '3', () => this.showExampleStep3());
+        new ButtonMessage('divide(9, 3) === 3', () => this.showExampleStep3()).add();
     }
     showExampleStep3() {
         new ComputerMessage([
@@ -37,7 +37,7 @@ export class TestDrivenDevelopment extends Methodology {
             'function divide(a, b) {\n  return b\n}'
         ]).add();
         new ComputerMessage(['This function still does NOT implement division, so add another unit test.']).add();
-        this.showFormUnitTestMessage('6', '3', '2', () => this.showExampleStep4());
+        new ButtonMessage('divide(6, 3) === 2', () => this.showExampleStep4()).add();
     }
     showExampleStep4() {
         new ComputerMessage([
