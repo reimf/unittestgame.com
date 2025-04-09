@@ -1,6 +1,7 @@
 import { Candidate } from './candidate.js'
 import { ButtonMessage, ComputerMessage } from './frame.js'
 import { TestResult } from './test_result.js'
+import { StoredValue } from './stored_value.js'
 
 export abstract class Methodology {
     public abstract name(): string
@@ -8,31 +9,24 @@ export abstract class Methodology {
     public abstract showExample(callback: () => void): void
     public abstract showWelcomeMessage(): void
     public abstract showPanelsOnMenu(specification: string, currentCandidate: Candidate, previousCandidate: Candidate|undefined, perfectCandidate: Candidate, coveredCandidates: Candidate[]): void
-    public abstract showHintMessage(currentCandidate: Candidate, failingTestResult: TestResult, penaltyHint: number): void
-    public abstract showNoHintMessage(penaltyHint: number): void
-    public abstract showBugFoundMessage(currentCandidate: Candidate, failingTestResult: TestResult, penaltySubmitWithBug: number): void
-    public abstract showUnsuccessfulEndMessage(score: number): void
-    public abstract showSuccessfulEndMessage(score: number): void
+    public abstract showHintMessage(currentCandidate: Candidate, failingTestResult: TestResult): void
+    public abstract showNoHintMessage(): void
+    public abstract showBugFoundMessage(currentCandidate: Candidate, failingTestResult: TestResult): void
+    public abstract showEndMessage(): void
     public abstract showUselessUnitTestMessage(): void
     public abstract showUsefulUnitTestMessage(): void
 
-    public getExampleSeen(storage: Storage): boolean {
-        return storage.getItem(this.name()) === 'true'
+    public readonly exampleSeen: StoredValue = new StoredValue(`${this.name()} - Example Seen`)
+
+    public getExampleSeen(storage: Storage): string {
+        return this.exampleSeen.get(storage)
     }
 
     public setExampleSeen(storage: Storage): void {
-        storage.setItem(this.name(), 'true')
+        this.exampleSeen.set(storage)
     }
 
-    public showIncorrectUnitTestMessage(penaltyIncorrectUnitTest: number): void {
+    public showIncorrectUnitTestMessage(): void {
         new ComputerMessage(['I did NOT add the unit test, because it is NOT correct.']).add()
-        new ComputerMessage([`The cost for trying to add an incorrect unit test is ${penaltyIncorrectUnitTest}%.`]).add()
-    }
-
-    public showMinimumScoreEndMessage(score: number): void {
-        new ComputerMessage([
-            'You have to retry this level, ' +
-            `because your score dropped to ${score}%.`,
-        ]).add()
     }
 }

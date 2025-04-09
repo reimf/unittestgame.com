@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test'
 import { Panel, ComputerMessage, HumanMessage, ButtonMessage } from '../../src/frame.js'
 
-  
+
 test.describe('class Frame', () => {
     test('subclass Panel', () => {
         const panel = new Panel('My Score', ['Level1: 100%'])
@@ -9,8 +9,8 @@ test.describe('class Frame', () => {
     })
 
     test('subclass ComputerMessage', () => {
-        const computerMessage = new ComputerMessage(['Hello', 'World']).appendProcessing()
-        expect(computerMessage.toString()).toBe('<section class="computer"><div><p class="processing">Hello</p><p>World</p></div></section>')
+        const computerMessage = new ComputerMessage(['Hello', 'World'])
+        expect(computerMessage.toString()).toBe('<section class="computer"><div><p>Hello</p><p>World</p></div></section>')
     })
 
     test('subclass HumanMessage', () => {

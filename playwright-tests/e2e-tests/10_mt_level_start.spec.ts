@@ -2,7 +2,8 @@ import { test, expect } from '@playwright/test'
 
 test.describe('mt level start', () => {
     test.beforeEach(async({ context, page }) => {
-        await context.addInitScript(_ => localStorage.setItem('Test-Driven Development', 'true'))
+        await context.addInitScript(_ => localStorage.setItem('Main - Sidebar Shown', 'Sun, 31 Dec 1899 00:00:00 GMT'))
+        await context.addInitScript(_ => localStorage.setItem('Test-Driven Development - Example Seen', 'Sun, 31 Dec 1899 00:00:00 GMT'))
         await context.addInitScript(_ => localStorage.setItem('Test-Driven Development - Voting Age', '100'))
         await context.addInitScript({ path: './playwright-tests/e2e-tests/init_script.js' })
         await page.goto('http://localhost:5500/')
@@ -10,7 +11,7 @@ test.describe('mt level start', () => {
         await page.getByRole('button', { name: 'divide(4, 2) === 2' }).click()
         await page.getByRole('button', { name: 'divide(9, 3) === 3' }).click()
         await page.getByRole('button', { name: 'divide(6, 3) === 2' }).click()
-        await page.getByRole('button', { name: 'divide(5, 0) === NaN' }).click()
+        await page.getByRole('button', { name: 'divide(5, 0) === 0' }).click()
         await page.getByRole('button', { name: 'I want to play Level 2 - Mutation Testing - Even or Odd' }).click()
     })
 
@@ -40,9 +41,9 @@ test.describe('mt level start', () => {
         await expect(codeLines).toContainText(['function isEven(number) {', '  if (number % 2 !== 0) return false', '  return true', '}'])
     })
 
-    test('has 100% in the score panel', async({ page }) => {
-        const scorePanel = page.getByTestId('score')
-        await expect(scorePanel).toContainText('100')
+    test('has score 0 in the level panel', async({ page }) => {
+        const levelPanel = page.getByTestId('level')
+        await expect(levelPanel).toContainText('0')
     })
 
     test('has contract message', async({ page }) => {
@@ -57,7 +58,6 @@ test.describe('mt level start', () => {
             'Add unit test',
             'Show hint',
             'Submit unit tests',
-            'Exit level',
         ])
     })
 })

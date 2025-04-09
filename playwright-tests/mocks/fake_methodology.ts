@@ -10,9 +10,8 @@ export class FakeMethodology extends Methodology {
     public showPanelsOnMenu(_specification: string, _currentCandidate: Candidate, _previousCandidate: Candidate|undefined, _perfectCandidate: Candidate, _coveredCandidates: Candidate[]): void { }
     public showUselessUnitTestMessage(): void { }
     public showUsefulUnitTestMessage(): void { }
-    public showHintMessage(_currentCandidate: Candidate, _failingTestResult: TestResult, _penaltyHint: number): void { }
-    public showNoHintMessage(_penaltyHint: number): void { }
-    public showBugFoundMessage(_currentCandidate: Candidate, _failingTestResult: TestResult, _penaltySubmitWithBug: number): void { }
-    public showUnsuccessfulEndMessage(_score: number): void { }
-    public showSuccessfulEndMessage(_score: number): void { }
+    public showHintMessage(_currentCandidate: Candidate, _failingTestResult: TestResult): void { }
+    public showNoHintMessage(): void { }
+    public showBugFoundMessage(_currentCandidate: Candidate, _failingTestResult: TestResult): void { }
+    public showEndMessage(): void { }
 }

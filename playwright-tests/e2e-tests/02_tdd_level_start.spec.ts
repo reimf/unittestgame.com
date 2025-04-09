@@ -2,9 +2,9 @@ import { test, expect } from '@playwright/test'
 
 test.describe('tdd level start', () => {
     test.beforeEach(async({ context, page }) => {
+        await context.addInitScript(_ => localStorage.setItem('Main - Sidebar Shown', 'Sun, 31 Dec 1899 00:00:00 GMT'))
         await context.addInitScript({ path: './playwright-tests/e2e-tests/init_script.js' })
         await page.goto('http://localhost:5500/')
-        await page.getByRole('button', { name: 'I want a sidebar for terms with a purple background' }).click()
         await page.getByRole('button', { name: 'I want to see an example of Test-Driven Development' }).click()
         await page.getByRole('button', { name: 'divide(4, 2) === 2' }).click()
         await page.getByRole('button', { name: 'divide(9, 3) === 3' }).click()
@@ -39,9 +39,9 @@ test.describe('tdd level start', () => {
         await expect(theFunctionPanel).not.toBeAttached()
     })
 
-    test('has 100% in the score panel', async({ page }) => {
-        const scorePanel = page.getByTestId('score')
-        await expect(scorePanel).toContainText('100')
+    test('has score 0 in the level panel', async({ page }) => {
+        const levelPanel = page.getByTestId('level')
+        await expect(levelPanel).toContainText('0')
     })
 
     test('has contract message', async({ page }) => {
@@ -56,7 +56,6 @@ test.describe('tdd level start', () => {
             'Add unit test',
             'Show hint',
             'Submit unit tests',
-            'Exit level',
         ])
     })
 })

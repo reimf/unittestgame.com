@@ -29,9 +29,9 @@ test.describe('level menu', () => {
         const link = page.getByTestId('mutation-testing').getByRole('link', { name: 'more' });
         expect(await link.getAttribute('href')).toBe('https://en.wikipedia.org/wiki/Mutation_testing');
     });
-    test('has no high scores panel', async ({ page }) => {
-        const highScoresPanel = page.getByTestId('high-scores');
-        await expect(highScoresPanel).not.toBeAttached();
+    test('has no levels panel', async ({ page }) => {
+        const levelsPanel = page.getByTestId('levels');
+        await expect(levelsPanel).not.toBeAttached();
     });
     test('has see example message', async ({ page }) => {
         const messages = page.getByTestId('messages');

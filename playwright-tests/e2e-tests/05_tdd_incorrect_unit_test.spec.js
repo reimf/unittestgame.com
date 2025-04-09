@@ -1,10 +1,10 @@
 import { test, expect } from '@playwright/test';
 test.describe('tdd incorrect unit test', () => {
     test.beforeEach(async ({ context, page }) => {
-        await context.addInitScript(_ => localStorage.setItem('Test-Driven Development', 'true'));
+        await context.addInitScript(_ => localStorage.setItem('Main - Sidebar Shown', 'Sun, 31 Dec 1899 00:00:00 GMT'));
+        await context.addInitScript(_ => localStorage.setItem('Test-Driven Development - Example Seen', 'Sun, 31 Dec 1899 00:00:00 GMT'));
         await context.addInitScript({ path: './playwright-tests/e2e-tests/init_script.js' });
         await page.goto('http://localhost:5500/');
-        await page.getByRole('button', { name: 'I want a sidebar for terms with a purple background' }).click();
         await page.getByRole('button', { name: 'I want to play Level 1 - Test-Driven Development - Voting Age' }).click();
         await page.getByRole('button', { name: 'Add unit test' }).click();
         await page.getByLabel('Age').fill('15');
@@ -30,7 +30,6 @@ test.describe('tdd incorrect unit test', () => {
             'Add unit test',
             'Show hint',
             'Submit unit tests',
-            'Exit level',
         ]);
     });
 });

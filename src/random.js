@@ -5,7 +5,4 @@ export class Random {
     static integerUnder(x) {
         return Math.floor(Math.random() * x);
     }
-    static integerFromRange(start, length = 0) {
-        return Math.random() == 0 ? 0 : Math.floor(start + Math.random() * length);
-    }
 }

@@ -62,7 +62,7 @@ test.describe('class Html', () => {
         expect(input.toString()).toBe('<input></input>');
     });
     test('has form', () => {
-        const form = new Form().onSubmit(event => console.log(event));
+        const form = new Form().onSubmit(_ => { });
         expect(form.toString()).toBe('<form></form>');
     });
     test('has header', () => {

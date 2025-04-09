@@ -13,6 +13,7 @@ import { LeapYear } from './use_case_leap_year.js'
 import { FloatFormat } from './use_case_float_format.js'
 import { PasswordStrength } from './use_case_password_strength.js'
 import { SpeedDisplay } from './use_case_speed_display.js'
+import { StoredValue } from './stored_value.js'
 
 export class Main {
     private readonly testDrivenDevelopment: Methodology = new TestDrivenDevelopment()
@@ -44,16 +45,18 @@ export class Main {
         new Level(this.testDrivenDevelopment, this.floatFormat),
         new Level(this.mutationTesting, this.speedDisplay),
     ]
+    private readonly sidebarShown: StoredValue = new StoredValue('Main - Sidebar Shown')
 
     public start(): void {
         this.showWelcomeMessage()
-        if (this.getLevelsWithHighScore().length === 0)
-            this.showQuestionSidebar(() => this.sidebar())
-        else
+        if (this.sidebarShown.get(localStorage))
             this.sidebar()
+        else
+            this.showQuestionSidebar(() => this.sidebar())
     }
 
     private sidebar(): void {
+        this.sidebarShown.set(localStorage)
         this.showUnittestgamePanel()
         for (const methodology of this.methodologies)
             methodology.showBasicDefinition()
@@ -61,7 +64,7 @@ export class Main {
     }
 
     private continue(): void {
-        this.showHighScoresPanel()
+        this.showLevelsPanel()
         this.showInvitationMessage()
         this.showNextLevel()
     }
@@ -71,8 +74,8 @@ export class Main {
         level.play(() => this.continue())
     }
 
-    private getLevelsWithHighScore(): Level[] {
-        return this.levels.filter(level => level.getHighScore(localStorage) > 0)
+    private getLevelsWithScore(): Level[] {
+        return this.levels.filter(level => level.getScore(localStorage) !== '')
     }
 
     private showWelcomeMessage(): void {
@@ -104,23 +107,22 @@ export class Main {
         return `Level ${index + 1} - ${level.description()}`
     }
 
-    private showHighScoresPanel(): void {
-        const levels = this.getLevelsWithHighScore()
+    private showLevelsPanel(): void {
+        const levels = this.getLevelsWithScore()
         if (levels.length > 0) {
-            new Panel('High Scores',
-                levels.map(level => new Div().appendText(`${this.levelDescription(level)}: ${level.getHighScore(localStorage)}%`)
-            )
-        ).show()
+            new Panel('Levels',
+                levels.map(level => new Div().appendText(`${this.levelDescription(level)}: ${level.getScore(localStorage)}`))
+            ).show()
         }
     }
 
     private showNextLevel(): void {
-        const nextLevel = this.levels.find(level => level.getHighScore(localStorage) === 0)
+        const nextLevel = this.levels.find(level => level.getScore(localStorage) === '')
         if (nextLevel && !nextLevel.getExampleSeen(localStorage)) {
             new ButtonMessage(
                 `I want to see an example of ${nextLevel.methodologyName()}`,
                 () => nextLevel.showExample(
-                    () => this.setExampleSeen(localStorage, nextLevel)
+                    () => this.setExampleSeen(nextLevel)
                 )
             ).add()
         }
@@ -130,8 +132,8 @@ export class Main {
             new ButtonMessage('I want to quit', () => window.close()).add()
     }
 
-    private setExampleSeen(storage: Storage, nextLevel: Level): void {
-        nextLevel.setExampleSeen(storage)
+    private setExampleSeen(nextLevel: Level): void {
+        nextLevel.setExampleSeen(localStorage)
         this.continue() 
     }
 }

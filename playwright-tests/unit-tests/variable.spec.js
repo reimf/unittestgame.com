@@ -15,6 +15,6 @@ test.describe('class Variable', () => {
     });
     test('subclass NumberVariable', () => {
         const variable = new NumberVariable('Number', 'number');
-        expect(variable.toHtml().toString()).toBe('<p><label>Number<input autocomplete="off" name="number" type="number"></input></label></p>');
+        expect(variable.toHtml().toString()).toBe('<p><label>Number<input autocomplete="off" name="number" type="text"></input></label></p>');
     });
 });

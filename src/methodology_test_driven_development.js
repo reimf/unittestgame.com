@@ -1,4 +1,4 @@
-import { Panel, ComputerMessage, ButtonMessage } from './frame.js';
+import { Panel, ComputerMessage, ButtonMessage, ProcessingMessage } from './frame.js';
 import { Methodology } from './methodology.js';
 export class TestDrivenDevelopment extends Methodology {
     constructor() {
@@ -10,45 +10,48 @@ export class TestDrivenDevelopment extends Methodology {
     }
     showBasicDefinition() {
         new Panel('Test-Driven Development', [
-            'Write a failing unit test for a function, then write just enough code to make the unit test pass; repeat. ' +
+            'Write a unit test that initially fails, then write just enough code to make the unit test pass; repeat until the code is according to the specification. ' +
                 '[Read more](https://en.wikipedia.org/wiki/Test-driven_development)',
         ]).show();
     }
     showExample(callback) {
         this.callback = callback;
-        new ComputerMessage([
-            'Let\'s start with the following function.',
-            'function divide(a, b) {\n  return undefined\n}',
-            'Can you give me a unit test to start with?'
-        ]).add();
+        new ProcessingMessage('Creating an example of Test-Driven Development...', () => this.showExampleStep1(), 2000).add();
+    }
+    showExampleStep1() {
+        new ComputerMessage(['Read the following function that will eventually implement division.', 'function divide(a, b) {\n  return undefined\n}']).add();
+        new ComputerMessage(['This function does NOT implement division yet, so add a unit test that fails.']).add();
         new ButtonMessage('divide(4, 2) === 2', () => this.showExampleStep2()).add();
     }
     showExampleStep2() {
-        new ComputerMessage([
-            'I wrote just enough code to pass the unit test.',
-            'function divide(a, b) {\n  return 2\n}'
-        ]).add();
-        new ComputerMessage(['This function does NOT implement division yet, so add another unit test.']).add();
-        new ButtonMessage('divide(9, 3) === 3', () => this.showExampleStep3()).add();
+        new ProcessingMessage('Writing just enough code to make the unit test pass...', () => this.showExampleStep3(), 2000).add();
     }
     showExampleStep3() {
-        new ComputerMessage([
-            'I rewrote the function with just enough code such that it passes both unit tests.',
-            'function divide(a, b) {\n  return b\n}'
-        ]).add();
-        new ComputerMessage(['This function still does NOT implement division, so add another unit test.']).add();
-        new ButtonMessage('divide(6, 3) === 2', () => this.showExampleStep4()).add();
+        new ComputerMessage(['I wrote just enough code to make the unit test pass.', 'function divide(a, b) {\n  return 2\n}']).add();
+        new ComputerMessage(['This function does NOT implement division yet, so add another unit test that fails.']).add();
+        new ButtonMessage('divide(9, 3) === 3', () => this.showExampleStep4()).add();
     }
     showExampleStep4() {
-        new ComputerMessage([
-            'I rewrote the function again with just enough code such that it passes all 3 unit tests.',
-            'function divide(a, b) {\n  return a / b\n}'
-        ]).add();
-        new ComputerMessage(['This function implements division, so submit the unit tests.']).add();
-        new ButtonMessage('Submit unit tests', () => this.showExampleStep5()).add();
+        new ProcessingMessage('Writing just enough code to make both unit tests pass...', () => this.showExampleStep5(), 2000).add();
     }
     showExampleStep5() {
-        new ComputerMessage(['Well done, now you understand the basics of Test-Driven Development!']).add();
+        new ComputerMessage(['I rewrote the function with just enough code to make both unit tests pass.', 'function divide(a, b) {\n  return b\n}']).add();
+        new ComputerMessage(['This function still does NOT implement division, so add another unit test that fails.']).add();
+        new ButtonMessage('divide(6, 3) === 2', () => this.showExampleStep6()).add();
+    }
+    showExampleStep6() {
+        new ProcessingMessage('Writing just enough code to make all 3 unit tests pass...', () => this.showExampleStep7(), 2000).add();
+    }
+    showExampleStep7() {
+        new ComputerMessage(['I rewrote the function again with just enough code to make all 3 unit tests pass.', 'function divide(a, b) {\n  return a / b\n}']).add();
+        new ComputerMessage(['Now the function implements division, so you can submit the unit tests.']).add();
+        new ButtonMessage('Submit unit tests', () => this.showExampleStep8()).add();
+    }
+    showExampleStep8() {
+        new ProcessingMessage('Checking if the function implements division...', () => this.showExampleStep9(), 2000).add();
+    }
+    showExampleStep9() {
+        new ComputerMessage(['Congratulations, you understand the basics of Test-Driven Development!']).add();
         this.callback();
     }
     showWelcomeMessage() {
@@ -79,25 +82,17 @@ export class TestDrivenDevelopment extends Methodology {
                 'I improved the *Current Function* such that it now also passes the new unit test.',
         ]).add();
     }
-    showHintMessage(_currentCandidate, failingTestResult, penaltyHint) {
-        new ComputerMessage(['A failing unit test for the *Current Function* is the following.', failingTestResult.unitTest.toString()]).add();
-        new ComputerMessage([`The cost for this hint is ${penaltyHint}%.`]).add();
+    showHintMessage(_currentCandidate, failingTestResult) {
+        new ComputerMessage(['A unit test that fails for the *Current Function* is the following.', failingTestResult.unitTest.toString()]).add();
     }
-    showNoHintMessage(penaltyHint) {
-        new ComputerMessage(['I can\'t think of a failing unit test for the *Current Function*.']).add();
-        new ComputerMessage([`The cost for this hint is ${penaltyHint}%.`]).add();
+    showNoHintMessage() {
+        new ComputerMessage(['I can\'t think of a unit test that fails for the *Current Function*.']).add();
     }
-    showBugFoundMessage(_currentCandidate, failingTestResult, penaltySubmitWithBug) {
+    showBugFoundMessage(_currentCandidate, failingTestResult) {
         new ComputerMessage(['I checked the *Current Function*, but it is NOT according to the *Specification*.']).add();
         new ComputerMessage(['It produces the following incorrect output.', failingTestResult.toString()]).add();
-        new ComputerMessage([`The cost for submitting when there is still an error is ${penaltySubmitWithBug}%.`]).add();
     }
-    showUnsuccessfulEndMessage(score) {
-        new ComputerMessage(['I checked the *Current Function*, but it is NOT according to the *Specification*.']).add();
-        new ComputerMessage([`Your final *Score* is ${score}%.`]).add();
-    }
-    showSuccessfulEndMessage(score) {
+    showEndMessage() {
         new ComputerMessage(['I checked the *Current Function* and it is indeed according to the *Specification*.']).add();
-        new ComputerMessage([`Your final *Score* is ${score}%.`]).add();
     }
 }

@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test'
 import { RadioVariable, CheckboxVariable, TextVariable, NumberVariable } from '../../src/variable.js'
 
-  
+
 test.describe('class Variable', () => {
     test('subclass RadioVariable', () => {
         const variable = new RadioVariable('Type of triangle', 'triangleType', ['equilateral', 'isosceles', 'scalene'])
@@ -20,6 +20,6 @@ test.describe('class Variable', () => {
 
     test('subclass NumberVariable', () => {
         const variable = new NumberVariable('Number', 'number')
-        expect(variable.toHtml().toString()).toBe('<p><label>Number<input autocomplete="off" name="number" type="number"></input></label></p>')
+        expect(variable.toHtml().toString()).toBe('<p><label>Number<input autocomplete="off" name="number" type="text"></input></label></p>')
     })
 })

@@ -1,25 +1,29 @@
 import { Candidate } from './candidate.js';
-import { HumanMessage, ComputerMessage, Panel } from './frame.js';
-import { Button, Div, Form, Input, Paragraph } from './html.js';
+import { HumanMessage, ProcessingMessage, ComputerMessage, Panel } from './frame.js';
+import { Button, Div, Form, Input, Paragraph, Span } from './html.js';
 import { Random } from './random.js';
 import { TestResult } from './test_result.js';
 import { UnitTest } from './unit_test.js';
+import { StoredValue } from './stored_value.js';
 export class Level {
     constructor(methodology, useCase) {
-        this.PERFECTSCORE = 100;
-        this.PENALTYINCORRECTUNITTEST = 5;
-        this.PENALTYHINT = 10;
-        this.PENALTYSUBMITWITHBUG = 20;
-        this.MINIMUMSCORE = 0;
         this.userdefinedUnitTests = [];
         this.coveredCandidates = [];
         this.currentCandidate = new Candidate([]);
         this.failingTestResult = undefined;
-        this.score = this.PERFECTSCORE;
+        this.score = 0;
+        this.previousScore = 0;
+        this.subscoreNumberOfUnitTests = 0;
+        this.subscoreNumberOfUsefulUnitTests = 0;
+        this.subscoreOnlyCorrectUnitTests = 200;
+        this.subscoreNoHint = 200;
+        this.subscoreNoSubmitWithBug = 400;
+        this.subscoreOnlyUsefulUnitTests = 200;
         this.newUnitTest = undefined;
         this.previousCandidate = undefined;
         this.methodology = methodology;
         this.useCase = useCase;
+        this.storedScore = new StoredValue(this.description());
     }
     description() {
         return `${this.methodology.name()} - ${this.useCase.name()}`;
@@ -36,12 +40,8 @@ export class Level {
     showExample(callback) {
         this.methodology.showExample(callback);
     }
-    getHighScore(storage) {
-        return Number(storage.getItem(this.description()));
-    }
-    saveScore(storage, score) {
-        if (score > this.getHighScore(storage))
-            storage.setItem(this.description(), score.toString());
+    getScore(storage) {
+        return this.storedScore.get(storage);
     }
     play(callback) {
         this.callback = callback;
@@ -49,7 +49,16 @@ export class Level {
         this.coveredCandidates = [];
         this.currentCandidate = this.findSimplestPassingCandidate();
         this.failingTestResult = this.findFailingTestResult();
-        this.score = this.PERFECTSCORE;
+        this.score = 0;
+        this.previousScore = 0;
+        this.subscoreNumberOfUnitTests = 0;
+        this.subscoreNumberOfUsefulUnitTests = 0;
+        this.subscoreOnlyCorrectUnitTests = 200;
+        this.subscoreNoHint = 200;
+        this.subscoreNoSubmitWithBug = 400;
+        this.subscoreOnlyUsefulUnitTests = 200;
+        this.newUnitTest = undefined;
+        this.previousCandidate = undefined;
         this.methodology.showWelcomeMessage();
         this.menu();
     }
@@ -88,8 +97,12 @@ export class Level {
             return Random.elementFrom(failingMinimalUnitTests);
         return undefined;
     }
-    showScorePanel() {
-        new Panel('Score', [`${this.description()}: ${this.score}%`]).show();
+    showLevelPanel() {
+        new Panel('Level', [
+            new Paragraph()
+                .appendText(`${this.description()}: `)
+                .appendChild(new Span().appendText(`${this.score}`).addClass('new', this.score !== this.previousScore))
+        ]).show();
     }
     showUnitTestsPanel() {
         new Panel('Unit Tests', this.userdefinedUnitTests.length === 0
@@ -98,17 +111,16 @@ export class Level {
         this.newUnitTest = undefined;
     }
     menu() {
+        this.previousScore = this.score;
+        this.score = this.calculateScoreDuringPlay();
         this.showPanels();
-        if (this.score === this.MINIMUMSCORE)
-            this.end();
-        else
-            this.showMenuMessage();
+        this.showMenuMessage();
     }
     showPanels() {
         this.methodology.showPanelsOnMenu(this.useCase.specification(), this.currentCandidate, this.previousCandidate, this.useCase.perfectCandidate, this.coveredCandidates);
         this.previousCandidate = undefined;
         this.showUnitTestsPanel();
-        this.showScorePanel();
+        this.showLevelPanel();
     }
     showMenuMessage() {
         new HumanMessage([
@@ -116,7 +128,6 @@ export class Level {
                 new Button().setTitle('I want to add a unit test').appendText('Add unit test').onClick(() => this.startAddUnitTestFlow()),
                 new Button().setTitle('I want to see a hint').appendText('Show hint').onClick(() => this.showHint()),
                 new Button().setTitle('I want to submit the unit tests').appendText('Submit unit tests').onClick(() => this.prepareSubmitUnitTests()),
-                new Button().setTitle('I want to exit this level').appendText('Exit level').onClick(() => this.end()),
             ]),
         ]).add();
     }
@@ -161,70 +172,70 @@ export class Level {
         const expected = this.useCase.unit.getValue();
         const unitTest = new UnitTest(this.useCase.parameters, argumentList, this.useCase.unit, expected);
         this.showAddUnitTestMessage(unitTest);
-        this.showProcessing(() => this.addUnitTest(unitTest));
-    }
-    showProcessing(callback) {
-        new ComputerMessage(['Processing... ']).appendProcessing().add();
-        window.setTimeout(() => {
-            ComputerMessage.removeLast();
-            callback();
-        }, Random.integerFromRange(1000, this.userdefinedUnitTests.length * 500));
+        new ProcessingMessage('Processing this new unit test...', () => this.addUnitTest(unitTest), 1000 + this.userdefinedUnitTests.length * 500).add();
     }
     addUnitTest(unitTest) {
         const unitTestIsCorrect = new TestResult(this.useCase.perfectCandidate, unitTest).passes;
         if (unitTestIsCorrect) {
             this.newUnitTest = unitTest;
             this.userdefinedUnitTests.push(unitTest);
+            this.subscoreNumberOfUnitTests += 100;
             this.coveredCandidates.push(this.findCoveredCandidate(unitTest));
             this.previousCandidate = this.currentCandidate;
-            if (new TestResult(this.currentCandidate, unitTest).passes)
+            if (new TestResult(this.currentCandidate, unitTest).passes) {
                 this.methodology.showUselessUnitTestMessage();
+                this.subscoreOnlyUsefulUnitTests = 0;
+            }
             else {
                 this.methodology.showUsefulUnitTestMessage();
+                this.subscoreNumberOfUsefulUnitTests += 100;
                 this.currentCandidate = this.findSimplestPassingCandidate();
                 this.failingTestResult = this.findFailingTestResult();
             }
         }
         else {
-            this.methodology.showIncorrectUnitTestMessage(this.PENALTYINCORRECTUNITTEST);
-            this.subtractPenalty(this.PENALTYINCORRECTUNITTEST);
+            this.methodology.showIncorrectUnitTestMessage();
+            this.subscoreOnlyCorrectUnitTests = 0;
         }
         this.menu();
     }
     showHint() {
         if (this.failingTestResult)
-            this.methodology.showHintMessage(this.currentCandidate, this.failingTestResult, this.PENALTYHINT);
+            this.methodology.showHintMessage(this.currentCandidate, this.failingTestResult);
         else
-            this.methodology.showNoHintMessage(this.PENALTYHINT);
-        this.subtractPenalty(this.PENALTYHINT);
+            this.methodology.showNoHintMessage();
+        this.subscoreNoHint = 0;
         this.menu();
     }
     prepareSubmitUnitTests() {
-        this.showProcessing(() => this.submitUnitTests());
+        new ProcessingMessage('Checking...', () => this.submitUnitTests(), 1000 + this.userdefinedUnitTests.length * 500).add();
     }
     submitUnitTests() {
         if (this.failingTestResult) {
-            this.methodology.showBugFoundMessage(this.currentCandidate, this.failingTestResult, this.PENALTYSUBMITWITHBUG);
-            this.subtractPenalty(this.PENALTYSUBMITWITHBUG);
+            this.methodology.showBugFoundMessage(this.currentCandidate, this.failingTestResult);
+            this.subscoreNoSubmitWithBug = 0;
             this.menu();
         }
         else
             this.end();
     }
     end() {
-        if (this.score === this.MINIMUMSCORE)
-            this.methodology.showMinimumScoreEndMessage(this.score);
-        else if (this.failingTestResult) {
-            this.score = this.MINIMUMSCORE;
-            this.methodology.showUnsuccessfulEndMessage(this.score);
-        }
-        else
-            this.methodology.showSuccessfulEndMessage(this.score);
+        this.previousScore = this.score;
+        this.score = this.calculateScoreAtEnd();
         this.showPanels();
-        this.saveScore(localStorage, this.score);
+        this.storedScore.set(localStorage, this.score.toString());
+        this.methodology.showEndMessage();
         this.callback();
     }
-    subtractPenalty(penalty) {
-        this.score = Math.max(this.score - penalty, this.MINIMUMSCORE);
+    calculateScoreDuringPlay() {
+        return Math.min(400, this.subscoreNumberOfUnitTests) +
+            Math.min(400, this.subscoreNumberOfUsefulUnitTests);
+    }
+    calculateScoreAtEnd() {
+        return this.calculateScoreDuringPlay() +
+            this.subscoreOnlyCorrectUnitTests +
+            this.subscoreNoHint +
+            this.subscoreNoSubmitWithBug +
+            this.subscoreOnlyUsefulUnitTests;
     }
 }

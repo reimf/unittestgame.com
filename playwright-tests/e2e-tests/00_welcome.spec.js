@@ -15,9 +15,9 @@ test.describe('welcome', () => {
         const unittestgamePanel = page.getByTestId('unittestgame');
         await expect(unittestgamePanel).not.toBeAttached();
     });
-    test('has no high scores panel', async ({ page }) => {
-        const highScoresPanel = page.getByTestId('high-scores');
-        await expect(highScoresPanel).not.toBeAttached();
+    test('has no levels panel', async ({ page }) => {
+        const levelsPanel = page.getByTestId('levels');
+        await expect(levelsPanel).not.toBeAttached();
     });
     test('has show sidebar message', async ({ page }) => {
         const messages = page.getByTestId('messages');

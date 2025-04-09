@@ -86,4 +86,24 @@ export class TextVariable extends Variable {
     }
 }
 
-export class NumberVariable extends TextVariable {}
+export class NumberVariable extends Variable {
+    public constructor(label: string, name: string) {
+        super(label, name)
+    }
+
+    public getValue(): number {
+        const input = document.querySelector(`input[name="${this.name}"]`) as HTMLInputElement
+        return Number(input.value)
+    }
+
+    public toHtml(): Html {
+        const input = new Input().setType('text').setName(this.name).setAutocomplete(false)
+        const label = new Label().appendText(this.label).appendChild(input)
+        const paragraph = new Paragraph().appendChild(label)
+        return paragraph
+    }
+
+    public format(value: string): string {
+        return value === undefined ? 'undefined' : `${value}`
+    }
+}

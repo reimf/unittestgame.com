@@ -70,16 +70,27 @@ export class ComputerMessage extends Message {
         this.addClass('computer')
     }
 
-    public appendProcessing(): ComputerMessage {
-        this.children[0].children[0].addClass('processing')
-        return this
-    }
-
     public static removeLast(): void {
         const id = document.querySelector('#messages')!.lastElementChild!.id
         const lastComputerMessage = new ComputerMessage([])
         lastComputerMessage.setId(id)
         lastComputerMessage.removeExisting()
+    }
+}
+
+export class ProcessingMessage extends ComputerMessage {
+    private readonly callback: () => void
+    private readonly delay: number
+
+    public constructor(text: string, callback: () => void, delay: number) {
+        super([new Paragraph().appendMarkdown(text).addClass('processing')])
+        this.callback = callback
+        this.delay = delay
+    }
+
+    public add(): void {
+        super.add()
+        window.setTimeout(() => { ComputerMessage.removeLast(); this.callback() }, this.delay)
     }
 }
 
@@ -113,7 +124,7 @@ export class HumanMessage extends Message {
             const focusable = document.querySelector('button, input')
             if (focusable)
                 (focusable as HTMLElement).focus()
-        }, Random.integerFromRange(500))
+        }, 500)
     }
 }
 

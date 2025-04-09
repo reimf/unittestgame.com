@@ -6,8 +6,8 @@ test.describe('class Frame', () => {
         expect(panel.toString()).toBe('<section id="my-score"><header>My Score</header><div><p>Level1: 100%</p></div></section>');
     });
     test('subclass ComputerMessage', () => {
-        const computerMessage = new ComputerMessage(['Hello', 'World']).appendProcessing();
-        expect(computerMessage.toString()).toBe('<section class="computer"><div><p class="processing">Hello</p><p>World</p></div></section>');
+        const computerMessage = new ComputerMessage(['Hello', 'World']);
+        expect(computerMessage.toString()).toBe('<section class="computer"><div><p>Hello</p><p>World</p></div></section>');
     });
     test('subclass HumanMessage', () => {
         const humanMessage = new HumanMessage(['Hello', 'World']);

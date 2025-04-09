@@ -1,9 +1,10 @@
 import { test, expect } from '@playwright/test';
 test.describe('hint unit test', () => {
     test.beforeEach(async ({ context, page }) => {
-        await context.addInitScript(_ => localStorage.setItem('Test-Driven Development', 'true'));
+        await context.addInitScript(_ => localStorage.setItem('Main - Sidebar Shown', 'Sun, 31 Dec 1899 00:00:00 GMT'));
+        await context.addInitScript(_ => localStorage.setItem('Test-Driven Development - Example Seen', 'Sun, 31 Dec 1899 00:00:00 GMT'));
         await context.addInitScript(_ => localStorage.setItem('Test-Driven Development - Voting Age', '100'));
-        await context.addInitScript(_ => localStorage.setItem('Mutation Testing', 'true'));
+        await context.addInitScript(_ => localStorage.setItem('Mutation Testing - Example Seen', 'Sun, 31 Dec 1899 00:00:00 GMT'));
         await context.addInitScript({ path: './playwright-tests/e2e-tests/init_script.js' });
         await page.goto('http://localhost:5500/');
         await page.getByRole('button', { name: 'I want to play Level 2 - Mutation Testing - Even or Odd' }).click();
@@ -21,7 +22,6 @@ test.describe('hint unit test', () => {
             'Add unit test',
             'Show hint',
             'Submit unit tests',
-            'Exit level',
         ]);
     });
 });

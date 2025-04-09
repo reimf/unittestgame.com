@@ -55,7 +55,7 @@ flowchart TD
     Methodology.showBasicDefinition --> Main.continue
 
     subgraph Main.continue
-        Main.showHighScoresPanel --> Main.showInvitationMessage
+        Main.showLevelsPanel --> Main.showInvitationMessage
         Main.showInvitationMessage --> Main.showNextLevel
     end
     Main.showNextLevel -- has next level --> Main.play
@@ -78,10 +78,10 @@ flowchart TD
 
     subgraph Level.menu
          Methodology.showPanelsOnMenu --> Level.showUnitTestsPanel
-         Level.showUnitTestsPanel --> Level.showScorePanel
-         Level.showScorePanel -- score > 0 --> Level.showMenuMessage
+         Level.showUnitTestsPanel --> Level.showLevelPanel
+         Level.showLevelPanel -- score > 0 --> Level.showMenuMessage
     end
-    Level.showScorePanel -- score == 0 --> Level.end
+    Level.showLevelPanel -- score == 0 --> Level.end
     Level.showMenuMessage --> Level.startAddUnitTestFlow
     Level.showMenuMessage --> Level.showHint
     Level.showMenuMessage --> Level.prepareSubmitUnitTests
@@ -136,11 +136,11 @@ flowchart TD
     subgraph Level.end
          X4@{ shape: circle, label: "Start" }
          X4 -- score == 0 --> Methodology.showMinimumScoreEndMessage
-         X4 -- not ok --> Level.showScorePanel2
-         Level.showScorePanel2 --> Methodology.showUnsuccessfulEndMessage
-         X4 -- score > 0 --> Methodology.showSuccessfulEndMessage
+         X4 -- not ok --> Level.showLevelPanel2
+         Level.showLevelPanel2 --> Methodology.showUnsuccessfulEndMessage
+         X4 -- score > 0 --> Methodology.showEndMessage
     end
     Methodology.showMinimumScoreEndMessage --> Main.continue
     Methodology.showUnsuccessfulEndMessage --> Main.continue
-    Methodology.showSuccessfulEndMessage --> Main.continue
+    Methodology.showEndMessage --> Main.continue
 ```

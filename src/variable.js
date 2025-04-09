@@ -63,5 +63,21 @@ export class TextVariable extends Variable {
         return value === undefined ? 'undefined' : `"${value}"`;
     }
 }
-export class NumberVariable extends TextVariable {
+export class NumberVariable extends Variable {
+    constructor(label, name) {
+        super(label, name);
+    }
+    getValue() {
+        const input = document.querySelector(`input[name="${this.name}"]`);
+        return Number(input.value);
+    }
+    toHtml() {
+        const input = new Input().setType('text').setName(this.name).setAutocomplete(false);
+        const label = new Label().appendText(this.label).appendChild(input);
+        const paragraph = new Paragraph().appendChild(label);
+        return paragraph;
+    }
+    format(value) {
+        return value === undefined ? 'undefined' : `${value}`;
+    }
 }

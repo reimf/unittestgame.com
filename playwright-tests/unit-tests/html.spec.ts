@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test'
 import { Span, Div, Section, Code, Label, Paragraph, Form, Header, Input, Bold, Italic, Anchor, Text } from '../../src/html.js'
 
-  
+
 test.describe('class Html', () => {
     test('appends text', () => {
         const header = new Header().appendText('abc')
@@ -72,7 +72,7 @@ test.describe('class Html', () => {
     })
 
     test('has form', () => {
-        const form = new Form().onSubmit(event => console.log(event))
+        const form = new Form().onSubmit(_ => {})
         expect(form.toString()).toBe('<form></form>')
     })
 

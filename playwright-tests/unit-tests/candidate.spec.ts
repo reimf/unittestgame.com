@@ -75,7 +75,7 @@ test.describe('class Candidate', () => {
         const candidate = new Candidate(['function divide(a, b) {', '', '  return a / b', '}'])
         const html = candidate.toHtmlWithPrevious(undefined)
         expect(html.toString()).toBe(
-            '<code>' + 
+            '<code>' +
                 '<div>function divide(a, b) {</div>' +
                 '<div></div>' +
                 '<div>  return a / b</div>' +
@@ -89,7 +89,7 @@ test.describe('class Candidate', () => {
         const previousCandidate = new Candidate(['function divide(a, b) {', '', '  if (a === 0) return 0', '', '  return undefined', '}'])
         const html = candidate.toHtmlWithPrevious(previousCandidate)
         expect(html.toString()).toBe(
-            '<code>' + 
+            '<code>' +
                 '<div>function divide(a, b) {</div>' +
                 '<div></div>' +
                 '<div><span class="comment">// was: if (a === 0) return 0</span></div>' +
@@ -104,7 +104,7 @@ test.describe('class Candidate', () => {
         const candidate = new Candidate(['function divide(a, b) {', '', '  return a / b', '}'])
         const html = candidate.toHtmlWithCoverage([])
         expect(html.toString()).toBe(
-            '<code>' + 
+            '<code>' +
                 '<div>function divide(a, b) {</div>' +
                 '<div></div>' +
                 '<div>  return a / b</div>' +
@@ -118,9 +118,9 @@ test.describe('class Candidate', () => {
         const coveredCandidate = new Candidate(['function divide(a, b) {', '', '  return NaN', '}'])
         const html = candidate.toHtmlWithCoverage([coveredCandidate])
         expect(html.toString()).toBe(
-            '<code>' + 
+            '<code>' +
                 '<div class="covered">function divide(a, b) {</div>' +
-                '<div>  if (b === 0) return NaN</div>' + 
+                '<div>  if (b === 0) return NaN</div>' +
                 '<div>  return a / b</div>' +
                 '<div class="covered">}</div>' +
             '</code>'

@@ -38,7 +38,6 @@ button {
     border-radius: 0.5rem;
     box-shadow: 0 0.25rem 0.5rem var(--button-shadow);
     color: var(--light-text);
-    flex-grow: 1;
     font-family: inherit;
     font-size: inherit;
     padding: 0.75rem;
@@ -170,7 +169,7 @@ a, button, input, label:has(input[type="checkbox"]), label:has(input[type="radio
     }
 }
 
-.covered, .new, div:has(> .comment) {
+.score, .covered, .new, div:has(> .comment) {
     background-color: var(--emphasis-background);
     color: var(--dark-text);
 }

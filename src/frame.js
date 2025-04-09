@@ -1,5 +1,4 @@
 import { Button, Div, Html, Header, Paragraph, Section } from './html.js';
-import { Random } from './random.js';
 class Frame extends Section {
     constructor(elements) {
         super();
@@ -59,15 +58,22 @@ export class ComputerMessage extends Message {
         super(elements);
         this.addClass('computer');
     }
-    appendProcessing() {
-        this.children[0].children[0].addClass('processing');
-        return this;
-    }
     static removeLast() {
         const id = document.querySelector('#messages').lastElementChild.id;
         const lastComputerMessage = new ComputerMessage([]);
         lastComputerMessage.setId(id);
         lastComputerMessage.removeExisting();
+    }
+}
+export class ProcessingMessage extends ComputerMessage {
+    constructor(text, callback, delay) {
+        super([new Paragraph().appendMarkdown(text).addClass('processing')]);
+        this.callback = callback;
+        this.delay = delay;
+    }
+    add() {
+        super.add();
+        window.setTimeout(() => { ComputerMessage.removeLast(); this.callback(); }, this.delay);
     }
 }
 export class HumanMessage extends Message {
@@ -97,7 +103,7 @@ export class HumanMessage extends Message {
             const focusable = document.querySelector('button, input');
             if (focusable)
                 focusable.focus();
-        }, Random.integerFromRange(500));
+        }, 500);
     }
 }
 export class ButtonMessage extends HumanMessage {

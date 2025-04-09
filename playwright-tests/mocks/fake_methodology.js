@@ -7,9 +7,8 @@ export class FakeMethodology extends Methodology {
     showPanelsOnMenu(_specification, _currentCandidate, _previousCandidate, _perfectCandidate, _coveredCandidates) { }
     showUselessUnitTestMessage() { }
     showUsefulUnitTestMessage() { }
-    showHintMessage(_currentCandidate, _failingTestResult, _penaltyHint) { }
-    showNoHintMessage(_penaltyHint) { }
-    showBugFoundMessage(_currentCandidate, _failingTestResult, _penaltySubmitWithBug) { }
-    showUnsuccessfulEndMessage(_score) { }
-    showSuccessfulEndMessage(_score) { }
+    showHintMessage(_currentCandidate, _failingTestResult) { }
+    showNoHintMessage() { }
+    showBugFoundMessage(_currentCandidate, _failingTestResult) { }
+    showEndMessage() { }
 }

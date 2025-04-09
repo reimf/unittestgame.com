@@ -11,6 +11,7 @@ import { LeapYear } from './use_case_leap_year.js';
 import { FloatFormat } from './use_case_float_format.js';
 import { PasswordStrength } from './use_case_password_strength.js';
 import { SpeedDisplay } from './use_case_speed_display.js';
+import { StoredValue } from './stored_value.js';
 export class Main {
     constructor() {
         this.testDrivenDevelopment = new TestDrivenDevelopment();
@@ -42,22 +43,24 @@ export class Main {
             new Level(this.testDrivenDevelopment, this.floatFormat),
             new Level(this.mutationTesting, this.speedDisplay),
         ];
+        this.sidebarShown = new StoredValue('Main - Sidebar Shown');
     }
     start() {
         this.showWelcomeMessage();
-        if (this.getLevelsWithHighScore().length === 0)
-            this.showQuestionSidebar(() => this.sidebar());
-        else
+        if (this.sidebarShown.get(localStorage))
             this.sidebar();
+        else
+            this.showQuestionSidebar(() => this.sidebar());
     }
     sidebar() {
+        this.sidebarShown.set(localStorage);
         this.showUnittestgamePanel();
         for (const methodology of this.methodologies)
             methodology.showBasicDefinition();
         this.continue();
     }
     continue() {
-        this.showHighScoresPanel();
+        this.showLevelsPanel();
         this.showInvitationMessage();
         this.showNextLevel();
     }
@@ -65,8 +68,8 @@ export class Main {
         Panel.removeAll();
         level.play(() => this.continue());
     }
-    getLevelsWithHighScore() {
-        return this.levels.filter(level => level.getHighScore(localStorage) > 0);
+    getLevelsWithScore() {
+        return this.levels.filter(level => level.getScore(localStorage) !== '');
     }
     showWelcomeMessage() {
         new ComputerMessage(['Welcome to *UnitTestGame*!']).add();
@@ -89,24 +92,24 @@ export class Main {
         const index = this.levels.findIndex(otherLevel => otherLevel === level);
         return `Level ${index + 1} - ${level.description()}`;
     }
-    showHighScoresPanel() {
-        const levels = this.getLevelsWithHighScore();
+    showLevelsPanel() {
+        const levels = this.getLevelsWithScore();
         if (levels.length > 0) {
-            new Panel('High Scores', levels.map(level => new Div().appendText(`${this.levelDescription(level)}: ${level.getHighScore(localStorage)}%`))).show();
+            new Panel('Levels', levels.map(level => new Div().appendText(`${this.levelDescription(level)}: ${level.getScore(localStorage)}`))).show();
         }
     }
     showNextLevel() {
-        const nextLevel = this.levels.find(level => level.getHighScore(localStorage) === 0);
+        const nextLevel = this.levels.find(level => level.getScore(localStorage) === '');
         if (nextLevel && !nextLevel.getExampleSeen(localStorage)) {
-            new ButtonMessage(`I want to see an example of ${nextLevel.methodologyName()}`, () => nextLevel.showExample(() => this.setExampleSeen(localStorage, nextLevel))).add();
+            new ButtonMessage(`I want to see an example of ${nextLevel.methodologyName()}`, () => nextLevel.showExample(() => this.setExampleSeen(nextLevel))).add();
         }
         else if (nextLevel)
             new ButtonMessage(`I want to play ${this.levelDescription(nextLevel)}`, () => this.play(nextLevel)).add();
         else
             new ButtonMessage('I want to quit', () => window.close()).add();
     }
-    setExampleSeen(storage, nextLevel) {
-        nextLevel.setExampleSeen(storage);
+    setExampleSeen(nextLevel) {
+        nextLevel.setExampleSeen(localStorage);
         this.continue();
     }
 }

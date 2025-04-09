@@ -1,19 +1,16 @@
 import { ComputerMessage } from './frame.js';
+import { StoredValue } from './stored_value.js';
 export class Methodology {
+    constructor() {
+        this.exampleSeen = new StoredValue(`${this.name()} - Example Seen`);
+    }
     getExampleSeen(storage) {
-        return storage.getItem(this.name()) === 'true';
+        return this.exampleSeen.get(storage);
     }
     setExampleSeen(storage) {
-        storage.setItem(this.name(), 'true');
+        this.exampleSeen.set(storage);
     }
-    showIncorrectUnitTestMessage(penaltyIncorrectUnitTest) {
+    showIncorrectUnitTestMessage() {
         new ComputerMessage(['I did NOT add the unit test, because it is NOT correct.']).add();
-        new ComputerMessage([`The cost for trying to add an incorrect unit test is ${penaltyIncorrectUnitTest}%.`]).add();
-    }
-    showMinimumScoreEndMessage(score) {
-        new ComputerMessage([
-            'You have to retry this level, ' +
-                `because your score dropped to ${score}%.`,
-        ]).add();
     }
 }

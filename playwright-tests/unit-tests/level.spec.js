@@ -10,19 +10,19 @@ test.describe('class Level', () => {
         const level = new Level(methodology, useCase);
         expect(level.description()).toBe('Fake Methodology - Fake Use Case');
     });
-    test('has high score 0 by default', () => {
+    test('has no score by default', () => {
         const methodology = new FakeMethodology();
         const useCase = new FakeUseCase();
         const level = new Level(methodology, useCase);
         const storage = new FakeStorage();
-        expect(level.getHighScore(storage)).toBe(0);
+        expect(level.getScore(storage)).toBe('');
     });
-    test('has high score from storage', () => {
+    test('has score from storage', () => {
         const methodology = new FakeMethodology();
         const useCase = new FakeUseCase();
         const level = new Level(methodology, useCase);
         const storage = new FakeStorage();
-        storage.setItem('Fake Methodology - Fake Use Case', '80');
-        expect(level.getHighScore(storage)).toBe(80);
+        storage.setItem('Fake Methodology - Fake Use Case', '800');
+        expect(level.getScore(storage)).toBe('800');
     });
 });
