@@ -75,6 +75,7 @@ export class TestDrivenDevelopment extends Methodology {
                 'but the *Current Function* already passed this unit test, ' +
                 'so I did NOT improve the *Current Function*.',
         ]).add();
+        new ComputerMessage(['Try to write unit tests that fail for the *Current Function*.']).add();
     }
     showUsefulUnitTestMessage() {
         new ComputerMessage([

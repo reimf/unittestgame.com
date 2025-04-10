@@ -34,9 +34,9 @@ test.describe('mt level start', () => {
         const codeLines = theFunctionPanel.locator('code > div');
         await expect(codeLines).toContainText(['function isEven(number) {', '  if (number % 2 !== 0) return false', '  return true', '}']);
     });
-    test('has score 0 in the level panel', async ({ page }) => {
+    test('has the level panel', async ({ page }) => {
         const levelPanel = page.getByTestId('level');
-        await expect(levelPanel).toContainText('0');
+        await expect(levelPanel).toContainText('Mutation Testing - Even or Odd');
     });
     test('has contract message', async ({ page }) => {
         const messages = page.getByTestId('messages');

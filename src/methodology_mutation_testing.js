@@ -77,6 +77,7 @@ export class MutationTesting extends Methodology {
             'I added the unit test to the *Unit Tests*, ' +
                 'but the line coverage of *The Function* did NOT increase.',
         ]).add();
+        new ComputerMessage(['Try to write unit tests that cover some code that is not yet covered by other unit tests.']).add();
     }
     showUsefulUnitTestMessage() {
         new ComputerMessage([

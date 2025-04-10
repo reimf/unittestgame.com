@@ -1,7 +1,7 @@
 import { Candidate } from './candidate.js'
 import { ButtonMessage, ComputerMessage } from './frame.js'
 import { TestResult } from './test_result.js'
-import { StoredValue } from './stored_value.js'
+import { Completed } from './completed.js'
 
 export abstract class Methodology {
     public abstract name(): string
@@ -16,14 +16,14 @@ export abstract class Methodology {
     public abstract showUselessUnitTestMessage(): void
     public abstract showUsefulUnitTestMessage(): void
 
-    public readonly exampleSeen: StoredValue = new StoredValue(`${this.name()} - Example Seen`)
+    public readonly isExampleSeen: Completed = new Completed(`${this.name()} - Example Seen`)
 
-    public getExampleSeen(storage: Storage): string {
-        return this.exampleSeen.get(storage)
+    public getExampleSeen(): boolean {
+        return this.isExampleSeen.get()
     }
 
-    public setExampleSeen(storage: Storage): void {
-        this.exampleSeen.set(storage)
+    public setExampleSeen(): void {
+        this.isExampleSeen.set()
     }
 
     public showIncorrectUnitTestMessage(): void {

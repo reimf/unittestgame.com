@@ -11,7 +11,7 @@ import { LeapYear } from './use_case_leap_year.js';
 import { FloatFormat } from './use_case_float_format.js';
 import { PasswordStrength } from './use_case_password_strength.js';
 import { SpeedDisplay } from './use_case_speed_display.js';
-import { StoredValue } from './stored_value.js';
+import { Completed } from './completed.js';
 export class Main {
     constructor() {
         this.testDrivenDevelopment = new TestDrivenDevelopment();
@@ -43,17 +43,17 @@ export class Main {
             new Level(this.testDrivenDevelopment, this.floatFormat),
             new Level(this.mutationTesting, this.speedDisplay),
         ];
-        this.sidebarShown = new StoredValue('Main - Sidebar Shown');
+        this.isSidebarShown = new Completed('Main - Sidebar Shown');
     }
     start() {
         this.showWelcomeMessage();
-        if (this.sidebarShown.get(localStorage))
+        if (this.isSidebarShown.get())
             this.sidebar();
         else
             this.showQuestionSidebar(() => this.sidebar());
     }
     sidebar() {
-        this.sidebarShown.set(localStorage);
+        this.isSidebarShown.set();
         this.showUnittestgamePanel();
         for (const methodology of this.methodologies)
             methodology.showBasicDefinition();
@@ -68,8 +68,8 @@ export class Main {
         Panel.removeAll();
         level.play(() => this.continue());
     }
-    getLevelsWithScore() {
-        return this.levels.filter(level => level.getScore(localStorage) !== '');
+    getFinishedLevels() {
+        return this.levels.filter(level => level.isFinished());
     }
     showWelcomeMessage() {
         new ComputerMessage(['Welcome to *UnitTestGame*!']).add();
@@ -86,21 +86,21 @@ export class Main {
         ]).show();
     }
     showInvitationMessage() {
-        new ComputerMessage(['What do you want to do now?']).add();
+        new ComputerMessage(['What do you want to do?']).add();
     }
     levelDescription(level) {
         const index = this.levels.findIndex(otherLevel => otherLevel === level);
         return `Level ${index + 1} - ${level.description()}`;
     }
     showLevelsPanel() {
-        const levels = this.getLevelsWithScore();
-        if (levels.length > 0) {
-            new Panel('Levels', levels.map(level => new Div().appendText(`${this.levelDescription(level)}: ${level.getScore(localStorage)}`))).show();
+        const finishedLevels = this.getFinishedLevels();
+        if (finishedLevels.length > 0) {
+            new Panel('Levels', finishedLevels.map(level => new Div().appendText(this.levelDescription(level)))).show();
         }
     }
     showNextLevel() {
-        const nextLevel = this.levels.find(level => level.getScore(localStorage) === '');
-        if (nextLevel && !nextLevel.getExampleSeen(localStorage)) {
+        const nextLevel = this.levels.find(level => !level.isFinished());
+        if (nextLevel && !nextLevel.getExampleSeen()) {
             new ButtonMessage(`I want to see an example of ${nextLevel.methodologyName()}`, () => nextLevel.showExample(() => this.setExampleSeen(nextLevel))).add();
         }
         else if (nextLevel)
@@ -109,7 +109,7 @@ export class Main {
             new ButtonMessage('I want to quit', () => window.close()).add();
     }
     setExampleSeen(nextLevel) {
-        nextLevel.setExampleSeen(localStorage);
+        nextLevel.setExampleSeen();
         this.continue();
     }
 }

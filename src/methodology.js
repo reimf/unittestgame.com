@@ -1,14 +1,14 @@
 import { ComputerMessage } from './frame.js';
-import { StoredValue } from './stored_value.js';
+import { Completed } from './completed.js';
 export class Methodology {
     constructor() {
-        this.exampleSeen = new StoredValue(`${this.name()} - Example Seen`);
+        this.isExampleSeen = new Completed(`${this.name()} - Example Seen`);
     }
-    getExampleSeen(storage) {
-        return this.exampleSeen.get(storage);
+    getExampleSeen() {
+        return this.isExampleSeen.get();
     }
-    setExampleSeen(storage) {
-        this.exampleSeen.set(storage);
+    setExampleSeen() {
+        this.isExampleSeen.set();
     }
     showIncorrectUnitTestMessage() {
         new ComputerMessage(['I did NOT add the unit test, because it is NOT correct.']).add();

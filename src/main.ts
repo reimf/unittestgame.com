@@ -13,7 +13,7 @@ import { LeapYear } from './use_case_leap_year.js'
 import { FloatFormat } from './use_case_float_format.js'
 import { PasswordStrength } from './use_case_password_strength.js'
 import { SpeedDisplay } from './use_case_speed_display.js'
-import { StoredValue } from './stored_value.js'
+import { Completed } from './completed.js'
 
 export class Main {
     private readonly testDrivenDevelopment: Methodology = new TestDrivenDevelopment()
@@ -45,18 +45,18 @@ export class Main {
         new Level(this.testDrivenDevelopment, this.floatFormat),
         new Level(this.mutationTesting, this.speedDisplay),
     ]
-    private readonly sidebarShown: StoredValue = new StoredValue('Main - Sidebar Shown')
+    private readonly isSidebarShown: Completed = new Completed('Main - Sidebar Shown')
 
     public start(): void {
         this.showWelcomeMessage()
-        if (this.sidebarShown.get(localStorage))
+        if (this.isSidebarShown.get())
             this.sidebar()
         else
             this.showQuestionSidebar(() => this.sidebar())
     }
 
     private sidebar(): void {
-        this.sidebarShown.set(localStorage)
+        this.isSidebarShown.set()
         this.showUnittestgamePanel()
         for (const methodology of this.methodologies)
             methodology.showBasicDefinition()
@@ -74,8 +74,8 @@ export class Main {
         level.play(() => this.continue())
     }
 
-    private getLevelsWithScore(): Level[] {
-        return this.levels.filter(level => level.getScore(localStorage) !== '')
+    private getFinishedLevels(): Level[] {
+        return this.levels.filter(level => level.isFinished())
     }
 
     private showWelcomeMessage(): void {
@@ -99,7 +99,7 @@ export class Main {
     }
 
     private showInvitationMessage(): void {
-        new ComputerMessage(['What do you want to do now?']).add()
+        new ComputerMessage(['What do you want to do?']).add()
     }
 
     private levelDescription(level: Level): string {
@@ -108,17 +108,17 @@ export class Main {
     }
 
     private showLevelsPanel(): void {
-        const levels = this.getLevelsWithScore()
-        if (levels.length > 0) {
+        const finishedLevels = this.getFinishedLevels()
+        if (finishedLevels.length > 0) {
             new Panel('Levels',
-                levels.map(level => new Div().appendText(`${this.levelDescription(level)}: ${level.getScore(localStorage)}`))
+                finishedLevels.map(level => new Div().appendText(this.levelDescription(level)))
             ).show()
         }
     }
 
     private showNextLevel(): void {
-        const nextLevel = this.levels.find(level => level.getScore(localStorage) === '')
-        if (nextLevel && !nextLevel.getExampleSeen(localStorage)) {
+        const nextLevel = this.levels.find(level => !level.isFinished())
+        if (nextLevel && !nextLevel.getExampleSeen()) {
             new ButtonMessage(
                 `I want to see an example of ${nextLevel.methodologyName()}`,
                 () => nextLevel.showExample(
@@ -133,7 +133,7 @@ export class Main {
     }
 
     private setExampleSeen(nextLevel: Level): void {
-        nextLevel.setExampleSeen(localStorage)
+        nextLevel.setExampleSeen()
         this.continue() 
     }
 }

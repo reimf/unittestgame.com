@@ -169,7 +169,7 @@ a, button, input, label:has(input[type="checkbox"]), label:has(input[type="radio
     }
 }
 
-.score, .covered, .new, div:has(> .comment) {
+.covered, .new, div:has(> .comment) {
     background-color: var(--emphasis-background);
     color: var(--dark-text);
 }

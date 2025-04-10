@@ -2,8 +2,8 @@ import { test, expect } from '@playwright/test';
 import { Panel, ComputerMessage, HumanMessage, ButtonMessage } from '../../src/frame.js';
 test.describe('class Frame', () => {
     test('subclass Panel', () => {
-        const panel = new Panel('My Score', ['Level1: 100%']);
-        expect(panel.toString()).toBe('<section id="my-score"><header>My Score</header><div><p>Level1: 100%</p></div></section>');
+        const panel = new Panel('Current Level', ['Level 1']);
+        expect(panel.toString()).toBe('<section id="current-level"><header>Current Level</header><div><p>Level 1</p></div></section>');
     });
     test('subclass ComputerMessage', () => {
         const computerMessage = new ComputerMessage(['Hello', 'World']);

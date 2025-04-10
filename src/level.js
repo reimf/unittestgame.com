@@ -1,29 +1,21 @@
 import { Candidate } from './candidate.js';
 import { HumanMessage, ProcessingMessage, ComputerMessage, Panel } from './frame.js';
-import { Button, Div, Form, Input, Paragraph, Span } from './html.js';
+import { Button, Div, Form, Input, Paragraph } from './html.js';
 import { Random } from './random.js';
 import { TestResult } from './test_result.js';
 import { UnitTest } from './unit_test.js';
-import { StoredValue } from './stored_value.js';
+import { Completed } from './completed.js';
 export class Level {
     constructor(methodology, useCase) {
         this.userdefinedUnitTests = [];
         this.coveredCandidates = [];
         this.currentCandidate = new Candidate([]);
         this.failingTestResult = undefined;
-        this.score = 0;
-        this.previousScore = 0;
-        this.subscoreNumberOfUnitTests = 0;
-        this.subscoreNumberOfUsefulUnitTests = 0;
-        this.subscoreOnlyCorrectUnitTests = 200;
-        this.subscoreNoHint = 200;
-        this.subscoreNoSubmitWithBug = 400;
-        this.subscoreOnlyUsefulUnitTests = 200;
         this.newUnitTest = undefined;
         this.previousCandidate = undefined;
         this.methodology = methodology;
         this.useCase = useCase;
-        this.storedScore = new StoredValue(this.description());
+        this.isLevelFinished = new Completed(this.description());
     }
     description() {
         return `${this.methodology.name()} - ${this.useCase.name()}`;
@@ -31,17 +23,17 @@ export class Level {
     methodologyName() {
         return this.methodology.name();
     }
-    getExampleSeen(storage) {
-        return this.methodology.getExampleSeen(storage);
+    getExampleSeen() {
+        return this.methodology.getExampleSeen();
     }
-    setExampleSeen(storage) {
-        this.methodology.setExampleSeen(storage);
+    setExampleSeen() {
+        this.methodology.setExampleSeen();
     }
     showExample(callback) {
         this.methodology.showExample(callback);
     }
-    getScore(storage) {
-        return this.storedScore.get(storage);
+    isFinished() {
+        return this.isLevelFinished.get();
     }
     play(callback) {
         this.callback = callback;
@@ -49,16 +41,9 @@ export class Level {
         this.coveredCandidates = [];
         this.currentCandidate = this.findSimplestPassingCandidate();
         this.failingTestResult = this.findFailingTestResult();
-        this.score = 0;
-        this.previousScore = 0;
-        this.subscoreNumberOfUnitTests = 0;
-        this.subscoreNumberOfUsefulUnitTests = 0;
-        this.subscoreOnlyCorrectUnitTests = 200;
-        this.subscoreNoHint = 200;
-        this.subscoreNoSubmitWithBug = 400;
-        this.subscoreOnlyUsefulUnitTests = 200;
         this.newUnitTest = undefined;
         this.previousCandidate = undefined;
+        this.showLevelPanel();
         this.methodology.showWelcomeMessage();
         this.menu();
     }
@@ -98,11 +83,7 @@ export class Level {
         return undefined;
     }
     showLevelPanel() {
-        new Panel('Level', [
-            new Paragraph()
-                .appendText(`${this.description()}: `)
-                .appendChild(new Span().appendText(`${this.score}`).addClass('new', this.score !== this.previousScore))
-        ]).show();
+        new Panel('Level', [new Paragraph().appendText(this.description())]).show();
     }
     showUnitTestsPanel() {
         new Panel('Unit Tests', this.userdefinedUnitTests.length === 0
@@ -111,8 +92,6 @@ export class Level {
         this.newUnitTest = undefined;
     }
     menu() {
-        this.previousScore = this.score;
-        this.score = this.calculateScoreDuringPlay();
         this.showPanels();
         this.showMenuMessage();
     }
@@ -120,7 +99,6 @@ export class Level {
         this.methodology.showPanelsOnMenu(this.useCase.specification(), this.currentCandidate, this.previousCandidate, this.useCase.perfectCandidate, this.coveredCandidates);
         this.previousCandidate = undefined;
         this.showUnitTestsPanel();
-        this.showLevelPanel();
     }
     showMenuMessage() {
         new HumanMessage([
@@ -179,24 +157,18 @@ export class Level {
         if (unitTestIsCorrect) {
             this.newUnitTest = unitTest;
             this.userdefinedUnitTests.push(unitTest);
-            this.subscoreNumberOfUnitTests += 100;
             this.coveredCandidates.push(this.findCoveredCandidate(unitTest));
             this.previousCandidate = this.currentCandidate;
-            if (new TestResult(this.currentCandidate, unitTest).passes) {
+            if (new TestResult(this.currentCandidate, unitTest).passes)
                 this.methodology.showUselessUnitTestMessage();
-                this.subscoreOnlyUsefulUnitTests = 0;
-            }
             else {
                 this.methodology.showUsefulUnitTestMessage();
-                this.subscoreNumberOfUsefulUnitTests += 100;
                 this.currentCandidate = this.findSimplestPassingCandidate();
                 this.failingTestResult = this.findFailingTestResult();
             }
         }
-        else {
+        else
             this.methodology.showIncorrectUnitTestMessage();
-            this.subscoreOnlyCorrectUnitTests = 0;
-        }
         this.menu();
     }
     showHint() {
@@ -204,7 +176,6 @@ export class Level {
             this.methodology.showHintMessage(this.currentCandidate, this.failingTestResult);
         else
             this.methodology.showNoHintMessage();
-        this.subscoreNoHint = 0;
         this.menu();
     }
     prepareSubmitUnitTests() {
@@ -213,29 +184,14 @@ export class Level {
     submitUnitTests() {
         if (this.failingTestResult) {
             this.methodology.showBugFoundMessage(this.currentCandidate, this.failingTestResult);
-            this.subscoreNoSubmitWithBug = 0;
             this.menu();
         }
         else
             this.end();
     }
     end() {
-        this.previousScore = this.score;
-        this.score = this.calculateScoreAtEnd();
-        this.showPanels();
-        this.storedScore.set(localStorage, this.score.toString());
+        this.isLevelFinished.set();
         this.methodology.showEndMessage();
         this.callback();
-    }
-    calculateScoreDuringPlay() {
-        return Math.min(400, this.subscoreNumberOfUnitTests) +
-            Math.min(400, this.subscoreNumberOfUsefulUnitTests);
-    }
-    calculateScoreAtEnd() {
-        return this.calculateScoreDuringPlay() +
-            this.subscoreOnlyCorrectUnitTests +
-            this.subscoreNoHint +
-            this.subscoreNoSubmitWithBug +
-            this.subscoreOnlyUsefulUnitTests;
     }
 }
