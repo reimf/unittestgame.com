@@ -60,7 +60,7 @@ export class Main {
         this.continue();
     }
     continue() {
-        this.showLevelsPanel();
+        this.showFinishedLevelsPanel();
         this.showInvitationMessage();
         this.showNextLevel();
     }
@@ -92,10 +92,10 @@ export class Main {
         const index = this.levels.findIndex(otherLevel => otherLevel === level);
         return `Level ${index + 1} - ${level.description()}`;
     }
-    showLevelsPanel() {
+    showFinishedLevelsPanel() {
         const finishedLevels = this.getFinishedLevels();
         if (finishedLevels.length > 0) {
-            new Panel('Levels', finishedLevels.map(level => new Div().appendText(this.levelDescription(level)))).show();
+            new Panel('Finished Levels', finishedLevels.map(level => new Div().appendText(this.levelDescription(level)))).show();
         }
     }
     showNextLevel() {

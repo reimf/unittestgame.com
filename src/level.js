@@ -43,7 +43,7 @@ export class Level {
         this.failingTestResult = this.findFailingTestResult();
         this.newUnitTest = undefined;
         this.previousCandidate = undefined;
-        this.showLevelPanel();
+        this.showCurrentLevelPanel();
         this.methodology.showWelcomeMessage();
         this.menu();
     }
@@ -82,8 +82,8 @@ export class Level {
             return Random.elementFrom(failingMinimalUnitTests);
         return undefined;
     }
-    showLevelPanel() {
-        new Panel('Level', [new Paragraph().appendText(this.description())]).show();
+    showCurrentLevelPanel() {
+        new Panel('Current Level', [new Paragraph().appendText(this.description())]).show();
     }
     showUnitTestsPanel() {
         new Panel('Unit Tests', this.userdefinedUnitTests.length === 0
@@ -121,9 +121,9 @@ export class Level {
         const unitField = this.useCase.unit.toHtml();
         const submitButton = new Input().setType('submit').setValue('I want to add this unit test');
         const cancelButton = new Button()
+            .appendText('Cancel')
             .setTitle('I don\'t want to add a unit test now')
             .onClick(() => this.cancelAddUnitTestFlow())
-            .appendText('Cancel')
             .addClass('cancel');
         const buttonBlock = new Paragraph().appendChildren([submitButton, cancelButton]);
         new HumanMessage([

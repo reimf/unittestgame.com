@@ -32,8 +32,8 @@ test.describe('tdd level start', () => {
         const theFunctionPanel = page.getByTestId('the-function');
         await expect(theFunctionPanel).not.toBeAttached();
     });
-    test('has the level panel', async ({ page }) => {
-        const levelPanel = page.getByTestId('level');
+    test('has the current level panel', async ({ page }) => {
+        const levelPanel = page.getByTestId('current-level');
         await expect(levelPanel).toContainText('Test-Driven Development - Voting Age');
     });
     test('has contract message', async ({ page }) => {

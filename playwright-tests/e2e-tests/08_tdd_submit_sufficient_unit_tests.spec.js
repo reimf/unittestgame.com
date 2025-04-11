@@ -28,9 +28,9 @@ test.describe('tdd submit sufficient unit test', () => {
         const messages = page.getByTestId('messages');
         await expect(messages).toContainText('I checked the Current Function and it is indeed according to the Specification');
     });
-    test('has levels panel', async ({ page }) => {
-        const levels = page.getByTestId('levels');
-        await expect(levels).toContainText('Level 1 - Test-Driven Development - Voting Age');
+    test('has finished levels panel', async ({ page }) => {
+        const finishedLevels = page.getByTestId('finished-levels');
+        await expect(finishedLevels).toContainText('Level 1 - Test-Driven Development - Voting Age');
     });
     test('has see example message', async ({ page }) => {
         const messages = page.getByTestId('messages');

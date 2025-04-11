@@ -1,5 +1,4 @@
 import { Button, Div, Html, Header, Paragraph, Section } from './html.js'
-import { Random } from './random.js'
 
 abstract class Frame extends Section {
     protected constructor(elements: (Html|string)[]) {
@@ -30,9 +29,8 @@ abstract class Frame extends Section {
 export class Panel extends Frame {
     public constructor(title: string, elements: (Html|string)[]) {
         super(elements)
-        this.prependChild(new Header().appendText(title))
         const id = title.toLowerCase().replace(/[^a-z0-9-]/g, ' ').trim().replace(/ +/g, '-')
-        this.setId(id)
+        this.setId(id).prependChild(new Header().appendText(title))
     }
 
     public static removeAll(): void {
@@ -56,11 +54,27 @@ abstract class Message extends Frame {
         super(elements)
     }
 
-    public add(): void {
-        const count = document.querySelector('#messages')!.childElementCount
-        this.setId(`message-${count}`)
-        const node = this.addTo('messages') as HTMLElement
-        node.scrollIntoView()
+    public add(extra?: () => void): void {
+        this.callDelayed(() => {
+            const count = document.querySelector('#messages')!.childElementCount
+            this.setId(`message-${count}`)
+            const node = this.addTo('messages') as HTMLElement
+            node.classList.add('reveal')
+            node.scrollIntoView()
+            this.focusFirst()
+            if (extra)
+                extra()
+        })
+    }
+
+    private focusFirst(): void {
+        const focusable = document.querySelector('button, input')
+        if (focusable)
+            (focusable as HTMLElement).focus()
+    }
+
+    public replaceExisting(): void {
+        this.callDelayed(() => super.replaceExisting())
     }
 }
 
@@ -72,9 +86,7 @@ export class ComputerMessage extends Message {
 
     public static removeLast(): void {
         const id = document.querySelector('#messages')!.lastElementChild!.id
-        const lastComputerMessage = new ComputerMessage([])
-        lastComputerMessage.setId(id)
-        lastComputerMessage.removeExisting()
+        new ComputerMessage([]).setId(id).removeExisting()
     }
 }
 
@@ -89,8 +101,9 @@ export class ProcessingMessage extends ComputerMessage {
     }
 
     public add(): void {
-        super.add()
-        window.setTimeout(() => { ComputerMessage.removeLast(); this.callback() }, this.delay)
+        super.add(
+            () => window.setTimeout(() => { ComputerMessage.removeLast(); this.callback() }, this.delay)
+        )
     }
 }
 
@@ -98,33 +111,11 @@ export class HumanMessage extends Message {
     public constructor(children: (Html|string)[]) {
         super(children)
         this.addClass('human')
-        this.onClick(event => {
-            if (event.target instanceof HTMLButtonElement) {
-                const text = event.target.title || event.target.textContent
-                const message = new HumanMessage([text + '.'])
-                message.setId(this.getId())
-                message.replaceExisting()
-            }
-        })
-    }
-
-    public add(): void {
-        super.add()
-        this.focusFirst()
     }
 
     public replace(): void {
         const id = document.querySelector('#messages')!.lastElementChild!.id
-        this.setId(id)
-        this.replaceExisting()
-    }
-
-    private focusFirst(): void {
-        setTimeout(() => {
-            const focusable = document.querySelector('button, input')
-            if (focusable)
-                (focusable as HTMLElement).focus()
-        }, 500)
+        this.setId(id).addClass('reveal').replaceExisting()
     }
 }
 

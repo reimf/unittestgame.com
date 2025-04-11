@@ -3,15 +3,21 @@ export class Html {
     private id: string = ''
     private readonly classList: string[] = []
     public readonly children: Html[] = []
-    private onClickCallback?: (event: Event) => void = undefined
-    private title: string = ''
+    private static timeOfLastDelayedCall: number = 0
 
-    protected setTagName(tagName: string): Html {
+    protected callDelayed(callback: () => void): void {
+        const now = Date.now()
+        const delay = Math.max(0, 500 + Html.timeOfLastDelayedCall - now)
+        Html.timeOfLastDelayedCall = now + delay
+        window.setTimeout(() => callback(), delay)
+    }
+
+    protected setTagName(tagName: string): this {
         this.tagName = tagName
         return this
     }
 
-    protected setId(id: string): Html {
+    public setId(id: string): this {
         this.id = id
         return this
     }
@@ -20,23 +26,13 @@ export class Html {
         return this.id
     }
 
-    public setTitle(title: string): Html {
-        this.title = title
-        return this
-    }
-
-    public addClass(value: string, condition: boolean = true): Html {
+    public addClass(value: string, condition: boolean = true): this {
         if (condition)
             this.classList.push(value)
         return this
     }
 
-    public onClick(callback: (event: Event) => void): Html {
-        this.onClickCallback = callback
-        return this
-    }
-
-    public appendMarkdown(markdown: string): Html {
+    public appendMarkdown(markdown: string): this {
         const buffer: string[] = []
         const flush = (buffer: string[]) => {
             if (buffer.length > 0) {
@@ -94,22 +90,22 @@ export class Html {
         return this
     }
 
-    public appendText(text: string): Html {
+    public appendText(text: string): this {
         this.children.push(new Text(text))
         return this
     }
 
-    public prependChild(child: Html): Html {
+    public prependChild(child: Html): this {
         this.children.unshift(child)
         return this
     }
 
-    public appendChild(child: Html): Html {
+    public appendChild(child: Html): this {
         this.children.push(child)
         return this
     }
 
-    public appendChildren(children: Html[]): Html {
+    public appendChildren(children: Html[]): this {
         this.children.push(...children)
         return this
     }
@@ -120,8 +116,6 @@ export class Html {
             attributes.push(`class="${this.classList.join(' ')}"`)
         if (this.id)
             attributes.push(`id="${this.id}"`)
-        if (this.title)
-            attributes.push(`title="${this.title}"`)
         return attributes
     }
 
@@ -137,10 +131,6 @@ export class Html {
             node.classList.add(klasse)
         if (this.id)
             node.id = this.id
-        if (this.title)
-            node.title = this.title
-        if (this.onClickCallback)
-            node.addEventListener('click', event => this.onClickCallback!(event))
         for (const child of this.children)
             node.appendChild(child.toNode())
         return node
@@ -175,22 +165,22 @@ export class Input extends Html {
         this.setTagName('input')
     }
 
-    public setType(type: string): Input {
+    public setType(type: string): this {
         this.type = type
         return this
     }
 
-    public setName(name: string): Input {
+    public setName(name: string): this {
         this.name = name
         return this
     }
 
-    public setValue(value: string): Input {
+    public setValue(value: string): this {
         this.value = value
         return this
     }
 
-    public setAutocomplete(autocomplete: boolean): Input {
+    public setAutocomplete(autocomplete: boolean): this {
         this.autocomplete = autocomplete ? 'on' : 'off'
         return this
     }
@@ -230,7 +220,7 @@ export class Form extends Html {
         this.setTagName('form')
     }
 
-    public onSubmit(callback: (event: Event) => void): Form {
+    public onSubmit(callback: (event: Event) => void): this {
         this.onSubmitCallback = callback
         return this
     }
@@ -238,7 +228,10 @@ export class Form extends Html {
     public toNode(): Node {
         const node = super.toNode() as HTMLFormElement
         if (this.onSubmitCallback)
-            node.addEventListener('submit', event => this.onSubmitCallback!(event))
+            node.addEventListener('submit', event => {
+                event.preventDefault()
+                this.onSubmitCallback!(event)
+            })
         return node
     }
 }
@@ -258,9 +251,53 @@ export class Paragraph extends Html {
 }
 
 export class Button extends Html {
+    private title: string = ''
+    private onClickCallback?: (event: Event) => void = undefined
+
     public constructor() {
         super()
         this.setTagName('button')
+    }
+
+    public setTitle(title: string): this {
+        this.title = title
+        return this
+    }
+
+    public onClick(callback: (event: Event) => void): this {
+        this.onClickCallback = callback
+        return this
+    }
+
+    public toAttributes(): string[] {
+        const attributes = super.toAttributes()
+        if (this.title)
+            attributes.push(`title="${this.title}"`)
+        return attributes
+    }
+
+    public toNode(): Node {
+        const node = super.toNode() as HTMLButtonElement
+        if (this.title)
+            node.title = this.title
+        if (this.onClickCallback)
+            node.addEventListener('click', event => {
+                event.preventDefault()
+                const target = event.target as HTMLButtonElement
+                const div = target.closest('div')
+                const section = target.closest('section')
+                if (section && div) {
+                    section.classList.remove('reveal')
+                    const text = (target.title || target.textContent) + "."
+                    const textNode = document.createTextNode(text)
+                    const paragraph = document.createElement('p')
+                    paragraph.appendChild(textNode)
+                    div.replaceChildren(paragraph)
+                    this.callDelayed(() => section.classList.add('reveal'))
+                    this.onClickCallback!(event)
+                }
+            })
+        return node
     }
 }
 
@@ -321,7 +358,7 @@ export class Anchor extends Html {
         this.setTagName('a')
     }
 
-    public setHref(href: string): Anchor {
+    public setHref(href: string): this {
         this.href = href
         return this
     }

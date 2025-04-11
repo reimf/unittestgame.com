@@ -59,7 +59,7 @@ export class Level {
         this.failingTestResult = this.findFailingTestResult()
         this.newUnitTest = undefined
         this.previousCandidate = undefined
-        this.showLevelPanel()
+        this.showCurrentLevelPanel()
         this.methodology.showWelcomeMessage()
         this.menu()
     }
@@ -103,8 +103,8 @@ export class Level {
         return undefined
     }
 
-    private showLevelPanel(): void {
-        new Panel('Level', [new Paragraph().appendText(this.description())]).show()
+    private showCurrentLevelPanel(): void {
+        new Panel('Current Level', [new Paragraph().appendText(this.description())]).show()
     }
 
     private showUnitTestsPanel(): void {
@@ -151,9 +151,9 @@ export class Level {
         const unitField = this.useCase.unit.toHtml()
         const submitButton = new Input().setType('submit').setValue('I want to add this unit test')
         const cancelButton = new Button()
+            .appendText('Cancel')
             .setTitle('I don\'t want to add a unit test now')
             .onClick(() => this.cancelAddUnitTestFlow())
-            .appendText('Cancel')
             .addClass('cancel')
         const buttonBlock = new Paragraph().appendChildren([submitButton, cancelButton])
         new HumanMessage([

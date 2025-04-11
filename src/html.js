@@ -4,8 +4,12 @@ export class Html {
         this.id = '';
         this.classList = [];
         this.children = [];
-        this.onClickCallback = undefined;
-        this.title = '';
+    }
+    callDelayed(callback) {
+        const now = Date.now();
+        const delay = Math.max(0, 500 + Html.timeOfLastDelayedCall - now);
+        Html.timeOfLastDelayedCall = now + delay;
+        window.setTimeout(() => callback(), delay);
     }
     setTagName(tagName) {
         this.tagName = tagName;
@@ -18,17 +22,9 @@ export class Html {
     getId() {
         return this.id;
     }
-    setTitle(title) {
-        this.title = title;
-        return this;
-    }
     addClass(value, condition = true) {
         if (condition)
             this.classList.push(value);
-        return this;
-    }
-    onClick(callback) {
-        this.onClickCallback = callback;
         return this;
     }
     appendMarkdown(markdown) {
@@ -107,8 +103,6 @@ export class Html {
             attributes.push(`class="${this.classList.join(' ')}"`);
         if (this.id)
             attributes.push(`id="${this.id}"`);
-        if (this.title)
-            attributes.push(`title="${this.title}"`);
         return attributes;
     }
     toString() {
@@ -122,15 +116,12 @@ export class Html {
             node.classList.add(klasse);
         if (this.id)
             node.id = this.id;
-        if (this.title)
-            node.title = this.title;
-        if (this.onClickCallback)
-            node.addEventListener('click', event => this.onClickCallback(event));
         for (const child of this.children)
             node.appendChild(child.toNode());
         return node;
     }
 }
+Html.timeOfLastDelayedCall = 0;
 export class Text extends Html {
     constructor(text) {
         super();
@@ -206,7 +197,10 @@ export class Form extends Html {
     toNode() {
         const node = super.toNode();
         if (this.onSubmitCallback)
-            node.addEventListener('submit', event => this.onSubmitCallback(event));
+            node.addEventListener('submit', event => {
+                event.preventDefault();
+                this.onSubmitCallback(event);
+            });
         return node;
     }
 }
@@ -225,7 +219,46 @@ export class Paragraph extends Html {
 export class Button extends Html {
     constructor() {
         super();
+        this.title = '';
+        this.onClickCallback = undefined;
         this.setTagName('button');
+    }
+    setTitle(title) {
+        this.title = title;
+        return this;
+    }
+    onClick(callback) {
+        this.onClickCallback = callback;
+        return this;
+    }
+    toAttributes() {
+        const attributes = super.toAttributes();
+        if (this.title)
+            attributes.push(`title="${this.title}"`);
+        return attributes;
+    }
+    toNode() {
+        const node = super.toNode();
+        if (this.title)
+            node.title = this.title;
+        if (this.onClickCallback)
+            node.addEventListener('click', event => {
+                event.preventDefault();
+                const target = event.target;
+                const div = target.closest('div');
+                const section = target.closest('section');
+                if (section && div) {
+                    section.classList.remove('reveal');
+                    const text = (target.title || target.textContent) + ".";
+                    const textNode = document.createTextNode(text);
+                    const paragraph = document.createElement('p');
+                    paragraph.appendChild(textNode);
+                    div.replaceChildren(paragraph);
+                    this.callDelayed(() => section.classList.add('reveal'));
+                    this.onClickCallback(event);
+                }
+            });
+        return node;
     }
 }
 export class Label extends Html {

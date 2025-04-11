@@ -64,7 +64,7 @@ export class Main {
     }
 
     private continue(): void {
-        this.showLevelsPanel()
+        this.showFinishedLevelsPanel()
         this.showInvitationMessage()
         this.showNextLevel()
     }
@@ -107,10 +107,10 @@ export class Main {
         return `Level ${index + 1} - ${level.description()}`
     }
 
-    private showLevelsPanel(): void {
+    private showFinishedLevelsPanel(): void {
         const finishedLevels = this.getFinishedLevels()
         if (finishedLevels.length > 0) {
-            new Panel('Levels',
+            new Panel('Finished Levels',
                 finishedLevels.map(level => new Div().appendText(this.levelDescription(level)))
             ).show()
         }

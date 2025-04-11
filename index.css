@@ -42,12 +42,6 @@ button {
     font-size: inherit;
     padding: 0.75rem;
     text-align: left;
-
-    &.cancel {
-        background-color: var(--general-background);
-        color: var(--dark-text);
-        flex-grow: 0;
-    }
 }
 
 b { /* markdown: **bold** */
@@ -60,6 +54,14 @@ b { /* markdown: **bold** */
 code {
     display: block;
     white-space: preserve;
+}
+
+form {
+    button {
+        background-color: var(--general-background);
+        color: var(--dark-text);
+        flex-grow: 0;
+    }
 }
 
 i { /* markdown: *italic* */
@@ -92,7 +94,6 @@ input {
 
         &:focus {
             outline: none !important;
-            border: 1rem solid blue;
         }
     }
 
@@ -187,12 +188,17 @@ a, button, input, label:has(input[type="checkbox"]), label:has(input[type="radio
         display: flex;
         flex-direction: column;
         height: 100vh;
-        overflow: scroll;
+        overflow-y: scroll;
         scrollbar-width: none;
         width: 60%;
 
+        #messages {
+            padding-bottom: 2rem;
+        }
+
         section {
             position: relative;
+            opacity: 0;
 
             > div {
                 border-radius: 1.25rem;
@@ -220,6 +226,10 @@ a, button, input, label:has(input[type="checkbox"]), label:has(input[type="radio
                     right: 0.5rem;
                 }
 
+                &.reveal {
+                    animation: revealHuman 0.25s linear forwards;
+                }
+    
                 > div {
                     background-color: var(--human-message-background);
                     border-bottom-right-radius: 0;
@@ -236,6 +246,10 @@ a, button, input, label:has(input[type="checkbox"]), label:has(input[type="radio
                     left: 0.5rem;
                 }
 
+                &.reveal {
+                    animation: revealComputer 0.25s linear forwards;
+                }
+    
                 > div {
                     background-color: var(--computer-message-background);
                     border-bottom-left-radius: 0;
@@ -286,5 +300,27 @@ a, button, input, label:has(input[type="checkbox"]), label:has(input[type="radio
     }
     to {
         opacity: 0;
+    }
+}
+
+@keyframes revealComputer {
+    from {
+        transform: translateY(-100%) rotateX(90deg);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0) rotateX(0deg);
+        opacity: 1;
+    }
+}
+
+@keyframes revealHuman {
+    from {
+        transform: translateY(-100%) rotateX(90deg);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0) rotateX(0deg);
+        opacity: 1;
     }
 }

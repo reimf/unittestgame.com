@@ -22,9 +22,9 @@ test.describe('mt submit insufficient unit test', () => {
         const messages = page.getByTestId('messages');
         await expect(messages).toContainText('I checked The Function and it is indeed fully tested');
     });
-    test('has levels panel', async ({ page }) => {
-        const levels = page.getByTestId('levels');
-        await expect(levels).toContainText('Level 2 - Mutation Testing - Even or Odd');
+    test('has finished levels panel', async ({ page }) => {
+        const finishedLevels = page.getByTestId('finished-levels');
+        await expect(finishedLevels).toContainText('Level 2 - Mutation Testing - Even or Odd');
     });
     test('has level menu message', async ({ page }) => {
         const messages = page.getByTestId('messages');
