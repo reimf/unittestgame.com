@@ -26,8 +26,8 @@ export class Html {
         return this.id
     }
 
-    public addClass(value: string, condition: boolean = true): this {
-        if (condition)
+    public addClass(value: string): this {
+        if (value)
             this.classList.push(value)
         return this
     }
@@ -135,6 +135,16 @@ export class Html {
             node.appendChild(child.toNode())
         return node
     }
+
+    protected replaceEnclosingMessageContent(element: HTMLElement, text: string): void {
+        const section = element.closest('section')!
+        section.classList.remove('reveal')
+        const textNode = document.createTextNode(text + '.')
+        const paragraph = document.createElement('p')
+        paragraph.appendChild(textNode)
+        section.querySelector('div')?.replaceChildren(paragraph)
+        this.callDelayed(() => section.classList.add('reveal'))
+    }
 }
 
 export class Text extends Html {
@@ -154,11 +164,37 @@ export class Text extends Html {
     }
 }
 
-export class Input extends Html {
+class FormControl extends Html {
+    private disabled: boolean = false
+
+    public setDisabled(disabled: boolean = true): this {
+        this.disabled = disabled
+        return this
+    }
+
+    public toAttributes(): string[] {
+        const attributes = super.toAttributes()
+        if (this.disabled)
+            attributes.push('disabled="disabled"')
+        return attributes
+    }
+
+    public toNode(): Node {
+        const node = super.toNode() as HTMLElement
+        if (this.disabled)
+            node.setAttribute('disabled', 'disabled')
+        return node
+    }
+}
+
+export class Input extends FormControl {
     private type: string = ''
     private name: string = ''
     private value: string = ''
     private autocomplete: string = ''
+    private checked: string = ''
+    private required: string = ''
+    private pattern: string = ''
 
     public constructor() {
         super()
@@ -180,8 +216,23 @@ export class Input extends Html {
         return this
     }
 
-    public setAutocomplete(autocomplete: boolean): this {
+    public setAutocomplete(autocomplete: boolean = true): this {
         this.autocomplete = autocomplete ? 'on' : 'off'
+        return this
+    }
+
+    public setChecked(checked: boolean = true): this {
+        this.checked = checked ? 'checked' : ''
+        return this
+    }
+
+    public setRequired(required: boolean = true): this {
+        this.required = required ? 'required' : ''
+        return this
+    }
+
+    public setPattern(pattern: string): this {
+        this.pattern = pattern
         return this
     }
 
@@ -195,6 +246,12 @@ export class Input extends Html {
             attributes.push(`value="${this.value}"`)
         if (this.autocomplete)
             attributes.push(`autocomplete="${this.autocomplete}"`)
+        if (this.checked)
+            attributes.push(`checked="${this.checked}"`)
+        if (this.required)
+            attributes.push(`required="${this.required}"`)
+        if (this.pattern)
+            attributes.push(`pattern="${this.pattern}"`)
         return attributes
     }
 
@@ -208,19 +265,27 @@ export class Input extends Html {
             node.value = this.value
         if (this.autocomplete)
             node.autocomplete = this.autocomplete as AutoFill
+        if (this.checked)
+            node.checked = true
+        if (this.required)
+            node.required = true
+        if (this.pattern)
+            node.pattern = this.pattern
         return node
     }
 }
 
+export type StringMap = Map<string, string>
+
 export class Form extends Html {
-    private onSubmitCallback?: (event: Event) => void = undefined
+    private onSubmitCallback?: (formData: StringMap) => void = undefined
 
     public constructor() {
         super()
         this.setTagName('form')
     }
 
-    public onSubmit(callback: (event: Event) => void): this {
+    public onSubmit(callback: (formData: StringMap) => void): this {
         this.onSubmitCallback = callback
         return this
     }
@@ -230,7 +295,11 @@ export class Form extends Html {
         if (this.onSubmitCallback)
             node.addEventListener('submit', event => {
                 event.preventDefault()
-                this.onSubmitCallback!(event)
+                node.querySelectorAll('input').forEach(input => input.disabled = false)
+                const formData = new Map<string, string>(new FormData(node).entries() as Iterable<[string, string]>)
+                const submit = node.querySelector('input[type="submit"]') as HTMLInputElement
+                this.replaceEnclosingMessageContent(node, submit.value)
+                this.onSubmitCallback!(formData)
             })
         return node
     }
@@ -250,7 +319,7 @@ export class Paragraph extends Html {
     }
 }
 
-export class Button extends Html {
+export class Button extends FormControl {
     private title: string = ''
     private onClickCallback?: (event: Event) => void = undefined
 
@@ -283,19 +352,8 @@ export class Button extends Html {
         if (this.onClickCallback)
             node.addEventListener('click', event => {
                 event.preventDefault()
-                const target = event.target as HTMLButtonElement
-                const div = target.closest('div')
-                const section = target.closest('section')
-                if (section && div) {
-                    section.classList.remove('reveal')
-                    const text = (target.title || target.textContent) + "."
-                    const textNode = document.createTextNode(text)
-                    const paragraph = document.createElement('p')
-                    paragraph.appendChild(textNode)
-                    div.replaceChildren(paragraph)
-                    this.callDelayed(() => section.classList.add('reveal'))
-                    this.onClickCallback!(event)
-                }
+                this.replaceEnclosingMessageContent(node, node.title || node.textContent || 'Unknown')
+                this.onClickCallback!(event)
             })
         return node
     }

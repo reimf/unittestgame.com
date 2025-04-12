@@ -2,6 +2,7 @@ import { Candidate } from './candidate.js';
 import { Random } from './random.js';
 import { UnitTest } from './unit_test.js';
 export class UseCase {
+    *exampleAnswerGenerator() { }
     constructor() {
         this.parameters = this.getParameters();
         this.unit = this.getUnit();
@@ -17,11 +18,8 @@ export class UseCase {
     *generateCandidates(listOfListOfLines, lines) {
         if (listOfListOfLines.length > 0) {
             const [firstListOfLines, ...remainingListOfListOfLines] = listOfListOfLines;
-            for (const line of firstListOfLines) {
-                const newLine = line === '' && remainingListOfListOfLines.length === 0 ? 'return undefined' : line;
-                const newLines = [...lines, newLine];
-                yield* this.generateCandidates(remainingListOfListOfLines, newLines);
-            }
+            for (const line of firstListOfLines)
+                yield* this.generateCandidates(remainingListOfListOfLines, [...lines, line]);
         }
         else
             yield this.createCandidate(lines);
@@ -51,7 +49,7 @@ export class UseCase {
     findPerfectCandidates() {
         const perfectCandidates = this.candidates.filter(candidate => candidate.failCount(this.minimalUnitTests) === 0);
         if (perfectCandidates.length === 0)
-            throw new Error(`There is no perfect function for use case ${this.name}.`);
+            throw new Error(`There is no perfect function for use case ${this.name()}.`);
         return perfectCandidates;
     }
     checkPerfectCandidates() {

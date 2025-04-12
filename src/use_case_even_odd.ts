@@ -11,18 +11,12 @@ export class EvenOdd extends UseCase {
 
     public getParameters(): Variable[] {
         return [
-            new NumberVariable(
-                'Number',
-                'number'
-            ),
+            new NumberVariable('Number', 'number'),
         ]
     }
 
     public getUnit(): Variable {
-        return new CheckboxVariable(
-            'Is even',
-            'isEven'
-        )
+        return new CheckboxVariable('Is even', 'isEven')
     }
 
     public getCandidateElements(): string[][] {
@@ -49,7 +43,7 @@ export class EvenOdd extends UseCase {
             [
                 'return true',
                 'return false',
-                '',
+                'return undefined',
             ],
         ]
     }

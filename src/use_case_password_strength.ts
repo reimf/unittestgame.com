@@ -24,10 +24,7 @@ export class PasswordStrength extends UseCase {
     }
 
     public getUnit(): Variable {
-        return new CheckboxVariable(
-            'Is a strong password',
-            'isStrongPassword'
-        )
+        return new CheckboxVariable('Is a strong password', 'isStrongPassword')
     }
 
     public getCandidateElements(): string[][] {
@@ -56,7 +53,7 @@ export class PasswordStrength extends UseCase {
             [
                 'return true',
                 'return false',
-                '',
+                'return undefined',
             ],
         ]
     }

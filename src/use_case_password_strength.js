@@ -46,7 +46,7 @@ export class PasswordStrength extends UseCase {
             [
                 'return true',
                 'return false',
-                '',
+                'return undefined',
             ],
         ];
     }

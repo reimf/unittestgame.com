@@ -61,7 +61,7 @@ export class FloatFormat extends UseCase {
                 'return new RegExp(regex).test(text)',
                 'return true',
                 'return false',
-                '',
+                'return undefined',
             ],
         ];
     }

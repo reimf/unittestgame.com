@@ -46,7 +46,7 @@ export class LeapYear extends UseCase {
             [
                 'return true',
                 'return false',
-                '',
+                'return undefined',
             ],
         ];
     }

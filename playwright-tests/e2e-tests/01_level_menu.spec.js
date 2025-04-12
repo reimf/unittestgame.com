@@ -36,6 +36,6 @@ test.describe('level menu', () => {
     test('has see example message', async ({ page }) => {
         const messages = page.getByTestId('messages');
         const button = messages.getByRole('button');
-        await expect(button).toHaveText('I want to see an example of Test-Driven Development');
+        await expect(button).toHaveText('I want to play Level 1 - Test-Driven Development - Example');
     });
 });

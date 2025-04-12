@@ -16,18 +16,12 @@ export class FizzBuzz extends UseCase {
 
     public getParameters(): Variable[] {
         return [
-            new NumberVariable(
-                'Number',
-                'number'
-            ),
+            new NumberVariable('Number', 'number'),
         ]
     }
 
     public getUnit(): Variable {
-        return new TextVariable(
-            'Output',
-            'fizzBuzz',
-        )
+        return new TextVariable('Output', 'fizzBuzz')
     }
 
     public getCandidateElements(): string[][] {
@@ -52,7 +46,7 @@ export class FizzBuzz extends UseCase {
                 'return "Buzz"',
                 'return "FizzBuzz"',
                 'return number.toString()',
-                '',
+                'return undefined',
             ],
         ]
     }

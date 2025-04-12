@@ -15,17 +15,31 @@ export class Candidate {
     }
 
     private computeComplexity(code: string): number {
+        const keywords: string[] = [
+            'function', 'return', '\\{', '\\}',
+            'if', '&&', '\\|\\|',
+            '\\d', 
+            '\\/', '%', '[=!]==', '\\+=', '=', '\\+', '\\*',
+            '\\>=?', '\\<=?',
+            'true', 'false', 
+            'new', 'RegExp', 'Math', '\\.', 'toString', 'toFixed', 'round', 'test',
+            'let', 'undefined', 'string',
+            '[A-Z]+',
+        ]
+        const regex = '^' + keywords.join('|') + '$'
         const chunks = code
             .replace(/\n/g, ' ') // simplify white space
             .replace(/\(([^(]*?)\)/g, ' function $1 ') // each function definition/call is 1 extra point
-            .replace(/"(.*?)"/g, ' string $1 ') // each string is 1 extra point
+            .replace(/\(([^(]*?)\)/g, ' function $1 ') // handle nested function calls
+            .replace(/"[^"]*?"/g, ' string string ') // each string is 1 extra point
             .replace(/\.(?=[a-z])/g, ' ') // each class mention is 1 point
             .replace(/(?<=\d)0+ /g, ' ') // 200 is 1 point
             .replace(/(?<=\d)(?=\d)/g, ' ') // 3199 is 4 points, 3200 only 2
             .replace(/(?<=\d)\.(?=\d)/g, ' dot ') // each float is 1 point extra
             .trim() // remove trailing white space
             .split(/\s+/) // each token is 1 point
-        return chunks.length
+        const variables = chunks.filter(chunk => !chunk.match(regex)) // each use of a parameter or variable is 1 extra point
+        return chunks.length + variables.length
     }
 
     public execute(argumentsList: any[]): any {
@@ -54,7 +68,7 @@ export class Candidate {
     }
 
     public isAmputeeOf(candidate: Candidate): boolean {
-        return this.lines.every((line, pos) => line === '' || line === candidate.lines[pos])
+        return this.lines.every((line, pos) => line === candidate.lines[pos] || line === '' || line.trim() === 'return undefined')
     }
 
     public compareComplexity(candidate: Candidate): number {
@@ -95,7 +109,7 @@ export class Candidate {
         const lines = this.lines.map((line, pos) => {
             const isNotIndented = !line.startsWith('  ')
             const isUsed = coveredCandidates.some(candidate => candidate.lines[pos] === line)
-            return new Div().appendText(line).addClass('covered', isNotIndented || isUsed)
+            return new Div().appendText(line).addClass(isNotIndented || isUsed ? 'covered' : '')
         })
         return new Code().appendChildren(lines)
     }

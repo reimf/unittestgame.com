@@ -24,11 +24,7 @@ export class TriangleType extends UseCase {
     }
 
     public getUnit(): Variable {
-        return new RadioVariable(
-            'Type of triangle',
-            'triangleType',
-            ['equilateral', 'isosceles', 'scalene']
-        )
+        return new RadioVariable('Type of triangle', 'triangleType', ['equilateral', 'isosceles', 'scalene'])
     }
 
     public getCandidateElements(): string[][] {
@@ -49,13 +45,14 @@ export class TriangleType extends UseCase {
                 'if (a === b) return "isosceles"',
                 'if (a === c) return "isosceles"',
                 'if (b === c) return "isosceles"',
+                'if (a !== b && a !== c && b !== c) return "scalene"',
                 '',
             ],
             [
                 'return "equilateral"',
                 'return "isosceles"',
                 'return "scalene"',
-                '',
+                'return undefined',
             ],
         ]
     }

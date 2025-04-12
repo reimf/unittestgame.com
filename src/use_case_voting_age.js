@@ -35,7 +35,7 @@ export class VotingAge extends UseCase {
             [
                 'return true',
                 'return false',
-                '',
+                'return undefined',
             ],
         ];
     }

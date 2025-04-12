@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test'
-import { Panel, ComputerMessage, HumanMessage, ButtonMessage } from '../../src/frame.js'
+import { Panel, ComputerMessage, HumanMessage, QuestionMessage } from '../../src/frame.js'
 
 
 test.describe('class Frame', () => {
@@ -18,8 +18,8 @@ test.describe('class Frame', () => {
         expect(humanMessage.toString()).toBe('<section class="human"><div><p>Hello</p><p>World</p></div></section>')
     })
 
-    test('subclass ButtonMessage', () => {
-        const buttonMessage = new ButtonMessage('Hello', () => {})
-        expect(buttonMessage.toString()).toBe('<section class="human"><div><p><button>Hello</button></p></div></section>')
+    test('subclass QuestionMessage', () => {
+        const questionMessage = new QuestionMessage('Hello', () => {})
+        expect(questionMessage.toString()).toBe('<section class="human"><div><p><button>Hello</button></p></div></section>')
     })
 })

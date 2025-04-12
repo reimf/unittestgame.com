@@ -1,5 +1,5 @@
 import { Candidate } from './candidate.js';
-import { HumanMessage, ProcessingMessage, ComputerMessage, Panel } from './frame.js';
+import { HumanMessage, CheckingMessage, ComputerMessage, Panel } from './frame.js';
 import { Button, Div, Form, Input, Paragraph } from './html.js';
 import { Random } from './random.js';
 import { TestResult } from './test_result.js';
@@ -23,17 +23,11 @@ export class Level {
     methodologyName() {
         return this.methodology.name();
     }
-    getExampleSeen() {
-        return this.methodology.getExampleSeen();
-    }
-    setExampleSeen() {
-        this.methodology.setExampleSeen();
-    }
-    showExample(callback) {
-        this.methodology.showExample(callback);
-    }
     isFinished() {
         return this.isLevelFinished.get();
+    }
+    isRecentlyFinished() {
+        return this.isLevelFinished.recent();
     }
     play(callback) {
         this.callback = callback;
@@ -88,7 +82,7 @@ export class Level {
     showUnitTestsPanel() {
         new Panel('Unit Tests', this.userdefinedUnitTests.length === 0
             ? ['You have not written any unit tests yet.']
-            : this.userdefinedUnitTests.map(unitTest => new Div().appendText(unitTest.toString()).addClass('new', unitTest === this.newUnitTest))).show();
+            : this.userdefinedUnitTests.map(unitTest => new Div().appendText(unitTest.toString()).addClass(unitTest === this.newUnitTest ? 'new' : ''))).show();
         this.newUnitTest = undefined;
     }
     menu() {
@@ -123,20 +117,13 @@ export class Level {
         const cancelButton = new Button()
             .appendText('Cancel')
             .setTitle('I don\'t want to add a unit test now')
-            .onClick(() => this.cancelAddUnitTestFlow())
-            .addClass('cancel');
+            .onClick(() => this.cancelAddUnitTestFlow());
         const buttonBlock = new Paragraph().appendChildren([submitButton, cancelButton]);
         new HumanMessage([
             new Form()
-                .onSubmit(() => this.prepareAddUnitTest())
+                .onSubmit(formData => this.prepareAddUnitTest(formData))
                 .appendChildren([...parameterFields, unitField, buttonBlock]),
         ]).add();
-    }
-    showAddUnitTestMessage(unitTest) {
-        new HumanMessage([
-            'I want to add the following unit test.',
-            unitTest.toString(),
-        ]).replace();
     }
     showConfirmCancelAddUnitTestFlowMessage() {
         new ComputerMessage(['Ok.']).add();
@@ -145,12 +132,12 @@ export class Level {
         this.showConfirmCancelAddUnitTestFlowMessage();
         this.menu();
     }
-    prepareAddUnitTest() {
-        const argumentList = this.useCase.parameters.map(parameter => parameter.getValue());
-        const expected = this.useCase.unit.getValue();
+    prepareAddUnitTest(formData) {
+        const argumentList = this.useCase.parameters.map(parameter => parameter.getInput(formData.get(parameter.name)));
+        const expected = this.useCase.unit.getInput(formData.get(this.useCase.unit.name));
         const unitTest = new UnitTest(this.useCase.parameters, argumentList, this.useCase.unit, expected);
-        this.showAddUnitTestMessage(unitTest);
-        new ProcessingMessage('Processing this new unit test...', () => this.addUnitTest(unitTest), 1000 + this.userdefinedUnitTests.length * 500).add();
+        new HumanMessage([unitTest.toString()]).add();
+        new CheckingMessage('Checking the new unit test', 'I checked the new unit test', () => this.addUnitTest(unitTest), 2000 + this.userdefinedUnitTests.length * 500).add();
     }
     addUnitTest(unitTest) {
         const unitTestIsCorrect = new TestResult(this.useCase.perfectCandidate, unitTest).passes;
@@ -179,7 +166,7 @@ export class Level {
         this.menu();
     }
     prepareSubmitUnitTests() {
-        new ProcessingMessage('Checking...', () => this.submitUnitTests(), 1000 + this.userdefinedUnitTests.length * 500).add();
+        new CheckingMessage('Checking the unit tests', 'I checked the unit tests', () => this.submitUnitTests(), 2000 + this.userdefinedUnitTests.length * 500).add();
     }
     submitUnitTests() {
         if (this.failingTestResult) {
@@ -191,7 +178,12 @@ export class Level {
     }
     end() {
         this.isLevelFinished.set();
+        this.coveredCandidates.length = 0;
+        this.showPanels();
         this.methodology.showEndMessage();
+        this.processCallback();
+    }
+    processCallback() {
         this.callback();
     }
 }

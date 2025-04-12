@@ -1,11 +1,9 @@
 import { Candidate } from './candidate.js'
-import { Panel, ComputerMessage, ButtonMessage, ProcessingMessage } from './frame.js'
+import { Panel, ComputerMessage } from './frame.js'
 import { Methodology } from './methodology.js'
 import { TestResult } from './test_result.js'
 
 export class MutationTesting extends Methodology {
-    private callback: () => void = () => {}
-
     public name(): string {
         return 'Mutation Testing'
     }
@@ -16,61 +14,6 @@ export class MutationTesting extends Methodology {
             'Mutations are simplifications of the code, e.g. by replacing "n % 4 === 0" with "n === 4". ' +
             '[Read more](https://en.wikipedia.org/wiki/Mutation_testing)',
         ]).show()
-    }
-
-    public showExample(callback: () => void): void {
-        this.callback = callback
-        new ProcessingMessage('Creating an example of Mutation Testing...', () => this.showExampleStep1(), 2000).add()
-    }
-
-    private showExampleStep1(): void {
-        new ComputerMessage([
-            'Suppose you have a function that implements a special version of division.',
-            'function divide(a, b) {\n  if (b === 0) return 0\n  return a / b\n}',
-        ]).add()
-        new ComputerMessage(['Can you give me a unit test that passes?']).add()
-        new ButtonMessage('divide(4, 2) === 2', () => this.showExampleStep2()).add()
-    }
-
-    private showExampleStep2(): void {
-        new ComputerMessage(['And another unit test that passes?']).add()
-        new ButtonMessage('divide(9, 3) === 3', () => this.showExampleStep3()).add()
-    }
-
-    private showExampleStep3(): void {
-        new ProcessingMessage('Checking if the function is fully tested...', () => this.showExampleStep4(), 2000).add()
-    }
-
-    private showExampleStep4(): void {
-        new ComputerMessage([
-            'I checked if the function is fully tested and I found the following mutation that is NOT correct, but still passes both unit tests.',
-            'function divide(a, b) {\n  return b\n}',
-        ]).add()
-        new ComputerMessage(['Add a unit test that fails this mutation, but passes the function under test.']).add()
-        new ButtonMessage('divide(6, 3) === 2', () => this.showExampleStep5()).add()
-    }
-
-    private showExampleStep5(): void {
-        new ProcessingMessage('Checking if the function is fully tested now...', () => this.showExampleStep6(), 2000).add()
-    }
-
-    private showExampleStep6(): void {
-        new ComputerMessage([
-            'I checked again if the function is fully tested and I found the following mutation that is NOT correct, but passes all 3 unit tests.',
-            'function divide(a, b) {\n  return a / b\n}'
-        ]).add()
-        new ComputerMessage(['Again, add a unit test that fails this mutation, but passes the function under test.']).add()
-        new ButtonMessage('divide(5, 0) === 0', () => this.showExampleStep7()).add()
-    }
-
-    private showExampleStep7(): void {
-        new ProcessingMessage('Checking if the function is fully tested now...', () => this.showExampleStep8(), 2000).add()
-    }
-
-    private showExampleStep8(): void {
-        new ComputerMessage(['I checked again if the function is fully tested and I could NOT find a mutation that passes all 4 unit tests, so the function is fully tested.']).add()
-        new ComputerMessage(['Congratulations, you understand the basics of Mutation Testing!']).add()
-        this.callback()
     }
 
     public showWelcomeMessage(): void {
@@ -85,6 +28,10 @@ export class MutationTesting extends Methodology {
 
     private showCodeCoveragePanel(perfectCandidate: Candidate, coveredCandidates: Candidate[]): void {
         new Panel('The Function', [perfectCandidate.toHtmlWithCoverage(coveredCandidates)]).show()
+    }
+
+    public showIncorrectUnitTestMessage(): void {
+        new ComputerMessage(['I did NOT add the unit test, because it is NOT correct.']).add()
     }
 
     public showUselessUnitTestMessage(): void {

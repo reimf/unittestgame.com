@@ -40,7 +40,7 @@ export class FizzBuzz extends UseCase {
                 'return "Buzz"',
                 'return "FizzBuzz"',
                 'return number.toString()',
-                '',
+                'return undefined',
             ],
         ];
     }

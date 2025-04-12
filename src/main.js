@@ -1,8 +1,11 @@
-import { Panel, ComputerMessage, ButtonMessage } from './frame.js';
+import { Completed } from './completed.js';
+import { Example } from './example.js';
+import { Panel, ComputerMessage, QuestionMessage } from './frame.js';
 import { Div } from './html.js';
 import { Level } from './level.js';
 import { MutationTesting } from './methodology_mutation_testing.js';
 import { TestDrivenDevelopment } from './methodology_test_driven_development.js';
+import { Battery } from './use_case_battery.js';
 import { VotingAge } from './use_case_voting_age.js';
 import { EvenOdd } from './use_case_even_odd.js';
 import { FizzBuzz } from './use_case_fizz_buzz.js';
@@ -11,12 +14,12 @@ import { LeapYear } from './use_case_leap_year.js';
 import { FloatFormat } from './use_case_float_format.js';
 import { PasswordStrength } from './use_case_password_strength.js';
 import { SpeedDisplay } from './use_case_speed_display.js';
-import { Completed } from './completed.js';
 export class Main {
     constructor() {
         this.testDrivenDevelopment = new TestDrivenDevelopment();
         this.mutationTesting = new MutationTesting();
         this.methodologies = [this.testDrivenDevelopment, this.mutationTesting];
+        this.battery = new Battery();
         this.votingAge = new VotingAge();
         this.evenOdd = new EvenOdd();
         this.fizzBuzz = new FizzBuzz();
@@ -26,7 +29,9 @@ export class Main {
         this.passwordStrength = new PasswordStrength();
         this.speedDisplay = new SpeedDisplay();
         this.levels = [
+            new Example(this.testDrivenDevelopment, this.battery),
             new Level(this.testDrivenDevelopment, this.votingAge),
+            new Example(this.mutationTesting, this.battery),
             new Level(this.mutationTesting, this.evenOdd),
             new Level(this.testDrivenDevelopment, this.fizzBuzz),
             new Level(this.mutationTesting, this.triangleType),
@@ -76,7 +81,7 @@ export class Main {
         new ComputerMessage(['I am an AI bot specialized in *Test-Driven Development* and *Mutation Testing*.']).add();
     }
     showQuestionSidebar(callback) {
-        new ButtonMessage('I want a sidebar for terms with a purple background', () => callback()).add();
+        new QuestionMessage('I want a sidebar for terms with a purple background', () => callback()).add();
     }
     showUnittestgamePanel() {
         const methodologies = this.methodologies.map(methodology => methodology.name()).join(' and ');
@@ -95,21 +100,14 @@ export class Main {
     showFinishedLevelsPanel() {
         const finishedLevels = this.getFinishedLevels();
         if (finishedLevels.length > 0) {
-            new Panel('Finished Levels', finishedLevels.map(level => new Div().appendText(this.levelDescription(level)))).show();
+            new Panel('Finished Levels', finishedLevels.map(level => new Div().appendText(this.levelDescription(level)).addClass(level.isRecentlyFinished() ? 'new' : ''))).show();
         }
     }
     showNextLevel() {
         const nextLevel = this.levels.find(level => !level.isFinished());
-        if (nextLevel && !nextLevel.getExampleSeen()) {
-            new ButtonMessage(`I want to see an example of ${nextLevel.methodologyName()}`, () => nextLevel.showExample(() => this.setExampleSeen(nextLevel))).add();
-        }
-        else if (nextLevel)
-            new ButtonMessage(`I want to play ${this.levelDescription(nextLevel)}`, () => this.play(nextLevel)).add();
+        if (nextLevel)
+            new QuestionMessage(`I want to play ${this.levelDescription(nextLevel)}`, () => this.play(nextLevel)).add();
         else
-            new ButtonMessage('I want to quit', () => window.close()).add();
-    }
-    setExampleSeen(nextLevel) {
-        nextLevel.setExampleSeen();
-        this.continue();
+            new QuestionMessage('I want to quit', () => window.close()).add();
     }
 }

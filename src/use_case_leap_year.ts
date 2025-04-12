@@ -17,18 +17,12 @@ export class LeapYear extends UseCase {
 
     public getParameters(): Variable[] {
         return [
-            new NumberVariable(
-                'Year',
-                'year'
-            ),
+            new NumberVariable('Year', 'year'),
         ]
     }
 
     public getUnit(): Variable {
-        return new CheckboxVariable(
-            'Is a leap year',
-            'isLeapYear'
-        )
+        return new CheckboxVariable('Is a leap year', 'isLeapYear')
     }
 
     public getCandidateElements(): string[][] {
@@ -58,7 +52,7 @@ export class LeapYear extends UseCase {
             [
                 'return true',
                 'return false',
-                '',
+                'return undefined',
             ],
         ]
     }

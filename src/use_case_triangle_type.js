@@ -38,13 +38,14 @@ export class TriangleType extends UseCase {
                 'if (a === b) return "isosceles"',
                 'if (a === c) return "isosceles"',
                 'if (b === c) return "isosceles"',
+                'if (a !== b && a !== c && b !== c) return "scalene"',
                 '',
             ],
             [
                 'return "equilateral"',
                 'return "isosceles"',
                 'return "scalene"',
-                '',
+                'return undefined',
             ],
         ];
     }

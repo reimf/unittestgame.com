@@ -59,7 +59,7 @@ export class SpeedDisplay extends UseCase {
                 'return (speed / 1000).toFixed()',
                 'return (speed / 1000).toFixed(1)',
                 'return (speed / 1000).toString()',
-                '',
+                'return undefined',
             ],
         ];
     }

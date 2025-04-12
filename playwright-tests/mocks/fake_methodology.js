@@ -5,6 +5,7 @@ export class FakeMethodology extends Methodology {
     showExample(_callback) { }
     showWelcomeMessage() { }
     showPanelsOnMenu(_specification, _currentCandidate, _previousCandidate, _perfectCandidate, _coveredCandidates) { }
+    showIncorrectUnitTestMessage() { }
     showUselessUnitTestMessage() { }
     showUsefulUnitTestMessage() { }
     showHintMessage(_currentCandidate, _failingTestResult) { }

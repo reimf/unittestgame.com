@@ -5,7 +5,7 @@ export class FakeUseCase extends UseCase {
         return 'Fake Use Case';
     }
     specification() {
-        return ('The usual FizzBuzz leet code challenge.');
+        return 'The usual FizzBuzz leet code challenge.';
     }
     getParameters() {
         return [new NumberVariable('Number', 'number')];

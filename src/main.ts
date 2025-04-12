@@ -1,10 +1,13 @@
-import { Panel, ComputerMessage, ButtonMessage } from './frame.js'
+import { Completed } from './completed.js'
+import { Example } from './example.js'
+import { Panel, ComputerMessage, QuestionMessage } from './frame.js'
 import { Div } from './html.js'
 import { Level } from './level.js'
 import { Methodology } from './methodology.js'
 import { MutationTesting } from './methodology_mutation_testing.js'
 import { TestDrivenDevelopment } from './methodology_test_driven_development.js'
 import { UseCase } from './use_case.js'
+import { Battery } from './use_case_battery.js'
 import { VotingAge } from './use_case_voting_age.js'
 import { EvenOdd } from './use_case_even_odd.js'
 import { FizzBuzz } from './use_case_fizz_buzz.js'
@@ -13,12 +16,12 @@ import { LeapYear } from './use_case_leap_year.js'
 import { FloatFormat } from './use_case_float_format.js'
 import { PasswordStrength } from './use_case_password_strength.js'
 import { SpeedDisplay } from './use_case_speed_display.js'
-import { Completed } from './completed.js'
 
 export class Main {
     private readonly testDrivenDevelopment: Methodology = new TestDrivenDevelopment()
     private readonly mutationTesting: Methodology = new MutationTesting()
     private readonly methodologies = [this.testDrivenDevelopment, this.mutationTesting]
+    private readonly battery: UseCase = new Battery()
     private readonly votingAge: UseCase = new VotingAge()
     private readonly evenOdd: UseCase = new EvenOdd()
     private readonly fizzBuzz: UseCase = new FizzBuzz()
@@ -28,7 +31,9 @@ export class Main {
     private readonly passwordStrength: UseCase = new PasswordStrength()
     private readonly speedDisplay: UseCase = new SpeedDisplay()
     private readonly levels: Level[] = [
+        new Example(this.testDrivenDevelopment, this.battery),
         new Level(this.testDrivenDevelopment, this.votingAge),
+        new Example(this.mutationTesting, this.battery),
         new Level(this.mutationTesting, this.evenOdd),
         new Level(this.testDrivenDevelopment, this.fizzBuzz),
         new Level(this.mutationTesting, this.triangleType),
@@ -84,7 +89,7 @@ export class Main {
     }
 
     private showQuestionSidebar(callback: () => void): void {
-        new ButtonMessage(
+        new QuestionMessage(
             'I want a sidebar for terms with a purple background',
             () => callback()
         ).add()
@@ -111,29 +116,18 @@ export class Main {
         const finishedLevels = this.getFinishedLevels()
         if (finishedLevels.length > 0) {
             new Panel('Finished Levels',
-                finishedLevels.map(level => new Div().appendText(this.levelDescription(level)))
+                finishedLevels.map(level => 
+                    new Div().appendText(this.levelDescription(level)).addClass(level.isRecentlyFinished() ? 'new' : '')
+                )
             ).show()
         }
     }
 
     private showNextLevel(): void {
         const nextLevel = this.levels.find(level => !level.isFinished())
-        if (nextLevel && !nextLevel.getExampleSeen()) {
-            new ButtonMessage(
-                `I want to see an example of ${nextLevel.methodologyName()}`,
-                () => nextLevel.showExample(
-                    () => this.setExampleSeen(nextLevel)
-                )
-            ).add()
-        }
-        else if (nextLevel)
-            new ButtonMessage(`I want to play ${this.levelDescription(nextLevel)}`, () => this.play(nextLevel)).add()
+        if (nextLevel)
+            new QuestionMessage(`I want to play ${this.levelDescription(nextLevel)}`, () => this.play(nextLevel)).add()
         else
-            new ButtonMessage('I want to quit', () => window.close()).add()
-    }
-
-    private setExampleSeen(nextLevel: Level): void {
-        nextLevel.setExampleSeen()
-        this.continue() 
+            new QuestionMessage('I want to quit', () => window.close()).add()
     }
 }

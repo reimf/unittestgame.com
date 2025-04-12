@@ -1,7 +1,7 @@
 import { Candidate } from './candidate.js'
-import { HumanMessage, ProcessingMessage, ComputerMessage, Panel } from './frame.js'
+import { HumanMessage, CheckingMessage, ComputerMessage, Panel } from './frame.js'
 import { Methodology } from './methodology.js'
-import { Button, Div, Form, Input, Paragraph } from './html.js'
+import { Button, Div, Form, Input, Paragraph, StringMap } from './html.js'
 import { Random } from './random.js'
 import { TestResult } from './test_result.js'
 import { UnitTest } from './unit_test.js'
@@ -9,8 +9,8 @@ import { UseCase } from './use_case.js'
 import { Completed } from './completed.js'
 
 export class Level {
-    private readonly methodology: Methodology
-    private readonly useCase: UseCase
+    protected readonly methodology: Methodology
+    protected readonly useCase: UseCase
     private readonly isLevelFinished: Completed
 
     private callback?: () => void
@@ -35,20 +35,12 @@ export class Level {
         return this.methodology.name()
     }
 
-    public getExampleSeen(): boolean {
-        return this.methodology.getExampleSeen()
-    }
-
-    public setExampleSeen(): void {
-        this.methodology.setExampleSeen()
-    }
-
-    public showExample(callback: () => void): void {
-        this.methodology.showExample(callback)
-    }
-
     public isFinished(): boolean {
         return this.isLevelFinished.get()
+    }
+
+    public isRecentlyFinished(): boolean {
+        return this.isLevelFinished.recent()
     }
 
     public play(callback: () => void): void {
@@ -111,7 +103,7 @@ export class Level {
         new Panel('Unit Tests',
             this.userdefinedUnitTests.length === 0
             ? ['You have not written any unit tests yet.']
-            : this.userdefinedUnitTests.map(unitTest => new Div().appendText(unitTest.toString()).addClass('new', unitTest === this.newUnitTest))
+            : this.userdefinedUnitTests.map(unitTest => new Div().appendText(unitTest.toString()).addClass(unitTest === this.newUnitTest ? 'new' : ''))
         ).show()
         this.newUnitTest = undefined
     }
@@ -127,7 +119,7 @@ export class Level {
         this.showUnitTestsPanel()
     }
 
-    private showMenuMessage(): void {
+    protected showMenuMessage(): void {
         new HumanMessage([
             new Paragraph().appendChildren([
                 new Button().setTitle('I want to add a unit test').appendText('Add unit test').onClick(() => this.startAddUnitTestFlow()),
@@ -137,7 +129,7 @@ export class Level {
         ]).add()
     }
 
-    private startAddUnitTestFlow(): void {
+    protected startAddUnitTestFlow(): void {
         this.showConfirmStartUnitTestFlowMessage()
         this.showFormUnitTestMessage()
     }
@@ -146,7 +138,7 @@ export class Level {
         new ComputerMessage(['Which unit test do you want to add?']).add()
     }
 
-    private showFormUnitTestMessage(): void {
+    protected showFormUnitTestMessage(): void {
         const parameterFields = this.useCase.parameters.map(variable => variable.toHtml())
         const unitField = this.useCase.unit.toHtml()
         const submitButton = new Input().setType('submit').setValue('I want to add this unit test')
@@ -154,37 +146,29 @@ export class Level {
             .appendText('Cancel')
             .setTitle('I don\'t want to add a unit test now')
             .onClick(() => this.cancelAddUnitTestFlow())
-            .addClass('cancel')
         const buttonBlock = new Paragraph().appendChildren([submitButton, cancelButton])
         new HumanMessage([
             new Form()
-                .onSubmit(() => this.prepareAddUnitTest())
+                .onSubmit(formData => this.prepareAddUnitTest(formData))
                 .appendChildren([...parameterFields, unitField, buttonBlock]),
         ]).add()
-    }
-
-    private showAddUnitTestMessage(unitTest: UnitTest): void {
-        new HumanMessage([
-            'I want to add the following unit test.',
-            unitTest.toString(),
-        ]).replace()
     }
 
     private showConfirmCancelAddUnitTestFlowMessage(): void {
         new ComputerMessage(['Ok.']).add()
     }
 
-    private cancelAddUnitTestFlow(): void {
+    protected cancelAddUnitTestFlow(): void {
         this.showConfirmCancelAddUnitTestFlowMessage()
         this.menu()
     }
 
-    private prepareAddUnitTest(): void {
-        const argumentList = this.useCase.parameters.map(parameter => parameter.getValue())
-        const expected = this.useCase.unit.getValue()
+    protected prepareAddUnitTest(formData: StringMap): void {
+        const argumentList = this.useCase.parameters.map(parameter => parameter.getInput(formData.get(parameter.name)!))
+        const expected = this.useCase.unit.getInput(formData.get(this.useCase.unit.name)!)
         const unitTest = new UnitTest(this.useCase.parameters, argumentList, this.useCase.unit, expected)
-        this.showAddUnitTestMessage(unitTest)
-        new ProcessingMessage('Processing this new unit test...', () => this.addUnitTest(unitTest), 1000 + this.userdefinedUnitTests.length * 500).add()
+        new HumanMessage([unitTest.toString()]).add()
+        new CheckingMessage('Checking the new unit test', 'I checked the new unit test', () => this.addUnitTest(unitTest), 2000 + this.userdefinedUnitTests.length * 500).add()
     }
 
     private addUnitTest(unitTest: UnitTest): void {
@@ -207,7 +191,7 @@ export class Level {
         this.menu()
     }
 
-    private showHint(): void {
+    protected showHint(): void {
         if (this.failingTestResult)
             this.methodology.showHintMessage(this.currentCandidate, this.failingTestResult)
         else
@@ -215,8 +199,8 @@ export class Level {
         this.menu()
     }
 
-    private prepareSubmitUnitTests(): void {
-        new ProcessingMessage('Checking...', () => this.submitUnitTests(), 1000 + this.userdefinedUnitTests.length * 500).add()
+    protected prepareSubmitUnitTests(): void {
+        new CheckingMessage('Checking the unit tests', 'I checked the unit tests', () => this.submitUnitTests(), 2000 + this.userdefinedUnitTests.length * 500).add()
     }
 
     private submitUnitTests(): void {
@@ -230,7 +214,13 @@ export class Level {
 
     private end(): void {
         this.isLevelFinished.set()
+        this.coveredCandidates.length = 0
+        this.showPanels()
         this.methodology.showEndMessage()
+        this.processCallback()
+    }
+
+    protected processCallback(): void {
         this.callback!()
     }
 }

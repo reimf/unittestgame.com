@@ -12,6 +12,8 @@ export abstract class UseCase {
     protected abstract minimalUnitTestGenerator(): Generator<any[]>
     protected abstract hintGenerator(): Generator<any[]>
 
+    public *exampleAnswerGenerator(): Generator<string> { }
+
     public readonly parameters: Variable[] = this.getParameters()
     public readonly unit: Variable = this.getUnit()
     public readonly candidates: Candidate[] = [...this.generateCandidates(this.getCandidateElements(), [])]
@@ -29,11 +31,8 @@ export abstract class UseCase {
     private *generateCandidates(listOfListOfLines: string[][], lines: string[]): Generator<Candidate> {
         if (listOfListOfLines.length > 0) {
             const [firstListOfLines, ...remainingListOfListOfLines] = listOfListOfLines
-            for (const line of firstListOfLines) {
-                const newLine = line === '' && remainingListOfListOfLines.length === 0 ? 'return undefined' : line
-                const newLines = [...lines, newLine]
-                yield* this.generateCandidates(remainingListOfListOfLines, newLines)
-            }
+            for (const line of firstListOfLines)
+                yield* this.generateCandidates(remainingListOfListOfLines, [...lines, line])
         }
         else
             yield this.createCandidate(lines)
@@ -68,7 +67,7 @@ export abstract class UseCase {
     private findPerfectCandidates(): Candidate[] {
         const perfectCandidates = this.candidates.filter(candidate => candidate.failCount(this.minimalUnitTests) === 0)
         if (perfectCandidates.length === 0)
-            throw new Error(`There is no perfect function for use case ${this.name}.`)
+            throw new Error(`There is no perfect function for use case ${this.name()}.`)
         return perfectCandidates
     }
 

@@ -12,18 +12,12 @@ export class VotingAge extends UseCase {
 
     public getParameters(): Variable[] {
         return [
-            new NumberVariable(
-                'Age',
-                'age'
-            ),
+            new NumberVariable('Age', 'age'),
         ]
     }
 
     public getUnit(): Variable {
-        return new CheckboxVariable(
-            'Is allowed to vote',
-            'isAllowedToVote'
-        )
+        return new CheckboxVariable('Is allowed to vote', 'isAllowedToVote')
     }
 
     public getCandidateElements(): string[][] {
@@ -46,7 +40,7 @@ export class VotingAge extends UseCase {
             [
                 'return true',
                 'return false',
-                '',
+                'return undefined',
             ],
         ]
     }

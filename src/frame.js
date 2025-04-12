@@ -8,12 +8,6 @@ class Frame extends Section {
     existingElement() {
         return document.querySelector('#' + this.getId());
     }
-    replaceExisting() {
-        this.existingElement().replaceWith(this.toNode());
-    }
-    removeExisting() {
-        this.existingElement().remove();
-    }
     addTo(parentId) {
         const node = this.toNode();
         document.querySelector('#' + parentId).appendChild(node);
@@ -31,14 +25,11 @@ export class Panel extends Frame {
         (_a = document.querySelector('#panels')) === null || _a === void 0 ? void 0 : _a.replaceChildren();
     }
     show() {
-        if (this.existingElement())
-            this.replaceExisting();
+        const existingElement = this.existingElement();
+        if (existingElement)
+            existingElement.replaceWith(this.toNode());
         else
             this.addTo('panels');
-    }
-    remove() {
-        var _a;
-        (_a = document.querySelector('#' + this.getId())) === null || _a === void 0 ? void 0 : _a.remove();
     }
 }
 class Message extends Frame {
@@ -52,18 +43,12 @@ class Message extends Frame {
             const node = this.addTo('messages');
             node.classList.add('reveal');
             node.scrollIntoView();
-            this.focusFirst();
+            const focusable = document.querySelector('button:not([disabled]), input:not([disabled])');
+            if (focusable)
+                focusable.focus();
             if (extra)
                 extra();
         });
-    }
-    focusFirst() {
-        const focusable = document.querySelector('button, input');
-        if (focusable)
-            focusable.focus();
-    }
-    replaceExisting() {
-        this.callDelayed(() => super.replaceExisting());
     }
 }
 export class ComputerMessage extends Message {
@@ -71,19 +56,19 @@ export class ComputerMessage extends Message {
         super(elements);
         this.addClass('computer');
     }
-    static removeLast() {
-        const id = document.querySelector('#messages').lastElementChild.id;
-        new ComputerMessage([]).setId(id).removeExisting();
-    }
 }
-export class ProcessingMessage extends ComputerMessage {
-    constructor(text, callback, delay) {
-        super([new Paragraph().appendMarkdown(text).addClass('processing')]);
+export class CheckingMessage extends ComputerMessage {
+    constructor(checkingText, finalText, callback, delay) {
+        super([new Paragraph().appendMarkdown(checkingText + '...').addClass('checking')]);
+        this.finalText = finalText;
         this.callback = callback;
         this.delay = delay;
     }
     add() {
-        super.add(() => window.setTimeout(() => { ComputerMessage.removeLast(); this.callback(); }, this.delay));
+        super.add(() => window.setTimeout(() => {
+            this.replaceEnclosingMessageContent(this.existingElement(), this.finalText);
+            this.callback();
+        }, this.delay));
     }
 }
 export class HumanMessage extends Message {
@@ -91,12 +76,8 @@ export class HumanMessage extends Message {
         super(children);
         this.addClass('human');
     }
-    replace() {
-        const id = document.querySelector('#messages').lastElementChild.id;
-        this.setId(id).addClass('reveal').replaceExisting();
-    }
 }
-export class ButtonMessage extends HumanMessage {
+export class QuestionMessage extends HumanMessage {
     constructor(text, callback) {
         super([
             new Paragraph().appendChild(new Button().onClick(callback).appendText(text))

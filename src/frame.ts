@@ -11,14 +11,6 @@ abstract class Frame extends Section {
         return document.querySelector('#' + this.getId())
     }
 
-    protected replaceExisting(): void {
-        this.existingElement()!.replaceWith(this.toNode())
-    }
-
-    protected removeExisting(): void {
-        this.existingElement()!.remove()
-    }
-
     protected addTo(parentId: string): Node {
         const node = this.toNode()
         document.querySelector('#' + parentId)!.appendChild(node)
@@ -38,14 +30,11 @@ export class Panel extends Frame {
     }
 
     public show(): void {
-        if (this.existingElement())
-            this.replaceExisting()
+        const existingElement = this.existingElement()
+        if (existingElement)
+            existingElement.replaceWith(this.toNode())
         else
             this.addTo('panels')
-    }
-
-    public remove(): void {
-        document.querySelector('#' + this.getId())?.remove()
     }
 }
 
@@ -61,20 +50,12 @@ abstract class Message extends Frame {
             const node = this.addTo('messages') as HTMLElement
             node.classList.add('reveal')
             node.scrollIntoView()
-            this.focusFirst()
+            const focusable = document.querySelector('button:not([disabled]), input:not([disabled])')
+            if (focusable)
+                (focusable as HTMLElement).focus()
             if (extra)
                 extra()
         })
-    }
-
-    private focusFirst(): void {
-        const focusable = document.querySelector('button, input')
-        if (focusable)
-            (focusable as HTMLElement).focus()
-    }
-
-    public replaceExisting(): void {
-        this.callDelayed(() => super.replaceExisting())
     }
 }
 
@@ -83,26 +64,26 @@ export class ComputerMessage extends Message {
         super(elements)
         this.addClass('computer')
     }
-
-    public static removeLast(): void {
-        const id = document.querySelector('#messages')!.lastElementChild!.id
-        new ComputerMessage([]).setId(id).removeExisting()
-    }
 }
 
-export class ProcessingMessage extends ComputerMessage {
+export class CheckingMessage extends ComputerMessage {
     private readonly callback: () => void
     private readonly delay: number
+    private readonly finalText: string
 
-    public constructor(text: string, callback: () => void, delay: number) {
-        super([new Paragraph().appendMarkdown(text).addClass('processing')])
+    public constructor(checkingText: string, finalText: string, callback: () => void, delay: number) {
+        super([new Paragraph().appendMarkdown(checkingText + '...').addClass('checking')])
+        this.finalText = finalText
         this.callback = callback
         this.delay = delay
     }
 
     public add(): void {
         super.add(
-            () => window.setTimeout(() => { ComputerMessage.removeLast(); this.callback() }, this.delay)
+            () => window.setTimeout(() => {
+                this.replaceEnclosingMessageContent(this.existingElement()!, this.finalText)
+                this.callback()
+            }, this.delay)
         )
     }
 }
@@ -112,14 +93,9 @@ export class HumanMessage extends Message {
         super(children)
         this.addClass('human')
     }
-
-    public replace(): void {
-        const id = document.querySelector('#messages')!.lastElementChild!.id
-        this.setId(id).addClass('reveal').replaceExisting()
-    }
 }
 
-export class ButtonMessage extends HumanMessage {
+export class QuestionMessage extends HumanMessage {
     public constructor(text: string, callback: () => void) {
         super([
             new Paragraph().appendChild(

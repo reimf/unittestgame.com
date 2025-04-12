@@ -22,8 +22,8 @@ export class Html {
     getId() {
         return this.id;
     }
-    addClass(value, condition = true) {
-        if (condition)
+    addClass(value) {
+        if (value)
             this.classList.push(value);
         return this;
     }
@@ -120,6 +120,16 @@ export class Html {
             node.appendChild(child.toNode());
         return node;
     }
+    replaceEnclosingMessageContent(element, text) {
+        var _a;
+        const section = element.closest('section');
+        section.classList.remove('reveal');
+        const textNode = document.createTextNode(text + '.');
+        const paragraph = document.createElement('p');
+        paragraph.appendChild(textNode);
+        (_a = section.querySelector('div')) === null || _a === void 0 ? void 0 : _a.replaceChildren(paragraph);
+        this.callDelayed(() => section.classList.add('reveal'));
+    }
 }
 Html.timeOfLastDelayedCall = 0;
 export class Text extends Html {
@@ -134,13 +144,38 @@ export class Text extends Html {
         return document.createTextNode(this.text);
     }
 }
-export class Input extends Html {
+class FormControl extends Html {
+    constructor() {
+        super(...arguments);
+        this.disabled = false;
+    }
+    setDisabled(disabled = true) {
+        this.disabled = disabled;
+        return this;
+    }
+    toAttributes() {
+        const attributes = super.toAttributes();
+        if (this.disabled)
+            attributes.push('disabled="disabled"');
+        return attributes;
+    }
+    toNode() {
+        const node = super.toNode();
+        if (this.disabled)
+            node.setAttribute('disabled', 'disabled');
+        return node;
+    }
+}
+export class Input extends FormControl {
     constructor() {
         super();
         this.type = '';
         this.name = '';
         this.value = '';
         this.autocomplete = '';
+        this.checked = '';
+        this.required = '';
+        this.pattern = '';
         this.setTagName('input');
     }
     setType(type) {
@@ -155,8 +190,20 @@ export class Input extends Html {
         this.value = value;
         return this;
     }
-    setAutocomplete(autocomplete) {
+    setAutocomplete(autocomplete = true) {
         this.autocomplete = autocomplete ? 'on' : 'off';
+        return this;
+    }
+    setChecked(checked = true) {
+        this.checked = checked ? 'checked' : '';
+        return this;
+    }
+    setRequired(required = true) {
+        this.required = required ? 'required' : '';
+        return this;
+    }
+    setPattern(pattern) {
+        this.pattern = pattern;
         return this;
     }
     toAttributes() {
@@ -169,6 +216,12 @@ export class Input extends Html {
             attributes.push(`value="${this.value}"`);
         if (this.autocomplete)
             attributes.push(`autocomplete="${this.autocomplete}"`);
+        if (this.checked)
+            attributes.push(`checked="${this.checked}"`);
+        if (this.required)
+            attributes.push(`required="${this.required}"`);
+        if (this.pattern)
+            attributes.push(`pattern="${this.pattern}"`);
         return attributes;
     }
     toNode() {
@@ -181,6 +234,12 @@ export class Input extends Html {
             node.value = this.value;
         if (this.autocomplete)
             node.autocomplete = this.autocomplete;
+        if (this.checked)
+            node.checked = true;
+        if (this.required)
+            node.required = true;
+        if (this.pattern)
+            node.pattern = this.pattern;
         return node;
     }
 }
@@ -199,7 +258,11 @@ export class Form extends Html {
         if (this.onSubmitCallback)
             node.addEventListener('submit', event => {
                 event.preventDefault();
-                this.onSubmitCallback(event);
+                node.querySelectorAll('input').forEach(input => input.disabled = false);
+                const formData = new Map(new FormData(node).entries());
+                const submit = node.querySelector('input[type="submit"]');
+                this.replaceEnclosingMessageContent(node, submit.value);
+                this.onSubmitCallback(formData);
             });
         return node;
     }
@@ -216,7 +279,7 @@ export class Paragraph extends Html {
         this.setTagName('p');
     }
 }
-export class Button extends Html {
+export class Button extends FormControl {
     constructor() {
         super();
         this.title = '';
@@ -244,19 +307,8 @@ export class Button extends Html {
         if (this.onClickCallback)
             node.addEventListener('click', event => {
                 event.preventDefault();
-                const target = event.target;
-                const div = target.closest('div');
-                const section = target.closest('section');
-                if (section && div) {
-                    section.classList.remove('reveal');
-                    const text = (target.title || target.textContent) + ".";
-                    const textNode = document.createTextNode(text);
-                    const paragraph = document.createElement('p');
-                    paragraph.appendChild(textNode);
-                    div.replaceChildren(paragraph);
-                    this.callDelayed(() => section.classList.add('reveal'));
-                    this.onClickCallback(event);
-                }
+                this.replaceEnclosingMessageContent(node, node.title || node.textContent || 'Unknown');
+                this.onClickCallback(event);
             });
         return node;
     }

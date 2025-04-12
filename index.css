@@ -11,6 +11,8 @@
     --emphasis-background: #FFFF00;
     --button-shadow: #00000066;
     --line-shadow: #00000033;
+    --disabled-background: #CCCCCC;
+    --disabled-foreground: #999999;
 }
 
 * {
@@ -53,13 +55,18 @@ b { /* markdown: **bold** */
 
 code {
     display: block;
-    white-space: preserve;
+    overflow: scroll;
+    white-space: pre;
+
+    div { 
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 }
 
 form {
     button {
-        background-color: var(--general-background);
-        color: var(--dark-text);
+        opacity: 0.5;
         flex-grow: 0;
     }
 }
@@ -131,7 +138,12 @@ label {
         margin-left: 0.75rem;
         padding-right: 0.75rem;
 
-        &:has(input:checked) {
+        &:has(input:disabled) {
+            background-color: var(--disabled-background);
+            color: var(--disabled-foreground);
+        }
+
+        &:has(input:checked:not(:disabled)) {
             background-color: var(--input-background);
             color: var(--light-text);
         }
@@ -158,16 +170,21 @@ p {
     }
 }
 
-a, button, input, label:has(input[type="checkbox"]), label:has(input[type="radio"]) {
+a, button, input, label:has(input[type="checkbox"]), label:has(input[type="radio"]:not(:disabled)) {
     &:focus-within {
         outline: 0.25rem solid var(--focus-background);
         outline-offset: 0.25rem;
     }
 
-    &:hover {
+    &:not(:disabled):hover {
         background-color: var(--focus-background) !important;
         color: var(--light-text) !important;
     }
+}
+
+:disabled {
+    background-color: var(--disabled-background) !important;
+    color: var(--disabled-foreground) !important;
 }
 
 .covered, .new, div:has(> .comment) {
@@ -286,11 +303,11 @@ a, button, input, label:has(input[type="checkbox"]), label:has(input[type="radio
     }
 }
 
-#conversation i:has(.processing), #panels .processing {
+#conversation i:has(.checking), #panels .checking {
     margin-left: 0.5rem;
 }
 
-.processing {
+.checking {
     animation: pulseOpacity 0.5s infinite alternate;
 }
 

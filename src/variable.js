@@ -1,8 +1,18 @@
 import { Input, Label, Paragraph } from './html.js';
 export class Variable {
     constructor(label, name) {
+        this.value = '';
+        this.disabled = false;
         this.label = label;
         this.name = name;
+    }
+    setValue(value) {
+        this.value = value;
+        return this;
+    }
+    setDisabled(disabled = true) {
+        this.disabled = disabled;
+        return this;
     }
 }
 export class RadioVariable extends Variable {
@@ -10,13 +20,12 @@ export class RadioVariable extends Variable {
         super(label, name);
         this.texts = texts;
     }
-    getValue() {
-        const input = document.querySelector(`input[name="${this.name}"]:checked`);
-        return input.value;
+    getInput(value) {
+        return value;
     }
     toHtml() {
         const radioButtons = this.texts.map(text => {
-            const input = new Input().setType('radio').setName(this.name).setValue(text);
+            const input = new Input().setType('radio').setName(this.name).setValue(text).setChecked(text === this.value).setDisabled(this.disabled).setRequired();
             const label = new Label().appendChild(input).appendText(text);
             return label;
         });
@@ -31,12 +40,11 @@ export class CheckboxVariable extends Variable {
     constructor(label, name) {
         super(label, name);
     }
-    getValue() {
-        const input = document.querySelector(`input[name="${this.name}"]`);
-        return input.checked;
+    getInput(value) {
+        return value === 'on';
     }
     toHtml() {
-        const input = new Input().setType('checkbox').setName(this.name);
+        const input = new Input().setType('checkbox').setName(this.name).setChecked(this.value !== '').setDisabled(this.disabled);
         const label = new Label().appendChild(input).appendText(this.label);
         const paragraph = new Paragraph().appendChild(label);
         return paragraph;
@@ -49,12 +57,11 @@ export class TextVariable extends Variable {
     constructor(label, name) {
         super(label, name);
     }
-    getValue() {
-        const input = document.querySelector(`input[name="${this.name}"]`);
-        return input.value;
+    getInput(value) {
+        return value;
     }
     toHtml() {
-        const input = new Input().setType('text').setName(this.name).setAutocomplete(false);
+        const input = new Input().setType('text').setName(this.name).setAutocomplete(false).setValue(this.value).setDisabled(this.disabled).setRequired();
         const label = new Label().appendText(this.label).appendChild(input);
         const paragraph = new Paragraph().appendChild(label);
         return paragraph;
@@ -67,12 +74,11 @@ export class NumberVariable extends Variable {
     constructor(label, name) {
         super(label, name);
     }
-    getValue() {
-        const input = document.querySelector(`input[name="${this.name}"]`);
-        return Number(input.value);
+    getInput(value) {
+        return Number(value);
     }
     toHtml() {
-        const input = new Input().setType('text').setName(this.name).setAutocomplete(false);
+        const input = new Input().setType('text').setName(this.name).setAutocomplete(false).setValue(this.value).setDisabled(this.disabled).setRequired().setPattern('[0-9]*');
         const label = new Label().appendText(this.label).appendChild(input);
         const paragraph = new Paragraph().appendChild(label);
         return paragraph;

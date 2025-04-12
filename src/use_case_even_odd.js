@@ -39,7 +39,7 @@ export class EvenOdd extends UseCase {
             [
                 'return true',
                 'return false',
-                '',
+                'return undefined',
             ],
         ];
     }

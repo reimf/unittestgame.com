@@ -23,10 +23,7 @@ export class FloatFormat extends UseCase {
     }
 
     public getUnit(): Variable {
-        return new CheckboxVariable(
-            'Represents a float',
-            'isFloatFormat'
-        )
+        return new CheckboxVariable('Represents a float', 'isFloatFormat')
     }
 
     public getCandidateElements(): string[][] {
@@ -71,7 +68,7 @@ export class FloatFormat extends UseCase {
                 'return new RegExp(regex).test(text)',
                 'return true',
                 'return false',
-                '',
+                'return undefined',
             ],
         ]
     }

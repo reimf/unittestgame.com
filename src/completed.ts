@@ -12,4 +12,13 @@ export class Completed {
     public set(): void {
         localStorage.setItem(this.key, new Date().toUTCString())
     }
+
+    public recent(): boolean {
+        const previous = localStorage.getItem(this.key)
+        if (previous == null)
+            return false
+        const now = new Date()
+        const previousDate = new Date(previous)
+        return now.getTime() - previousDate.getTime() < 60 * 1000
+    }
 }

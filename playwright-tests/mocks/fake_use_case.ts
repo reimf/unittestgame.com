@@ -7,9 +7,7 @@ export class FakeUseCase extends UseCase {
     }
 
     public specification(): string {
-        return (
-            'The usual FizzBuzz leet code challenge.'
-        )
+        return 'The usual FizzBuzz leet code challenge.'
     }
 
     public getParameters(): Variable[] {
