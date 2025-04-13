@@ -36,6 +36,7 @@ export class Candidate {
             .replace(/(?<=\d)0+ /g, ' ') // 200 is 1 point
             .replace(/(?<=\d)(?=\d)/g, ' ') // 3199 is 4 points, 3200 only 2
             .replace(/(?<=\d)\.(?=\d)/g, ' dot ') // each float is 1 point extra
+            .replace(/undefined/g, ' ') // undefined is free
             .trim() // remove trailing white space
             .split(/\s+/) // each token is 1 point
         const variables = chunks.filter(chunk => !chunk.match(regex)) // each use of a parameter or variable is 1 extra point

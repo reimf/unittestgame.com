@@ -29,18 +29,11 @@ export class TestDrivenDevelopment extends Methodology {
         new ComputerMessage(['I did NOT add the unit test, because it is NOT correct.']).add();
     }
     showUselessUnitTestMessage() {
-        new ComputerMessage([
-            'I added the unit test to the *Unit Tests*, ' +
-                'but the *Current Function* already passed this unit test, ' +
-                'so I did NOT improve the *Current Function*.',
-        ]).add();
+        new ComputerMessage(['I added the unit test to the *Unit Tests*, but the *Current Function* already passed this unit test, so I did NOT improve the *Current Function*.']).add();
         new ComputerMessage(['Try to write unit tests that fail for the *Current Function*.']).add();
     }
     showUsefulUnitTestMessage() {
-        new ComputerMessage([
-            'I added the unit test to the *Unit Tests* and ' +
-                'I improved the *Current Function* such that it now also passes the new unit test.',
-        ]).add();
+        new ComputerMessage(['I added the unit test to the *Unit Tests* and I improved the *Current Function* such that it passes the new unit test.']).add();
     }
     showHintMessage(_currentCandidate, failingTestResult) {
         new ComputerMessage(['A unit test that fails for the *Current Function* is the following.', failingTestResult.unitTest.toString()]).add();

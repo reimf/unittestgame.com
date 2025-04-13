@@ -26,17 +26,11 @@ export class MutationTesting extends Methodology {
         new ComputerMessage(['I did NOT add the unit test, because it is NOT correct.']).add();
     }
     showUselessUnitTestMessage() {
-        new ComputerMessage([
-            'I added the unit test to the *Unit Tests*, ' +
-                'but the line coverage of *The Function* did NOT increase.',
-        ]).add();
+        new ComputerMessage(['I added the unit test to the *Unit Tests*, but the line coverage of *The Function* did NOT increase.']).add();
         new ComputerMessage(['Try to write unit tests that cover some code that is not yet covered by other unit tests.']).add();
     }
     showUsefulUnitTestMessage() {
-        new ComputerMessage([
-            'I added the unit test to the *Unit Tests* and ' +
-                'I showed the increased line coverage in *The Function*.'
-        ]).add();
+        new ComputerMessage(['I added the unit test to the *Unit Tests* and I showed the line coverage in *The Function*.']).add();
     }
     showHintMessage(currentCandidate, _failingTestResult) {
         new ComputerMessage(['A mutation of *The Function* that is NOT correct, but still passes the *Unit Tests* is the following.', currentCandidate.toHtml()]).add();

@@ -35,18 +35,12 @@ export class MutationTesting extends Methodology {
     }
 
     public showUselessUnitTestMessage(): void {
-        new ComputerMessage([
-            'I added the unit test to the *Unit Tests*, ' +
-            'but the line coverage of *The Function* did NOT increase.',
-        ]).add()
+        new ComputerMessage(['I added the unit test to the *Unit Tests*, but the line coverage of *The Function* did NOT increase.']).add()
         new ComputerMessage(['Try to write unit tests that cover some code that is not yet covered by other unit tests.']).add()
     }
 
     public showUsefulUnitTestMessage(): void {
-        new ComputerMessage([
-            'I added the unit test to the *Unit Tests* and ' +
-            'I showed the increased line coverage in *The Function*.'
-        ]).add()
+        new ComputerMessage(['I added the unit test to the *Unit Tests* and I showed the line coverage in *The Function*.']).add()
     }
 
     public showHintMessage(currentCandidate: Candidate, _failingTestResult: TestResult): void {

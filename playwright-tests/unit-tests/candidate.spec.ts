@@ -57,6 +57,13 @@ test.describe('class Candidate', () => {
         expect(variableCandidate.compareComplexity(constantCandidate)).toBe(+1)
     })
 
+    test('computes complexity of undefined', () => {
+        const undefinedCandidate = new Candidate(['function divide(a, b) {', '  return undefined', '}'])
+        const variableCandidate = new Candidate(['function divide(a, b) {', '  return true', '}'])
+        expect(undefinedCandidate.compareComplexity(variableCandidate)).toBe(-1)
+        expect(variableCandidate.compareComplexity(undefinedCandidate)).toBe(+1)
+    })
+
     test('executes function', () => {
         const candidate = new Candidate(['function divide(a, b) {', '  return a / b', '}'])
         expect(candidate.execute([6, 2])).toBe(3)

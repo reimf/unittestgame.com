@@ -5,7 +5,7 @@ export class Battery extends UseCase {
         return 'Example';
     }
     specification() {
-        return 'A smartphone normally operates in Normal Mode, but when the battery is 20% or less, it operates in Low Power Mode.';
+        return 'A smartphone normally operates in Normal Mode, but when the battery is less than 20%, it operates in Low Power Mode.';
     }
     getParameters() {
         return [
@@ -23,11 +23,11 @@ export class Battery extends UseCase {
                 'if (battery >= 20) return "Normal Mode"',
                 'if (battery >= 21) return "Normal Mode"',
                 'if (battery >= 22) return "Normal Mode"',
-                'if (battery <= 18) return "Low Power Mode"',
-                'if (battery <= 19) return "Low Power Mode"',
-                'if (battery <= 20) return "Low Power Mode"',
-                'if (battery <= 21) return "Low Power Mode"',
-                'if (battery <= 22) return "Low Power Mode"',
+                'if (battery < 19) return "Low Power Mode"',
+                'if (battery < 20) return "Low Power Mode"',
+                'if (battery < 21) return "Low Power Mode"',
+                'if (battery < 22) return "Low Power Mode"',
+                'if (battery < 23) return "Low Power Mode"',
                 'if (battery === 20) return "Normal Mode"',
                 'if (battery === 19) return "Low Power Mode"',
                 '',

@@ -90,7 +90,7 @@ export class Main {
 
     private showQuestionSidebar(callback: () => void): void {
         new QuestionMessage(
-            'I want a sidebar for terms with a purple background',
+            'I want more information in a sidebar on terms with a purple background',
             () => callback()
         ).add()
     }
