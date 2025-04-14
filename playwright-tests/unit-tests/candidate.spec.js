@@ -88,9 +88,9 @@ test.describe('class Candidate', () => {
         expect(html.toString()).toBe('<code>' +
             '<div>function divide(a, b) {</div>' +
             '<div></div>' +
-            '<div><span class="comment">// was: if (a === 0) return 0</span></div>' +
-            '<div>  if (b === 0) return NaN<span class="comment">// new</span></div>' +
-            '<div>  return a / b<span class="comment">// was: return undefined</span></div>' +
+            '<div><span class="comment">  // was: if (a === 0) return 0</span></div>' +
+            '<div>  if (b === 0) return NaN<span class="comment"> // new</span></div>' +
+            '<div>  return a / b<span class="comment"> // was: return undefined</span></div>' +
             '<div>}</div>' +
             '</code>');
     });

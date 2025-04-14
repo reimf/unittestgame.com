@@ -74,9 +74,9 @@ export class Candidate {
             const previousLine = previousCandidate.lines[pos];
             const comment = currentLine === '' && previousLine === '' ? ''
                 : currentLine === previousLine ? ''
-                    : currentLine === '' ? `// was: ${previousLine.trim()}`
-                        : previousLine === '' ? '// new'
-                            : `// was: ${previousLine.trim()}`;
+                    : currentLine === '' ? `  // was: ${previousLine.trim()}`
+                        : previousLine === '' ? ' // new'
+                            : ` // was: ${previousLine.trim()}`;
             const div = new Div();
             if (currentLine !== '')
                 div.appendText(currentLine);

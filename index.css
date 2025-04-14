@@ -193,7 +193,6 @@ a, button, input, label:has(input[type="checkbox"]), label:has(input[type="radio
 }
 
 .comment {
-    margin-left: 0.5rem;
     opacity: 0.25;
 }
 
