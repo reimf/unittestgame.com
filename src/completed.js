@@ -14,6 +14,6 @@ export class Completed {
             return false;
         const now = new Date();
         const previousDate = new Date(previous);
-        return now.getTime() - previousDate.getTime() < 60 * 1000;
+        return now.getTime() - previousDate.getTime() < 10 * 1000;
     }
 }
