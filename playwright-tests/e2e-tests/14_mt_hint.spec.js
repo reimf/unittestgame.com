@@ -13,7 +13,7 @@ test.describe('hint unit test', () => {
     test('has hint function message', async ({ page }) => {
         const messages = page.getByTestId('messages');
         const codeLines = messages.locator('code > div');
-        await expect(codeLines).toContainText(['function isEven(number) {', '  return true', '}']);
+        await expect(codeLines).toContainText(['function isEven(number) {', '  return undefined', '}']);
     });
     test('has action menu message', async ({ page }) => {
         const messages = page.getByTestId('messages');

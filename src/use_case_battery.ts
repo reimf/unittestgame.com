@@ -1,5 +1,5 @@
 import { UseCase } from './use_case.js'
-import { Variable, NumberVariable, RadioVariable } from './variable.js'
+import { Variable, IntegerVariable, RadioVariable } from './variable.js'
 
 export class Battery extends UseCase {
     public name(): string {
@@ -11,7 +11,7 @@ export class Battery extends UseCase {
 
     public getParameters(): Variable[] {
         return [
-            new NumberVariable('Battery', 'battery'),
+            new IntegerVariable('Battery', 'battery'),
         ]
     }
 

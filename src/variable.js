@@ -70,7 +70,7 @@ export class TextVariable extends Variable {
         return value === undefined ? 'undefined' : `"${value}"`;
     }
 }
-export class NumberVariable extends Variable {
+export class IntegerVariable extends Variable {
     constructor(label, name) {
         super(label, name);
     }
@@ -78,7 +78,25 @@ export class NumberVariable extends Variable {
         return Number(value);
     }
     toHtml() {
-        const input = new Input().setType('text').setName(this.name).setAutocomplete(false).setValue(this.value).setDisabled(this.disabled).setRequired().setPattern('[0-9]*');
+        const input = new Input().setType('text').setName(this.name).setAutocomplete(false).setValue(this.value).setDisabled(this.disabled).setRequired().setPattern('[0-9]+');
+        const label = new Label().appendText(this.label).appendChild(input);
+        const paragraph = new Paragraph().appendChild(label);
+        return paragraph;
+    }
+    format(value) {
+        return value === undefined ? 'undefined' : `${value}`;
+    }
+}
+export class FloatVariable extends Variable {
+    constructor(label, name) {
+        super(label, name);
+    }
+    getInput(value) {
+        return Number(value);
+    }
+    toHtml() {
+        const displayValue = this.value === '' ? '' : Number(this.value).toFixed(1);
+        const input = new Input().setType('text').setName(this.name).setAutocomplete(false).setValue(displayValue).setDisabled(this.disabled).setRequired().setPattern('[0-9]+(\.[0-9])?');
         const label = new Label().appendText(this.label).appendChild(input);
         const paragraph = new Paragraph().appendChild(label);
         return paragraph;

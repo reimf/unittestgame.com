@@ -1,5 +1,5 @@
 import { UseCase } from './use_case.js';
-import { CheckboxVariable, NumberVariable } from './variable.js';
+import { CheckboxVariable, IntegerVariable } from './variable.js';
 export class LeapYear extends UseCase {
     name() {
         return 'Leap Year';
@@ -13,7 +13,7 @@ export class LeapYear extends UseCase {
     }
     getParameters() {
         return [
-            new NumberVariable('Year', 'year'),
+            new IntegerVariable('Year', 'year'),
         ];
     }
     getUnit() {

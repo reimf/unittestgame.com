@@ -1,5 +1,5 @@
 import { UseCase } from '../../src/use_case.js'
-import { Variable, TextVariable, NumberVariable } from '../../src/variable.js'
+import { Variable, TextVariable, IntegerVariable } from '../../src/variable.js'
 
 export class FakeUseCase extends UseCase {
     public name(): string {
@@ -11,7 +11,7 @@ export class FakeUseCase extends UseCase {
     }
 
     public getParameters(): Variable[] {
-        return [new NumberVariable('Number', 'number')]
+        return [new IntegerVariable('Number', 'number')]
     }
 
     public getUnit(): Variable {

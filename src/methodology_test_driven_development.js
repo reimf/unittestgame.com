@@ -43,7 +43,7 @@ export class TestDrivenDevelopment extends Methodology {
     }
     showBugFoundMessage(_currentCandidate, failingTestResult) {
         new ComputerMessage(['I checked the *Current Function*, but it is NOT according to the *Specification*.']).add();
-        new ComputerMessage(['It produces the following incorrect output.', failingTestResult.toString()]).add();
+        new ComputerMessage(['It produces the following incorrect result.', failingTestResult.toString()]).add();
     }
     showEndMessage() {
         new ComputerMessage(['I checked the *Current Function* and it is indeed according to the *Specification*.']).add();

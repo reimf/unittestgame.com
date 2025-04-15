@@ -31,7 +31,7 @@ test.describe('tdd added unit test', () => {
     test('has another candidate in the current function panel', async({ page }) => {
         const currentFunctionPanel = page.getByTestId('current-function')
         const codeLines = currentFunctionPanel.locator('code > div')
-        await expect(codeLines).toContainText(['function isAllowedToVote(age) {', '  return false// was: return true', '}'])
+        await expect(codeLines).toContainText(['function isAllowedToVote(age) {', '  return false // was: return undefined', '}'])
     })
 
     test('has action menu message', async({ page }) => {

@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test'
-import { NumberVariable, TextVariable } from '../../src/variable.js'
+import { IntegerVariable, TextVariable } from '../../src/variable.js'
 import { FakeUseCase } from '../mocks/fake_use_case.js'
 
 test.describe('class UseCase', () => {
@@ -16,7 +16,7 @@ test.describe('class UseCase', () => {
     test('has parameters', () => {
         const useCase = new FakeUseCase()
         expect(useCase.parameters.length).toBe(1)
-        expect(useCase.parameters[0]).toBeInstanceOf(NumberVariable)
+        expect(useCase.parameters[0]).toBeInstanceOf(IntegerVariable)
         expect(useCase.parameters[0].name).toBe('number')
     })
 

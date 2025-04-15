@@ -14,7 +14,7 @@ test.describe('tdd submit insufficient unit test', () => {
     });
     test('has unit test in bug found message', async ({ page }) => {
         const messages = page.getByTestId('messages');
-        await expect(messages).toContainText('isAllowedToVote(1) === true');
+        await expect(messages).toContainText('isAllowedToVote(1) === undefined');
     });
     test('has action menu message', async ({ page }) => {
         const messages = page.getByTestId('messages');

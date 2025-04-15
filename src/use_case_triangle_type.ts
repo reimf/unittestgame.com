@@ -1,5 +1,5 @@
 import { UseCase } from './use_case.js'
-import { Variable, RadioVariable, NumberVariable } from './variable.js'
+import { Variable, RadioVariable, IntegerVariable } from './variable.js'
 
 export class TriangleType extends UseCase {
     public name(): string {
@@ -17,9 +17,9 @@ export class TriangleType extends UseCase {
 
     public getParameters(): Variable[] {
         return [
-            new NumberVariable('Side A', 'a'),
-            new NumberVariable('Side B', 'b'),
-            new NumberVariable('Side C', 'c'),
+            new IntegerVariable('Side A', 'a'),
+            new IntegerVariable('Side B', 'b'),
+            new IntegerVariable('Side C', 'c'),
         ]
     }
 

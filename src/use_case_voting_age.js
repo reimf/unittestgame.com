@@ -1,5 +1,5 @@
 import { UseCase } from './use_case.js';
-import { CheckboxVariable, NumberVariable } from './variable.js';
+import { CheckboxVariable, IntegerVariable } from './variable.js';
 export class VotingAge extends UseCase {
     name() {
         return 'Voting Age';
@@ -9,7 +9,7 @@ export class VotingAge extends UseCase {
     }
     getParameters() {
         return [
-            new NumberVariable('Age', 'age'),
+            new IntegerVariable('Age', 'age'),
         ];
     }
     getUnit() {

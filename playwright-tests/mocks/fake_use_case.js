@@ -1,5 +1,5 @@
 import { UseCase } from '../../src/use_case.js';
-import { TextVariable, NumberVariable } from '../../src/variable.js';
+import { TextVariable, IntegerVariable } from '../../src/variable.js';
 export class FakeUseCase extends UseCase {
     name() {
         return 'Fake Use Case';
@@ -8,7 +8,7 @@ export class FakeUseCase extends UseCase {
         return 'The usual FizzBuzz leet code challenge.';
     }
     getParameters() {
-        return [new NumberVariable('Number', 'number')];
+        return [new IntegerVariable('Number', 'number')];
     }
     getUnit() {
         return new TextVariable('Output', 'fizzBuzz');

@@ -1,5 +1,5 @@
 import { UseCase } from './use_case.js'
-import { Variable, TextVariable, NumberVariable } from './variable.js'
+import { Variable, TextVariable, IntegerVariable } from './variable.js'
 
 export class FizzBuzz extends UseCase {
     public name(): string {
@@ -16,7 +16,7 @@ export class FizzBuzz extends UseCase {
 
     public getParameters(): Variable[] {
         return [
-            new NumberVariable('Number', 'number'),
+            new IntegerVariable('Number', 'number'),
         ]
     }
 

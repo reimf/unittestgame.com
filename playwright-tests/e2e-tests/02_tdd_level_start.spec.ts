@@ -38,7 +38,7 @@ test.describe('tdd level start', () => {
     test('has the simplest candidate in the current function panel', async({ page }) => {
         const currentFunctionPanel = page.getByTestId('current-function')
         const codeLines = currentFunctionPanel.locator('code > div')
-        await expect(codeLines).toContainText(['function isAllowedToVote(age) {', '  return true', '}'])
+        await expect(codeLines).toContainText(['function isAllowedToVote(age) {', '  return undefined', '}'])
     })
 
     test('has no the function panel', async({ page }) => {

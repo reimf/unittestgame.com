@@ -1,5 +1,5 @@
 import { UseCase } from './use_case.js';
-import { RadioVariable, NumberVariable } from './variable.js';
+import { RadioVariable, IntegerVariable } from './variable.js';
 export class TriangleType extends UseCase {
     name() {
         return 'Triangle Type';
@@ -12,9 +12,9 @@ export class TriangleType extends UseCase {
     }
     getParameters() {
         return [
-            new NumberVariable('Side A', 'a'),
-            new NumberVariable('Side B', 'b'),
-            new NumberVariable('Side C', 'c'),
+            new IntegerVariable('Side A', 'a'),
+            new IntegerVariable('Side B', 'b'),
+            new IntegerVariable('Side C', 'c'),
         ];
     }
     getUnit() {

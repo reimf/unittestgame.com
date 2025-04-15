@@ -1,5 +1,5 @@
 import { UseCase } from './use_case.js'
-import { Variable, CheckboxVariable, NumberVariable } from './variable.js'
+import { Variable, CheckboxVariable, IntegerVariable } from './variable.js'
 
 export class EvenOdd extends UseCase {
     public name(): string {
@@ -11,7 +11,7 @@ export class EvenOdd extends UseCase {
 
     public getParameters(): Variable[] {
         return [
-            new NumberVariable('Number', 'number'),
+            new IntegerVariable('Number', 'number'),
         ]
     }
 
