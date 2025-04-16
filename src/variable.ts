@@ -1,4 +1,4 @@
-import { Html, Input, Label, Paragraph } from './html.js'
+import { Html, Input, Label, Paragraph, Span } from './html.js'
 
 export abstract class Variable {
     protected readonly label: string
@@ -44,7 +44,7 @@ export class RadioVariable extends Variable {
             const label = new Label().appendChild(input).appendText(text)
             return label
         })
-        const paragraph = new Paragraph().appendText(this.label).appendChildren(radioButtons)
+        const paragraph = new Paragraph().appendChild(new Span().appendText(this.label)).appendChildren(radioButtons)
         return paragraph
     }
 
@@ -68,7 +68,7 @@ export class BooleanVariable extends Variable {
             const label = new Label().appendChild(input).appendText(text)
             return label
         })
-        const paragraph = new Paragraph().appendText(this.label).appendChildren(radioButtons)
+        const paragraph = new Paragraph().appendChild(new Span().appendText(this.label)).appendChildren(radioButtons)
         return paragraph
     }
 
@@ -88,7 +88,7 @@ export class TextVariable extends Variable {
 
     public toHtml(): Html {
         const input = new Input().setType('text').setName(this.name).setAutocomplete(false).setValue(this.value).setDisabled(this.disabled).setRequired()
-        const label = new Label().appendText(this.label).appendChild(input)
+        const label = new Label().appendChild(new Span().appendText(this.label)).appendChild(input)
         const paragraph = new Paragraph().appendChild(label)
         return paragraph
     }
@@ -109,7 +109,7 @@ export class IntegerVariable extends Variable {
 
     public toHtml(): Html {
         const input = new Input().setType('text').setName(this.name).setAutocomplete(false).setValue(this.value).setDisabled(this.disabled).setRequired().setPattern('[0-9]+')
-        const label = new Label().appendText(this.label).appendChild(input)
+        const label = new Label().appendChild(new Span().appendText(this.label)).appendChild(input)
         const paragraph = new Paragraph().appendChild(label)
         return paragraph
     }
@@ -131,7 +131,7 @@ export class FloatVariable extends Variable {
     public toHtml(): Html {
         const displayValue = this.value === '' ? '' : Number(this.value).toFixed(1)
         const input = new Input().setType('text').setName(this.name).setAutocomplete(false).setValue(displayValue).setDisabled(this.disabled).setRequired().setPattern('[0-9]+(\.[0-9])?')
-        const label = new Label().appendText(this.label).appendChild(input)
+        const label = new Label().appendChild(new Span().appendText(this.label)).appendChild(input)
         const paragraph = new Paragraph().appendChild(label)
         return paragraph
     }

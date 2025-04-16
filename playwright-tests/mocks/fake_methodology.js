@@ -8,8 +8,6 @@ export class FakeMethodology extends Methodology {
     showIncorrectUnitTestMessage() { }
     showUselessUnitTestMessage() { }
     showUsefulUnitTestMessage() { }
-    showHintMessage(_currentCandidate, _failingTestResult) { }
-    showNoHintMessage() { }
     showBugFoundMessage(_currentCandidate, _failingTestResult) { }
     showEndMessage() { }
 }

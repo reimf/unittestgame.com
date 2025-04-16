@@ -7,17 +7,13 @@ test.describe('mt level start', () => {
         await context.addInitScript({ path: './playwright-tests/e2e-tests/init_script.js' });
         await page.goto('http://localhost:5500/');
         await page.getByRole('button', { name: 'I want to play Level 3 - Mutation Testing - Example' }).click();
-        await page.getByRole('button', { name: 'Add unit test' }).click();
         await page.getByRole('button', { name: 'I want to add this unit test' }).click();
-        await page.getByRole('button', { name: 'Add unit test' }).click();
         await page.getByRole('button', { name: 'I want to add this unit test' }).click();
-        await page.getByRole('button', { name: 'Submit unit tests' }).click();
-        await page.getByRole('button', { name: 'Add unit test' }).click();
+        await page.getByRole('button', { name: 'I want to submit the unit tests' }).click();
         await page.getByRole('button', { name: 'I want to add this unit test' }).click();
-        await page.getByRole('button', { name: 'Submit unit tests' }).click();
-        await page.getByRole('button', { name: 'Add unit test' }).click();
+        await page.getByRole('button', { name: 'I want to submit the unit tests' }).click();
         await page.getByRole('button', { name: 'I want to add this unit test' }).click();
-        await page.getByRole('button', { name: 'Submit unit tests' }).click();
+        await page.getByRole('button', { name: 'I want to submit the unit tests' }).click();
         await page.getByRole('button', { name: 'I want to play Level 4 - Mutation Testing - Even or Odd' }).click();
     });
     test('has no unittestgame panel', async ({ page }) => {
@@ -53,9 +49,8 @@ test.describe('mt level start', () => {
         const messages = page.getByTestId('messages');
         const buttons = messages.getByRole('button');
         await expect(buttons).toHaveText([
-            'Add unit test',
-            'Show hint',
-            'Submit unit tests',
+            'I want to add this unit test',
+            'I want to submit the unit tests',
         ]);
     });
 });

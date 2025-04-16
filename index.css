@@ -7,16 +7,17 @@
     --general-background: #ECE5DD;
     --computer-message-background: #FFFFFF;
     --panel-background: #FFFFFF;
-    --focus-background: #FF6600;
     --emphasis-background: #FFFF00;
     --button-shadow: #00000066;
-    --line-shadow: #00000033;
+    --focus-shadow: #FF6600;
+    --separator-shadow: #00000033;
     --disabled-background: #CCCCCC;
     --disabled-foreground: #999999;
 }
 
 * {
     box-sizing: border-box;
+    outline: none !important;
 }
 
 a { /* markdown: [text](url) */
@@ -42,8 +43,9 @@ button {
     color: var(--light-text);
     font-family: inherit;
     font-size: inherit;
-    padding: 0.75rem;
-    text-align: left;
+    line-height: 1.5rem;
+    padding: 0.5rem 0.75rem;
+    width: 100%;
 }
 
 b { /* markdown: **bold** */
@@ -65,9 +67,8 @@ code {
 }
 
 form {
-    button {
-        opacity: 0.5;
-        flex-grow: 0;
+    span {
+        display: block;
     }
 }
 
@@ -89,27 +90,12 @@ input {
         font-family: inherit;
         font-size: inherit;
         height: 2rem;
-        margin: 0 0 0 0.75rem;
         padding: 0 0.5rem;
         width: 8rem;
     }
 
-    &[type="checkbox"] {
-        border-radius: 0.25rem;
-        margin: 0 0.75rem 0 0.5rem;
-        vertical-align: middle;
-
-        &:focus {
-            outline: none !important;
-        }
-    }
-
     &[type="radio"] {
         margin: 0 0.5rem 0 0.75rem;
-
-        &:focus {
-            outline: none !important;
-        }
     }
 
     &[type="submit"] {
@@ -120,22 +106,24 @@ input {
         color: var(--light-text);
         font-family: inherit;
         font-size: inherit;
-        height: 2.5rem;
+        line-height: 1.5rem;
         margin: 0;
-        padding: 0 1rem;
+        padding: 0.5rem 0.75rem;
+        white-space: inherit;
+        width: 100%;
     }
 }
 
 label {
     border-radius: 0.5rem;
-    display: inline-block;
     height: 2rem;
 
     &:has(input[type="radio"]) {
         background-color: var(--general-background);
         color: var(--dark-text);
+        display: inline-block;
         line-height: 2rem;
-        margin-left: 0.75rem;
+        margin-right: 0.75rem;
         padding-right: 0.75rem;
 
         &:has(input:disabled) {
@@ -152,34 +140,18 @@ label {
             cursor: pointer;
         }
     }
-
-    &:has(input[type="checkbox"]) {
-        background-color: var(--input-background);
-        color: var(--light-text);
-        line-height: 2rem;
-        padding-right: 0.5rem;
-    }
 }
 
 p {
     white-space: pre-wrap;
-
-    &:has(> button) {
-        display: flex;
-        gap: 0.75rem;
-    }
 }
 
-a, button, input, label:has(input[type="checkbox"]), label:has(input[type="radio"]:not(:disabled)) {
-    &:focus-within, &:focus {
-        outline: 0.25rem solid var(--focus-background);
-        outline-offset: 0.25rem;
-    }
-
-    &:not(:disabled):hover, &:not(:disabled):has(:focus) {
-        background-color: var(--focus-background) !important;
-        color: var(--light-text) !important;
-    }
+a, button, input, label:has(input[type="radio"]:not(:disabled)) {
+    &:focus-within, &:focus, &:not(:disabled):hover, &:not(:disabled):has(:focus) {
+        box-shadow: 0 0 0.3rem 0.3rem var(--focus-shadow);
+        background-color: var(--input-background);
+        color: var(--light-text);
+}
 }
 
 :disabled {
@@ -200,7 +172,7 @@ a, button, input, label:has(input[type="checkbox"]), label:has(input[type="radio
     display: flex;
 
     #conversation {
-        box-shadow: 0.25rem 0 0.5rem var(--line-shadow);
+        box-shadow: 0.25rem 0 0.5rem var(--separator-shadow);
         display: flex;
         flex-direction: column;
         height: 100vh;
@@ -304,6 +276,31 @@ a, button, input, label:has(input[type="checkbox"]), label:has(input[type="radio
 
 #conversation i:has(.checking), #panels .checking {
     margin-left: 0.5rem;
+}
+
+.or {
+    overflow: hidden;
+    text-align: center;
+      
+    &:before, &:after {
+        content: "";
+        border-bottom: 0.1rem solid var(--dark-text);
+        display: inline-block;
+        height: 0;
+        position: relative;
+        vertical-align: middle;
+        width: 50%;
+    }
+    
+    &:before {
+        right: 1rem;
+        margin-left: -50%;
+    }
+    
+    &:after {
+        left: 1rem;
+        margin-right: -50%;
+    }    
 }
 
 .checking {

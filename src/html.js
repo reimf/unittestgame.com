@@ -282,32 +282,19 @@ export class Paragraph extends Html {
 export class Button extends FormControl {
     constructor() {
         super();
-        this.title = '';
         this.onClickCallback = undefined;
         this.setTagName('button');
-    }
-    setTitle(title) {
-        this.title = title;
-        return this;
     }
     onClick(callback) {
         this.onClickCallback = callback;
         return this;
     }
-    toAttributes() {
-        const attributes = super.toAttributes();
-        if (this.title)
-            attributes.push(`title="${this.title}"`);
-        return attributes;
-    }
     toNode() {
         const node = super.toNode();
-        if (this.title)
-            node.title = this.title;
         if (this.onClickCallback)
             node.addEventListener('click', event => {
                 event.preventDefault();
-                this.replaceEnclosingMessageContent(node, node.title || node.textContent || 'Unknown');
+                this.replaceEnclosingMessageContent(node, node.textContent || 'Unknown');
                 this.onClickCallback(event);
             });
         return node;

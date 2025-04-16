@@ -1,6 +1,6 @@
 import { Level } from './level.js'
 import { ComputerMessage, HumanMessage } from './frame.js'
-import { Button, Form, Input, Paragraph } from './html.js'
+import { Button, Div, Form, Input, Paragraph } from './html.js'
 import { Methodology } from './methodology.js'
 import { UseCase } from './use_case.js'
 
@@ -24,31 +24,19 @@ export class Example extends Level {
     }
 
     protected showMenuMessage(): void {
-        const answer = this.nextAnswer()
-        new HumanMessage([
-            new Paragraph().appendChildren([
-                new Button().setTitle('I want to add a unit test').appendText('Add unit test').onClick(() => this.startAddUnitTestFlow()).setDisabled(answer !== 'Add unit test'),
-                new Button().setTitle('I want to see a hint').appendText('Show hint').onClick(() => this.showHint()).setDisabled(answer !== 'Show hint'),
-                new Button().setTitle('I want to submit the unit tests').appendText('Submit unit tests').onClick(() => this.prepareSubmitUnitTests()).setDisabled(answer !== 'Submit unit tests'),
-            ]),
-        ]).add()
-    }
-
-    protected showFormUnitTestMessage(): void {
-        const parameterFields = this.useCase.parameters.map(variable => variable.setValue(this.nextAnswer()).setDisabled().toHtml())
-        const unitField = this.useCase.unit.setValue(this.nextAnswer()).setDisabled().toHtml()
-        const answer = this.nextAnswer()
-        const submitButton = new Input().setType('submit').setValue('I want to add this unit test').setDisabled(answer !== 'I want to add this unit test')
-        const cancelButton = new Button()
-            .appendText('Cancel')
-            .setTitle('I don\'t want to add a unit test now')
-            .onClick(() => this.cancelAddUnitTestFlow())
-            .setDisabled(answer !== 'Cancel')
-        const buttonBlock = new Paragraph().appendChildren([submitButton, cancelButton])
+        const buttonToClick = this.nextAnswer()
+        const parameterFields = this.useCase.parameters.map(variable => variable.setValue(buttonToClick === 'I want to add this unit test' ? this.nextAnswer() : '').setDisabled().toHtml())
+        const unitField = this.useCase.unit.setValue(buttonToClick === 'I want to add this unit test' ? this.nextAnswer() : '').setDisabled().toHtml()
+        const submitButton = new Input().setType('submit').setValue('I want to add this unit test').setDisabled(buttonToClick !== 'I want to add this unit test')
+        const buttonBlock = new Paragraph().appendChild(submitButton)
         new HumanMessage([
             new Form()
                 .onSubmit(formData => this.prepareAddUnitTest(formData))
                 .appendChildren([...parameterFields, unitField, buttonBlock]),
+            new Div().appendText('OR').addClass('or'),
+            new Paragraph().appendChild(
+                new Button().appendText('I want to submit the unit tests').onClick(() => this.prepareSubmitUnitTests()).setDisabled(buttonToClick !== 'I want to submit the unit tests')
+            ),
         ]).add()
     }
 

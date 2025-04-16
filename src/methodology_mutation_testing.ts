@@ -43,14 +43,6 @@ export class MutationTesting extends Methodology {
         new ComputerMessage(['I added the unit test to the *Unit Tests* and I showed the line coverage in *The Function*.']).add()
     }
 
-    public showHintMessage(currentCandidate: Candidate, _failingTestResult: TestResult): void {
-        new ComputerMessage(['A mutation of *The Function* that is NOT correct, but still passes the *Unit Tests* is the following.', currentCandidate.toHtml()]).add()
-    }
-
-    public showNoHintMessage(): void {
-        new ComputerMessage(['I can\'t think of a mutation of *The Function* that passes all the *Unit Tests*.']).add()
-    }
-
     public showBugFoundMessage(currentCandidate: Candidate, _failingTestResult: TestResult): void {
         new ComputerMessage(['I checked *The Function*, but it is NOT fully tested.']).add()
         new ComputerMessage(['A mutation of *The Function* that is NOT correct, but still passes your unit tests is the following.', currentCandidate.toHtml()]).add()

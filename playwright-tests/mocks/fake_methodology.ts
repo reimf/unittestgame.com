@@ -11,8 +11,6 @@ export class FakeMethodology extends Methodology {
     public showIncorrectUnitTestMessage(): void { }
     public showUselessUnitTestMessage(): void { }
     public showUsefulUnitTestMessage(): void { }
-    public showHintMessage(_currentCandidate: Candidate, _failingTestResult: TestResult): void { }
-    public showNoHintMessage(): void { }
     public showBugFoundMessage(_currentCandidate: Candidate, _failingTestResult: TestResult): void { }
     public showEndMessage(): void { }
 }

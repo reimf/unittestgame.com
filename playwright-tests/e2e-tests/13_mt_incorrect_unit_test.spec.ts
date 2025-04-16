@@ -9,13 +9,12 @@ test.describe('mt incorrect unit test', () => {
         await context.addInitScript({ path: './playwright-tests/e2e-tests/init_script.js' })
         await page.goto('http://localhost:5500/')
         await page.getByRole('button', { name: 'I want to play Level 4 - Mutation Testing - Even or Odd' }).click()
-        await page.getByRole('button', { name: 'Add unit test' }).click()
         await page.getByLabel('Number').fill('42')
         await page.getByLabel('false').check()
         await page.getByRole('button', { name: 'I want to add this unit test' }).click()
     })
 
-    test('has add unit test message', async({ page }) => {
+    test('has I want to add this unit test message', async({ page }) => {
         const messages = page.getByTestId('messages')
         await expect(messages).toContainText('isEven(42) === false')
     })
@@ -34,9 +33,8 @@ test.describe('mt incorrect unit test', () => {
         const messages = page.getByTestId('messages')
         const buttons = messages.getByRole('button')
         await expect(buttons).toHaveText([
-            'Add unit test',
-            'Show hint',
-            'Submit unit tests',
+            'I want to add this unit test',
+            'I want to submit the unit tests',
         ])
     })
 })

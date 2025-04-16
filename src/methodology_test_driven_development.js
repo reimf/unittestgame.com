@@ -35,12 +35,6 @@ export class TestDrivenDevelopment extends Methodology {
     showUsefulUnitTestMessage() {
         new ComputerMessage(['I added the unit test to the *Unit Tests* and I improved the *Current Function* such that it passes the new unit test.']).add();
     }
-    showHintMessage(_currentCandidate, failingTestResult) {
-        new ComputerMessage(['A unit test that fails for the *Current Function* is the following.', failingTestResult.unitTest.toString()]).add();
-    }
-    showNoHintMessage() {
-        new ComputerMessage(['I can\'t think of a unit test that fails for the *Current Function*.']).add();
-    }
     showBugFoundMessage(_currentCandidate, failingTestResult) {
         new ComputerMessage(['I checked the *Current Function*, but it is NOT according to the *Specification*.']).add();
         new ComputerMessage(['It produces the following incorrect result.', failingTestResult.toString()]).add();

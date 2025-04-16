@@ -57,28 +57,27 @@ export class Battery extends UseCase {
     }
 
     public *exampleAnswerGenerator(): Generator<string> {
-        yield 'Add unit test'
+        yield 'I want to add this unit test'
         yield '20'
         yield 'Normal Mode'
-        yield 'I want to add this unit test'
 
-        yield 'Add unit test'
+        yield 'I want to add this unit test'
         yield '19'
         yield 'Low Power Mode'
-        yield 'I want to add this unit test'
-        yield 'Submit unit tests'
 
-        yield 'Add unit test'
+        yield 'I want to submit the unit tests'
+
+        yield 'I want to add this unit test'
         yield '21'
         yield 'Normal Mode'
-        yield 'I want to add this unit test'
-        yield 'Submit unit tests'
 
-        yield 'Add unit test'
+        yield 'I want to submit the unit tests'
+
+        yield 'I want to add this unit test'
         yield '18'
         yield 'Low Power Mode'
-        yield 'I want to add this unit test'
-        yield 'Submit unit tests'
+
+        yield 'I want to submit the unit tests'
     }
 
 }

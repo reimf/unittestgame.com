@@ -6,7 +6,7 @@ test.describe('tdd submit insufficient unit test', () => {
         await context.addInitScript({ path: './playwright-tests/e2e-tests/init_script.js' });
         await page.goto('http://localhost:5500/');
         await page.getByRole('button', { name: 'I want to play Level 2 - Test-Driven Development - Voting Age' }).click();
-        await page.getByRole('button', { name: 'Submit unit tests' }).click();
+        await page.getByRole('button', { name: 'I want to submit the unit tests' }).click();
     });
     test('has bug found message', async ({ page }) => {
         const messages = page.getByTestId('messages');
@@ -20,9 +20,8 @@ test.describe('tdd submit insufficient unit test', () => {
         const messages = page.getByTestId('messages');
         const buttons = messages.getByRole('button');
         await expect(buttons).toHaveText([
-            'Add unit test',
-            'Show hint',
-            'Submit unit tests',
+            'I want to add this unit test',
+            'I want to submit the unit tests',
         ]);
     });
 });

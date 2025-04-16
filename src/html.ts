@@ -320,7 +320,6 @@ export class Paragraph extends Html {
 }
 
 export class Button extends FormControl {
-    private title: string = ''
     private onClickCallback?: (event: Event) => void = undefined
 
     public constructor() {
@@ -328,31 +327,17 @@ export class Button extends FormControl {
         this.setTagName('button')
     }
 
-    public setTitle(title: string): this {
-        this.title = title
-        return this
-    }
-
     public onClick(callback: (event: Event) => void): this {
         this.onClickCallback = callback
         return this
     }
 
-    public toAttributes(): string[] {
-        const attributes = super.toAttributes()
-        if (this.title)
-            attributes.push(`title="${this.title}"`)
-        return attributes
-    }
-
     public toNode(): Node {
         const node = super.toNode() as HTMLButtonElement
-        if (this.title)
-            node.title = this.title
         if (this.onClickCallback)
             node.addEventListener('click', event => {
                 event.preventDefault()
-                this.replaceEnclosingMessageContent(node, node.title || node.textContent || 'Unknown')
+                this.replaceEnclosingMessageContent(node, node.textContent || 'Unknown')
                 this.onClickCallback!(event)
             })
         return node

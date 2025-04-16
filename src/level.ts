@@ -1,5 +1,5 @@
 import { Candidate } from './candidate.js'
-import { HumanMessage, CheckingMessage, ComputerMessage, Panel } from './frame.js'
+import { HumanMessage, CheckingMessage, Panel } from './frame.js'
 import { Methodology } from './methodology.js'
 import { Button, Div, Form, Input, Paragraph, StringMap } from './html.js'
 import { Random } from './random.js'
@@ -120,47 +120,19 @@ export class Level {
     }
 
     protected showMenuMessage(): void {
-        new HumanMessage([
-            new Paragraph().appendChildren([
-                new Button().setTitle('I want to add a unit test').appendText('Add unit test').onClick(() => this.startAddUnitTestFlow()),
-                new Button().setTitle('I want to see a hint').appendText('Show hint').onClick(() => this.showHint()),
-                new Button().setTitle('I want to submit the unit tests').appendText('Submit unit tests').onClick(() => this.prepareSubmitUnitTests()),
-            ]),
-        ]).add()
-    }
-
-    protected startAddUnitTestFlow(): void {
-        this.showConfirmStartUnitTestFlowMessage()
-        this.showFormUnitTestMessage()
-    }
-
-    private showConfirmStartUnitTestFlowMessage(): void {
-        new ComputerMessage(['Which unit test do you want to add?']).add()
-    }
-
-    protected showFormUnitTestMessage(): void {
         const parameterFields = this.useCase.parameters.map(variable => variable.toHtml())
         const unitField = this.useCase.unit.toHtml()
         const submitButton = new Input().setType('submit').setValue('I want to add this unit test')
-        const cancelButton = new Button()
-            .appendText('Cancel')
-            .setTitle('I don\'t want to add a unit test now')
-            .onClick(() => this.cancelAddUnitTestFlow())
-        const buttonBlock = new Paragraph().appendChildren([submitButton, cancelButton])
+        const buttonBlock = new Paragraph().appendChild(submitButton)
         new HumanMessage([
             new Form()
                 .onSubmit(formData => this.prepareAddUnitTest(formData))
                 .appendChildren([...parameterFields, unitField, buttonBlock]),
+            new Div().appendText('OR').addClass('or'),
+            new Paragraph().appendChild(
+                new Button().appendText('I want to submit the unit tests').onClick(() => this.prepareSubmitUnitTests())
+            ),
         ]).add()
-    }
-
-    private showConfirmCancelAddUnitTestFlowMessage(): void {
-        new ComputerMessage(['Ok.']).add()
-    }
-
-    protected cancelAddUnitTestFlow(): void {
-        this.showConfirmCancelAddUnitTestFlowMessage()
-        this.menu()
     }
 
     protected prepareAddUnitTest(formData: StringMap): void {
@@ -188,14 +160,6 @@ export class Level {
         }
         else
             this.methodology.showIncorrectUnitTestMessage()
-        this.menu()
-    }
-
-    protected showHint(): void {
-        if (this.failingTestResult)
-            this.methodology.showHintMessage(this.currentCandidate, this.failingTestResult)
-        else
-            this.methodology.showNoHintMessage()
         this.menu()
     }
 
