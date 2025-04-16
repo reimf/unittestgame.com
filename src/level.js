@@ -13,6 +13,7 @@ export class Level {
         this.failingTestResult = undefined;
         this.newUnitTest = undefined;
         this.previousCandidate = undefined;
+        this.numberOfSubmissions = 0;
         this.methodology = methodology;
         this.useCase = useCase;
         this.isLevelFinished = new Completed(this.description());
@@ -26,9 +27,6 @@ export class Level {
     isFinished() {
         return this.isLevelFinished.get();
     }
-    isRecentlyFinished() {
-        return this.isLevelFinished.recent();
-    }
     play(callback) {
         this.callback = callback;
         this.userdefinedUnitTests = [];
@@ -37,6 +35,7 @@ export class Level {
         this.failingTestResult = this.findFailingTestResult();
         this.newUnitTest = undefined;
         this.previousCandidate = undefined;
+        this.numberOfSubmissions = 0;
         this.showCurrentLevelPanel();
         this.methodology.showWelcomeMessage();
         this.menu();
@@ -137,6 +136,7 @@ export class Level {
         new CheckingMessage('Checking the unit tests', 'I checked the unit tests', () => this.submitUnitTests(), 2000 + this.userdefinedUnitTests.length * 500).add();
     }
     submitUnitTests() {
+        this.numberOfSubmissions += 1;
         if (this.failingTestResult) {
             this.methodology.showBugFoundMessage(this.currentCandidate, this.failingTestResult);
             this.menu();
@@ -145,7 +145,7 @@ export class Level {
             this.end();
     }
     end() {
-        this.isLevelFinished.set();
+        this.isLevelFinished.set(this.numberOfSubmissions);
         this.coveredCandidates.length = 0;
         this.showPanels();
         this.methodology.showEndMessage();

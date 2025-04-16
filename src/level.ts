@@ -20,6 +20,7 @@ export class Level {
     private failingTestResult?: TestResult = undefined
     private newUnitTest?: UnitTest = undefined
     private previousCandidate?: Candidate = undefined
+    private numberOfSubmissions: number = 0
 
     public constructor(methodology: Methodology, useCase: UseCase) {
         this.methodology = methodology
@@ -35,12 +36,8 @@ export class Level {
         return this.methodology.name()
     }
 
-    public isFinished(): boolean {
+    public isFinished(): number {
         return this.isLevelFinished.get()
-    }
-
-    public isRecentlyFinished(): boolean {
-        return this.isLevelFinished.recent()
     }
 
     public play(callback: () => void): void {
@@ -51,6 +48,7 @@ export class Level {
         this.failingTestResult = this.findFailingTestResult()
         this.newUnitTest = undefined
         this.previousCandidate = undefined
+        this.numberOfSubmissions = 0
         this.showCurrentLevelPanel()
         this.methodology.showWelcomeMessage()
         this.menu()
@@ -168,6 +166,7 @@ export class Level {
     }
 
     private submitUnitTests(): void {
+        this.numberOfSubmissions += 1
         if (this.failingTestResult) {
             this.methodology.showBugFoundMessage(this.currentCandidate, this.failingTestResult)
             this.menu()
@@ -177,7 +176,7 @@ export class Level {
     }
 
     private end(): void {
-        this.isLevelFinished.set()
+        this.isLevelFinished.set(this.numberOfSubmissions)
         this.coveredCandidates.length = 0
         this.showPanels()
         this.methodology.showEndMessage()

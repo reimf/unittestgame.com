@@ -61,22 +61,22 @@ export class Main {
     }
 
     private sidebar(): void {
-        this.isSidebarShown.set()
+        this.isSidebarShown.set(1)
         this.showUnittestgamePanel()
         for (const methodology of this.methodologies)
             methodology.showBasicDefinition()
         this.continue()
     }
 
-    private continue(): void {
-        this.showFinishedLevelsPanel()
+    private continue(previousLevel?: Level): void {
+        this.showFinishedLevelsPanel(previousLevel)
         this.showInvitationMessage()
         this.showNextLevel()
     }
 
     private play(level: Level): void {
         Panel.removeAll()
-        level.play(() => this.continue())
+        level.play(() => this.continue(level))
     }
 
     private getFinishedLevels(): Level[] {
@@ -109,15 +109,16 @@ export class Main {
 
     private levelDescription(level: Level): string {
         const index = this.levels.findIndex(otherLevel => otherLevel === level)
-        return `Level ${index + 1} - ${level.description()}`
+        const medal = ['', '🥇', '🥈', '🥉'].at(Math.min(3, level.isFinished()))
+        return [`Level ${index + 1}`, level.description(), medal].filter(Boolean).join(' - ')
     }
 
-    private showFinishedLevelsPanel(): void {
+    private showFinishedLevelsPanel(previousLevel?: Level): void {
         const finishedLevels = this.getFinishedLevels()
         if (finishedLevels.length > 0) {
             new Panel('Finished Levels',
                 finishedLevels.map(level => 
-                    new Div().appendText(this.levelDescription(level)).addClass(level.isRecentlyFinished() ? 'new' : '')
+                    new Div().appendText(this.levelDescription(level)).addClass(level === previousLevel ? 'new' : '')
                 )
             ).show()
         }

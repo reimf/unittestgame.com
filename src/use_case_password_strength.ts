@@ -24,7 +24,7 @@ export class PasswordStrength extends UseCase {
     }
 
     public getUnit(): Variable {
-        return new BooleanVariable('Is a strong password', 'isStrongPassword')
+        return new BooleanVariable('Is strong password', 'isStrongPassword')
     }
 
     public getCandidateElements(): string[][] {

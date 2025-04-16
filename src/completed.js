@@ -3,17 +3,10 @@ export class Completed {
         this.key = key;
     }
     get() {
-        return localStorage.getItem(this.key) != null;
+        const value = localStorage.getItem(this.key);
+        return value ? Number(value) : 0;
     }
-    set() {
-        localStorage.setItem(this.key, new Date().toUTCString());
-    }
-    recent() {
-        const previous = localStorage.getItem(this.key);
-        if (previous == null)
-            return false;
-        const now = new Date();
-        const previousDate = new Date(previous);
-        return now.getTime() - previousDate.getTime() < 10 * 1000;
+    set(value) {
+        localStorage.setItem(this.key, value.toString());
     }
 }

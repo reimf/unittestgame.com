@@ -18,7 +18,7 @@ export class PasswordStrength extends UseCase {
         ];
     }
     getUnit() {
-        return new BooleanVariable('Is a strong password', 'isStrongPassword');
+        return new BooleanVariable('Is strong password', 'isStrongPassword');
     }
     getCandidateElements() {
         return [

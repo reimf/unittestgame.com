@@ -59,11 +59,6 @@ code {
     display: block;
     overflow: scroll;
     white-space: pre;
-
-    div { 
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
 }
 
 form {
@@ -119,11 +114,12 @@ label {
     height: 2rem;
 
     &:has(input[type="radio"]) {
-        background-color: var(--general-background);
-        color: var(--dark-text);
+        background-color: var(--input-background);
+        color: var(--light-text);
         display: inline-block;
         line-height: 2rem;
         margin-right: 0.75rem;
+        opacity: 0.5;
         padding-right: 0.75rem;
 
         &:has(input:disabled) {
@@ -132,8 +128,7 @@ label {
         }
 
         &:has(input:checked:not(:disabled)) {
-            background-color: var(--input-background);
-            color: var(--light-text);
+            opacity: 1;
         }
 
         &:hover {
@@ -149,9 +144,8 @@ p {
 a, button, input, label:has(input[type="radio"]:not(:disabled)) {
     &:focus-within, &:focus, &:not(:disabled):hover, &:not(:disabled):has(:focus) {
         box-shadow: 0 0 0.3rem 0.3rem var(--focus-shadow);
-        background-color: var(--input-background);
-        color: var(--light-text);
-}
+        opacity: 1;
+    }
 }
 
 :disabled {
@@ -269,13 +263,15 @@ a, button, input, label:has(input[type="radio"]:not(:disabled)) {
 
             > div {
                 margin: 0.75rem 0;
+                
+                div {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: pre;
+                }                
             }
         }
     }
-}
-
-#conversation i:has(.checking), #panels .checking {
-    margin-left: 0.5rem;
 }
 
 .or {
@@ -284,7 +280,7 @@ a, button, input, label:has(input[type="radio"]:not(:disabled)) {
       
     &:before, &:after {
         content: "";
-        border-bottom: 0.1rem solid var(--dark-text);
+        border-bottom: 1px solid var(--dark-text);
         display: inline-block;
         height: 0;
         position: relative;

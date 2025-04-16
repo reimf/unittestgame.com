@@ -5,20 +5,12 @@ export class Completed {
         this.key = key
     }
 
-    public get(): boolean {
-        return localStorage.getItem(this.key) != null
+    public get(): number {
+        const value = localStorage.getItem(this.key)
+        return value ? Number(value) : 0
     }
 
-    public set(): void {
-        localStorage.setItem(this.key, new Date().toUTCString())
-    }
-
-    public recent(): boolean {
-        const previous = localStorage.getItem(this.key)
-        if (previous == null)
-            return false
-        const now = new Date()
-        const previousDate = new Date(previous)
-        return now.getTime() - previousDate.getTime() < 10 * 1000
+    public set(value: number): void {
+        localStorage.setItem(this.key, value.toString())
     }
 }

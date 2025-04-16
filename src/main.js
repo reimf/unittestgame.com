@@ -58,20 +58,20 @@ export class Main {
             this.showQuestionSidebar(() => this.sidebar());
     }
     sidebar() {
-        this.isSidebarShown.set();
+        this.isSidebarShown.set(1);
         this.showUnittestgamePanel();
         for (const methodology of this.methodologies)
             methodology.showBasicDefinition();
         this.continue();
     }
-    continue() {
-        this.showFinishedLevelsPanel();
+    continue(previousLevel) {
+        this.showFinishedLevelsPanel(previousLevel);
         this.showInvitationMessage();
         this.showNextLevel();
     }
     play(level) {
         Panel.removeAll();
-        level.play(() => this.continue());
+        level.play(() => this.continue(level));
     }
     getFinishedLevels() {
         return this.levels.filter(level => level.isFinished());
@@ -95,12 +95,13 @@ export class Main {
     }
     levelDescription(level) {
         const index = this.levels.findIndex(otherLevel => otherLevel === level);
-        return `Level ${index + 1} - ${level.description()}`;
+        const medal = ['', '🥇', '🥈', '🥉'].at(Math.min(3, level.isFinished()));
+        return [`Level ${index + 1}`, level.description(), medal].filter(Boolean).join(' - ');
     }
-    showFinishedLevelsPanel() {
+    showFinishedLevelsPanel(previousLevel) {
         const finishedLevels = this.getFinishedLevels();
         if (finishedLevels.length > 0) {
-            new Panel('Finished Levels', finishedLevels.map(level => new Div().appendText(this.levelDescription(level)).addClass(level.isRecentlyFinished() ? 'new' : ''))).show();
+            new Panel('Finished Levels', finishedLevels.map(level => new Div().appendText(this.levelDescription(level)).addClass(level === previousLevel ? 'new' : ''))).show();
         }
     }
     showNextLevel() {
