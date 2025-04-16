@@ -1,5 +1,5 @@
 import { UseCase } from './use_case.js';
-import { CheckboxVariable, IntegerVariable } from './variable.js';
+import { BooleanVariable, IntegerVariable } from './variable.js';
 export class VotingAge extends UseCase {
     name() {
         return 'Voting Age';
@@ -13,7 +13,7 @@ export class VotingAge extends UseCase {
         ];
     }
     getUnit() {
-        return new CheckboxVariable('Is allowed to vote', 'isAllowedToVote');
+        return new BooleanVariable('Is allowed to vote', 'isAllowedToVote');
     }
     getCandidateElements() {
         return [

@@ -10,11 +10,11 @@ test.describe('mt submit insufficient unit test', () => {
         await page.getByRole('button', { name: 'I want to play Level 4 - Mutation Testing - Even or Odd' }).click();
         await page.getByRole('button', { name: 'Add unit test' }).click();
         await page.getByLabel('Number').fill('42');
-        await page.getByLabel('Is even').check();
+        await page.getByLabel('true').check();
         await page.getByRole('button', { name: 'I want to add this unit test' }).click();
         await page.getByRole('button', { name: 'Add unit test' }).click();
         await page.getByLabel('Number').fill('43');
-        await page.getByLabel('Is even').uncheck();
+        await page.getByLabel('false').check();
         await page.getByRole('button', { name: 'I want to add this unit test' }).click();
         await page.getByRole('button', { name: 'Submit unit tests' }).click();
     });

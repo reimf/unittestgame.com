@@ -171,12 +171,12 @@ p {
 }
 
 a, button, input, label:has(input[type="checkbox"]), label:has(input[type="radio"]:not(:disabled)) {
-    &:focus-within {
+    &:focus-within, &:focus {
         outline: 0.25rem solid var(--focus-background);
         outline-offset: 0.25rem;
     }
 
-    &:not(:disabled):hover {
+    &:not(:disabled):hover, &:not(:disabled):has(:focus) {
         background-color: var(--focus-background) !important;
         color: var(--light-text) !important;
     }

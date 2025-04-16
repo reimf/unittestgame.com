@@ -1,6 +1,6 @@
 import { UseCase } from './use_case.js';
 import { Random } from './random.js';
-import { CheckboxVariable, TextVariable } from './variable.js';
+import { BooleanVariable, TextVariable } from './variable.js';
 export class FloatFormat extends UseCase {
     name() {
         return 'Float Format';
@@ -17,7 +17,7 @@ export class FloatFormat extends UseCase {
         ];
     }
     getUnit() {
-        return new CheckboxVariable('Represents a float', 'isFloatFormat');
+        return new BooleanVariable('Represents a float', 'isFloatFormat');
     }
     getCandidateElements() {
         return [

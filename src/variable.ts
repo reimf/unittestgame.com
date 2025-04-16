@@ -53,19 +53,22 @@ export class RadioVariable extends Variable {
     }
 }
 
-export class CheckboxVariable extends Variable {
+export class BooleanVariable extends Variable {
     public constructor(label: string, name: string) {
         super(label, name)
     }
 
     public getInput(value: string): boolean {
-        return value === 'on'
+        return value === 'true'
     }
 
     public toHtml(): Html {
-        const input = new Input().setType('checkbox').setName(this.name).setChecked(this.value !== '').setDisabled(this.disabled)
-        const label = new Label().appendChild(input).appendText(this.label)
-        const paragraph = new Paragraph().appendChild(label)
+        const radioButtons = ['true', 'false'].map(text => {
+            const input = new Input().setType('radio').setName(this.name).setValue(text).setChecked(text === this.value).setDisabled(this.disabled).setRequired()
+            const label = new Label().appendChild(input).appendText(text)
+            return label
+        })
+        const paragraph = new Paragraph().appendText(this.label).appendChildren(radioButtons)
         return paragraph
     }
 

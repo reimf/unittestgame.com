@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test'
-import { RadioVariable, CheckboxVariable, TextVariable, IntegerVariable, FloatVariable } from '../../src/variable.js'
+import { RadioVariable, BooleanVariable, TextVariable, IntegerVariable, FloatVariable } from '../../src/variable.js'
 
 
 test.describe('class Variable', () => {
@@ -8,9 +8,9 @@ test.describe('class Variable', () => {
         expect(variable.toHtml().toString()).toBe('<p>Type of triangle<label><input name="triangleType" required="required" type="radio" value="equilateral"></input>equilateral</label><label><input name="triangleType" required="required" type="radio" value="isosceles"></input>isosceles</label><label><input name="triangleType" required="required" type="radio" value="scalene"></input>scalene</label></p>')
     })
 
-    test('subclass CheckboxVariable', () => {
-        const variable = new CheckboxVariable('Is even', 'isEven')
-        expect(variable.toHtml().toString()).toBe('<p><label><input name="isEven" type="checkbox"></input>Is even</label></p>')
+    test('subclass BooleanVariable', () => {
+        const variable = new BooleanVariable('Is even', 'isEven')
+        expect(variable.toHtml().toString()).toBe('<p>Is even<label><input name="isEven" required="required" type="radio" value="true"></input>true</label><label><input name="isEven" required="required" type="radio" value="false"></input>false</label></p>')
     })
 
     test('subclass TextVariable', () => {

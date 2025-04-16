@@ -1,6 +1,6 @@
 import { UseCase } from './use_case.js'
 import { Random } from './random.js'
-import { Variable, CheckboxVariable, TextVariable } from './variable.js'
+import { Variable, BooleanVariable, TextVariable } from './variable.js'
 
 export class PasswordStrength extends UseCase {
     public name(): string {
@@ -24,7 +24,7 @@ export class PasswordStrength extends UseCase {
     }
 
     public getUnit(): Variable {
-        return new CheckboxVariable('Is a strong password', 'isStrongPassword')
+        return new BooleanVariable('Is a strong password', 'isStrongPassword')
     }
 
     public getCandidateElements(): string[][] {

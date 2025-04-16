@@ -1,5 +1,5 @@
 import { UseCase } from './use_case.js';
-import { CheckboxVariable, IntegerVariable } from './variable.js';
+import { BooleanVariable, IntegerVariable } from './variable.js';
 export class EvenOdd extends UseCase {
     name() {
         return 'Even or Odd';
@@ -13,7 +13,7 @@ export class EvenOdd extends UseCase {
         ];
     }
     getUnit() {
-        return new CheckboxVariable('Is even', 'isEven');
+        return new BooleanVariable('Is even', 'isEven');
     }
     getCandidateElements() {
         return [

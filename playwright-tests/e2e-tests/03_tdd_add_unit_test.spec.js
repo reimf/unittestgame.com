@@ -12,9 +12,9 @@ test.describe('tdd add unit test', () => {
         const age = page.getByLabel('Age');
         await expect(age).toBeInViewport();
     });
-    test('has allowed to vote checkbox', async ({ page }) => {
-        const isAllowedToVote = page.getByLabel('Is allowed to vote');
-        await expect(isAllowedToVote).toBeInViewport();
+    test('asks is allowed to vote', async ({ page }) => {
+        const messages = page.getByTestId('messages');
+        await expect(messages).toContainText('Is allowed to vote');
     });
     test('has submit button', async ({ page }) => {
         const submitButton = page.getByRole('button', { name: 'I want to add this unit test' });

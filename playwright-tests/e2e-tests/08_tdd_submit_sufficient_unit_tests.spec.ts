@@ -10,22 +10,22 @@ test.describe('tdd submit sufficient unit test', () => {
 
         await page.getByRole('button', { name: 'Add unit test' }).click()
         await page.getByLabel('Age').fill('16')
-        await page.getByLabel('Is allowed to vote').uncheck()
+        await page.getByLabel('false').check()
         await page.getByRole('button', { name: 'I want to add this unit test' }).click()
 
         await page.getByRole('button', { name: 'Add unit test' }).click()
         await page.getByLabel('Age').fill('17')
-        await page.getByLabel('Is allowed to vote').uncheck()
+        await page.getByLabel('false').check()
         await page.getByRole('button', { name: 'I want to add this unit test' }).click()
 
         await page.getByRole('button', { name: 'Add unit test' }).click()
         await page.getByLabel('Age').fill('18')
-        await page.getByLabel('Is allowed to vote').check()
+        await page.getByLabel('true').check()
         await page.getByRole('button', { name: 'I want to add this unit test' }).click()
 
         await page.getByRole('button', { name: 'Add unit test' }).click()
         await page.getByLabel('Age').fill('19')
-        await page.getByLabel('Is allowed to vote').check()
+        await page.getByLabel('true').check()
         await page.getByRole('button', { name: 'I want to add this unit test' }).click()
         await page.getByRole('button', { name: 'Submit unit tests' }).click()
     })

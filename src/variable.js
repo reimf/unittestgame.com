@@ -36,17 +36,20 @@ export class RadioVariable extends Variable {
         return value === undefined ? 'undefined' : `"${value}"`;
     }
 }
-export class CheckboxVariable extends Variable {
+export class BooleanVariable extends Variable {
     constructor(label, name) {
         super(label, name);
     }
     getInput(value) {
-        return value === 'on';
+        return value === 'true';
     }
     toHtml() {
-        const input = new Input().setType('checkbox').setName(this.name).setChecked(this.value !== '').setDisabled(this.disabled);
-        const label = new Label().appendChild(input).appendText(this.label);
-        const paragraph = new Paragraph().appendChild(label);
+        const radioButtons = ['true', 'false'].map(text => {
+            const input = new Input().setType('radio').setName(this.name).setValue(text).setChecked(text === this.value).setDisabled(this.disabled).setRequired();
+            const label = new Label().appendChild(input).appendText(text);
+            return label;
+        });
+        const paragraph = new Paragraph().appendText(this.label).appendChildren(radioButtons);
         return paragraph;
     }
     format(value) {

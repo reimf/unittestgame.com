@@ -9,7 +9,7 @@ test.describe('tdd incorrect unit test', () => {
         await page.getByRole('button', { name: 'I want to play Level 2 - Test-Driven Development - Voting Age' }).click()
         await page.getByRole('button', { name: 'Add unit test' }).click()
         await page.getByLabel('Age').fill('15')
-        await page.getByLabel('Is allowed to vote').check()
+        await page.getByLabel('true').check()
         await page.getByRole('button', { name: 'I want to add this unit test' }).click()
     })
 

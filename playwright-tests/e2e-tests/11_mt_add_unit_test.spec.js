@@ -14,9 +14,9 @@ test.describe('mt add unit test', () => {
         const number = page.getByLabel('Number');
         await expect(number).toBeInViewport();
     });
-    test('has is even checkbox', async ({ page }) => {
-        const isEven = page.getByLabel('Is even');
-        await expect(isEven).toBeInViewport();
+    test('asks is even', async ({ page }) => {
+        const messages = page.getByTestId('messages');
+        await expect(messages).toContainText('Is even');
     });
     test('has submit button', async ({ page }) => {
         const submitButton = page.getByRole('button', { name: 'I want to add this unit test' });
