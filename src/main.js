@@ -5,7 +5,7 @@ import { Div } from './html.js';
 import { Level } from './level.js';
 import { MutationTesting } from './methodology_mutation_testing.js';
 import { TestDrivenDevelopment } from './methodology_test_driven_development.js';
-import { Battery } from './use_case_battery.js';
+import { BatteryLevel } from './use_case_battery_level.js';
 import { VotingAge } from './use_case_voting_age.js';
 import { EvenOdd } from './use_case_even_odd.js';
 import { FizzBuzz } from './use_case_fizz_buzz.js';
@@ -19,7 +19,7 @@ export class Main {
         this.testDrivenDevelopment = new TestDrivenDevelopment();
         this.mutationTesting = new MutationTesting();
         this.methodologies = [this.testDrivenDevelopment, this.mutationTesting];
-        this.battery = new Battery();
+        this.battery = new BatteryLevel();
         this.votingAge = new VotingAge();
         this.evenOdd = new EvenOdd();
         this.fizzBuzz = new FizzBuzz();

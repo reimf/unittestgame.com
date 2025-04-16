@@ -42,4 +42,13 @@ export class TestDrivenDevelopment extends Methodology {
     showEndMessage() {
         new ComputerMessage(['I checked the *Current Function* and it is indeed according to the *Specification*.']).add();
     }
+    *exampleMessageGenerator() {
+        yield new ComputerMessage(['The *Specification* contains the number 20. That is a good starting point for a unit test. When the battery level is 20%, the smartphone operates in Normal Mode.']);
+        yield new ComputerMessage(['The *Current Function* always returns Normal Mode. The *Specification* says that when the battery level is less than 20%, the smartphone operates in Low Power Mode. So, add a unit test for battery level 19%.']);
+        yield new ComputerMessage(['The *Current Function* now sometimes returns Normal Mode and sometimes Low Power Mode. Submit the unit tests to see if the *Current Function* is according to the *Specification*.']);
+        yield new ComputerMessage(['Add a unit test for battery level 21%, because the *Current Function* now returns the wrong mode.']);
+        yield new ComputerMessage(['Submit the unit tests again to see if the *Current Function* is correct now.']);
+        yield new ComputerMessage(['Add a unit test for battery level 18%, because the *Current Function* now returns the wrong mode.']);
+        yield new ComputerMessage(['Submit the unit tests again to see if the *Current Function* is finally correct.']);
+    }
 }

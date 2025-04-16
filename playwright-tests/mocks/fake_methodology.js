@@ -10,4 +10,5 @@ export class FakeMethodology extends Methodology {
     showUsefulUnitTestMessage() { }
     showBugFoundMessage(_currentCandidate, _failingTestResult) { }
     showEndMessage() { }
+    *exampleMessageGenerator() { }
 }

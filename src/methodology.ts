@@ -1,4 +1,5 @@
 import { Candidate } from './candidate.js'
+import { ComputerMessage } from './frame.js'
 import { TestResult } from './test_result.js'
 
 export abstract class Methodology {
@@ -11,4 +12,5 @@ export abstract class Methodology {
     public abstract showIncorrectUnitTestMessage(): void
     public abstract showUselessUnitTestMessage(): void
     public abstract showUsefulUnitTestMessage(): void
+    public abstract exampleMessageGenerator(): Generator<ComputerMessage>
 }

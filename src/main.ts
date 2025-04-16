@@ -7,7 +7,7 @@ import { Methodology } from './methodology.js'
 import { MutationTesting } from './methodology_mutation_testing.js'
 import { TestDrivenDevelopment } from './methodology_test_driven_development.js'
 import { UseCase } from './use_case.js'
-import { Battery } from './use_case_battery.js'
+import { BatteryLevel } from './use_case_battery_level.js'
 import { VotingAge } from './use_case_voting_age.js'
 import { EvenOdd } from './use_case_even_odd.js'
 import { FizzBuzz } from './use_case_fizz_buzz.js'
@@ -21,7 +21,7 @@ export class Main {
     private readonly testDrivenDevelopment: Methodology = new TestDrivenDevelopment()
     private readonly mutationTesting: Methodology = new MutationTesting()
     private readonly methodologies = [this.testDrivenDevelopment, this.mutationTesting]
-    private readonly battery: UseCase = new Battery()
+    private readonly battery: UseCase = new BatteryLevel()
     private readonly votingAge: UseCase = new VotingAge()
     private readonly evenOdd: UseCase = new EvenOdd()
     private readonly fizzBuzz: UseCase = new FizzBuzz()

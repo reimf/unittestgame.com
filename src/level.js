@@ -94,14 +94,13 @@ export class Level {
         this.showUnitTestsPanel();
     }
     showMenuMessage() {
-        const parameterFields = this.useCase.parameters.map(variable => variable.toHtml());
-        const unitField = this.useCase.unit.toHtml();
+        const fields = [...this.useCase.parameters, this.useCase.unit].map(variable => variable.toHtml());
         const submitButton = new Input().setType('submit').setValue('I want to add this unit test');
-        const buttonBlock = new Paragraph().appendChild(submitButton);
         new HumanMessage([
             new Form()
                 .onSubmit(formData => this.prepareAddUnitTest(formData))
-                .appendChildren([...parameterFields, unitField, buttonBlock]),
+                .appendChildren(fields)
+                .appendChild(new Paragraph().appendChild(submitButton)),
             new Div().appendText('OR').addClass('or'),
             new Paragraph().appendChild(new Button().appendText('I want to submit the unit tests').onClick(() => this.prepareSubmitUnitTests())),
         ]).add();

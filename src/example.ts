@@ -6,15 +6,22 @@ import { UseCase } from './use_case.js'
 
 export class Example extends Level {
     private readonly exampleAnswers: Generator<string>
+    private readonly exampleMessages: Generator<ComputerMessage>
 
     constructor(methodology: Methodology, useCase: UseCase) {
         super(methodology, useCase)
         this.exampleAnswers = this.useCase.exampleAnswerGenerator()
+        this.exampleMessages = this.methodology.exampleMessageGenerator()
     }
 
     private nextAnswer(): string {
         const answer = this.exampleAnswers.next()
         return answer.done ? '' : answer.value
+    }
+
+    private nextMessage(): ComputerMessage {
+        const message = this.exampleMessages.next()
+        return message.done ? new ComputerMessage([]) : message.value
     }
 
     public play(callback: () => void): void {
@@ -24,15 +31,15 @@ export class Example extends Level {
     }
 
     protected showMenuMessage(): void {
+        this.nextMessage().add()
         const buttonToClick = this.nextAnswer()
-        const parameterFields = this.useCase.parameters.map(variable => variable.setValue(buttonToClick === 'I want to add this unit test' ? this.nextAnswer() : '').setDisabled().toHtml())
-        const unitField = this.useCase.unit.setValue(buttonToClick === 'I want to add this unit test' ? this.nextAnswer() : '').setDisabled().toHtml()
+        const fields = [...this.useCase.parameters, this.useCase.unit].map(variable => variable.setValue(buttonToClick === 'I want to add this unit test' ? this.nextAnswer() : '').setDisabled().toHtml())
         const submitButton = new Input().setType('submit').setValue('I want to add this unit test').setDisabled(buttonToClick !== 'I want to add this unit test')
-        const buttonBlock = new Paragraph().appendChild(submitButton)
         new HumanMessage([
             new Form()
                 .onSubmit(formData => this.prepareAddUnitTest(formData))
-                .appendChildren([...parameterFields, unitField, buttonBlock]),
+                .appendChildren(fields)
+                .appendChild(new Paragraph().appendChild(submitButton)),
             new Div().appendText('OR').addClass('or'),
             new Paragraph().appendChild(
                 new Button().appendText('I want to submit the unit tests').onClick(() => this.prepareSubmitUnitTests()).setDisabled(buttonToClick !== 'I want to submit the unit tests')

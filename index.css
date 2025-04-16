@@ -11,8 +11,8 @@
     --button-shadow: #00000066;
     --focus-shadow: #FF6600;
     --separator-shadow: #00000033;
-    --disabled-background: #CCCCCC;
-    --disabled-foreground: #999999;
+    --disabled-background: #333333;
+    --disabled-foreground: #FFFFFF;
 }
 
 * {
@@ -127,7 +127,7 @@ label {
             color: var(--disabled-foreground);
         }
 
-        &:has(input:checked:not(:disabled)) {
+        &:has(input:checked) {
             opacity: 1;
         }
 

@@ -1,35 +1,35 @@
 import { UseCase } from './use_case.js';
 import { IntegerVariable, RadioVariable } from './variable.js';
-export class Battery extends UseCase {
+export class BatteryLevel extends UseCase {
     name() {
         return 'Example';
     }
     specification() {
-        return 'A smartphone normally operates in Normal Mode, but when the battery is less than 20%, it operates in Low Power Mode.';
+        return 'A smartphone normally operates in Normal Mode, but when the battery level is less than 20%, it operates in Low Power Mode.';
     }
     getParameters() {
         return [
-            new IntegerVariable('Battery', 'battery'),
+            new IntegerVariable('Battery Level', 'batteryLevel'),
         ];
     }
     getUnit() {
-        return new RadioVariable('Mode', 'mode', ['Normal Mode', 'Low Power Mode']);
+        return new RadioVariable('Power Mode', 'powerMode', ['Normal Mode', 'Low Power Mode']);
     }
     getCandidateElements() {
         return [
             [
-                'if (battery >= 18) return "Normal Mode"',
-                'if (battery >= 19) return "Normal Mode"',
-                'if (battery >= 20) return "Normal Mode"',
-                'if (battery >= 21) return "Normal Mode"',
-                'if (battery >= 22) return "Normal Mode"',
-                'if (battery < 19) return "Low Power Mode"',
-                'if (battery < 20) return "Low Power Mode"',
-                'if (battery < 21) return "Low Power Mode"',
-                'if (battery < 22) return "Low Power Mode"',
-                'if (battery < 23) return "Low Power Mode"',
-                'if (battery === 20) return "Normal Mode"',
-                'if (battery === 19) return "Low Power Mode"',
+                'if (batteryLevel >= 18) return "Normal Mode"',
+                'if (batteryLevel >= 19) return "Normal Mode"',
+                'if (batteryLevel >= 20) return "Normal Mode"',
+                'if (batteryLevel >= 21) return "Normal Mode"',
+                'if (batteryLevel >= 22) return "Normal Mode"',
+                'if (batteryLevel < 19) return "Low Power Mode"',
+                'if (batteryLevel < 20) return "Low Power Mode"',
+                'if (batteryLevel < 21) return "Low Power Mode"',
+                'if (batteryLevel < 22) return "Low Power Mode"',
+                'if (batteryLevel < 23) return "Low Power Mode"',
+                'if (batteryLevel === 20) return "Normal Mode"',
+                'if (batteryLevel === 19) return "Low Power Mode"',
                 '',
             ],
             [
@@ -46,8 +46,8 @@ export class Battery extends UseCase {
         yield [[21], 'Normal Mode'];
     }
     *hintGenerator() {
-        for (let battery = 18; battery <= 21; battery += 1)
-            yield [battery];
+        for (let batteryLevel = 18; batteryLevel <= 21; batteryLevel += 1)
+            yield [batteryLevel];
     }
     *exampleAnswerGenerator() {
         yield 'I want to add this unit test';

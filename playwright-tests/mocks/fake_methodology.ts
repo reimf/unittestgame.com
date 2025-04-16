@@ -1,4 +1,5 @@
 import { Candidate } from '../../src/candidate.js'
+import { ComputerMessage } from '../../src/frame.js'
 import { Methodology } from '../../src/methodology.js'
 import { TestResult } from '../../src/test_result.js'
 
@@ -13,4 +14,5 @@ export class FakeMethodology extends Methodology {
     public showUsefulUnitTestMessage(): void { }
     public showBugFoundMessage(_currentCandidate: Candidate, _failingTestResult: TestResult): void { }
     public showEndMessage(): void { }
+    public *exampleMessageGenerator(): Generator<ComputerMessage> { }
 }
