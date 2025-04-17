@@ -119,7 +119,7 @@ label {
         display: inline-block;
         line-height: 2rem;
         margin-right: 0.75rem;
-        opacity: 0.5;
+        opacity: 0.25;
         padding-right: 0.75rem;
 
         &:has(input:disabled) {
@@ -151,6 +151,10 @@ a, button, input, label:has(input[type="radio"]:not(:disabled)) {
 :disabled {
     background-color: var(--disabled-background) !important;
     color: var(--disabled-foreground) !important;
+
+    &:is(button), &:is(input[type="submit"]), &.empty {
+        opacity: 0.25;
+    }    
 }
 
 .covered, .new, div:has(> .comment) {

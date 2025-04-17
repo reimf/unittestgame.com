@@ -34,6 +34,9 @@ export class Example extends Level {
             new Paragraph().appendChild(new Button().appendText('I want to submit the unit tests').onClick(() => this.prepareSubmitUnitTests()).setDisabled(buttonToClick !== 'I want to submit the unit tests')),
         ]).add();
     }
+    levelFinishedValue() {
+        return 1;
+    }
     processCallback() {
         new ComputerMessage([`Congratulations, now you understand the basics of ${this.methodology.name()}.`]).add();
         super.processCallback();

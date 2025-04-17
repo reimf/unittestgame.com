@@ -143,8 +143,11 @@ export class Level {
         else
             this.end();
     }
+    levelFinishedValue() {
+        return this.numberOfSubmissions;
+    }
     end() {
-        this.isLevelFinished.set(this.numberOfSubmissions);
+        this.isLevelFinished.set(this.levelFinishedValue());
         this.coveredCandidates.length = 0;
         this.showPanels();
         this.methodology.showEndMessage();

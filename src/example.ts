@@ -47,6 +47,10 @@ export class Example extends Level {
         ]).add()
     }
 
+    protected levelFinishedValue(): number {
+        return 1
+    }
+
     protected processCallback(): void {
         new ComputerMessage([`Congratulations, now you understand the basics of ${this.methodology.name()}.`]).add()
         super.processCallback()

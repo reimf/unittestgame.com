@@ -57,12 +57,12 @@ export class TestDrivenDevelopment extends Methodology {
     }
 
     public *exampleMessageGenerator(): Generator<ComputerMessage> {
-        yield new ComputerMessage(['The *Specification* contains the number 20. That is a good starting point for a unit test. When the battery level is 20%, the smartphone operates in Normal Mode.'])
-        yield new ComputerMessage(['The *Current Function* always returns Normal Mode. The *Specification* says that when the battery level is less than 20%, the smartphone operates in Low Power Mode. So, add a unit test for battery level 19%.'])
+        yield new ComputerMessage(['The *Specification* contains the number 20. That is a good starting point for a unit test. When the battery level is 20%, the function should return Normal Mode.'])
+        yield new ComputerMessage(['The *Current Function* now always returns Normal Mode. The *Specification* says that when the battery level is less than 20%, the function should return Low Power Mode. So, add a unit test for battery level 19%.'])
         yield new ComputerMessage(['The *Current Function* now sometimes returns Normal Mode and sometimes Low Power Mode. Submit the unit tests to see if the *Current Function* is according to the *Specification*.'])
-        yield new ComputerMessage(['Add a unit test for battery level 21%, because the *Current Function* now returns the wrong mode.'])
-        yield new ComputerMessage(['Submit the unit tests again to see if the *Current Function* is correct now.'])
-        yield new ComputerMessage(['Add a unit test for battery level 18%, because the *Current Function* now returns the wrong mode.'])
-        yield new ComputerMessage(['Submit the unit tests again to see if the *Current Function* is finally correct.'])
+        yield new ComputerMessage(['The *Current Function* now returns Normal Mode only for battery level 20%. Add a unit test for battery level 21%, because the *Specification* says it should return Normal Mode for battery level 21% as well.'])
+        yield new ComputerMessage(['Submit the unit tests again to see if the *Current Function* is according to the *Specification*.'])
+        yield new ComputerMessage(['The *Current Function* now returns Low Power Mode only for battery level 19%. Add a unit test for battery level 18%, because the *Specification* says it should return Low Power Mode for battery level 18% as well.'])
+        yield new ComputerMessage(['Submit the unit tests again to see if the *Current Function* is finally according to the *Specification*.'])
     }
 }

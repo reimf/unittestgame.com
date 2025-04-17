@@ -87,7 +87,7 @@ export class TextVariable extends Variable {
     }
 
     public toHtml(): Html {
-        const input = new Input().setType('text').setName(this.name).setAutocomplete(false).setValue(this.value).setDisabled(this.disabled).setRequired()
+        const input = new Input().setType('text').setName(this.name).setAutocomplete(false).setValue(this.value).addClass(this.value === '' ? 'empty' : 'preset').setDisabled(this.disabled).setRequired()
         const label = new Label().appendChild(new Span().appendText(this.label)).appendChild(input)
         const paragraph = new Paragraph().appendChild(label)
         return paragraph
@@ -108,7 +108,8 @@ export class IntegerVariable extends Variable {
     }
 
     public toHtml(): Html {
-        const input = new Input().setType('text').setName(this.name).setAutocomplete(false).setValue(this.value).setDisabled(this.disabled).setRequired().setPattern('[0-9]+')
+        const displayValue = this.value === '' ? '' : Number(this.value).toFixed()
+        const input = new Input().setType('text').setName(this.name).setAutocomplete(false).setValue(displayValue).addClass(displayValue === '' ? 'empty' : 'preset').setDisabled(this.disabled).setRequired().setPattern('[0-9]+')
         const label = new Label().appendChild(new Span().appendText(this.label)).appendChild(input)
         const paragraph = new Paragraph().appendChild(label)
         return paragraph
@@ -130,7 +131,7 @@ export class FloatVariable extends Variable {
 
     public toHtml(): Html {
         const displayValue = this.value === '' ? '' : Number(this.value).toFixed(1)
-        const input = new Input().setType('text').setName(this.name).setAutocomplete(false).setValue(displayValue).setDisabled(this.disabled).setRequired().setPattern('[0-9]+(\.[0-9])?')
+        const input = new Input().setType('text').setName(this.name).setAutocomplete(false).setValue(displayValue).addClass(displayValue === '' ? 'empty' : 'preset').setDisabled(this.disabled).setRequired().setPattern('[0-9]+(\.[0-9])?')
         const label = new Label().appendChild(new Span().appendText(this.label)).appendChild(input)
         const paragraph = new Paragraph().appendChild(label)
         return paragraph

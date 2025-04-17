@@ -174,8 +174,12 @@ export class Level {
             this.end()
     }
 
+    protected levelFinishedValue(): number {
+        return this.numberOfSubmissions
+    }
+
     private end(): void {
-        this.isLevelFinished.set(this.numberOfSubmissions)
+        this.isLevelFinished.set(this.levelFinishedValue())
         this.coveredCandidates.length = 0
         this.showPanels()
         this.methodology.showEndMessage()
