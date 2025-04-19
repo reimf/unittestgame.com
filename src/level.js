@@ -60,9 +60,9 @@ export class Level {
         const simplestPassingCandidates = this.findSimplestCandidates(passingImperfectCandidates);
         return Random.elementFrom(simplestPassingCandidates);
     }
-    findCoveredCandidate(unitTest) {
+    findCoveredCandidate(unitTests) {
         const passingCandidates = this.useCase.amputeesOfPerfectCandidate
-            .filter(candidate => candidate.failCount([unitTest]) === 0);
+            .filter(candidate => candidate.failCount(unitTests) === 0);
         const simplestPassingCandidates = this.findSimplestCandidates(passingCandidates);
         return Random.elementFrom(simplestPassingCandidates);
     }
@@ -117,7 +117,7 @@ export class Level {
         if (unitTestIsCorrect) {
             this.newUnitTest = unitTest;
             this.userdefinedUnitTests.push(unitTest);
-            this.coveredCandidates.push(this.findCoveredCandidate(unitTest));
+            this.coveredCandidates.push(this.findCoveredCandidate(this.userdefinedUnitTests));
             this.previousCandidate = this.currentCandidate;
             if (new TestResult(this.currentCandidate, unitTest).passes)
                 this.methodology.showUselessUnitTestMessage();

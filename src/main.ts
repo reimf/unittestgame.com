@@ -129,6 +129,10 @@ export class Main {
         if (nextLevel)
             new QuestionMessage(`I want to play ${this.levelDescription(nextLevel)}`, () => this.play(nextLevel)).add()
         else
-            new QuestionMessage('I want to quit', () => window.close()).add()
+            new QuestionMessage('I played all the levels', () => this.quit()).add()
+    }
+
+    private quit(): void {
+        new ComputerMessage(['Well done! You can close this tab now and start writing effective unit tests for your real-world projects.']).add()
     }
 }

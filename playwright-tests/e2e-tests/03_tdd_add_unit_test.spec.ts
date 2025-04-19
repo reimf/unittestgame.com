@@ -5,7 +5,7 @@ test.describe('tdd I want to add this unit test', () => {
         await context.addInitScript(_ => localStorage.setItem('Main - Sidebar Shown', '1'))
         await context.addInitScript(_ => localStorage.setItem('Test-Driven Development - Example', '1'))
         await context.addInitScript({ path: './playwright-tests/e2e-tests/init_script.js' })
-        await page.goto('http://localhost:5500/')
+        await page.goto('http://localhost:3000/')
         await page.getByRole('button', { name: 'I want to play Level 2 - Test-Driven Development - Voting Age' }).click()
     })
 

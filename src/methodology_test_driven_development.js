@@ -36,11 +36,11 @@ export class TestDrivenDevelopment extends Methodology {
         new ComputerMessage(['I added the unit test to the *Unit Tests* and I improved the *Current Function* such that it passes the new unit test.']).add();
     }
     showBugFoundMessage(_currentCandidate, failingTestResult) {
-        new ComputerMessage(['I checked the *Current Function*, but it is NOT according to the *Specification*.']).add();
+        new ComputerMessage(['The *Current Function* is NOT according to the *Specification*.']).add();
         new ComputerMessage(['It produces the following incorrect result.', failingTestResult.toString()]).add();
     }
     showEndMessage() {
-        new ComputerMessage(['I checked the *Current Function* and it is indeed according to the *Specification*.']).add();
+        new ComputerMessage(['The *Current Function* is indeed according to the *Specification*.']).add();
     }
     *exampleMessageGenerator() {
         yield new ComputerMessage(['The *Specification* contains the number 20. That is a good starting point for a unit test. When the battery level is 20%, the function should return Normal Mode.']);

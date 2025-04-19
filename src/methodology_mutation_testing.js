@@ -33,11 +33,11 @@ export class MutationTesting extends Methodology {
         new ComputerMessage(['I added the unit test to the *Unit Tests* and I showed the line coverage in *The Function*.']).add();
     }
     showBugFoundMessage(currentCandidate, _failingTestResult) {
-        new ComputerMessage(['I checked *The Function*, but it is NOT fully tested.']).add();
+        new ComputerMessage(['*The Function* is NOT fully tested.']).add();
         new ComputerMessage(['A mutation of *The Function* that is NOT correct, but still passes your unit tests is the following.', currentCandidate.toHtml()]).add();
     }
     showEndMessage() {
-        new ComputerMessage(['I checked *The Function* and it is indeed fully tested.']).add();
+        new ComputerMessage(['*The Function* is indeed fully tested.']).add();
     }
     *exampleMessageGenerator() {
         yield new ComputerMessage(['*The Function* contains the number 20. That is a good starting point for a unit test. When the battery level is 20%, the function should return Normal Mode.']);
