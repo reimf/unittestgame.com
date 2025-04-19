@@ -17,7 +17,7 @@ test.describe('mt submit insufficient unit test', () => {
         await page.getByLabel('Number').fill('43')
         await page.getByLabel('false').check()
         await page.getByRole('button', { name: 'I want to add this unit test' }).click()
-        
+
         await page.getByRole('button', { name: 'I want to submit the unit tests' }).click()
     })
 

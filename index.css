@@ -154,7 +154,7 @@ a, button, input, label:has(input[type="radio"]:not(:disabled)) {
 
     &:is(button), &:is(input[type="submit"]), &.empty {
         opacity: 0.25;
-    }    
+    }
 }
 
 .covered, .new, div:has(> .comment) {
@@ -215,7 +215,7 @@ a, button, input, label:has(input[type="radio"]:not(:disabled)) {
                 &.reveal {
                     animation: revealHuman 0.25s linear forwards;
                 }
-    
+
                 > div {
                     background-color: var(--human-message-background);
                     border-bottom-right-radius: 0;
@@ -235,7 +235,7 @@ a, button, input, label:has(input[type="radio"]:not(:disabled)) {
                 &.reveal {
                     animation: revealComputer 0.25s linear forwards;
                 }
-    
+
                 > div {
                     background-color: var(--computer-message-background);
                     border-bottom-left-radius: 0;
@@ -267,12 +267,12 @@ a, button, input, label:has(input[type="radio"]:not(:disabled)) {
 
             > div {
                 margin: 0.75rem 0;
-                
+
                 div {
                     overflow: hidden;
                     text-overflow: ellipsis;
                     white-space: pre;
-                }                
+                }
             }
         }
     }
@@ -281,7 +281,7 @@ a, button, input, label:has(input[type="radio"]:not(:disabled)) {
 .or {
     overflow: hidden;
     text-align: center;
-      
+
     &:before, &:after {
         content: "";
         border-bottom: 1px solid var(--dark-text);
@@ -291,16 +291,16 @@ a, button, input, label:has(input[type="radio"]:not(:disabled)) {
         vertical-align: middle;
         width: 50%;
     }
-    
+
     &:before {
         right: 1rem;
         margin-left: -50%;
     }
-    
+
     &:after {
         left: 1rem;
         margin-right: -50%;
-    }    
+    }
 }
 
 .checking {

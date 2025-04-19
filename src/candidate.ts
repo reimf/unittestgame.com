@@ -18,10 +18,10 @@ export class Candidate {
         const keywords: string[] = [
             'function', 'return', '\\{', '\\}',
             'if', '&&', '\\|\\|',
-            '\\d', 
+            '\\d',
             '\\/', '%', '[=!]==', '\\+=', '=', '\\+', '\\*',
             '\\>=?', '\\<=?',
-            'true', 'false', 
+            'true', 'false',
             'new', 'RegExp', 'Math', '\\.', 'toString', 'toFixed', 'round', 'test',
             'let', 'undefined', 'string',
             '[A-Z]+',

@@ -117,7 +117,7 @@ export class Main {
         const finishedLevels = this.getFinishedLevels()
         if (finishedLevels.length > 0) {
             new Panel('Finished Levels',
-                finishedLevels.map(level => 
+                finishedLevels.map(level =>
                     new Div().appendText(this.levelDescription(level)).addClass(level === previousLevel ? 'new' : '')
                 )
             ).show()

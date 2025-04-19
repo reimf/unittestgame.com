@@ -23,7 +23,7 @@ test.describe('tdd submit sufficient unit test', () => {
         await page.getByLabel('Age').fill('19')
         await page.getByLabel('true').check()
         await page.getByRole('button', { name: 'I want to add this unit test' }).click()
-        
+
         await page.getByRole('button', { name: 'I want to submit the unit tests' }).click()
     })
 

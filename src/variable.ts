@@ -20,7 +20,7 @@ export abstract class Variable {
         this.disabled = disabled
         return this
     }
-    
+
     public abstract getInput(value: string): boolean | number | string
     public abstract toHtml(): Html
     public abstract format(value: boolean | number | string | undefined): string
