@@ -68,8 +68,10 @@ export class Level {
     }
 
     private findSimplestPassingCandidate(): Candidate {
-        const passingCandidates = this.useCase.candidates.filter(candidate => candidate.failCount(this.userdefinedUnitTests) === 0)
-        const passingImperfectCandidates = passingCandidates.filter(candidate => !this.useCase.perfectCandidates.includes(candidate))
+        const passingCandidates = this.useCase.candidates
+            .filter(candidate => candidate.failCount(this.userdefinedUnitTests) === 0)
+        const passingImperfectCandidates = passingCandidates
+            .filter(candidate => !this.useCase.perfectCandidates.includes(candidate))
         if (passingImperfectCandidates.length === 0)
             return Random.elementFrom(this.useCase.perfectCandidates)
         const simplestPassingCandidates = this.findSimplestCandidates(passingImperfectCandidates)
