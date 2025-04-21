@@ -96,7 +96,7 @@ test.describe('class Candidate', () => {
     });
     test('to html without coverage', () => {
         const candidate = new Candidate(['function divide(a, b) {', '', '  return a / b', '}']);
-        const html = candidate.toHtmlWithCoverage([]);
+        const html = candidate.toHtmlWithCoverage(undefined);
         expect(html.toString()).toBe('<code>' +
             '<div>function divide(a, b) {</div>' +
             '<div></div>' +
@@ -107,7 +107,7 @@ test.describe('class Candidate', () => {
     test('to html with coverage', () => {
         const candidate = new Candidate(['function divide(a, b) {', '  if (b === 0) return NaN', '  return a / b', '}']);
         const coveredCandidate = new Candidate(['function divide(a, b) {', '', '  return NaN', '}']);
-        const html = candidate.toHtmlWithCoverage([coveredCandidate]);
+        const html = candidate.toHtmlWithCoverage(coveredCandidate);
         expect(html.toString()).toBe('<code>' +
             '<div class="covered">function divide(a, b) {</div>' +
             '<div>  if (b === 0) return NaN</div>' +

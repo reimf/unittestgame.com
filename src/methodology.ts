@@ -6,7 +6,7 @@ export abstract class Methodology {
     public abstract name(): string
     public abstract showBasicDefinition(): void
     public abstract showWelcomeMessage(): void
-    public abstract showPanelsOnMenu(specification: string, currentCandidate: Candidate, previousCandidate: Candidate|undefined, perfectCandidate: Candidate, coveredCandidates: Candidate[]): void
+    public abstract showPanelsOnMenu(specification: string, currentCandidate: Candidate, previousCandidate: Candidate|undefined, perfectCandidate: Candidate, coveredCandidate: Candidate|undefined): void
     public abstract showBugFoundMessage(currentCandidate: Candidate, failingTestResult: TestResult): void
     public abstract showEndMessage(): void
     public abstract showIncorrectUnitTestMessage(): void

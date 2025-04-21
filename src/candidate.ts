@@ -104,12 +104,12 @@ export class Candidate {
         return new Code().appendChildren(lines)
     }
 
-    public toHtmlWithCoverage(coveredCandidates: Candidate[]): Html {
-        if (coveredCandidates.length === 0)
+    public toHtmlWithCoverage(coveredCandidate: Candidate|undefined): Html {
+        if (!coveredCandidate)
             return this.toHtml()
         const lines = this.lines.map((line, pos) => {
             const isNotIndented = !line.startsWith('  ')
-            const isUsed = coveredCandidates.some(candidate => candidate.lines[pos] === line)
+            const isUsed = coveredCandidate.lines[pos] === line
             return new Div().appendText(line).addClass(isNotIndented || isUsed ? 'covered' : '')
         })
         return new Code().appendChildren(lines)

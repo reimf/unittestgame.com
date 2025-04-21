@@ -15,7 +15,7 @@ export class TestDrivenDevelopment extends Methodology {
         new ComputerMessage(['After adding a unit test I (the AI bot) rewrite the *Current Function* such that it passes the *Unit Tests*.']).add();
         new ComputerMessage(['When you think the *Current Function* is according to the *Specification*, you submit the *Unit Tests*.']).add();
     }
-    showPanelsOnMenu(specification, currentCandidate, previousCandidate, _perfectCandidate, _coveredCandidates) {
+    showPanelsOnMenu(specification, currentCandidate, previousCandidate, _perfectCandidate, _coveredCandidate) {
         this.showSpecificationPanel(specification);
         this.showCurrentFunctionPanel(currentCandidate, previousCandidate);
     }

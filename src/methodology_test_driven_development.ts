@@ -21,7 +21,7 @@ export class TestDrivenDevelopment extends Methodology {
         new ComputerMessage(['When you think the *Current Function* is according to the *Specification*, you submit the *Unit Tests*.']).add()
     }
 
-    public showPanelsOnMenu(specification: string, currentCandidate: Candidate, previousCandidate: Candidate|undefined, _perfectCandidate: Candidate, _coveredCandidates: Candidate[]): void {
+    public showPanelsOnMenu(specification: string, currentCandidate: Candidate, previousCandidate: Candidate|undefined, _perfectCandidate: Candidate, _coveredCandidate: Candidate|undefined): void {
         this.showSpecificationPanel(specification)
         this.showCurrentFunctionPanel(currentCandidate, previousCandidate)
     }

@@ -16,11 +16,11 @@ export class MutationTesting extends Methodology {
         new ComputerMessage(['After adding a unit test, I show the line coverage of *The Function*.']).add();
         new ComputerMessage(['When you think *The Function* is fully tested, you submit the *Unit Tests*.']).add();
     }
-    showPanelsOnMenu(_specification, _currentCandidate, _previousCandidate, perfectCandidate, coveredCandidates) {
-        this.showCodeCoveragePanel(perfectCandidate, coveredCandidates);
+    showPanelsOnMenu(_specification, _currentCandidate, _previousCandidate, perfectCandidate, coveredCandidate) {
+        this.showCodeCoveragePanel(perfectCandidate, coveredCandidate);
     }
-    showCodeCoveragePanel(perfectCandidate, coveredCandidates) {
-        new Panel('The Function', [perfectCandidate.toHtmlWithCoverage(coveredCandidates)]).show();
+    showCodeCoveragePanel(perfectCandidate, coveredCandidate) {
+        new Panel('The Function', [perfectCandidate.toHtmlWithCoverage(coveredCandidate)]).show();
     }
     showIncorrectUnitTestMessage() {
         new ComputerMessage(['I did NOT add the unit test, because it is NOT correct.']).add();

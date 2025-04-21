@@ -8,7 +8,7 @@ import { Completed } from './completed.js';
 export class Level {
     constructor(methodology, useCase) {
         this.userdefinedUnitTests = [];
-        this.coveredCandidates = [];
+        this.coveredCandidate = undefined;
         this.currentCandidate = new Candidate([]);
         this.failingTestResult = undefined;
         this.newUnitTest = undefined;
@@ -30,7 +30,7 @@ export class Level {
     play(callback) {
         this.callback = callback;
         this.userdefinedUnitTests = [];
-        this.coveredCandidates = [];
+        this.coveredCandidate = undefined;
         this.currentCandidate = this.findSimplestPassingCandidate();
         this.failingTestResult = this.findFailingTestResult();
         this.newUnitTest = undefined;
@@ -89,7 +89,7 @@ export class Level {
         this.showMenuMessage();
     }
     showPanels() {
-        this.methodology.showPanelsOnMenu(this.useCase.specification(), this.currentCandidate, this.previousCandidate, this.useCase.perfectCandidate, this.coveredCandidates);
+        this.methodology.showPanelsOnMenu(this.useCase.specification(), this.currentCandidate, this.previousCandidate, this.useCase.perfectCandidate, this.coveredCandidate);
         this.previousCandidate = undefined;
         this.showUnitTestsPanel();
     }
@@ -117,7 +117,7 @@ export class Level {
         if (unitTestIsCorrect) {
             this.newUnitTest = unitTest;
             this.userdefinedUnitTests.push(unitTest);
-            this.coveredCandidates.push(this.findCoveredCandidate(this.userdefinedUnitTests));
+            this.coveredCandidate = this.findCoveredCandidate(this.userdefinedUnitTests);
             this.previousCandidate = this.currentCandidate;
             if (new TestResult(this.currentCandidate, unitTest).passes)
                 this.methodology.showUselessUnitTestMessage();
@@ -148,7 +148,7 @@ export class Level {
     }
     end() {
         this.isLevelFinished.set(this.levelFinishedValue());
-        this.coveredCandidates.length = 0;
+        this.coveredCandidate = undefined;
         this.showPanels();
         this.methodology.showEndMessage();
         this.processCallback();

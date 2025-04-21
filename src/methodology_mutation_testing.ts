@@ -22,12 +22,12 @@ export class MutationTesting extends Methodology {
         new ComputerMessage(['When you think *The Function* is fully tested, you submit the *Unit Tests*.']).add()
     }
 
-    public showPanelsOnMenu(_specification: string, _currentCandidate: Candidate, _previousCandidate: Candidate|undefined, perfectCandidate: Candidate, coveredCandidates: Candidate[]): void {
-        this.showCodeCoveragePanel(perfectCandidate, coveredCandidates)
+    public showPanelsOnMenu(_specification: string, _currentCandidate: Candidate, _previousCandidate: Candidate|undefined, perfectCandidate: Candidate, coveredCandidate: Candidate|undefined): void {
+        this.showCodeCoveragePanel(perfectCandidate, coveredCandidate)
     }
 
-    private showCodeCoveragePanel(perfectCandidate: Candidate, coveredCandidates: Candidate[]): void {
-        new Panel('The Function', [perfectCandidate.toHtmlWithCoverage(coveredCandidates)]).show()
+    private showCodeCoveragePanel(perfectCandidate: Candidate, coveredCandidate: Candidate|undefined): void {
+        new Panel('The Function', [perfectCandidate.toHtmlWithCoverage(coveredCandidate)]).show()
     }
 
     public showIncorrectUnitTestMessage(): void {
