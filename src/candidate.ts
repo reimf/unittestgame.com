@@ -17,9 +17,10 @@ export class Candidate {
     private getChunks(code: string): string[] {
         return code
             .replace(/\n/g, ' ') // simplify white space
+            .replace(/"[^"]*?"/g, ' string string ') // each string is 1 extra point
             .replace(/\(([^(]*?)\)/g, ' function $1 ') // each function definition/call is 1 extra point
             .replace(/\(([^(]*?)\)/g, ' function $1 ') // handle nested function calls
-            .replace(/"[^"]*?"/g, ' string string ') // each string is 1 extra point
+            .replace(/,/g, ' ') // each class mention is 1 point
             .replace(/\.(?=[a-z])/g, ' ') // each class mention is 1 point
             .replace(/(?<=\d)0+ /g, ' ') // 200 is 1 point
             .replace(/(?<=\d)(?=\d)/g, ' ') // 3199 is 4 points, 3200 only 2
@@ -27,6 +28,7 @@ export class Candidate {
             .replace(/undefined/g, ' ') // undefined is free
             .trim() // remove trailing white space
             .split(/\s+/) // each token is 1 point
+            .filter(token => token.length > 0)
     }
 
     private getVariables(chunks: string[]): string[] {
@@ -37,7 +39,7 @@ export class Candidate {
             '\\/', '%', '[=!]==', '\\+=', '=', '\\+', '\\*',
             '\\>=?', '\\<=?',
             'true', 'false',
-            'new', 'RegExp', 'Math', '\\.', 'toString', 'toFixed', 'round', 'test',
+            'new', 'RegExp', 'Math', 'dot', 'toString', 'toFixed', 'round', 'test', 'length',
             'let', 'undefined', 'string',
             '[A-Z]+',
         ]
@@ -53,6 +55,9 @@ export class Candidate {
         const code = this.lines.join('\n')
         const chunks = this.getChunks(code)
         const variables = this.getVariables(chunks)
+        const notYetSeen = variables.filter(variable => !variable.match(/^([a-z]+([A-Z][a-z]+)+|a|age|b|c|display|num|password|regex|speed|text|year)$/))
+        if (notYetSeen.length > 0)
+            throw new Error(`Unknown tokens: ${notYetSeen.join(', ')}`)
         const preference = this.getPreferenceEarlyReturns(this.lines)
         return chunks.length + variables.length + preference
     }
