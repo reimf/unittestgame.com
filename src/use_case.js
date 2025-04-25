@@ -2,7 +2,8 @@ import { Candidate } from './candidate.js';
 import { Random } from './random.js';
 import { UnitTest } from './unit_test.js';
 export class UseCase {
-    *exampleAnswerGenerator() { }
+    *exampleGuidanceGeneratorTestDrivenDevelopment() { }
+    *exampleGuidanceGeneratorMutationTesting() { }
     constructor() {
         this.parameters = this.getParameters();
         this.unit = this.getUnit();

@@ -4,16 +4,11 @@ import { Button, Div, Form, Input, Paragraph } from './html.js';
 export class Example extends Level {
     constructor(methodology, useCase) {
         super(methodology, useCase);
-        this.exampleAnswers = this.useCase.exampleAnswerGenerator();
-        this.exampleMessages = this.methodology.exampleMessageGenerator();
+        this.exampleGuidance = methodology.exampleGuidanceGenerator(useCase);
     }
-    nextAnswer() {
-        const answer = this.exampleAnswers.next();
+    nextGuide() {
+        const answer = this.exampleGuidance.next();
         return answer.done ? '' : answer.value;
-    }
-    nextMessage() {
-        const message = this.exampleMessages.next();
-        return message.done ? new ComputerMessage([]) : message.value;
     }
     play(callback) {
         new ComputerMessage(['In this example you only have to press the green buttons.']).add();
@@ -21,9 +16,10 @@ export class Example extends Level {
         super.play(callback);
     }
     showMenuMessage() {
-        this.nextMessage().add();
-        const buttonToClick = this.nextAnswer();
-        const fields = [...this.useCase.parameters, this.useCase.unit].map(variable => variable.setValue(buttonToClick === 'I want to add this unit test' ? this.nextAnswer() : '').setDisabled().toHtml());
+        const message = this.nextGuide();
+        new ComputerMessage([message]).add();
+        const buttonToClick = this.nextGuide();
+        const fields = [...this.useCase.parameters, this.useCase.unit].map(variable => variable.setValue(buttonToClick === 'I want to add this unit test' ? this.nextGuide() : '').setDisabled().toHtml());
         const submitButton = new Input().setType('submit').setValue('I want to add this unit test').setDisabled(buttonToClick !== 'I want to add this unit test');
         new HumanMessage([
             new Form()

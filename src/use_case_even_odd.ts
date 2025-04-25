@@ -66,12 +66,12 @@ export class EvenOdd extends UseCase {
         ]
     }
 
-    public *minimalUnitTestGenerator(): Generator<any[]> {
+    public* minimalUnitTestGenerator(): Generator<any[]> {
         yield [[25], false]
         yield [[26], true]
     }
 
-    public *hintGenerator(): Generator<any[]> {
+    public* hintGenerator(): Generator<any[]> {
         for (let number = 0; number <= 40; number += 1)
             yield [number]
     }

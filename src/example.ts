@@ -5,23 +5,16 @@ import { Methodology } from './methodology.js'
 import { UseCase } from './use_case.js'
 
 export class Example extends Level {
-    private readonly exampleAnswers: Generator<string>
-    private readonly exampleMessages: Generator<ComputerMessage>
+    private readonly exampleGuidance: Generator<string>
 
     constructor(methodology: Methodology, useCase: UseCase) {
         super(methodology, useCase)
-        this.exampleAnswers = this.useCase.exampleAnswerGenerator()
-        this.exampleMessages = this.methodology.exampleMessageGenerator()
+        this.exampleGuidance = methodology.exampleGuidanceGenerator(useCase)
     }
 
-    private nextAnswer(): string {
-        const answer = this.exampleAnswers.next()
+    private nextGuide(): string {
+        const answer = this.exampleGuidance.next()
         return answer.done ? '' : answer.value
-    }
-
-    private nextMessage(): ComputerMessage {
-        const message = this.exampleMessages.next()
-        return message.done ? new ComputerMessage([]) : message.value
     }
 
     public play(callback: () => void): void {
@@ -31,9 +24,10 @@ export class Example extends Level {
     }
 
     protected showMenuMessage(): void {
-        this.nextMessage().add()
-        const buttonToClick = this.nextAnswer()
-        const fields = [...this.useCase.parameters, this.useCase.unit].map(variable => variable.setValue(buttonToClick === 'I want to add this unit test' ? this.nextAnswer() : '').setDisabled().toHtml())
+        const message = this.nextGuide()
+        new ComputerMessage([message]).add()
+        const buttonToClick = this.nextGuide()
+        const fields = [...this.useCase.parameters, this.useCase.unit].map(variable => variable.setValue(buttonToClick === 'I want to add this unit test' ? this.nextGuide() : '').setDisabled().toHtml())
         const submitButton = new Input().setType('submit').setValue('I want to add this unit test').setDisabled(buttonToClick !== 'I want to add this unit test')
         new HumanMessage([
             new Form()

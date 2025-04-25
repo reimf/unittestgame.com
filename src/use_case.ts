@@ -12,7 +12,8 @@ export abstract class UseCase {
     protected abstract minimalUnitTestGenerator(): Generator<any[]>
     protected abstract hintGenerator(): Generator<any[]>
 
-    public *exampleAnswerGenerator(): Generator<string> { }
+    public* exampleGuidanceGeneratorTestDrivenDevelopment(): Generator<string> { }
+    public* exampleGuidanceGeneratorMutationTesting(): Generator<string> { }
 
     public readonly parameters: Variable[] = this.getParameters()
     public readonly unit: Variable = this.getUnit()

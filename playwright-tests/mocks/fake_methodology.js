@@ -4,11 +4,11 @@ export class FakeMethodology extends Methodology {
     showBasicDefinition() { }
     showExample(_callback) { }
     showWelcomeMessage() { }
-    showPanelsOnMenu(_specification, _currentCandidate, _previousCandidate, _perfectCandidate, _coveredCandidate) { }
+    showPanelsOnMenu(_specification, _currentCandidate, _previousCandidates, _perfectCandidate, _coveredCandidates) { }
     showIncorrectUnitTestMessage() { }
     showUselessUnitTestMessage() { }
     showUsefulUnitTestMessage() { }
     showBugFoundMessage(_currentCandidate, _failingTestResult) { }
     showEndMessage() { }
-    *exampleMessageGenerator() { }
+    *exampleGuidanceGenerator(_useCase) { }
 }

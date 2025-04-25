@@ -51,14 +51,14 @@ export class FizzBuzz extends UseCase {
         ]
     }
 
-    public *minimalUnitTestGenerator(): Generator<any[]> {
+    public* minimalUnitTestGenerator(): Generator<any[]> {
         yield [[6], 'Fizz']
         yield [[25], 'Buzz']
         yield [[30], 'FizzBuzz']
         yield [[1], '1']
     }
 
-    public *hintGenerator(): Generator<any[]> {
+    public* hintGenerator(): Generator<any[]> {
         for (let number = 0; number < 100; number += 1)
             yield [number]
     }

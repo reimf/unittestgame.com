@@ -28,6 +28,6 @@ test.describe('welcome', () => {
     test('has show sidebar message', async({ page }) => {
         const messages = page.getByTestId('messages')
         const button = messages.getByRole('button')
-        await expect(button).toHaveText('I want more information in a sidebar on terms with a purple background')
+        await expect(button).toHaveText('I want a sidebar with information on terms with a purple background')
     })
 })

@@ -72,7 +72,7 @@ export class SpeedDisplay extends UseCase {
         ]
     }
 
-    public *minimalUnitTestGenerator(): Generator<any[]> {
+    public* minimalUnitTestGenerator(): Generator<any[]> {
         yield [[0.0], 'START']
         yield [[0.1], '0.1']
         yield [[19.9], '19.9']
@@ -81,7 +81,7 @@ export class SpeedDisplay extends UseCase {
         yield [[199.5], 'DANGER']
     }
 
-    public *hintGenerator(): Generator<any[]> {
+    public* hintGenerator(): Generator<any[]> {
         for (let speed = 0; speed <= 1; speed += 0.1)
             yield [speed]
         for (let speed = 0; speed <= 27; speed += 0.3)

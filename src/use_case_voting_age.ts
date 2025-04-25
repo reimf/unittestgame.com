@@ -45,14 +45,14 @@ export class VotingAge extends UseCase {
         ]
     }
 
-    public *minimalUnitTestGenerator(): Generator<any[]> {
+    public* minimalUnitTestGenerator(): Generator<any[]> {
         yield [[16], false]
         yield [[17], false]
         yield [[18], true]
         yield [[19], true]
     }
 
-    public *hintGenerator(): Generator<any[]> {
+    public* hintGenerator(): Generator<any[]> {
         for (let age = 1; age <= 40; age += 1)
             yield [age]
     }

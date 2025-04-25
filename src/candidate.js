@@ -5,9 +5,23 @@ export class Candidate {
         this.lines = lines.map(line => line.replace(/\\\\/g, '\\'));
         const code = lines.join('\n');
         this.function = new Function('return ' + code)();
-        this.complexity = this.computeComplexity(code);
+        this.complexity = this.computeComplexity();
     }
-    computeComplexity(code) {
+    getChunks(code) {
+        return code
+            .replace(/\n/g, ' ') // simplify white space
+            .replace(/\(([^(]*?)\)/g, ' function $1 ') // each function definition/call is 1 extra point
+            .replace(/\(([^(]*?)\)/g, ' function $1 ') // handle nested function calls
+            .replace(/"[^"]*?"/g, ' string string ') // each string is 1 extra point
+            .replace(/\.(?=[a-z])/g, ' ') // each class mention is 1 point
+            .replace(/(?<=\d)0+ /g, ' ') // 200 is 1 point
+            .replace(/(?<=\d)(?=\d)/g, ' ') // 3199 is 4 points, 3200 only 2
+            .replace(/(?<=\d)\.(?=\d)/g, ' dot ') // each float is 1 point extra
+            .replace(/undefined/g, ' ') // undefined is free
+            .trim() // remove trailing white space
+            .split(/\s+/); // each token is 1 point
+    }
+    getVariables(chunks) {
         const keywords = [
             'function', 'return', '\\{', '\\}',
             'if', '&&', '\\|\\|',
@@ -20,20 +34,17 @@ export class Candidate {
             '[A-Z]+',
         ];
         const regex = '^' + keywords.join('|') + '$';
-        const chunks = code
-            .replace(/\n/g, ' ') // simplify white space
-            .replace(/\(([^(]*?)\)/g, ' function $1 ') // each function definition/call is 1 extra point
-            .replace(/\(([^(]*?)\)/g, ' function $1 ') // handle nested function calls
-            .replace(/"[^"]*?"/g, ' string string ') // each string is 1 extra point
-            .replace(/\.(?=[a-z])/g, ' ') // each class mention is 1 point
-            .replace(/(?<=\d)0+ /g, ' ') // 200 is 1 point
-            .replace(/(?<=\d)(?=\d)/g, ' ') // 3199 is 4 points, 3200 only 2
-            .replace(/(?<=\d)\.(?=\d)/g, ' dot ') // each float is 1 point extra
-            .replace(/undefined/g, ' ') // undefined is free
-            .trim() // remove trailing white space
-            .split(/\s+/); // each token is 1 point
-        const variables = chunks.filter(chunk => !chunk.match(regex)); // each use of a parameter or variable is 1 extra point
-        return chunks.length + variables.length;
+        return chunks.filter(chunk => !chunk.match(regex));
+    }
+    getPreferenceEarlyReturns(lines) {
+        return lines.reduce((subtotal, line, index) => subtotal + (line ? index : 0), 0);
+    }
+    computeComplexity() {
+        const code = this.lines.join('\n');
+        const chunks = this.getChunks(code);
+        const variables = this.getVariables(chunks);
+        const preference = this.getPreferenceEarlyReturns(this.lines);
+        return chunks.length + variables.length + preference;
     }
     execute(argumentsList) {
         try {
@@ -67,9 +78,10 @@ export class Candidate {
     toHtml() {
         return new Code().appendChildren(this.lines.map(line => new Div().appendText(line)));
     }
-    toHtmlWithPrevious(previousCandidate) {
-        if (!previousCandidate)
+    toHtmlWithPrevious(previousCandidates) {
+        if (previousCandidates.length === 0)
             return this.toHtml();
+        const previousCandidate = previousCandidates[previousCandidates.length - 1];
         const lines = this.lines.reduce((lines, currentLine, pos) => {
             const previousLine = previousCandidate.lines[pos];
             const comment = currentLine === '' && previousLine === '' ? ''
@@ -86,12 +98,12 @@ export class Candidate {
         }, []);
         return new Code().appendChildren(lines);
     }
-    toHtmlWithCoverage(coveredCandidate) {
-        if (!coveredCandidate)
+    toHtmlWithCoverage(coveredCandidates) {
+        if (coveredCandidates.length === 0)
             return this.toHtml();
         const lines = this.lines.map((line, pos) => {
             const isNotIndented = !line.startsWith('  ');
-            const isUsed = coveredCandidate.lines[pos] === line;
+            const isUsed = coveredCandidates.some(candidate => candidate.lines[pos] === line);
             return new Div().appendText(line).addClass(isNotIndented || isUsed ? 'covered' : '');
         });
         return new Code().appendChildren(lines);

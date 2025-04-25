@@ -2,6 +2,7 @@ import { Candidate } from './candidate.js'
 import { Panel, ComputerMessage } from './frame.js'
 import { Methodology } from './methodology.js'
 import { TestResult } from './test_result.js'
+import { UseCase } from './use_case.js'
 
 export class MutationTesting extends Methodology {
     public name(): string {
@@ -22,12 +23,12 @@ export class MutationTesting extends Methodology {
         new ComputerMessage(['When you think *The Function* is fully tested, you submit the *Unit Tests*.']).add()
     }
 
-    public showPanelsOnMenu(_specification: string, _currentCandidate: Candidate, _previousCandidate: Candidate|undefined, perfectCandidate: Candidate, coveredCandidate: Candidate|undefined): void {
-        this.showCodeCoveragePanel(perfectCandidate, coveredCandidate)
+    public showPanelsOnMenu(_specification: string, _currentCandidate: Candidate, _previousCandidates: Candidate[], perfectCandidate: Candidate, coveredCandidates: Candidate[]): void {
+        this.showCodeCoveragePanel(perfectCandidate, coveredCandidates)
     }
 
-    private showCodeCoveragePanel(perfectCandidate: Candidate, coveredCandidate: Candidate|undefined): void {
-        new Panel('The Function', [perfectCandidate.toHtmlWithCoverage(coveredCandidate)]).show()
+    private showCodeCoveragePanel(perfectCandidate: Candidate, coveredCandidates: Candidate[]): void {
+        new Panel('The Function', [perfectCandidate.toHtmlWithCoverage(coveredCandidates)]).show()
     }
 
     public showIncorrectUnitTestMessage(): void {
@@ -52,13 +53,7 @@ export class MutationTesting extends Methodology {
         new ComputerMessage(['*The Function* is indeed fully tested.']).add()
     }
 
-    public *exampleMessageGenerator(): Generator<ComputerMessage> {
-        yield new ComputerMessage(['*The Function* contains the number 20. That is a good starting point for a unit test. When the battery level is 20%, the function should return Normal Mode.'])
-        yield new ComputerMessage(['*The Function* does not always return Normal Mode. When the battery level is less than 20%, the function should return Low Power Mode. So, add a unit test for battery level 19%.'])
-        yield new ComputerMessage(['All lines in *The Function* are covered now. Submit the unit tests to see if *The Function* is fully tested.'])
-        yield new ComputerMessage(['This mutation only returns Normal Mode if the battery level is exactly 20%. Add a unit test for battery level 21%, because *The Function* should also return Normal Mode for battery level 21%.'])
-        yield new ComputerMessage(['Submit the unit tests again to see if *The Function* is fully tested now.'])
-        yield new ComputerMessage(['This mutation only returns Low Power Mode if the battery level is exactly 19%. Add a unit test for battery level 18%, because *The Function* should also return Low Power Mode for battery level 18%.'])
-        yield new ComputerMessage(['Submit the unit tests again to see if *The Function* is finally fully tested.'])
+    public* exampleGuidanceGenerator(useCase: UseCase): Generator<string> {
+        yield* useCase.exampleGuidanceGeneratorMutationTesting()
     }
 }

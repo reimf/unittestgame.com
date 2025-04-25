@@ -58,7 +58,7 @@ export class PasswordStrength extends UseCase {
         ]
     }
 
-    public *minimalUnitTestGenerator(): Generator<any[]> {
+    public* minimalUnitTestGenerator(): Generator<any[]> {
         yield [['A3a6#'], true]
         yield [['@251Bz'], true]
         yield [['1#36D0'], false]
@@ -114,7 +114,7 @@ export class PasswordStrength extends UseCase {
         }
     }
 
-    public *hintGenerator(): Generator<string[]> {
+    public* hintGenerator(): Generator<string[]> {
         const digits = [...this.generateDigits()]
         const uppercase = [...this.generateUppercase()]
         const lowercase = [...this.generateLowercase()]

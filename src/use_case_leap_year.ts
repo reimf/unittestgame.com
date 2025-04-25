@@ -56,7 +56,7 @@ export class LeapYear extends UseCase {
         ]
     }
 
-    public *minimalUnitTestGenerator(): Generator<any[]> {
+    public* minimalUnitTestGenerator(): Generator<any[]> {
         yield [[2001], false]
         yield [[2002], false]
         yield [[2004], true]
@@ -64,7 +64,7 @@ export class LeapYear extends UseCase {
         yield [[1600], true]
     }
 
-    public *hintGenerator(): Generator<any[]> {
+    public* hintGenerator(): Generator<any[]> {
         for (let year = 2001; year <= 2030; year += 1)
             yield [year]
         for (let year = 1000; year <= 3000; year += 100)

@@ -73,7 +73,7 @@ export class FloatFormat extends UseCase {
         ]
     }
 
-    public *minimalUnitTestGenerator(): Generator<any[]> {
+    public* minimalUnitTestGenerator(): Generator<any[]> {
         yield [['+123'], true]
         yield [['-123.45'], true]
         yield [['123.45'], true]
@@ -83,7 +83,7 @@ export class FloatFormat extends UseCase {
         yield [['12.3.45'], false]
     }
 
-    public *hintGenerator(): Generator<any[]> {
+    public* hintGenerator(): Generator<any[]> {
         for (let i = 0; i < 100; i++) {
             const integerPart = Random.integerUnder(1000).toString()
             const precision = Random.integerUnder(4)

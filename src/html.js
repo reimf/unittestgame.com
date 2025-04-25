@@ -240,6 +240,7 @@ export class Input extends FormControl {
             node.required = true;
         if (this.pattern)
             node.pattern = this.pattern;
+        node.addEventListener('focus', () => node.checked = true);
         return node;
     }
 }

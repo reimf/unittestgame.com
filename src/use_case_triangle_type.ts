@@ -57,7 +57,7 @@ export class TriangleType extends UseCase {
         ]
     }
 
-    public *minimalUnitTestGenerator(): Generator<any[]> {
+    public* minimalUnitTestGenerator(): Generator<any[]> {
         yield [[5, 5, 5], 'equilateral']
         yield [[3, 5, 5], 'isosceles']
         yield [[5, 3, 5], 'isosceles']
@@ -65,7 +65,7 @@ export class TriangleType extends UseCase {
         yield [[3, 4, 5], 'scalene']
     }
 
-    public *hintGenerator(): Generator<any[]> {
+    public* hintGenerator(): Generator<any[]> {
         for (let a = 6; a < 9; a++)
             for (let b = 6; b < 9; b++)
                 for (let c = 6; c < 9; c++)

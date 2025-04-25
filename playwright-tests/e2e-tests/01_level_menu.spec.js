@@ -3,7 +3,7 @@ test.describe('level menu', () => {
     test.beforeEach(async ({ context, page }) => {
         await context.addInitScript({ path: './playwright-tests/e2e-tests/init_script.js' });
         await page.goto('http://localhost:3000/');
-        await page.getByRole('button', { name: 'I want more information in a sidebar on terms with a purple background' }).click();
+        await page.getByRole('button', { name: 'I want a sidebar with information on terms with a purple background' }).click();
     });
     test('has unittestgame panel', async ({ page }) => {
         const unittestgamePanel = page.getByTestId('unittestgame');

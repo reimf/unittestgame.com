@@ -81,7 +81,7 @@ export class Main {
         new ComputerMessage(['I am an AI bot specialized in *Test-Driven Development* and *Mutation Testing*.']).add();
     }
     showQuestionSidebar(callback) {
-        new QuestionMessage('I want more information in a sidebar on terms with a purple background', () => callback()).add();
+        new QuestionMessage('I want a sidebar with information on terms with a purple background', () => callback()).add();
     }
     showUnittestgamePanel() {
         const methodologies = this.methodologies.map(methodology => methodology.name()).join(' and ');

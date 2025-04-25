@@ -15,11 +15,11 @@ export class Level {
 
     private callback?: () => void
     private userdefinedUnitTests: UnitTest[] = []
-    private coveredCandidate?: Candidate = undefined
+    private coveredCandidates: Candidate[] = []
     private currentCandidate: Candidate = new Candidate([])
     private failingTestResult?: TestResult = undefined
     private newUnitTest?: UnitTest = undefined
-    private previousCandidate?: Candidate = undefined
+    private previousCandidates: Candidate[] = []
     private numberOfSubmissions: number = 0
 
     public constructor(methodology: Methodology, useCase: UseCase) {
@@ -43,11 +43,11 @@ export class Level {
     public play(callback: () => void): void {
         this.callback = callback
         this.userdefinedUnitTests = []
-        this.coveredCandidate = undefined
+        this.coveredCandidates = []
         this.currentCandidate = this.findSimplestPassingCandidate()
         this.failingTestResult = this.findFailingTestResult()
         this.newUnitTest = undefined
-        this.previousCandidate = undefined
+        this.previousCandidates = []
         this.numberOfSubmissions = 0
         this.showCurrentLevelPanel()
         this.methodology.showWelcomeMessage()
@@ -114,8 +114,7 @@ export class Level {
     }
 
     private showPanels(): void {
-        this.methodology.showPanelsOnMenu(this.useCase.specification(), this.currentCandidate, this.previousCandidate, this.useCase.perfectCandidate, this.coveredCandidate)
-        this.previousCandidate = undefined
+        this.methodology.showPanelsOnMenu(this.useCase.specification(), this.currentCandidate, this.previousCandidates, this.useCase.perfectCandidate, this.coveredCandidates)
         this.showUnitTestsPanel()
     }
 
@@ -147,8 +146,8 @@ export class Level {
         if (unitTestIsCorrect) {
             this.newUnitTest = unitTest
             this.userdefinedUnitTests.push(unitTest)
-            this.coveredCandidate = this.findCoveredCandidate(this.userdefinedUnitTests)
-            this.previousCandidate = this.currentCandidate
+            this.coveredCandidates.push(this.findCoveredCandidate(this.userdefinedUnitTests))
+            this.previousCandidates.push(this.currentCandidate)
             if (new TestResult(this.currentCandidate, unitTest).passes)
                 this.methodology.showUselessUnitTestMessage()
             else {
@@ -182,7 +181,8 @@ export class Level {
 
     private end(): void {
         this.isLevelFinished.set(this.levelFinishedValue())
-        this.coveredCandidate = undefined
+        this.coveredCandidates = []
+        this.previousCandidates = []
         this.showPanels()
         this.methodology.showEndMessage()
         this.processCallback()

@@ -2,6 +2,7 @@ import { Candidate } from './candidate.js'
 import { Panel, ComputerMessage } from './frame.js'
 import { Methodology } from './methodology.js'
 import { TestResult } from './test_result.js'
+import { UseCase } from './use_case.js'
 
 export class TestDrivenDevelopment extends Methodology {
     public name(): string {
@@ -21,17 +22,17 @@ export class TestDrivenDevelopment extends Methodology {
         new ComputerMessage(['When you think the *Current Function* is according to the *Specification*, you submit the *Unit Tests*.']).add()
     }
 
-    public showPanelsOnMenu(specification: string, currentCandidate: Candidate, previousCandidate: Candidate|undefined, _perfectCandidate: Candidate, _coveredCandidate: Candidate|undefined): void {
+    public showPanelsOnMenu(specification: string, currentCandidate: Candidate, previousCandidates: Candidate[], _perfectCandidate: Candidate, _coveredCandidates: Candidate[]): void {
         this.showSpecificationPanel(specification)
-        this.showCurrentFunctionPanel(currentCandidate, previousCandidate)
+        this.showCurrentFunctionPanel(currentCandidate, previousCandidates)
     }
 
     private showSpecificationPanel(specification: string): void {
         new Panel('Specification', [specification]).show()
     }
 
-    public showCurrentFunctionPanel(currentCandidate: Candidate, previousCandidate: Candidate|undefined): void {
-        new Panel('Current Function', [currentCandidate.toHtmlWithPrevious(previousCandidate)]).show()
+    public showCurrentFunctionPanel(currentCandidate: Candidate, previousCandidates: Candidate[]): void {
+        new Panel('Current Function', [currentCandidate.toHtmlWithPrevious(previousCandidates)]).show()
     }
 
     public showIncorrectUnitTestMessage(): void {
@@ -56,13 +57,7 @@ export class TestDrivenDevelopment extends Methodology {
         new ComputerMessage(['The *Current Function* is indeed according to the *Specification*.']).add()
     }
 
-    public *exampleMessageGenerator(): Generator<ComputerMessage> {
-        yield new ComputerMessage(['The *Specification* contains the number 20. That is a good starting point for a unit test. When the battery level is 20%, the function should return Normal Mode.'])
-        yield new ComputerMessage(['The *Current Function* now always returns Normal Mode. The *Specification* says that when the battery level is less than 20%, the function should return Low Power Mode. So, add a unit test for battery level 19%.'])
-        yield new ComputerMessage(['The *Current Function* now sometimes returns Normal Mode and sometimes Low Power Mode. Submit the unit tests to see if the *Current Function* is according to the *Specification*.'])
-        yield new ComputerMessage(['The *Current Function* now returns Normal Mode only for battery level 20%. Add a unit test for battery level 21%, because the *Specification* says it should return Normal Mode for battery level 21% as well.'])
-        yield new ComputerMessage(['Submit the unit tests again to see if the *Current Function* is according to the *Specification*.'])
-        yield new ComputerMessage(['The *Current Function* now returns Low Power Mode only for battery level 19%. Add a unit test for battery level 18%, because the *Specification* says it should return Low Power Mode for battery level 18% as well.'])
-        yield new ComputerMessage(['Submit the unit tests again to see if the *Current Function* is finally according to the *Specification*.'])
+    public* exampleGuidanceGenerator(useCase: UseCase): Generator<string> {
+        yield* useCase.exampleGuidanceGeneratorTestDrivenDevelopment()
     }
 }
