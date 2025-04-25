@@ -12,7 +12,7 @@ export class Example extends Level {
         this.exampleGuidance = methodology.exampleGuidanceGenerator(useCase)
     }
 
-    private nextGuide(): string {
+    private nextGuidance(): string {
         const answer = this.exampleGuidance.next()
         return answer.done ? '' : answer.value
     }
@@ -24,10 +24,10 @@ export class Example extends Level {
     }
 
     protected showMenuMessage(): void {
-        const message = this.nextGuide()
+        const message = this.nextGuidance()
         new ComputerMessage([message]).add()
-        const buttonToClick = this.nextGuide()
-        const fields = [...this.useCase.parameters, this.useCase.unit].map(variable => variable.setValue(buttonToClick === 'I want to add this unit test' ? this.nextGuide() : '').setDisabled().toHtml())
+        const buttonToClick = this.nextGuidance()
+        const fields = [...this.useCase.parameters, this.useCase.unit].map(variable => variable.setValue(buttonToClick === 'I want to add this unit test' ? this.nextGuidance() : '').setDisabled().toHtml())
         const submitButton = new Input().setType('submit').setValue('I want to add this unit test').setDisabled(buttonToClick !== 'I want to add this unit test')
         new HumanMessage([
             new Form()

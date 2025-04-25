@@ -7,12 +7,12 @@ import { UnitTest } from './unit_test.js';
 import { Completed } from './completed.js';
 export class Level {
     constructor(methodology, useCase) {
-        this.userdefinedUnitTests = [];
+        this.humanUnitTests = [];
+        this.previousCandidates = [];
         this.coveredCandidates = [];
         this.currentCandidate = new Candidate([]);
         this.failingTestResult = undefined;
         this.newUnitTest = undefined;
-        this.previousCandidates = [];
         this.numberOfSubmissions = 0;
         this.methodology = methodology;
         this.useCase = useCase;
@@ -21,20 +21,17 @@ export class Level {
     description() {
         return `${this.methodology.name()} - ${this.useCase.name()}`;
     }
-    methodologyName() {
-        return this.methodology.name();
-    }
     isFinished() {
         return this.isLevelFinished.get();
     }
     play(callback) {
         this.callback = callback;
-        this.userdefinedUnitTests = [];
+        this.humanUnitTests = [];
+        this.previousCandidates = [];
         this.coveredCandidates = [];
         this.currentCandidate = this.findSimplestPassingCandidate();
         this.failingTestResult = this.findFailingTestResult();
         this.newUnitTest = undefined;
-        this.previousCandidates = [];
         this.numberOfSubmissions = 0;
         this.showCurrentLevelPanel();
         this.methodology.showWelcomeMessage();
@@ -54,7 +51,7 @@ export class Level {
     }
     findSimplestPassingCandidate() {
         const passingCandidates = this.useCase.candidates
-            .filter(candidate => candidate.failCount(this.userdefinedUnitTests) === 0);
+            .filter(candidate => candidate.failCount(this.humanUnitTests) === 0);
         const passingImperfectCandidates = passingCandidates
             .filter(candidate => !this.useCase.perfectCandidates.includes(candidate));
         if (passingImperfectCandidates.length === 0)
@@ -81,9 +78,9 @@ export class Level {
         new Panel('Current Level', [new Paragraph().appendText(this.description())]).show();
     }
     showUnitTestsPanel() {
-        new Panel('Unit Tests', this.userdefinedUnitTests.length === 0
+        new Panel('Unit Tests', this.humanUnitTests.length === 0
             ? ['You have not written any unit tests yet.']
-            : this.userdefinedUnitTests.map(unitTest => new Div().appendText(unitTest.toString()).addClass(unitTest === this.newUnitTest ? 'new' : ''))).show();
+            : this.humanUnitTests.map(unitTest => new Div().appendText(unitTest.toString()).addClass(unitTest === this.newUnitTest ? 'new' : ''))).show();
         this.newUnitTest = undefined;
     }
     menu() {
@@ -111,15 +108,15 @@ export class Level {
         const expected = this.useCase.unit.getInput(formData.get(this.useCase.unit.name));
         const unitTest = new UnitTest(this.useCase.parameters, argumentList, this.useCase.unit, expected);
         new HumanMessage([unitTest.toString()]).add();
-        new CheckingMessage('Checking the new unit test', 'I checked the new unit test', () => this.addUnitTest(unitTest), 2000 + this.userdefinedUnitTests.length * 500).add();
+        new CheckingMessage('Checking the new unit test', 'I checked the new unit test', () => this.addUnitTest(unitTest), 2000 + this.humanUnitTests.length * 500).add();
     }
     addUnitTest(unitTest) {
         const unitTestIsCorrect = new TestResult(this.useCase.perfectCandidate, unitTest).passes;
         if (unitTestIsCorrect) {
             this.newUnitTest = unitTest;
-            this.userdefinedUnitTests.push(unitTest);
-            this.coveredCandidates.push(this.findCoveredCandidate(this.userdefinedUnitTests));
+            this.humanUnitTests.push(unitTest);
             this.previousCandidates.push(this.currentCandidate);
+            this.coveredCandidates.push(this.findCoveredCandidate(this.humanUnitTests));
             if (new TestResult(this.currentCandidate, unitTest).passes)
                 this.methodology.showUselessUnitTestMessage();
             else {
@@ -133,7 +130,7 @@ export class Level {
         this.menu();
     }
     prepareSubmitUnitTests() {
-        new CheckingMessage('Checking the unit tests', 'I checked the unit tests', () => this.submitUnitTests(), 2000 + this.userdefinedUnitTests.length * 500).add();
+        new CheckingMessage('Checking the unit tests', 'I checked the unit tests', () => this.submitUnitTests(), 2000 + this.humanUnitTests.length * 500).add();
     }
     submitUnitTests() {
         this.numberOfSubmissions += 1;
@@ -149,8 +146,8 @@ export class Level {
     }
     end() {
         this.isLevelFinished.set(this.levelFinishedValue());
-        this.coveredCandidates = [];
         this.previousCandidates = [];
+        this.coveredCandidates = [];
         this.showPanels();
         this.methodology.showEndMessage();
         this.processCallback();

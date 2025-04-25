@@ -11,13 +11,6 @@ test.describe('class Level', () => {
         expect(level.description()).toBe('Fake Methodology - Fake Use Case')
     })
 
-    test('has a methodology name', () => {
-        const methodology = new FakeMethodology()
-        const useCase = new FakeUseCase()
-        const level = new Level(methodology, useCase)
-        expect(level.methodologyName()).toBe('Fake Methodology')
-    })
-
     test('is playable', () => {
         const methodology = new FakeMethodology()
         const useCase = new FakeUseCase()

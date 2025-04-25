@@ -16,7 +16,7 @@ export class FizzBuzz extends UseCase {
 
     public getParameters(): Variable[] {
         return [
-            new IntegerVariable('Number', 'number'),
+            new IntegerVariable('Number', 'num'),
         ]
     }
 
@@ -27,25 +27,25 @@ export class FizzBuzz extends UseCase {
     public getCandidateElements(): string[][] {
         return [
             [
-                'if (number === 15) return "FizzBuzz"',
-                'if (number % 15 === 0) return "FizzBuzz"',
+                'if (num === 15) return "FizzBuzz"',
+                'if (num % 15 === 0) return "FizzBuzz"',
                 '',
             ],
             [
-                'if (number === 3) return "Fizz"',
-                'if (number % 3 === 0) return "Fizz"',
+                'if (num === 3) return "Fizz"',
+                'if (num % 3 === 0) return "Fizz"',
                 ''
             ],
             [
-                'if (number === 5) return "Buzz"',
-                'if (number % 5 === 0) return "Buzz"',
+                'if (num === 5) return "Buzz"',
+                'if (num % 5 === 0) return "Buzz"',
                 ''
             ],
             [
                 'return "Fizz"',
                 'return "Buzz"',
                 'return "FizzBuzz"',
-                'return number.toString()',
+                'return num.toString()',
                 'return undefined',
             ],
         ]
@@ -59,7 +59,7 @@ export class FizzBuzz extends UseCase {
     }
 
     public* hintGenerator(): Generator<any[]> {
-        for (let number = 0; number < 100; number += 1)
-            yield [number]
+        for (let num = 0; num < 100; num += 1)
+            yield [num]
     }
 }

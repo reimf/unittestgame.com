@@ -6,7 +6,7 @@ export class Example extends Level {
         super(methodology, useCase);
         this.exampleGuidance = methodology.exampleGuidanceGenerator(useCase);
     }
-    nextGuide() {
+    nextGuidance() {
         const answer = this.exampleGuidance.next();
         return answer.done ? '' : answer.value;
     }
@@ -16,10 +16,10 @@ export class Example extends Level {
         super.play(callback);
     }
     showMenuMessage() {
-        const message = this.nextGuide();
+        const message = this.nextGuidance();
         new ComputerMessage([message]).add();
-        const buttonToClick = this.nextGuide();
-        const fields = [...this.useCase.parameters, this.useCase.unit].map(variable => variable.setValue(buttonToClick === 'I want to add this unit test' ? this.nextGuide() : '').setDisabled().toHtml());
+        const buttonToClick = this.nextGuidance();
+        const fields = [...this.useCase.parameters, this.useCase.unit].map(variable => variable.setValue(buttonToClick === 'I want to add this unit test' ? this.nextGuidance() : '').setDisabled().toHtml());
         const submitButton = new Input().setType('submit').setValue('I want to add this unit test').setDisabled(buttonToClick !== 'I want to add this unit test');
         new HumanMessage([
             new Form()
