@@ -17,7 +17,7 @@ test.describe('class UseCase', () => {
         const useCase = new FakeUseCase()
         expect(useCase.parameters.length).toBe(1)
         expect(useCase.parameters[0]).toBeInstanceOf(IntegerVariable)
-        expect(useCase.parameters[0].name).toBe('number')
+        expect(useCase.parameters[0].name).toBe('num')
     })
 
     test('has a unit', () => {

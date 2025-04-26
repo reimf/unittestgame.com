@@ -35,7 +35,7 @@ test.describe('mt level start', () => {
     test('has the perfect candidate in the function panel', async ({ page }) => {
         const theFunctionPanel = page.getByTestId('the-function');
         const codeLines = theFunctionPanel.locator('code > div');
-        await expect(codeLines).toContainText(['function isEven(number) {', '  if (number % 2 !== 0) return false', '  return true', '}']);
+        await expect(codeLines).toContainText(['function isEven(num) {', '  if (num % 2 !== 0) return false', '  return true', '}']);
     });
     test('has the current level panel', async ({ page }) => {
         const levelPanel = page.getByTestId('current-level');

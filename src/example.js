@@ -11,7 +11,7 @@ export class Example extends Level {
         return answer.done ? '' : answer.value;
     }
     play(callback) {
-        new ComputerMessage(['In this example you only have to press the green buttons.']).add();
+        new ComputerMessage(['In this example you only have to click the green button.']).add();
         new ComputerMessage(['Meanwhile, keep an eye on the changes in the sidebar marked in yellow.']).add();
         super.play(callback);
     }

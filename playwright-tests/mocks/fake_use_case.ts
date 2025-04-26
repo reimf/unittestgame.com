@@ -11,7 +11,7 @@ export class FakeUseCase extends UseCase {
     }
 
     public getParameters(): Variable[] {
-        return [new IntegerVariable('Number', 'number')]
+        return [new IntegerVariable('Number', 'num')]
     }
 
     public getUnit(): Variable {
@@ -21,20 +21,20 @@ export class FakeUseCase extends UseCase {
     public getCandidateElements(): string[][] {
         return [
             [
-                'if (number % 15 === 0) return "FizzBuzz"',
+                'if (num % 15 === 0) return "FizzBuzz"',
                 ''
             ],
             [
-                'if (number % 3 === 0) return "Fizz"',
+                'if (num % 3 === 0) return "Fizz"',
                 ''
             ],
             [
-                'if (number % 5 === 0) return "Buzz"',
+                'if (num % 5 === 0) return "Buzz"',
                 ''
             ],
             [
                 'return ""',
-                'return number.toString()'
+                'return num.toString()'
             ],
         ]
     }
@@ -47,7 +47,7 @@ export class FakeUseCase extends UseCase {
     }
 
     public* hintGenerator(): Generator<any[]> {
-        for (let number = 0; number < 100; number += 1)
-            yield [number]
+        for (let num = 0; num < 100; num += 1)
+            yield [num]
     }
 }

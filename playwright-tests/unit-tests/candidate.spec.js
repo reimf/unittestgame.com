@@ -20,8 +20,8 @@ test.describe('class Candidate', () => {
         expect(withStringCandidate.compareComplexity(withoutStringCandidate)).toBe(+1);
     });
     test('compares complexity of class mention', () => {
-        const withoutClassCandidate = new Candidate(['function divide(a, b) {', '  return min(a, b)', '}']);
-        const withClassCandidate = new Candidate(['function divide(a, b) {', '  return Math.min(a, b)', '  }']);
+        const withoutClassCandidate = new Candidate(['function divide(a, b) {', '  return round(a, b)', '}']);
+        const withClassCandidate = new Candidate(['function divide(a, b) {', '  return Math.round(a, b)', '  }']);
         expect(withoutClassCandidate.compareComplexity(withClassCandidate)).toBe(-1);
         expect(withClassCandidate.compareComplexity(withoutClassCandidate)).toBe(+1);
     });
@@ -53,6 +53,12 @@ test.describe('class Candidate', () => {
         const variableCandidate = new Candidate(['function divide(a, b) {', '  return true', '}']);
         expect(undefinedCandidate.compareComplexity(variableCandidate)).toBe(-1);
         expect(variableCandidate.compareComplexity(undefinedCandidate)).toBe(+1);
+    });
+    test('computes prefering early returns', () => {
+        const earlyReturnCandidate = new Candidate(['function divide(a, b) {', '  return undefined', '', '}']);
+        const lateReturnCandidate = new Candidate(['function divide(a, b) {', '', '  return undefined', '}']);
+        expect(earlyReturnCandidate.compareComplexity(lateReturnCandidate)).toBe(-1);
+        expect(lateReturnCandidate.compareComplexity(earlyReturnCandidate)).toBe(+1);
     });
     test('executes function', () => {
         const candidate = new Candidate(['function divide(a, b) {', '  return a / b', '}']);
