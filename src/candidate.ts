@@ -26,7 +26,6 @@ export class Candidate {
             .replace(/(?<=\d)(?=\d)/g, ' ') // 3199 is 4 points, 3200 only 2
             .replace(/(?<=\d)\.(?=\d)/g, ' _ ') // each float is 1 point extra
             .replace(/undefined/g, ' ') // undefined is free
-            .trim() // remove trailing white space
             .split(/\s+/) // each token is 1 point
             .filter(token => token !== '')
     }
@@ -71,20 +70,12 @@ export class Candidate {
         }
     }
 
-    public testResults(unitTests: UnitTest[]): TestResult[] {
-        return unitTests.map(unitTest => new TestResult(this, unitTest))
-    }
-
     public failingTestResults(unitTests: UnitTest[]): TestResult[] {
-        return this.testResults(unitTests).filter(testResult => !testResult.passes)
+        return unitTests.map(unitTest => new TestResult(this, unitTest)).filter(testResult => !testResult.passes)
     }
 
     public failCount(unitTests: UnitTest[]): number {
         return this.failingTestResults(unitTests).length
-    }
-
-    public passCount(unitTests: UnitTest[]): number {
-        return unitTests.length - this.failCount(unitTests)
     }
 
     public isAmputeeOf(candidate: Candidate): boolean {

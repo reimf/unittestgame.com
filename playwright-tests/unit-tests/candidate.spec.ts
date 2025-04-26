@@ -64,11 +64,36 @@ test.describe('class Candidate', () => {
         expect(variableCandidate.compareComplexity(undefinedCandidate)).toBe(+1)
     })
 
+    test('computes empty code', () => {
+        const emptyCandidate = new Candidate([''])
+        const noCandidate = new Candidate([])
+        expect(noCandidate.compareComplexity(emptyCandidate)).toBe(0)
+    })
+
+    test('computes variables', () => {
+        const valueCandidate = new Candidate(['function divide(a, b) {', '  return 2', '', '}'])
+        const variableCandidate = new Candidate(['function divide(a, b) {', '  return a', '', '}'])
+        expect(variableCandidate.compareComplexity(valueCandidate)).toBe(+1)
+        expect(valueCandidate.compareComplexity(variableCandidate)).toBe(-1)
+    })
+
     test('computes prefering early returns', () => {
         const earlyReturnCandidate = new Candidate(['function divide(a, b) {', '  return undefined', '', '}'])
         const lateReturnCandidate = new Candidate(['function divide(a, b) {', '', '  return undefined', '}'])
         expect(earlyReturnCandidate.compareComplexity(lateReturnCandidate)).toBe(-1)
         expect(lateReturnCandidate.compareComplexity(earlyReturnCandidate)).toBe(+1)
+    })
+
+    test('is amputee of', () => {
+        const fullCandidate = new Candidate(['function divide(a, b) {', '  b = 2', '  return a / b', '}'])
+        const amputatedCandidate = new Candidate(['function divide(a, b) {', '', '  return undefined', '}'])
+        expect(amputatedCandidate.isAmputeeOf(fullCandidate)).toBe(true)
+    })
+
+    test('is not amputee of', () => {
+        const fullCandidate = new Candidate(['function divide(a, b) {', '  return a / b', '}'])
+        const amputatedCandidate = new Candidate(['function divide(a, b) {', '  return 1', '}'])
+        expect(amputatedCandidate.isAmputeeOf(fullCandidate)).toBe(false)
     })
 
     test('executes function', () => {

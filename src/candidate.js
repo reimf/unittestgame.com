@@ -19,7 +19,6 @@ export class Candidate {
             .replace(/(?<=\d)(?=\d)/g, ' ') // 3199 is 4 points, 3200 only 2
             .replace(/(?<=\d)\.(?=\d)/g, ' _ ') // each float is 1 point extra
             .replace(/undefined/g, ' ') // undefined is free
-            .trim() // remove trailing white space
             .split(/\s+/) // each token is 1 point
             .filter(token => token !== '');
     }
@@ -59,17 +58,11 @@ export class Candidate {
             return undefined;
         }
     }
-    testResults(unitTests) {
-        return unitTests.map(unitTest => new TestResult(this, unitTest));
-    }
     failingTestResults(unitTests) {
-        return this.testResults(unitTests).filter(testResult => !testResult.passes);
+        return unitTests.map(unitTest => new TestResult(this, unitTest)).filter(testResult => !testResult.passes);
     }
     failCount(unitTests) {
         return this.failingTestResults(unitTests).length;
-    }
-    passCount(unitTests) {
-        return unitTests.length - this.failCount(unitTests);
     }
     isAmputeeOf(candidate) {
         return this.lines.every((line, pos) => line === candidate.lines[pos] || line === '' || line.trim() === 'return undefined');
