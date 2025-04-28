@@ -5,8 +5,9 @@ import { UseCase } from './use_case.js'
 export abstract class Methodology {
     public abstract name(): string
     public abstract showBasicDefinition(): void
+    public abstract compareComplexity(candidate: Candidate, otherCandidate: Candidate): number
     public abstract showWelcomeMessage(): void
-    public abstract showPanelsOnMenu(specification: string, currentCandidate: Candidate, previousCandidates: Candidate[], perfectCandidate: Candidate, coveredCandidates: Candidate[]): void
+    public abstract showPanelsOnMenu(specification: string, currentCandidate: Candidate, previousCandidate: Candidate|undefined, perfectCandidate: Candidate, coveredCandidates: Candidate|undefined): void
     public abstract showBugFoundMessage(currentCandidate: Candidate, failingTestResult: TestResult): void
     public abstract showEndMessage(): void
     public abstract showIncorrectUnitTestMessage(): void

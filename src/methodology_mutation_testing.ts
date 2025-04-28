@@ -17,18 +17,24 @@ export class MutationTesting extends Methodology {
         ]).show()
     }
 
+    public compareComplexity(candidate: Candidate, otherCandidate: Candidate): number {
+        return candidate.compareComplexityMutationTesting(otherCandidate)
+    }
+
     public showWelcomeMessage(): void {
         new ComputerMessage(['You read *The Function* and write *Unit Tests* that pass.']).add()
         new ComputerMessage(['After adding a unit test, I show the line coverage of *The Function*.']).add()
         new ComputerMessage(['When you think *The Function* is fully tested, you submit the *Unit Tests*.']).add()
     }
 
-    public showPanelsOnMenu(_specification: string, _currentCandidate: Candidate, _previousCandidates: Candidate[], perfectCandidate: Candidate, coveredCandidates: Candidate[]): void {
-        this.showCodeCoveragePanel(perfectCandidate, coveredCandidates)
+    public showPanelsOnMenu(_specification: string, _currentCandidate: Candidate, _previousCandidate: Candidate|undefined, perfectCandidate: Candidate, coveredCandidate: Candidate|undefined): void {
+        this.showCodeCoveragePanel(perfectCandidate, coveredCandidate)
     }
 
-    private showCodeCoveragePanel(perfectCandidate: Candidate, coveredCandidates: Candidate[]): void {
-        new Panel('The Function', [perfectCandidate.toHtmlWithCoverage(coveredCandidates)]).show()
+    private showCodeCoveragePanel(perfectCandidate: Candidate, coveredCandidate: Candidate|undefined): void {
+        new Panel('The Function', [
+            coveredCandidate ? perfectCandidate.toHtmlWithCoverage(coveredCandidate) : perfectCandidate.toHtml()
+        ]).show()
     }
 
     public showIncorrectUnitTestMessage(): void {

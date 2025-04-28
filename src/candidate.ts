@@ -5,13 +5,28 @@ import { UnitTest } from './unit_test.js'
 export class Candidate {
     private readonly lines: string[]
     private readonly function: Function
-    private readonly complexity: number
+    private readonly complexityTestDrivenDevelopment: number
+    private readonly complexityMutationTesting: number
 
     public constructor(lines: string[]) {
         this.lines = lines.map(line => line.replace(/\\\\/g, '\\'))
         const code = lines.join('\n')
         this.function = new Function('return ' + code)()
-        this.complexity = this.computeComplexity()
+        const chunks = this.getChunks(code)
+        const variables = this.getVariables(chunks)
+        this.complexityTestDrivenDevelopment = chunks.length + variables.length
+        this.complexityMutationTesting = this.getPreferenceEarlyReturns(this.lines)
+    }
+
+    private zip(candidate: Candidate): string[][] {
+        return this.lines.map((line, pos) => [line, candidate.lines[pos]])
+    }
+
+    public combine(candidate: Candidate|undefined): Candidate {
+        if (!candidate)
+            return this
+        const lines = this.zip(candidate).map(([line, other]) => line || other)
+        return new Candidate(lines)
     }
 
     private getChunks(code: string): string[] {
@@ -43,22 +58,15 @@ export class Candidate {
             '[A-Z]+', '_',
         ]
         const regex = '^' + keywords.join('|') + '$'
-        return chunks.filter(chunk => !chunk.match(regex))
+        const variables = chunks.filter(chunk => !chunk.match(regex))
+        const notYetSeen = variables.filter(variable => !variable.match(/^([a-z]+([A-Z][a-z]+)+|a|age|b|c|display|num|password|regex|speed|text|year)$/))
+        if (notYetSeen.length > 0)
+            throw new Error(`Unknown tokens: ${notYetSeen.join(', ')}`)
+        return variables
     }
 
     private getPreferenceEarlyReturns(lines: string[]): number {
-        return lines.reduce((subtotal, line, index) => subtotal + (line ? index : 0), 0)
-    }
-
-    private computeComplexity(): number {
-        const code = this.lines.join('\n')
-        const chunks = this.getChunks(code)
-        const variables = this.getVariables(chunks)
-        const notYetSeen = variables.filter(variable => !variable.match(/^([a-z]+([A-Z][a-z]+)+|a|age|b|c|display|divide|num|password|regex|speed|text|year)$/))
-        if (notYetSeen.length > 0)
-            throw new Error(`Unknown tokens: ${notYetSeen.join(', ')}`)
-        const preference = this.getPreferenceEarlyReturns(this.lines)
-        return chunks.length + variables.length + preference
+        return lines.reduce((subtotal, line, index) => subtotal + (line && line.trim() !== 'return undefined' ? Math.pow(2, index) : 0), 0)
     }
 
     public execute(argumentsList: any[]): any {
@@ -79,11 +87,15 @@ export class Candidate {
     }
 
     public isAmputeeOf(candidate: Candidate): boolean {
-        return this.lines.every((line, pos) => line === candidate.lines[pos] || line === '' || line.trim() === 'return undefined')
+        return this.zip(candidate).every(([line, other]) => line === other || line === '' || line.trim() === 'return undefined')
     }
 
-    public compareComplexity(candidate: Candidate): number {
-        return Math.sign(this.complexity - candidate.complexity)
+    public compareComplexityTestDrivenDevelopment(candidate: Candidate): number {
+        return Math.sign(this.complexityTestDrivenDevelopment - candidate.complexityTestDrivenDevelopment)
+    }
+
+    public compareComplexityMutationTesting(candidate: Candidate): number {
+        return Math.sign(this.complexityMutationTesting - candidate.complexityMutationTesting)
     }
 
     public toString(): string {
@@ -94,33 +106,27 @@ export class Candidate {
         return new Code().appendChildren(this.lines.map(line => new Div().appendText(line)))
     }
 
-    public toHtmlWithPrevious(previousCandidates: Candidate[]): Html {
-        if (previousCandidates.length === 0)
-            return this.toHtml()
-        const previousCandidate = previousCandidates[previousCandidates.length - 1]
-        const lines = this.lines.reduce((lines, currentLine, pos) => {
-            const previousLine = previousCandidate.lines[pos]
-            const comment = currentLine === '' && previousLine === '' ? ''
-                : currentLine === previousLine ? ''
-                : currentLine === '' ? `  // was: ${previousLine.trim()}`
-                : previousLine === '' ? ' // new'
-                : ` // was: ${previousLine.trim()}`
+    public toHtmlWithPrevious(previousCandidate: Candidate): Html {
+        const lines = this.zip(previousCandidate).reduce((divs, [line, other]) => {
+            const comment = line === '' && other === '' ? ''
+                : line === other ? ''
+                : line === '' ? `  // was: ${other.trim()}`
+                : other === '' ? ' // new'
+                : ` // was: ${other.trim()}`
             const div = new Div()
-            if (currentLine !== '')
-                div.appendText(currentLine)
+            if (line !== '')
+                div.appendText(line)
             if (comment !== '')
                 div.appendChild(new Span().appendText(comment).addClass('comment'))
-            return [...lines, div]
+            return [...divs, div]
         }, [] as Div[])
         return new Code().appendChildren(lines)
     }
 
-    public toHtmlWithCoverage(coveredCandidates: Candidate[]): Html {
-        if (coveredCandidates.length === 0)
-            return this.toHtml()
-        const lines = this.lines.map((line, pos) => {
+    public toHtmlWithCoverage(coveredCandidate: Candidate): Html {
+        const lines = this.zip(coveredCandidate).map(([line, other]) => {
             const isNotIndented = !line.startsWith('  ')
-            const isUsed = coveredCandidates.some(candidate => candidate.lines[pos] === line)
+            const isUsed = line === other
             return new Div().appendText(line).addClass(isNotIndented || isUsed ? 'covered' : '')
         })
         return new Code().appendChildren(lines)

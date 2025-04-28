@@ -8,8 +8,8 @@ import { Completed } from './completed.js';
 export class Level {
     constructor(methodology, useCase) {
         this.humanUnitTests = [];
-        this.previousCandidates = [];
-        this.coveredCandidates = [];
+        this.previousCandidate = undefined;
+        this.coveredCandidate = undefined;
         this.currentCandidate = new Candidate([]);
         this.failingTestResult = undefined;
         this.newUnitTest = undefined;
@@ -27,8 +27,8 @@ export class Level {
     play(callback) {
         this.callback = callback;
         this.humanUnitTests = [];
-        this.previousCandidates = [];
-        this.coveredCandidates = [];
+        this.previousCandidate = undefined;
+        this.coveredCandidate = undefined;
         this.currentCandidate = this.findSimplestPassingCandidate();
         this.failingTestResult = this.findFailingTestResult();
         this.newUnitTest = undefined;
@@ -41,7 +41,7 @@ export class Level {
         return candidates.reduce((simplestCandidatesSoFar, candidate) => {
             if (simplestCandidatesSoFar.length === 0)
                 return [candidate];
-            const sign = candidate.compareComplexity(simplestCandidatesSoFar[0]);
+            const sign = this.methodology.compareComplexity(candidate, simplestCandidatesSoFar[0]);
             if (sign < 0)
                 return [candidate];
             if (sign > 0)
@@ -59,9 +59,10 @@ export class Level {
         const simplestPassingCandidates = this.findSimplestCandidates(passingImperfectCandidates);
         return Random.elementFrom(simplestPassingCandidates);
     }
-    findCoveredCandidate(unitTests) {
+    findCoveredCandidate(unitTest) {
         const passingCandidates = this.useCase.amputeesOfPerfectCandidate
-            .filter(candidate => candidate.failCount(unitTests) === 0);
+            .filter(candidate => candidate.failCount([unitTest]) === 0);
+        console.log(passingCandidates);
         const simplestPassingCandidates = this.findSimplestCandidates(passingCandidates);
         return Random.elementFrom(simplestPassingCandidates);
     }
@@ -88,7 +89,7 @@ export class Level {
         this.showMenuMessage();
     }
     showPanels() {
-        this.methodology.showPanelsOnMenu(this.useCase.specification(), this.currentCandidate, this.previousCandidates, this.useCase.perfectCandidate, this.coveredCandidates);
+        this.methodology.showPanelsOnMenu(this.useCase.specification(), this.currentCandidate, this.previousCandidate, this.useCase.perfectCandidate, this.coveredCandidate);
         this.showUnitTestsPanel();
     }
     showMenuMessage() {
@@ -115,8 +116,10 @@ export class Level {
         if (unitTestIsCorrect) {
             this.newUnitTest = unitTest;
             this.humanUnitTests.push(unitTest);
-            this.previousCandidates.push(this.currentCandidate);
-            this.coveredCandidates.push(this.findCoveredCandidate(this.humanUnitTests));
+            this.previousCandidate = this.currentCandidate;
+            const coveredCandidate = this.findCoveredCandidate(unitTest);
+            console.log(coveredCandidate);
+            this.coveredCandidate = coveredCandidate.combine(this.coveredCandidate);
             if (new TestResult(this.currentCandidate, unitTest).passes)
                 this.methodology.showUselessUnitTestMessage();
             else {
@@ -146,8 +149,8 @@ export class Level {
     }
     end() {
         this.isLevelFinished.set(this.levelFinishedValue());
-        this.previousCandidates = [];
-        this.coveredCandidates = [];
+        this.previousCandidate = undefined;
+        this.coveredCandidate = undefined;
         this.showPanels();
         this.methodology.showEndMessage();
         this.processCallback();

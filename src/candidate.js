@@ -5,7 +5,19 @@ export class Candidate {
         this.lines = lines.map(line => line.replace(/\\\\/g, '\\'));
         const code = lines.join('\n');
         this.function = new Function('return ' + code)();
-        this.complexity = this.computeComplexity();
+        const chunks = this.getChunks(code);
+        const variables = this.getVariables(chunks);
+        this.complexityTestDrivenDevelopment = chunks.length + variables.length;
+        this.complexityMutationTesting = this.getPreferenceEarlyReturns(this.lines);
+    }
+    zip(candidate) {
+        return this.lines.map((line, pos) => [line, candidate.lines[pos]]);
+    }
+    combine(candidate) {
+        if (!candidate)
+            return this;
+        const lines = this.zip(candidate).map(([line, other]) => line || other);
+        return new Candidate(lines);
     }
     getChunks(code) {
         return code
@@ -35,20 +47,14 @@ export class Candidate {
             '[A-Z]+', '_',
         ];
         const regex = '^' + keywords.join('|') + '$';
-        return chunks.filter(chunk => !chunk.match(regex));
-    }
-    getPreferenceEarlyReturns(lines) {
-        return lines.reduce((subtotal, line, index) => subtotal + (line ? index : 0), 0);
-    }
-    computeComplexity() {
-        const code = this.lines.join('\n');
-        const chunks = this.getChunks(code);
-        const variables = this.getVariables(chunks);
-        const notYetSeen = variables.filter(variable => !variable.match(/^([a-z]+([A-Z][a-z]+)+|a|age|b|c|display|divide|num|password|regex|speed|text|year)$/));
+        const variables = chunks.filter(chunk => !chunk.match(regex));
+        const notYetSeen = variables.filter(variable => !variable.match(/^([a-z]+([A-Z][a-z]+)+|a|age|b|c|display|num|password|regex|speed|text|year)$/));
         if (notYetSeen.length > 0)
             throw new Error(`Unknown tokens: ${notYetSeen.join(', ')}`);
-        const preference = this.getPreferenceEarlyReturns(this.lines);
-        return chunks.length + variables.length + preference;
+        return variables;
+    }
+    getPreferenceEarlyReturns(lines) {
+        return lines.reduce((subtotal, line, index) => subtotal + (line && line.trim() !== 'return undefined' ? Math.pow(2, index) : 0), 0);
     }
     execute(argumentsList) {
         try {
@@ -65,10 +71,13 @@ export class Candidate {
         return this.failingTestResults(unitTests).length;
     }
     isAmputeeOf(candidate) {
-        return this.lines.every((line, pos) => line === candidate.lines[pos] || line === '' || line.trim() === 'return undefined');
+        return this.zip(candidate).every(([line, other]) => line === other || line === '' || line.trim() === 'return undefined');
     }
-    compareComplexity(candidate) {
-        return Math.sign(this.complexity - candidate.complexity);
+    compareComplexityTestDrivenDevelopment(candidate) {
+        return Math.sign(this.complexityTestDrivenDevelopment - candidate.complexityTestDrivenDevelopment);
+    }
+    compareComplexityMutationTesting(candidate) {
+        return Math.sign(this.complexityMutationTesting - candidate.complexityMutationTesting);
     }
     toString() {
         return this.lines.join('\n');
@@ -76,32 +85,26 @@ export class Candidate {
     toHtml() {
         return new Code().appendChildren(this.lines.map(line => new Div().appendText(line)));
     }
-    toHtmlWithPrevious(previousCandidates) {
-        if (previousCandidates.length === 0)
-            return this.toHtml();
-        const previousCandidate = previousCandidates[previousCandidates.length - 1];
-        const lines = this.lines.reduce((lines, currentLine, pos) => {
-            const previousLine = previousCandidate.lines[pos];
-            const comment = currentLine === '' && previousLine === '' ? ''
-                : currentLine === previousLine ? ''
-                    : currentLine === '' ? `  // was: ${previousLine.trim()}`
-                        : previousLine === '' ? ' // new'
-                            : ` // was: ${previousLine.trim()}`;
+    toHtmlWithPrevious(previousCandidate) {
+        const lines = this.zip(previousCandidate).reduce((divs, [line, other]) => {
+            const comment = line === '' && other === '' ? ''
+                : line === other ? ''
+                    : line === '' ? `  // was: ${other.trim()}`
+                        : other === '' ? ' // new'
+                            : ` // was: ${other.trim()}`;
             const div = new Div();
-            if (currentLine !== '')
-                div.appendText(currentLine);
+            if (line !== '')
+                div.appendText(line);
             if (comment !== '')
                 div.appendChild(new Span().appendText(comment).addClass('comment'));
-            return [...lines, div];
+            return [...divs, div];
         }, []);
         return new Code().appendChildren(lines);
     }
-    toHtmlWithCoverage(coveredCandidates) {
-        if (coveredCandidates.length === 0)
-            return this.toHtml();
-        const lines = this.lines.map((line, pos) => {
+    toHtmlWithCoverage(coveredCandidate) {
+        const lines = this.zip(coveredCandidate).map(([line, other]) => {
             const isNotIndented = !line.startsWith('  ');
-            const isUsed = coveredCandidates.some(candidate => candidate.lines[pos] === line);
+            const isUsed = line === other;
             return new Div().appendText(line).addClass(isNotIndented || isUsed ? 'covered' : '');
         });
         return new Code().appendChildren(lines);

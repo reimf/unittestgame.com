@@ -16,23 +16,29 @@ export class TestDrivenDevelopment extends Methodology {
         ]).show()
     }
 
+    public compareComplexity(candidate: Candidate, otherCandidate: Candidate): number {
+        return candidate.compareComplexityTestDrivenDevelopment(otherCandidate)
+    }
+
     public showWelcomeMessage(): void {
         new ComputerMessage(['You read the *Specification* and write *Unit Tests* that fail the *Current Function*.']).add()
         new ComputerMessage(['After adding a unit test I (the AI bot) rewrite the *Current Function* such that it passes the *Unit Tests*.']).add()
         new ComputerMessage(['When you think the *Current Function* is according to the *Specification*, you submit the *Unit Tests*.']).add()
     }
 
-    public showPanelsOnMenu(specification: string, currentCandidate: Candidate, previousCandidates: Candidate[], _perfectCandidate: Candidate, _coveredCandidates: Candidate[]): void {
+    public showPanelsOnMenu(specification: string, currentCandidate: Candidate, previousCandidate: Candidate|undefined, _perfectCandidate: Candidate, _coveredCandidate: Candidate|undefined): void {
         this.showSpecificationPanel(specification)
-        this.showCurrentFunctionPanel(currentCandidate, previousCandidates)
+        this.showCurrentFunctionPanel(currentCandidate, previousCandidate)
     }
 
     private showSpecificationPanel(specification: string): void {
         new Panel('Specification', [specification]).show()
     }
 
-    public showCurrentFunctionPanel(currentCandidate: Candidate, previousCandidates: Candidate[]): void {
-        new Panel('Current Function', [currentCandidate.toHtmlWithPrevious(previousCandidates)]).show()
+    public showCurrentFunctionPanel(currentCandidate: Candidate, previousCandidate: Candidate|undefined): void {
+        new Panel('Current Function', [
+            previousCandidate ? currentCandidate.toHtmlWithPrevious(previousCandidate) : currentCandidate.toHtml()
+        ]).show()
     }
 
     public showIncorrectUnitTestMessage(): void {

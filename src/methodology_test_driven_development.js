@@ -10,20 +10,25 @@ export class TestDrivenDevelopment extends Methodology {
                 '[Read more](https://en.wikipedia.org/wiki/Test-driven_development)',
         ]).show();
     }
+    compareComplexity(candidate, otherCandidate) {
+        return candidate.compareComplexityTestDrivenDevelopment(otherCandidate);
+    }
     showWelcomeMessage() {
         new ComputerMessage(['You read the *Specification* and write *Unit Tests* that fail the *Current Function*.']).add();
         new ComputerMessage(['After adding a unit test I (the AI bot) rewrite the *Current Function* such that it passes the *Unit Tests*.']).add();
         new ComputerMessage(['When you think the *Current Function* is according to the *Specification*, you submit the *Unit Tests*.']).add();
     }
-    showPanelsOnMenu(specification, currentCandidate, previousCandidates, _perfectCandidate, _coveredCandidates) {
+    showPanelsOnMenu(specification, currentCandidate, previousCandidate, _perfectCandidate, _coveredCandidate) {
         this.showSpecificationPanel(specification);
-        this.showCurrentFunctionPanel(currentCandidate, previousCandidates);
+        this.showCurrentFunctionPanel(currentCandidate, previousCandidate);
     }
     showSpecificationPanel(specification) {
         new Panel('Specification', [specification]).show();
     }
-    showCurrentFunctionPanel(currentCandidate, previousCandidates) {
-        new Panel('Current Function', [currentCandidate.toHtmlWithPrevious(previousCandidates)]).show();
+    showCurrentFunctionPanel(currentCandidate, previousCandidate) {
+        new Panel('Current Function', [
+            previousCandidate ? currentCandidate.toHtmlWithPrevious(previousCandidate) : currentCandidate.toHtml()
+        ]).show();
     }
     showIncorrectUnitTestMessage() {
         new ComputerMessage(['I did NOT add the unit test, because it is NOT correct.']).add();
