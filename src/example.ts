@@ -19,7 +19,7 @@ export class Example extends Level {
 
     public play(callback: () => void): void {
         new ComputerMessage(['In this example you only have to click the green button.']).add()
-        new ComputerMessage(['Meanwhile, keep an eye on the changes in the sidebar marked in yellow.']).add()
+        new ComputerMessage(['Meanwhile, keep an eye on the yellow marked changes in the sidebar.']).add()
         super.play(callback)
     }
 
@@ -27,7 +27,7 @@ export class Example extends Level {
         const message = this.nextGuidance()
         new ComputerMessage([message]).add()
         const buttonToClick = this.nextGuidance()
-        const fields = [...this.useCase.parameters, this.useCase.unit].map(variable => variable.setValue(buttonToClick === 'I want to add this unit test' ? this.nextGuidance() : '').setDisabled().toHtml())
+        const fields = [...this.useCase.parameters, this.useCase.unit].map(variable => variable.setValue(buttonToClick === 'I want to add this unit test' ? this.nextGuidance() : '').setDisabled(true).toHtml())
         const submitButton = new Input().setType('submit').setValue('I want to add this unit test').setDisabled(buttonToClick !== 'I want to add this unit test')
         new HumanMessage([
             new Form()

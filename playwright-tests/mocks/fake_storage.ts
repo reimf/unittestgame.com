@@ -5,7 +5,7 @@ export class FakeStorage {
         return this.storage.size
     }
 
-    getItem(key: string): string | null {
+    getItem(key: string): string|null {
         return this.storage.get(key) ?? null
     }
 
@@ -19,7 +19,7 @@ export class FakeStorage {
         return this
     }
 
-    key(index: number): string | null {
+    key(index: number): string|null {
         return Array.from(this.storage.keys())[index] ?? null
     }
 

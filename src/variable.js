@@ -10,7 +10,7 @@ export class Variable {
         this.value = value;
         return this;
     }
-    setDisabled(disabled = true) {
+    setDisabled(disabled) {
         this.disabled = disabled;
         return this;
     }
@@ -26,8 +26,7 @@ export class RadioVariable extends Variable {
     toHtml() {
         const radioButtons = this.texts.map(text => {
             const input = new Input().setType('radio').setName(this.name).setValue(text).setChecked(text === this.value).setDisabled(this.disabled).setRequired();
-            const label = new Label().appendChild(input).appendText(text);
-            return label;
+            return new Label().appendChild(input).appendText(text);
         });
         const paragraph = new Paragraph().appendChild(new Span().appendText(this.label)).appendChildren(radioButtons);
         return paragraph;
@@ -46,8 +45,7 @@ export class BooleanVariable extends Variable {
     toHtml() {
         const radioButtons = ['true', 'false'].map(text => {
             const input = new Input().setType('radio').setName(this.name).setValue(text).setChecked(text === this.value).setDisabled(this.disabled).setRequired();
-            const label = new Label().appendChild(input).appendText(text);
-            return label;
+            return new Label().appendChild(input).appendText(text);
         });
         const paragraph = new Paragraph().appendChild(new Span().appendText(this.label)).appendChildren(radioButtons);
         return paragraph;
@@ -66,8 +64,7 @@ export class TextVariable extends Variable {
     toHtml() {
         const input = new Input().setType('text').setName(this.name).setAutocomplete(false).setValue(this.value).addClass(this.value === '' ? 'empty' : 'preset').setDisabled(this.disabled).setRequired();
         const label = new Label().appendChild(new Span().appendText(this.label)).appendChild(input);
-        const paragraph = new Paragraph().appendChild(label);
-        return paragraph;
+        return new Paragraph().appendChild(label);
     }
     format(value) {
         return value === undefined ? 'undefined' : `"${value}"`;
@@ -84,11 +81,10 @@ export class IntegerVariable extends Variable {
         const displayValue = this.value === '' ? '' : Number(this.value).toFixed();
         const input = new Input().setType('text').setName(this.name).setAutocomplete(false).setValue(displayValue).addClass(displayValue === '' ? 'empty' : 'preset').setDisabled(this.disabled).setRequired().setPattern('[0-9]+');
         const label = new Label().appendChild(new Span().appendText(this.label)).appendChild(input);
-        const paragraph = new Paragraph().appendChild(label);
-        return paragraph;
+        return new Paragraph().appendChild(label);
     }
     format(value) {
-        return value === undefined ? 'undefined' : `${value}`;
+        return value === undefined ? 'undefined' : value;
     }
 }
 export class FloatVariable extends Variable {
@@ -102,10 +98,9 @@ export class FloatVariable extends Variable {
         const displayValue = this.value === '' ? '' : Number(this.value).toFixed(1);
         const input = new Input().setType('text').setName(this.name).setAutocomplete(false).setValue(displayValue).addClass(displayValue === '' ? 'empty' : 'preset').setDisabled(this.disabled).setRequired().setPattern('[0-9]+(\.[0-9])?');
         const label = new Label().appendChild(new Span().appendText(this.label)).appendChild(input);
-        const paragraph = new Paragraph().appendChild(label);
-        return paragraph;
+        return new Paragraph().appendChild(label);
     }
     format(value) {
-        return value === undefined ? 'undefined' : `${value}`;
+        return value === undefined ? 'undefined' : value;
     }
 }

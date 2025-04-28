@@ -1,19 +1,19 @@
-export class Html {
-    constructor() {
-        this.tagName = '';
-        this.id = '';
-        this.classList = [];
-        this.children = [];
-    }
+class Content {
     callDelayed(callback) {
         const now = Date.now();
         const delay = Math.max(0, 500 + Html.timeOfLastDelayedCall - now);
         Html.timeOfLastDelayedCall = now + delay;
         window.setTimeout(() => callback(), delay);
     }
-    setTagName(tagName) {
+}
+Content.timeOfLastDelayedCall = 0;
+export class Html extends Content {
+    constructor(tagName) {
+        super();
+        this.id = '';
+        this.classList = [];
+        this.children = [];
         this.tagName = tagName;
-        return this;
     }
     setId(id) {
         this.id = id;
@@ -131,8 +131,7 @@ export class Html {
         this.callDelayed(() => section.classList.add('reveal'));
     }
 }
-Html.timeOfLastDelayedCall = 0;
-export class Text extends Html {
+class Text extends Content {
     constructor(text) {
         super();
         this.text = text;
@@ -149,7 +148,7 @@ class FormControl extends Html {
         super(...arguments);
         this.disabled = false;
     }
-    setDisabled(disabled = true) {
+    setDisabled(disabled) {
         this.disabled = disabled;
         return this;
     }
@@ -168,7 +167,7 @@ class FormControl extends Html {
 }
 export class Input extends FormControl {
     constructor() {
-        super();
+        super('input');
         this.type = '';
         this.name = '';
         this.value = '';
@@ -176,7 +175,6 @@ export class Input extends FormControl {
         this.checked = '';
         this.required = '';
         this.pattern = '';
-        this.setTagName('input');
     }
     setType(type) {
         this.type = type;
@@ -246,9 +244,8 @@ export class Input extends FormControl {
 }
 export class Form extends Html {
     constructor() {
-        super();
+        super('form');
         this.onSubmitCallback = undefined;
-        this.setTagName('form');
     }
     onSubmit(callback) {
         this.onSubmitCallback = callback;
@@ -270,21 +267,18 @@ export class Form extends Html {
 }
 export class Header extends Html {
     constructor() {
-        super();
-        this.setTagName('header');
+        super('header');
     }
 }
 export class Paragraph extends Html {
     constructor() {
-        super();
-        this.setTagName('p');
+        super('p');
     }
 }
 export class Button extends FormControl {
     constructor() {
-        super();
+        super('button');
         this.onClickCallback = undefined;
-        this.setTagName('button');
     }
     onClick(callback) {
         this.onClickCallback = callback;
@@ -303,51 +297,43 @@ export class Button extends FormControl {
 }
 export class Label extends Html {
     constructor() {
-        super();
-        this.setTagName('label');
+        super('label');
     }
 }
 export class Code extends Html {
     constructor() {
-        super();
-        this.setTagName('code');
+        super('code');
     }
 }
 export class Section extends Html {
     constructor() {
-        super();
-        this.setTagName('section');
+        super('section');
     }
 }
 export class Div extends Html {
     constructor() {
-        super();
-        this.setTagName('div');
+        super('div');
     }
 }
 export class Span extends Html {
     constructor() {
-        super();
-        this.setTagName('span');
+        super('span');
     }
 }
 export class Italic extends Html {
     constructor() {
-        super();
-        this.setTagName('i');
+        super('i');
     }
 }
 export class Bold extends Html {
     constructor() {
-        super();
-        this.setTagName('b');
+        super('b');
     }
 }
 export class Anchor extends Html {
     constructor() {
-        super();
+        super('a');
         this.href = '';
-        this.setTagName('a');
     }
     setHref(href) {
         this.href = href;

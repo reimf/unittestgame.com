@@ -81,7 +81,7 @@ export class Level {
         return Random.elementFrom(simplestPassingCandidates)
     }
 
-    private findFailingTestResult(): TestResult | undefined {
+    private findFailingTestResult(): TestResult|undefined {
         const failingHints = this.currentCandidate.failingTestResults(this.useCase.hints)
         if (failingHints.length > 0)
             return Random.elementFrom(failingHints)

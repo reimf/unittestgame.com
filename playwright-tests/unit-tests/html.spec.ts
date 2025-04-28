@@ -1,69 +1,47 @@
 import { test, expect } from '@playwright/test'
-import { Span, Div, Section, Code, Label, Paragraph, Form, Header, Input, Bold, Italic, Anchor, Text } from '../../src/html.js'
+import { Span, Div, Section, Code, Label, Paragraph, Form, Header, Input, Bold, Italic, Anchor } from '../../src/html.js'
 
 
 test.describe('class Html', () => {
     test('appends text', () => {
         const header = new Header().appendText('abc')
-        const child = header.children[0] as Text
-        expect(child.toString()).toBe('abc')
+        expect(header.toString()).toBe('<header>abc</header>')
     })
 
     test('appends child', () => {
-        const header = new Header().appendChild(new Text('abc'))
-        const child = header.children[0] as Text
-        expect(child.toString()).toBe('abc')
+        const span = new Span().appendMarkdown('abc')
+        const header = new Header().appendChild(span)
+        expect(header.toString()).toBe('<header><span>abc</span></header>')
     })
 
     test('appends children', () => {
-        const header = new Header().appendChildren([new Text('abc'), new Text('def')])
-        const child1 = header.children[0] as Text
-        expect(child1.toString()).toBe('abc')
-        const child2 = header.children[1] as Text
-        expect(child2.toString()).toBe('def')
+        const span1 = new Span().appendMarkdown('abc')
+        const span2 = new Span().appendMarkdown('def')
+        const header = new Header().appendChildren([span1, span2])
+        expect(header.toString()).toBe('<header><span>abc</span><span>def</span></header>')
     })
 
     test('prepends child', () => {
-        const header = new Header().appendChild(new Text('def'))
-        header.prependChild(new Text('abc'))
-        const child1 = header.children[0] as Text
-        expect(child1.toString()).toBe('abc')
-        const child2 = header.children[1] as Text
-        expect(child2.toString()).toBe('def')
+        const span1 = new Span().appendMarkdown('abc')
+        const span2 = new Span().appendMarkdown('def')
+        const header = new Header().appendChild(span2)
+        header.prependChild(span1)
+        expect(header.toString()).toBe('<header><span>abc</span><span>def</span></header>')
     })
 
     test('appends bold in markdown', () => {
         const header = new Header().appendMarkdown('this is **bold**')
-        const child1 = header.children[0] as Text
-        const child2 = header.children[1]
-        expect(child1.toString()).toBe('this is ')
-        expect(child2).toBeInstanceOf(Bold)
-        const bold = child2 as Bold
-        const boldText = bold.children[0] as Text
-        expect(boldText.toString()).toBe('bold')
+        expect(header.toString()).toBe('<header>this is <b>bold</b></header>')
     })
 
     test('appends italic in markdown', () => {
         const header = new Header().appendMarkdown('this is *italic*')
-        const child1 = header.children[0] as Text
-        const child2 = header.children[1]
-        expect(child1.toString()).toBe('this is ')
-        expect(child2).toBeInstanceOf(Italic)
-        const italic = child2 as Italic
-        const italicText = italic.children[0] as Text
-        expect(italicText.toString()).toBe('italic')
+        expect(header.toString()).toBe('<header>this is <i>italic</i></header>')
     })
 
     test('appends anchor in markdown', () => {
         const header = new Header().appendMarkdown('this is a [website](https://example.com)')
-        const child1 = header.children[0] as Text
-        expect(child1.toString()).toBe('this is a ')
-        const child2 = header.children[1]
-        expect(child2).toBeInstanceOf(Anchor)
-        const anchor = child2 as Anchor
-        expect(anchor.href).toBe('https://example.com')
-        const anchorText = anchor.children[0] as Text
-        expect(anchorText.toString()).toBe('website')
+        expect(header.toString()).toBe('<header>this is a <a href="https://example.com">website</a></header>')
     })
 
     test('has input', () => {

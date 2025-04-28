@@ -1,8 +1,4 @@
-export class Html {
-    private tagName: string = ''
-    private id: string = ''
-    private readonly classList: string[] = []
-    public readonly children: Html[] = []
+abstract class Content {
     private static timeOfLastDelayedCall: number = 0
 
     protected callDelayed(callback: () => void): void {
@@ -12,9 +8,19 @@ export class Html {
         window.setTimeout(() => callback(), delay)
     }
 
-    protected setTagName(tagName: string): this {
+    public abstract toString(): string
+    public abstract toNode(): Node
+}
+
+export class Html extends Content {
+    private tagName: string
+    private id: string = ''
+    private readonly classList: string[] = []
+    private readonly children: Content[] = []
+
+    protected constructor(tagName: string) {
+        super()
         this.tagName = tagName
-        return this
     }
 
     public setId(id: string): this {
@@ -95,22 +101,22 @@ export class Html {
         return this
     }
 
-    public prependChild(child: Html): this {
+    public prependChild(child: Content): this {
         this.children.unshift(child)
         return this
     }
 
-    public appendChild(child: Html): this {
+    public appendChild(child: Content): this {
         this.children.push(child)
         return this
     }
 
-    public appendChildren(children: Html[]): this {
+    public appendChildren(children: Content[]): this {
         this.children.push(...children)
         return this
     }
 
-    public toAttributes(): string[] {
+    protected toAttributes(): string[] {
         const attributes: string[] = []
         if (this.classList.length > 0)
             attributes.push(`class="${this.classList.join(' ')}"`)
@@ -147,7 +153,7 @@ export class Html {
     }
 }
 
-export class Text extends Html {
+class Text extends Content {
     public readonly text: string
 
     public constructor(text: string) {
@@ -167,12 +173,12 @@ export class Text extends Html {
 class FormControl extends Html {
     private disabled: boolean = false
 
-    public setDisabled(disabled: boolean = true): this {
+    public setDisabled(disabled: boolean): this {
         this.disabled = disabled
         return this
     }
 
-    public toAttributes(): string[] {
+    protected toAttributes(): string[] {
         const attributes = super.toAttributes()
         if (this.disabled)
             attributes.push('disabled="disabled"')
@@ -191,14 +197,13 @@ export class Input extends FormControl {
     private type: string = ''
     private name: string = ''
     private value: string = ''
-    private autocomplete: string = ''
+    private autocomplete: AutoFillBase = ''
     private checked: string = ''
     private required: string = ''
     private pattern: string = ''
 
     public constructor() {
-        super()
-        this.setTagName('input')
+        super('input')
     }
 
     public setType(type: string): this {
@@ -236,7 +241,7 @@ export class Input extends FormControl {
         return this
     }
 
-    public toAttributes(): string[] {
+    protected toAttributes(): string[] {
         const attributes = super.toAttributes()
         if (this.type)
             attributes.push(`type="${this.type}"`)
@@ -264,7 +269,7 @@ export class Input extends FormControl {
         if (this.value)
             node.value = this.value
         if (this.autocomplete)
-            node.autocomplete = this.autocomplete as AutoFill
+            node.autocomplete = this.autocomplete
         if (this.checked)
             node.checked = true
         if (this.required)
@@ -282,8 +287,7 @@ export class Form extends Html {
     private onSubmitCallback?: (formData: StringMap) => void = undefined
 
     public constructor() {
-        super()
-        this.setTagName('form')
+        super('form')
     }
 
     public onSubmit(callback: (formData: StringMap) => void): this {
@@ -308,15 +312,13 @@ export class Form extends Html {
 
 export class Header extends Html {
     public constructor() {
-        super()
-        this.setTagName('header')
+        super('header')
     }
 }
 
 export class Paragraph extends Html {
     public constructor() {
-        super()
-        this.setTagName('p')
+        super('p')
     }
 }
 
@@ -324,8 +326,7 @@ export class Button extends FormControl {
     private onClickCallback?: (event: Event) => void = undefined
 
     public constructor() {
-        super()
-        this.setTagName('button')
+        super('button')
     }
 
     public onClick(callback: (event: Event) => void): this {
@@ -347,50 +348,43 @@ export class Button extends FormControl {
 
 export class Label extends Html {
     public constructor() {
-        super()
-        this.setTagName('label')
+        super('label')
     }
 }
 
 export class Code extends Html {
     public constructor() {
-        super()
-        this.setTagName('code')
+        super('code')
     }
 }
 
 export class Section extends Html {
     public constructor() {
-        super()
-        this.setTagName('section')
+        super('section')
     }
 }
 
 export class Div extends Html {
     public constructor() {
-        super()
-        this.setTagName('div')
+        super('div')
     }
 }
 
 export class Span extends Html {
     public constructor() {
-        super()
-        this.setTagName('span')
+        super('span')
     }
 }
 
 export class Italic extends Html {
     public constructor() {
-        super()
-        this.setTagName('i')
+        super('i')
     }
 }
 
 export class Bold extends Html {
     public constructor() {
-        super()
-        this.setTagName('b')
+        super('b')
     }
 }
 
@@ -398,8 +392,7 @@ export class Anchor extends Html {
     public href: string = ''
 
     public constructor() {
-        super()
-        this.setTagName('a')
+        super('a')
     }
 
     public setHref(href: string): this {
@@ -407,7 +400,7 @@ export class Anchor extends Html {
         return this
     }
 
-    public toAttributes(): string[] {
+    protected toAttributes(): string[] {
         const attributes = super.toAttributes()
         if (this.href)
             attributes.push(`href="${this.href}"`)

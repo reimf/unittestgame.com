@@ -7,7 +7,7 @@ abstract class Frame extends Section {
         this.appendChild(new Div().appendChildren(children))
     }
 
-    protected existingElement(): HTMLElement | null {
+    protected existingElement(): HTMLElement|null {
         return document.querySelector('#' + this.getId())
     }
 

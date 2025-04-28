@@ -16,14 +16,14 @@ export abstract class Variable {
         return this
     }
 
-    public setDisabled(disabled: boolean = true): this {
+    public setDisabled(disabled: boolean): this {
         this.disabled = disabled
         return this
     }
 
-    public abstract getInput(value: string): boolean | number | string
+    public abstract getInput(value: string): boolean|number|string
     public abstract toHtml(): Html
-    public abstract format(value: boolean | number | string | undefined): string
+    public abstract format(value: boolean|number|string|undefined): string
 }
 
 export class RadioVariable extends Variable {
@@ -41,8 +41,7 @@ export class RadioVariable extends Variable {
     public toHtml(): Html {
         const radioButtons = this.texts.map(text => {
             const input = new Input().setType('radio').setName(this.name).setValue(text).setChecked(text === this.value).setDisabled(this.disabled).setRequired()
-            const label = new Label().appendChild(input).appendText(text)
-            return label
+            return new Label().appendChild(input).appendText(text)
         })
         const paragraph = new Paragraph().appendChild(new Span().appendText(this.label)).appendChildren(radioButtons)
         return paragraph
@@ -65,8 +64,7 @@ export class BooleanVariable extends Variable {
     public toHtml(): Html {
         const radioButtons = ['true', 'false'].map(text => {
             const input = new Input().setType('radio').setName(this.name).setValue(text).setChecked(text === this.value).setDisabled(this.disabled).setRequired()
-            const label = new Label().appendChild(input).appendText(text)
-            return label
+            return new Label().appendChild(input).appendText(text)
         })
         const paragraph = new Paragraph().appendChild(new Span().appendText(this.label)).appendChildren(radioButtons)
         return paragraph
@@ -89,8 +87,7 @@ export class TextVariable extends Variable {
     public toHtml(): Html {
         const input = new Input().setType('text').setName(this.name).setAutocomplete(false).setValue(this.value).addClass(this.value === '' ? 'empty' : 'preset').setDisabled(this.disabled).setRequired()
         const label = new Label().appendChild(new Span().appendText(this.label)).appendChild(input)
-        const paragraph = new Paragraph().appendChild(label)
-        return paragraph
+        return new Paragraph().appendChild(label)
     }
 
     public format(value: string): string {
@@ -111,12 +108,11 @@ export class IntegerVariable extends Variable {
         const displayValue = this.value === '' ? '' : Number(this.value).toFixed()
         const input = new Input().setType('text').setName(this.name).setAutocomplete(false).setValue(displayValue).addClass(displayValue === '' ? 'empty' : 'preset').setDisabled(this.disabled).setRequired().setPattern('[0-9]+')
         const label = new Label().appendChild(new Span().appendText(this.label)).appendChild(input)
-        const paragraph = new Paragraph().appendChild(label)
-        return paragraph
+        return new Paragraph().appendChild(label)
     }
 
     public format(value: string): string {
-        return value === undefined ? 'undefined' : `${value}`
+        return value === undefined ? 'undefined' : value
     }
 }
 
@@ -133,11 +129,10 @@ export class FloatVariable extends Variable {
         const displayValue = this.value === '' ? '' : Number(this.value).toFixed(1)
         const input = new Input().setType('text').setName(this.name).setAutocomplete(false).setValue(displayValue).addClass(displayValue === '' ? 'empty' : 'preset').setDisabled(this.disabled).setRequired().setPattern('[0-9]+(\.[0-9])?')
         const label = new Label().appendChild(new Span().appendText(this.label)).appendChild(input)
-        const paragraph = new Paragraph().appendChild(label)
-        return paragraph
+        return new Paragraph().appendChild(label)
     }
 
     public format(value: string): string {
-        return value === undefined ? 'undefined' : `${value}`
+        return value === undefined ? 'undefined' : value
     }
 }
