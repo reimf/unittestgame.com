@@ -2,16 +2,6 @@ import { Code, Div, Span } from './html.js';
 import { TestResult } from './test_result.js';
 export class Candidate {
     constructor(lines) {
-        this.keywords = [
-            'function', 'return', '{', '}',
-            'if', '&&', '||', '!',
-            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-            '+', '*', '/', '%', '===', '!==', '+=', '=',
-            '>', '>=', '<', '<=',
-            'true', 'false',
-            'let', 'new',
-            '_',
-        ];
         this.lines = lines.map(line => line.replace(/\\\\/g, '\\'));
         const code = lines.join('\n');
         this.function = new Function('return ' + code)();

@@ -7,16 +7,6 @@ export class Candidate {
     private readonly function: Function
     private readonly complexityTestDrivenDevelopment: number
     private readonly complexityMutationTesting: number
-    private readonly keywords = [
-        'function', 'return', '{', '}',
-        'if', '&&', '||', '!',
-        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-        '+', '*', '/', '%', '===', '!==', '+=', '=',
-        '>', '>=', '<', '<=',
-        'true', 'false',
-        'let', 'new',
-        '_',
-    ]
 
     public constructor(lines: string[]) {
         this.lines = lines.map(line => line.replace(/\\\\/g, '\\'))
