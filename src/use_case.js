@@ -48,22 +48,22 @@ export class UseCase {
             yield new UnitTest(this.parameters, argumentList, this.unit, this.perfectCandidate.execute(argumentList));
     }
     findPerfectCandidates() {
-        const perfectCandidates = this.candidates.filter(candidate => candidate.failCount(this.minimalUnitTests) === 0);
+        const perfectCandidates = this.candidates.filter(candidate => candidate.passes(this.minimalUnitTests));
         if (perfectCandidates.length === 0)
             throw new Error(`There is no perfect function for use case ${this.name()}.`);
         return perfectCandidates;
     }
     checkPerfectCandidates() {
-        const hintResults = this.perfectCandidates.map(candidate => candidate.failCount(this.hints));
-        if (hintResults.some(result => result > 0)) {
+        const failingCandidates = this.perfectCandidates.filter(candidate => !candidate.passes(this.hints));
+        if (failingCandidates.length > 0) {
             throw new Error(`Not all perfect functions for use case ${this.name()} pass all hints.\n\n` +
-                `${this.perfectCandidates.join('\n\n')}`);
+                `${failingCandidates.join('\n\n')}`);
         }
     }
     checkAllMinimalUnitTestsAreNeeded() {
         for (const unitTest of this.minimalUnitTests) {
             const allMinusOneUnitTests = this.minimalUnitTests.filter(otherUnitTest => otherUnitTest !== unitTest);
-            const almostPerfectCandidates = this.candidates.filter(candidate => candidate.failCount(allMinusOneUnitTests) === 0);
+            const almostPerfectCandidates = this.candidates.filter(candidate => candidate.passes(allMinusOneUnitTests));
             if (almostPerfectCandidates.length === this.perfectCandidates.length)
                 throw new Error(`Unit test ${unitTest} is not needed.\n${almostPerfectCandidates[0]}`);
         }

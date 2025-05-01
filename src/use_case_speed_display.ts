@@ -40,7 +40,7 @@ export class SpeedDisplay extends UseCase {
     public getCandidateElements(): string[][] {
         return [
             [
-                'if (speed == 0.0) return "START"',
+                'if (speed === 0.0) return "START"',
                 'if (speed < 0.5) return "START"',
                 'if (speed < 0.1) return "START"',
                 'if (speed < 1.0) return "START"',

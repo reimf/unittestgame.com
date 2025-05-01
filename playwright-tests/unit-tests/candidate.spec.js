@@ -8,8 +8,8 @@ test.describe('class Candidate', () => {
         expect(complexCandidate.compareComplexityTestDrivenDevelopment(simpleCandidate)).toBe(+1);
     });
     test('compares test-driven development complexity of function call', () => {
-        const withoutFunctionCallCandidate = new Candidate(['function nextYear(year) {', '  return round', '}']);
-        const withFunctionCallCandidate = new Candidate(['function nextYear(year) {', '  return round()', '}']);
+        const withoutFunctionCallCandidate = new Candidate(['function nextYear(year) {', '  return nextYear', '}']);
+        const withFunctionCallCandidate = new Candidate(['function nextYear(year) {', '  return nextYear()', '}']);
         expect(withoutFunctionCallCandidate.compareComplexityTestDrivenDevelopment(withFunctionCallCandidate)).toBe(-1);
         expect(withFunctionCallCandidate.compareComplexityTestDrivenDevelopment(withoutFunctionCallCandidate)).toBe(+1);
     });
@@ -20,7 +20,7 @@ test.describe('class Candidate', () => {
         expect(withStringCandidate.compareComplexityTestDrivenDevelopment(withoutStringCandidate)).toBe(+1);
     });
     test('compares test-driven development complexity of class mention', () => {
-        const withoutClassCandidate = new Candidate(['function nextYear(year) {', '  return round(year)', '}']);
+        const withoutClassCandidate = new Candidate(['function nextYear(year) {', '  return nextYear(year)', '}']);
         const withClassCandidate = new Candidate(['function nextYear(year) {', '  return Math.round(year)', '}']);
         expect(withoutClassCandidate.compareComplexityTestDrivenDevelopment(withClassCandidate)).toBe(-1);
         expect(withClassCandidate.compareComplexityTestDrivenDevelopment(withoutClassCandidate)).toBe(+1);
@@ -79,8 +79,8 @@ test.describe('class Candidate', () => {
         const candidate = new Candidate(['function nextYear(year) {', '  return year + 1', '}']);
         expect(candidate.execute([2024])).toBe(2025);
     });
-    test('executes function with syntax error', () => {
-        const candidate = new Candidate(['function nextYear(year) {', '  return c', '}']);
+    test('executes function with error', () => {
+        const candidate = new Candidate(['function nextYear(year) {', '  return year.round(1)', '}']);
         expect(candidate.execute([2024])).toBe(undefined);
     });
     test('converts to a string', () => {

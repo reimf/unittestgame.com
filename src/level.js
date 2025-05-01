@@ -51,7 +51,7 @@ export class Level {
     }
     findSimplestPassingCandidate() {
         const passingCandidates = this.useCase.candidates
-            .filter(candidate => candidate.failCount(this.humanUnitTests) === 0);
+            .filter(candidate => candidate.passes(this.humanUnitTests));
         const passingImperfectCandidates = passingCandidates
             .filter(candidate => !this.useCase.perfectCandidates.includes(candidate));
         if (passingImperfectCandidates.length === 0)
@@ -59,10 +59,9 @@ export class Level {
         const simplestPassingCandidates = this.findSimplestCandidates(passingImperfectCandidates);
         return Random.elementFrom(simplestPassingCandidates);
     }
-    findCoveredCandidate(unitTest) {
+    findCoveredCandidate(unitTests) {
         const passingCandidates = this.useCase.amputeesOfPerfectCandidate
-            .filter(candidate => candidate.failCount([unitTest]) === 0);
-        console.log(passingCandidates);
+            .filter(candidate => candidate.passes(unitTests));
         const simplestPassingCandidates = this.findSimplestCandidates(passingCandidates);
         return Random.elementFrom(simplestPassingCandidates);
     }
@@ -117,9 +116,7 @@ export class Level {
             this.newUnitTest = unitTest;
             this.humanUnitTests.push(unitTest);
             this.previousCandidate = this.currentCandidate;
-            const coveredCandidate = this.findCoveredCandidate(unitTest);
-            console.log(coveredCandidate);
-            this.coveredCandidate = coveredCandidate.combine(this.coveredCandidate);
+            this.coveredCandidate = this.findCoveredCandidate(this.humanUnitTests).combine(this.coveredCandidate);
             if (new TestResult(this.currentCandidate, unitTest).passes)
                 this.methodology.showUselessUnitTestMessage();
             else {

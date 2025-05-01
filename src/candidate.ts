@@ -7,15 +7,23 @@ export class Candidate {
     private readonly function: Function
     private readonly complexityTestDrivenDevelopment: number
     private readonly complexityMutationTesting: number
+    private readonly keywords = [
+        'function', 'return', '{', '}',
+        'if', '&&', '||', '!',
+        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+        '+', '*', '/', '%', '===', '!==', '+=', '=',
+        '>', '>=', '<', '<=',
+        'true', 'false',
+        'let', 'new',
+        '_',
+    ]
 
     public constructor(lines: string[]) {
         this.lines = lines.map(line => line.replace(/\\\\/g, '\\'))
         const code = lines.join('\n')
         this.function = new Function('return ' + code)()
-        const chunks = this.getChunks(code)
-        const variables = this.getVariables(chunks)
-        this.complexityTestDrivenDevelopment = chunks.length + variables.length
-        this.complexityMutationTesting = this.getPreferenceEarlyReturns(this.lines)
+        this.complexityTestDrivenDevelopment = this.getComplexityTestDrivenDevelopment(code)
+        this.complexityMutationTesting = this.getComplexityMutationTesting(this.lines)
     }
 
     private zip(candidate: Candidate): string[][] {
@@ -25,47 +33,50 @@ export class Candidate {
     public combine(candidate: Candidate|undefined): Candidate {
         if (!candidate)
             return this
-        const lines = this.zip(candidate).map(([line, other]) => line || other)
+        const lines = this.zip(candidate).map(([line, other]) => line && line.trim() !== 'return undefined' ? line : other)
         return new Candidate(lines)
     }
 
-    private getChunks(code: string): string[] {
-        return code
+    private getComplexityTestDrivenDevelopment(code: string): number {
+        const functionMatches = code.matchAll(/\bfunction\s+(\w+)\(([^)]*)\)/g)
+        const functionNames = [...functionMatches].map(match => match[1])
+        const functionRegEx = new RegExp(`\\b${functionNames.join('|')}\\b`, 'g')
+        const parameterMatches = code.matchAll(/\bfunction\s+\w+\(([^)]*)\)/g)
+        const parameterNames = [...parameterMatches].flatMap(match => match[1].split(/,\s*/))
+        const parameterRegEx = new RegExp(`\\b${parameterNames.join('|')}\\b`, 'g')
+        const variableMatches = code.matchAll(/\blet\s+(\w*)\b/g)
+        const variableNames = [...variableMatches].map(match => match[1])
+        const variableRegEx = new RegExp(`\\b${variableNames.join('|')}\\b`, 'g') 
+        const tokens = code
             .replace(/\n/g, ' ') // simplify white space
             .replace(/"[^"]*?"/g, ' _ _ ') // each string is 1 extra point
             .replace(/\(([^(]*?)\)/g, ' _ $1 ') // each function definition/call is 1 extra point
             .replace(/\(([^(]*?)\)/g, ' _ $1 ') // handle nested function calls
             .replace(/,/g, ' ') // each parameter and argument is 1 point
-            .replace(/\.(?=[a-z])/g, ' ') // each class mention is 1 point
+            .replace(/[a-zA-Z]+(?=\.)/g, ' _ ') // each static class mention is 1 point
+            .replace(/\.[a-zA-Z]+/g, ' _ _ ') // each method invocation is 1 point extra
             .replace(/(?<=\d)0+ /g, ' ') // 200 is 1 point
             .replace(/(?<=\d)(?=\d)/g, ' ') // 3199 is 4 points, 3200 only 2
             .replace(/(?<=\d)\.(?=\d)/g, ' _ ') // each float is 1 point extra
+            .replace(/\d/g, ' _ ') // each digit is 1 point
+            .replace(/\/[^/]*\//g, ' _ _ ') // regex is 1 point extra
             .replace(/undefined/g, ' ') // undefined is free
+            .replace(/(\+|\*|\/|%|<|>|!|\&\&|\|\|)/g, ' _ ') // each operator is 1 point
+            .replace(/=+/g, ' _ ') // each comparison operator is 1 point
+            .replace(functionRegEx, ' _ _ ') // each function is 1 point extra
+            .replace(parameterRegEx, ' _ _ ') // each parameter is 1 point extra
+            .replace(variableRegEx, ' _ _ ') // each variable is 1 point extra
+            .replace(/\bnew [A-Z][a-zA-Z]*/g, ' _ _ ') // each created object is 1 point extra
+            .replace(/function|return|\{|\}|if|true|false|let/g, ' _ ') // each keyword is 1 point
             .split(/\s+/) // each token is 1 point
             .filter(token => token !== '')
+        const unknownTokens = tokens.filter(token => token !== '_')
+        if (unknownTokens.length > 0)
+            throw new Error(`Unknown tokens: ${unknownTokens.join(', ')}`)
+        return tokens.length
     }
 
-    private getVariables(chunks: string[]): string[] {
-        const keywords: string[] = [
-            'function', 'return', '\\{', '\\}',
-            'if', '&&', '\\|\\|',
-            '\\d',
-            '\\/', '%', '[=!]==', '\\+=', '=', '\\+', '\\*',
-            '\\>=?', '\\<=?',
-            'true', 'false',
-            'new', 'RegExp', 'Math', 'toString', 'toFixed', 'round', 'test', 'length',
-            'let', 'undefined',
-            '[A-Z]+', '_',
-        ]
-        const regex = '^' + keywords.join('|') + '$'
-        const variables = chunks.filter(chunk => !chunk.match(regex))
-        const notYetSeen = variables.filter(variable => !variable.match(/^([a-z]+([A-Z][a-z]+)+|a|age|b|c|display|num|password|regex|speed|text|year)$/))
-        if (notYetSeen.length > 0)
-            throw new Error(`Unknown tokens: ${notYetSeen.join(', ')}`)
-        return variables
-    }
-
-    private getPreferenceEarlyReturns(lines: string[]): number {
+    private getComplexityMutationTesting(lines: string[]): number {
         return lines.reduce((subtotal, line, index) => subtotal + (line && line.trim() !== 'return undefined' ? Math.pow(2, index) : 0), 0)
     }
 
@@ -82,8 +93,8 @@ export class Candidate {
         return unitTests.map(unitTest => new TestResult(this, unitTest)).filter(testResult => !testResult.passes)
     }
 
-    public failCount(unitTests: UnitTest[]): number {
-        return this.failingTestResults(unitTests).length
+    public passes(unitTests: UnitTest[]): boolean {
+        return this.failingTestResults(unitTests).length === 0
     }
 
     public isAmputeeOf(candidate: Candidate): boolean {
