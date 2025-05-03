@@ -41,7 +41,7 @@ export class Level {
         this.humanUnitTests = []
         this.previousCandidate = undefined
         this.coveredCandidate = undefined
-        this.currentCandidate = this.findSimplestPassingCandidate()
+        this.currentCandidate = this.findSimplestPassingCandidate(this.humanUnitTests)
         this.failingTestResult = this.findFailingTestResult()
         this.newUnitTest = undefined
         this.numberOfSubmissions = 0
@@ -63,9 +63,9 @@ export class Level {
         }, [])
     }
 
-    private findSimplestPassingCandidate(): Candidate {
+    public findSimplestPassingCandidate(unitTests: UnitTest[]): Candidate {
         const passingCandidates = this.useCase.candidates
-            .filter(candidate => candidate.passes(this.humanUnitTests))
+            .filter(candidate => candidate.passes(unitTests))
         const passingImperfectCandidates = passingCandidates
             .filter(candidate => !this.useCase.perfectCandidates.includes(candidate))
         if (passingImperfectCandidates.length === 0)
@@ -74,7 +74,7 @@ export class Level {
         return Random.elementFrom(simplestPassingCandidates)
     }
 
-    private findCoveredCandidate(unitTests: UnitTest[]): Candidate {
+    public findSimplestCoveredCandidate(unitTests: UnitTest[]): Candidate {
         const passingCandidates = this.useCase.amputeesOfPerfectCandidate
             .filter(candidate => candidate.passes(unitTests))
         const simplestPassingCandidates = this.findSimplestCandidates(passingCandidates)
@@ -143,12 +143,12 @@ export class Level {
             this.newUnitTest = unitTest
             this.humanUnitTests.push(unitTest)
             this.previousCandidate = this.currentCandidate
-            this.coveredCandidate = this.findCoveredCandidate(this.humanUnitTests).combine(this.coveredCandidate)
+            this.coveredCandidate = this.findSimplestCoveredCandidate(this.humanUnitTests).combine(this.coveredCandidate)
             if (new TestResult(this.currentCandidate, unitTest).passes)
                 this.methodology.showUselessUnitTestMessage()
             else {
                 this.methodology.showUsefulUnitTestMessage()
-                this.currentCandidate = this.findSimplestPassingCandidate()
+                this.currentCandidate = this.findSimplestPassingCandidate(this.humanUnitTests)
                 this.failingTestResult = this.findFailingTestResult()
             }
         }

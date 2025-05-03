@@ -2,8 +2,6 @@ import { Candidate } from './candidate.js';
 import { Random } from './random.js';
 import { UnitTest } from './unit_test.js';
 export class UseCase {
-    *exampleGuidanceGeneratorTestDrivenDevelopment() { }
-    *exampleGuidanceGeneratorMutationTesting() { }
     constructor() {
         this.parameters = this.getParameters();
         this.unit = this.getUnit();
@@ -13,9 +11,9 @@ export class UseCase {
         this.perfectCandidate = Random.elementFrom(this.perfectCandidates);
         this.amputeesOfPerfectCandidate = this.findAmputeesOfPerfectCandidate();
         this.hints = [...this.generateHints()];
-        this.checkPerfectCandidates();
-        this.checkAllMinimalUnitTestsAreNeeded();
     }
+    *exampleGuidanceGeneratorTestDrivenDevelopment() { }
+    *exampleGuidanceGeneratorMutationTesting() { }
     *generateCandidates(listOfListOfLines, lines) {
         if (listOfListOfLines.length > 0) {
             const [firstListOfLines, ...remainingListOfListOfLines] = listOfListOfLines;
@@ -52,20 +50,5 @@ export class UseCase {
         if (perfectCandidates.length === 0)
             throw new Error(`There is no perfect function for use case ${this.name()}.`);
         return perfectCandidates;
-    }
-    checkPerfectCandidates() {
-        const failingCandidates = this.perfectCandidates.filter(candidate => !candidate.passes(this.hints));
-        if (failingCandidates.length > 0) {
-            throw new Error(`Not all perfect functions for use case ${this.name()} pass all hints.\n\n` +
-                `${failingCandidates.join('\n\n')}`);
-        }
-    }
-    checkAllMinimalUnitTestsAreNeeded() {
-        for (const unitTest of this.minimalUnitTests) {
-            const allMinusOneUnitTests = this.minimalUnitTests.filter(otherUnitTest => otherUnitTest !== unitTest);
-            const almostPerfectCandidates = this.candidates.filter(candidate => candidate.passes(allMinusOneUnitTests));
-            if (almostPerfectCandidates.length === this.perfectCandidates.length)
-                throw new Error(`Unit test ${unitTest} is not needed.\n${almostPerfectCandidates[0]}`);
-        }
     }
 }

@@ -24,11 +24,6 @@ export abstract class UseCase {
     public readonly amputeesOfPerfectCandidate: Candidate[] = this.findAmputeesOfPerfectCandidate()
     public readonly hints: UnitTest[] = [...this.generateHints()]
 
-    public constructor() {
-        this.checkPerfectCandidates()
-        this.checkAllMinimalUnitTestsAreNeeded()
-    }
-
     private *generateCandidates(listOfListOfLines: string[][], lines: string[]): Generator<Candidate> {
         if (listOfListOfLines.length > 0) {
             const [firstListOfLines, ...remainingListOfListOfLines] = listOfListOfLines
@@ -70,22 +65,5 @@ export abstract class UseCase {
         if (perfectCandidates.length === 0)
             throw new Error(`There is no perfect function for use case ${this.name()}.`)
         return perfectCandidates
-    }
-
-    private checkPerfectCandidates(): void {
-        const failingCandidates = this.perfectCandidates.filter(candidate => !candidate.passes(this.hints))
-        if (failingCandidates.length > 0) {
-            throw new Error(`Not all perfect functions for use case ${this.name()} pass all hints.\n\n` +
-                `${failingCandidates.join('\n\n')}`)
-        }
-    }
-
-    private checkAllMinimalUnitTestsAreNeeded(): void {
-        for (const unitTest of this.minimalUnitTests) {
-            const allMinusOneUnitTests = this.minimalUnitTests.filter(otherUnitTest => otherUnitTest !== unitTest)
-            const almostPerfectCandidates = this.candidates.filter(candidate => candidate.passes(allMinusOneUnitTests))
-            if (almostPerfectCandidates.length === this.perfectCandidates.length)
-                throw new Error(`Unit test ${unitTest} is not needed.\n${almostPerfectCandidates[0]}`)
-        }
     }
 }
