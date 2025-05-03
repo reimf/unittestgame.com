@@ -16,13 +16,14 @@ type TestCase = {
 test.describe('class LeapYear', () => {
     test('has perfect candidates', () => {
         const useCase = new LeapYear()
-        expect(useCase.perfectCandidates).not.toBe([])
+        expect(useCase.perfectCandidates).not.toHaveLength(0)
     })
 
     test('perfect candidates pass all hints', () => {
         const useCase = new LeapYear()
         const failingCandidates = useCase.perfectCandidates.filter(candidate => !candidate.passes(useCase.hints))
-        expect(failingCandidates).toStrictEqual([])
+           expect(failingCandidates).toHaveLength(0)
+
     })
 
     test('all minimal unit tests are needed', () => {
@@ -36,13 +37,13 @@ test.describe('class LeapYear', () => {
 
     test.describe('with class TestDrivenDevelopment in class Level', () => {
         [
-            { argumentLists: [], code: 'function isLeapYear(year) {\n\n\n\n  return undefined\n}' },
-            { argumentLists: [[2024]], code: 'function isLeapYear(year) {\n\n\n\n  return true\n}' },
-            { argumentLists: [[2025]], code: 'function isLeapYear(year) {\n\n\n\n  return false\n}' },
-            { argumentLists: [[2024], [2025]], code: 'function isLeapYear(year) {\n\n\n  if (year % 4 === 0) return true\n  return false\n}' },
-            { argumentLists: [[2800]], code: 'function isLeapYear(year) {\n\n\n\n  return true\n}' },
-            { argumentLists: [[2800], [2700]], code: 'function isLeapYear(year) {\n  if (year % 400 === 0) return true\n\n\n  return false\n}' },
-            { argumentLists: [[2800], [2700], [2024]], code: 'function isLeapYear(year) {\n  if (year % 400 === 0) return true\n  if (year % 100 === 0) return false\n\n  return true\n}' },
+            { argumentLists: [], code: 'function isLeapYear(year) {\n  return undefined\n}' },
+            { argumentLists: [[2024]], code: 'function isLeapYear(year) {\n  return true\n}' },
+            { argumentLists: [[2025]], code: 'function isLeapYear(year) {\n  return false\n}' },
+            { argumentLists: [[2024], [2025]], code: 'function isLeapYear(year) {\n  if (year % 4 === 0) return true\n  return false\n}' },
+            { argumentLists: [[2800]], code: 'function isLeapYear(year) {\n  return true\n}' },
+            { argumentLists: [[2800], [2700]], code: 'function isLeapYear(year) {\n  if (year % 400 === 0) return true\n  return false\n}' },
+            { argumentLists: [[2800], [2700], [2024]], code: 'function isLeapYear(year) {\n  if (year % 400 === 0) return true\n  if (year % 100 === 0) return false\n  return true\n}' },
             { argumentLists: [[2800], [2700], [2024], [2025]], code: 'function isLeapYear(year) {\n  if (year % 200 === 0) return true\n  if (year % 100 === 0) return false\n  if (year % 4 === 0) return true\n  return false\n}' },
             { argumentLists: [[2800], [2700], [2024], [2025], [2600]], code: 'function isLeapYear(year) {\n  if (year % 400 === 0) return true\n  if (year % 100 === 0) return false\n  if (year % 4 === 0) return true\n  return false\n}' },
         ].forEach(({ argumentLists, code }: TestCase) => {
@@ -59,13 +60,13 @@ test.describe('class LeapYear', () => {
 
     test.describe('with class MutationTesting in class Level', () => {
         [
-            { argumentLists: [], code: 'function isLeapYear(year) {\n\n\n\n  return undefined\n}' },
-            { argumentLists: [[2800]], code: 'function isLeapYear(year) {\n  if (year % 400 === 0) return true\n\n\n  return undefined\n}' },
-            { argumentLists: [[2700]], code: 'function isLeapYear(year) {\n\n  if (year % 100 === 0) return false\n\n  return undefined\n}' },
-            { argumentLists: [[2024]], code: 'function isLeapYear(year) {\n\n\n  if (year % 4 === 0) return true\n  return undefined\n}' },
-            { argumentLists: [[2025]], code: 'function isLeapYear(year) {\n\n\n\n  return false\n}' },
-            { argumentLists: [[2024], [2025]], code: 'function isLeapYear(year) {\n\n\n  if (year % 4 === 0) return true\n  return false\n}' },
-            { argumentLists: [[2800], [2700]], code: 'function isLeapYear(year) {\n  if (year % 400 === 0) return true\n  if (year % 100 === 0) return false\n\n  return undefined\n}' },
+            { argumentLists: [], code: 'function isLeapYear(year) {\n  return undefined\n}' },
+            { argumentLists: [[2800]], code: 'function isLeapYear(year) {\n  if (year % 400 === 0) return true\n  return undefined\n}' },
+            { argumentLists: [[2700]], code: 'function isLeapYear(year) {\n  if (year % 100 === 0) return false\n  return undefined\n}' },
+            { argumentLists: [[2024]], code: 'function isLeapYear(year) {\n  if (year % 4 === 0) return true\n  return undefined\n}' },
+            { argumentLists: [[2025]], code: 'function isLeapYear(year) {\n  return false\n}' },
+            { argumentLists: [[2024], [2025]], code: 'function isLeapYear(year) {\n  if (year % 4 === 0) return true\n  return false\n}' },
+            { argumentLists: [[2800], [2700]], code: 'function isLeapYear(year) {\n  if (year % 400 === 0) return true\n  if (year % 100 === 0) return false\n  return undefined\n}' },
             { argumentLists: [[2800], [2700], [2024]], code: 'function isLeapYear(year) {\n  if (year % 400 === 0) return true\n  if (year % 100 === 0) return false\n  if (year % 4 === 0) return true\n  return undefined\n}' },
             { argumentLists: [[2800], [2700], [2024], [2025]], code: 'function isLeapYear(year) {\n  if (year % 400 === 0) return true\n  if (year % 100 === 0) return false\n  if (year % 4 === 0) return true\n  return false\n}' },
         ].forEach(({ argumentLists, code }: TestCase) => {

@@ -3,12 +3,12 @@ import { EvenOdd } from '../../src/use_case_even_odd.js';
 test.describe('class EvenOdd', () => {
     test('has perfect candidates', () => {
         const useCase = new EvenOdd();
-        expect(useCase.perfectCandidates).not.toBe([]);
+        expect(useCase.perfectCandidates).not.toHaveLength(0);
     });
     test('perfect candidates pass all hints', () => {
         const useCase = new EvenOdd();
         const failingCandidates = useCase.perfectCandidates.filter(candidate => !candidate.passes(useCase.hints));
-        expect(failingCandidates).toStrictEqual([]);
+        expect(failingCandidates).toHaveLength(0);
     });
     test('all minimal unit tests are needed', () => {
         const useCase = new EvenOdd();

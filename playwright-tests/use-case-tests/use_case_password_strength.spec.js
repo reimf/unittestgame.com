@@ -3,12 +3,12 @@ import { PasswordStrength } from '../../src/use_case_password_strength.js';
 test.describe('class PasswordStrength', () => {
     test('has perfect candidates', () => {
         const useCase = new PasswordStrength();
-        expect(useCase.perfectCandidates).not.toBe([]);
+        expect(useCase.perfectCandidates).not.toHaveLength(0);
     });
     test('perfect candidates pass all hints', () => {
         const useCase = new PasswordStrength();
         const failingCandidates = useCase.perfectCandidates.filter(candidate => !candidate.passes(useCase.hints));
-        expect(failingCandidates).toStrictEqual([]);
+        expect(failingCandidates).toHaveLength(0);
     });
     test('all minimal unit tests are needed', () => {
         const useCase = new PasswordStrength();
