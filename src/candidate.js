@@ -81,10 +81,13 @@ export class Candidate {
         return Math.sign(this.complexityMutationTesting - candidate.complexityMutationTesting);
     }
     toString() {
-        return this.lines.join('\n');
+        return this.lines.filter(line => line !== '').join('\n');
     }
     toHtml() {
         return new Code().appendChildren(this.lines.map(line => new Div().appendText(line)));
+    }
+    toMutationHtml() {
+        return new Code().appendChildren(this.lines.map(line => new Div().appendText(line).addClass('covered')));
     }
     toHtmlWithPrevious(previousCandidate) {
         const lines = this.zip(previousCandidate).reduce((divs, [line, other]) => {

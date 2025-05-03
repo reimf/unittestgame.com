@@ -7,6 +7,7 @@ export class UseCase {
         this.unit = this.getUnit();
         this.candidates = [...this.generateCandidates(this.getCandidateElements(), [])];
         this.minimalUnitTests = [...this.generateMinimalUnitTests()];
+        this.subsetsOfMinimalUnitTests = [...this.generateSubsets(this.minimalUnitTests)];
         this.perfectCandidates = this.findPerfectCandidates();
         this.perfectCandidate = Random.elementFrom(this.perfectCandidates);
         this.amputeesOfPerfectCandidate = this.findAmputeesOfPerfectCandidate();
@@ -36,9 +37,19 @@ export class UseCase {
         return this.candidates.filter(candidate => candidate.isAmputeeOf(this.perfectCandidate));
     }
     *generateMinimalUnitTests() {
-        for (const tuple of this.minimalUnitTestGenerator()) {
-            const [argumentList, expected] = tuple;
+        for (const [argumentList, expected] of this.minimalUnitTestGenerator()) {
             yield new UnitTest(this.parameters, argumentList, this.unit, expected);
+        }
+    }
+    *generateSubsets(unitTests) {
+        const n = unitTests.length;
+        const total = 1 << n;
+        for (let size = 0; size <= n; size++) {
+            for (let mask = 0; mask < total; mask++) {
+                const subset = unitTests.filter((_, i) => mask & (1 << i));
+                if (subset.length === size)
+                    yield subset;
+            }
         }
     }
     *generateHints() {
@@ -46,9 +57,6 @@ export class UseCase {
             yield new UnitTest(this.parameters, argumentList, this.unit, this.perfectCandidate.execute(argumentList));
     }
     findPerfectCandidates() {
-        const perfectCandidates = this.candidates.filter(candidate => candidate.passes(this.minimalUnitTests));
-        if (perfectCandidates.length === 0)
-            throw new Error(`There is no perfect function for use case ${this.name()}.`);
-        return perfectCandidates;
+        return this.candidates.filter(candidate => candidate.passes(this.minimalUnitTests));
     }
 }

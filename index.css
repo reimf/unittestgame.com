@@ -57,6 +57,7 @@ b { /* markdown: **bold** */
 
 code {
     display: block;
+    margin: 0.75rem 0;
     overflow: scroll;
     white-space: pre;
 }
@@ -138,6 +139,7 @@ label {
 }
 
 p {
+    margin: 0.75rem 0;
     white-space: pre-wrap;
 }
 

@@ -37,9 +37,10 @@ export class MutationTesting extends Methodology {
     showUsefulUnitTestMessage() {
         new ComputerMessage(['I added the unit test to the *Unit Tests* and I showed the line coverage in *The Function*.']).add();
     }
-    showBugFoundMessage(currentCandidate, _failingTestResult) {
+    showBugFoundMessage(currentCandidate, _failingTestResult, numberOfUnitTestsStillNeeded) {
         new ComputerMessage(['*The Function* is NOT fully tested.']).add();
-        new ComputerMessage(['A mutation of *The Function* that is NOT correct, but still passes your unit tests is the following.', currentCandidate.toHtml()]).add();
+        new ComputerMessage(['A mutation of *The Function* that is NOT correct, but still passes your unit tests is the following.', currentCandidate.toMutationHtml()]).add();
+        new ComputerMessage([`Try to write a unit test that passes *The Function* and fails for this mutation. I think you need at least ${numberOfUnitTestsStillNeeded} more ${numberOfUnitTestsStillNeeded === 1 ? 'unit test' : 'unit tests'} to fully test *The Function*.`]).add();
     }
     showEndMessage() {
         new ComputerMessage(['*The Function* is indeed fully tested.']).add();

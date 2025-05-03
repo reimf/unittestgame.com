@@ -12,7 +12,7 @@ export class FakeMethodology extends Methodology {
     public showIncorrectUnitTestMessage(): void { }
     public showUselessUnitTestMessage(): void { }
     public showUsefulUnitTestMessage(): void { }
-    public showBugFoundMessage(_currentCandidate: Candidate, _failingTestResult: TestResult): void { }
+    public showBugFoundMessage(_currentCandidate: Candidate, _failingTestResult: TestResult, _numberOfUnitTestsStillNeeded: number): void { }
     public showEndMessage(): void { }
     public* exampleGuidanceGenerator(_useCase: any): Generator<string> { }
 }

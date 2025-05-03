@@ -100,11 +100,15 @@ export class Candidate {
     }
 
     public toString(): string {
-        return this.lines.join('\n')
+        return this.lines.filter(line => line !== '').join('\n')
     }
 
     public toHtml(): Html {
         return new Code().appendChildren(this.lines.map(line => new Div().appendText(line)))
+    }
+
+    public toMutationHtml(): Html {
+        return new Code().appendChildren(this.lines.map(line => new Div().appendText(line).addClass('covered')))
     }
 
     public toHtmlWithPrevious(previousCandidate: Candidate): Html {

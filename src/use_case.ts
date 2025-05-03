@@ -19,6 +19,7 @@ export abstract class UseCase {
     public readonly unit: Variable = this.getUnit()
     public readonly candidates: Candidate[] = [...this.generateCandidates(this.getCandidateElements(), [])]
     public readonly minimalUnitTests: UnitTest[] = [...this.generateMinimalUnitTests()]
+    public readonly subsetsOfMinimalUnitTests: UnitTest[][] = [...this.generateSubsets(this.minimalUnitTests)]
     public readonly perfectCandidates: Candidate[] = this.findPerfectCandidates()
     public readonly perfectCandidate: Candidate = Random.elementFrom(this.perfectCandidates)
     public readonly amputeesOfPerfectCandidate: Candidate[] = this.findAmputeesOfPerfectCandidate()
@@ -49,9 +50,20 @@ export abstract class UseCase {
     }
 
     private *generateMinimalUnitTests(): Generator<UnitTest> {
-        for (const tuple of this.minimalUnitTestGenerator()) {
-            const [argumentList, expected] = tuple
+        for (const [argumentList, expected] of this.minimalUnitTestGenerator()) {
             yield new UnitTest(this.parameters, argumentList, this.unit, expected)
+        }
+    }
+
+    private* generateSubsets(unitTests: UnitTest[]): Generator<UnitTest[]> {
+        const n = unitTests.length
+        const total = 1 << n
+        for (let size = 0; size <= n; size++) {
+            for (let mask = 0; mask < total; mask++) {
+                const subset = unitTests.filter((_, i) => mask & (1 << i))
+                if (subset.length === size)
+                    yield subset
+            }
         }
     }
 
@@ -61,9 +73,6 @@ export abstract class UseCase {
     }
 
     private findPerfectCandidates(): Candidate[] {
-        const perfectCandidates = this.candidates.filter(candidate => candidate.passes(this.minimalUnitTests))
-        if (perfectCandidates.length === 0)
-            throw new Error(`There is no perfect function for use case ${this.name()}.`)
-        return perfectCandidates
+        return this.candidates.filter(candidate => candidate.passes(this.minimalUnitTests))
     }
 }

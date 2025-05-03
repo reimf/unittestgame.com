@@ -84,7 +84,7 @@ test.describe('class Candidate', () => {
         expect(candidate.execute([2024])).toBe(undefined);
     });
     test('converts to a string', () => {
-        const candidate = new Candidate(['function nextYear(year) {', '  return year', '}']);
+        const candidate = new Candidate(['function nextYear(year) {', '', '  return year', '}']);
         expect(candidate.toString()).toBe('function nextYear(year) {\n  return year\n}');
     });
     test('to html', () => {

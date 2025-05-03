@@ -42,7 +42,7 @@ export class Level {
         this.previousCandidate = undefined
         this.coveredCandidate = undefined
         this.currentCandidate = this.findSimplestPassingCandidate(this.humanUnitTests)
-        this.failingTestResult = this.findFailingTestResult()
+        this.failingTestResult = this.findFailingTestResult(this.currentCandidate, [this.useCase.hints, this.useCase.minimalUnitTests])
         this.newUnitTest = undefined
         this.numberOfSubmissions = 0
         this.showCurrentLevelPanel()
@@ -81,14 +81,23 @@ export class Level {
         return Random.elementFrom(simplestPassingCandidates)
     }
 
-    private findFailingTestResult(): TestResult|undefined {
-        const failingHints = this.currentCandidate.failingTestResults(this.useCase.hints)
-        if (failingHints.length > 0)
-            return Random.elementFrom(failingHints)
-        const failingMinimalUnitTests = this.currentCandidate.failingTestResults(this.useCase.minimalUnitTests)
-        if (failingMinimalUnitTests.length > 0)
-            return Random.elementFrom(failingMinimalUnitTests)
+    private findFailingTestResult(candidate: Candidate, unitTestsList: UnitTest[][]): TestResult|undefined {
+        for (const unitTests of unitTestsList) {
+            const failingUnitTests = candidate.failingTestResults(unitTests)
+            if (failingUnitTests.length > 0)
+                return Random.elementFrom(failingUnitTests)
+        }
         return undefined
+    }
+
+    private findNumberOfUnitTestsStillNeeded(): number {
+        for (const subsetOfMinimalUnitTests of this.useCase.subsetsOfMinimalUnitTests) {
+            const unitTests = [...this.humanUnitTests, ...subsetOfMinimalUnitTests]
+            const passingCandidates = this.useCase.candidates.filter(candidate => candidate.passes(unitTests))
+            if (passingCandidates.length === this.useCase.perfectCandidates.length)
+                return subsetOfMinimalUnitTests.length
+        }
+        return Infinity
     }
 
     private showCurrentLevelPanel(): void {
@@ -149,7 +158,7 @@ export class Level {
             else {
                 this.methodology.showUsefulUnitTestMessage()
                 this.currentCandidate = this.findSimplestPassingCandidate(this.humanUnitTests)
-                this.failingTestResult = this.findFailingTestResult()
+                this.failingTestResult = this.findFailingTestResult(this.currentCandidate, [this.useCase.hints, this.useCase.minimalUnitTests])
             }
         }
         else
@@ -164,7 +173,7 @@ export class Level {
     private submitUnitTests(): void {
         this.numberOfSubmissions += 1
         if (this.failingTestResult) {
-            this.methodology.showBugFoundMessage(this.currentCandidate, this.failingTestResult)
+            this.methodology.showBugFoundMessage(this.currentCandidate, this.failingTestResult, this.findNumberOfUnitTestsStillNeeded())
             this.menu()
         }
         else

@@ -9,7 +9,7 @@ export class FakeMethodology extends Methodology {
     showIncorrectUnitTestMessage() { }
     showUselessUnitTestMessage() { }
     showUsefulUnitTestMessage() { }
-    showBugFoundMessage(_currentCandidate, _failingTestResult) { }
+    showBugFoundMessage(_currentCandidate, _failingTestResult, _numberOfUnitTestsStillNeeded) { }
     showEndMessage() { }
     *exampleGuidanceGenerator(_useCase) { }
 }

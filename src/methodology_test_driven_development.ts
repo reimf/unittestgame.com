@@ -54,9 +54,10 @@ export class TestDrivenDevelopment extends Methodology {
         new ComputerMessage(['I added the unit test to the *Unit Tests* and I improved the *Current Function* such that it passes the new unit test.']).add()
     }
 
-    public showBugFoundMessage(_currentCandidate: Candidate, failingTestResult: TestResult): void {
+    public showBugFoundMessage(_currentCandidate: Candidate, failingTestResult: TestResult, numberOfUnitTestsStillNeeded: number): void {
         new ComputerMessage(['The *Current Function* is NOT according to the *Specification*.']).add()
         new ComputerMessage(['It produces the following incorrect result.', failingTestResult.toString()]).add()
+        new ComputerMessage([`Try to write a unit test that is according to the *Specification* and fails for the *Current Function*. I think you need at least ${numberOfUnitTestsStillNeeded} more ${numberOfUnitTestsStillNeeded === 1 ? 'unit test' : 'unit tests'} to make the *Current Function* according to the *Specification*.`]).add()
     }
 
     public showEndMessage(): void {
