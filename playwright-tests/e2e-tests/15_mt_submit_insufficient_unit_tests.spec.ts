@@ -7,7 +7,7 @@ test.describe('mt submit insufficient unit test', () => {
         await context.addInitScript(_ => localStorage.setItem('Test-Driven Development - Voting Age', '100'))
         await context.addInitScript(_ => localStorage.setItem('Mutation Testing - Example', '1'))
         await context.addInitScript({ path: './playwright-tests/e2e-tests/init_script.js' })
-        await page.goto('http://localhost:3000/')
+        await page.goto('/')
         await page.getByRole('button', { name: 'I want to play Level 4 - Mutation Testing - Even or Odd' }).click()
         await page.getByRole('button', { name: 'I want to submit the unit tests' }).click()
     })

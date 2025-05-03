@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 test.describe('level menu', () => {
     test.beforeEach(async ({ context, page }) => {
         await context.addInitScript({ path: './playwright-tests/e2e-tests/init_script.js' });
-        await page.goto('http://localhost:3000/');
+        await page.goto('/');
         await page.getByRole('button', { name: 'I want a sidebar with information on terms with a purple background' }).click();
     });
     test('has unittestgame panel', async ({ page }) => {
