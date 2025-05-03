@@ -17,16 +17,15 @@ export class Candidate {
         const lines = this.zip(candidate).map(([line, other]) => line && line.trim() !== 'return undefined' ? line : other);
         return new Candidate(lines);
     }
+    getRegEx(code, regex) {
+        const matches = code.matchAll(regex);
+        const names = [...matches].flatMap(match => match[1].split(/,\s*/));
+        return new RegExp(`\\b(${names.join('|')})\\b`, 'g');
+    }
     getComplexityTestDrivenDevelopment(code) {
-        const functionMatches = code.matchAll(/\bfunction\s+(\w+)\(([^)]*)\)/g);
-        const functionNames = [...functionMatches].map(match => match[1]);
-        const functionRegEx = new RegExp(`\\b${functionNames.join('|')}\\b`, 'g');
-        const parameterMatches = code.matchAll(/\bfunction\s+\w+\(([^)]*)\)/g);
-        const parameterNames = [...parameterMatches].flatMap(match => match[1].split(/,\s*/));
-        const parameterRegEx = new RegExp(`\\b${parameterNames.join('|')}\\b`, 'g');
-        const variableMatches = code.matchAll(/\blet\s+(\w*)\b/g);
-        const variableNames = [...variableMatches].map(match => match[1]);
-        const variableRegEx = new RegExp(`\\b${variableNames.join('|')}\\b`, 'g');
+        const functions = this.getRegEx(code, /\bfunction\s+(\w+)\b/g);
+        const parameters = this.getRegEx(code, /\bfunction\s+\w+\((.*?)\)/g);
+        const variables = this.getRegEx(code, /\blet\s+(\w+)\b/g);
         const tokens = code
             .replace(/\n/g, ' ') // simplify white space
             .replace(/"[^"]*?"/g, ' _ _ ') // each string is 1 extra point
@@ -43,9 +42,9 @@ export class Candidate {
             .replace(/undefined/g, ' ') // undefined is free
             .replace(/(\+|\*|\/|%|<|>|!|\&\&|\|\|)/g, ' _ ') // each operator is 1 point
             .replace(/=+/g, ' _ ') // each comparison operator is 1 point
-            .replace(functionRegEx, ' _ _ ') // each function is 1 point extra
-            .replace(parameterRegEx, ' _ _ ') // each parameter is 1 point extra
-            .replace(variableRegEx, ' _ _ ') // each variable is 1 point extra
+            .replace(functions, ' _ _ ') // each function is 1 point extra
+            .replace(parameters, ' _ _ ') // each parameter is 1 point extra
+            .replace(variables, ' _ _ ') // each variable is 1 point extra
             .replace(/\bnew [A-Z][a-zA-Z]*/g, ' _ _ ') // each created object is 1 point extra
             .replace(/function|return|\{|\}|if|true|false|let/g, ' _ ') // each keyword is 1 point
             .split(/\s+/) // each token is 1 point
