@@ -45,11 +45,7 @@ export class LeapYear extends UseCase {
                 '',
             ],
             [
-                'if (year % 2 !== 0) return true',
-                'if (year % 2 === 0) return true',
-                '',
-            ],
-            [
+                'return true',
                 'return false',
                 'return undefined',
             ],
@@ -57,7 +53,6 @@ export class LeapYear extends UseCase {
     }
 
     public* minimalUnitTestGenerator(): Generator<any[]> {
-        yield [[2001], false]
         yield [[2002], false]
         yield [[2004], true]
         yield [[1800], false]
