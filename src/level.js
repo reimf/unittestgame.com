@@ -37,8 +37,8 @@ export class Level {
         this.methodology.showWelcomeMessage();
         this.menu();
     }
-    findSimplestCandidates(candidates) {
-        return candidates.reduce((simplestCandidatesSoFar, candidate) => {
+    findSimplestCandidate(candidates) {
+        const simplestCandidates = candidates.reduce((simplestCandidatesSoFar, candidate) => {
             if (simplestCandidatesSoFar.length === 0)
                 return [candidate];
             const sign = this.methodology.compareComplexity(candidate, simplestCandidatesSoFar[0]);
@@ -48,6 +48,7 @@ export class Level {
                 return simplestCandidatesSoFar;
             return [...simplestCandidatesSoFar, candidate];
         }, []);
+        return Random.elementFrom(simplestCandidates);
     }
     findSimplestPassingCandidate(unitTests) {
         const passingCandidates = this.useCase.candidates
@@ -56,14 +57,15 @@ export class Level {
             .filter(candidate => !this.useCase.perfectCandidates.includes(candidate));
         if (passingImperfectCandidates.length === 0)
             return Random.elementFrom(this.useCase.perfectCandidates);
-        const simplestPassingCandidates = this.findSimplestCandidates(passingImperfectCandidates);
-        return Random.elementFrom(simplestPassingCandidates);
+        return this.findSimplestCandidate(passingImperfectCandidates);
     }
     findSimplestCoveredCandidate(unitTests) {
-        const passingCandidates = this.useCase.amputeesOfPerfectCandidate
-            .filter(candidate => candidate.passes(unitTests));
-        const simplestPassingCandidates = this.findSimplestCandidates(passingCandidates);
-        return Random.elementFrom(simplestPassingCandidates);
+        return unitTests.reduce((simplestCoveredCandidateSoFar, unitTest) => {
+            const passingCandidates = this.useCase.amputeesOfPerfectCandidate
+                .filter(candidate => candidate.passes([unitTest]));
+            const simplestPassingCandidate = this.findSimplestCandidate(passingCandidates);
+            return simplestPassingCandidate.combine(simplestCoveredCandidateSoFar);
+        }, this.findSimplestPassingCandidate([]));
     }
     findFailingTestResult(candidate, unitTestsList) {
         for (const unitTests of unitTestsList) {
@@ -124,7 +126,7 @@ export class Level {
             this.newUnitTest = unitTest;
             this.humanUnitTests.push(unitTest);
             this.previousCandidate = this.currentCandidate;
-            this.coveredCandidate = this.findSimplestCoveredCandidate(this.humanUnitTests).combine(this.coveredCandidate);
+            this.coveredCandidate = this.findSimplestCoveredCandidate(this.humanUnitTests);
             if (new TestResult(this.currentCandidate, unitTest).passes)
                 this.methodology.showUselessUnitTestMessage();
             else {

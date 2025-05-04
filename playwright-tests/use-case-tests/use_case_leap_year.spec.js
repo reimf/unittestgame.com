@@ -51,6 +51,8 @@ test.describe('class LeapYear', () => {
             { argumentLists: [[2700]], code: 'function isLeapYear(year) {\n  if (year % 100 === 0) return false\n  return undefined\n}' },
             { argumentLists: [[2024]], code: 'function isLeapYear(year) {\n  if (year % 4 === 0) return true\n  return undefined\n}' },
             { argumentLists: [[2025]], code: 'function isLeapYear(year) {\n  return false\n}' },
+            { argumentLists: [[2800], [2024]], code: 'function isLeapYear(year) {\n  if (year % 400 === 0) return true\n  if (year % 4 === 0) return true\n  return undefined\n}' },
+            { argumentLists: [[2024], [2800]], code: 'function isLeapYear(year) {\n  if (year % 400 === 0) return true\n  if (year % 4 === 0) return true\n  return undefined\n}' },
             { argumentLists: [[2024], [2025]], code: 'function isLeapYear(year) {\n  if (year % 4 === 0) return true\n  return false\n}' },
             { argumentLists: [[2800], [2700]], code: 'function isLeapYear(year) {\n  if (year % 400 === 0) return true\n  if (year % 100 === 0) return false\n  return undefined\n}' },
             { argumentLists: [[2800], [2700], [2024]], code: 'function isLeapYear(year) {\n  if (year % 400 === 0) return true\n  if (year % 100 === 0) return false\n  if (year % 4 === 0) return true\n  return undefined\n}' },
