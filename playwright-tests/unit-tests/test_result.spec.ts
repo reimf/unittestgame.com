@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect, Page } from '@playwright/test'
 import { TestResult } from '../../src/test_result.js'
 import { Candidate } from '../../src/candidate.js'
 import { UnitTest } from '../../src/unit_test.js'

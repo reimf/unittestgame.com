@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect, Page } from '@playwright/test'
 import { SpeedDisplay } from '../../src/use_case_speed_display.js'
 
 test.describe('class SpeedDisplay', () => {

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect, Page } from '@playwright/test'
 import { PasswordStrength } from '../../src/use_case_password_strength.js'
 
 test.describe('class PasswordStrength', () => {

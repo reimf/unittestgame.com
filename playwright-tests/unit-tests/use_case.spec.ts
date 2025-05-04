@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect, Page } from '@playwright/test'
 import { IntegerVariable, TextVariable } from '../../src/variable.js'
 import { FakeUseCase } from '../mocks/fake_use_case.js'
 

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect, Page } from '@playwright/test'
 import { BatteryLevel } from '../../src/use_case_battery_level.js'
 
 test.describe('class BatteryLevel', () => {

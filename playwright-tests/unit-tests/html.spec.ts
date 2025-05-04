@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect, Page } from '@playwright/test'
 import { Span, Div, Section, Code, Label, Paragraph, Form, Header, Input, Bold, Italic, Anchor } from '../../src/html.js'
 
 

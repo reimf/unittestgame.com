@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect, Page } from '@playwright/test'
 import { EvenOdd } from '../../src/use_case_even_odd.js'
 
 test.describe('class EvenOdd', () => {

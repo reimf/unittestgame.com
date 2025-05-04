@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect, Page } from '@playwright/test'
 import { Completed } from '../../src/completed.js'
 import { FakeStorage } from '../mocks/fake_storage.js'
 

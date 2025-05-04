@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect, Page } from '@playwright/test'
 import { VotingAge } from '../../src/use_case_voting_age.js'
 
 test.describe('class VotingAge', () => {
