@@ -6,19 +6,19 @@
   stroke-linejoin="round"
   fill="transparent">
     <path d="
-    M 6 7 v 2
-    M 8 7 h 2 v 2 h -2 z
-    M 6 11 h 2 v 2 h -2 z
-    M 10 11 v 2
-    M 5 5 h 6 l 1 1 v 8 l -3 2 l -1 -1 l -1 1 l -3 -2 v -8 z
-    M 4 10 h -3
-    M 12 10 h 3
-    M 4 13 h -2 v 1 l -1 1
-    M 12 13 h 2 v 1 l 1 1
-    M 4 7 h -2 v -1 l -1 -1
-    M 12 7 h 2 v -1 l 1 -1
-    M 6 5 v -2 h 4 v 2
-    M 7 3 v -1 l -1 -1
-    M 9 3 v -1 l 1 -1
+    M 6 8 v 2
+    M 8 8 h 2 v 2 h -2 z
+    M 6 12 h 2 v 2 h -2 z
+    M 10 12 v 2
+    M 5 6 h 6 l 1 1 v 8 l -1 1 h -6 l -1 -1 v -8 l 1 -1 z
+    M 4 11 h -3
+    M 12 11 h 3
+    M 4 14 h -2 v 1 l -1 1
+    M 12 14 h 2 v 1 l 1 1
+    M 4 8 h -2 v -1 l -1 -1
+    M 12 8 h 2 v -1 l 1 -1
+    M 6 6 v -2 l 1 -1 h 2 l 1 1 v 2
+    M 7 3 l -2 -2
+    M 9 3 l 2 -2
   "/>
 </svg>
