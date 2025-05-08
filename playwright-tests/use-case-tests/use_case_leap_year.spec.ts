@@ -14,20 +14,19 @@ type TestCase = {
 }
 
 test.describe('class LeapYear', () => {
+    const useCase = new LeapYear()
+
     test('has perfect candidates', () => {
-        const useCase = new LeapYear()
         expect(useCase.perfectCandidates).not.toHaveLength(0)
     })
 
     test('perfect candidates pass all hints', () => {
-        const useCase = new LeapYear()
         const failingCandidates = useCase.perfectCandidates.filter(candidate => !candidate.passes(useCase.hints))
            expect(failingCandidates).toHaveLength(0)
 
     })
 
     test('all minimal unit tests are needed', () => {
-        const useCase = new LeapYear()
         for (const unitTest of useCase.minimalUnitTests) {
             const allMinusOneUnitTests = useCase.minimalUnitTests.filter(otherUnitTest => otherUnitTest !== unitTest)
             const almostPerfectCandidates = useCase.candidates.filter(candidate => candidate.passes(allMinusOneUnitTests))
@@ -48,7 +47,6 @@ test.describe('class LeapYear', () => {
             { argumentLists: [[2800], [2700], [2024], [2025], [2600]], code: 'function isLeapYear(year) {\n  if (year % 400 === 0) return true\n  if (year % 100 === 0) return false\n  if (year % 4 === 0) return true\n  return false\n}' },
         ].forEach(({ argumentLists, code }: TestCase) => {
             test(`has simplest passing candidate with unit tests ${argumentLists}`, () => {
-                const useCase = new LeapYear()
                 const level = new Level(new TestDrivenDevelopment(), useCase)
                 const unitTests = argumentLists.map(argumentList =>
                     new UnitTest(useCase.parameters, argumentList, useCase.unit, useCase.perfectCandidate.execute(argumentList))
@@ -73,7 +71,6 @@ test.describe('class LeapYear', () => {
             { argumentLists: [[2800], [2700], [2024], [2025]], code: 'function isLeapYear(year) {\n  if (year % 400 === 0) return true\n  if (year % 100 === 0) return false\n  if (year % 4 === 0) return true\n  return false\n}' },
         ].forEach(({ argumentLists, code }: TestCase) => {
             test(`has covered candidate with unit tests ${argumentLists}`, () => {
-                const useCase = new LeapYear()
                 const level = new Level(new MutationTesting(), useCase)
                 const unitTests = argumentLists.map(argumentList =>
                     new UnitTest(useCase.parameters, argumentList, useCase.unit, useCase.perfectCandidate.execute(argumentList))

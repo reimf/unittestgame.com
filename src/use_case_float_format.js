@@ -66,13 +66,13 @@ export class FloatFormat extends UseCase {
         ];
     }
     *minimalUnitTestGenerator() {
-        yield [['+123'], true];
-        yield [['-123.45'], true];
-        yield [['123.45'], true];
-        yield [['+-123'], false];
-        yield [['123.'], false];
-        yield [['.45'], false];
-        yield [['12.3.45'], false];
+        yield [['+12'], true];
+        yield [['-12.34'], true];
+        yield [['12.34'], true];
+        yield [['+-12'], false];
+        yield [['12.'], false];
+        yield [['.34'], false];
+        yield [['12.3.4'], false];
     }
     *hintGenerator() {
         for (let i = 0; i < 100; i++) {
