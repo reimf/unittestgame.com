@@ -1,7 +1,7 @@
 import { Html, Input, Label, Paragraph, Span } from './html.js'
 
 export abstract class Variable {
-    protected readonly label: string
+    public readonly label: string
     protected value: string = ''
     public readonly name: string
     protected disabled: boolean = false

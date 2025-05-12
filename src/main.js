@@ -19,7 +19,7 @@ export class Main {
         this.testDrivenDevelopment = new TestDrivenDevelopment();
         this.mutationTesting = new MutationTesting();
         this.methodologies = [this.testDrivenDevelopment, this.mutationTesting];
-        this.battery = new BatteryLevel();
+        this.batteryLevel = new BatteryLevel();
         this.votingAge = new VotingAge();
         this.evenOdd = new EvenOdd();
         this.fizzBuzz = new FizzBuzz();
@@ -29,9 +29,9 @@ export class Main {
         this.passwordStrength = new PasswordStrength();
         this.speedDisplay = new SpeedDisplay();
         this.levels = [
-            new Example(this.testDrivenDevelopment, this.battery),
+            new Example(this.testDrivenDevelopment, this.batteryLevel),
             new Level(this.testDrivenDevelopment, this.votingAge),
-            new Example(this.mutationTesting, this.battery),
+            new Example(this.mutationTesting, this.batteryLevel),
             new Level(this.mutationTesting, this.evenOdd),
             new Level(this.testDrivenDevelopment, this.fizzBuzz),
             new Level(this.mutationTesting, this.triangleType),

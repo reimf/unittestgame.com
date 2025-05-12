@@ -21,7 +21,7 @@ export class Main {
     private readonly testDrivenDevelopment: Methodology = new TestDrivenDevelopment()
     private readonly mutationTesting: Methodology = new MutationTesting()
     private readonly methodologies = [this.testDrivenDevelopment, this.mutationTesting]
-    private readonly battery: UseCase = new BatteryLevel()
+    private readonly batteryLevel: UseCase = new BatteryLevel()
     private readonly votingAge: UseCase = new VotingAge()
     private readonly evenOdd: UseCase = new EvenOdd()
     private readonly fizzBuzz: UseCase = new FizzBuzz()
@@ -31,9 +31,9 @@ export class Main {
     private readonly passwordStrength: UseCase = new PasswordStrength()
     private readonly speedDisplay: UseCase = new SpeedDisplay()
     private readonly levels: Level[] = [
-        new Example(this.testDrivenDevelopment, this.battery),
+        new Example(this.testDrivenDevelopment, this.batteryLevel),
         new Level(this.testDrivenDevelopment, this.votingAge),
-        new Example(this.mutationTesting, this.battery),
+        new Example(this.mutationTesting, this.batteryLevel),
         new Level(this.mutationTesting, this.evenOdd),
         new Level(this.testDrivenDevelopment, this.fizzBuzz),
         new Level(this.mutationTesting, this.triangleType),
