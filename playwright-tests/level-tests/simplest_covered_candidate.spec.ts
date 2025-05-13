@@ -1,7 +1,6 @@
-import { test, expect, Page } from '@playwright/test'
+import { test, expect } from '@playwright/test'
 import { Level } from '../../src/level.js'
 import { MutationTesting } from '../../src/methodology_mutation_testing.js'
-import { TestDrivenDevelopment } from '../../src/methodology_test_driven_development.js'
 import { UnitTest } from '../../src/unit_test.js'
 import { LeapYear } from '../../src/use_case_leap_year.js'
 

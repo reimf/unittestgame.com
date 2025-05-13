@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test'
+import { test, expect } from '@playwright/test'
 import { FakeMethodology } from '../mocks/fake_methodology.js'
 
 test.describe('class Methodology', () => {

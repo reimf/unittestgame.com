@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test'
+import { test, expect } from '@playwright/test'
 import { Level } from '../../src/level.js'
 import { FakeMethodology } from '../mocks/fake_methodology.js'
 import { FakeUseCase } from '../mocks/fake_use_case.js'

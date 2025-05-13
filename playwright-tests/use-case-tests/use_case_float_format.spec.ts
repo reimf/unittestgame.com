@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test'
+import { test, expect } from '@playwright/test'
 import { FloatFormat } from '../../src/use_case_float_format.js'
 
 test.describe('class FloatFormat', () => {

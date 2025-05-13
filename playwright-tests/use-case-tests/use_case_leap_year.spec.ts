@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test'
+import { test, expect } from '@playwright/test'
 import { LeapYear } from '../../src/use_case_leap_year.js'
 
 test.describe('class LeapYear', () => {

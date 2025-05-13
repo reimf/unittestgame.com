@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test'
+import { test, expect } from '@playwright/test'
 import { UnitTest } from '../../src/unit_test.js'
 import { IntegerVariable } from '../../src/variable.js'
 
