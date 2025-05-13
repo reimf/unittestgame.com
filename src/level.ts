@@ -9,8 +9,8 @@ import { UseCase } from './use_case.js'
 import { Completed } from './completed.js'
 
 export class Level {
-    protected readonly methodology: Methodology
-    protected readonly useCase: UseCase
+    public readonly methodology: Methodology
+    public readonly useCase: UseCase
     private readonly isLevelFinished: Completed
 
     private callback?: () => void
