@@ -210,7 +210,7 @@ a, button, input, label:has(input[type="radio"]:not(:disabled)) {
                 margin-left: 20%;
 
                 &:before {
-                    background-image: url('avatar_human.png');
+                    background-image: url('avatar-human.png');
                     right: 0.5rem;
                 }
 
@@ -230,7 +230,7 @@ a, button, input, label:has(input[type="radio"]:not(:disabled)) {
                 margin-right: 20%;
 
                 &:before {
-                    background-image: url('avatar_computer.png');
+                    background-image: url('avatar-computer.png');
                     left: 0.5rem;
                 }
 

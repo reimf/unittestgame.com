@@ -1,5 +1,5 @@
 import { Code, Div, Span } from './html.js';
-import { TestResult } from './test_result.js';
+import { TestResult } from './test-result.js';
 export class Candidate {
     constructor(lines) {
         this.lines = lines.map(line => line.replace(/\\\\/g, '\\'));

@@ -1,6 +1,6 @@
 import { Code, Div, Html, Span } from './html.js'
-import { TestResult } from './test_result.js'
-import { UnitTest } from './unit_test.js'
+import { TestResult } from './test-result.js'
+import { UnitTest } from './unit-test.js'
 
 export class Candidate {
     private readonly lines: string[]

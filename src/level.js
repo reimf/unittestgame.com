@@ -2,8 +2,8 @@ import { Candidate } from './candidate.js';
 import { HumanMessage, CheckingMessage, Panel } from './frame.js';
 import { Button, Div, Form, Input, Paragraph } from './html.js';
 import { Random } from './random.js';
-import { TestResult } from './test_result.js';
-import { UnitTest } from './unit_test.js';
+import { TestResult } from './test-result.js';
+import { UnitTest } from './unit-test.js';
 import { Completed } from './completed.js';
 export class Level {
     constructor(methodology, useCase) {

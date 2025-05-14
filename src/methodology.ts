@@ -1,7 +1,7 @@
 import { Candidate } from './candidate.js'
 import { ComputerMessage } from './frame.js'
-import { TestResult } from './test_result.js'
-import { UseCase } from './use_case.js'
+import { TestResult } from './test-result.js'
+import { UseCase } from './use-case.js'
 
 export abstract class Methodology {
     public abstract name(): string

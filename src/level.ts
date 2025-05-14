@@ -3,9 +3,9 @@ import { HumanMessage, CheckingMessage, Panel } from './frame.js'
 import { Methodology } from './methodology.js'
 import { Button, Div, Form, Input, Paragraph, StringMap } from './html.js'
 import { Random } from './random.js'
-import { TestResult } from './test_result.js'
-import { UnitTest } from './unit_test.js'
-import { UseCase } from './use_case.js'
+import { TestResult } from './test-result.js'
+import { UnitTest } from './unit-test.js'
+import { UseCase } from './use-case.js'
 import { Completed } from './completed.js'
 
 export class Level {

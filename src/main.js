@@ -3,17 +3,17 @@ import { Example } from './example.js';
 import { Panel, ComputerMessage, QuestionMessage } from './frame.js';
 import { Div } from './html.js';
 import { Level } from './level.js';
-import { MutationTesting } from './methodology_mutation_testing.js';
-import { TestDrivenDevelopment } from './methodology_test_driven_development.js';
-import { BatteryLevel } from './use_case_battery_level.js';
-import { VotingAge } from './use_case_voting_age.js';
-import { EvenOdd } from './use_case_even_odd.js';
-import { FizzBuzz } from './use_case_fizz_buzz.js';
-import { TriangleType } from './use_case_triangle_type.js';
-import { LeapYear } from './use_case_leap_year.js';
-import { FloatFormat } from './use_case_float_format.js';
-import { PasswordStrength } from './use_case_password_strength.js';
-import { SpeedDisplay } from './use_case_speed_display.js';
+import { MutationTesting } from './methodology-mutation-testing.js';
+import { TestDrivenDevelopment } from './methodology-test-driven-development.js';
+import { BatteryLevel } from './use-case-battery-level.js';
+import { VotingAge } from './use-case-voting-age.js';
+import { EvenOdd } from './use-case-even-odd.js';
+import { FizzBuzz } from './use-case-fizz-buzz.js';
+import { TriangleType } from './use-case-triangle-type.js';
+import { LeapYear } from './use-case-leap-year.js';
+import { FloatFormat } from './use-case-float-format.js';
+import { PasswordStrength } from './use-case-password-strength.js';
+import { SpeedDisplay } from './use-case-speed-display.js';
 export class Main {
     constructor() {
         this.testDrivenDevelopment = new TestDrivenDevelopment();

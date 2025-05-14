@@ -2,7 +2,7 @@ import { Level } from './level.js'
 import { ComputerMessage, HumanMessage } from './frame.js'
 import { Button, Div, Form, Input, Paragraph } from './html.js'
 import { Methodology } from './methodology.js'
-import { UseCase } from './use_case.js'
+import { UseCase } from './use-case.js'
 
 export class Example extends Level {
     private readonly exampleGuidance: Generator<string>

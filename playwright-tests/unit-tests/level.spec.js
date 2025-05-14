@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { Level } from '../../src/level.js';
-import { FakeMethodology } from '../mocks/fake_methodology.js';
-import { FakeUseCase } from '../mocks/fake_use_case.js';
+import { FakeMethodology } from '../mocks/fake-methodology.js';
+import { FakeUseCase } from '../mocks/fake-use-case.js';
 test.describe('class Level', () => {
     test('has a description', () => {
         const methodology = new FakeMethodology();
