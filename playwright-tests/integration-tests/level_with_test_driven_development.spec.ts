@@ -1,16 +1,26 @@
-import { test, expect } from '@playwright/test';
-import { Level } from '../../src/level.js';
-import { TestDrivenDevelopment } from '../../src/methodology_test_driven_development.js';
-import { UnitTest } from '../../src/unit_test.js';
-import { LeapYear } from '../../src/use_case_leap_year.js';
+import { test, expect } from '@playwright/test'
+import { Level } from '../../src/level.js'
+import { TestDrivenDevelopment } from '../../src/methodology_test_driven_development.js'
+import { UnitTest } from '../../src/unit_test.js'
+import { LeapYear } from '../../src/use_case_leap_year.js'
+
+// make tests predictable
+Math.random = () => 0
+
+type TestCase = {
+    unitTests: UnitTest[],
+    simplestPassingCandidate: string,
+}
+
 test.describe('class Level with Test-Driven Development', () => {
-    const useCase = new LeapYear();
-    const unitTest2024 = new UnitTest(useCase.parameters, [2024], useCase.unit, useCase.perfectCandidate.execute([2024]));
-    const unitTest2025 = new UnitTest(useCase.parameters, [2025], useCase.unit, useCase.perfectCandidate.execute([2025]));
-    const unitTest2200 = new UnitTest(useCase.parameters, [2200], useCase.unit, useCase.perfectCandidate.execute([2200]));
-    const unitTest2300 = new UnitTest(useCase.parameters, [2300], useCase.unit, useCase.perfectCandidate.execute([2300]));
-    const unitTest2400 = new UnitTest(useCase.parameters, [2400], useCase.unit, useCase.perfectCandidate.execute([2400]));
-    const testCases = [
+    const useCase = new LeapYear()
+    const unitTest2024 = new UnitTest(useCase.parameters, [2024], useCase.unit, useCase.perfectCandidate.execute([2024]))
+    const unitTest2025 = new UnitTest(useCase.parameters, [2025], useCase.unit, useCase.perfectCandidate.execute([2025]))
+    const unitTest2200 = new UnitTest(useCase.parameters, [2200], useCase.unit, useCase.perfectCandidate.execute([2200]))
+    const unitTest2300 = new UnitTest(useCase.parameters, [2300], useCase.unit, useCase.perfectCandidate.execute([2300]))
+    const unitTest2400 = new UnitTest(useCase.parameters, [2400], useCase.unit, useCase.perfectCandidate.execute([2400]))
+
+    const testCases: TestCase[] = [
         { unitTests: [], simplestPassingCandidate: 'function isLeapYear(year) {\n  return undefined\n}' },
         { unitTests: [unitTest2400], simplestPassingCandidate: 'function isLeapYear(year) {\n  return true\n}' },
         { unitTests: [unitTest2024], simplestPassingCandidate: 'function isLeapYear(year) {\n  return true\n}' },
@@ -336,13 +346,15 @@ test.describe('class Level with Test-Driven Development', () => {
         { unitTests: [unitTest2200, unitTest2025, unitTest2300, unitTest2400, unitTest2024], simplestPassingCandidate: 'function isLeapYear(year) {\n  if (year % 400 === 0) return true\n  if (year % 100 === 0) return false\n  if (year % 4 === 0) return true\n  return false\n}' },
         { unitTests: [unitTest2200, unitTest2025, unitTest2024, unitTest2400, unitTest2300], simplestPassingCandidate: 'function isLeapYear(year) {\n  if (year % 400 === 0) return true\n  if (year % 100 === 0) return false\n  if (year % 4 === 0) return true\n  return false\n}' },
         { unitTests: [unitTest2200, unitTest2025, unitTest2024, unitTest2300, unitTest2400], simplestPassingCandidate: 'function isLeapYear(year) {\n  if (year % 400 === 0) return true\n  if (year % 100 === 0) return false\n  if (year % 4 === 0) return true\n  return false\n}' },
-    ];
+    ]
+
     test.describe('method findSimplestPassingCandidate', () => {
-        const level = new Level(new TestDrivenDevelopment(), useCase);
-        testCases.forEach(({ unitTests, simplestPassingCandidate }) => {
+        const level = new Level(new TestDrivenDevelopment(), useCase)
+
+        testCases.forEach(({ unitTests, simplestPassingCandidate }: TestCase) => {
             test(`finds the simplest passing candidate for unit tests ${unitTests.map(unitTest => unitTest.argumentList)}`, () => {
-                expect(level.findSimplestPassingCandidate(unitTests).toString()).toBe(simplestPassingCandidate);
-            });
-        });
-    });
-});
+                expect(level.findSimplestPassingCandidate(unitTests).toString()).toBe(simplestPassingCandidate)
+            })
+        })
+    })
+})
