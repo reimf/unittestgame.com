@@ -3,7 +3,7 @@ import { Level } from '../../src/level.js';
 import { TestDrivenDevelopment } from '../../src/methodology-test-driven-development.js';
 import { UnitTest } from '../../src/unit-test.js';
 import { LeapYear } from '../../src/use-case-leap-year.js';
-test.describe('class Level with Test-Driven Development', () => {
+test.describe('class Level with ckass Methodology Test-Driven Development', () => {
     const useCase = new LeapYear();
     const unitTest2024 = new UnitTest(useCase.parameters, [2024], useCase.unit, useCase.perfectCandidate.execute([2024]));
     const unitTest2025 = new UnitTest(useCase.parameters, [2025], useCase.unit, useCase.perfectCandidate.execute([2025]));

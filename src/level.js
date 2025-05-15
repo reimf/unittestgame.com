@@ -24,15 +24,18 @@ export class Level {
     isFinished() {
         return this.isLevelFinished.get();
     }
-    play(callback) {
-        this.callback = callback;
+    reset() {
         this.humanUnitTests = [];
         this.previousCandidate = undefined;
         this.coveredCandidate = undefined;
         this.currentCandidate = this.findSimplestPassingCandidate(this.humanUnitTests);
-        this.failingTestResult = this.findFailingTestResult(this.currentCandidate, [this.useCase.hints, this.useCase.minimalUnitTests]);
+        this.failingTestResult = this.findFailingTestResult(this.currentCandidate, this.useCase.hints, this.useCase.minimalUnitTests);
         this.newUnitTest = undefined;
         this.numberOfSubmissions = 0;
+    }
+    play(callback) {
+        this.callback = callback;
+        this.reset();
         this.showCurrentLevelPanel();
         this.methodology.showWelcomeMessage();
         this.menu();
@@ -67,18 +70,18 @@ export class Level {
             return simplestPassingCandidate.combine(simplestCoveredCandidateSoFar);
         }, this.findSimplestPassingCandidate([]));
     }
-    findFailingTestResult(candidate, unitTestsList) {
-        for (const unitTests of unitTestsList) {
+    findFailingTestResult(candidate, hints, minimalUnitTestsList) {
+        for (const unitTests of [hints, minimalUnitTestsList]) {
             const failingUnitTests = candidate.failingTestResults(unitTests);
             if (failingUnitTests.length > 0)
                 return Random.elementFrom(failingUnitTests);
         }
         return undefined;
     }
-    findNumberOfUnitTestsStillNeeded() {
+    findNumberOfUnitTestsStillNeeded(unitTests) {
         for (const subsetOfMinimalUnitTests of this.useCase.subsetsOfMinimalUnitTests) {
-            const unitTests = [...this.humanUnitTests, ...subsetOfMinimalUnitTests];
-            const passingCandidates = this.useCase.candidates.filter(candidate => candidate.passes(unitTests));
+            const extendedUnitTests = [...unitTests, ...subsetOfMinimalUnitTests];
+            const passingCandidates = this.useCase.candidates.filter(candidate => candidate.passes(extendedUnitTests));
             if (passingCandidates.length === this.useCase.perfectCandidates.length)
                 return subsetOfMinimalUnitTests.length;
         }
@@ -132,7 +135,7 @@ export class Level {
             else {
                 this.methodology.showUsefulUnitTestMessage();
                 this.currentCandidate = this.findSimplestPassingCandidate(this.humanUnitTests);
-                this.failingTestResult = this.findFailingTestResult(this.currentCandidate, [this.useCase.hints, this.useCase.minimalUnitTests]);
+                this.failingTestResult = this.findFailingTestResult(this.currentCandidate, this.useCase.hints, this.useCase.minimalUnitTests);
             }
         }
         else
@@ -145,7 +148,8 @@ export class Level {
     submitUnitTests() {
         this.numberOfSubmissions += 1;
         if (this.failingTestResult) {
-            this.methodology.showBugFoundMessage(this.currentCandidate, this.failingTestResult, this.findNumberOfUnitTestsStillNeeded());
+            const numberOfUnitTestsStillNeeded = this.findNumberOfUnitTestsStillNeeded(this.humanUnitTests);
+            this.methodology.showBugFoundMessage(this.currentCandidate, this.failingTestResult, numberOfUnitTestsStillNeeded);
             this.menu();
         }
         else

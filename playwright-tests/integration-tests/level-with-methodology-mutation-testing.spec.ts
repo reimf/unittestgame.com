@@ -1,16 +1,23 @@
-import { test, expect } from '@playwright/test';
-import { Level } from '../../src/level.js';
-import { MutationTesting } from '../../src/methodology-mutation-testing.js';
-import { UnitTest } from '../../src/unit-test.js';
-import { LeapYear } from '../../src/use-case-leap-year.js';
-test.describe('class Level with Mutation Testing', () => {
-    const useCase = new LeapYear();
-    const unitTest2024 = new UnitTest(useCase.parameters, [2024], useCase.unit, useCase.perfectCandidate.execute([2024]));
-    const unitTest2025 = new UnitTest(useCase.parameters, [2025], useCase.unit, useCase.perfectCandidate.execute([2025]));
-    const unitTest2200 = new UnitTest(useCase.parameters, [2200], useCase.unit, useCase.perfectCandidate.execute([2200]));
-    const unitTest2300 = new UnitTest(useCase.parameters, [2300], useCase.unit, useCase.perfectCandidate.execute([2300]));
-    const unitTest2400 = new UnitTest(useCase.parameters, [2400], useCase.unit, useCase.perfectCandidate.execute([2400]));
-    const testCases = [
+import { test, expect } from '@playwright/test'
+import { Level } from '../../src/level.js'
+import { MutationTesting } from '../../src/methodology-mutation-testing.js'
+import { UnitTest } from '../../src/unit-test.js'
+import { LeapYear } from '../../src/use-case-leap-year.js'
+
+type TestCase = {
+    unitTests: UnitTest[],
+    simplestCoveredCandidate: string
+}
+
+test.describe('class Level with class Methodology Mutation Testing', () => {
+    const useCase = new LeapYear()
+    const unitTest2024 = new UnitTest(useCase.parameters, [2024], useCase.unit, useCase.perfectCandidate.execute([2024]))
+    const unitTest2025 = new UnitTest(useCase.parameters, [2025], useCase.unit, useCase.perfectCandidate.execute([2025]))
+    const unitTest2200 = new UnitTest(useCase.parameters, [2200], useCase.unit, useCase.perfectCandidate.execute([2200]))
+    const unitTest2300 = new UnitTest(useCase.parameters, [2300], useCase.unit, useCase.perfectCandidate.execute([2300]))
+    const unitTest2400 = new UnitTest(useCase.parameters, [2400], useCase.unit, useCase.perfectCandidate.execute([2400]))
+
+    const testCases: TestCase[] = [
         { unitTests: [], simplestCoveredCandidate: 'function isLeapYear(year) {\n  return undefined\n}' },
         { unitTests: [unitTest2400], simplestCoveredCandidate: 'function isLeapYear(year) {\n  if (year % 400 === 0) return true\n  return undefined\n}' },
         { unitTests: [unitTest2024], simplestCoveredCandidate: 'function isLeapYear(year) {\n  if (year % 4 === 0) return true\n  return undefined\n}' },
@@ -336,13 +343,15 @@ test.describe('class Level with Mutation Testing', () => {
         { unitTests: [unitTest2200, unitTest2025, unitTest2300, unitTest2400, unitTest2024], simplestCoveredCandidate: 'function isLeapYear(year) {\n  if (year % 400 === 0) return true\n  if (year % 100 === 0) return false\n  if (year % 4 === 0) return true\n  return false\n}' },
         { unitTests: [unitTest2200, unitTest2025, unitTest2024, unitTest2400, unitTest2300], simplestCoveredCandidate: 'function isLeapYear(year) {\n  if (year % 400 === 0) return true\n  if (year % 100 === 0) return false\n  if (year % 4 === 0) return true\n  return false\n}' },
         { unitTests: [unitTest2200, unitTest2025, unitTest2024, unitTest2300, unitTest2400], simplestCoveredCandidate: 'function isLeapYear(year) {\n  if (year % 400 === 0) return true\n  if (year % 100 === 0) return false\n  if (year % 4 === 0) return true\n  return false\n}' },
-    ];
+    ]
+
     test.describe('method findSimplestCoveredCandidate', () => {
-        const level = new Level(new MutationTesting(), useCase);
-        testCases.forEach(({ unitTests, simplestCoveredCandidate }) => {
+        const level = new Level(new MutationTesting(), useCase)
+
+        testCases.forEach(({ unitTests, simplestCoveredCandidate }: TestCase) => {
             test(`finds the simplest covered candidate with unit tests ${unitTests.map(unitTest => unitTest.argumentList)}`, () => {
-                expect(level.findSimplestCoveredCandidate(unitTests).toString()).toBe(simplestCoveredCandidate);
-            });
-        });
-    });
-});
+                expect(level.findSimplestCoveredCandidate(unitTests).toString()).toBe(simplestCoveredCandidate)
+            })
+        })
+    })
+})

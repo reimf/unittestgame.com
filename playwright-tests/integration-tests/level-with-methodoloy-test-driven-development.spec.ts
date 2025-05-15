@@ -9,7 +9,7 @@ type TestCase = {
     simplestPassingCandidates: string[],
 }
 
-test.describe('class Level with Test-Driven Development', () => {
+test.describe('class Level with ckass Methodology Test-Driven Development', () => {
     const useCase = new LeapYear()
     const unitTest2024 = new UnitTest(useCase.parameters, [2024], useCase.unit, useCase.perfectCandidate.execute([2024]))
     const unitTest2025 = new UnitTest(useCase.parameters, [2025], useCase.unit, useCase.perfectCandidate.execute([2025]))

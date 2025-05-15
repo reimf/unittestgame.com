@@ -36,15 +36,19 @@ export class Level {
         return this.isLevelFinished.get()
     }
 
-    public play(callback: () => void): void {
-        this.callback = callback
+    private reset(): void {
         this.humanUnitTests = []
         this.previousCandidate = undefined
         this.coveredCandidate = undefined
         this.currentCandidate = this.findSimplestPassingCandidate(this.humanUnitTests)
-        this.failingTestResult = this.findFailingTestResult(this.currentCandidate, [this.useCase.hints, this.useCase.minimalUnitTests])
+        this.failingTestResult = this.findFailingTestResult(this.currentCandidate, this.useCase.hints, this.useCase.minimalUnitTests)
         this.newUnitTest = undefined
         this.numberOfSubmissions = 0
+    }
+
+    public play(callback: () => void): void {
+        this.callback = callback
+        this.reset()
         this.showCurrentLevelPanel()
         this.methodology.showWelcomeMessage()
         this.menu()
@@ -83,8 +87,8 @@ export class Level {
         }, this.findSimplestPassingCandidate([]))
     }
 
-    private findFailingTestResult(candidate: Candidate, unitTestsList: UnitTest[][]): TestResult|undefined {
-        for (const unitTests of unitTestsList) {
+    private findFailingTestResult(candidate: Candidate, hints: UnitTest[], minimalUnitTestsList: UnitTest[]): TestResult|undefined {
+        for (const unitTests of [hints, minimalUnitTestsList]) {
             const failingUnitTests = candidate.failingTestResults(unitTests)
             if (failingUnitTests.length > 0)
                 return Random.elementFrom(failingUnitTests)
@@ -92,10 +96,10 @@ export class Level {
         return undefined
     }
 
-    private findNumberOfUnitTestsStillNeeded(): number {
+    public findNumberOfUnitTestsStillNeeded(unitTests: UnitTest[]): number {
         for (const subsetOfMinimalUnitTests of this.useCase.subsetsOfMinimalUnitTests) {
-            const unitTests = [...this.humanUnitTests, ...subsetOfMinimalUnitTests]
-            const passingCandidates = this.useCase.candidates.filter(candidate => candidate.passes(unitTests))
+            const extendedUnitTests = [...unitTests, ...subsetOfMinimalUnitTests]
+            const passingCandidates = this.useCase.candidates.filter(candidate => candidate.passes(extendedUnitTests))
             if (passingCandidates.length === this.useCase.perfectCandidates.length)
                 return subsetOfMinimalUnitTests.length
         }
@@ -160,7 +164,7 @@ export class Level {
             else {
                 this.methodology.showUsefulUnitTestMessage()
                 this.currentCandidate = this.findSimplestPassingCandidate(this.humanUnitTests)
-                this.failingTestResult = this.findFailingTestResult(this.currentCandidate, [this.useCase.hints, this.useCase.minimalUnitTests])
+                this.failingTestResult = this.findFailingTestResult(this.currentCandidate, this.useCase.hints, this.useCase.minimalUnitTests)
             }
         }
         else
@@ -175,7 +179,8 @@ export class Level {
     private submitUnitTests(): void {
         this.numberOfSubmissions += 1
         if (this.failingTestResult) {
-            this.methodology.showBugFoundMessage(this.currentCandidate, this.failingTestResult, this.findNumberOfUnitTestsStillNeeded())
+            const numberOfUnitTestsStillNeeded = this.findNumberOfUnitTestsStillNeeded(this.humanUnitTests)
+            this.methodology.showBugFoundMessage(this.currentCandidate, this.failingTestResult, numberOfUnitTestsStillNeeded)
             this.menu()
         }
         else
