@@ -64,10 +64,10 @@ export class Level {
     }
     findSimplestCoveredCandidate(unitTests) {
         return unitTests.reduce((simplestCoveredCandidateSoFar, unitTest) => {
-            const passingCandidates = this.useCase.amputeesOfPerfectCandidate
+            const passingAmputeesOfPerfectCandidate = this.useCase.amputeesOfPerfectCandidate
                 .filter(candidate => candidate.passes([unitTest]));
-            const simplestPassingCandidate = this.findSimplestCandidate(passingCandidates);
-            return simplestPassingCandidate.combine(simplestCoveredCandidateSoFar);
+            const simplestPassingAmputeeOfPerfectCandidate = this.findSimplestCandidate(passingAmputeesOfPerfectCandidate);
+            return simplestPassingAmputeeOfPerfectCandidate.combine(simplestCoveredCandidateSoFar);
         }, this.findSimplestPassingCandidate([]));
     }
     findFailingTestResult(candidate, hints, minimalUnitTestsList) {

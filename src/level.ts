@@ -80,10 +80,10 @@ export class Level {
 
     public findSimplestCoveredCandidate(unitTests: UnitTest[]): Candidate {
         return unitTests.reduce((simplestCoveredCandidateSoFar: Candidate, unitTest: UnitTest) => {
-            const passingCandidates = this.useCase.amputeesOfPerfectCandidate
+            const passingAmputeesOfPerfectCandidate = this.useCase.amputeesOfPerfectCandidate
                 .filter(candidate => candidate.passes([unitTest]))
-            const simplestPassingCandidate = this.findSimplestCandidate(passingCandidates)
-            return simplestPassingCandidate.combine(simplestCoveredCandidateSoFar)
+            const simplestPassingAmputeeOfPerfectCandidate = this.findSimplestCandidate(passingAmputeesOfPerfectCandidate)
+            return simplestPassingAmputeeOfPerfectCandidate.combine(simplestCoveredCandidateSoFar)
         }, this.findSimplestPassingCandidate([]))
     }
 
