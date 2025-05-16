@@ -24,8 +24,8 @@ export class TestCases {
             })
         )
         const pathname = path.resolve(__dirname, 'test-cases.json')
-        const jsonContent = fs.readFileSync(pathname, 'utf8')
-        this.all = JSON.parse(jsonContent) as TestCase[]
+        const text = fs.readFileSync(pathname, 'utf8')
+        this.all = JSON.parse(text) as TestCase[]
         for (const testCase of this.all)
             testCase.unitTests = testCase.years.map(year => unitTestMap.get(year)!)
     }

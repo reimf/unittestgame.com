@@ -10,8 +10,8 @@ export class TestCases {
             return [year, unitTest];
         }));
         const pathname = path.resolve(__dirname, 'test-cases.json');
-        const jsonContent = fs.readFileSync(pathname, 'utf8');
-        this.all = JSON.parse(jsonContent);
+        const text = fs.readFileSync(pathname, 'utf8');
+        this.all = JSON.parse(text);
         for (const testCase of this.all)
             testCase.unitTests = testCase.years.map(year => unitTestMap.get(year));
     }
