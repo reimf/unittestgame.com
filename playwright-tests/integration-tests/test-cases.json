@@ -1718,17 +1718,6 @@
         "numberOfUnitTestsStillNeeded": 0
     },
     {
-        "years": [2200, 2400, 2025, 2024],
-        "simplestCoveredCandidate": "function isLeapYear(year) {\n  if (year % 400 === 0) return true\n  if (year % 100 === 0) return false\n  if (year % 4 === 0) return true\n  return false\n}",
-        "simplestPassingCandidatesMutationTesting": [
-            "function isLeapYear(year) {\n  if (year % 400 === 0) return true\n  if (year % 100 === 0) return false\n  if (year % 4 === 0) return true\n  return false\n}"
-        ],
-        "simplestPassingCandidatesTestDrivenDevelopment": [
-            "function isLeapYear(year) {\n  if (year % 400 === 0) return true\n  if (year % 100 === 0) return false\n  if (year % 4 === 0) return true\n  return false\n}"
-        ],
-        "numberOfUnitTestsStillNeeded": 0
-    },
-    {
         "years": [2200, 2400, 2024, 2300],
         "simplestCoveredCandidate": "function isLeapYear(year) {\n  if (year % 400 === 0) return true\n  if (year % 100 === 0) return false\n  if (year % 4 === 0) return true\n  return undefined\n}",
         "simplestPassingCandidatesMutationTesting": [
@@ -1738,6 +1727,17 @@
             "function isLeapYear(year) {\n  if (year % 400 === 0) return true\n  if (year % 100 === 0) return false\n  return true\n}"
         ],
         "numberOfUnitTestsStillNeeded": 1
+    },
+    {
+        "years": [2200, 2400, 2025, 2024],
+        "simplestCoveredCandidate": "function isLeapYear(year) {\n  if (year % 400 === 0) return true\n  if (year % 100 === 0) return false\n  if (year % 4 === 0) return true\n  return false\n}",
+        "simplestPassingCandidatesMutationTesting": [
+            "function isLeapYear(year) {\n  if (year % 400 === 0) return true\n  if (year % 100 === 0) return false\n  if (year % 4 === 0) return true\n  return false\n}"
+        ],
+        "simplestPassingCandidatesTestDrivenDevelopment": [
+            "function isLeapYear(year) {\n  if (year % 400 === 0) return true\n  if (year % 100 === 0) return false\n  if (year % 4 === 0) return true\n  return false\n}"
+        ],
+        "numberOfUnitTestsStillNeeded": 0
     },
     {
         "years": [2200, 2400, 2025, 2300],
