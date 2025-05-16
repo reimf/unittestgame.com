@@ -4,8 +4,28 @@ import { FloatFormat } from '../../src/use-case-float-format.js'
 test.describe('class FloatFormat', () => {
     const useCase = new FloatFormat()
 
-    test('has perfect candidates', () => {
-        expect(useCase.perfectCandidates).not.toHaveLength(0)
+    test('has the right amount of parameters', () => {
+        expect(useCase.parameters).toHaveLength(1)
+    })
+
+    test('has the right amount of candidates', () => {
+        expect(useCase.candidates).toHaveLength(1456)
+    })
+
+    test('has the right amount of minimal unit tests', () => {
+        expect(useCase.minimalUnitTests).toHaveLength(7)
+    })
+
+    test('has the right amount of subsets minimal unit tests', () => {
+        expect(useCase.subsetsOfMinimalUnitTests).toHaveLength(128)
+    })
+
+    test('has the right amount of perfect candidates', () => {
+        expect(useCase.perfectCandidates).toHaveLength(1)
+    })
+
+    test('has the right amount of amputees of the perfect candidate', () => {
+        expect(useCase.amputeesOfPerfectCandidate).toHaveLength(16)
     })
 
     test('perfect candidates pass all hints', () => {

@@ -2,8 +2,23 @@ import { test, expect } from '@playwright/test';
 import { FizzBuzz } from '../../src/use-case-fizz-buzz.js';
 test.describe('class FizzBuzz', () => {
     const useCase = new FizzBuzz();
-    test('has perfect candidates', () => {
-        expect(useCase.perfectCandidates).not.toHaveLength(0);
+    test('has the right amount of parameters', () => {
+        expect(useCase.parameters).toHaveLength(1);
+    });
+    test('has the right amount of candidates', () => {
+        expect(useCase.candidates).toHaveLength(135);
+    });
+    test('has the right amount of minimal unit tests', () => {
+        expect(useCase.minimalUnitTests).toHaveLength(4);
+    });
+    test('has the right amount of subsets minimal unit tests', () => {
+        expect(useCase.subsetsOfMinimalUnitTests).toHaveLength(16);
+    });
+    test('has the right amount of perfect candidates', () => {
+        expect(useCase.perfectCandidates).toHaveLength(1);
+    });
+    test('has the right amount of amputees of the perfect candidate', () => {
+        expect(useCase.amputeesOfPerfectCandidate).toHaveLength(16);
     });
     test('perfect candidates pass all hints', () => {
         const failingCandidates = useCase.perfectCandidates.filter(candidate => !candidate.passes(useCase.hints));

@@ -4,8 +4,28 @@ import { BatteryLevel } from '../../src/use-case-battery-level.js'
 test.describe('class BatteryLevel', () => {
     const useCase = new BatteryLevel()
 
-    test('has perfect candidates', () => {
-        expect(useCase.perfectCandidates).not.toHaveLength(0)
+    test('has the right amount of parameters', () => {
+        expect(useCase.parameters).toHaveLength(1)
+    })
+
+    test('has the right amount of candidates', () => {
+        expect(useCase.candidates).toHaveLength(39)
+    })
+
+    test('has the right amount of minimal unit tests', () => {
+        expect(useCase.minimalUnitTests).toHaveLength(4)
+    })
+
+    test('has the right amount of subsets minimal unit tests', () => {
+        expect(useCase.subsetsOfMinimalUnitTests).toHaveLength(16)
+    })
+
+    test('has the right amount of perfect candidates', () => {
+        expect(useCase.perfectCandidates).toHaveLength(2)
+    })
+
+    test('has the right amount of amputees of the perfect candidate', () => {
+        expect(useCase.amputeesOfPerfectCandidate).toHaveLength(4)
     })
 
     test('perfect candidates pass all hints', () => {

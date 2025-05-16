@@ -4,8 +4,28 @@ import { TriangleType } from '../../src/use-case-triangle-type.js'
 test.describe('class TriangleType', () => {
     const useCase = new TriangleType()
 
-    test('has perfect candidates', () => {
-        expect(useCase.perfectCandidates).not.toHaveLength(0)
+    test('has the right amount of parameters', () => {
+        expect(useCase.parameters).toHaveLength(3)
+    })
+
+    test('has the right amount of candidates', () => {
+        expect(useCase.candidates).toHaveLength(216)
+    })
+
+    test('has the right amount of minimal unit tests', () => {
+        expect(useCase.minimalUnitTests).toHaveLength(5)
+    })
+
+    test('has the right amount of subsets minimal unit tests', () => {
+        expect(useCase.subsetsOfMinimalUnitTests).toHaveLength(32)
+    })
+
+    test('has the right amount of perfect candidates', () => {
+        expect(useCase.perfectCandidates).toHaveLength(2)
+    })
+
+    test('has the right amount of amputees of the perfect candidate', () => {
+        expect(useCase.amputeesOfPerfectCandidate).toHaveLength(8)
     })
 
     test('perfect candidates pass all hints', () => {
