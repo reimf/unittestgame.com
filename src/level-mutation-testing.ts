@@ -1,10 +1,10 @@
 import { Candidate } from './candidate.js'
 import { Panel, ComputerMessage } from './frame.js'
-import { Methodology } from './methodology.js'
+import { Level } from './level.js'
 import { TestResult } from './test-result.js'
 import { UseCase } from './use-case.js'
 
-export class MutationTesting extends Methodology {
+export class MutationTesting extends Level {
     public name(): string {
         return 'Mutation Testing'
     }

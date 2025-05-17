@@ -1,6 +1,6 @@
 import { test, expect, Page } from '@playwright/test'
 
-test.describe('mt submit insufficient unit test', () => {
+test.describe('mt submit sufficient unit test', () => {
     let page: Page
 
     test.beforeAll(async ({ browser }) => {

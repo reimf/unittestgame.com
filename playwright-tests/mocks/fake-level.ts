@@ -1,9 +1,9 @@
 import { Candidate } from '../../src/candidate.js'
-import { Methodology } from '../../src/methodology.js'
+import { Level } from '../../src/level.js'
 import { TestResult } from '../../src/test-result.js'
 
-export class FakeMethodology extends Methodology {
-    public name(): string { return 'Fake Methodology' }
+export class FakeLevel extends Level {
+    public name(): string { return 'Fake Level' }
     public showBasicDefinition(): void { }
     public compareComplexity(_candidate: Candidate, _otherCandidate: Candidate): number { return 0 }
     public showExample(_callback: () => void): void { }

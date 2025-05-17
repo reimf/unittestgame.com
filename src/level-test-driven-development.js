@@ -1,6 +1,6 @@
 import { Panel, ComputerMessage } from './frame.js';
-import { Methodology } from './methodology.js';
-export class TestDrivenDevelopment extends Methodology {
+import { Level } from './level.js';
+export class TestDrivenDevelopment extends Level {
     name() {
         return 'Test-Driven Development';
     }

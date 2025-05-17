@@ -1,6 +1,6 @@
 import { Panel, ComputerMessage } from './frame.js';
-import { Methodology } from './methodology.js';
-export class MutationTesting extends Methodology {
+import { Level } from './level.js';
+export class MutationTesting extends Level {
     name() {
         return 'Mutation Testing';
     }

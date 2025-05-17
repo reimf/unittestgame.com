@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-test.describe('mt submit insufficient unit test', () => {
+test.describe('mt submit sufficient unit test', () => {
     let page;
     test.beforeAll(async ({ browser }) => {
         const context = await browser.newContext();

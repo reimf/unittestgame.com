@@ -1,9 +1,8 @@
 import { Completed } from './completed.js';
 import { Panel, ComputerMessage, QuestionMessage } from './frame.js';
 import { Div } from './html.js';
-import { Level } from './level.js';
-import { MutationTesting } from './methodology-mutation-testing.js';
-import { TestDrivenDevelopment } from './methodology-test-driven-development.js';
+import { MutationTesting } from './level-mutation-testing.js';
+import { TestDrivenDevelopment } from './level-test-driven-development.js';
 import { BatteryLevel } from './use-case-battery-level.js';
 import { VotingAge } from './use-case-voting-age.js';
 import { EvenOdd } from './use-case-even-odd.js';
@@ -15,9 +14,6 @@ import { PasswordStrength } from './use-case-password-strength.js';
 import { SpeedDisplay } from './use-case-speed-display.js';
 export class Main {
     constructor() {
-        this.testDrivenDevelopment = new TestDrivenDevelopment();
-        this.mutationTesting = new MutationTesting();
-        this.methodologies = [this.testDrivenDevelopment, this.mutationTesting];
         this.batteryLevel = new BatteryLevel();
         this.votingAge = new VotingAge();
         this.evenOdd = new EvenOdd();
@@ -27,25 +23,28 @@ export class Main {
         this.floatFormat = new FloatFormat();
         this.passwordStrength = new PasswordStrength();
         this.speedDisplay = new SpeedDisplay();
+        this.exampleTestDrivenDevelopment = new TestDrivenDevelopment(this.batteryLevel);
+        this.exampleMutationTesting = new MutationTesting(this.batteryLevel);
+        this.examples = [this.exampleTestDrivenDevelopment, this.exampleMutationTesting];
         this.levels = [
-            new Level(this.testDrivenDevelopment, this.batteryLevel),
-            new Level(this.testDrivenDevelopment, this.votingAge),
-            new Level(this.mutationTesting, this.batteryLevel),
-            new Level(this.mutationTesting, this.evenOdd),
-            new Level(this.testDrivenDevelopment, this.fizzBuzz),
-            new Level(this.mutationTesting, this.triangleType),
-            new Level(this.testDrivenDevelopment, this.evenOdd),
-            new Level(this.mutationTesting, this.votingAge),
-            new Level(this.testDrivenDevelopment, this.triangleType),
-            new Level(this.mutationTesting, this.fizzBuzz),
-            new Level(this.testDrivenDevelopment, this.leapYear),
-            new Level(this.mutationTesting, this.passwordStrength),
-            new Level(this.testDrivenDevelopment, this.speedDisplay),
-            new Level(this.mutationTesting, this.floatFormat),
-            new Level(this.testDrivenDevelopment, this.passwordStrength),
-            new Level(this.mutationTesting, this.leapYear),
-            new Level(this.testDrivenDevelopment, this.floatFormat),
-            new Level(this.mutationTesting, this.speedDisplay),
+            this.exampleTestDrivenDevelopment,
+            new TestDrivenDevelopment(this.votingAge),
+            this.exampleMutationTesting,
+            new MutationTesting(this.evenOdd),
+            new TestDrivenDevelopment(this.fizzBuzz),
+            new MutationTesting(this.triangleType),
+            new TestDrivenDevelopment(this.evenOdd),
+            new MutationTesting(this.votingAge),
+            new TestDrivenDevelopment(this.triangleType),
+            new MutationTesting(this.fizzBuzz),
+            new TestDrivenDevelopment(this.leapYear),
+            new MutationTesting(this.passwordStrength),
+            new TestDrivenDevelopment(this.speedDisplay),
+            new MutationTesting(this.floatFormat),
+            new TestDrivenDevelopment(this.passwordStrength),
+            new MutationTesting(this.leapYear),
+            new TestDrivenDevelopment(this.floatFormat),
+            new MutationTesting(this.speedDisplay),
         ];
         this.isSidebarShown = new Completed('Main - Sidebar Shown');
     }
@@ -59,8 +58,8 @@ export class Main {
     sidebar() {
         this.isSidebarShown.set(1);
         this.showUnittestgamePanel();
-        for (const methodology of this.methodologies)
-            methodology.showBasicDefinition();
+        for (const example of this.examples)
+            example.showBasicDefinition();
         this.continue();
     }
     continue(previousLevel) {
@@ -83,9 +82,9 @@ export class Main {
         new QuestionMessage('I want a sidebar with information on terms with a purple background', () => callback()).add();
     }
     showUnittestgamePanel() {
-        const methodologies = this.methodologies.map(methodology => methodology.name()).join(' and ');
+        const names = this.examples.map(example => example.name()).join(' and ');
         new Panel('UnitTestGame', [
-            `Learn to write effective unit tests using ${methodologies}. ` +
+            `Learn to write effective unit tests using ${names}. ` +
                 '[Give feedback](mailto:feedback@unittestgame.com)',
         ]).show();
     }
