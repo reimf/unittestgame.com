@@ -1,5 +1,4 @@
 import { Completed } from './completed.js';
-import { Example } from './example.js';
 import { Panel, ComputerMessage, QuestionMessage } from './frame.js';
 import { Div } from './html.js';
 import { Level } from './level.js';
@@ -29,9 +28,9 @@ export class Main {
         this.passwordStrength = new PasswordStrength();
         this.speedDisplay = new SpeedDisplay();
         this.levels = [
-            new Example(this.testDrivenDevelopment, this.batteryLevel),
+            new Level(this.testDrivenDevelopment, this.batteryLevel),
             new Level(this.testDrivenDevelopment, this.votingAge),
-            new Example(this.mutationTesting, this.batteryLevel),
+            new Level(this.mutationTesting, this.batteryLevel),
             new Level(this.mutationTesting, this.evenOdd),
             new Level(this.testDrivenDevelopment, this.fizzBuzz),
             new Level(this.mutationTesting, this.triangleType),

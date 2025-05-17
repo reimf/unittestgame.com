@@ -11,9 +11,6 @@ export class MutationTesting extends Methodology {
                 '[Read more](https://en.wikipedia.org/wiki/Mutation_testing)',
         ]).show();
     }
-    compareComplexity(candidate, otherCandidate) {
-        return candidate.compareComplexityMutationTesting(otherCandidate);
-    }
     showWelcomeMessage() {
         new ComputerMessage(['You read *The Function* and write *Unit Tests* that pass.']).add();
         new ComputerMessage(['After adding a unit test, I show the line coverage of *The Function*.']).add();
@@ -47,5 +44,8 @@ export class MutationTesting extends Methodology {
     }
     *exampleGuidanceGenerator(useCase) {
         yield* useCase.exampleGuidanceGeneratorMutationTesting();
+    }
+    compareComplexity(candidate, otherCandidate) {
+        return candidate.compareComplexityMutationTesting(otherCandidate);
     }
 }

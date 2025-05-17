@@ -16,10 +16,6 @@ export class TestDrivenDevelopment extends Methodology {
         ]).show()
     }
 
-    public compareComplexity(candidate: Candidate, otherCandidate: Candidate): number {
-        return candidate.compareComplexityTestDrivenDevelopment(otherCandidate)
-    }
-
     public showWelcomeMessage(): void {
         new ComputerMessage(['You read the *Specification* and write *Unit Tests* that fail the *Current Function*.']).add()
         new ComputerMessage(['After adding a unit test I (the AI bot) rewrite the *Current Function* such that it passes the *Unit Tests*.']).add()
@@ -66,5 +62,9 @@ export class TestDrivenDevelopment extends Methodology {
 
     public* exampleGuidanceGenerator(useCase: UseCase): Generator<string> {
         yield* useCase.exampleGuidanceGeneratorTestDrivenDevelopment()
+    }
+
+    protected compareComplexity(candidate: Candidate, otherCandidate: Candidate): number {
+        return candidate.compareComplexityTestDrivenDevelopment(otherCandidate)
     }
 }

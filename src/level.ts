@@ -1,17 +1,17 @@
 import { Candidate } from './candidate.js'
-import { HumanMessage, CheckingMessage, Panel } from './frame.js'
+import { HumanMessage, CheckingMessage, Panel, ComputerMessage } from './frame.js'
 import { Methodology } from './methodology.js'
 import { Button, Div, Form, Input, Paragraph, StringMap } from './html.js'
-import { Random } from './random.js'
 import { TestResult } from './test-result.js'
 import { UnitTest } from './unit-test.js'
 import { UseCase } from './use-case.js'
 import { Completed } from './completed.js'
 
 export class Level {
-    public readonly methodology: Methodology
-    public readonly useCase: UseCase
+    protected readonly methodology: Methodology
+    protected readonly useCase: UseCase
     private readonly isLevelFinished: Completed
+    private readonly exampleGuidance: Generator<string>
 
     private callback?: () => void
     private humanUnitTests: UnitTest[] = []
@@ -26,6 +26,12 @@ export class Level {
         this.methodology = methodology
         this.useCase = useCase
         this.isLevelFinished = new Completed(this.description())
+        this.exampleGuidance = methodology.exampleGuidanceGenerator(useCase)        
+    }
+
+    private nextGuidance(): string {
+        const text = this.exampleGuidance.next()
+        return text.done ? '' : text.value
     }
 
     public description(): string {
@@ -40,8 +46,8 @@ export class Level {
         this.humanUnitTests = []
         this.previousCandidate = undefined
         this.coveredCandidate = undefined
-        this.currentCandidate = this.findSimplestPassingCandidate(this.humanUnitTests)
-        this.failingTestResult = this.findFailingTestResult(this.currentCandidate, this.useCase.hints, this.useCase.minimalUnitTests)
+        this.currentCandidate = this.methodology.findSimplestPassingCandidate(this.useCase.candidates, this.useCase.perfectCandidates, this.humanUnitTests)
+        this.failingTestResult = this.methodology.findFailingTestResult(this.currentCandidate, this.useCase.hints, this.useCase.minimalUnitTests)
         this.newUnitTest = undefined
         this.numberOfSubmissions = 0
     }
@@ -50,60 +56,14 @@ export class Level {
         this.callback = callback
         this.reset()
         this.showCurrentLevelPanel()
+        const firstMessage = this.nextGuidance()
+        if (firstMessage)
+            new ComputerMessage([firstMessage]).add()
+        const secondMessage = this.nextGuidance()
+        if (secondMessage)
+            new ComputerMessage([secondMessage]).add()
         this.methodology.showWelcomeMessage()
         this.menu()
-    }
-
-    private findSimplestCandidate(candidates: Candidate[]): Candidate {
-        const simplestCandidates = candidates.reduce((simplestCandidatesSoFar: Candidate[], candidate) => {
-            if (simplestCandidatesSoFar.length === 0)
-                return [candidate]
-            const sign = this.methodology.compareComplexity(candidate, simplestCandidatesSoFar[0])
-            if (sign < 0)
-                return [candidate]
-            if (sign > 0)
-                return simplestCandidatesSoFar
-            return [...simplestCandidatesSoFar, candidate]
-        }, [])
-        return Random.elementFrom(simplestCandidates)
-    }
-
-    public findSimplestPassingCandidate(unitTests: UnitTest[]): Candidate {
-        const passingCandidates = this.useCase.candidates
-            .filter(candidate => candidate.passes(unitTests))
-        const passingImperfectCandidates = passingCandidates
-            .filter(candidate => !this.useCase.perfectCandidates.includes(candidate))
-        if (passingImperfectCandidates.length === 0)
-            return Random.elementFrom(this.useCase.perfectCandidates)
-        return this.findSimplestCandidate(passingImperfectCandidates)
-    }
-
-    public findSimplestCoveredCandidate(unitTests: UnitTest[]): Candidate {
-        return unitTests.reduce((simplestCoveredCandidateSoFar: Candidate, unitTest: UnitTest) => {
-            const passingAmputeesOfPerfectCandidate = this.useCase.amputeesOfPerfectCandidate
-                .filter(candidate => candidate.passes([unitTest]))
-            const simplestPassingAmputeeOfPerfectCandidate = this.findSimplestCandidate(passingAmputeesOfPerfectCandidate)
-            return simplestPassingAmputeeOfPerfectCandidate.combine(simplestCoveredCandidateSoFar)
-        }, this.findSimplestPassingCandidate([]))
-    }
-
-    private findFailingTestResult(candidate: Candidate, hints: UnitTest[], minimalUnitTestsList: UnitTest[]): TestResult|undefined {
-        for (const unitTests of [hints, minimalUnitTestsList]) {
-            const failingUnitTests = candidate.failingTestResults(unitTests)
-            if (failingUnitTests.length > 0)
-                return Random.elementFrom(failingUnitTests)
-        }
-        return undefined
-    }
-
-    public findNumberOfUnitTestsStillNeeded(unitTests: UnitTest[]): number {
-        for (const subsetOfMinimalUnitTests of this.useCase.subsetsOfMinimalUnitTests) {
-            const extendedUnitTests = [...unitTests, ...subsetOfMinimalUnitTests]
-            const passingCandidates = this.useCase.candidates.filter(candidate => candidate.passes(extendedUnitTests))
-            if (passingCandidates.length === this.useCase.perfectCandidates.length)
-                return subsetOfMinimalUnitTests.length
-        }
-        return Infinity
     }
 
     private showCurrentLevelPanel(): void {
@@ -130,8 +90,19 @@ export class Level {
     }
 
     protected showMenuMessage(): void {
-        const fields = [...this.useCase.parameters, this.useCase.unit].map(variable => variable.toHtml())
-        const submitButton = new Input().setType('submit').setValue('I want to add this unit test')
+        const message = this.nextGuidance()
+        if (message)
+            new ComputerMessage([message]).add()
+        const buttonToClick = this.nextGuidance()
+        const fields = [...this.useCase.parameters, this.useCase.unit].map(variable => variable
+            .setValue(buttonToClick === 'I want to add this unit test' ? this.nextGuidance() : '')
+            .setDisabled(buttonToClick !== '')
+            .toHtml()
+        )
+        const submitButton = new Input()
+            .setType('submit')
+            .setValue('I want to add this unit test')
+            .setDisabled(buttonToClick === 'I want to submit the unit tests')
         new HumanMessage([
             new Form()
                 .onSubmit(formData => this.prepareAddUnitTest(formData))
@@ -139,7 +110,10 @@ export class Level {
                 .appendChild(new Paragraph().appendChild(submitButton)),
             new Div().appendText('OR').addClass('or'),
             new Paragraph().appendChild(
-                new Button().appendText('I want to submit the unit tests').onClick(() => this.prepareSubmitUnitTests())
+                new Button()
+                    .appendText('I want to submit the unit tests')
+                    .onClick(() => this.prepareSubmitUnitTests())
+                    .setDisabled(buttonToClick === 'I want to add this unit test')
             ),
         ]).add()
     }
@@ -158,13 +132,13 @@ export class Level {
             this.newUnitTest = unitTest
             this.humanUnitTests.push(unitTest)
             this.previousCandidate = this.currentCandidate
-            this.coveredCandidate = this.findSimplestCoveredCandidate(this.humanUnitTests)
+            this.coveredCandidate = this.methodology.findSimplestCoveredCandidate(this.useCase.amputeesOfPerfectCandidate, this.humanUnitTests)
             if (new TestResult(this.currentCandidate, unitTest).passes)
                 this.methodology.showUselessUnitTestMessage()
             else {
                 this.methodology.showUsefulUnitTestMessage()
-                this.currentCandidate = this.findSimplestPassingCandidate(this.humanUnitTests)
-                this.failingTestResult = this.findFailingTestResult(this.currentCandidate, this.useCase.hints, this.useCase.minimalUnitTests)
+                this.currentCandidate = this.methodology.findSimplestPassingCandidate(this.useCase.candidates, this.useCase.perfectCandidates, this.humanUnitTests)
+                this.failingTestResult = this.methodology.findFailingTestResult(this.currentCandidate, this.useCase.hints, this.useCase.minimalUnitTests)
             }
         }
         else
@@ -179,7 +153,7 @@ export class Level {
     private submitUnitTests(): void {
         this.numberOfSubmissions += 1
         if (this.failingTestResult) {
-            const numberOfUnitTestsStillNeeded = this.findNumberOfUnitTestsStillNeeded(this.humanUnitTests)
+            const numberOfUnitTestsStillNeeded = this.methodology.findNumberOfUnitTestsStillNeeded(this.humanUnitTests, this.useCase.subsetsOfMinimalUnitTests, this.useCase.candidates, this.useCase.perfectCandidates.length)
             this.methodology.showBugFoundMessage(this.currentCandidate, this.failingTestResult, numberOfUnitTestsStillNeeded)
             this.menu()
         }
@@ -187,7 +161,10 @@ export class Level {
             this.end()
     }
 
-    protected levelFinishedValue(): number { // is overridden in class Example to return 1
+    protected levelFinishedValue(): number {
+        const isExample = this.nextGuidance()
+        if (isExample)
+            return 1
         return this.numberOfSubmissions
     }
 
@@ -201,6 +178,9 @@ export class Level {
     }
 
     protected processCallback(): void {
+        const isExample = this.nextGuidance()
+        if (isExample)
+            new ComputerMessage([`Congratulations, now you understand the basics of ${this.methodology.name()}.`]).add()
         this.callback!()
     }
 }

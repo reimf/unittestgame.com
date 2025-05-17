@@ -50,6 +50,8 @@ export class BatteryLevel extends UseCase {
             yield [batteryLevel];
     }
     *exampleGuidanceGeneratorTestDrivenDevelopment() {
+        yield 'In this example you only have to click the green button.';
+        yield 'Meanwhile, keep an eye on the yellow marked changes in the sidebar.';
         yield 'The *Specification* contains the number 20. That is a good starting point for a unit test. When the battery level is 20%, the function should return Normal Mode.';
         yield 'I want to add this unit test';
         yield '20';
@@ -72,8 +74,12 @@ export class BatteryLevel extends UseCase {
         yield 'Low Power Mode';
         yield 'Submit the unit tests again to see if the *Current Function* is finally according to the *Specification*.';
         yield 'I want to submit the unit tests';
+        yield 'levelFinishedValue should return 1';
+        yield 'processCallback should congratulate the user';
     }
     *exampleGuidanceGeneratorMutationTesting() {
+        yield 'In this example you only have to click the green button.';
+        yield 'Meanwhile, keep an eye on the yellow marked changes in the sidebar.';
         yield '*The Function* contains the number 20. That is a good starting point for a unit test. When the battery level is 20%, the function returns Normal Mode.';
         yield 'I want to add this unit test';
         yield '20';
@@ -96,5 +102,7 @@ export class BatteryLevel extends UseCase {
         yield 'Low Power Mode';
         yield 'Submit the unit tests again to see if *The Function* is finally fully tested.';
         yield 'I want to submit the unit tests';
+        yield 'levelFinishedValue should return 1';
+        yield 'processCallback should congratulate the user';
     }
 }

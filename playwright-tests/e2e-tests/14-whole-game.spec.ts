@@ -1,6 +1,4 @@
 import { test, expect } from '@playwright/test'
-import { Example } from '../../src/example.js'
-import { Level } from '../../src/level.js'
 import { Methodology } from '../../src/methodology.js'
 import { MutationTesting } from '../../src/methodology-mutation-testing.js'
 import { TestDrivenDevelopment } from '../../src/methodology-test-driven-development.js'
@@ -15,6 +13,8 @@ import { FloatFormat } from '../../src/use-case-float-format.js'
 import { PasswordStrength } from '../../src/use-case-password-strength.js'
 import { SpeedDisplay } from '../../src/use-case-speed-display.js'
 import { BooleanVariable, RadioVariable } from '../../src/variable.js'
+
+type methodologyAndUseCase = [Methodology, UseCase]
 
 test.describe('whole game', () => {
     test('plays whole game', async ({ browser }) => {
@@ -33,25 +33,25 @@ test.describe('whole game', () => {
         const passwordStrength: UseCase = new PasswordStrength()
         const speedDisplay: UseCase = new SpeedDisplay()
 
-        const levels: Level[] = [
-            new Example(testDrivenDevelopment, batteryLevel),
-            new Level(testDrivenDevelopment, votingAge),
-            new Example(mutationTesting, batteryLevel),
-            new Level(mutationTesting, evenOdd),
-            new Level(testDrivenDevelopment, fizzBuzz),
-            new Level(mutationTesting, triangleType),
-            new Level(testDrivenDevelopment, evenOdd),
-            new Level(mutationTesting, votingAge),
-            new Level(testDrivenDevelopment, triangleType),
-            new Level(mutationTesting, fizzBuzz),
-            new Level(testDrivenDevelopment, leapYear),
-            new Level(mutationTesting, passwordStrength),
-            new Level(testDrivenDevelopment, speedDisplay),
-            new Level(mutationTesting, floatFormat),
-            new Level(testDrivenDevelopment, passwordStrength),
-            new Level(mutationTesting, leapYear),
-            new Level(testDrivenDevelopment, floatFormat),
-            new Level(mutationTesting, speedDisplay),
+        const methodologiesAndUseCases: methodologyAndUseCase[] = [
+            [testDrivenDevelopment, batteryLevel],
+            [testDrivenDevelopment, votingAge],
+            [mutationTesting, batteryLevel],
+            [mutationTesting, evenOdd],
+            [testDrivenDevelopment, fizzBuzz],
+            [mutationTesting, triangleType],
+            [testDrivenDevelopment, evenOdd],
+            [mutationTesting, votingAge],
+            [testDrivenDevelopment, triangleType],
+            [mutationTesting, fizzBuzz],
+            [testDrivenDevelopment, leapYear],
+            [mutationTesting, passwordStrength],
+            [testDrivenDevelopment, speedDisplay],
+            [mutationTesting, floatFormat],
+            [testDrivenDevelopment, passwordStrength],
+            [mutationTesting, leapYear],
+            [testDrivenDevelopment, floatFormat],
+            [mutationTesting, speedDisplay],
         ]
 
         const context = await browser.newContext()
@@ -60,11 +60,11 @@ test.describe('whole game', () => {
         await page.goto('/')
         await page.getByRole('button', { name: 'I want a sidebar with information on terms with a purple background' }).click()
 
-        for (let index = 0; index < levels.length; index++) {
-            const level = levels[index]
-            await page.getByRole('button', { name: `I want to play Level ${index + 1} - ${level.description()}` }).click()
+        for (let index = 0; index < methodologiesAndUseCases.length; index++) {
+            const [methodology, useCase] = methodologiesAndUseCases[index]
+            await page.getByRole('button', { name: `I want to play Level ${index + 1} - ${methodology.name()} - ${useCase.name()}` }).click()
 
-            if (level instanceof Example) {
+            if (useCase === batteryLevel) {
                 await page.getByRole('button', { name: 'I want to add this unit test' }).click()
                 await page.getByRole('button', { name: 'I want to add this unit test' }).click()
                 await page.getByRole('button', { name: 'I want to submit the unit tests' }).click()
@@ -74,7 +74,6 @@ test.describe('whole game', () => {
                 await page.getByRole('button', { name: 'I want to submit the unit tests' }).click()
             }
             else {
-                const useCase = level.useCase
                 const variables = [...useCase.parameters, useCase.unit]
                 for (const unitTest of useCase.minimalUnitTests) {
                     const values = [...unitTest.argumentList, unitTest.expected]

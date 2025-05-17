@@ -10,9 +10,6 @@ export class TestDrivenDevelopment extends Methodology {
                 '[Read more](https://en.wikipedia.org/wiki/Test-driven_development)',
         ]).show();
     }
-    compareComplexity(candidate, otherCandidate) {
-        return candidate.compareComplexityTestDrivenDevelopment(otherCandidate);
-    }
     showWelcomeMessage() {
         new ComputerMessage(['You read the *Specification* and write *Unit Tests* that fail the *Current Function*.']).add();
         new ComputerMessage(['After adding a unit test I (the AI bot) rewrite the *Current Function* such that it passes the *Unit Tests*.']).add();
@@ -50,5 +47,8 @@ export class TestDrivenDevelopment extends Methodology {
     }
     *exampleGuidanceGenerator(useCase) {
         yield* useCase.exampleGuidanceGeneratorTestDrivenDevelopment();
+    }
+    compareComplexity(candidate, otherCandidate) {
+        return candidate.compareComplexityTestDrivenDevelopment(otherCandidate);
     }
 }
