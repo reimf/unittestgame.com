@@ -5,44 +5,23 @@ window.onerror = (message, source, lineno, colno, error) => {
 }
 
 document.addEventListener('keydown', event => {
-    const verticalDirection = event.key === 'ArrowDown' ? +1 : event.key === 'ArrowUp' ? -1 : 0
-    if (!verticalDirection)
+    const up = event.key === 'ArrowUp' ? true : event.key === 'ArrowDown' ? false : undefined
+    if (up === undefined)
         return
     const oldFocused = document.activeElement
-    if (!oldFocused)
+    if (oldFocused === null)
         return
-    const oldParagraph = oldFocused.closest('p')
-    if (!oldParagraph)
+    const allFocusables = Array.from(document.querySelectorAll('input, button'))
+    const allTops = allFocusables.map(focusable => focusable.getBoundingClientRect().top)
+    const oldTop = oldFocused.getBoundingClientRect().top
+    const newTop = up ? Math.max(...allTops.filter(top => top < oldTop)) : Math.min(...allTops.filter(top => top > oldTop))
+    const sameLineFocusables = allFocusables.filter(focusable => focusable.getBoundingClientRect().top === newTop)
+    if (sameLineFocusables.length === 0)
         return
-    const newParagraph = verticalDirection === -1 ? oldParagraph.previousElementSibling : oldParagraph.nextElementSibling
-    if (!newParagraph)
-        return
-    const focusables = newParagraph.querySelectorAll('input, button')
-    if (focusables.length === 0)
-        return
-    const newFocused = focusables.item(0) as HTMLElement
+    const checkedFocusables = sameLineFocusables.filter(focusable => focusable instanceof HTMLInputElement && focusable.checked)
+    const newFocused = (checkedFocusables.length === 1 ? checkedFocusables[0] : sameLineFocusables[0]) as HTMLElement
     newFocused.focus()
     event.preventDefault()
-})
-document.addEventListener('keydown', event => {
-    const horizontalDirection = event.key === 'ArrowRight' ? +1 : event.key === 'ArrowLeft' ? -1 : 0
-    if (!horizontalDirection)
-        return
-    const oldFocused = document.activeElement
-    if (!oldFocused)
-        return
-    const oldParagraph = oldFocused.closest('p')
-    if (!oldParagraph)
-        return
-    const focusables = oldParagraph.querySelectorAll('input, button')
-    const oldIndex = [...focusables].indexOf(oldFocused)
-    if (oldIndex === -1)
-        return
-    const newIndex = oldIndex + horizontalDirection
-    if (newIndex < 0 || newIndex >= focusables.length)
-        return
-    const newFocused = focusables.item(newIndex) as HTMLElement
-    newFocused.focus()
 })
 
 document.addEventListener('DOMContentLoaded', () => {
