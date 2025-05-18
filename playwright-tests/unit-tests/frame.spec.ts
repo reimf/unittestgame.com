@@ -20,6 +20,6 @@ test.describe('class Frame', () => {
 
     test('subclass QuestionMessage', () => {
         const questionMessage = new QuestionMessage('Hello', () => {})
-        expect(questionMessage.toString()).toBe('<section class="human"><div><p><button>Hello</button></p></div></section>')
+        expect(questionMessage.toString()).toBe('<section class="human"><div><button>Hello</button></div></section>')
     })
 })
