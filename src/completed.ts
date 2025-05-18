@@ -7,7 +7,7 @@ export class Completed {
 
     public get(): number {
         const value = localStorage.getItem(this.key)
-        return value ? Number(value) : 0
+        return value === null ? 0 : Number(value)
     }
 
     public set(value: number): void {

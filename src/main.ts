@@ -124,7 +124,7 @@ export class Main {
 
     private showNextLevel(): void {
         const nextLevel = this.levels.find(level => !level.isFinished())
-        if (nextLevel)
+        if (nextLevel !== undefined)
             new QuestionMessage(`I want to play ${this.levelDescription(nextLevel)}`, () => this.play(nextLevel)).add()
         else
             new QuestionMessage('I played all the levels', () => this.quit()).add()

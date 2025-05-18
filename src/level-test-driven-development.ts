@@ -33,7 +33,7 @@ export class TestDrivenDevelopment extends Level {
 
     public showCurrentFunctionPanel(currentCandidate: Candidate, previousCandidate: Candidate|undefined): void {
         new Panel('Current Function', [
-            previousCandidate ? currentCandidate.toHtmlWithPrevious(previousCandidate) : currentCandidate.toHtml()
+            previousCandidate === undefined ? currentCandidate.toHtml() : currentCandidate.toHtmlWithPrevious(previousCandidate)
         ]).show()
     }
 

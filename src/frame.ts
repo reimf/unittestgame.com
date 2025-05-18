@@ -31,7 +31,7 @@ export class Panel extends Frame {
 
     public show(): void {
         const existingElement = this.existingElement()
-        if (existingElement)
+        if (existingElement !== null)
             existingElement.replaceWith(this.toNode())
         else
             this.addTo('panels')
@@ -51,9 +51,9 @@ abstract class Message extends Frame {
             node.classList.add('reveal')
             node.scrollIntoView()
             const focusable = document.querySelector('button:not([disabled]), input:not([disabled])')
-            if (focusable)
+            if (focusable !== null)
                 (focusable as HTMLElement).focus()
-            if (extra)
+            if (extra !== undefined)
                 extra()
         })
     }

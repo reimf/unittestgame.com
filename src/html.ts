@@ -33,7 +33,7 @@ export class Html extends Content {
     }
 
     public addClass(value: string): this {
-        if (value)
+        if (value !== '')
             this.classList.push(value)
         return this
     }

@@ -7,6 +7,7 @@ export default defineConfig({
     use: {
         baseURL: 'http://localhost:3000',
         testIdAttribute: 'id',
+        screenshot: 'only-on-failure',
     },
 
     projects: [

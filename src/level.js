@@ -62,9 +62,12 @@ export class Level {
         }
         return Infinity;
     }
-    nextGuidance() {
-        const text = this.exampleGuidance.next();
-        return text.done ? '' : text.value;
+    nextGuidance(callback = () => { }) {
+        const value = this.exampleGuidance.next();
+        const text = value.done ? '' : value.value;
+        if (text != '')
+            callback(text);
+        return text;
     }
     description() {
         return `${this.name()} - ${this.useCase.name()}`;
@@ -85,12 +88,8 @@ export class Level {
         this.callback = callback;
         this.reset();
         this.showCurrentLevelPanel();
-        const firstMessage = this.nextGuidance();
-        if (firstMessage)
-            new ComputerMessage([firstMessage]).add();
-        const secondMessage = this.nextGuidance();
-        if (secondMessage)
-            new ComputerMessage([secondMessage]).add();
+        this.nextGuidance(message => new ComputerMessage([message]).add());
+        this.nextGuidance(message => new ComputerMessage([message]).add());
         this.showWelcomeMessage();
         this.menu();
     }
@@ -112,9 +111,7 @@ export class Level {
         this.showUnitTestsPanel();
     }
     showMenuMessage() {
-        const message = this.nextGuidance();
-        if (message)
-            new ComputerMessage([message]).add();
+        this.nextGuidance(message => new ComputerMessage([message]).add());
         const buttonToClick = this.nextGuidance();
         const fields = [...this.useCase.parameters, this.useCase.unit].map(variable => variable
             .setValue(buttonToClick === 'I want to add this unit test' ? this.nextGuidance() : '')
@@ -176,9 +173,7 @@ export class Level {
             this.end();
     }
     levelFinishedValue() {
-        const isExample = this.nextGuidance();
-        if (isExample)
-            return 1;
+        this.nextGuidance(text => this.numberOfSubmissions = Number(text));
         return this.numberOfSubmissions;
     }
     end() {
@@ -190,9 +185,7 @@ export class Level {
         this.processCallback();
     }
     processCallback() {
-        const isExample = this.nextGuidance();
-        if (isExample)
-            new ComputerMessage([`Congratulations, now you understand the basics of ${this.name()}.`]).add();
+        this.nextGuidance(text => new ComputerMessage([text]).add());
         this.callback();
     }
 }

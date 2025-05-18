@@ -4,7 +4,7 @@ export class Completed {
     }
     get() {
         const value = localStorage.getItem(this.key);
-        return value ? Number(value) : 0;
+        return value === null ? 0 : Number(value);
     }
     set(value) {
         localStorage.setItem(this.key, value.toString());

@@ -88,9 +88,12 @@ export abstract class Level {
         return Infinity
     }
 
-    private nextGuidance(): string {
-        const text = this.exampleGuidance.next()
-        return text.done ? '' : text.value
+    private nextGuidance(callback: (text: string) => void = () => {}): string {
+        const value = this.exampleGuidance.next()
+        const text = value.done ? '' : value.value
+        if (text != '')
+            callback(text)
+        return text
     }
 
     public description(): string {
@@ -115,12 +118,8 @@ export abstract class Level {
         this.callback = callback
         this.reset()
         this.showCurrentLevelPanel()
-        const firstMessage = this.nextGuidance()
-        if (firstMessage)
-            new ComputerMessage([firstMessage]).add()
-        const secondMessage = this.nextGuidance()
-        if (secondMessage)
-            new ComputerMessage([secondMessage]).add()
+        this.nextGuidance(message => new ComputerMessage([message]).add())
+        this.nextGuidance(message => new ComputerMessage([message]).add())
         this.showWelcomeMessage()
         this.menu()
     }
@@ -149,9 +148,7 @@ export abstract class Level {
     }
 
     protected showMenuMessage(): void {
-        const message = this.nextGuidance()
-        if (message)
-            new ComputerMessage([message]).add()
+        this.nextGuidance(message => new ComputerMessage([message]).add())
         const buttonToClick = this.nextGuidance()
         const fields = [...this.useCase.parameters, this.useCase.unit].map(variable => variable
             .setValue(buttonToClick === 'I want to add this unit test' ? this.nextGuidance() : '')
@@ -221,9 +218,7 @@ export abstract class Level {
     }
 
     protected levelFinishedValue(): number {
-        const isExample = this.nextGuidance()
-        if (isExample)
-            return 1
+        this.nextGuidance(text => this.numberOfSubmissions = Number(text))
         return this.numberOfSubmissions
     }
 
@@ -237,9 +232,7 @@ export abstract class Level {
     }
 
     protected processCallback(): void {
-        const isExample = this.nextGuidance()
-        if (isExample)
-            new ComputerMessage([`Congratulations, now you understand the basics of ${this.name()}.`]).add()
+        this.nextGuidance(text => new ComputerMessage([text]).add())
         this.callback!()
     }
 }
