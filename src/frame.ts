@@ -98,9 +98,7 @@ export class HumanMessage extends Message {
 export class QuestionMessage extends HumanMessage {
     public constructor(text: string, callback: () => void) {
         super([
-            new Paragraph().appendChild(
-                new Button().onClick(callback).appendText(text)
-            )
+            new Button().onClick(callback).appendText(text)
         ])
     }
 }

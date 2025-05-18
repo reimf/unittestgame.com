@@ -44,6 +44,7 @@ button {
     font-family: inherit;
     font-size: inherit;
     line-height: 1.5rem;
+    margin: 0.75rem 0;
     padding: 0.5rem 0.75rem;
     width: 100%;
 }
@@ -100,10 +101,11 @@ input {
         border-radius: 0.5rem;
         box-shadow: 0 0.25rem 0.5rem var(--button-shadow);
         color: var(--light-text);
+        display: block;
         font-family: inherit;
         font-size: inherit;
         line-height: 1.5rem;
-        margin: 0;
+        margin: 0.75rem 0;
         padding: 0.5rem 0.75rem;
         white-space: inherit;
         width: 100%;

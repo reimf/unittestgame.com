@@ -21,7 +21,7 @@ export class Candidate {
     }
 
     public combine(candidate: Candidate|undefined): Candidate {
-        if (!candidate)
+        if (candidate === undefined)
             return this
         const lines = this.zip(candidate).map(([line, other]) => line && line.trim() !== 'return undefined' ? line : other)
         return new Candidate(lines)

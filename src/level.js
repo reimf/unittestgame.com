@@ -1,6 +1,6 @@
 import { Candidate } from './candidate.js';
 import { HumanMessage, CheckingMessage, Panel, ComputerMessage } from './frame.js';
-import { Button, Div, Form, Input, Paragraph } from './html.js';
+import { Button, Div, Form, Input } from './html.js';
 import { Random } from './random.js';
 import { TestResult } from './test-result.js';
 import { UnitTest } from './unit-test.js';
@@ -62,10 +62,10 @@ export class Level {
         }
         return Infinity;
     }
-    nextGuidance(callback = () => { }) {
+    nextExampleGuidance(callback) {
         const value = this.exampleGuidance.next();
         const text = value.done ? '' : value.value;
-        if (text != '')
+        if (callback !== undefined && text !== '')
             callback(text);
         return text;
     }
@@ -88,13 +88,13 @@ export class Level {
         this.callback = callback;
         this.reset();
         this.showCurrentLevelPanel();
-        this.nextGuidance(message => new ComputerMessage([message]).add());
-        this.nextGuidance(message => new ComputerMessage([message]).add());
+        this.nextExampleGuidance(message => new ComputerMessage([message]).add());
+        this.nextExampleGuidance(message => new ComputerMessage([message]).add());
         this.showWelcomeMessage();
         this.menu();
     }
     showCurrentLevelPanel() {
-        new Panel('Current Level', [new Paragraph().appendText(this.description())]).show();
+        new Panel('Current Level', [this.description()]).show();
     }
     showUnitTestsPanel() {
         new Panel('Unit Tests', this.humanUnitTests.length === 0
@@ -111,27 +111,27 @@ export class Level {
         this.showUnitTestsPanel();
     }
     showMenuMessage() {
-        this.nextGuidance(message => new ComputerMessage([message]).add());
-        const buttonToClick = this.nextGuidance();
-        const fields = [...this.useCase.parameters, this.useCase.unit].map(variable => variable
-            .setValue(buttonToClick === 'I want to add this unit test' ? this.nextGuidance() : '')
-            .setDisabled(buttonToClick !== '')
-            .toHtml());
-        const submitButton = new Input()
+        this.nextExampleGuidance(message => new ComputerMessage([message]).add());
+        const enabledButtonText = this.nextExampleGuidance();
+        const variables = [...this.useCase.parameters, this.useCase.unit];
+        if (enabledButtonText === 'I want to add this unit test')
+            variables.forEach(variable => variable.setValue(this.nextExampleGuidance()));
+        if (enabledButtonText !== '')
+            variables.forEach(variable => variable.setDisabled(true));
+        const addThisUnitTestButton = new Input()
             .setType('submit')
             .setValue('I want to add this unit test')
-            .setDisabled(buttonToClick === 'I want to submit the unit tests');
-        new HumanMessage([
-            new Form()
-                .onSubmit(formData => this.prepareAddUnitTest(formData))
-                .appendChildren(fields)
-                .appendChild(new Paragraph().appendChild(submitButton)),
-            new Div().appendText('OR').addClass('or'),
-            new Paragraph().appendChild(new Button()
-                .appendText('I want to submit the unit tests')
-                .onClick(() => this.prepareSubmitUnitTests())
-                .setDisabled(buttonToClick === 'I want to add this unit test')),
-        ]).add();
+            .setDisabled(enabledButtonText === 'I want to submit the unit tests');
+        const form = new Form()
+            .onSubmit(formData => this.prepareAddUnitTest(formData))
+            .appendChildren(variables.map(variable => variable.toHtml()))
+            .appendChild(addThisUnitTestButton);
+        const divider = new Div().appendText('OR').addClass('or');
+        const submitTheUnitTestsButton = new Button()
+            .appendText('I want to submit the unit tests')
+            .onClick(() => this.prepareSubmitUnitTests())
+            .setDisabled(enabledButtonText === 'I want to add this unit test');
+        new HumanMessage([form, divider, submitTheUnitTestsButton]).add();
     }
     prepareAddUnitTest(formData) {
         const argumentList = this.useCase.parameters.map(parameter => parameter.getInput(formData.get(parameter.name)));
@@ -173,7 +173,7 @@ export class Level {
             this.end();
     }
     levelFinishedValue() {
-        this.nextGuidance(text => this.numberOfSubmissions = Number(text));
+        this.nextExampleGuidance(text => this.numberOfSubmissions = Number(text));
         return this.numberOfSubmissions;
     }
     end() {
@@ -185,7 +185,7 @@ export class Level {
         this.processCallback();
     }
     processCallback() {
-        this.nextGuidance(text => new ComputerMessage([text]).add());
+        this.nextExampleGuidance(text => new ComputerMessage([text]).add());
         this.callback();
     }
 }

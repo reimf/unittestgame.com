@@ -12,7 +12,7 @@ export class Candidate {
         return this.lines.map((line, pos) => [line, candidate.lines[pos]]);
     }
     combine(candidate) {
-        if (!candidate)
+        if (candidate === undefined)
             return this;
         const lines = this.zip(candidate).map(([line, other]) => line && line.trim() !== 'return undefined' ? line : other);
         return new Candidate(lines);

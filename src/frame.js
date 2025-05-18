@@ -80,7 +80,7 @@ export class HumanMessage extends Message {
 export class QuestionMessage extends HumanMessage {
     constructor(text, callback) {
         super([
-            new Paragraph().appendChild(new Button().onClick(callback).appendText(text))
+            new Button().onClick(callback).appendText(text)
         ]);
     }
 }

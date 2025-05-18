@@ -88,10 +88,10 @@ export abstract class Level {
         return Infinity
     }
 
-    private nextGuidance(callback: (text: string) => void = () => {}): string {
+    private nextExampleGuidance(callback?: (text: string) => void): string {
         const value = this.exampleGuidance.next()
         const text = value.done ? '' : value.value
-        if (text != '')
+        if (callback !== undefined && text !== '')
             callback(text)
         return text
     }
@@ -118,14 +118,14 @@ export abstract class Level {
         this.callback = callback
         this.reset()
         this.showCurrentLevelPanel()
-        this.nextGuidance(message => new ComputerMessage([message]).add())
-        this.nextGuidance(message => new ComputerMessage([message]).add())
+        this.nextExampleGuidance(message => new ComputerMessage([message]).add())
+        this.nextExampleGuidance(message => new ComputerMessage([message]).add())
         this.showWelcomeMessage()
         this.menu()
     }
 
     private showCurrentLevelPanel(): void {
-        new Panel('Current Level', [new Paragraph().appendText(this.description())]).show()
+        new Panel('Current Level', [this.description()]).show()
     }
 
     private showUnitTestsPanel(): void {
@@ -148,30 +148,27 @@ export abstract class Level {
     }
 
     protected showMenuMessage(): void {
-        this.nextGuidance(message => new ComputerMessage([message]).add())
-        const buttonToClick = this.nextGuidance()
-        const fields = [...this.useCase.parameters, this.useCase.unit].map(variable => variable
-            .setValue(buttonToClick === 'I want to add this unit test' ? this.nextGuidance() : '')
-            .setDisabled(buttonToClick !== '')
-            .toHtml()
-        )
-        const submitButton = new Input()
+        this.nextExampleGuidance(message => new ComputerMessage([message]).add())
+        const enabledButtonText = this.nextExampleGuidance()
+        const variables = [...this.useCase.parameters, this.useCase.unit]
+        if (enabledButtonText === 'I want to add this unit test')
+            variables.forEach(variable => variable.setValue(this.nextExampleGuidance()))
+        if (enabledButtonText !== '')
+            variables.forEach(variable => variable.setDisabled(true))
+        const addThisUnitTestButton = new Input()
             .setType('submit')
             .setValue('I want to add this unit test')
-            .setDisabled(buttonToClick === 'I want to submit the unit tests')
-        new HumanMessage([
-            new Form()
-                .onSubmit(formData => this.prepareAddUnitTest(formData))
-                .appendChildren(fields)
-                .appendChild(new Paragraph().appendChild(submitButton)),
-            new Div().appendText('OR').addClass('or'),
-            new Paragraph().appendChild(
-                new Button()
-                    .appendText('I want to submit the unit tests')
-                    .onClick(() => this.prepareSubmitUnitTests())
-                    .setDisabled(buttonToClick === 'I want to add this unit test')
-            ),
-        ]).add()
+            .setDisabled(enabledButtonText === 'I want to submit the unit tests')
+        const form = new Form()
+            .onSubmit(formData => this.prepareAddUnitTest(formData))
+            .appendChildren(variables.map(variable => variable.toHtml()))
+            .appendChild(addThisUnitTestButton)
+        const divider = new Div().appendText('OR').addClass('or')
+        const submitTheUnitTestsButton = new Button()
+            .appendText('I want to submit the unit tests')
+            .onClick(() => this.prepareSubmitUnitTests())
+            .setDisabled(enabledButtonText === 'I want to add this unit test')
+        new HumanMessage([form, divider, submitTheUnitTestsButton]).add()
     }
 
     protected prepareAddUnitTest(formData: StringMap): void {
@@ -218,7 +215,7 @@ export abstract class Level {
     }
 
     protected levelFinishedValue(): number {
-        this.nextGuidance(text => this.numberOfSubmissions = Number(text))
+        this.nextExampleGuidance(text => this.numberOfSubmissions = Number(text))
         return this.numberOfSubmissions
     }
 
@@ -232,7 +229,7 @@ export abstract class Level {
     }
 
     protected processCallback(): void {
-        this.nextGuidance(text => new ComputerMessage([text]).add())
+        this.nextExampleGuidance(text => new ComputerMessage([text]).add())
         this.callback!()
     }
 }
