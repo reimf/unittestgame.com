@@ -15,10 +15,6 @@ export class TestDrivenDevelopment extends Level {
         new ComputerMessage(['After adding a unit test I (the AI bot) rewrite the *Current Function* such that it passes the *Unit Tests*.']).add();
         new ComputerMessage(['When you think the *Current Function* is according to the *Specification*, you submit the *Unit Tests*.']).add();
     }
-    showPanelsOnMenu(specification, currentCandidate, previousCandidate, _perfectCandidate, _coveredCandidate) {
-        this.showSpecificationPanel(specification);
-        this.showCurrentFunctionPanel(currentCandidate, previousCandidate);
-    }
     showSpecificationPanel(specification) {
         new Panel('Specification', [specification]).show();
     }
@@ -26,6 +22,9 @@ export class TestDrivenDevelopment extends Level {
         new Panel('Current Function', [
             previousCandidate ? currentCandidate.toHtmlWithPrevious(previousCandidate) : currentCandidate.toHtml()
         ]).show();
+    }
+    showCodeCoveragePanel(_perfectCandidate, _coveredCandidate) {
+        // nothing
     }
     showIncorrectUnitTestMessage() {
         new ComputerMessage(['I did NOT add the unit test, because it is NOT correct.']).add();

@@ -116,7 +116,7 @@ export class Main {
         if (finishedLevels.length > 0) {
             new Panel('Finished Levels',
                 finishedLevels.map(level =>
-                    new Div().appendText(this.levelDescription(level)).addClass(level === previousLevel ? 'new' : 'existing')
+                    new Div().appendText(this.levelDescription(level)).addClass(level === previousLevel ? 'new' : 'old')
                 )
             ).show()
         }

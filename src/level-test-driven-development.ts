@@ -16,18 +16,13 @@ export class TestDrivenDevelopment extends Level {
         ]).show()
     }
 
-    public showWelcomeMessage(): void {
+    protected showWelcomeMessage(): void {
         new ComputerMessage(['You read the *Specification* and write *Unit Tests* that fail the *Current Function*.']).add()
         new ComputerMessage(['After adding a unit test I (the AI bot) rewrite the *Current Function* such that it passes the *Unit Tests*.']).add()
         new ComputerMessage(['When you think the *Current Function* is according to the *Specification*, you submit the *Unit Tests*.']).add()
     }
 
-    public showPanelsOnMenu(specification: string, currentCandidate: Candidate, previousCandidate: Candidate|undefined, _perfectCandidate: Candidate, _coveredCandidate: Candidate|undefined): void {
-        this.showSpecificationPanel(specification)
-        this.showCurrentFunctionPanel(currentCandidate, previousCandidate)
-    }
-
-    private showSpecificationPanel(specification: string): void {
+    protected showSpecificationPanel(specification: string): void {
         new Panel('Specification', [specification]).show()
     }
 
@@ -37,30 +32,34 @@ export class TestDrivenDevelopment extends Level {
         ]).show()
     }
 
-    public showIncorrectUnitTestMessage(): void {
+    protected showCodeCoveragePanel(_perfectCandidate: Candidate, _coveredCandidate: Candidate|undefined): void {
+        // nothing
+    }
+
+    protected showIncorrectUnitTestMessage(): void {
         new ComputerMessage(['I did NOT add the unit test, because it is NOT correct.']).add()
     }
 
-    public showUselessUnitTestMessage(): void {
+    protected showUselessUnitTestMessage(): void {
         new ComputerMessage(['I added the unit test to the *Unit Tests*, but the *Current Function* already passed this unit test, so I did NOT improve the *Current Function*.']).add()
         new ComputerMessage(['Try to write unit tests that fail for the *Current Function*.']).add()
     }
 
-    public showUsefulUnitTestMessage(): void {
+    protected showUsefulUnitTestMessage(): void {
         new ComputerMessage(['I added the unit test to the *Unit Tests* and I improved the *Current Function* such that it passes the new unit test.']).add()
     }
 
-    public showBugFoundMessage(_currentCandidate: Candidate, failingTestResult: TestResult, numberOfUnitTestsStillNeeded: number): void {
+    protected showBugFoundMessage(_currentCandidate: Candidate, failingTestResult: TestResult, numberOfUnitTestsStillNeeded: number): void {
         new ComputerMessage(['The *Current Function* is NOT according to the *Specification*.']).add()
         new ComputerMessage(['It produces the following incorrect result.', failingTestResult.toString()]).add()
         new ComputerMessage([`Try to write a unit test that is according to the *Specification* and fails for the *Current Function*. I think you need at least ${numberOfUnitTestsStillNeeded} more ${numberOfUnitTestsStillNeeded === 1 ? 'unit test' : 'unit tests'} to make the *Current Function* according to the *Specification*.`]).add()
     }
 
-    public showEndMessage(): void {
+    protected showEndMessage(): void {
         new ComputerMessage(['The *Current Function* is indeed according to the *Specification*.']).add()
     }
 
-    public* exampleGuidanceGenerator(useCase: UseCase): Generator<string> {
+    protected* exampleGuidanceGenerator(useCase: UseCase): Generator<string> {
         yield* useCase.exampleGuidanceGeneratorTestDrivenDevelopment()
     }
 

@@ -17,46 +17,50 @@ export class MutationTesting extends Level {
         ]).show()
     }
 
-    public showWelcomeMessage(): void {
+    protected showWelcomeMessage(): void {
         new ComputerMessage(['You read *The Function* and write *Unit Tests* that pass.']).add()
         new ComputerMessage(['After adding a unit test, I show the line coverage of *The Function*.']).add()
         new ComputerMessage(['When you think *The Function* is fully tested, you submit the *Unit Tests*.']).add()
     }
 
-    public showPanelsOnMenu(_specification: string, _currentCandidate: Candidate, _previousCandidate: Candidate|undefined, perfectCandidate: Candidate, coveredCandidate: Candidate|undefined): void {
-        this.showCodeCoveragePanel(perfectCandidate, coveredCandidate)
+    protected showSpecificationPanel(_specification: string): void {
+        // nothing
     }
 
-    private showCodeCoveragePanel(perfectCandidate: Candidate, coveredCandidate: Candidate|undefined): void {
+    protected showCurrentFunctionPanel(_currentCandidate: Candidate, _previousCandidate: Candidate|undefined): void {
+        // nothing
+    }
+
+    protected showCodeCoveragePanel(perfectCandidate: Candidate, coveredCandidate: Candidate|undefined): void {
         new Panel('The Function', [
             coveredCandidate ? perfectCandidate.toHtmlWithCoverage(coveredCandidate) : perfectCandidate.toHtml()
         ]).show()
     }
 
-    public showIncorrectUnitTestMessage(): void {
+    protected showIncorrectUnitTestMessage(): void {
         new ComputerMessage(['I did NOT add the unit test, because it is NOT correct.']).add()
     }
 
-    public showUselessUnitTestMessage(): void {
+    protected showUselessUnitTestMessage(): void {
         new ComputerMessage(['I added the unit test to the *Unit Tests*, but the line coverage of *The Function* did NOT increase.']).add()
         new ComputerMessage(['Try to write unit tests that cover some code that is not yet covered by other unit tests.']).add()
     }
 
-    public showUsefulUnitTestMessage(): void {
+    protected showUsefulUnitTestMessage(): void {
         new ComputerMessage(['I added the unit test to the *Unit Tests* and I showed the line coverage in *The Function*.']).add()
     }
 
-    public showBugFoundMessage(currentCandidate: Candidate, _failingTestResult: TestResult, numberOfUnitTestsStillNeeded: number): void {
+    protected showBugFoundMessage(currentCandidate: Candidate, _failingTestResult: TestResult, numberOfUnitTestsStillNeeded: number): void {
         new ComputerMessage(['*The Function* is NOT fully tested.']).add()
         new ComputerMessage(['A mutation of *The Function* that is NOT correct, but still passes your unit tests is the following.', currentCandidate.toMutationHtml()]).add()
         new ComputerMessage([`Try to write a unit test that passes *The Function* and fails for this mutation. I think you need at least ${numberOfUnitTestsStillNeeded} more ${numberOfUnitTestsStillNeeded === 1 ? 'unit test' : 'unit tests'} to fully test *The Function*.`]).add()
     }
 
-    public showEndMessage(): void {
+    protected showEndMessage(): void {
         new ComputerMessage(['*The Function* is indeed fully tested.']).add()
     }
 
-    public* exampleGuidanceGenerator(useCase: UseCase): Generator<string> {
+    protected* exampleGuidanceGenerator(useCase: UseCase): Generator<string> {
         yield* useCase.exampleGuidanceGeneratorMutationTesting()
     }
 

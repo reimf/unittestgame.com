@@ -16,8 +16,11 @@ export class MutationTesting extends Level {
         new ComputerMessage(['After adding a unit test, I show the line coverage of *The Function*.']).add();
         new ComputerMessage(['When you think *The Function* is fully tested, you submit the *Unit Tests*.']).add();
     }
-    showPanelsOnMenu(_specification, _currentCandidate, _previousCandidate, perfectCandidate, coveredCandidate) {
-        this.showCodeCoveragePanel(perfectCandidate, coveredCandidate);
+    showSpecificationPanel(_specification) {
+        // nothing
+    }
+    showCurrentFunctionPanel(_currentCandidate, _previousCandidate) {
+        // nothing
     }
     showCodeCoveragePanel(perfectCandidate, coveredCandidate) {
         new Panel('The Function', [

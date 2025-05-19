@@ -84,9 +84,8 @@ export class BatteryLevel extends UseCase {
         // showMenuMessage
         yield 'Submit the unit tests again to see if the *Current Function* is finally according to the *Specification*.';
         yield 'I want to submit the unit tests';
-        // levelFinishedValue
+        // end
         yield '1';
-        // processCallback
         yield 'Congratulations, now you understand the basics of Test-Driven Development.';
     }
     *exampleGuidanceGeneratorMutationTesting() {
@@ -124,9 +123,8 @@ export class BatteryLevel extends UseCase {
         // showMenuMessage
         yield 'Submit the unit tests again to see if *The Function* is finally fully tested.';
         yield 'I want to submit the unit tests';
-        // levelFinishedValue
+        // end
         yield '1';
-        // processCallback
         yield 'Congratulations, now you understand the basics of Mutation Testing.';
     }
 }

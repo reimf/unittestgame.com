@@ -77,7 +77,7 @@ export class Level {
     isFinished() {
         return this.isLevelFinished.get();
     }
-    reset() {
+    initialize() {
         this.humanUnitTests = [];
         this.previousCandidate = undefined;
         this.coveredCandidate = undefined;
@@ -88,7 +88,7 @@ export class Level {
     }
     play(callback) {
         this.callback = callback;
-        this.reset();
+        this.initialize();
         this.showCurrentLevelPanel();
         this.showExampleMessage();
         this.showExampleMessage();
@@ -98,19 +98,21 @@ export class Level {
     showCurrentLevelPanel() {
         new Panel('Current Level', [this.description()]).show();
     }
-    showUnitTestsPanel() {
-        new Panel('Unit Tests', this.humanUnitTests.length === 0
+    showUnitTestsPanel(unitTests, newUnitTest) {
+        new Panel('Unit Tests', unitTests.length === 0
             ? ['You have not written any unit tests yet.']
-            : this.humanUnitTests.map(unitTest => new Div().appendText(unitTest.toString()).addClass(unitTest === this.newUnitTest ? 'new' : 'existing'))).show();
-        this.newUnitTest = undefined;
+            : unitTests.map(unitTest => new Div().appendText(unitTest.toString()).addClass(unitTest === newUnitTest ? 'new' : 'old'))).show();
     }
     menu() {
         this.showPanels();
         this.showMenuMessage();
     }
     showPanels() {
-        this.showPanelsOnMenu(this.useCase.specification(), this.currentCandidate, this.previousCandidate, this.useCase.perfectCandidate, this.coveredCandidate);
-        this.showUnitTestsPanel();
+        this.showSpecificationPanel(this.useCase.specification());
+        this.showCurrentFunctionPanel(this.currentCandidate, this.previousCandidate);
+        this.showCodeCoveragePanel(this.useCase.perfectCandidate, this.coveredCandidate);
+        this.showUnitTestsPanel(this.humanUnitTests, this.newUnitTest);
+        this.newUnitTest = undefined;
     }
     showMenuMessage() {
         this.showExampleMessage();
@@ -118,7 +120,7 @@ export class Level {
         const elementsToShow = [];
         if (!buttonText || buttonText === 'I want to add this unit test') {
             const variables = [...this.useCase.parameters, this.useCase.unit];
-            if (buttonText === 'I want to add this unit test')
+            if (buttonText)
                 variables.forEach(variable => variable.setValue(this.nextExampleGuidance()).setDisabled(true));
             const addThisUnitTestButton = new Input().setType('submit').setValue('I want to add this unit test');
             const form = new Form()
@@ -176,20 +178,14 @@ export class Level {
         else
             this.end();
     }
-    levelFinishedValue() {
+    end() {
         if (this.hasExampleGuidance)
             this.numberOfSubmissions = Number(this.nextExampleGuidance());
-        return this.numberOfSubmissions;
-    }
-    end() {
-        this.isLevelFinished.set(this.levelFinishedValue());
+        this.isLevelFinished.set(this.numberOfSubmissions);
         this.previousCandidate = undefined;
         this.coveredCandidate = undefined;
         this.showPanels();
         this.showEndMessage();
-        this.processCallback();
-    }
-    processCallback() {
         this.showExampleMessage();
         this.callback();
     }

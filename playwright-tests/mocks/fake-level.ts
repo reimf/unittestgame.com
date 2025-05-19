@@ -5,14 +5,16 @@ import { TestResult } from '../../src/test-result.js'
 export class FakeLevel extends Level {
     public name(): string { return 'Fake Level' }
     public showBasicDefinition(): void { }
-    public compareComplexity(_candidate: Candidate, _otherCandidate: Candidate): number { return 0 }
-    public showExample(_callback: () => void): void { }
-    public showWelcomeMessage(): void { }
-    public showPanelsOnMenu(_specification: string, _currentCandidate: Candidate, _previousCandidate: Candidate|undefined, _perfectCandidate: Candidate, _coveredCandidate: Candidate|undefined): void { }
-    public showIncorrectUnitTestMessage(): void { }
-    public showUselessUnitTestMessage(): void { }
-    public showUsefulUnitTestMessage(): void { }
-    public showBugFoundMessage(_currentCandidate: Candidate, _failingTestResult: TestResult, _numberOfUnitTestsStillNeeded: number): void { }
-    public showEndMessage(): void { }
-    public* exampleGuidanceGenerator(_useCase: any): Generator<string> { }
+    protected compareComplexity(_candidate: Candidate, _otherCandidate: Candidate): number { return 0 }
+    protected showWelcomeMessage(): void { }
+    protected showSpecificationPanel(_specification: string): void { }
+    protected showCurrentFunctionPanel(_currentCandidate: Candidate, _previousCandidate: Candidate|undefined): void {}
+    protected showCodeCoveragePanel(_perfectCandidate: Candidate, _coveredCandidate: Candidate|undefined): void { }
+
+    protected showIncorrectUnitTestMessage(): void { }
+    protected showUselessUnitTestMessage(): void { }
+    protected showUsefulUnitTestMessage(): void { }
+    protected showBugFoundMessage(_currentCandidate: Candidate, _failingTestResult: TestResult, _numberOfUnitTestsStillNeeded: number): void { }
+    protected showEndMessage(): void { }
+    protected* exampleGuidanceGenerator(_useCase: any): Generator<string> { }
 }

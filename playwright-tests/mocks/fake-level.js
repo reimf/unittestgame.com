@@ -3,9 +3,10 @@ export class FakeLevel extends Level {
     name() { return 'Fake Level'; }
     showBasicDefinition() { }
     compareComplexity(_candidate, _otherCandidate) { return 0; }
-    showExample(_callback) { }
     showWelcomeMessage() { }
-    showPanelsOnMenu(_specification, _currentCandidate, _previousCandidate, _perfectCandidate, _coveredCandidate) { }
+    showSpecificationPanel(_specification) { }
+    showCurrentFunctionPanel(_currentCandidate, _previousCandidate) { }
+    showCodeCoveragePanel(_perfectCandidate, _coveredCandidate) { }
     showIncorrectUnitTestMessage() { }
     showUselessUnitTestMessage() { }
     showUsefulUnitTestMessage() { }

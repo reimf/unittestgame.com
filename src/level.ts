@@ -10,15 +10,17 @@ import { Completed } from './completed.js'
 export abstract class Level {
     public abstract name(): string
     public abstract showBasicDefinition(): void
-    public abstract showWelcomeMessage(): void
-    public abstract showPanelsOnMenu(specification: string, currentCandidate: Candidate, previousCandidate: Candidate|undefined, perfectCandidate: Candidate, coveredCandidates: Candidate|undefined): void
-    public abstract showBugFoundMessage(currentCandidate: Candidate, failingTestResult: TestResult, numberOfUnitTestsStillNeeded: number): void
-    public abstract showEndMessage(): void
-    public abstract showIncorrectUnitTestMessage(): void
-    public abstract showUselessUnitTestMessage(): void
-    public abstract showUsefulUnitTestMessage(): void
-    public abstract exampleGuidanceGenerator(useCase: UseCase): Generator<string>
-    protected abstract compareComplexity(_candidate: Candidate, _otherCandidate: Candidate): number
+    protected abstract showWelcomeMessage(): void
+    protected abstract showSpecificationPanel(specification: string): void
+    protected abstract showCurrentFunctionPanel(currentCandidate: Candidate, previousCandidate: Candidate|undefined): void
+    protected abstract showCodeCoveragePanel(perfectCandidate: Candidate, coveredCandidate: Candidate|undefined): void
+    protected abstract showBugFoundMessage(currentCandidate: Candidate, failingTestResult: TestResult, numberOfUnitTestsStillNeeded: number): void
+    protected abstract showEndMessage(): void
+    protected abstract showIncorrectUnitTestMessage(): void
+    protected abstract showUselessUnitTestMessage(): void
+    protected abstract showUsefulUnitTestMessage(): void
+    protected abstract exampleGuidanceGenerator(useCase: UseCase): Generator<string>
+    protected abstract compareComplexity(candidate: Candidate, otherCandidate: Candidate): number
 
     private readonly useCase: UseCase
     private readonly isLevelFinished: Completed
@@ -108,7 +110,7 @@ export abstract class Level {
         return this.isLevelFinished.get()
     }
 
-    private reset(): void {
+    private initialize(): void {
         this.humanUnitTests = []
         this.previousCandidate = undefined
         this.coveredCandidate = undefined
@@ -120,7 +122,7 @@ export abstract class Level {
 
     public play(callback: () => void): void {
         this.callback = callback
-        this.reset()
+        this.initialize()
         this.showCurrentLevelPanel()
         this.showExampleMessage()
         this.showExampleMessage()
@@ -132,13 +134,12 @@ export abstract class Level {
         new Panel('Current Level', [this.description()]).show()
     }
 
-    private showUnitTestsPanel(): void {
+    private showUnitTestsPanel(unitTests: UnitTest[], newUnitTest: UnitTest|undefined): void {
         new Panel('Unit Tests',
-            this.humanUnitTests.length === 0
+            unitTests.length === 0
             ? ['You have not written any unit tests yet.']
-            : this.humanUnitTests.map(unitTest => new Div().appendText(unitTest.toString()).addClass(unitTest === this.newUnitTest ? 'new' : 'existing'))
+            : unitTests.map(unitTest => new Div().appendText(unitTest.toString()).addClass(unitTest === newUnitTest ? 'new' : 'old'))
         ).show()
-        this.newUnitTest = undefined
     }
 
     private menu(): void {
@@ -147,8 +148,11 @@ export abstract class Level {
     }
 
     private showPanels(): void {
-        this.showPanelsOnMenu(this.useCase.specification(), this.currentCandidate, this.previousCandidate, this.useCase.perfectCandidate, this.coveredCandidate)
-        this.showUnitTestsPanel()
+        this.showSpecificationPanel(this.useCase.specification())
+        this.showCurrentFunctionPanel(this.currentCandidate, this.previousCandidate)
+        this.showCodeCoveragePanel(this.useCase.perfectCandidate, this.coveredCandidate)
+        this.showUnitTestsPanel(this.humanUnitTests, this.newUnitTest)
+        this.newUnitTest = undefined
     }
 
     protected showMenuMessage(): void {
@@ -157,7 +161,7 @@ export abstract class Level {
         const elementsToShow = []
         if (!buttonText || buttonText === 'I want to add this unit test') {
             const variables = [...this.useCase.parameters, this.useCase.unit]
-            if (buttonText === 'I want to add this unit test')
+            if (buttonText)
                 variables.forEach(variable => variable.setValue(this.nextExampleGuidance()).setDisabled(true))
             const addThisUnitTestButton = new Input().setType('submit').setValue('I want to add this unit test')
             const form = new Form()
@@ -220,22 +224,14 @@ export abstract class Level {
             this.end()
     }
 
-    protected levelFinishedValue(): number {
+    private end(): void {
         if (this.hasExampleGuidance)
             this.numberOfSubmissions = Number(this.nextExampleGuidance())
-        return this.numberOfSubmissions
-    }
-
-    private end(): void {
-        this.isLevelFinished.set(this.levelFinishedValue())
+        this.isLevelFinished.set(this.numberOfSubmissions)
         this.previousCandidate = undefined
         this.coveredCandidate = undefined
         this.showPanels()
         this.showEndMessage()
-        this.processCallback()
-    }
-
-    protected processCallback(): void {
         this.showExampleMessage()
         this.callback!()
     }
