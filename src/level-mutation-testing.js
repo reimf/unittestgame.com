@@ -44,6 +44,7 @@ export class MutationTesting extends Level {
     }
     showEndMessage() {
         new ComputerMessage(['*The Function* is indeed fully tested.']).add();
+        new ComputerMessage(['Well done!']).add();
     }
     *exampleGuidanceGenerator(useCase) {
         yield* useCase.exampleGuidanceGeneratorMutationTesting();

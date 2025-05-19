@@ -1,6 +1,6 @@
 import { Candidate } from './candidate.js'
 import { HumanMessage, CheckingMessage, Panel, ComputerMessage } from './frame.js'
-import { Button, Div, Form, Input, Paragraph, StringMap } from './html.js'
+import { Button, Div, Form, Input, StringMap } from './html.js'
 import { Random } from './random.js'
 import { TestResult } from './test-result.js'
 import { UnitTest } from './unit-test.js'
@@ -155,7 +155,7 @@ export abstract class Level {
         this.newUnitTest = undefined
     }
 
-    protected showMenuMessage(): void {
+    private showMenuMessage(): void {
         this.showExampleMessage()
         const buttonText = this.hasExampleGuidance ? this.nextExampleGuidance() : undefined
         const elementsToShow = []
@@ -181,7 +181,7 @@ export abstract class Level {
         new HumanMessage(elementsToShow).add()
     }
 
-    protected prepareAddUnitTest(formData: StringMap): void {
+    private prepareAddUnitTest(formData: StringMap): void {
         const argumentList = this.useCase.parameters.map(parameter => parameter.getInput(formData.get(parameter.name)!))
         const expected = this.useCase.unit.getInput(formData.get(this.useCase.unit.name)!)
         const unitTest = new UnitTest(this.useCase.parameters, argumentList, this.useCase.unit, expected)
@@ -209,7 +209,7 @@ export abstract class Level {
         this.menu()
     }
 
-    protected prepareSubmitUnitTests(): void {
+    private prepareSubmitUnitTests(): void {
         new CheckingMessage('Checking the unit tests', 'I checked the unit tests', () => this.submitUnitTests(), 2000 + this.humanUnitTests.length * 500).add()
     }
 

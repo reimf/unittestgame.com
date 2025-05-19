@@ -11,7 +11,8 @@ export class TestDrivenDevelopment extends Level {
 
     public showBasicDefinition(): void {
         new Panel('Test-Driven Development', [
-            'Write a unit test that initially fails, then write just enough code to make the unit test pass; repeat until the code is according to the specification. ' +
+            'Write a unit test that initially fails, then write just enough code to make the unit test pass. ' +
+            'Repeat until the code is according to the specification. ' +
             '[Read more](https://en.wikipedia.org/wiki/Test-driven_development)',
         ]).show()
     }
@@ -26,7 +27,7 @@ export class TestDrivenDevelopment extends Level {
         new Panel('Specification', [specification]).show()
     }
 
-    public showCurrentFunctionPanel(currentCandidate: Candidate, previousCandidate: Candidate|undefined): void {
+    protected showCurrentFunctionPanel(currentCandidate: Candidate, previousCandidate: Candidate|undefined): void {
         new Panel('Current Function', [
             previousCandidate ? currentCandidate.toHtmlWithPrevious(previousCandidate) : currentCandidate.toHtml()
         ]).show()
@@ -57,6 +58,7 @@ export class TestDrivenDevelopment extends Level {
 
     protected showEndMessage(): void {
         new ComputerMessage(['The *Current Function* is indeed according to the *Specification*.']).add()
+        new ComputerMessage(['Well done!']).add()
     }
 
     protected* exampleGuidanceGenerator(useCase: UseCase): Generator<string> {

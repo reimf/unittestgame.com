@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { TestDrivenDevelopment } from '../../src/level-test-driven-development.js';
-import { TestCases } from './test-cases.js';
-test.describe('class Level Test-Driven Development with use case Leap Year', () => {
+import { TestCases } from '../test-cases/test-cases.js';
+test.describe('class Level Test-Driven Development', () => {
     const testCases = new TestCases();
     const useCase = testCases.useCase;
     const level = new TestDrivenDevelopment(useCase);

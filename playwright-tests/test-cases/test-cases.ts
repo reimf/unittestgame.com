@@ -1,6 +1,6 @@
 import * as fs from 'fs'
 import * as path from 'path'
-import { LeapYear } from '../../src/use-case-leap-year.js'
+import { FakeUseCase } from '../mocks/fake-use-case'
 import { UnitTest } from '../../src/unit-test.js'
 
 type TestCase = {
@@ -13,7 +13,7 @@ type TestCase = {
 }
 
 export class TestCases {
-    public readonly useCase = new LeapYear()
+    public readonly useCase = new FakeUseCase()
     public readonly all: TestCase[]
 
     public constructor() {

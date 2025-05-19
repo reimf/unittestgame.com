@@ -1,46 +1,53 @@
 import { UseCase } from '../../src/use-case.js';
-import { TextVariable, IntegerVariable } from '../../src/variable.js';
+import { BooleanVariable, IntegerVariable } from '../../src/variable.js';
 export class FakeUseCase extends UseCase {
     name() {
         return 'Fake Use Case';
     }
     specification() {
-        return 'The usual FizzBuzz leet code challenge.';
+        return ('Fake Specification');
     }
     getParameters() {
-        return [new IntegerVariable('Number', 'num')];
+        return [
+            new IntegerVariable('Year', 'year'),
+        ];
     }
     getUnit() {
-        return new TextVariable('Output', 'fizzBuzz');
+        return new BooleanVariable('Is a leap year', 'isLeapYear');
     }
     getCandidateElements() {
         return [
             [
-                'if (num % 15 === 0) return "FizzBuzz"',
-                ''
+                'if (year % 400 === 0) return true',
+                'if (year % 200 === 0) return true',
+                '',
             ],
             [
-                'if (num % 3 === 0) return "Fizz"',
-                ''
+                'if (year % 100 === 0) return false',
+                '',
             ],
             [
-                'if (num % 5 === 0) return "Buzz"',
-                ''
+                'if (year % 4 !== 0) return true',
+                'if (year % 4 === 0) return true',
+                '',
             ],
             [
-                'return ""',
-                'return num.toString()'
+                'return true',
+                'return false',
+                'return undefined',
             ],
         ];
     }
     *minimalUnitTestGenerator() {
-        yield [[6], 'Fizz'];
-        yield [[25], 'Buzz'];
-        yield [[30], 'FizzBuzz'];
-        yield [[1], '1'];
+        yield [[2002], false];
+        yield [[2004], true];
+        yield [[1800], false];
+        yield [[1600], true];
     }
     *hintGenerator() {
-        for (let num = 0; num < 100; num += 1)
-            yield [num];
+        for (let year = 2001; year <= 2030; year += 1)
+            yield [year];
+        for (let year = 1000; year <= 3000; year += 100)
+            yield [year];
     }
 }

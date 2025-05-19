@@ -1,10 +1,10 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { LeapYear } from '../../src/use-case-leap-year.js';
+import { FakeUseCase } from '../mocks/fake-use-case';
 import { UnitTest } from '../../src/unit-test.js';
 export class TestCases {
     constructor() {
-        this.useCase = new LeapYear();
+        this.useCase = new FakeUseCase();
         const unitTestMap = new Map([2024, 2025, 2200, 2300, 2400].map(year => {
             const unitTest = new UnitTest(this.useCase.parameters, [year], this.useCase.unit, this.useCase.perfectCandidate.execute([year]));
             return [year, unitTest];

@@ -5,6 +5,7 @@ export class LeapYear extends UseCase {
     public name(): string {
         return 'Leap Year'
     }
+
     public specification(): string {
         return (
             'Return true if the year is a leap year and ' +
@@ -30,13 +31,10 @@ export class LeapYear extends UseCase {
             [
                 'if (year % 400 === 0) return true',
                 'if (year % 200 === 0) return true',
-                'if (year === 2000) return true',
                 '',
             ],
             [
                 'if (year % 100 === 0) return false',
-                'if (year === 1900) return false',
-                'if (year === 2100) return false',
                 '',
             ],
             [

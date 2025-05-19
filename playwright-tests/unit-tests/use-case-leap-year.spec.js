@@ -6,7 +6,7 @@ test.describe('class LeapYear', () => {
         expect(useCase.parameters).toHaveLength(1);
     });
     test('has the right amount of candidates', () => {
-        expect(useCase.candidates).toHaveLength(144);
+        expect(useCase.candidates).toHaveLength(54);
     });
     test('has the right amount of minimal unit tests', () => {
         expect(useCase.minimalUnitTests).toHaveLength(4);

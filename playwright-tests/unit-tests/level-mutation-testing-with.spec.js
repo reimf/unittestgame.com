@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { MutationTesting } from '../../src/level-mutation-testing.js';
-import { TestCases } from './test-cases.js';
-test.describe('class Level Mutation Testing with use case Leap Year', () => {
+import { TestCases } from '../test-cases/test-cases.js';
+test.describe('class Level Mutation Testing', () => {
     const testCases = new TestCases();
     const useCase = testCases.useCase;
     const level = new MutationTesting(useCase);
