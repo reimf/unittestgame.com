@@ -21,7 +21,7 @@ export class Candidate {
     }
 
     public combine(candidate: Candidate|undefined): Candidate {
-        if (candidate === undefined)
+        if (!candidate)
             return this
         const lines = this.zip(candidate).map(([line, other]) => line && line.trim() !== 'return undefined' ? line : other)
         return new Candidate(lines)
@@ -59,7 +59,7 @@ export class Candidate {
             .replace(/\bnew [A-Z][a-zA-Z]*/g, ' _ _ ') // each created object is 1 point extra
             .replace(/function|return|\{|\}|if|true|false|let/g, ' _ ') // each keyword is 1 point
             .split(/\s+/) // each token is 1 point
-            .filter(token => token !== '')
+            .filter(token => token)
         const unknownTokens = tokens.filter(token => token !== '_')
         if (unknownTokens.length > 0)
             throw new Error(`Unknown tokens: ${unknownTokens.join(', ')}`)
@@ -88,7 +88,7 @@ export class Candidate {
     }
 
     public isAmputeeOf(candidate: Candidate): boolean {
-        return this.zip(candidate).every(([line, other]) => line === other || line === '' || line.trim() === 'return undefined')
+        return this.zip(candidate).every(([line, other]) => !line || line === other || line.trim() === 'return undefined')
     }
 
     public compareComplexityTestDrivenDevelopment(candidate: Candidate): number {
@@ -100,7 +100,7 @@ export class Candidate {
     }
 
     public toString(): string {
-        return this.lines.filter(line => line !== '').join('\n')
+        return this.lines.filter(line => line).join('\n')
     }
 
     public toHtml(): Html {
@@ -113,15 +113,15 @@ export class Candidate {
 
     public toHtmlWithPrevious(previousCandidate: Candidate): Html {
         const lines = this.zip(previousCandidate).reduce((divs, [line, other]) => {
-            const comment = line === '' && other === '' ? ''
+            const comment = !line && !other ? ''
                 : line === other ? ''
-                : line === '' ? `  // was: ${other.trim()}`
-                : other === '' ? ' // new'
+                : !line ? `  // was: ${other.trim()}`
+                : !other ? ' // new'
                 : ` // was: ${other.trim()}`
             const div = new Div()
-            if (line !== '')
+            if (line)
                 div.appendText(line)
-            if (comment !== '')
+            if (comment)
                 div.appendChild(new Span().appendText(comment).addClass('comment'))
             return [...divs, div]
         }, [] as Div[])
@@ -132,7 +132,7 @@ export class Candidate {
         const lines = this.zip(coveredCandidate).map(([line, other]) => {
             const isNotIndented = !line.startsWith('  ')
             const isUsed = line === other
-            return new Div().appendText(line).addClass(isNotIndented || isUsed ? 'covered' : '')
+            return new Div().appendText(line).addClass(isNotIndented || isUsed ? 'covered' : 'notcovered')
         })
         return new Code().appendChildren(lines)
     }

@@ -111,8 +111,8 @@ test.describe('class Candidate', () => {
         const html = candidate.toHtmlWithCoverage(coveredCandidate);
         expect(html.toString()).toBe('<code>' +
             '<div class="covered">function nextYear(year) {</div>' +
-            '<div>  if (year < 0) return 0</div>' +
-            '<div>  return year</div>' +
+            '<div class="notcovered">  if (year < 0) return 0</div>' +
+            '<div class="notcovered">  return year</div>' +
             '<div class="covered">}</div>' +
             '</code>');
     });

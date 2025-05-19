@@ -24,7 +24,7 @@ export class TestDrivenDevelopment extends Level {
     }
     showCurrentFunctionPanel(currentCandidate, previousCandidate) {
         new Panel('Current Function', [
-            previousCandidate === undefined ? currentCandidate.toHtml() : currentCandidate.toHtmlWithPrevious(previousCandidate)
+            previousCandidate ? currentCandidate.toHtmlWithPrevious(previousCandidate) : currentCandidate.toHtml()
         ]).show();
     }
     showIncorrectUnitTestMessage() {

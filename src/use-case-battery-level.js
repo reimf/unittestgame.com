@@ -50,6 +50,8 @@ export class BatteryLevel extends UseCase {
             yield [batteryLevel];
     }
     *exampleGuidanceGeneratorTestDrivenDevelopment() {
+        // constructor
+        yield 'true';
         // play
         yield 'In this example you only have to click the green button.';
         yield 'Meanwhile, keep an eye on the yellow marked changes in the sidebar.';
@@ -88,6 +90,8 @@ export class BatteryLevel extends UseCase {
         yield 'Congratulations, now you understand the basics of Test-Driven Development.';
     }
     *exampleGuidanceGeneratorMutationTesting() {
+        // constructor
+        yield 'true';
         // play
         yield 'In this example you only have to click the green button.';
         yield 'Meanwhile, keep an eye on the yellow marked changes in the sidebar.';

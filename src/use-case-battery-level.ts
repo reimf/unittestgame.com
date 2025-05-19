@@ -57,6 +57,9 @@ export class BatteryLevel extends UseCase {
     }
 
     public* exampleGuidanceGeneratorTestDrivenDevelopment(): Generator<string> {
+        // constructor
+        yield 'true'
+
         // play
         yield 'In this example you only have to click the green button.'
         yield 'Meanwhile, keep an eye on the yellow marked changes in the sidebar.'
@@ -105,6 +108,9 @@ export class BatteryLevel extends UseCase {
     }
 
     public* exampleGuidanceGeneratorMutationTesting(): Generator<string> {
+        // constructor
+        yield 'true'
+        
         // play
         yield 'In this example you only have to click the green button.'
         yield 'Meanwhile, keep an eye on the yellow marked changes in the sidebar.'

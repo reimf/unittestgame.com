@@ -85,7 +85,7 @@ export class TextVariable extends Variable {
     }
 
     public toHtml(): Html {
-        const input = new Input().setType('text').setName(this.name).setAutocomplete(false).setValue(this.value).addClass(this.value === '' ? 'empty' : 'preset').setDisabled(this.disabled).setRequired()
+        const input = new Input().setType('text').setName(this.name).setAutocomplete(false).setValue(this.value).addClass(this.value ? 'preset' : 'empty').setDisabled(this.disabled).setRequired()
         const label = new Label().appendChild(new Span().appendText(this.label)).appendChild(input)
         return new Paragraph().appendChild(label)
     }
@@ -105,8 +105,8 @@ export class IntegerVariable extends Variable {
     }
 
     public toHtml(): Html {
-        const displayValue = this.value === '' ? '' : Number(this.value).toFixed()
-        const input = new Input().setType('text').setName(this.name).setAutocomplete(false).setValue(displayValue).addClass(displayValue === '' ? 'empty' : 'preset').setDisabled(this.disabled).setRequired().setPattern('[0-9]+')
+        const displayValue = this.value ? Number(this.value).toFixed() : ''
+        const input = new Input().setType('text').setName(this.name).setAutocomplete(false).setValue(displayValue).addClass(displayValue ? 'preset' : 'empty').setDisabled(this.disabled).setRequired().setPattern('[0-9]+')
         const label = new Label().appendChild(new Span().appendText(this.label)).appendChild(input)
         return new Paragraph().appendChild(label)
     }
@@ -126,8 +126,8 @@ export class FloatVariable extends Variable {
     }
 
     public toHtml(): Html {
-        const displayValue = this.value === '' ? '' : Number(this.value).toFixed(1)
-        const input = new Input().setType('text').setName(this.name).setAutocomplete(false).setValue(displayValue).addClass(displayValue === '' ? 'empty' : 'preset').setDisabled(this.disabled).setRequired().setPattern('[0-9]+(\.[0-9])?')
+        const displayValue = this.value ? Number(this.value).toFixed(1) : ''
+        const input = new Input().setType('text').setName(this.name).setAutocomplete(false).setValue(displayValue).addClass(displayValue ? 'preset' : 'empty').setDisabled(this.disabled).setRequired().setPattern('[0-9]+(\.[0-9])?')
         const label = new Label().appendChild(new Span().appendText(this.label)).appendChild(input)
         return new Paragraph().appendChild(label)
     }

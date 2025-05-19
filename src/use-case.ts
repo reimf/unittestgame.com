@@ -39,7 +39,7 @@ export abstract class UseCase {
         const parameterList = this.parameters.map(parameter => parameter.name).join(', ')
         const indentedLines = [
             `function ${this.unit.name}(${parameterList}) {`,
-                ...lines.map(line => line === '' ? '' : '  ' + line),
+                ...lines.map(line => line ? '  ' + line : ''),
             '}',
         ]
         return new Candidate(indentedLines)

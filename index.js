@@ -7,7 +7,7 @@ document.addEventListener('keydown', event => {
     if (up === undefined)
         return;
     const oldFocused = document.activeElement;
-    if (oldFocused === null)
+    if (!oldFocused)
         return;
     const allFocusables = Array.from(document.querySelectorAll('input, button'));
     const allTops = allFocusables.map(focusable => focusable.getBoundingClientRect().top);

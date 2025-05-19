@@ -23,7 +23,7 @@ export class Html extends Content {
         return this.id;
     }
     addClass(value) {
-        if (value !== '')
+        if (value)
             this.classList.push(value);
         return this;
     }

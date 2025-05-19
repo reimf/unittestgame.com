@@ -17,6 +17,7 @@ export class Level {
         this.useCase = useCase;
         this.isLevelFinished = new Completed(this.description());
         this.exampleGuidance = this.exampleGuidanceGenerator(useCase);
+        this.hasExampleGuidance = this.nextExampleGuidance() !== '';
     }
     findSimplestCandidate(candidates) {
         const simplestCandidates = candidates.reduce((simplestCandidatesSoFar, candidate) => {
@@ -62,12 +63,13 @@ export class Level {
         }
         return Infinity;
     }
-    nextExampleGuidance(callback) {
+    nextExampleGuidance() {
         const value = this.exampleGuidance.next();
-        const text = value.done ? '' : value.value;
-        if (callback !== undefined && text !== '')
-            callback(text);
-        return text;
+        return value.done ? '' : value.value;
+    }
+    showExampleMessage() {
+        if (this.hasExampleGuidance)
+            new ComputerMessage([this.nextExampleGuidance()]).add();
     }
     description() {
         return `${this.name()} - ${this.useCase.name()}`;
@@ -88,8 +90,8 @@ export class Level {
         this.callback = callback;
         this.reset();
         this.showCurrentLevelPanel();
-        this.nextExampleGuidance(message => new ComputerMessage([message]).add());
-        this.nextExampleGuidance(message => new ComputerMessage([message]).add());
+        this.showExampleMessage();
+        this.showExampleMessage();
         this.showWelcomeMessage();
         this.menu();
     }
@@ -99,7 +101,7 @@ export class Level {
     showUnitTestsPanel() {
         new Panel('Unit Tests', this.humanUnitTests.length === 0
             ? ['You have not written any unit tests yet.']
-            : this.humanUnitTests.map(unitTest => new Div().appendText(unitTest.toString()).addClass(unitTest === this.newUnitTest ? 'new' : ''))).show();
+            : this.humanUnitTests.map(unitTest => new Div().appendText(unitTest.toString()).addClass(unitTest === this.newUnitTest ? 'new' : 'existing'))).show();
         this.newUnitTest = undefined;
     }
     menu() {
@@ -111,27 +113,29 @@ export class Level {
         this.showUnitTestsPanel();
     }
     showMenuMessage() {
-        this.nextExampleGuidance(message => new ComputerMessage([message]).add());
-        const enabledButtonText = this.nextExampleGuidance();
-        const variables = [...this.useCase.parameters, this.useCase.unit];
-        if (enabledButtonText === 'I want to add this unit test')
-            variables.forEach(variable => variable.setValue(this.nextExampleGuidance()));
-        if (enabledButtonText !== '')
-            variables.forEach(variable => variable.setDisabled(true));
-        const addThisUnitTestButton = new Input()
-            .setType('submit')
-            .setValue('I want to add this unit test')
-            .setDisabled(enabledButtonText === 'I want to submit the unit tests');
-        const form = new Form()
-            .onSubmit(formData => this.prepareAddUnitTest(formData))
-            .appendChildren(variables.map(variable => variable.toHtml()))
-            .appendChild(addThisUnitTestButton);
-        const divider = new Div().appendText('OR').addClass('or');
-        const submitTheUnitTestsButton = new Button()
-            .appendText('I want to submit the unit tests')
-            .onClick(() => this.prepareSubmitUnitTests())
-            .setDisabled(enabledButtonText === 'I want to add this unit test');
-        new HumanMessage([form, divider, submitTheUnitTestsButton]).add();
+        this.showExampleMessage();
+        const buttonText = this.hasExampleGuidance ? this.nextExampleGuidance() : undefined;
+        const elementsToShow = [];
+        if (!buttonText || buttonText === 'I want to add this unit test') {
+            const variables = [...this.useCase.parameters, this.useCase.unit];
+            if (buttonText === 'I want to add this unit test')
+                variables.forEach(variable => variable.setValue(this.nextExampleGuidance()).setDisabled(true));
+            const addThisUnitTestButton = new Input().setType('submit').setValue('I want to add this unit test');
+            const form = new Form()
+                .onSubmit(formData => this.prepareAddUnitTest(formData))
+                .appendChildren(variables.map(variable => variable.toHtml()))
+                .appendChild(addThisUnitTestButton);
+            elementsToShow.push(form);
+        }
+        if (!buttonText) {
+            const divider = new Div().appendText('OR').addClass('or');
+            elementsToShow.push(divider);
+        }
+        if (!buttonText || buttonText === 'I want to submit the unit tests') {
+            const submitTheUnitTestsButton = new Button().appendText('I want to submit the unit tests').onClick(() => this.prepareSubmitUnitTests());
+            elementsToShow.push(submitTheUnitTestsButton);
+        }
+        new HumanMessage(elementsToShow).add();
     }
     prepareAddUnitTest(formData) {
         const argumentList = this.useCase.parameters.map(parameter => parameter.getInput(formData.get(parameter.name)));
@@ -173,7 +177,8 @@ export class Level {
             this.end();
     }
     levelFinishedValue() {
-        this.nextExampleGuidance(text => this.numberOfSubmissions = Number(text));
+        if (this.hasExampleGuidance)
+            this.numberOfSubmissions = Number(this.nextExampleGuidance());
         return this.numberOfSubmissions;
     }
     end() {
@@ -185,7 +190,7 @@ export class Level {
         this.processCallback();
     }
     processCallback() {
-        this.nextExampleGuidance(text => new ComputerMessage([text]).add());
+        this.showExampleMessage();
         this.callback();
     }
 }

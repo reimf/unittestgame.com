@@ -99,12 +99,12 @@ export class Main {
     showFinishedLevelsPanel(previousLevel) {
         const finishedLevels = this.getFinishedLevels();
         if (finishedLevels.length > 0) {
-            new Panel('Finished Levels', finishedLevels.map(level => new Div().appendText(this.levelDescription(level)).addClass(level === previousLevel ? 'new' : ''))).show();
+            new Panel('Finished Levels', finishedLevels.map(level => new Div().appendText(this.levelDescription(level)).addClass(level === previousLevel ? 'new' : 'existing'))).show();
         }
     }
     showNextLevel() {
         const nextLevel = this.levels.find(level => !level.isFinished());
-        if (nextLevel !== undefined)
+        if (nextLevel)
             new QuestionMessage(`I want to play ${this.levelDescription(nextLevel)}`, () => this.play(nextLevel)).add();
         else
             new QuestionMessage('I played all the levels', () => this.quit()).add();

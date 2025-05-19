@@ -26,7 +26,7 @@ export class Panel extends Frame {
     }
     show() {
         const existingElement = this.existingElement();
-        if (existingElement !== null)
+        if (existingElement)
             existingElement.replaceWith(this.toNode());
         else
             this.addTo('panels');
@@ -44,9 +44,9 @@ class Message extends Frame {
             node.classList.add('reveal');
             node.scrollIntoView();
             const focusable = document.querySelector('button:not([disabled]), input:not([disabled])');
-            if (focusable !== null)
+            if (focusable)
                 focusable.focus();
-            if (extra !== undefined)
+            if (extra)
                 extra();
         });
     }

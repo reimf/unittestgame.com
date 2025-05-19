@@ -116,7 +116,7 @@ export class Main {
         if (finishedLevels.length > 0) {
             new Panel('Finished Levels',
                 finishedLevels.map(level =>
-                    new Div().appendText(this.levelDescription(level)).addClass(level === previousLevel ? 'new' : '')
+                    new Div().appendText(this.levelDescription(level)).addClass(level === previousLevel ? 'new' : 'existing')
                 )
             ).show()
         }
@@ -124,7 +124,7 @@ export class Main {
 
     private showNextLevel(): void {
         const nextLevel = this.levels.find(level => !level.isFinished())
-        if (nextLevel !== undefined)
+        if (nextLevel)
             new QuestionMessage(`I want to play ${this.levelDescription(nextLevel)}`, () => this.play(nextLevel)).add()
         else
             new QuestionMessage('I played all the levels', () => this.quit()).add()
