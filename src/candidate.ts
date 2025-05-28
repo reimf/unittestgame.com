@@ -17,7 +17,8 @@ export class Candidate {
     }
 
     private zip(candidate: Candidate): string[][] {
-        return this.lines.map((line, pos) => [line, candidate.lines[pos]])
+        const indexes = [...this.lines.keys()]
+        return indexes.map(index => [this.lines[index], candidate.lines[index]])
     }
 
     public combine(candidate: Candidate|undefined): Candidate {
