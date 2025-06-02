@@ -1,4 +1,4 @@
-import { UseCase } from './use-case.js'
+import { UseCase } from './use-case-base.js'
 import { Variable, RadioVariable, IntegerVariable } from './variable.js'
 
 export class TriangleType extends UseCase {

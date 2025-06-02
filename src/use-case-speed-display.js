@@ -1,4 +1,4 @@
-import { UseCase } from './use-case.js';
+import { UseCase } from './use-case-base.js';
 import { TextVariable, FloatVariable } from './variable.js';
 export class SpeedDisplay extends UseCase {
     name() {

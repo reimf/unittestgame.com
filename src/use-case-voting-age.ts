@@ -1,4 +1,4 @@
-import { UseCase } from './use-case.js'
+import { UseCase } from './use-case-base.js'
 import { Variable, BooleanVariable, IntegerVariable } from './variable.js'
 
 export class VotingAge extends UseCase {

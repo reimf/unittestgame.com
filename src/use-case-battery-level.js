@@ -1,4 +1,4 @@
-import { UseCase } from './use-case.js';
+import { UseCase } from './use-case-base.js';
 import { IntegerVariable, RadioVariable } from './variable.js';
 export class BatteryLevel extends UseCase {
     name() {

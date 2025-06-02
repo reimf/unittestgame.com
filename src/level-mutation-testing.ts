@@ -1,8 +1,8 @@
 import { Candidate } from './candidate.js'
 import { Panel, ComputerMessage } from './frame.js'
-import { Level } from './level.js'
+import { Level } from './level-base.js'
 import { TestResult } from './test-result.js'
-import { UseCase } from './use-case.js'
+import { UseCase } from './use-case-base.js'
 
 export class MutationTesting extends Level {
     public name(): string {

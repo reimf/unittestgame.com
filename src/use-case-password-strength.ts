@@ -1,4 +1,4 @@
-import { UseCase } from './use-case.js'
+import { UseCase } from './use-case-base.js'
 import { Random } from './random.js'
 import { Variable, BooleanVariable, TextVariable } from './variable.js'
 

@@ -1,4 +1,4 @@
-import { UseCase } from './use-case.js';
+import { UseCase } from './use-case-base.js';
 import { TextVariable, IntegerVariable } from './variable.js';
 export class FizzBuzz extends UseCase {
     name() {

@@ -9,7 +9,8 @@ export class Candidate {
         this.complexityMutationTesting = this.getComplexityMutationTesting(this.lines);
     }
     zip(candidate) {
-        return this.lines.map((line, pos) => [line, candidate.lines[pos]]);
+        const indexes = [...this.lines.keys()];
+        return indexes.map(index => [this.lines[index], candidate.lines[index]]);
     }
     combine(candidate) {
         if (!candidate)

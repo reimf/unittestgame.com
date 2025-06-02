@@ -1,5 +1,5 @@
 import { Panel, ComputerMessage } from './frame.js';
-import { Level } from './level.js';
+import { Level } from './level-base.js';
 export class MutationTesting extends Level {
     name() {
         return 'Mutation Testing';
