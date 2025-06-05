@@ -108,11 +108,11 @@ export class BatteryLevel extends UseCase {
     public* exampleGuidanceGeneratorMutationTesting(): Generator<string> {
         // constructor
         yield 'true'
-        
+
         // play
         yield 'In this example you only have to click the green button.'
         yield 'Meanwhile, keep an eye on the yellow marked changes in the sidebar.'
-        
+
         // showMenuMessage
         yield '*The Function* contains the number 20. That is a good starting point for a unit test. When the battery level is 20%, the function returns Normal Mode.'
         yield 'I want to add this unit test'

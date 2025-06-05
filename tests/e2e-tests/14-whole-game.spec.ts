@@ -19,7 +19,7 @@ type LevelAndUseCase = [Level, UseCase]
 test.describe('whole game', () => {
     test('plays whole game', async ({ browser }) => {
         test.slow()
-        
+
         const batteryLevel: UseCase = new BatteryLevel()
         const votingAge: UseCase = new VotingAge()
         const evenOdd: UseCase = new EvenOdd()

@@ -39,7 +39,7 @@ export abstract class Level {
     public constructor(useCase: UseCase) {
         this.useCase = useCase
         this.isLevelFinished = new Completed(this.description())
-        this.exampleGuidance = this.exampleGuidanceGenerator(useCase)   
+        this.exampleGuidance = this.exampleGuidanceGenerator(useCase)
         this.hasExampleGuidance = this.nextExampleGuidance() !== ''
     }
 

@@ -25,7 +25,10 @@ export class Main {
         this.speedDisplay = new SpeedDisplay();
         this.exampleTestDrivenDevelopment = new TestDrivenDevelopment(this.batteryLevel);
         this.exampleMutationTesting = new MutationTesting(this.batteryLevel);
-        this.examples = [this.exampleTestDrivenDevelopment, this.exampleMutationTesting];
+        this.examples = [
+            this.exampleTestDrivenDevelopment,
+            this.exampleMutationTesting
+        ];
         this.levels = [
             this.exampleTestDrivenDevelopment,
             new TestDrivenDevelopment(this.votingAge),
@@ -51,12 +54,16 @@ export class Main {
     start() {
         this.showWelcomeMessage();
         if (this.isSidebarShown.get())
-            this.sidebar();
+            this.showSidebar();
         else
-            this.showQuestionSidebar(() => this.sidebar());
+            this.showQuestionSidebar(() => this.confirmSidebar());
     }
-    sidebar() {
+    confirmSidebar() {
         this.isSidebarShown.set(1);
+        new ComputerMessage(['Ok, from now on I will always show the sidebar.']).add();
+        this.showSidebar();
+    }
+    showSidebar() {
         this.showUnittestgamePanel();
         for (const example of this.examples)
             example.showBasicDefinition();
@@ -75,7 +82,7 @@ export class Main {
         return this.levels.filter(level => level.isFinished());
     }
     showWelcomeMessage() {
-        new ComputerMessage(['Welcome to *UnitTestGame*!']).add();
+        new ComputerMessage(['Welcome to *UnitTestGame* where you can learn to write effective unit tests.']).add();
         new ComputerMessage(['I am an AI bot specialized in *Test-Driven Development* and *Mutation Testing*.']).add();
     }
     showQuestionSidebar(callback) {

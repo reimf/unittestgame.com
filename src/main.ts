@@ -4,7 +4,6 @@ import { Div } from './html.js'
 import { Level } from './level-base.js'
 import { MutationTesting } from './level-mutation-testing.js'
 import { TestDrivenDevelopment } from './level-test-driven-development.js'
-import { UseCase } from './use-case-base.js'
 import { BatteryLevel } from './use-case-battery-level.js'
 import { VotingAge } from './use-case-voting-age.js'
 import { EvenOdd } from './use-case-even-odd.js'
@@ -16,18 +15,21 @@ import { PasswordStrength } from './use-case-password-strength.js'
 import { SpeedDisplay } from './use-case-speed-display.js'
 
 export class Main {
-    private readonly batteryLevel: UseCase = new BatteryLevel()
-    private readonly votingAge: UseCase = new VotingAge()
-    private readonly evenOdd: UseCase = new EvenOdd()
-    private readonly fizzBuzz: UseCase = new FizzBuzz()
-    private readonly triangleType: UseCase = new TriangleType()
-    private readonly leapYear: UseCase = new LeapYear()
-    private readonly floatFormat: UseCase = new FloatFormat()
-    private readonly passwordStrength: UseCase = new PasswordStrength()
-    private readonly speedDisplay: UseCase = new SpeedDisplay()
-    private readonly exampleTestDrivenDevelopment: Level = new TestDrivenDevelopment(this.batteryLevel)
-    private readonly exampleMutationTesting: Level = new MutationTesting(this.batteryLevel)
-    private readonly examples = [this.exampleTestDrivenDevelopment, this.exampleMutationTesting]
+    private readonly batteryLevel = new BatteryLevel()
+    private readonly votingAge = new VotingAge()
+    private readonly evenOdd = new EvenOdd()
+    private readonly fizzBuzz = new FizzBuzz()
+    private readonly triangleType = new TriangleType()
+    private readonly leapYear = new LeapYear()
+    private readonly floatFormat = new FloatFormat()
+    private readonly passwordStrength = new PasswordStrength()
+    private readonly speedDisplay = new SpeedDisplay()
+    private readonly exampleTestDrivenDevelopment = new TestDrivenDevelopment(this.batteryLevel)
+    private readonly exampleMutationTesting = new MutationTesting(this.batteryLevel)
+    private readonly examples = [
+        this.exampleTestDrivenDevelopment,
+        this.exampleMutationTesting
+    ]
     private readonly levels: Level[] = [
         this.exampleTestDrivenDevelopment,
         new TestDrivenDevelopment(this.votingAge),
@@ -53,13 +55,18 @@ export class Main {
     public start(): void {
         this.showWelcomeMessage()
         if (this.isSidebarShown.get())
-            this.sidebar()
+            this.showSidebar()
         else
-            this.showQuestionSidebar(() => this.sidebar())
+            this.showQuestionSidebar(() => this.confirmSidebar())
     }
 
-    private sidebar(): void {
+    private confirmSidebar(): void {
         this.isSidebarShown.set(1)
+        new ComputerMessage(['Ok, from now on I will always show the sidebar.']).add()
+        this.showSidebar()
+    }
+
+    private showSidebar(): void {
         this.showUnittestgamePanel()
         for (const example of this.examples)
             example.showBasicDefinition()
@@ -82,7 +89,7 @@ export class Main {
     }
 
     private showWelcomeMessage(): void {
-        new ComputerMessage(['Welcome to *UnitTestGame*!']).add()
+        new ComputerMessage(['Welcome to *UnitTestGame* where you can learn to write effective unit tests.']).add()
         new ComputerMessage(['I am an AI bot specialized in *Test-Driven Development* and *Mutation Testing*.']).add()
     }
 
