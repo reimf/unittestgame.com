@@ -12,7 +12,7 @@ test.describe('welcome', () => {
     });
     test('has welcome message', async () => {
         const messages = page.getByTestId('messages');
-        await expect(messages).toContainText('Welcome to UnitTestGame!');
+        await expect(messages).toContainText('Welcome to UnitTestGame where you can learn to write effective unit tests.');
     });
     test('has no unittestgame panel', async () => {
         const unittestgamePanel = page.getByTestId('unittestgame');

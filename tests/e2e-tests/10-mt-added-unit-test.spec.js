@@ -10,7 +10,7 @@ test.describe('mt added unit test', () => {
         await context.addInitScript({ path: './tests/e2e-tests/init-script.js' });
         page = await context.newPage();
         await page.goto('/');
-        await page.getByRole('button', { name: 'I want to play Level 4 - Mutation Testing - Even or Odd' }).click();
+        await page.getByRole('button', { name: 'I want to play Level 4 - Mutation Testing - Even or Odd - 🔓' }).click();
         await page.getByLabel('Number').fill('42');
         await page.getByLabel('true').check();
         await page.getByRole('button', { name: 'I want to add this unit test' }).click();

@@ -10,7 +10,7 @@ test.describe('tdd submit sufficient unit test', () => {
         await context.addInitScript({ path: './tests/e2e-tests/init-script.js' })
         page = await context.newPage()
         await page.goto('/')
-        await page.getByRole('button', { name: 'I want to play Level 2 - Test-Driven Development - Voting Age' }).click()
+        await page.getByRole('button', { name: 'I want to play Level 2 - Test-Driven Development - Voting Age - 🔓' }).click()
 
         await page.getByLabel('Age').fill('16')
         await page.getByLabel('false').check()
@@ -44,7 +44,7 @@ test.describe('tdd submit sufficient unit test', () => {
     test('has see example message', async () => {
         const messages = page.getByTestId('messages')
         const button = messages.getByRole('button')
-        await expect(button).toHaveText('I want to play Level 3 - Mutation Testing - Example')
+        await expect(button).toHaveText('I want to play Level 3 - Mutation Testing - Example - 🔓')
     })
 
     test.afterAll(async () => {

@@ -114,8 +114,8 @@ export class Main {
 
     private levelDescription(level: Level): string {
         const index = this.levels.findIndex(otherLevel => otherLevel === level)
-        const medal = ['', '🥇', '🥈', '🥉'].at(Math.min(3, level.isFinished()))
-        return [`Level ${index + 1}`, level.description(), medal].filter(Boolean).join(' - ')
+        const emoji = ['🔓', '🥇', '🥈', '🥉'].at(Math.min(3, level.isFinished()))
+        return `Level ${index + 1} - ${level.description()} - ${emoji}`
     }
 
     private showFinishedLevelsPanel(previousLevel?: Level): void {

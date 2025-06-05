@@ -10,7 +10,7 @@ test.describe('mt submit insufficient unit test', () => {
         await context.addInitScript({ path: './tests/e2e-tests/init-script.js' });
         page = await context.newPage();
         await page.goto('/');
-        await page.getByRole('button', { name: 'I want to play Level 4 - Mutation Testing - Even or Odd' }).click();
+        await page.getByRole('button', { name: 'I want to play Level 4 - Mutation Testing - Even or Odd - 🔓' }).click();
         await page.getByRole('button', { name: 'I want to submit the unit tests' }).click();
     });
     test('has bug found message', async () => {
