@@ -1,13 +1,13 @@
 import { test, expect } from '@playwright/test';
 import { IntegerVariable, BooleanVariable } from '../../src/variable.js';
-import { FakeUseCase } from '../mocks/fake-use-case.js';
+import { MockUseCase } from '../mocks/mock-use-case.js';
 test.describe('class UseCase', () => {
-    const useCase = new FakeUseCase();
+    const useCase = new MockUseCase();
     test('has a specification', () => {
-        expect(useCase.specification()).toBe('Fake Specification');
+        expect(useCase.specification()).toBe('Mock Specification');
     });
     test('has a name', () => {
-        expect(useCase.name()).toBe('Fake Use Case');
+        expect(useCase.name()).toBe('Mock Use Case');
     });
     test('has parameters', () => {
         expect(useCase.parameters.length).toBe(1);

@@ -1,12 +1,12 @@
 import { test, expect } from '@playwright/test';
 import { MutationTesting } from '../../src/level-mutation-testing.js';
-import { TestCases } from '../test-cases/test-cases.js';
+import { FixtureLevelStates } from '../fixtures/fixture-level-states.js';
 test.describe('class Level Mutation Testing', () => {
-    const testCases = new TestCases();
-    const useCase = testCases.useCase;
+    const fixtureLevelStates = new FixtureLevelStates();
+    const useCase = fixtureLevelStates.useCase;
     const level = new MutationTesting(useCase);
     test.describe('method findSimplestPassingCandidate', () => {
-        testCases.all.forEach(({ unitTests, simplestPassingCandidatesMutationTesting }) => {
+        fixtureLevelStates.states.forEach(({ unitTests, simplestPassingCandidatesMutationTesting }) => {
             test(`finds the simplest passing candidate for unit tests ${unitTests.map(unitTest => unitTest.argumentList)}`, () => {
                 const code = level.findSimplestPassingCandidate(useCase.candidates, useCase.perfectCandidates, unitTests).toString();
                 expect(simplestPassingCandidatesMutationTesting).toContain(code);
@@ -14,7 +14,7 @@ test.describe('class Level Mutation Testing', () => {
         });
     });
     test.describe('method findSimplestCoveredCandidate', () => {
-        testCases.all.forEach(({ unitTests, simplestCoveredCandidate }) => {
+        fixtureLevelStates.states.forEach(({ unitTests, simplestCoveredCandidate }) => {
             test(`finds the simplest covered candidate with unit tests ${unitTests.map(unitTest => unitTest.argumentList)}`, () => {
                 const code = level.findSimplestCoveredCandidate(useCase.amputeesOfPerfectCandidate, unitTests).toString();
                 expect(code).toBe(simplestCoveredCandidate);

@@ -1,6 +1,6 @@
 import { Level } from '../../src/level-base.js';
-export class FakeLevel extends Level {
-    name() { return 'Fake Level'; }
+export class MockLevel extends Level {
+    name() { return 'Mock Level'; }
     showBasicDefinition() { }
     compareComplexity(_candidate, _otherCandidate) { return 0; }
     showWelcomeMessage() { }

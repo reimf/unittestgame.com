@@ -1,14 +1,14 @@
 import { UseCase } from '../../src/use-case-base.js'
 import { Variable, BooleanVariable, IntegerVariable } from '../../src/variable.js'
 
-export class FakeUseCase extends UseCase {
+export class MockUseCase extends UseCase {
     public name(): string {
-        return 'Fake Use Case'
+        return 'Mock Use Case'
     }
 
     public specification(): string {
         return (
-            'Fake Specification'
+            'Mock Specification'
         )
     }
 

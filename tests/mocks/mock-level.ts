@@ -2,8 +2,8 @@ import { Candidate } from '../../src/candidate.js'
 import { Level } from '../../src/level-base.js'
 import { TestResult } from '../../src/test-result.js'
 
-export class FakeLevel extends Level {
-    public name(): string { return 'Fake Level' }
+export class MockLevel extends Level {
+    public name(): string { return 'Mock Level' }
     public showBasicDefinition(): void { }
     protected compareComplexity(_candidate: Candidate, _otherCandidate: Candidate): number { return 0 }
     protected showWelcomeMessage(): void { }
