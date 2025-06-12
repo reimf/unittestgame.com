@@ -1,6 +1,6 @@
 import * as fs from 'fs'
 import * as path from 'path'
-import { MockUseCase } from '../mocks/mock-use-case'
+import { MockUseCase } from '../mocks/mock-use-case.js'
 import { UnitTest } from '../../src/unit-test.js'
 
 type FixtureLevelState = {
