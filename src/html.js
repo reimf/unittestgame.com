@@ -1,4 +1,5 @@
 class Content {
+    static timeOfLastDelayedCall = 0;
     callDelayed(callback) {
         const now = Date.now();
         const delay = Math.max(0, 500 + Html.timeOfLastDelayedCall - now);
@@ -6,13 +7,13 @@ class Content {
         window.setTimeout(() => callback(), delay);
     }
 }
-Content.timeOfLastDelayedCall = 0;
 export class Html extends Content {
+    tagName;
+    id = '';
+    classList = [];
+    children = [];
     constructor(tagName) {
         super();
-        this.id = '';
-        this.classList = [];
-        this.children = [];
         this.tagName = tagName;
     }
     setId(id) {
@@ -121,17 +122,17 @@ export class Html extends Content {
         return node;
     }
     replaceEnclosingMessageContent(element, text) {
-        var _a;
         const section = element.closest('section');
         section.classList.remove('reveal');
         const textNode = document.createTextNode(text + '.');
         const paragraph = document.createElement('p');
         paragraph.appendChild(textNode);
-        (_a = section.querySelector('div')) === null || _a === void 0 ? void 0 : _a.replaceChildren(paragraph);
+        section.querySelector('div')?.replaceChildren(paragraph);
         this.callDelayed(() => section.classList.add('reveal'));
     }
 }
 class Text extends Content {
+    text;
     constructor(text) {
         super();
         this.text = text;
@@ -144,10 +145,7 @@ class Text extends Content {
     }
 }
 class FormControl extends Html {
-    constructor() {
-        super(...arguments);
-        this.disabled = false;
-    }
+    disabled = false;
     setDisabled(disabled) {
         this.disabled = disabled;
         return this;
@@ -166,15 +164,15 @@ class FormControl extends Html {
     }
 }
 export class Input extends FormControl {
+    type = '';
+    name = '';
+    value = '';
+    autocomplete = '';
+    checked = '';
+    required = '';
+    pattern = '';
     constructor() {
         super('input');
-        this.type = '';
-        this.name = '';
-        this.value = '';
-        this.autocomplete = '';
-        this.checked = '';
-        this.required = '';
-        this.pattern = '';
     }
     setType(type) {
         this.type = type;
@@ -243,9 +241,9 @@ export class Input extends FormControl {
     }
 }
 export class Form extends Html {
+    onSubmitCallback = undefined;
     constructor() {
         super('form');
-        this.onSubmitCallback = undefined;
     }
     onSubmit(callback) {
         this.onSubmitCallback = callback;
@@ -276,9 +274,9 @@ export class Paragraph extends Html {
     }
 }
 export class Button extends FormControl {
+    onClickCallback = undefined;
     constructor() {
         super('button');
-        this.onClickCallback = undefined;
     }
     onClick(callback) {
         this.onClickCallback = callback;
@@ -331,9 +329,9 @@ export class Bold extends Html {
     }
 }
 export class Anchor extends Html {
+    href = '';
     constructor() {
         super('a');
-        this.href = '';
     }
     setHref(href) {
         this.href = href;

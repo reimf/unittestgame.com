@@ -1,13 +1,10 @@
 export class MockStorage {
-    constructor() {
-        this.storage = new Map();
-    }
+    storage = new Map();
     get length() {
         return this.storage.size;
     }
     getItem(key) {
-        var _a;
-        return (_a = this.storage.get(key)) !== null && _a !== void 0 ? _a : null;
+        return this.storage.get(key) ?? null;
     }
     setItem(key, value) {
         this.storage.set(key, value);
@@ -18,8 +15,7 @@ export class MockStorage {
         return this;
     }
     key(index) {
-        var _a;
-        return (_a = Array.from(this.storage.keys())[index]) !== null && _a !== void 0 ? _a : null;
+        return Array.from(this.storage.keys())[index] ?? null;
     }
     clear() {
         this.storage.clear();

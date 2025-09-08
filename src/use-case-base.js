@@ -2,19 +2,17 @@ import { Candidate } from './candidate.js';
 import { Random } from './random.js';
 import { UnitTest } from './unit-test.js';
 export class UseCase {
-    constructor() {
-        this.parameters = this.getParameters();
-        this.unit = this.getUnit();
-        this.candidates = [...this.generateCandidates(this.getCandidateElements(), [])];
-        this.minimalUnitTests = [...this.generateMinimalUnitTests()];
-        this.subsetsOfMinimalUnitTests = [...this.generateSubsets(this.minimalUnitTests)];
-        this.perfectCandidates = this.findPerfectCandidates();
-        this.perfectCandidate = Random.elementFrom(this.perfectCandidates);
-        this.amputeesOfPerfectCandidate = this.findAmputeesOfPerfectCandidate();
-        this.hints = [...this.generateHints()];
-    }
     *exampleGuidanceGeneratorTestDrivenDevelopment() { }
     *exampleGuidanceGeneratorMutationTesting() { }
+    parameters = this.getParameters();
+    unit = this.getUnit();
+    candidates = [...this.generateCandidates(this.getCandidateElements(), [])];
+    minimalUnitTests = [...this.generateMinimalUnitTests()];
+    subsetsOfMinimalUnitTests = [...this.generateSubsets(this.minimalUnitTests)];
+    perfectCandidates = this.findPerfectCandidates();
+    perfectCandidate = Random.elementFrom(this.perfectCandidates);
+    amputeesOfPerfectCandidate = this.findAmputeesOfPerfectCandidate();
+    hints = [...this.generateHints()];
     *generateCandidates(listOfListOfLines, lines) {
         if (listOfListOfLines.length > 0) {
             const [firstListOfLines, ...remainingListOfListOfLines] = listOfListOfLines;

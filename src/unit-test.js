@@ -1,4 +1,8 @@
 export class UnitTest {
+    parameters;
+    argumentList;
+    unit;
+    expected;
     constructor(parameters, argumentList, unit, expected) {
         this.parameters = parameters;
         this.argumentList = argumentList;

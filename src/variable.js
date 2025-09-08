@@ -1,8 +1,10 @@
 import { Input, Label, Paragraph, Span } from './html.js';
 export class Variable {
+    label;
+    value = '';
+    name;
+    disabled = false;
     constructor(label, name) {
-        this.value = '';
-        this.disabled = false;
         this.label = label;
         this.name = name;
     }
@@ -16,6 +18,7 @@ export class Variable {
     }
 }
 export class RadioVariable extends Variable {
+    texts;
     constructor(label, name, texts) {
         super(label, name);
         this.texts = texts;

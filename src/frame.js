@@ -21,8 +21,7 @@ export class Panel extends Frame {
         this.setId(id).prependChild(new Header().appendText(title));
     }
     static removeAll() {
-        var _a;
-        (_a = document.querySelector('#panels')) === null || _a === void 0 ? void 0 : _a.replaceChildren();
+        document.querySelector('#panels')?.replaceChildren();
     }
     show() {
         const existingElement = this.existingElement();
@@ -58,6 +57,9 @@ export class ComputerMessage extends Message {
     }
 }
 export class CheckingMessage extends ComputerMessage {
+    callback;
+    delay;
+    finalText;
     constructor(checkingText, finalText, callback, delay) {
         super([new Paragraph().appendMarkdown(checkingText + '...').addClass('checking')]);
         this.finalText = finalText;

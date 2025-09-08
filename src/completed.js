@@ -1,4 +1,5 @@
 export class Completed {
+    key;
     constructor(key) {
         this.key = key;
     }

@@ -6,14 +6,19 @@ import { TestResult } from './test-result.js';
 import { UnitTest } from './unit-test.js';
 import { Completed } from './completed.js';
 export class Level {
+    useCase;
+    isLevelFinished;
+    exampleGuidance;
+    hasExampleGuidance;
+    callback;
+    humanUnitTests = [];
+    previousCandidate = undefined;
+    coveredCandidate = undefined;
+    currentCandidate = new Candidate([]);
+    failingTestResult = undefined;
+    newUnitTest = undefined;
+    numberOfSubmissions = 0;
     constructor(useCase) {
-        this.humanUnitTests = [];
-        this.previousCandidate = undefined;
-        this.coveredCandidate = undefined;
-        this.currentCandidate = new Candidate([]);
-        this.failingTestResult = undefined;
-        this.newUnitTest = undefined;
-        this.numberOfSubmissions = 0;
         this.useCase = useCase;
         this.isLevelFinished = new Completed(this.description());
         this.exampleGuidance = this.exampleGuidanceGenerator(useCase);

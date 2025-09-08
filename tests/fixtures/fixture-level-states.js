@@ -3,8 +3,9 @@ import * as path from 'path';
 import { MockUseCase } from '../mocks/mock-use-case.js';
 import { UnitTest } from '../../src/unit-test.js';
 export class FixtureLevelStates {
+    useCase = new MockUseCase();
+    states;
     constructor() {
-        this.useCase = new MockUseCase();
         const pathname = path.resolve(__dirname, 'fixture-level-states.json');
         const text = fs.readFileSync(pathname, 'utf8');
         this.states = this.enrich(JSON.parse(text));

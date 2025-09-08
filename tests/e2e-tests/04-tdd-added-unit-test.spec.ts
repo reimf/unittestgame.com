@@ -5,7 +5,6 @@ test.describe('tdd added unit test', () => {
 
     test.beforeAll(async ({ browser }) => {
         const context = await browser.newContext()
-        await context.addInitScript(_ => localStorage.setItem('Main - Sidebar Shown', '1'))
         await context.addInitScript(_ => localStorage.setItem('Test-Driven Development - Example', '1'))
         await context.addInitScript({ path: './tests/e2e-tests/init-script.js' })
         page = await context.newPage()

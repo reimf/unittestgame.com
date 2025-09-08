@@ -1,6 +1,6 @@
 import { Main } from './src/main.js';
 window.onerror = (message, source, lineno, colno, error) => {
-    alert(`${error === null || error === void 0 ? void 0 : error.name}: ${message}\n${source}:${lineno}:${colno}`);
+    alert(`${error?.name}: ${message}\n${source}:${lineno}:${colno}`);
 };
 document.addEventListener('keydown', event => {
     const up = event.key === 'ArrowUp' ? true : event.key === 'ArrowDown' ? false : undefined;

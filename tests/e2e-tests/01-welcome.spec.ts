@@ -1,6 +1,6 @@
 import { test, expect, Page } from '@playwright/test'
 
-test.describe('level menu', () => {
+test.describe('welcome', () => {
     let page: Page
 
     test.beforeAll(async ({ browser }) => {
@@ -8,7 +8,15 @@ test.describe('level menu', () => {
         await context.addInitScript({ path: './tests/e2e-tests/init-script.js' })
         page = await context.newPage()
         await page.goto('/')
-        await page.getByRole('button', { name: 'I want a sidebar with information on terms with a purple background' }).click()
+    })
+
+    test('has title', async () => {
+        await expect(page).toHaveTitle('UnitTestGame.com')
+    })
+
+    test('has welcome message', async () => {
+        const messages = page.getByTestId('messages')
+        await expect(messages).toContainText('Welcome to UnitTestGame where you can learn to write effective unit tests.')
     })
 
     test('has unittestgame panel', async () => {

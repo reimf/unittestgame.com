@@ -1,6 +1,10 @@
 import { Code, Div, Span } from './html.js';
 import { TestResult } from './test-result.js';
 export class Candidate {
+    lines;
+    function;
+    complexityTestDrivenDevelopment;
+    complexityMutationTesting;
     constructor(lines) {
         this.lines = lines.map(line => line.replace(/\\\\/g, '\\'));
         const code = lines.join('\n');

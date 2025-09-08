@@ -1,4 +1,3 @@
-import { Completed } from './completed.js';
 import { Panel, ComputerMessage, QuestionMessage } from './frame.js';
 import { Div } from './html.js';
 import { MutationTesting } from './level-mutation-testing.js';
@@ -13,57 +12,43 @@ import { FloatFormat } from './use-case-float-format.js';
 import { PasswordStrength } from './use-case-password-strength.js';
 import { SpeedDisplay } from './use-case-speed-display.js';
 export class Main {
-    constructor() {
-        this.batteryLevel = new BatteryLevel();
-        this.votingAge = new VotingAge();
-        this.evenOdd = new EvenOdd();
-        this.fizzBuzz = new FizzBuzz();
-        this.triangleType = new TriangleType();
-        this.leapYear = new LeapYear();
-        this.floatFormat = new FloatFormat();
-        this.passwordStrength = new PasswordStrength();
-        this.speedDisplay = new SpeedDisplay();
-        this.exampleTestDrivenDevelopment = new TestDrivenDevelopment(this.batteryLevel);
-        this.exampleMutationTesting = new MutationTesting(this.batteryLevel);
-        this.examples = [
-            this.exampleTestDrivenDevelopment,
-            this.exampleMutationTesting
-        ];
-        this.levels = [
-            this.exampleTestDrivenDevelopment,
-            new TestDrivenDevelopment(this.votingAge),
-            this.exampleMutationTesting,
-            new MutationTesting(this.evenOdd),
-            new TestDrivenDevelopment(this.fizzBuzz),
-            new MutationTesting(this.triangleType),
-            new TestDrivenDevelopment(this.evenOdd),
-            new MutationTesting(this.votingAge),
-            new TestDrivenDevelopment(this.triangleType),
-            new MutationTesting(this.fizzBuzz),
-            new TestDrivenDevelopment(this.leapYear),
-            new MutationTesting(this.passwordStrength),
-            new TestDrivenDevelopment(this.speedDisplay),
-            new MutationTesting(this.floatFormat),
-            new TestDrivenDevelopment(this.passwordStrength),
-            new MutationTesting(this.leapYear),
-            new TestDrivenDevelopment(this.floatFormat),
-            new MutationTesting(this.speedDisplay),
-        ];
-        this.isSidebarShown = new Completed('Main - Sidebar Shown');
-    }
+    batteryLevel = new BatteryLevel();
+    votingAge = new VotingAge();
+    evenOdd = new EvenOdd();
+    fizzBuzz = new FizzBuzz();
+    triangleType = new TriangleType();
+    leapYear = new LeapYear();
+    floatFormat = new FloatFormat();
+    passwordStrength = new PasswordStrength();
+    speedDisplay = new SpeedDisplay();
+    exampleTestDrivenDevelopment = new TestDrivenDevelopment(this.batteryLevel);
+    exampleMutationTesting = new MutationTesting(this.batteryLevel);
+    examples = [
+        this.exampleTestDrivenDevelopment,
+        this.exampleMutationTesting
+    ];
+    levels = [
+        this.exampleTestDrivenDevelopment,
+        new TestDrivenDevelopment(this.votingAge),
+        this.exampleMutationTesting,
+        new MutationTesting(this.evenOdd),
+        new TestDrivenDevelopment(this.fizzBuzz),
+        new MutationTesting(this.triangleType),
+        new TestDrivenDevelopment(this.evenOdd),
+        new MutationTesting(this.votingAge),
+        new TestDrivenDevelopment(this.triangleType),
+        new MutationTesting(this.fizzBuzz),
+        new TestDrivenDevelopment(this.leapYear),
+        new MutationTesting(this.passwordStrength),
+        new TestDrivenDevelopment(this.speedDisplay),
+        new MutationTesting(this.floatFormat),
+        new TestDrivenDevelopment(this.passwordStrength),
+        new MutationTesting(this.leapYear),
+        new TestDrivenDevelopment(this.floatFormat),
+        new MutationTesting(this.speedDisplay),
+    ];
     start() {
         this.showWelcomeMessage();
-        if (this.isSidebarShown.get())
-            this.showSidebar();
-        else
-            this.showQuestionSidebar(() => this.confirmSidebar());
-    }
-    confirmSidebar() {
-        this.isSidebarShown.set(1);
-        new ComputerMessage(['Ok, from now on I will always show the sidebar.']).add();
-        this.showSidebar();
-    }
-    showSidebar() {
         this.showUnittestgamePanel();
         for (const example of this.examples)
             example.showBasicDefinition();
@@ -84,9 +69,6 @@ export class Main {
     showWelcomeMessage() {
         new ComputerMessage(['Welcome to *UnitTestGame* where you can learn to write effective unit tests.']).add();
         new ComputerMessage(['I am an AI bot specialized in *Test-Driven Development* and *Mutation Testing*.']).add();
-    }
-    showQuestionSidebar(callback) {
-        new QuestionMessage('I want a sidebar with information on terms with a purple background', () => callback()).add();
     }
     showUnittestgamePanel() {
         const names = this.examples.map(example => example.name()).join(' and ');

@@ -50,23 +50,9 @@ export class Main {
         new TestDrivenDevelopment(this.floatFormat),
         new MutationTesting(this.speedDisplay),
     ]
-    private readonly isSidebarShown: Completed = new Completed('Main - Sidebar Shown')
 
     public start(): void {
         this.showWelcomeMessage()
-        if (this.isSidebarShown.get())
-            this.showSidebar()
-        else
-            this.showQuestionSidebar(() => this.confirmSidebar())
-    }
-
-    private confirmSidebar(): void {
-        this.isSidebarShown.set(1)
-        new ComputerMessage(['Ok, from now on I will always show the sidebar.']).add()
-        this.showSidebar()
-    }
-
-    private showSidebar(): void {
         this.showUnittestgamePanel()
         for (const example of this.examples)
             example.showBasicDefinition()
@@ -91,13 +77,6 @@ export class Main {
     private showWelcomeMessage(): void {
         new ComputerMessage(['Welcome to *UnitTestGame* where you can learn to write effective unit tests.']).add()
         new ComputerMessage(['I am an AI bot specialized in *Test-Driven Development* and *Mutation Testing*.']).add()
-    }
-
-    private showQuestionSidebar(callback: () => void): void {
-        new QuestionMessage(
-            'I want a sidebar with information on terms with a purple background',
-            () => callback()
-        ).add()
     }
 
     private showUnittestgamePanel(): void {

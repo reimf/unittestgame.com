@@ -58,7 +58,6 @@ test.describe('whole game', () => {
         await context.addInitScript({ path: './tests/e2e-tests/init-script.js' })
         const page = await context.newPage()
         await page.goto('/')
-        await page.getByRole('button', { name: 'I want a sidebar with information on terms with a purple background' }).click()
 
         for (let index = 0; index < levelsAndUseCases.length; index++) {
             const [level, useCase] = levelsAndUseCases[index]
