@@ -83,7 +83,7 @@ export class Main {
     levelDescription(level) {
         const index = this.levels.findIndex(otherLevel => otherLevel === level);
         const emoji = ['🔓', '🥇', '🥈', '🥉'].at(Math.min(3, level.isFinished()));
-        return `Level ${index + 1} - ${level.description()} - ${emoji}`;
+        return `Level ${index + 1} of ${this.levels.length} - ${level.description()} - ${emoji}`;
     }
     showFinishedLevelsPanel(previousLevel) {
         const finishedLevels = this.getFinishedLevels();

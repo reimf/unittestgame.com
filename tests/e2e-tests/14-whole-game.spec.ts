@@ -61,7 +61,7 @@ test.describe('whole game', () => {
 
         for (let index = 0; index < levelsAndUseCases.length; index++) {
             const [level, useCase] = levelsAndUseCases[index]
-            await page.getByRole('button', { name: `I want to play Level ${index + 1} - ${level.description()}` }).click()
+            await page.getByRole('button', { name: `I want to play Level ${index + 1} of ${levelsAndUseCases.length} - ${level.description()}` }).click()
 
             if (examples.includes(level)) {
                 await page.getByRole('button', { name: 'I want to add this unit test' }).click()

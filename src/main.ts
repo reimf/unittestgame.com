@@ -1,4 +1,3 @@
-import { Completed } from './completed.js'
 import { Panel, ComputerMessage, QuestionMessage } from './frame.js'
 import { Div } from './html.js'
 import { Level } from './level-base.js'
@@ -94,7 +93,7 @@ export class Main {
     private levelDescription(level: Level): string {
         const index = this.levels.findIndex(otherLevel => otherLevel === level)
         const emoji = ['🔓', '🥇', '🥈', '🥉'].at(Math.min(3, level.isFinished()))
-        return `Level ${index + 1} - ${level.description()} - ${emoji}`
+        return `Level ${index + 1} of ${this.levels.length} - ${level.description()} - ${emoji}`
     }
 
     private showFinishedLevelsPanel(previousLevel?: Level): void {

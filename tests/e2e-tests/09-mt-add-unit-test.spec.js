@@ -9,7 +9,7 @@ test.describe('mt I want to add this unit test', () => {
         await context.addInitScript({ path: './tests/e2e-tests/init-script.js' });
         page = await context.newPage();
         await page.goto('/');
-        await page.getByRole('button', { name: 'I want to play Level 4 - Mutation Testing - Even or Odd - 🔓' }).click();
+        await page.getByRole('button', { name: 'I want to play Level 4 of 18 - Mutation Testing - Even or Odd - 🔓' }).click();
     });
     test('has number field', async () => {
         const number = page.getByLabel('Number');
