@@ -1,7 +1,9 @@
 import { test, expect } from '@playwright/test';
+import { Locale } from '../../src/locale.js';
 import { FizzBuzz } from '../../src/use-case-fizz-buzz.js';
 test.describe('class FizzBuzz', () => {
-    const useCase = new FizzBuzz();
+    const locale = new Locale('en');
+    const useCase = new FizzBuzz(locale);
     test('has the right amount of parameters', () => {
         expect(useCase.parameters).toHaveLength(1);
     });

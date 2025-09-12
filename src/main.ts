@@ -1,6 +1,7 @@
 import { Panel, ComputerMessage, QuestionMessage } from './frame.js'
 import { Div } from './html.js'
 import { Level } from './level-base.js'
+import { Locale } from './locale.js'
 import { MutationTesting } from './level-mutation-testing.js'
 import { TestDrivenDevelopment } from './level-test-driven-development.js'
 import { BatteryLevel } from './use-case-battery-level.js'
@@ -14,45 +15,47 @@ import { PasswordStrength } from './use-case-password-strength.js'
 import { SpeedDisplay } from './use-case-speed-display.js'
 
 export class Main {
-    private readonly batteryLevel = new BatteryLevel()
-    private readonly votingAge = new VotingAge()
-    private readonly evenOdd = new EvenOdd()
-    private readonly fizzBuzz = new FizzBuzz()
-    private readonly triangleType = new TriangleType()
-    private readonly leapYear = new LeapYear()
-    private readonly floatFormat = new FloatFormat()
-    private readonly passwordStrength = new PasswordStrength()
-    private readonly speedDisplay = new SpeedDisplay()
-    private readonly exampleTestDrivenDevelopment = new TestDrivenDevelopment(this.batteryLevel)
-    private readonly exampleMutationTesting = new MutationTesting(this.batteryLevel)
+    private readonly lng = (new URL(window.location.href)).searchParams.get('lng') || navigator.language.split('-')[0]
+    private readonly locale = new Locale(this.lng)
+    private readonly batteryLevel = new BatteryLevel(this.locale)
+    private readonly votingAge = new VotingAge(this.locale)
+    private readonly evenOdd = new EvenOdd(this.locale)
+    private readonly fizzBuzz = new FizzBuzz(this.locale)
+    private readonly triangleType = new TriangleType(this.locale)
+    private readonly leapYear = new LeapYear(this.locale)
+    private readonly floatFormat = new FloatFormat(this.locale)
+    private readonly passwordStrength = new PasswordStrength(this.locale)
+    private readonly speedDisplay = new SpeedDisplay(this.locale)
+    private readonly exampleTestDrivenDevelopment = new TestDrivenDevelopment(this.locale, this.batteryLevel)
+    private readonly exampleMutationTesting = new MutationTesting(this.locale, this.batteryLevel)
     private readonly examples = [
         this.exampleTestDrivenDevelopment,
         this.exampleMutationTesting
     ]
     private readonly levels: Level[] = [
         this.exampleTestDrivenDevelopment,
-        new TestDrivenDevelopment(this.votingAge),
+        new TestDrivenDevelopment(this.locale, this.votingAge),
         this.exampleMutationTesting,
-        new MutationTesting(this.evenOdd),
-        new TestDrivenDevelopment(this.fizzBuzz),
-        new MutationTesting(this.triangleType),
-        new TestDrivenDevelopment(this.evenOdd),
-        new MutationTesting(this.votingAge),
-        new TestDrivenDevelopment(this.triangleType),
-        new MutationTesting(this.fizzBuzz),
-        new TestDrivenDevelopment(this.leapYear),
-        new MutationTesting(this.passwordStrength),
-        new TestDrivenDevelopment(this.speedDisplay),
-        new MutationTesting(this.floatFormat),
-        new TestDrivenDevelopment(this.passwordStrength),
-        new MutationTesting(this.leapYear),
-        new TestDrivenDevelopment(this.floatFormat),
-        new MutationTesting(this.speedDisplay),
+        new MutationTesting(this.locale, this.evenOdd),
+        new TestDrivenDevelopment(this.locale, this.fizzBuzz),
+        new MutationTesting(this.locale, this.triangleType),
+        new TestDrivenDevelopment(this.locale, this.evenOdd),
+        new MutationTesting(this.locale, this.votingAge),
+        new TestDrivenDevelopment(this.locale, this.triangleType),
+        new MutationTesting(this.locale, this.fizzBuzz),
+        new TestDrivenDevelopment(this.locale, this.leapYear),
+        new MutationTesting(this.locale, this.passwordStrength),
+        new TestDrivenDevelopment(this.locale, this.speedDisplay),
+        new MutationTesting(this.locale, this.floatFormat),
+        new TestDrivenDevelopment(this.locale, this.passwordStrength),
+        new MutationTesting(this.locale, this.leapYear),
+        new TestDrivenDevelopment(this.locale, this.floatFormat),
+        new MutationTesting(this.locale, this.speedDisplay),
     ]
 
     public start(): void {
         this.showWelcomeMessage()
-        this.showUnittestgamePanel()
+        this.showAboutPanel()
         for (const example of this.examples)
             example.showBasicDefinition()
         this.continue()
@@ -74,32 +77,28 @@ export class Main {
     }
 
     private showWelcomeMessage(): void {
-        new ComputerMessage(['Welcome to *UnitTestGame* where you can learn to write effective unit tests.']).add()
-        new ComputerMessage(['I am an AI bot specialized in *Test-Driven Development* and *Mutation Testing*.']).add()
+        new ComputerMessage([this.locale.welcomeToUnittestgame()]).add()
+        new ComputerMessage([this.locale.iAmAnAiBot()]).add()
     }
 
-    private showUnittestgamePanel(): void {
-        const names = this.examples.map(example => example.name()).join(' and ')
-        new Panel('UnitTestGame', [
-            `Learn to write effective unit tests using ${names}. ` +
-            '[Give feedback](mailto:feedback@unittestgame.com)',
-        ]).show()
+    private showAboutPanel(): void {
+        new Panel('unittestgame', this.locale.about(), [this.locale.learnToWriteEffectiveUnitTests()]).show()
     }
 
     private showInvitationMessage(): void {
-        new ComputerMessage(['What do you want to do?']).add()
+        new ComputerMessage([this.locale.whatDoYouWantToDo()]).add()
     }
 
     private levelDescription(level: Level): string {
         const index = this.levels.findIndex(otherLevel => otherLevel === level)
-        const emoji = ['🔓', '🥇', '🥈', '🥉'].at(Math.min(3, level.isFinished()))
-        return `Level ${index + 1} of ${this.levels.length} - ${level.description()} - ${emoji}`
+        const emoji = ['🔓', '🥇', '🥈', '🥉'].at(level.isFinished()) || '🥉'
+        return this.locale.level(index + 1, this.levels.length, level.description(), emoji)
     }
 
     private showFinishedLevelsPanel(previousLevel?: Level): void {
         const finishedLevels = this.getFinishedLevels()
         if (finishedLevels.length > 0) {
-            new Panel('Finished Levels',
+            new Panel('finished-levels', this.locale.finishedLevels(),
                 finishedLevels.map(level =>
                     new Div().appendText(this.levelDescription(level)).addClass(level === previousLevel ? 'new' : 'old')
                 )
@@ -110,12 +109,12 @@ export class Main {
     private showNextLevel(): void {
         const nextLevel = this.levels.find(level => !level.isFinished())
         if (nextLevel)
-            new QuestionMessage(`I want to play ${this.levelDescription(nextLevel)}`, () => this.play(nextLevel)).add()
+            new QuestionMessage(this.locale.iWantToPlayTheNextLevel(this.levelDescription(nextLevel)), () => this.play(nextLevel)).add()
         else
-            new QuestionMessage('I played all the levels', () => this.quit()).add()
+            new QuestionMessage(this.locale.iPlayedAllTheLevels(), () => this.quit()).add()
     }
 
     private quit(): void {
-        new ComputerMessage(['Well done! You can close this tab now and start writing effective unit tests for your real-world projects.']).add()
+        new ComputerMessage([this.locale.wellDoneYouCanCloseThisTab()]).add()
     }
 }

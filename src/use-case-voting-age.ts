@@ -7,7 +7,7 @@ export class VotingAge extends UseCase {
     }
 
     public specification(): string {
-        return 'Return true if the age is 18 years or over and return false if the age is under 18.'
+        return this.locale.returnTrueIfTheAgeIs18YearsOrOverAndFalseIfTheAgeIsUnder18()
     }
 
     public getParameters(): Variable[] {

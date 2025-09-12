@@ -6,7 +6,7 @@ export class EvenOdd extends UseCase {
         return 'Even or Odd'
     }
     public specification(): string {
-        return 'Return true if a number is even and false if it is odd.'
+        return this.locale.returnTrueIfTheNumberIsEvenAndFalseIfItIsOdd()
     }
 
     public getParameters(): Variable[] {

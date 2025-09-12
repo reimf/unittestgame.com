@@ -25,6 +25,8 @@ test.describe('welcome', () => {
     })
 
     test('has link to feedback mail address', async () => {
+        const about = page.locator('summary:has-text("About")')
+        await about.click()
         const link = page.getByRole('link', { name: 'feedback' })
         expect(await link.getAttribute('href')).toBe('mailto:feedback@unittestgame.com')
     })
@@ -35,7 +37,7 @@ test.describe('welcome', () => {
     })
 
     test('has more info on Test-Driven Development', async () => {
-        const link = page.getByTestId('test-driven-development').getByRole('link', { name: 'more' })
+        const link = page.getByTestId('test-driven-development').getByRole('link', { name: 'Read more' })
         expect(await link.getAttribute('href')).toBe('https://en.wikipedia.org/wiki/Test-driven_development')
     })
 

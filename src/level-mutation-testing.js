@@ -2,19 +2,15 @@ import { Panel, ComputerMessage } from './frame.js';
 import { Level } from './level-base.js';
 export class MutationTesting extends Level {
     name() {
-        return 'Mutation Testing';
+        return this.locale.mutationTesting();
     }
     showBasicDefinition() {
-        new Panel('Mutation Testing', [
-            'Each mutation of a fully tested function should make at least one unit test fail. ' +
-                'Mutations are simplifications of the code, e.g. by replacing "n % 4 === 0" with "n === 4". ' +
-                '[Read more](https://en.wikipedia.org/wiki/Mutation_testing)',
-        ]).show();
+        new Panel('mutation-testing', this.locale.mutationTesting(), [this.locale.definitionMT()]).show();
     }
     showWelcomeMessage() {
-        new ComputerMessage(['You read *The Function* and write *Unit Tests* that pass.']).add();
-        new ComputerMessage(['After adding a unit test, I show the line coverage of *The Function*.']).add();
-        new ComputerMessage(['When you think *The Function* is fully tested, you submit the *Unit Tests*.']).add();
+        new ComputerMessage([this.locale.step1MT()]).add();
+        new ComputerMessage([this.locale.step2MT()]).add();
+        new ComputerMessage([this.locale.step3MT()]).add();
     }
     showSpecificationPanel(_specification) {
         // nothing
@@ -23,28 +19,28 @@ export class MutationTesting extends Level {
         // nothing
     }
     showCodeCoveragePanel(perfectCandidate, coveredCandidate) {
-        new Panel('The Function', [
+        new Panel('the-function', this.locale.theFunction(), [
             coveredCandidate ? perfectCandidate.toHtmlWithCoverage(coveredCandidate) : perfectCandidate.toHtml()
         ]).show();
     }
     showIncorrectUnitTestMessage() {
-        new ComputerMessage(['I did NOT add the unit test, because it is NOT correct.']).add();
+        new ComputerMessage([this.locale.iDidNotAddTheUnitTest()]).add();
     }
     showUselessUnitTestMessage() {
-        new ComputerMessage(['I added the unit test to the *Unit Tests*, but the line coverage of *The Function* did NOT increase.']).add();
-        new ComputerMessage(['Try to write unit tests that cover some code that is not yet covered by other unit tests.']).add();
+        new ComputerMessage([this.locale.iAddedTheUnitTestButTheLineCoverageDidNotIncrease()]).add();
+        new ComputerMessage([this.locale.tryToWriteUnitTestsThatFail()]).add();
     }
     showUsefulUnitTestMessage() {
-        new ComputerMessage(['I added the unit test to the *Unit Tests* and I showed the line coverage in *The Function*.']).add();
+        new ComputerMessage([this.locale.iAddedTheUnitTestAnd()]).add();
     }
     showBugFoundMessage(currentCandidate, _failingTestResult, numberOfUnitTestsStillNeeded) {
-        new ComputerMessage(['*The Function* is NOT fully tested.']).add();
-        new ComputerMessage(['A mutation of *The Function* that is NOT correct, but still passes your unit tests is the following.', currentCandidate.toMutationHtml()]).add();
-        new ComputerMessage([`Try to write a unit test that passes *The Function* and fails for this mutation. I think you need at least ${numberOfUnitTestsStillNeeded} more ${numberOfUnitTestsStillNeeded === 1 ? 'unit test' : 'unit tests'} to fully test *The Function*.`]).add();
+        new ComputerMessage([this.locale.theFunctionIsNotFullyTested()]).add();
+        new ComputerMessage([this.locale.aMutationOfTheFunction(), currentCandidate.toMutationHtml()]).add();
+        new ComputerMessage([this.locale.tryToWriteAUnitTestThatPasses(numberOfUnitTestsStillNeeded)]).add();
     }
     showEndMessage() {
-        new ComputerMessage(['*The Function* is indeed fully tested.']).add();
-        new ComputerMessage(['Well done!']).add();
+        new ComputerMessage([this.locale.theFunctionIsIndeedFullyTested()]).add();
+        new ComputerMessage([this.locale.wellDone()]).add();
     }
     *exampleGuidanceGenerator(useCase) {
         yield* useCase.exampleGuidanceGeneratorMutationTesting();

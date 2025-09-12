@@ -1,7 +1,9 @@
 import { test, expect } from '@playwright/test';
+import { Locale } from '../../src/locale.js';
 import { FloatFormat } from '../../src/use-case-float-format.js';
 test.describe('class FloatFormat', () => {
-    const useCase = new FloatFormat();
+    const locale = new Locale('en');
+    const useCase = new FloatFormat(locale);
     test('has the right amount of parameters', () => {
         expect(useCase.parameters).toHaveLength(1);
     });

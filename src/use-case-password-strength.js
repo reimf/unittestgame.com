@@ -6,11 +6,7 @@ export class PasswordStrength extends UseCase {
         return 'Password Strength';
     }
     specification() {
-        return ('Return true if the password is strong and return false if the password is not strong. ' +
-            'A password is strong if it contains at least 5 characters, ' +
-            'an uppercase letter, ' +
-            'a lowercase letter and ' +
-            'a special character ("#" or "@").');
+        return this.locale.returnTrueIfThePasswordIsStrongAndFalseIfItIsNot();
     }
     getParameters() {
         return [

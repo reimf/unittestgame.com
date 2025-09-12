@@ -1,7 +1,9 @@
 import { test, expect } from '@playwright/test';
+import { Locale } from '../../src/locale.js';
 import { TriangleType } from '../../src/use-case-triangle-type.js';
 test.describe('class TriangleType', () => {
-    const useCase = new TriangleType();
+    const locale = new Locale('en');
+    const useCase = new TriangleType(locale);
     test('has the right amount of parameters', () => {
         expect(useCase.parameters).toHaveLength(3);
     });

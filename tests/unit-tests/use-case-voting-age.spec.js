@@ -1,7 +1,9 @@
 import { test, expect } from '@playwright/test';
+import { Locale } from '../../src/locale.js';
 import { VotingAge } from '../../src/use-case-voting-age.js';
 test.describe('class VotingAge', () => {
-    const useCase = new VotingAge();
+    const locale = new Locale('en');
+    const useCase = new VotingAge(locale);
     test('has the right amount of parameters', () => {
         expect(useCase.parameters).toHaveLength(1);
     });

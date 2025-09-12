@@ -5,11 +5,7 @@ export class LeapYear extends UseCase {
         return 'Leap Year';
     }
     specification() {
-        return ('Return true if the year is a leap year and ' +
-            'return false if the year is not a leap year. ' +
-            'A year is a leap year if it is divisible by 4. ' +
-            'The exception is that years that are divisible by 100 are not leap years, ' +
-            'unless they are also divisible by 400.');
+        return this.locale.returnTrueIfTheYearIsALeapYearAndFalseIfItIsNot();
     }
     getParameters() {
         return [

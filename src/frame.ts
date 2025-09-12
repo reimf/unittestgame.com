@@ -19,9 +19,8 @@ abstract class Frame extends Section {
 }
 
 export class Panel extends Frame {
-    public constructor(title: string, elements: (Html|string)[]) {
+    public constructor(id: string, title: string, elements: (Html|string)[]) {
         super(elements)
-        const id = title.toLowerCase().replace(/[^a-z0-9-]/g, ' ').trim().replace(/ +/g, '-')
         this.setId(id).prependChild(new Header().appendText(title))
     }
 

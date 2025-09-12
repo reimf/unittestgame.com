@@ -1,8 +1,10 @@
 import { test, expect } from '@playwright/test'
+import { Locale } from '../../src/locale.js'
 import { SpeedDisplay } from '../../src/use-case-speed-display.js'
 
 test.describe('class SpeedDisplay', () => {
-    const useCase = new SpeedDisplay()
+    const locale = new Locale('en')
+    const useCase = new SpeedDisplay(locale)
 
     test('has the right amount of parameters', () => {
         expect(useCase.parameters).toHaveLength(1)

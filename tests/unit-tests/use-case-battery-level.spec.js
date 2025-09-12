@@ -1,7 +1,9 @@
 import { test, expect } from '@playwright/test';
+import { Locale } from '../../src/locale.js';
 import { BatteryLevel } from '../../src/use-case-battery-level.js';
 test.describe('class BatteryLevel', () => {
-    const useCase = new BatteryLevel();
+    const locale = new Locale('en');
+    const useCase = new BatteryLevel(locale);
     test('has the right amount of parameters', () => {
         expect(useCase.parameters).toHaveLength(1);
     });

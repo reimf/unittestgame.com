@@ -4,7 +4,7 @@ import { Panel, ComputerMessage, HumanMessage, QuestionMessage } from '../../src
 
 test.describe('class Frame', () => {
     test('subclass Panel', () => {
-        const panel = new Panel('Current Level', ['Level 1'])
+        const panel = new Panel('current-level', 'Current Level', ['Level 1'])
         expect(panel.toString()).toBe('<section id="current-level"><header>Current Level</header><div><p>Level 1</p></div></section>')
     })
 

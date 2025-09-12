@@ -1,7 +1,9 @@
 import { test, expect } from '@playwright/test';
+import { Locale } from '../../src/locale.js';
 import { EvenOdd } from '../../src/use-case-even-odd.js';
 test.describe('class EvenOdd', () => {
-    const useCase = new EvenOdd();
+    const locale = new Locale('en');
+    const useCase = new EvenOdd(locale);
     test('has the right amount of parameters', () => {
         expect(useCase.parameters).toHaveLength(1);
     });

@@ -1,6 +1,7 @@
 import { Candidate } from './candidate.js'
 import { HumanMessage, CheckingMessage, Panel, ComputerMessage } from './frame.js'
 import { Button, Div, Form, Input, StringMap } from './html.js'
+import { Locale } from './locale.js'
 import { Random } from './random.js'
 import { TestResult } from './test-result.js'
 import { UnitTest } from './unit-test.js'
@@ -22,6 +23,7 @@ export abstract class Level {
     protected abstract exampleGuidanceGenerator(useCase: UseCase): Generator<string>
     protected abstract compareComplexity(candidate: Candidate, otherCandidate: Candidate): number
 
+    protected readonly locale: Locale
     private readonly useCase: UseCase
     private readonly isLevelFinished: Completed
     private readonly exampleGuidance: Generator<string>
@@ -36,7 +38,8 @@ export abstract class Level {
     private newUnitTest?: UnitTest = undefined
     private numberOfSubmissions: number = 0
 
-    public constructor(useCase: UseCase) {
+    public constructor(locale: Locale, useCase: UseCase) {
+        this.locale = locale
         this.useCase = useCase
         this.isLevelFinished = new Completed(this.description())
         this.exampleGuidance = this.exampleGuidanceGenerator(useCase)
@@ -131,13 +134,13 @@ export abstract class Level {
     }
 
     private showCurrentLevelPanel(): void {
-        new Panel('Current Level', [this.description()]).show()
+        new Panel('current-level', this.locale.currentLevel(), [this.description()]).show()
     }
 
     private showUnitTestsPanel(unitTests: UnitTest[], newUnitTest: UnitTest|undefined): void {
-        new Panel('Unit Tests',
+        new Panel('unit-tests', this.locale.unitTests(),
             unitTests.length === 0
-            ? ['You have not written any unit tests yet.']
+            ? [new Div().appendText(this.locale.youHaveNotWrittenAnyUnitTestsYet())]
             : unitTests.map(unitTest => new Div().appendText(unitTest.toString()).addClass(unitTest === newUnitTest ? 'new' : 'old'))
         ).show()
     }
@@ -159,11 +162,11 @@ export abstract class Level {
         this.showExampleMessage()
         const buttonText = this.hasExampleGuidance ? this.nextExampleGuidance() : undefined
         const elementsToShow = []
-        if (!buttonText || buttonText === 'I want to add this unit test') {
+        if (!buttonText || buttonText === this.locale.iWantToAddThisUnitTest()) {
             const variables = [...this.useCase.parameters, this.useCase.unit]
             if (buttonText)
                 variables.forEach(variable => variable.setValue(this.nextExampleGuidance()).setDisabled(true))
-            const addThisUnitTestButton = new Input().setType('submit').setValue('I want to add this unit test')
+            const addThisUnitTestButton = new Input().setType('submit').setValue(this.locale.iWantToAddThisUnitTest())
             const form = new Form()
                 .onSubmit(formData => this.prepareAddUnitTest(formData))
                 .appendChildren(variables.map(variable => variable.toHtml()))
@@ -174,8 +177,8 @@ export abstract class Level {
             const divider = new Div().appendText('OR').addClass('or')
             elementsToShow.push(divider)
         }
-        if (!buttonText || buttonText === 'I want to submit the unit tests') {
-            const submitTheUnitTestsButton = new Button().appendText('I want to submit the unit tests').onClick(() => this.prepareSubmitUnitTests())
+        if (!buttonText || buttonText === this.locale.iWantToSubmitTheUnitTests()) {
+            const submitTheUnitTestsButton = new Button().appendText(this.locale.iWantToSubmitTheUnitTests()).onClick(() => this.prepareSubmitUnitTests())
             elementsToShow.push(submitTheUnitTestsButton)
         }
         new HumanMessage(elementsToShow).add()
@@ -186,7 +189,7 @@ export abstract class Level {
         const expected = this.useCase.unit.getInput(formData.get(this.useCase.unit.name)!)
         const unitTest = new UnitTest(this.useCase.parameters, argumentList, this.useCase.unit, expected)
         new HumanMessage([unitTest.toString()]).add()
-        new CheckingMessage('Checking the new unit test', 'I checked the new unit test', () => this.addUnitTest(unitTest), 2000 + this.humanUnitTests.length * 500).add()
+        new CheckingMessage(this.locale.checkingTheNewUnitTest(), this.locale.iCheckedTheNewUnitTest(), () => this.addUnitTest(unitTest), 2000 + this.humanUnitTests.length * 500).add()
     }
 
     private addUnitTest(unitTest: UnitTest): void {
@@ -210,7 +213,7 @@ export abstract class Level {
     }
 
     private prepareSubmitUnitTests(): void {
-        new CheckingMessage('Checking the unit tests', 'I checked the unit tests', () => this.submitUnitTests(), 2000 + this.humanUnitTests.length * 500).add()
+        new CheckingMessage(this.locale.checkingTheUnitTests(), this.locale.iCheckedTheUnitTests(), () => this.submitUnitTests(), 2000 + this.humanUnitTests.length * 500).add()
     }
 
     private submitUnitTests(): void {
@@ -226,7 +229,7 @@ export abstract class Level {
 
     private end(): void {
         if (this.hasExampleGuidance)
-            this.numberOfSubmissions = Number(this.nextExampleGuidance())
+            this.numberOfSubmissions = 1
         this.isLevelFinished.set(this.numberOfSubmissions)
         this.previousCandidate = undefined
         this.coveredCandidate = undefined

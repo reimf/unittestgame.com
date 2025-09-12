@@ -1,8 +1,10 @@
 import { test, expect } from '@playwright/test'
+import { Locale } from '../../src/locale.js'
 import { PasswordStrength } from '../../src/use-case-password-strength.js'
 
 test.describe('class PasswordStrength', () => {
-    const useCase = new PasswordStrength()
+    const locale = new Locale('en')
+    const useCase = new PasswordStrength(locale)
 
     test('has the right amount of parameters', () => {
         expect(useCase.parameters).toHaveLength(1)

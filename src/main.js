@@ -1,5 +1,6 @@
 import { Panel, ComputerMessage, QuestionMessage } from './frame.js';
 import { Div } from './html.js';
+import { Locale } from './locale.js';
 import { MutationTesting } from './level-mutation-testing.js';
 import { TestDrivenDevelopment } from './level-test-driven-development.js';
 import { BatteryLevel } from './use-case-battery-level.js';
@@ -12,44 +13,46 @@ import { FloatFormat } from './use-case-float-format.js';
 import { PasswordStrength } from './use-case-password-strength.js';
 import { SpeedDisplay } from './use-case-speed-display.js';
 export class Main {
-    batteryLevel = new BatteryLevel();
-    votingAge = new VotingAge();
-    evenOdd = new EvenOdd();
-    fizzBuzz = new FizzBuzz();
-    triangleType = new TriangleType();
-    leapYear = new LeapYear();
-    floatFormat = new FloatFormat();
-    passwordStrength = new PasswordStrength();
-    speedDisplay = new SpeedDisplay();
-    exampleTestDrivenDevelopment = new TestDrivenDevelopment(this.batteryLevel);
-    exampleMutationTesting = new MutationTesting(this.batteryLevel);
+    lng = (new URL(window.location.href)).searchParams.get('lng') || navigator.language.split('-')[0];
+    locale = new Locale(this.lng);
+    batteryLevel = new BatteryLevel(this.locale);
+    votingAge = new VotingAge(this.locale);
+    evenOdd = new EvenOdd(this.locale);
+    fizzBuzz = new FizzBuzz(this.locale);
+    triangleType = new TriangleType(this.locale);
+    leapYear = new LeapYear(this.locale);
+    floatFormat = new FloatFormat(this.locale);
+    passwordStrength = new PasswordStrength(this.locale);
+    speedDisplay = new SpeedDisplay(this.locale);
+    exampleTestDrivenDevelopment = new TestDrivenDevelopment(this.locale, this.batteryLevel);
+    exampleMutationTesting = new MutationTesting(this.locale, this.batteryLevel);
     examples = [
         this.exampleTestDrivenDevelopment,
         this.exampleMutationTesting
     ];
     levels = [
         this.exampleTestDrivenDevelopment,
-        new TestDrivenDevelopment(this.votingAge),
+        new TestDrivenDevelopment(this.locale, this.votingAge),
         this.exampleMutationTesting,
-        new MutationTesting(this.evenOdd),
-        new TestDrivenDevelopment(this.fizzBuzz),
-        new MutationTesting(this.triangleType),
-        new TestDrivenDevelopment(this.evenOdd),
-        new MutationTesting(this.votingAge),
-        new TestDrivenDevelopment(this.triangleType),
-        new MutationTesting(this.fizzBuzz),
-        new TestDrivenDevelopment(this.leapYear),
-        new MutationTesting(this.passwordStrength),
-        new TestDrivenDevelopment(this.speedDisplay),
-        new MutationTesting(this.floatFormat),
-        new TestDrivenDevelopment(this.passwordStrength),
-        new MutationTesting(this.leapYear),
-        new TestDrivenDevelopment(this.floatFormat),
-        new MutationTesting(this.speedDisplay),
+        new MutationTesting(this.locale, this.evenOdd),
+        new TestDrivenDevelopment(this.locale, this.fizzBuzz),
+        new MutationTesting(this.locale, this.triangleType),
+        new TestDrivenDevelopment(this.locale, this.evenOdd),
+        new MutationTesting(this.locale, this.votingAge),
+        new TestDrivenDevelopment(this.locale, this.triangleType),
+        new MutationTesting(this.locale, this.fizzBuzz),
+        new TestDrivenDevelopment(this.locale, this.leapYear),
+        new MutationTesting(this.locale, this.passwordStrength),
+        new TestDrivenDevelopment(this.locale, this.speedDisplay),
+        new MutationTesting(this.locale, this.floatFormat),
+        new TestDrivenDevelopment(this.locale, this.passwordStrength),
+        new MutationTesting(this.locale, this.leapYear),
+        new TestDrivenDevelopment(this.locale, this.floatFormat),
+        new MutationTesting(this.locale, this.speedDisplay),
     ];
     start() {
         this.showWelcomeMessage();
-        this.showUnittestgamePanel();
+        this.showAboutPanel();
         for (const example of this.examples)
             example.showBasicDefinition();
         this.continue();
@@ -67,38 +70,34 @@ export class Main {
         return this.levels.filter(level => level.isFinished());
     }
     showWelcomeMessage() {
-        new ComputerMessage(['Welcome to *UnitTestGame* where you can learn to write effective unit tests.']).add();
-        new ComputerMessage(['I am an AI bot specialized in *Test-Driven Development* and *Mutation Testing*.']).add();
+        new ComputerMessage([this.locale.welcomeToUnittestgame()]).add();
+        new ComputerMessage([this.locale.iAmAnAiBot()]).add();
     }
-    showUnittestgamePanel() {
-        const names = this.examples.map(example => example.name()).join(' and ');
-        new Panel('UnitTestGame', [
-            `Learn to write effective unit tests using ${names}. ` +
-                '[Give feedback](mailto:feedback@unittestgame.com)',
-        ]).show();
+    showAboutPanel() {
+        new Panel('unittestgame', this.locale.about(), [this.locale.learnToWriteEffectiveUnitTests()]).show();
     }
     showInvitationMessage() {
-        new ComputerMessage(['What do you want to do?']).add();
+        new ComputerMessage([this.locale.whatDoYouWantToDo()]).add();
     }
     levelDescription(level) {
         const index = this.levels.findIndex(otherLevel => otherLevel === level);
-        const emoji = ['🔓', '🥇', '🥈', '🥉'].at(Math.min(3, level.isFinished()));
-        return `Level ${index + 1} of ${this.levels.length} - ${level.description()} - ${emoji}`;
+        const emoji = ['🔓', '🥇', '🥈', '🥉'].at(level.isFinished()) || '🥉';
+        return this.locale.level(index + 1, this.levels.length, level.description(), emoji);
     }
     showFinishedLevelsPanel(previousLevel) {
         const finishedLevels = this.getFinishedLevels();
         if (finishedLevels.length > 0) {
-            new Panel('Finished Levels', finishedLevels.map(level => new Div().appendText(this.levelDescription(level)).addClass(level === previousLevel ? 'new' : 'old'))).show();
+            new Panel('finished-levels', this.locale.finishedLevels(), finishedLevels.map(level => new Div().appendText(this.levelDescription(level)).addClass(level === previousLevel ? 'new' : 'old'))).show();
         }
     }
     showNextLevel() {
         const nextLevel = this.levels.find(level => !level.isFinished());
         if (nextLevel)
-            new QuestionMessage(`I want to play ${this.levelDescription(nextLevel)}`, () => this.play(nextLevel)).add();
+            new QuestionMessage(this.locale.iWantToPlayTheNextLevel(this.levelDescription(nextLevel)), () => this.play(nextLevel)).add();
         else
-            new QuestionMessage('I played all the levels', () => this.quit()).add();
+            new QuestionMessage(this.locale.iPlayedAllTheLevels(), () => this.quit()).add();
     }
     quit() {
-        new ComputerMessage(['Well done! You can close this tab now and start writing effective unit tests for your real-world projects.']).add();
+        new ComputerMessage([this.locale.wellDoneYouCanCloseThisTab()]).add();
     }
 }

@@ -1,9 +1,11 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { MockUseCase } from '../mocks/mock-use-case.js';
+import { Locale } from '../../src/locale.js';
 import { UnitTest } from '../../src/unit-test.js';
 export class FixtureLevelStates {
-    useCase = new MockUseCase();
+    locale = new Locale('en');
+    useCase = new MockUseCase(this.locale);
     states;
     constructor() {
         const pathname = path.resolve(__dirname, 'fixture-level-states.json');

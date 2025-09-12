@@ -89,6 +89,30 @@ export class Html extends Content {
                 }
             }
 
+            // HTML: <tag>content</tag>
+            if (markdown[pos] === '<') {
+                const openTagEnd = markdown.indexOf('>', pos)
+                if (openTagEnd > pos) {
+                    const tag = markdown.slice(pos + 1, openTagEnd)
+                    if (tag[0] !== ' ') {
+                        const closingTagStart = markdown.indexOf('</' + tag + '>', openTagEnd + 1)
+                        if (closingTagStart > openTagEnd) {
+                            const closingTagEnd = markdown.indexOf('>', closingTagStart + 1)
+                            if (closingTagEnd > closingTagStart) {
+                                flush(buffer)
+                                const content = markdown.slice(pos, closingTagStart)
+                                const html = new Other(content)
+                                this.appendChild(html)
+                                pos = closingTagEnd
+                                continue
+                            }
+                        }
+                    }
+
+                    continue
+                }
+            }
+
             // Plain text
             buffer.push(markdown[pos])
         }
@@ -167,6 +191,27 @@ class Text extends Content {
 
     public toNode(): Node {
         return document.createTextNode(this.text)
+    }
+}
+
+class Other extends Content {
+    public readonly html: string
+
+    public constructor(html: string) {
+        super()
+        this.html = html
+    }
+
+    public toString(): string {
+        return this.html
+    }
+
+    public toNode(): Node {
+        const template = document.createElement('template')
+        template.innerHTML = this.html
+        if (template.content.childNodes.length === 1)
+            return template.content.firstChild!
+        return (new Text("ERROR")).toNode()
     }
 }
 

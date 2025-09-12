@@ -4,6 +4,7 @@ import { UnitTest } from './unit-test.js';
 export class UseCase {
     *exampleGuidanceGeneratorTestDrivenDevelopment() { }
     *exampleGuidanceGeneratorMutationTesting() { }
+    locale;
     parameters = this.getParameters();
     unit = this.getUnit();
     candidates = [...this.generateCandidates(this.getCandidateElements(), [])];
@@ -13,6 +14,9 @@ export class UseCase {
     perfectCandidate = Random.elementFrom(this.perfectCandidates);
     amputeesOfPerfectCandidate = this.findAmputeesOfPerfectCandidate();
     hints = [...this.generateHints()];
+    constructor(locale) {
+        this.locale = locale;
+    }
     *generateCandidates(listOfListOfLines, lines) {
         if (listOfListOfLines.length > 0) {
             const [firstListOfLines, ...remainingListOfListOfLines] = listOfListOfLines;

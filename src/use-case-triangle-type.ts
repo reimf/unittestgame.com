@@ -7,12 +7,7 @@ export class TriangleType extends UseCase {
     }
 
     public specification(): string {
-        return (
-            'Return the type of the triangle: equilateral, isosceles or scalene. ' +
-            'A triangle is equilateral if all three sides have the same length. ' +
-            'A triangle is isosceles if two sides have the same length and a third side has a different length. ' +
-            'A triangle is scalene if all three sides have different lengths.'
-        )
+        return this.locale.returnTheTypeOfTheTriangle()
     }
 
     public getParameters(): Variable[] {

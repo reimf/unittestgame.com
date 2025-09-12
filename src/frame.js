@@ -15,9 +15,8 @@ class Frame extends Section {
     }
 }
 export class Panel extends Frame {
-    constructor(title, elements) {
+    constructor(id, title, elements) {
         super(elements);
-        const id = title.toLowerCase().replace(/[^a-z0-9-]/g, ' ').trim().replace(/ +/g, '-');
         this.setId(id).prependChild(new Header().appendText(title));
     }
     static removeAll() {

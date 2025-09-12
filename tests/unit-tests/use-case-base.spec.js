@@ -1,8 +1,10 @@
 import { test, expect } from '@playwright/test';
+import { Locale } from '../../src/locale.js';
 import { IntegerVariable, BooleanVariable } from '../../src/variable.js';
 import { MockUseCase } from '../mocks/mock-use-case.js';
 test.describe('class UseCase', () => {
-    const useCase = new MockUseCase();
+    const locale = new Locale('en');
+    const useCase = new MockUseCase(locale);
     test('has a specification', () => {
         expect(useCase.specification()).toBe('Mock Specification');
     });

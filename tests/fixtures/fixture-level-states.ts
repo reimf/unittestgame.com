@@ -1,6 +1,7 @@
 import * as fs from 'fs'
 import * as path from 'path'
 import { MockUseCase } from '../mocks/mock-use-case.js'
+import { Locale } from '../../src/locale.js'
 import { UnitTest } from '../../src/unit-test.js'
 
 type FixtureLevelState = {
@@ -13,7 +14,8 @@ type FixtureLevelState = {
 }
 
 export class FixtureLevelStates {
-    public readonly useCase = new MockUseCase()
+    private readonly locale = new Locale('en')
+    public readonly useCase = new MockUseCase(this.locale)
     public readonly states: FixtureLevelState[]
 
     public constructor() {

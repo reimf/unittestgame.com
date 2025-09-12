@@ -1,4 +1,5 @@
 import { Candidate } from './candidate.js'
+import { Locale } from './locale.js'
 import { Random } from './random.js'
 import { UnitTest } from './unit-test.js'
 import { Variable } from './variable.js'
@@ -15,6 +16,7 @@ export abstract class UseCase {
     public* exampleGuidanceGeneratorTestDrivenDevelopment(): Generator<string> { }
     public* exampleGuidanceGeneratorMutationTesting(): Generator<string> { }
 
+    protected readonly locale: Locale
     public readonly parameters: Variable[] = this.getParameters()
     public readonly unit: Variable = this.getUnit()
     public readonly candidates: Candidate[] = [...this.generateCandidates(this.getCandidateElements(), [])]
@@ -24,6 +26,10 @@ export abstract class UseCase {
     public readonly perfectCandidate: Candidate = Random.elementFrom(this.perfectCandidates)
     public readonly amputeesOfPerfectCandidate: Candidate[] = this.findAmputeesOfPerfectCandidate()
     public readonly hints: UnitTest[] = [...this.generateHints()]
+
+    public constructor(locale: Locale) {
+        this.locale = locale
+    }
 
     private *generateCandidates(listOfListOfLines: string[][], lines: string[]): Generator<Candidate> {
         if (listOfListOfLines.length > 0) {

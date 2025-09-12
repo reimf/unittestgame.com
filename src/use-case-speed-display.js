@@ -5,22 +5,7 @@ export class SpeedDisplay extends UseCase {
         return 'Speed Display';
     }
     specification() {
-        return ('The function receives the speed in kilometers per hour with at most one decimal. ' +
-            'If possible, show one decimal (e.g. 13 displays "13.0"). ' +
-            'Otherwise, round to an integer (e.g. 87.6 displays "88"). ' +
-            'Instead of "0.0" display "START". ' +
-            'If the speed no longer fits on the display, ' +
-            'then display "DANGER" (e.g. 300 displays "DANGER").\n' +
-            'The display looks like this, where every X is a LED light:\n' +
-            '+-------------------+\n' +
-            '|  X   XXXX   XXXX  |\n' +
-            '|  X   X  X   X  X  |\n' +
-            '|  X   XXXX   XXXX  |\n' +
-            '|  X   X  X   X  X  |\n' +
-            '|  X   XXXX X XXXX  |\n' +
-            '|                   |\n' +
-            '| X START  DANGER X |\n' +
-            '+-------------------+');
+        return this.locale.theFunctionReceivesTheSpeedInKilometersPerHourWithAtMostOneDecimal();
     }
     getParameters() {
         return [

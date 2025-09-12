@@ -1,10 +1,12 @@
 import { test, expect } from '@playwright/test';
 import { TestDrivenDevelopment } from '../../src/level-test-driven-development.js';
+import { Locale } from '../../src/locale.js';
 import { FixtureLevelStates } from '../fixtures/fixture-level-states.js';
 test.describe('class Level Test-Driven Development', () => {
     const fixtureLevelStates = new FixtureLevelStates();
     const useCase = fixtureLevelStates.useCase;
-    const level = new TestDrivenDevelopment(useCase);
+    const locale = new Locale('en');
+    const level = new TestDrivenDevelopment(locale, useCase);
     test.describe('method findSimplestPassingCandidate', () => {
         fixtureLevelStates.states.forEach(({ unitTests, simplestPassingCandidatesTestDrivenDevelopment }) => {
             test(`finds the simplest passing candidate for unit tests ${unitTests.map(unitTest => unitTest.argumentList)}`, () => {

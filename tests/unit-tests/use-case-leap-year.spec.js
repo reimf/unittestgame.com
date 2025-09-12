@@ -1,7 +1,9 @@
 import { test, expect } from '@playwright/test';
+import { Locale } from '../../src/locale.js';
 import { LeapYear } from '../../src/use-case-leap-year.js';
 test.describe('class LeapYear', () => {
-    const useCase = new LeapYear();
+    const locale = new Locale('en');
+    const useCase = new LeapYear(locale);
     test('has the right amount of parameters', () => {
         expect(useCase.parameters).toHaveLength(1);
     });

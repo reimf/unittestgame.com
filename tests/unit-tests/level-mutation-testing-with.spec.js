@@ -1,10 +1,12 @@
 import { test, expect } from '@playwright/test';
 import { MutationTesting } from '../../src/level-mutation-testing.js';
+import { Locale } from '../../src/locale.js';
 import { FixtureLevelStates } from '../fixtures/fixture-level-states.js';
 test.describe('class Level Mutation Testing', () => {
     const fixtureLevelStates = new FixtureLevelStates();
     const useCase = fixtureLevelStates.useCase;
-    const level = new MutationTesting(useCase);
+    const locale = new Locale('en');
+    const level = new MutationTesting(locale, useCase);
     test.describe('method findSimplestPassingCandidate', () => {
         fixtureLevelStates.states.forEach(({ unitTests, simplestPassingCandidatesMutationTesting }) => {
             test(`finds the simplest passing candidate for unit tests ${unitTests.map(unitTest => unitTest.argumentList)}`, () => {

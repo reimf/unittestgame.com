@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { MutationTesting } from '../../src/level-mutation-testing.js';
 import { TestDrivenDevelopment } from '../../src/level-test-driven-development.js';
+import { Locale } from '../../src/locale.js';
 import { BatteryLevel } from '../../src/use-case-battery-level.js';
 import { VotingAge } from '../../src/use-case-voting-age.js';
 import { EvenOdd } from '../../src/use-case-even-odd.js';
@@ -14,37 +15,38 @@ import { BooleanVariable, RadioVariable } from '../../src/variable.js';
 test.describe('whole game', () => {
     test('plays whole game', async ({ browser }) => {
         test.slow();
-        const batteryLevel = new BatteryLevel();
-        const votingAge = new VotingAge();
-        const evenOdd = new EvenOdd();
-        const fizzBuzz = new FizzBuzz();
-        const triangleType = new TriangleType();
-        const leapYear = new LeapYear();
-        const floatFormat = new FloatFormat();
-        const passwordStrength = new PasswordStrength();
-        const speedDisplay = new SpeedDisplay();
-        const exampleTestDrivenDevelopment = new TestDrivenDevelopment(batteryLevel);
-        const exampleMutationTesting = new MutationTesting(batteryLevel);
+        const locale = new Locale('en');
+        const batteryLevel = new BatteryLevel(locale);
+        const votingAge = new VotingAge(locale);
+        const evenOdd = new EvenOdd(locale);
+        const fizzBuzz = new FizzBuzz(locale);
+        const triangleType = new TriangleType(locale);
+        const leapYear = new LeapYear(locale);
+        const floatFormat = new FloatFormat(locale);
+        const passwordStrength = new PasswordStrength(locale);
+        const speedDisplay = new SpeedDisplay(locale);
+        const exampleTestDrivenDevelopment = new TestDrivenDevelopment(locale, batteryLevel);
+        const exampleMutationTesting = new MutationTesting(locale, batteryLevel);
         const examples = [exampleTestDrivenDevelopment, exampleMutationTesting];
         const levelsAndUseCases = [
             [exampleTestDrivenDevelopment, batteryLevel],
-            [new TestDrivenDevelopment(votingAge), votingAge],
+            [new TestDrivenDevelopment(locale, votingAge), votingAge],
             [exampleMutationTesting, batteryLevel],
-            [new MutationTesting(evenOdd), evenOdd],
-            [new TestDrivenDevelopment(fizzBuzz), fizzBuzz],
-            [new MutationTesting(triangleType), triangleType],
-            [new TestDrivenDevelopment(evenOdd), evenOdd],
-            [new MutationTesting(votingAge), votingAge],
-            [new TestDrivenDevelopment(triangleType), triangleType],
-            [new MutationTesting(fizzBuzz), fizzBuzz],
-            [new TestDrivenDevelopment(leapYear), leapYear],
-            [new MutationTesting(passwordStrength), passwordStrength],
-            [new TestDrivenDevelopment(speedDisplay), speedDisplay],
-            [new MutationTesting(floatFormat), floatFormat],
-            [new TestDrivenDevelopment(passwordStrength), passwordStrength],
-            [new MutationTesting(leapYear), leapYear],
-            [new TestDrivenDevelopment(floatFormat), floatFormat],
-            [new MutationTesting(speedDisplay), speedDisplay],
+            [new MutationTesting(locale, evenOdd), evenOdd],
+            [new TestDrivenDevelopment(locale, fizzBuzz), fizzBuzz],
+            [new MutationTesting(locale, triangleType), triangleType],
+            [new TestDrivenDevelopment(locale, evenOdd), evenOdd],
+            [new MutationTesting(locale, votingAge), votingAge],
+            [new TestDrivenDevelopment(locale, triangleType), triangleType],
+            [new MutationTesting(locale, fizzBuzz), fizzBuzz],
+            [new TestDrivenDevelopment(locale, leapYear), leapYear],
+            [new MutationTesting(locale, passwordStrength), passwordStrength],
+            [new TestDrivenDevelopment(locale, speedDisplay), speedDisplay],
+            [new MutationTesting(locale, floatFormat), floatFormat],
+            [new TestDrivenDevelopment(locale, passwordStrength), passwordStrength],
+            [new MutationTesting(locale, leapYear), leapYear],
+            [new TestDrivenDevelopment(locale, floatFormat), floatFormat],
+            [new MutationTesting(locale, speedDisplay), speedDisplay],
         ];
         const context = await browser.newContext();
         await context.addInitScript({ path: './tests/e2e-tests/init-script.js' });

@@ -6,6 +6,7 @@ import { TestResult } from './test-result.js';
 import { UnitTest } from './unit-test.js';
 import { Completed } from './completed.js';
 export class Level {
+    locale;
     useCase;
     isLevelFinished;
     exampleGuidance;
@@ -18,7 +19,8 @@ export class Level {
     failingTestResult = undefined;
     newUnitTest = undefined;
     numberOfSubmissions = 0;
-    constructor(useCase) {
+    constructor(locale, useCase) {
+        this.locale = locale;
         this.useCase = useCase;
         this.isLevelFinished = new Completed(this.description());
         this.exampleGuidance = this.exampleGuidanceGenerator(useCase);
@@ -101,11 +103,11 @@ export class Level {
         this.menu();
     }
     showCurrentLevelPanel() {
-        new Panel('Current Level', [this.description()]).show();
+        new Panel('current-level', this.locale.currentLevel(), [this.description()]).show();
     }
     showUnitTestsPanel(unitTests, newUnitTest) {
-        new Panel('Unit Tests', unitTests.length === 0
-            ? ['You have not written any unit tests yet.']
+        new Panel('unit-tests', this.locale.unitTests(), unitTests.length === 0
+            ? [new Div().appendText(this.locale.youHaveNotWrittenAnyUnitTestsYet())]
             : unitTests.map(unitTest => new Div().appendText(unitTest.toString()).addClass(unitTest === newUnitTest ? 'new' : 'old'))).show();
     }
     menu() {
@@ -123,11 +125,11 @@ export class Level {
         this.showExampleMessage();
         const buttonText = this.hasExampleGuidance ? this.nextExampleGuidance() : undefined;
         const elementsToShow = [];
-        if (!buttonText || buttonText === 'I want to add this unit test') {
+        if (!buttonText || buttonText === this.locale.iWantToAddThisUnitTest()) {
             const variables = [...this.useCase.parameters, this.useCase.unit];
             if (buttonText)
                 variables.forEach(variable => variable.setValue(this.nextExampleGuidance()).setDisabled(true));
-            const addThisUnitTestButton = new Input().setType('submit').setValue('I want to add this unit test');
+            const addThisUnitTestButton = new Input().setType('submit').setValue(this.locale.iWantToAddThisUnitTest());
             const form = new Form()
                 .onSubmit(formData => this.prepareAddUnitTest(formData))
                 .appendChildren(variables.map(variable => variable.toHtml()))
@@ -138,8 +140,8 @@ export class Level {
             const divider = new Div().appendText('OR').addClass('or');
             elementsToShow.push(divider);
         }
-        if (!buttonText || buttonText === 'I want to submit the unit tests') {
-            const submitTheUnitTestsButton = new Button().appendText('I want to submit the unit tests').onClick(() => this.prepareSubmitUnitTests());
+        if (!buttonText || buttonText === this.locale.iWantToSubmitTheUnitTests()) {
+            const submitTheUnitTestsButton = new Button().appendText(this.locale.iWantToSubmitTheUnitTests()).onClick(() => this.prepareSubmitUnitTests());
             elementsToShow.push(submitTheUnitTestsButton);
         }
         new HumanMessage(elementsToShow).add();
@@ -149,7 +151,7 @@ export class Level {
         const expected = this.useCase.unit.getInput(formData.get(this.useCase.unit.name));
         const unitTest = new UnitTest(this.useCase.parameters, argumentList, this.useCase.unit, expected);
         new HumanMessage([unitTest.toString()]).add();
-        new CheckingMessage('Checking the new unit test', 'I checked the new unit test', () => this.addUnitTest(unitTest), 2000 + this.humanUnitTests.length * 500).add();
+        new CheckingMessage(this.locale.checkingTheNewUnitTest(), this.locale.iCheckedTheNewUnitTest(), () => this.addUnitTest(unitTest), 2000 + this.humanUnitTests.length * 500).add();
     }
     addUnitTest(unitTest) {
         const unitTestIsCorrect = new TestResult(this.useCase.perfectCandidate, unitTest).passes;
@@ -171,7 +173,7 @@ export class Level {
         this.menu();
     }
     prepareSubmitUnitTests() {
-        new CheckingMessage('Checking the unit tests', 'I checked the unit tests', () => this.submitUnitTests(), 2000 + this.humanUnitTests.length * 500).add();
+        new CheckingMessage(this.locale.checkingTheUnitTests(), this.locale.iCheckedTheUnitTests(), () => this.submitUnitTests(), 2000 + this.humanUnitTests.length * 500).add();
     }
     submitUnitTests() {
         this.numberOfSubmissions += 1;
@@ -185,7 +187,7 @@ export class Level {
     }
     end() {
         if (this.hasExampleGuidance)
-            this.numberOfSubmissions = Number(this.nextExampleGuidance());
+            this.numberOfSubmissions = 1;
         this.isLevelFinished.set(this.numberOfSubmissions);
         this.previousCandidate = undefined;
         this.coveredCandidate = undefined;
