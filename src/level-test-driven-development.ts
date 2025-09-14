@@ -2,10 +2,15 @@ import { Candidate } from './candidate.js'
 import { Panel, ComputerMessage } from './frame.js'
 import { Level } from './level-base.js'
 import { TestResult } from './test-result.js'
+import { Translation } from './translation.js'
 import { UseCase } from './use-case-base.js'
 
 export class TestDrivenDevelopment extends Level {
-    public name(): string {
+    protected identifier(): string {
+        return 'test-driven-development'
+    }
+
+    public name(): Translation {
         return this.locale.testDrivenDevelopment()
     }
 
@@ -19,7 +24,7 @@ export class TestDrivenDevelopment extends Level {
         new ComputerMessage([this.locale.step3TDD()]).add()
     }
 
-    protected showSpecificationPanel(specification: string): void {
+    protected showSpecificationPanel(specification: Translation): void {
         new Panel('specification', this.locale.specification(), [specification]).show()
     }
 
@@ -48,7 +53,7 @@ export class TestDrivenDevelopment extends Level {
 
     protected showBugFoundMessage(_currentCandidate: Candidate, failingTestResult: TestResult, numberOfUnitTestsStillNeeded: number): void {
         new ComputerMessage([this.locale.theCurrentFunctionIsNotAccordingToTheSpecification()]).add()
-        new ComputerMessage([this.locale.itProducesTheFollowingIncorrectResult(), failingTestResult.toString()]).add()
+        new ComputerMessage([this.locale.itProducesTheFollowingIncorrectResult(), failingTestResult.toTranslation()]).add()
         new ComputerMessage([this.locale.tryToWriteAUnitTestThatIsAccordingToTheSpecification(numberOfUnitTestsStillNeeded)]).add()
     }
 
@@ -57,8 +62,12 @@ export class TestDrivenDevelopment extends Level {
         new ComputerMessage([this.locale.wellDone()]).add()
     }
 
-    protected* exampleGuidanceGenerator(useCase: UseCase): Generator<string> {
-        yield* useCase.exampleGuidanceGeneratorTestDrivenDevelopment()
+    protected* exampleValuesGenerator(useCase: UseCase): Generator<string> {
+        yield* useCase.exampleValuesGenerator()
+    }
+
+    protected* exampleTranslationGenerator(useCase: UseCase): Generator<Translation> {
+        yield* useCase.exampleTranslationGeneratorTestDrivenDevelopment()
     }
 
     protected compareComplexity(candidate: Candidate, otherCandidate: Candidate): number {

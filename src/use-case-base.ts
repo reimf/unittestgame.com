@@ -1,20 +1,23 @@
 import { Candidate } from './candidate.js'
 import { Locale } from './locale.js'
 import { Random } from './random.js'
+import { Translation } from './translation.js'
 import { UnitTest } from './unit-test.js'
 import { Variable } from './variable.js'
 
 export abstract class UseCase {
+    public abstract identifier(): string
     public abstract name(): string
-    public abstract specification(): string
+    public abstract specification(): Translation
     protected abstract getParameters(): Variable[]
     protected abstract getUnit(): Variable
     protected abstract getCandidateElements(): string[][]
     protected abstract minimalUnitTestGenerator(): Generator<any[]>
     protected abstract hintGenerator(): Generator<any[]>
 
-    public* exampleGuidanceGeneratorTestDrivenDevelopment(): Generator<string> { }
-    public* exampleGuidanceGeneratorMutationTesting(): Generator<string> { }
+    public* exampleValuesGenerator(): Generator<string> { }
+    public* exampleTranslationGeneratorTestDrivenDevelopment(): Generator<Translation> { }
+    public* exampleTranslationGeneratorMutationTesting(): Generator<Translation> { }
 
     protected readonly locale: Locale
     public readonly parameters: Variable[] = this.getParameters()

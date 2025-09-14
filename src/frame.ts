@@ -1,7 +1,8 @@
 import { Button, Div, Html, Header, Paragraph, Section } from './html.js'
+import { Translation } from './translation.js'
 
 abstract class Frame extends Section {
-    protected constructor(elements: (Html|string)[]) {
+    protected constructor(elements: (Html|Translation)[]) {
         super()
         const children = elements.map(element => element instanceof Html ? element : new Paragraph().appendMarkdown(element))
         this.appendChild(new Div().appendChildren(children))
@@ -19,9 +20,9 @@ abstract class Frame extends Section {
 }
 
 export class Panel extends Frame {
-    public constructor(id: string, title: string, elements: (Html|string)[]) {
+    public constructor(id: string, title: Translation, elements: (Html|Translation)[]) {
         super(elements)
-        this.setId(id).prependChild(new Header().appendText(title))
+        this.setId(id).prependChild(new Header().appendTranslation(title))
     }
 
     public static removeAll(): void {
@@ -38,7 +39,7 @@ export class Panel extends Frame {
 }
 
 abstract class Message extends Frame {
-    protected constructor(elements: (Html|string)[]) {
+    protected constructor(elements: (Html|Translation)[]) {
         super(elements)
     }
 
@@ -59,7 +60,7 @@ abstract class Message extends Frame {
 }
 
 export class ComputerMessage extends Message {
-    public constructor(elements: (Html|string)[]) {
+    public constructor(elements: (Html|Translation)[]) {
         super(elements)
         this.addClass('computer')
     }
@@ -68,10 +69,10 @@ export class ComputerMessage extends Message {
 export class CheckingMessage extends ComputerMessage {
     private readonly callback: () => void
     private readonly delay: number
-    private readonly finalText: string
+    private readonly finalText: Translation
 
-    public constructor(checkingText: string, finalText: string, callback: () => void, delay: number) {
-        super([new Paragraph().appendMarkdown(checkingText + '...').addClass('checking')])
+    public constructor(checkingText: Translation, finalText: Translation, callback: () => void, delay: number) {
+        super([new Paragraph().appendMarkdown(checkingText).addClass('checking')])
         this.finalText = finalText
         this.callback = callback
         this.delay = delay
@@ -80,7 +81,7 @@ export class CheckingMessage extends ComputerMessage {
     public add(): void {
         super.add(
             () => window.setTimeout(() => {
-                this.replaceEnclosingMessageContent(this.existingElement()!, this.finalText)
+                this.replaceEnclosingMessageContent(this.existingElement()!, this.finalText.toString())
                 this.callback()
             }, this.delay)
         )
@@ -88,16 +89,16 @@ export class CheckingMessage extends ComputerMessage {
 }
 
 export class HumanMessage extends Message {
-    public constructor(children: (Html|string)[]) {
+    public constructor(children: (Html|Translation)[]) {
         super(children)
         this.addClass('human')
     }
 }
 
 export class QuestionMessage extends HumanMessage {
-    public constructor(text: string, callback: () => void) {
+    public constructor(text: Translation, callback: () => void) {
         super([
-            new Button().onClick(callback).appendText(text)
+            new Button().onClick(callback).appendTranslation(text)
         ])
     }
 }

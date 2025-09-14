@@ -1,6 +1,9 @@
 import { UseCase } from './use-case-base.js';
 import { TextVariable, FloatVariable } from './variable.js';
 export class SpeedDisplay extends UseCase {
+    identifier() {
+        return 'speed-display';
+    }
     name() {
         return 'Speed Display';
     }

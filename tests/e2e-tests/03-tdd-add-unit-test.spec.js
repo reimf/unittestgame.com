@@ -3,7 +3,7 @@ test.describe('tdd I want to add this unit test', () => {
     let page;
     test.beforeAll(async ({ browser }) => {
         const context = await browser.newContext();
-        await context.addInitScript(_ => localStorage.setItem('Test-Driven Development - Example', '1'));
+        await context.addInitScript(_ => localStorage.setItem('level-test-driven-development-battery-level-finished', '1'));
         await context.addInitScript({ path: './tests/e2e-tests/init-script.js' });
         page = await context.newPage();
         await page.goto('/');

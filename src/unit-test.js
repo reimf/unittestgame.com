@@ -1,3 +1,4 @@
+import { Translation } from './translation.js';
 export class UnitTest {
     parameters;
     argumentList;
@@ -9,11 +10,11 @@ export class UnitTest {
         this.unit = unit;
         this.expected = expected;
     }
-    toStringWithResult(result) {
+    toTranslationWithResult(result) {
         const argumentsText = this.argumentList.map((value, index) => this.parameters[index].format(value)).join(', ');
-        return `${this.unit.name}(${argumentsText}) === ${this.unit.format(result)}`;
+        return new Translation(`${this.unit.name}(${argumentsText}) === ${this.unit.format(result)}`);
     }
-    toString() {
-        return this.toStringWithResult(this.expected);
+    toTranslation() {
+        return this.toTranslationWithResult(this.expected);
     }
 }

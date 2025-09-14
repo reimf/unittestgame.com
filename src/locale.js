@@ -1,3 +1,4 @@
+import { Translation } from './translation.js';
 export class Locale {
     lng;
     constructor(lang) {
@@ -5,7 +6,7 @@ export class Locale {
         this.lng = lng;
     }
     pick(options) {
-        return options[this.lng];
+        return new Translation(options[this.lng]);
     }
     welcomeToUnittestgame() {
         return this.pick({
@@ -117,8 +118,8 @@ export class Locale {
     }
     checkingTheNewUnitTest() {
         return this.pick({
-            en: 'Checking the new unit test',
-            nl: 'De nieuwe unit test wordt gecontroleerd',
+            en: 'Checking the new unit test...',
+            nl: 'De nieuwe unit test wordt gecontroleerd...',
         });
     }
     iCheckedTheNewUnitTest() {
@@ -129,8 +130,8 @@ export class Locale {
     }
     checkingTheUnitTests() {
         return this.pick({
-            en: 'Checking the unit tests',
-            nl: 'De unit testen worden gecontroleerd',
+            en: 'Checking the unit tests...',
+            nl: 'De unit testen worden gecontroleerd...',
         });
     }
     iCheckedTheUnitTests() {
@@ -488,6 +489,12 @@ export class Locale {
         return this.pick({
             en: 'Return true if the age is 18 years or over and return false if the age is under 18.',
             nl: 'Geef true terug als de leeftijd 18 jaar of ouder is en geef false terug als de leeftijd onder de 18 is.',
+        });
+    }
+    or() {
+        return this.pick({
+            en: 'OR',
+            nl: 'OF',
         });
     }
 }

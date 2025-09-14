@@ -8,7 +8,7 @@ test.describe('tdd level start', () => {
         await context.addInitScript({ path: './tests/e2e-tests/init-script.js' })
         page = await context.newPage()
         await page.goto('/')
-        await page.getByRole('button', { name: 'I want to play Level 1 of 18 - Test-Driven Development - Example - 🔓' }).click()
+        await page.getByRole('button', { name: 'I want to play Level 1 of 18 - Test-Driven Development - Battery Level - 🔓' }).click()
         await page.getByRole('button', { name: 'I want to add this unit test' }).click()
         await page.getByRole('button', { name: 'I want to add this unit test' }).click()
         await page.getByRole('button', { name: 'I want to submit the unit tests' }).click()

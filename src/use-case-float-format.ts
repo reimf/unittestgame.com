@@ -1,13 +1,18 @@
-import { UseCase } from './use-case-base.js'
 import { Random } from './random.js'
+import { Translation } from './translation.js'
+import { UseCase } from './use-case-base.js'
 import { Variable, BooleanVariable, TextVariable } from './variable.js'
 
 export class FloatFormat extends UseCase {
+    public identifier(): string {
+        return 'float-format'
+    }
+
     public name(): string {
         return 'Float Format'
     }
 
-    public specification(): string {
+    public specification(): Translation {
         return this.locale.returnTrueIfTheTextRepresentsAFloatAndFalseIfItDoesnt()
     }
 

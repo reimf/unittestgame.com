@@ -1,12 +1,17 @@
 import { UseCase } from './use-case-base.js'
 import { Variable, BooleanVariable, IntegerVariable } from './variable.js'
+import { Translation } from './translation.js'
 
 export class LeapYear extends UseCase {
+    public identifier(): string {
+        return 'leap-year'
+    }
+
     public name(): string {
         return 'Leap Year'
     }
 
-    public specification(): string {
+    public specification(): Translation {
         return this.locale.returnTrueIfTheYearIsALeapYearAndFalseIfItIsNot()
     }
 

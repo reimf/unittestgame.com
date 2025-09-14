@@ -1,7 +1,10 @@
-import { UseCase } from './use-case-base.js';
 import { Random } from './random.js';
+import { UseCase } from './use-case-base.js';
 import { BooleanVariable, TextVariable } from './variable.js';
 export class PasswordStrength extends UseCase {
+    identifier() {
+        return 'password-strength';
+    }
     name() {
         return 'Password Strength';
     }

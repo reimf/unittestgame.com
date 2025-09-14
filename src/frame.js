@@ -17,7 +17,7 @@ class Frame extends Section {
 export class Panel extends Frame {
     constructor(id, title, elements) {
         super(elements);
-        this.setId(id).prependChild(new Header().appendText(title));
+        this.setId(id).prependChild(new Header().appendTranslation(title));
     }
     static removeAll() {
         document.querySelector('#panels')?.replaceChildren();
@@ -60,14 +60,14 @@ export class CheckingMessage extends ComputerMessage {
     delay;
     finalText;
     constructor(checkingText, finalText, callback, delay) {
-        super([new Paragraph().appendMarkdown(checkingText + '...').addClass('checking')]);
+        super([new Paragraph().appendMarkdown(checkingText).addClass('checking')]);
         this.finalText = finalText;
         this.callback = callback;
         this.delay = delay;
     }
     add() {
         super.add(() => window.setTimeout(() => {
-            this.replaceEnclosingMessageContent(this.existingElement(), this.finalText);
+            this.replaceEnclosingMessageContent(this.existingElement(), this.finalText.toString());
             this.callback();
         }, this.delay));
     }
@@ -81,7 +81,7 @@ export class HumanMessage extends Message {
 export class QuestionMessage extends HumanMessage {
     constructor(text, callback) {
         super([
-            new Button().onClick(callback).appendText(text)
+            new Button().onClick(callback).appendTranslation(text)
         ]);
     }
 }

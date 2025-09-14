@@ -1,6 +1,9 @@
 import { Panel, ComputerMessage } from './frame.js';
 import { Level } from './level-base.js';
 export class MutationTesting extends Level {
+    identifier() {
+        return 'mutation-testing';
+    }
     name() {
         return this.locale.mutationTesting();
     }
@@ -42,8 +45,11 @@ export class MutationTesting extends Level {
         new ComputerMessage([this.locale.theFunctionIsIndeedFullyTested()]).add();
         new ComputerMessage([this.locale.wellDone()]).add();
     }
-    *exampleGuidanceGenerator(useCase) {
-        yield* useCase.exampleGuidanceGeneratorMutationTesting();
+    *exampleValuesGenerator(useCase) {
+        yield* useCase.exampleValuesGenerator();
+    }
+    *exampleTranslationGenerator(useCase) {
+        yield* useCase.exampleTranslationGeneratorMutationTesting();
     }
     compareComplexity(candidate, otherCandidate) {
         return candidate.compareComplexityMutationTesting(otherCandidate);

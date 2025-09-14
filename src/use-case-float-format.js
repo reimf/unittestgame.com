@@ -1,7 +1,10 @@
-import { UseCase } from './use-case-base.js';
 import { Random } from './random.js';
+import { UseCase } from './use-case-base.js';
 import { BooleanVariable, TextVariable } from './variable.js';
 export class FloatFormat extends UseCase {
+    identifier() {
+        return 'float-format';
+    }
     name() {
         return 'Float Format';
     }

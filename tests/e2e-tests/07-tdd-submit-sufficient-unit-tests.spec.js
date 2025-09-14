@@ -3,7 +3,7 @@ test.describe('tdd submit sufficient unit test', () => {
     let page;
     test.beforeAll(async ({ browser }) => {
         const context = await browser.newContext();
-        await context.addInitScript(_ => localStorage.setItem('Test-Driven Development - Example', '1'));
+        await context.addInitScript(_ => localStorage.setItem('level-test-driven-development-battery-level-finished', '1'));
         await context.addInitScript({ path: './tests/e2e-tests/init-script.js' });
         page = await context.newPage();
         await page.goto('/');
@@ -33,7 +33,7 @@ test.describe('tdd submit sufficient unit test', () => {
     test('has see example message', async () => {
         const messages = page.getByTestId('messages');
         const button = messages.getByRole('button');
-        await expect(button).toHaveText('I want to play Level 3 of 18 - Mutation Testing - Example - 🔓');
+        await expect(button).toHaveText('I want to play Level 3 of 18 - Mutation Testing - Battery Level - 🔓');
     });
     test.afterAll(async () => {
         await page.close();

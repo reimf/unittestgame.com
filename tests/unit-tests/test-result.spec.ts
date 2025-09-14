@@ -29,6 +29,6 @@ test.describe('class TestResult', () => {
         const unit = new BooleanVariable('Is next number', 'isNextNumber')
         const unitTest = new UnitTest(parameters, [6, 7], unit, true)
         const testResult = new TestResult(candidate, unitTest)
-        expect(testResult.toString()).toBe('isNextNumber(6, 7) === true')
+        expect(testResult.toTranslation().toString()).toBe('isNextNumber(6, 7) === true')
     })
 })

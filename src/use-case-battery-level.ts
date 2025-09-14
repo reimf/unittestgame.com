@@ -1,11 +1,16 @@
 import { UseCase } from './use-case-base.js'
 import { Variable, IntegerVariable, RadioVariable } from './variable.js'
+import { Translation } from './translation.js'
 
 export class BatteryLevel extends UseCase {
-    public name(): string {
-        return 'Example'
+    public identifier(): string {
+        return 'battery-level'
     }
-    public specification(): string {
+
+    public name(): string {
+        return 'Battery Level'
+    }
+    public specification(): Translation {
         return this.locale.aSmartphoneNormallyOperatesInNormalMode()
     }
 
@@ -16,7 +21,7 @@ export class BatteryLevel extends UseCase {
     }
 
     public getUnit(): Variable {
-        return new RadioVariable('Power Mode', 'powerMode', ['Normal Mode', 'Low Power Mode'])
+        return new RadioVariable('Mode', 'mode', ['Normal Mode', 'Low Power Mode'])
     }
 
     public getCandidateElements(): string[][] {
@@ -56,9 +61,23 @@ export class BatteryLevel extends UseCase {
             yield [batteryLevel]
     }
 
-    public* exampleGuidanceGeneratorTestDrivenDevelopment(): Generator<string> {
+    public* exampleValuesGenerator(): Generator<string> {
+        yield '20'
+        yield 'Normal Mode'
+
+        yield '19'
+        yield 'Low Power Mode'
+
+        yield '21'
+        yield 'Normal Mode'
+
+        yield '18'
+        yield 'Low Power Mode'
+    }
+
+    public* exampleTranslationGeneratorTestDrivenDevelopment(): Generator<Translation> {
         // constructor
-        yield 'true' // hasExampleGuidance
+        yield new Translation('true') // isExample
 
         // play
         yield this.locale.inThisExampleYouOnlyHaveToClickTheGreenButton()
@@ -67,14 +86,10 @@ export class BatteryLevel extends UseCase {
         // showMenuMessage
         yield this.locale.theSpecificationContainsTheNumber20()
         yield this.locale.iWantToAddThisUnitTest()
-        yield '20'
-        yield 'Normal Mode'
 
         // showMenuMessage
         yield this.locale.theCurrentFunctionNowAlwaysReturnsNormalMode()
         yield this.locale.iWantToAddThisUnitTest()
-        yield '19'
-        yield 'Low Power Mode'
 
         // showMenuMessage
         yield this.locale.theCurrentFunctionNowSometimesReturnsNormalModeAndSometimesLowPowerMode()
@@ -83,8 +98,6 @@ export class BatteryLevel extends UseCase {
         // showMenuMessage
         yield this.locale.theCurrentFunctionNowReturnsNormalModeOnlyForBatteryLevel20Percent()
         yield this.locale.iWantToAddThisUnitTest()
-        yield '21'
-        yield 'Normal Mode'
 
         // showMenuMessage
         yield this.locale.submitTheUnitTestsAgainToSeeIfTheCurrentFunctionIsAccordingToTheSpecification()
@@ -93,8 +106,6 @@ export class BatteryLevel extends UseCase {
         // showMenuMessage
         yield this.locale.theCurrentFunctionNowReturnsLowPowerModeOnlyForBatteryLevel19Percent()
         yield this.locale.iWantToAddThisUnitTest()
-        yield '18'
-        yield 'Low Power Mode'
 
         // showMenuMessage
         yield this.locale.submitTheUnitTestsAgainToSeeIfTheCurrentFunctionIsFinallyAccordingToTheSpecification()
@@ -104,9 +115,9 @@ export class BatteryLevel extends UseCase {
         yield this.locale.congratulationsNowYouUnderstandTheBasicsOfTestDrivenDevelopment()
     }
 
-    public* exampleGuidanceGeneratorMutationTesting(): Generator<string> {
+    public* exampleTranslationGeneratorMutationTesting(): Generator<Translation> {
         // constructor
-        yield 'true'
+        yield new Translation('true') // isExample
 
         // play
         yield this.locale.inThisExampleYouOnlyHaveToClickTheGreenButton()
@@ -115,14 +126,10 @@ export class BatteryLevel extends UseCase {
         // showMenuMessage
         yield this.locale.theFunctionContainsTheNumber20()
         yield this.locale.iWantToAddThisUnitTest()
-        yield '20'
-        yield 'Normal Mode'
 
         // showMenuMessage
         yield this.locale.theFunctionDoesNotAlwaysReturnNormalMode()
         yield this.locale.iWantToAddThisUnitTest()
-        yield '19'
-        yield 'Low Power Mode'
 
         // showMenuMessage
         yield this.locale.allLinesInTheFunctionAreCoveredNow()
@@ -131,8 +138,6 @@ export class BatteryLevel extends UseCase {
         // showMenuMessage
         yield this.locale.thisMutationOnlyReturnsNormalModeIfTheBatteryLevelIsExactly20Percent()
         yield this.locale.iWantToAddThisUnitTest()
-        yield '21'
-        yield 'Normal Mode'
 
         // showMenuMessage
         yield this.locale.submitTheUnitTestsAgainToSeeIfTheFunctionIsFullyTestedNow()
@@ -141,8 +146,6 @@ export class BatteryLevel extends UseCase {
         // showMenuMessage
         yield this.locale.thisMutationOnlyReturnsLowPowerModeIfTheBatteryLevelIsExactly19Percent()
         yield this.locale.iWantToAddThisUnitTest()
-        yield '18'
-        yield 'Low Power Mode'
 
         // showMenuMessage
         yield this.locale.submitTheUnitTestsAgainToSeeIfTheFunctionIsFinallyFullyTestedNow()

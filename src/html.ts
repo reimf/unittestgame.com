@@ -1,3 +1,5 @@
+import { Translation } from './translation.js'
+
 abstract class Content {
     private static timeOfLastDelayedCall: number = 0
 
@@ -38,22 +40,23 @@ export class Html extends Content {
         return this
     }
 
-    public appendMarkdown(markdown: string): this {
+    public appendMarkdown(markdown: Translation): this {
+        const markdownText = markdown.toString()
         const buffer: string[] = []
         const flush = (buffer: string[]) => {
             if (buffer.length > 0) {
-                this.appendText(buffer.join(''))
+                this.appendTranslation(new Translation(buffer.join('')))
                 buffer.length = 0
             }
         }
-        for (let pos = 0; pos < markdown.length; pos++) {
+        for (let pos = 0; pos < markdownText.length; pos++) {
             // Bold: **text**
-            if (markdown.slice(pos, pos + 2) === '**') {
-                const end = markdown.indexOf('**', pos + 2)
+            if (markdownText.slice(pos, pos + 2) === '**') {
+                const end = markdownText.indexOf('**', pos + 2)
                 if (end > pos) {
                     flush(buffer)
-                    const text = markdown.slice(pos + 2, end)
-                    const bold = new Bold().appendMarkdown(text)
+                    const text = markdownText.slice(pos + 2, end)
+                    const bold = new Bold().appendMarkdown(new Translation(text))
                     this.appendChild(bold)
                     pos = end + 1
                     continue
@@ -61,12 +64,12 @@ export class Html extends Content {
             }
 
             // Italic: *text*
-            if (markdown[pos] === '*') {
-                const end = markdown.indexOf('*', pos + 1)
+            if (markdownText[pos] === '*') {
+                const end = markdownText.indexOf('*', pos + 1)
                 if (end > pos) {
                     flush(buffer)
-                    const text = markdown.slice(pos + 1, end)
-                    const italic = new Italic().appendMarkdown(text)
+                    const text = markdownText.slice(pos + 1, end)
+                    const italic = new Italic().appendMarkdown(new Translation(text))
                     this.appendChild(italic)
                     pos = end
                     continue
@@ -74,15 +77,15 @@ export class Html extends Content {
             }
 
             // Link: [text](url)
-            if (markdown[pos] === '[') {
-                const closeBracket = markdown.indexOf(']', pos)
-                const openParen = markdown.indexOf('(', closeBracket)
-                const closeParen = markdown.indexOf(')', openParen)
+            if (markdownText[pos] === '[') {
+                const closeBracket = markdownText.indexOf(']', pos)
+                const openParen = markdownText.indexOf('(', closeBracket)
+                const closeParen = markdownText.indexOf(')', openParen)
                 if (closeBracket > pos && openParen === closeBracket + 1 && closeParen > openParen) {
                     flush(buffer)
-                    const text = markdown.slice(pos + 1, closeBracket)
-                    const url = markdown.slice(openParen + 1, closeParen)
-                    const anchor = new Anchor().setHref(url).appendMarkdown(text)
+                    const text = markdownText.slice(pos + 1, closeBracket)
+                    const url = markdownText.slice(openParen + 1, closeParen)
+                    const anchor = new Anchor().setHref(url).appendMarkdown(new Translation(text))
                     this.appendChild(anchor)
                     pos = closeParen
                     continue
@@ -90,17 +93,17 @@ export class Html extends Content {
             }
 
             // HTML: <tag>content</tag>
-            if (markdown[pos] === '<') {
-                const openTagEnd = markdown.indexOf('>', pos)
+            if (markdownText[pos] === '<') {
+                const openTagEnd = markdownText.indexOf('>', pos)
                 if (openTagEnd > pos) {
-                    const tag = markdown.slice(pos + 1, openTagEnd)
+                    const tag = markdownText.slice(pos + 1, openTagEnd)
                     if (tag[0] !== ' ') {
-                        const closingTagStart = markdown.indexOf('</' + tag + '>', openTagEnd + 1)
+                        const closingTagStart = markdownText.indexOf('</' + tag + '>', openTagEnd + 1)
                         if (closingTagStart > openTagEnd) {
-                            const closingTagEnd = markdown.indexOf('>', closingTagStart + 1)
+                            const closingTagEnd = markdownText.indexOf('>', closingTagStart + 1)
                             if (closingTagEnd > closingTagStart) {
                                 flush(buffer)
-                                const content = markdown.slice(pos, closingTagStart)
+                                const content = markdownText.slice(pos, closingTagStart)
                                 const html = new Other(content)
                                 this.appendChild(html)
                                 pos = closingTagEnd
@@ -114,14 +117,14 @@ export class Html extends Content {
             }
 
             // Plain text
-            buffer.push(markdown[pos])
+            buffer.push(markdownText[pos])
         }
         flush(buffer)
         return this
     }
 
-    public appendText(text: string): this {
-        this.children.push(new Text(text))
+    public appendTranslation(translation: Translation): this {
+        this.children.push(new Text(translation))
         return this
     }
 
@@ -178,19 +181,19 @@ export class Html extends Content {
 }
 
 class Text extends Content {
-    public readonly text: string
+    public readonly translation: Translation
 
-    public constructor(text: string) {
+    public constructor(translation: Translation) {
         super()
-        this.text = text
+        this.translation = translation
     }
 
     public toString(): string {
-        return this.text
+        return this.translation.toString()
     }
 
     public toNode(): Node {
-        return document.createTextNode(this.text)
+        return document.createTextNode(this.toString())
     }
 }
 
@@ -211,7 +214,7 @@ class Other extends Content {
         template.innerHTML = this.html
         if (template.content.childNodes.length === 1)
             return template.content.firstChild!
-        return (new Text("ERROR")).toNode()
+        return (new Text(new Translation('ERROR'))).toNode()
     }
 }
 
@@ -384,7 +387,7 @@ export class Button extends FormControl {
         if (this.onClickCallback)
             node.addEventListener('click', event => {
                 event.preventDefault()
-                this.replaceEnclosingMessageContent(node, node.textContent || 'Unknown')
+                this.replaceEnclosingMessageContent(node, node.textContent)
                 this.onClickCallback!(event)
             })
         return node

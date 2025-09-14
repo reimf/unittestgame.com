@@ -1,6 +1,9 @@
 import { UseCase } from './use-case-base.js';
 import { BooleanVariable, IntegerVariable } from './variable.js';
 export class LeapYear extends UseCase {
+    identifier() {
+        return 'leap-year';
+    }
     name() {
         return 'Leap Year';
     }

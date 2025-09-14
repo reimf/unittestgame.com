@@ -1,18 +1,19 @@
 import { Panel, ComputerMessage, QuestionMessage } from './frame.js'
 import { Div } from './html.js'
 import { Level } from './level-base.js'
-import { Locale } from './locale.js'
 import { MutationTesting } from './level-mutation-testing.js'
 import { TestDrivenDevelopment } from './level-test-driven-development.js'
+import { Locale } from './locale.js'
+import { Translation } from './translation.js'
 import { BatteryLevel } from './use-case-battery-level.js'
-import { VotingAge } from './use-case-voting-age.js'
 import { EvenOdd } from './use-case-even-odd.js'
 import { FizzBuzz } from './use-case-fizz-buzz.js'
-import { TriangleType } from './use-case-triangle-type.js'
-import { LeapYear } from './use-case-leap-year.js'
 import { FloatFormat } from './use-case-float-format.js'
+import { LeapYear } from './use-case-leap-year.js'
 import { PasswordStrength } from './use-case-password-strength.js'
 import { SpeedDisplay } from './use-case-speed-display.js'
+import { TriangleType } from './use-case-triangle-type.js'
+import { VotingAge } from './use-case-voting-age.js'
 
 export class Main {
     private readonly lng = (new URL(window.location.href)).searchParams.get('lng') || navigator.language.split('-')[0]
@@ -89,7 +90,7 @@ export class Main {
         new ComputerMessage([this.locale.whatDoYouWantToDo()]).add()
     }
 
-    private levelDescription(level: Level): string {
+    private levelDescription(level: Level): Translation {
         const index = this.levels.findIndex(otherLevel => otherLevel === level)
         const emoji = ['🔓', '🥇', '🥈', '🥉'].at(level.isFinished()) || '🥉'
         return this.locale.level(index + 1, this.levels.length, level.description(), emoji)
@@ -100,7 +101,7 @@ export class Main {
         if (finishedLevels.length > 0) {
             new Panel('finished-levels', this.locale.finishedLevels(),
                 finishedLevels.map(level =>
-                    new Div().appendText(this.levelDescription(level)).addClass(level === previousLevel ? 'new' : 'old')
+                    new Div().appendTranslation(this.levelDescription(level)).addClass(level === previousLevel ? 'new' : 'old')
                 )
             ).show()
         }

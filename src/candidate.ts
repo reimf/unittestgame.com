@@ -1,5 +1,6 @@
 import { Code, Div, Html, Span } from './html.js'
 import { TestResult } from './test-result.js'
+import { Translation } from './translation.js'
 import { UnitTest } from './unit-test.js'
 
 export class Candidate {
@@ -105,11 +106,11 @@ export class Candidate {
     }
 
     public toHtml(): Html {
-        return new Code().appendChildren(this.lines.map(line => new Div().appendText(line)))
+        return new Code().appendChildren(this.lines.map(line => new Div().appendTranslation(new Translation(line))))
     }
 
     public toMutationHtml(): Html {
-        return new Code().appendChildren(this.lines.map(line => new Div().appendText(line).addClass('covered')))
+        return new Code().appendChildren(this.lines.map(line => new Div().appendTranslation(new Translation(line)).addClass('covered')))
     }
 
     public toHtmlWithPrevious(previousCandidate: Candidate): Html {
@@ -121,9 +122,9 @@ export class Candidate {
                 : ` // was: ${other.trim()}`
             const div = new Div()
             if (line)
-                div.appendText(line)
+                div.appendTranslation(new Translation(line))
             if (comment)
-                div.appendChild(new Span().appendText(comment).addClass('comment'))
+                div.appendChild(new Span().appendTranslation(new Translation(comment)).addClass('comment'))
             return [...divs, div]
         }, [] as Div[])
         return new Code().appendChildren(lines)
@@ -133,7 +134,7 @@ export class Candidate {
         const lines = this.zip(coveredCandidate).map(([line, other]) => {
             const isNotIndented = !line.startsWith('  ')
             const isUsed = line === other
-            return new Div().appendText(line).addClass(isNotIndented || isUsed ? 'covered' : 'notcovered')
+            return new Div().appendTranslation(new Translation(line)).addClass(isNotIndented || isUsed ? 'covered' : 'notcovered')
         })
         return new Code().appendChildren(lines)
     }

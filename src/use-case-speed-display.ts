@@ -1,12 +1,17 @@
 import { UseCase } from './use-case-base.js'
 import { Variable, TextVariable, FloatVariable } from './variable.js'
+import { Translation } from './translation.js'
 
 export class SpeedDisplay extends UseCase {
+    public identifier(): string {
+        return 'speed-display'
+    }
+
     public name(): string {
         return 'Speed Display'
     }
 
-    public specification(): string {
+    public specification(): Translation {
         return this.locale.theFunctionReceivesTheSpeedInKilometersPerHourWithAtMostOneDecimal()
     }
 

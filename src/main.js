@@ -1,17 +1,17 @@
 import { Panel, ComputerMessage, QuestionMessage } from './frame.js';
 import { Div } from './html.js';
-import { Locale } from './locale.js';
 import { MutationTesting } from './level-mutation-testing.js';
 import { TestDrivenDevelopment } from './level-test-driven-development.js';
+import { Locale } from './locale.js';
 import { BatteryLevel } from './use-case-battery-level.js';
-import { VotingAge } from './use-case-voting-age.js';
 import { EvenOdd } from './use-case-even-odd.js';
 import { FizzBuzz } from './use-case-fizz-buzz.js';
-import { TriangleType } from './use-case-triangle-type.js';
-import { LeapYear } from './use-case-leap-year.js';
 import { FloatFormat } from './use-case-float-format.js';
+import { LeapYear } from './use-case-leap-year.js';
 import { PasswordStrength } from './use-case-password-strength.js';
 import { SpeedDisplay } from './use-case-speed-display.js';
+import { TriangleType } from './use-case-triangle-type.js';
+import { VotingAge } from './use-case-voting-age.js';
 export class Main {
     lng = (new URL(window.location.href)).searchParams.get('lng') || navigator.language.split('-')[0];
     locale = new Locale(this.lng);
@@ -87,7 +87,7 @@ export class Main {
     showFinishedLevelsPanel(previousLevel) {
         const finishedLevels = this.getFinishedLevels();
         if (finishedLevels.length > 0) {
-            new Panel('finished-levels', this.locale.finishedLevels(), finishedLevels.map(level => new Div().appendText(this.levelDescription(level)).addClass(level === previousLevel ? 'new' : 'old'))).show();
+            new Panel('finished-levels', this.locale.finishedLevels(), finishedLevels.map(level => new Div().appendTranslation(this.levelDescription(level)).addClass(level === previousLevel ? 'new' : 'old'))).show();
         }
     }
     showNextLevel() {
