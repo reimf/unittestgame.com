@@ -1,6 +1,9 @@
 import { Panel, ComputerMessage } from './frame.js';
 import { Level } from './level-base.js';
 export class TestDrivenDevelopment extends Level {
+    identifier() {
+        return 'test-driven-development';
+    }
     name() {
         return this.locale.testDrivenDevelopment();
     }
@@ -42,8 +45,8 @@ export class TestDrivenDevelopment extends Level {
         new ComputerMessage([this.locale.theCurrentFunctionIsIndeedAccordingToTheSpecification()]).add();
         new ComputerMessage([this.locale.wellDone()]).add();
     }
-    *exampleGuidanceGenerator(useCase) {
-        yield* useCase.exampleGuidanceGeneratorTestDrivenDevelopment();
+    *exampleStringGenerator(useCase) {
+        yield* useCase.exampleStringGeneratorTestDrivenDevelopment();
     }
     compareComplexity(candidate, otherCandidate) {
         return candidate.compareComplexityTestDrivenDevelopment(otherCandidate);

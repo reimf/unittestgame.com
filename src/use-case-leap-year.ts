@@ -2,6 +2,10 @@ import { UseCase } from './use-case-base.js'
 import { Variable, BooleanVariable, IntegerVariable } from './variable.js'
 
 export class LeapYear extends UseCase {
+    public identifier(): string {
+        return 'leap-year'
+    }
+
     public name(): string {
         return 'Leap Year'
     }
@@ -10,17 +14,17 @@ export class LeapYear extends UseCase {
         return this.locale.returnTrueIfTheYearIsALeapYearAndFalseIfItIsNot()
     }
 
-    public getParameters(): Variable[] {
+    protected getParameters(): Variable[] {
         return [
             new IntegerVariable('Year', 'year'),
         ]
     }
 
-    public getUnit(): Variable {
+    protected getUnit(): Variable {
         return new BooleanVariable('Is a leap year', 'isLeapYear')
     }
 
-    public getCandidateElements(): string[][] {
+    protected getCandidateElements(): string[][] {
         return [
             [
                 'if (year % 400 === 0) return true',
@@ -44,14 +48,14 @@ export class LeapYear extends UseCase {
         ]
     }
 
-    public* minimalUnitTestGenerator(): Generator<any[]> {
+    protected* minimalUnitTestGenerator(): Generator<any[]> {
         yield [[2002], false]
         yield [[2004], true]
         yield [[1800], false]
         yield [[1600], true]
     }
 
-    public* hintGenerator(): Generator<any[]> {
+    protected* hintGenerator(): Generator<any[]> {
         for (let year = 2001; year <= 2030; year += 1)
             yield [year]
         for (let year = 1000; year <= 3000; year += 100)

@@ -3,6 +3,10 @@ import { Random } from './random.js'
 import { Variable, BooleanVariable, TextVariable } from './variable.js'
 
 export class FloatFormat extends UseCase {
+    public identifier(): string {
+        return 'float-format'
+    }
+
     public name(): string {
         return 'Float Format'
     }
@@ -11,17 +15,17 @@ export class FloatFormat extends UseCase {
         return this.locale.returnTrueIfTheTextRepresentsAFloatAndFalseIfItDoesnt()
     }
 
-    public getParameters(): Variable[] {
+    protected getParameters(): Variable[] {
         return [
             new TextVariable('Text', 'text')
         ]
     }
 
-    public getUnit(): Variable {
+    protected getUnit(): Variable {
         return new BooleanVariable('Represents a float', 'isFloatFormat')
     }
 
-    public getCandidateElements(): string[][] {
+    protected getCandidateElements(): string[][] {
         return [
             [
                 'let regex = "^"',
@@ -68,7 +72,7 @@ export class FloatFormat extends UseCase {
         ]
     }
 
-    public* minimalUnitTestGenerator(): Generator<any[]> {
+    protected* minimalUnitTestGenerator(): Generator<any[]> {
         yield [['+12'], true]
         yield [['-12.34'], true]
         yield [['12.34'], true]
@@ -78,7 +82,7 @@ export class FloatFormat extends UseCase {
         yield [['12.3.4'], false]
     }
 
-    public* hintGenerator(): Generator<any[]> {
+    protected* hintGenerator(): Generator<any[]> {
         for (let i = 0; i < 100; i++) {
             const integerPart = Random.integerUnder(1000).toString()
             const precision = Random.integerUnder(4)

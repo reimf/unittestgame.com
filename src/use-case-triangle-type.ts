@@ -2,6 +2,10 @@ import { UseCase } from './use-case-base.js'
 import { Variable, RadioVariable, IntegerVariable } from './variable.js'
 
 export class TriangleType extends UseCase {
+    public identifier(): string {
+        return 'triangle-type'
+    }
+    
     public name(): string {
         return 'Triangle Type'
     }
@@ -10,7 +14,7 @@ export class TriangleType extends UseCase {
         return this.locale.returnTheTypeOfTheTriangle()
     }
 
-    public getParameters(): Variable[] {
+    protected getParameters(): Variable[] {
         return [
             new IntegerVariable('Side A', 'a'),
             new IntegerVariable('Side B', 'b'),
@@ -18,11 +22,11 @@ export class TriangleType extends UseCase {
         ]
     }
 
-    public getUnit(): Variable {
+    protected getUnit(): Variable {
         return new RadioVariable('Type of triangle', 'triangleType', ['equilateral', 'isosceles', 'scalene'])
     }
 
-    public getCandidateElements(): string[][] {
+    protected getCandidateElements(): string[][] {
         return [
             [
                 'if (a === b && b === c) return "equilateral"',
@@ -52,7 +56,7 @@ export class TriangleType extends UseCase {
         ]
     }
 
-    public* minimalUnitTestGenerator(): Generator<any[]> {
+    protected* minimalUnitTestGenerator(): Generator<any[]> {
         yield [[5, 5, 5], 'equilateral']
         yield [[3, 5, 5], 'isosceles']
         yield [[5, 3, 5], 'isosceles']
@@ -60,7 +64,7 @@ export class TriangleType extends UseCase {
         yield [[3, 4, 5], 'scalene']
     }
 
-    public* hintGenerator(): Generator<any[]> {
+    protected* hintGenerator(): Generator<any[]> {
         for (let a = 6; a < 9; a++)
             for (let b = 6; b < 9; b++)
                 for (let c = 6; c < 9; c++)

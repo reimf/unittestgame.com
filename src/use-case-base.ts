@@ -5,6 +5,7 @@ import { UnitTest } from './unit-test.js'
 import { Variable } from './variable.js'
 
 export abstract class UseCase {
+    public abstract identifier(): string
     public abstract name(): string
     public abstract specification(): string
     protected abstract getParameters(): Variable[]
@@ -13,8 +14,8 @@ export abstract class UseCase {
     protected abstract minimalUnitTestGenerator(): Generator<any[]>
     protected abstract hintGenerator(): Generator<any[]>
 
-    public* exampleGuidanceGeneratorTestDrivenDevelopment(): Generator<string> { }
-    public* exampleGuidanceGeneratorMutationTesting(): Generator<string> { }
+    public* exampleStringGeneratorTestDrivenDevelopment(): Generator<string> { }
+    public* exampleStringGeneratorMutationTesting(): Generator<string> { }
 
     protected readonly locale: Locale
     public readonly parameters: Variable[] = this.getParameters()

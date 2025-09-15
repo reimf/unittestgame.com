@@ -5,6 +5,10 @@ import { TestResult } from './test-result.js'
 import { UseCase } from './use-case-base.js'
 
 export class MutationTesting extends Level {
+    public identifier(): string {
+        return 'mutation-testing'
+    }
+    
     public name(): string {
         return this.locale.mutationTesting()
     }
@@ -57,8 +61,8 @@ export class MutationTesting extends Level {
         new ComputerMessage([this.locale.wellDone()]).add()
     }
 
-    protected* exampleGuidanceGenerator(useCase: UseCase): Generator<string> {
-        yield* useCase.exampleGuidanceGeneratorMutationTesting()
+    protected* exampleStringGenerator(useCase: UseCase): Generator<string> {
+        yield* useCase.exampleStringGeneratorMutationTesting()
     }
 
     protected compareComplexity(candidate: Candidate, otherCandidate: Candidate): number {

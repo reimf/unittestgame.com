@@ -1,6 +1,9 @@
 import { UseCase } from '../../src/use-case-base.js';
 import { BooleanVariable, IntegerVariable } from '../../src/variable.js';
 export class MockUseCase extends UseCase {
+    identifier() {
+        return 'mock-use-case';
+    }
     name() {
         return 'Mock Use Case';
     }

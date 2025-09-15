@@ -326,7 +326,7 @@ export class Button extends FormControl {
         if (this.onClickCallback)
             node.addEventListener('click', event => {
                 event.preventDefault();
-                this.replaceEnclosingMessageContent(node, node.textContent || 'Unknown');
+                this.replaceEnclosingMessageContent(node, node.textContent || 'ERROR');
                 this.onClickCallback(event);
             });
         return node;

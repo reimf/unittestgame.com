@@ -9,8 +9,7 @@ export class Level {
     locale;
     useCase;
     isLevelFinished;
-    exampleGuidance;
-    hasExampleGuidance;
+    exampleStrings;
     callback;
     humanUnitTests = [];
     previousCandidate = undefined;
@@ -22,9 +21,8 @@ export class Level {
     constructor(locale, useCase) {
         this.locale = locale;
         this.useCase = useCase;
-        this.isLevelFinished = new Completed(this.description());
-        this.exampleGuidance = this.exampleGuidanceGenerator(useCase);
-        this.hasExampleGuidance = this.nextExampleGuidance() !== '';
+        this.isLevelFinished = new Completed(`level-${this.identifier()}-${useCase.identifier()}-finished`);
+        this.exampleStrings = [...this.exampleStringGenerator(useCase)];
     }
     findSimplestCandidate(candidates) {
         const simplestCandidates = candidates.reduce((simplestCandidatesSoFar, candidate) => {
@@ -70,13 +68,13 @@ export class Level {
         }
         return Infinity;
     }
-    nextExampleGuidance() {
-        const value = this.exampleGuidance.next();
-        return value.done ? '' : value.value;
+    nextExampleString() {
+        return this.exampleStrings.shift() || '';
     }
     showExampleMessage() {
-        if (this.hasExampleGuidance)
-            new ComputerMessage([this.nextExampleGuidance()]).add();
+        const exampleMessage = this.nextExampleString();
+        if (exampleMessage)
+            new ComputerMessage([exampleMessage]).add();
     }
     description() {
         return `${this.name()} - ${this.useCase.name()}`;
@@ -123,27 +121,31 @@ export class Level {
     }
     showMenuMessage() {
         this.showExampleMessage();
-        const buttonText = this.hasExampleGuidance ? this.nextExampleGuidance() : undefined;
+        const buttonText = this.nextExampleString();
         const elementsToShow = [];
-        if (!buttonText || buttonText === this.locale.iWantToAddThisUnitTest()) {
-            const variables = [...this.useCase.parameters, this.useCase.unit];
-            if (buttonText)
-                variables.forEach(variable => variable.setValue(this.nextExampleGuidance()).setDisabled(true));
-            const addThisUnitTestButton = new Input().setType('submit').setValue(this.locale.iWantToAddThisUnitTest());
-            const form = new Form()
-                .onSubmit(formData => this.prepareAddUnitTest(formData))
-                .appendChildren(variables.map(variable => variable.toHtml()))
-                .appendChild(addThisUnitTestButton);
-            elementsToShow.push(form);
-        }
-        if (!buttonText) {
-            const divider = new Div().appendText('OR').addClass('or');
-            elementsToShow.push(divider);
-        }
-        if (!buttonText || buttonText === this.locale.iWantToSubmitTheUnitTests()) {
-            const submitTheUnitTestsButton = new Button().appendText(this.locale.iWantToSubmitTheUnitTests()).onClick(() => this.prepareSubmitUnitTests());
-            elementsToShow.push(submitTheUnitTestsButton);
-        }
+        const disableIWantToAddThisUnitTest = buttonText !== '' && buttonText !== this.locale.iWantToAddThisUnitTest().toString();
+        const variables = [...this.useCase.parameters, this.useCase.unit];
+        if (buttonText === this.locale.iWantToAddThisUnitTest().toString())
+            variables.forEach(variable => variable.setValue(this.nextExampleString()).setDisabled(true));
+        else
+            variables.forEach(variable => variable.setValue(''));
+        const addThisUnitTestButton = new Input()
+            .setType('submit')
+            .setValue(this.locale.iWantToAddThisUnitTest().toString())
+            .setDisabled(disableIWantToAddThisUnitTest);
+        const form = new Form()
+            .onSubmit(formData => this.prepareAddUnitTest(formData))
+            .appendChildren(variables.map(variable => variable.toHtml()))
+            .appendChild(addThisUnitTestButton);
+        elementsToShow.push(form);
+        const divider = new Div().appendText(this.locale.or()).addClass('or');
+        elementsToShow.push(divider);
+        const disableIWantToSubmitTheUnitTests = buttonText !== '' && buttonText !== this.locale.iWantToSubmitTheUnitTests().toString();
+        const submitTheUnitTestsButton = new Button()
+            .appendText(this.locale.iWantToSubmitTheUnitTests())
+            .onClick(() => this.prepareSubmitUnitTests())
+            .setDisabled(disableIWantToSubmitTheUnitTests);
+        elementsToShow.push(submitTheUnitTestsButton);
         new HumanMessage(elementsToShow).add();
     }
     prepareAddUnitTest(formData) {
@@ -186,7 +188,7 @@ export class Level {
             this.end();
     }
     end() {
-        if (this.hasExampleGuidance)
+        if (this.exampleStrings)
             this.numberOfSubmissions = 1;
         this.isLevelFinished.set(this.numberOfSubmissions);
         this.previousCandidate = undefined;

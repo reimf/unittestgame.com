@@ -2,6 +2,10 @@ import { UseCase } from './use-case-base.js'
 import { Variable, BooleanVariable, IntegerVariable } from './variable.js'
 
 export class VotingAge extends UseCase {
+    public identifier(): string {
+        return 'voting-age'
+    }
+    
     public name(): string {
         return 'Voting Age'
     }
@@ -10,17 +14,17 @@ export class VotingAge extends UseCase {
         return this.locale.returnTrueIfTheAgeIs18YearsOrOverAndFalseIfTheAgeIsUnder18()
     }
 
-    public getParameters(): Variable[] {
+    protected getParameters(): Variable[] {
         return [
             new IntegerVariable('Age', 'age'),
         ]
     }
 
-    public getUnit(): Variable {
+    protected getUnit(): Variable {
         return new BooleanVariable('Is allowed to vote', 'isAllowedToVote')
     }
 
-    public getCandidateElements(): string[][] {
+    protected getCandidateElements(): string[][] {
         return [
             [
                 'if (age >= 16) return true',
@@ -45,14 +49,14 @@ export class VotingAge extends UseCase {
         ]
     }
 
-    public* minimalUnitTestGenerator(): Generator<any[]> {
+    protected* minimalUnitTestGenerator(): Generator<any[]> {
         yield [[16], false]
         yield [[17], false]
         yield [[18], true]
         yield [[19], true]
     }
 
-    public* hintGenerator(): Generator<any[]> {
+    protected* hintGenerator(): Generator<any[]> {
         for (let age = 1; age <= 40; age += 1)
             yield [age]
     }

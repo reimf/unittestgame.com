@@ -3,6 +3,7 @@ import { Level } from '../../src/level-base.js'
 import { TestResult } from '../../src/test-result.js'
 
 export class MockLevel extends Level {
+    public identifier(): string { return 'mock-level' }
     public name(): string { return 'Mock Level' }
     public showBasicDefinition(): void { }
     protected compareComplexity(_candidate: Candidate, _otherCandidate: Candidate): number { return 0 }
@@ -16,5 +17,5 @@ export class MockLevel extends Level {
     protected showUsefulUnitTestMessage(): void { }
     protected showBugFoundMessage(_currentCandidate: Candidate, _failingTestResult: TestResult, _numberOfUnitTestsStillNeeded: number): void { }
     protected showEndMessage(): void { }
-    protected* exampleGuidanceGenerator(_useCase: any): Generator<string> { }
+    protected* exampleStringGenerator(_useCase: any): Generator<string> { }
 }

@@ -2,24 +2,29 @@ import { UseCase } from './use-case-base.js'
 import { Variable, IntegerVariable, RadioVariable } from './variable.js'
 
 export class BatteryLevel extends UseCase {
-    public name(): string {
-        return 'Example'
+    public identifier(): string {
+        return 'battery-level'
     }
+
+    public name(): string {
+        return 'Battery Level'
+    }
+    
     public specification(): string {
         return this.locale.aSmartphoneNormallyOperatesInNormalMode()
     }
 
-    public getParameters(): Variable[] {
+    protected getParameters(): Variable[] {
         return [
             new IntegerVariable('Battery Level', 'batteryLevel'),
         ]
     }
 
-    public getUnit(): Variable {
+    protected getUnit(): Variable {
         return new RadioVariable('Power Mode', 'powerMode', ['Normal Mode', 'Low Power Mode'])
     }
 
-    public getCandidateElements(): string[][] {
+    protected getCandidateElements(): string[][] {
         return [
             [
                 'if (batteryLevel >= 18) return "Normal Mode"',
@@ -44,22 +49,19 @@ export class BatteryLevel extends UseCase {
         ]
     }
 
-    public* minimalUnitTestGenerator(): Generator<any[]> {
+    protected* minimalUnitTestGenerator(): Generator<any[]> {
         yield [[18], 'Low Power Mode']
         yield [[19], 'Low Power Mode']
         yield [[20], 'Normal Mode']
         yield [[21], 'Normal Mode']
     }
 
-    public* hintGenerator(): Generator<any[]> {
+    protected* hintGenerator(): Generator<any[]> {
         for (let batteryLevel = 18; batteryLevel <= 21; batteryLevel += 1)
             yield [batteryLevel]
     }
 
-    public* exampleGuidanceGeneratorTestDrivenDevelopment(): Generator<string> {
-        // constructor
-        yield 'true' // hasExampleGuidance
-
+    public* exampleStringGeneratorTestDrivenDevelopment(): Generator<string> {
         // play
         yield this.locale.inThisExampleYouOnlyHaveToClickTheGreenButton()
         yield this.locale.meanwhileKeepAnEyeOnTheYellowMarkedChangesInTheSidebar()
@@ -104,10 +106,7 @@ export class BatteryLevel extends UseCase {
         yield this.locale.congratulationsNowYouUnderstandTheBasicsOfTestDrivenDevelopment()
     }
 
-    public* exampleGuidanceGeneratorMutationTesting(): Generator<string> {
-        // constructor
-        yield 'true'
-
+    public* exampleStringGeneratorMutationTesting(): Generator<string> {
         // play
         yield this.locale.inThisExampleYouOnlyHaveToClickTheGreenButton()
         yield this.locale.meanwhileKeepAnEyeOnTheYellowMarkedChangesInTheSidebar()

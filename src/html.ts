@@ -178,7 +178,7 @@ export class Html extends Content {
 }
 
 class Text extends Content {
-    public readonly text: string
+    private readonly text: string
 
     public constructor(text: string) {
         super()
@@ -195,7 +195,7 @@ class Text extends Content {
 }
 
 class Other extends Content {
-    public readonly html: string
+    private readonly html: string
 
     public constructor(html: string) {
         super()
@@ -384,7 +384,7 @@ export class Button extends FormControl {
         if (this.onClickCallback)
             node.addEventListener('click', event => {
                 event.preventDefault()
-                this.replaceEnclosingMessageContent(node, node.textContent || 'Unknown')
+                this.replaceEnclosingMessageContent(node, node.textContent || 'ERROR')
                 this.onClickCallback!(event)
             })
         return node
@@ -434,7 +434,7 @@ export class Bold extends Html {
 }
 
 export class Anchor extends Html {
-    public href: string = ''
+    private href: string = ''
 
     public constructor() {
         super('a')

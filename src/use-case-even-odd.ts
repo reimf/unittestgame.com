@@ -2,24 +2,29 @@ import { UseCase } from './use-case-base.js'
 import { Variable, BooleanVariable, IntegerVariable } from './variable.js'
 
 export class EvenOdd extends UseCase {
+    public identifier(): string {
+        return 'even-odd'
+    }
+
     public name(): string {
         return 'Even or Odd'
     }
+    
     public specification(): string {
         return this.locale.returnTrueIfTheNumberIsEvenAndFalseIfItIsOdd()
     }
 
-    public getParameters(): Variable[] {
+    protected getParameters(): Variable[] {
         return [
             new IntegerVariable('Number', 'num'),
         ]
     }
 
-    public getUnit(): Variable {
+    protected getUnit(): Variable {
         return new BooleanVariable('Is even', 'isEven')
     }
 
-    public getCandidateElements(): string[][] {
+    protected getCandidateElements(): string[][] {
         return [
             [
                 'if (num === 1) return false',
@@ -66,12 +71,12 @@ export class EvenOdd extends UseCase {
         ]
     }
 
-    public* minimalUnitTestGenerator(): Generator<any[]> {
+    protected* minimalUnitTestGenerator(): Generator<any[]> {
         yield [[25], false]
         yield [[26], true]
     }
 
-    public* hintGenerator(): Generator<any[]> {
+    protected* hintGenerator(): Generator<any[]> {
         for (let num = 0; num <= 40; num += 1)
             yield [num]
     }

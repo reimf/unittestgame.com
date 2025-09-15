@@ -2,6 +2,10 @@ import { UseCase } from './use-case-base.js'
 import { Variable, TextVariable, IntegerVariable } from './variable.js'
 
 export class FizzBuzz extends UseCase {
+    public identifier(): string {
+        return 'fizz-buzz'
+    }
+
     public name(): string {
         return 'FizzBuzz'
     }
@@ -9,17 +13,17 @@ export class FizzBuzz extends UseCase {
         return this.locale.returnFizzIfTheNumberIsDivisibleBy3()
     }
 
-    public getParameters(): Variable[] {
+    protected getParameters(): Variable[] {
         return [
             new IntegerVariable('Number', 'num'),
         ]
     }
 
-    public getUnit(): Variable {
+    protected getUnit(): Variable {
         return new TextVariable('Output', 'fizzBuzz')
     }
 
-    public getCandidateElements(): string[][] {
+    protected getCandidateElements(): string[][] {
         return [
             [
                 'if (num === 15) return "FizzBuzz"',
@@ -46,14 +50,14 @@ export class FizzBuzz extends UseCase {
         ]
     }
 
-    public* minimalUnitTestGenerator(): Generator<any[]> {
+    protected* minimalUnitTestGenerator(): Generator<any[]> {
         yield [[6], 'Fizz']
         yield [[25], 'Buzz']
         yield [[30], 'FizzBuzz']
         yield [[1], '1']
     }
 
-    public* hintGenerator(): Generator<any[]> {
+    protected* hintGenerator(): Generator<any[]> {
         for (let num = 0; num < 100; num += 1)
             yield [num]
     }

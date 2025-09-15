@@ -1,6 +1,9 @@
 import { UseCase } from './use-case-base.js';
 import { BooleanVariable, IntegerVariable } from './variable.js';
 export class EvenOdd extends UseCase {
+    identifier() {
+        return 'even-odd';
+    }
     name() {
         return 'Even or Odd';
     }

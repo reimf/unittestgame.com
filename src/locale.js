@@ -490,4 +490,10 @@ export class Locale {
             nl: 'Geef true terug als de leeftijd 18 jaar of ouder is en geef false terug als de leeftijd onder de 18 is.',
         });
     }
+    or() {
+        return this.pick({
+            en: 'OR',
+            nl: 'OF',
+        });
+    }
 }

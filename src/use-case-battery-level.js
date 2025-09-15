@@ -1,8 +1,11 @@
 import { UseCase } from './use-case-base.js';
 import { IntegerVariable, RadioVariable } from './variable.js';
 export class BatteryLevel extends UseCase {
+    identifier() {
+        return 'battery-level';
+    }
     name() {
-        return 'Example';
+        return 'Battery Level';
     }
     specification() {
         return this.locale.aSmartphoneNormallyOperatesInNormalMode();
@@ -49,9 +52,7 @@ export class BatteryLevel extends UseCase {
         for (let batteryLevel = 18; batteryLevel <= 21; batteryLevel += 1)
             yield [batteryLevel];
     }
-    *exampleGuidanceGeneratorTestDrivenDevelopment() {
-        // constructor
-        yield 'true'; // hasExampleGuidance
+    *exampleStringGeneratorTestDrivenDevelopment() {
         // play
         yield this.locale.inThisExampleYouOnlyHaveToClickTheGreenButton();
         yield this.locale.meanwhileKeepAnEyeOnTheYellowMarkedChangesInTheSidebar();
@@ -87,9 +88,7 @@ export class BatteryLevel extends UseCase {
         // end
         yield this.locale.congratulationsNowYouUnderstandTheBasicsOfTestDrivenDevelopment();
     }
-    *exampleGuidanceGeneratorMutationTesting() {
-        // constructor
-        yield 'true';
+    *exampleStringGeneratorMutationTesting() {
         // play
         yield this.locale.inThisExampleYouOnlyHaveToClickTheGreenButton();
         yield this.locale.meanwhileKeepAnEyeOnTheYellowMarkedChangesInTheSidebar();

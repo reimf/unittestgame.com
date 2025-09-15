@@ -2,6 +2,10 @@ import { UseCase } from './use-case-base.js'
 import { Variable, TextVariable, FloatVariable } from './variable.js'
 
 export class SpeedDisplay extends UseCase {
+    public identifier(): string {
+        return 'speed-display'
+    }
+    
     public name(): string {
         return 'Speed Display'
     }
@@ -10,17 +14,17 @@ export class SpeedDisplay extends UseCase {
         return this.locale.theFunctionReceivesTheSpeedInKilometersPerHourWithAtMostOneDecimal()
     }
 
-    public getParameters(): Variable[] {
+    protected getParameters(): Variable[] {
         return [
             new FloatVariable('Speed', 'speed')
         ]
     }
 
-    public getUnit(): Variable {
+    protected getUnit(): Variable {
         return new TextVariable('Display', 'display')
     }
 
-    public getCandidateElements(): string[][] {
+    protected getCandidateElements(): string[][] {
         return [
             [
                 'if (speed === 0.0) return "START"',
@@ -55,7 +59,7 @@ export class SpeedDisplay extends UseCase {
         ]
     }
 
-    public* minimalUnitTestGenerator(): Generator<any[]> {
+    protected* minimalUnitTestGenerator(): Generator<any[]> {
         yield [[0.0], 'START']
         yield [[0.1], '0.1']
         yield [[19.9], '19.9']
@@ -64,7 +68,7 @@ export class SpeedDisplay extends UseCase {
         yield [[199.5], 'DANGER']
     }
 
-    public* hintGenerator(): Generator<any[]> {
+    protected* hintGenerator(): Generator<any[]> {
         for (let speed = 0; speed <= 1; speed += 0.1)
             yield [speed]
         for (let speed = 0; speed <= 27; speed += 0.3)

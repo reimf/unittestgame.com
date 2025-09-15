@@ -5,6 +5,10 @@ import { TestResult } from './test-result.js'
 import { UseCase } from './use-case-base.js'
 
 export class TestDrivenDevelopment extends Level {
+    public identifier(): string {
+        return 'test-driven-development'
+    }
+    
     public name(): string {
         return this.locale.testDrivenDevelopment()
     }
@@ -57,8 +61,8 @@ export class TestDrivenDevelopment extends Level {
         new ComputerMessage([this.locale.wellDone()]).add()
     }
 
-    protected* exampleGuidanceGenerator(useCase: UseCase): Generator<string> {
-        yield* useCase.exampleGuidanceGeneratorTestDrivenDevelopment()
+    protected* exampleStringGenerator(useCase: UseCase): Generator<string> {
+        yield* useCase.exampleStringGeneratorTestDrivenDevelopment()
     }
 
     protected compareComplexity(candidate: Candidate, otherCandidate: Candidate): number {

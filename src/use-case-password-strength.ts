@@ -3,6 +3,10 @@ import { Random } from './random.js'
 import { Variable, BooleanVariable, TextVariable } from './variable.js'
 
 export class PasswordStrength extends UseCase {
+    public identifier(): string {
+        return 'password-strength'
+    }
+
     public name(): string {
         return 'Password Strength'
     }
@@ -11,17 +15,17 @@ export class PasswordStrength extends UseCase {
         return this.locale.returnTrueIfThePasswordIsStrongAndFalseIfItIsNot()
     }
 
-    public getParameters(): Variable[] {
+    protected getParameters(): Variable[] {
         return [
             new TextVariable('Password', 'password')
         ]
     }
 
-    public getUnit(): Variable {
+    protected getUnit(): Variable {
         return new BooleanVariable('Is strong password', 'isStrongPassword')
     }
 
-    public getCandidateElements(): string[][] {
+    protected getCandidateElements(): string[][] {
         return [
             [
                 'if (password.length < 4) return false',
@@ -52,7 +56,7 @@ export class PasswordStrength extends UseCase {
         ]
     }
 
-    public* minimalUnitTestGenerator(): Generator<any[]> {
+    protected* minimalUnitTestGenerator(): Generator<any[]> {
         yield [['A3a6#'], true]
         yield [['@251Bz'], true]
         yield [['1#36D0'], false]
@@ -108,7 +112,7 @@ export class PasswordStrength extends UseCase {
         }
     }
 
-    public* hintGenerator(): Generator<string[]> {
+    protected* hintGenerator(): Generator<string[]> {
         const digits = [...this.generateDigits()]
         const uppercase = [...this.generateUppercase()]
         const lowercase = [...this.generateLowercase()]
