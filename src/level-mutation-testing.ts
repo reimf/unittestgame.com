@@ -2,15 +2,10 @@ import { Candidate } from './candidate.js'
 import { Panel, ComputerMessage } from './frame.js'
 import { Level } from './level-base.js'
 import { TestResult } from './test-result.js'
-import { Translation } from './translation.js'
 import { UseCase } from './use-case-base.js'
 
 export class MutationTesting extends Level {
-    protected identifier(): string {
-        return 'mutation-testing'
-    }
-    
-    public name(): Translation {
+    public name(): string {
         return this.locale.mutationTesting()
     }
 
@@ -24,7 +19,7 @@ export class MutationTesting extends Level {
         new ComputerMessage([this.locale.step3MT()]).add()
     }
 
-    protected showSpecificationPanel(_specification: Translation): void {
+    protected showSpecificationPanel(_specification: string): void {
         // nothing
     }
 
@@ -62,12 +57,8 @@ export class MutationTesting extends Level {
         new ComputerMessage([this.locale.wellDone()]).add()
     }
 
-    protected* exampleValuesGenerator(useCase: UseCase): Generator<string> {
-        yield* useCase.exampleValuesGenerator()
-    }
-
-    protected* exampleTranslationGenerator(useCase: UseCase): Generator<Translation> {
-        yield* useCase.exampleTranslationGeneratorMutationTesting()
+    protected* exampleGuidanceGenerator(useCase: UseCase): Generator<string> {
+        yield* useCase.exampleGuidanceGeneratorMutationTesting()
     }
 
     protected compareComplexity(candidate: Candidate, otherCandidate: Candidate): number {

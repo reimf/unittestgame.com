@@ -1,17 +1,12 @@
 import { UseCase } from './use-case-base.js'
 import { Variable, RadioVariable, IntegerVariable } from './variable.js'
-import { Translation } from './translation.js'
 
 export class TriangleType extends UseCase {
-    public identifier(): string {
-        return 'triangle-type'
-    }
-
     public name(): string {
         return 'Triangle Type'
     }
 
-    public specification(): Translation {
+    public specification(): string {
         return this.locale.returnTheTypeOfTheTriangle()
     }
 

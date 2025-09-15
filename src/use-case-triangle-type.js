@@ -1,9 +1,6 @@
 import { UseCase } from './use-case-base.js';
 import { RadioVariable, IntegerVariable } from './variable.js';
 export class TriangleType extends UseCase {
-    identifier() {
-        return 'triangle-type';
-    }
     name() {
         return 'Triangle Type';
     }

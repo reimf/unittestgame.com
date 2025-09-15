@@ -1,16 +1,11 @@
 import { UseCase } from './use-case-base.js'
 import { Variable, TextVariable, IntegerVariable } from './variable.js'
-import { Translation } from './translation.js'
 
 export class FizzBuzz extends UseCase {
-    public identifier(): string {
-        return 'fizz-buzz'
-    }
-
     public name(): string {
         return 'FizzBuzz'
     }
-    public specification(): Translation {
+    public specification(): string {
         return this.locale.returnFizzIfTheNumberIsDivisibleBy3()
     }
 

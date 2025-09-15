@@ -1,15 +1,11 @@
-import { Translation } from '../../src/translation.js';
 import { UseCase } from '../../src/use-case-base.js';
 import { BooleanVariable, IntegerVariable } from '../../src/variable.js';
 export class MockUseCase extends UseCase {
-    identifier() {
-        return 'mock-use-case';
-    }
     name() {
         return 'Mock Use Case';
     }
     specification() {
-        return new Translation('Mock Specification');
+        return ('Mock Specification');
     }
     getParameters() {
         return [

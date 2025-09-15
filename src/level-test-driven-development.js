@@ -1,9 +1,6 @@
 import { Panel, ComputerMessage } from './frame.js';
 import { Level } from './level-base.js';
 export class TestDrivenDevelopment extends Level {
-    identifier() {
-        return 'test-driven-development';
-    }
     name() {
         return this.locale.testDrivenDevelopment();
     }
@@ -38,18 +35,15 @@ export class TestDrivenDevelopment extends Level {
     }
     showBugFoundMessage(_currentCandidate, failingTestResult, numberOfUnitTestsStillNeeded) {
         new ComputerMessage([this.locale.theCurrentFunctionIsNotAccordingToTheSpecification()]).add();
-        new ComputerMessage([this.locale.itProducesTheFollowingIncorrectResult(), failingTestResult.toTranslation()]).add();
+        new ComputerMessage([this.locale.itProducesTheFollowingIncorrectResult(), failingTestResult.toString()]).add();
         new ComputerMessage([this.locale.tryToWriteAUnitTestThatIsAccordingToTheSpecification(numberOfUnitTestsStillNeeded)]).add();
     }
     showEndMessage() {
         new ComputerMessage([this.locale.theCurrentFunctionIsIndeedAccordingToTheSpecification()]).add();
         new ComputerMessage([this.locale.wellDone()]).add();
     }
-    *exampleValuesGenerator(useCase) {
-        yield* useCase.exampleValuesGenerator();
-    }
-    *exampleTranslationGenerator(useCase) {
-        yield* useCase.exampleTranslationGeneratorTestDrivenDevelopment();
+    *exampleGuidanceGenerator(useCase) {
+        yield* useCase.exampleGuidanceGeneratorTestDrivenDevelopment();
     }
     compareComplexity(candidate, otherCandidate) {
         return candidate.compareComplexityTestDrivenDevelopment(otherCandidate);

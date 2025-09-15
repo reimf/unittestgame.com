@@ -7,13 +7,13 @@ test.describe('class UnitTest', () => {
         const parameters = [new IntegerVariable('A', 'a'), new IntegerVariable('B', 'b')]
         const unit = new IntegerVariable('Divide', 'divide')
         const unitTest = new UnitTest(parameters, [6, 3], unit, 2)
-        expect(unitTest.toTranslation().toString()).toBe('divide(6, 3) === 2')
+        expect(unitTest.toString()).toBe('divide(6, 3) === 2')
     })
 
     test('converts to a string with another result', () => {
         const parameters = [new IntegerVariable('A', 'a'), new IntegerVariable('B', 'b')]
         const unit = new IntegerVariable('Divide', 'divide')
         const unitTest = new UnitTest(parameters, [6, 3], unit, 2)
-        expect(unitTest.toTranslationWithResult(5).toString()).toBe('divide(6, 3) === 5')
+        expect(unitTest.toStringWithResult(5)).toBe('divide(6, 3) === 5')
     })
 })

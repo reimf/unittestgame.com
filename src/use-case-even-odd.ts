@@ -1,16 +1,11 @@
 import { UseCase } from './use-case-base.js'
 import { Variable, BooleanVariable, IntegerVariable } from './variable.js'
-import { Translation } from './translation.js'
 
 export class EvenOdd extends UseCase {
-    public identifier(): string {
-        return 'even-odd'
-    }
-
     public name(): string {
         return 'Even or Odd'
     }
-    public specification(): Translation {
+    public specification(): string {
         return this.locale.returnTrueIfTheNumberIsEvenAndFalseIfItIsOdd()
     }
 

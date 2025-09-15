@@ -47,7 +47,7 @@ test.describe('welcome', () => {
     test('has see example message', async () => {
         const messages = page.getByTestId('messages');
         const button = messages.getByRole('button');
-        await expect(button).toHaveText('I want to play Level 1 of 18 - Test-Driven Development - Battery Level - 🔓');
+        await expect(button).toHaveText('I want to play Level 1 of 18 - Test-Driven Development - Example - 🔓');
     });
     test.afterAll(async () => {
         await page.close();

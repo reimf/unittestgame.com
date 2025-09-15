@@ -1,5 +1,4 @@
 import { Input, Label, Paragraph, Span } from './html.js';
-import { Translation } from './translation.js';
 export class Variable {
     label;
     value = '';
@@ -30,9 +29,9 @@ export class RadioVariable extends Variable {
     toHtml() {
         const radioButtons = this.texts.map(text => {
             const input = new Input().setType('radio').setName(this.name).setValue(text).setChecked(text === this.value).setDisabled(this.disabled).setRequired();
-            return new Label().appendChild(input).appendTranslation(new Translation(text));
+            return new Label().appendChild(input).appendText(text);
         });
-        const paragraph = new Paragraph().appendChild(new Span().appendTranslation(new Translation(this.label))).appendChildren(radioButtons);
+        const paragraph = new Paragraph().appendChild(new Span().appendText(this.label)).appendChildren(radioButtons);
         return paragraph;
     }
     format(value) {
@@ -49,9 +48,9 @@ export class BooleanVariable extends Variable {
     toHtml() {
         const radioButtons = ['true', 'false'].map(text => {
             const input = new Input().setType('radio').setName(this.name).setValue(text).setChecked(text === this.value).setDisabled(this.disabled).setRequired();
-            return new Label().appendChild(input).appendTranslation(new Translation(text));
+            return new Label().appendChild(input).appendText(text);
         });
-        const paragraph = new Paragraph().appendChild(new Span().appendTranslation(new Translation(this.label))).appendChildren(radioButtons);
+        const paragraph = new Paragraph().appendChild(new Span().appendText(this.label)).appendChildren(radioButtons);
         return paragraph;
     }
     format(value) {
@@ -67,7 +66,7 @@ export class TextVariable extends Variable {
     }
     toHtml() {
         const input = new Input().setType('text').setName(this.name).setAutocomplete(false).setValue(this.value).addClass(this.value ? 'preset' : 'empty').setDisabled(this.disabled).setRequired();
-        const label = new Label().appendChild(new Span().appendTranslation(new Translation(this.label))).appendChild(input);
+        const label = new Label().appendChild(new Span().appendText(this.label)).appendChild(input);
         return new Paragraph().appendChild(label);
     }
     format(value) {
@@ -84,7 +83,7 @@ export class IntegerVariable extends Variable {
     toHtml() {
         const displayValue = this.value ? Number(this.value).toFixed() : '';
         const input = new Input().setType('text').setName(this.name).setAutocomplete(false).setValue(displayValue).addClass(displayValue ? 'preset' : 'empty').setDisabled(this.disabled).setRequired().setPattern('[0-9]+');
-        const label = new Label().appendChild(new Span().appendTranslation(new Translation(this.label))).appendChild(input);
+        const label = new Label().appendChild(new Span().appendText(this.label)).appendChild(input);
         return new Paragraph().appendChild(label);
     }
     format(value) {
@@ -101,7 +100,7 @@ export class FloatVariable extends Variable {
     toHtml() {
         const displayValue = this.value ? Number(this.value).toFixed(1) : '';
         const input = new Input().setType('text').setName(this.name).setAutocomplete(false).setValue(displayValue).addClass(displayValue ? 'preset' : 'empty').setDisabled(this.disabled).setRequired().setPattern('[0-9]+(\.[0-9])?');
-        const label = new Label().appendChild(new Span().appendTranslation(new Translation(this.label))).appendChild(input);
+        const label = new Label().appendChild(new Span().appendText(this.label)).appendChild(input);
         return new Paragraph().appendChild(label);
     }
     format(value) {

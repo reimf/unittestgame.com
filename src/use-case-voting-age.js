@@ -1,9 +1,6 @@
 import { UseCase } from './use-case-base.js';
 import { BooleanVariable, IntegerVariable } from './variable.js';
 export class VotingAge extends UseCase {
-    identifier() {
-        return 'voting-age';
-    }
     name() {
         return 'Voting Age';
     }

@@ -1,6 +1,5 @@
 import { Code, Div, Span } from './html.js';
 import { TestResult } from './test-result.js';
-import { Translation } from './translation.js';
 export class Candidate {
     lines;
     function;
@@ -90,10 +89,10 @@ export class Candidate {
         return this.lines.filter(line => line).join('\n');
     }
     toHtml() {
-        return new Code().appendChildren(this.lines.map(line => new Div().appendTranslation(new Translation(line))));
+        return new Code().appendChildren(this.lines.map(line => new Div().appendText(line)));
     }
     toMutationHtml() {
-        return new Code().appendChildren(this.lines.map(line => new Div().appendTranslation(new Translation(line)).addClass('covered')));
+        return new Code().appendChildren(this.lines.map(line => new Div().appendText(line).addClass('covered')));
     }
     toHtmlWithPrevious(previousCandidate) {
         const lines = this.zip(previousCandidate).reduce((divs, [line, other]) => {
@@ -104,9 +103,9 @@ export class Candidate {
                             : ` // was: ${other.trim()}`;
             const div = new Div();
             if (line)
-                div.appendTranslation(new Translation(line));
+                div.appendText(line);
             if (comment)
-                div.appendChild(new Span().appendTranslation(new Translation(comment)).addClass('comment'));
+                div.appendChild(new Span().appendText(comment).addClass('comment'));
             return [...divs, div];
         }, []);
         return new Code().appendChildren(lines);
@@ -115,7 +114,7 @@ export class Candidate {
         const lines = this.zip(coveredCandidate).map(([line, other]) => {
             const isNotIndented = !line.startsWith('  ');
             const isUsed = line === other;
-            return new Div().appendTranslation(new Translation(line)).addClass(isNotIndented || isUsed ? 'covered' : 'notcovered');
+            return new Div().appendText(line).addClass(isNotIndented || isUsed ? 'covered' : 'notcovered');
         });
         return new Code().appendChildren(lines);
     }

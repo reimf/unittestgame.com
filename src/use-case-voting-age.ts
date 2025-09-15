@@ -1,17 +1,12 @@
 import { UseCase } from './use-case-base.js'
 import { Variable, BooleanVariable, IntegerVariable } from './variable.js'
-import { Translation } from './translation.js'
 
 export class VotingAge extends UseCase {
-    public identifier(): string {
-        return 'voting-age'
-    }
-
     public name(): string {
         return 'Voting Age'
     }
 
-    public specification(): Translation {
+    public specification(): string {
         return this.locale.returnTrueIfTheAgeIs18YearsOrOverAndFalseIfTheAgeIsUnder18()
     }
 

@@ -1,18 +1,13 @@
-import { Random } from './random.js'
-import { Translation } from './translation.js'
 import { UseCase } from './use-case-base.js'
+import { Random } from './random.js'
 import { Variable, BooleanVariable, TextVariable } from './variable.js'
 
 export class PasswordStrength extends UseCase {
-    public identifier(): string {
-        return 'password-strength'
-    }
-
     public name(): string {
         return 'Password Strength'
     }
 
-    public specification(): Translation {
+    public specification(): string {
         return this.locale.returnTrueIfThePasswordIsStrongAndFalseIfItIsNot()
     }
 

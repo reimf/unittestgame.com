@@ -8,7 +8,7 @@ test.describe('class UseCase', () => {
     const useCase = new MockUseCase(locale)
 
     test('has a specification', () => {
-        expect(useCase.specification().toString()).toBe('Mock Specification')
+        expect(useCase.specification()).toBe('Mock Specification')
     })
 
     test('has a name', () => {

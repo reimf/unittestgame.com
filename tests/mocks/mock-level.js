@@ -1,8 +1,6 @@
 import { Level } from '../../src/level-base.js';
-import { Translation } from '../../src/translation.js';
 export class MockLevel extends Level {
-    identifier() { return 'mock-level'; }
-    name() { return new Translation('Mock Level'); }
+    name() { return 'Mock Level'; }
     showBasicDefinition() { }
     compareComplexity(_candidate, _otherCandidate) { return 0; }
     showWelcomeMessage() { }
@@ -14,6 +12,5 @@ export class MockLevel extends Level {
     showUsefulUnitTestMessage() { }
     showBugFoundMessage(_currentCandidate, _failingTestResult, _numberOfUnitTestsStillNeeded) { }
     showEndMessage() { }
-    *exampleTranslationGenerator() { }
-    *exampleValuesGenerator() { }
+    *exampleGuidanceGenerator(_useCase) { }
 }
