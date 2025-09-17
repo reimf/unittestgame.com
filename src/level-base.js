@@ -1,10 +1,10 @@
 import { Candidate } from './candidate.js';
+import { Completed } from './completed.js';
 import { HumanMessage, CheckingMessage, Panel, ComputerMessage } from './frame.js';
 import { Button, Div, Form, Input } from './html.js';
 import { Random } from './random.js';
 import { TestResult } from './test-result.js';
 import { UnitTest } from './unit-test.js';
-import { Completed } from './completed.js';
 export class Level {
     locale;
     useCase;

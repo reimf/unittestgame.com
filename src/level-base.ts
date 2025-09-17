@@ -1,4 +1,5 @@
 import { Candidate } from './candidate.js'
+import { Completed } from './completed.js'
 import { HumanMessage, CheckingMessage, Panel, ComputerMessage } from './frame.js'
 import { Button, Div, Form, Input, StringMap } from './html.js'
 import { Locale } from './locale.js'
@@ -6,7 +7,6 @@ import { Random } from './random.js'
 import { TestResult } from './test-result.js'
 import { UnitTest } from './unit-test.js'
 import { UseCase } from './use-case-base.js'
-import { Completed } from './completed.js'
 
 export abstract class Level {
     public abstract identifier(): string
