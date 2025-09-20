@@ -30,8 +30,8 @@ export class MutationTesting extends Level {
         new ComputerMessage([this.locale.iDidNotAddTheUnitTest()]).add();
     }
     showUselessUnitTestMessage() {
-        new ComputerMessage([this.locale.iAddedTheUnitTestButTheLineCoverageDidNotIncrease()]).add();
-        new ComputerMessage([this.locale.tryToWriteUnitTestsThatFail()]).add();
+        new ComputerMessage([this.locale.iAddedTheUnitTestButNoExtraLinesOfTheFunctionAreTested()]).add();
+        new ComputerMessage([this.locale.tryToWriteUnitTestsThatDoNotPass()]).add();
     }
     showUsefulUnitTestMessage() {
         new ComputerMessage([this.locale.iAddedTheUnitTestAnd()]).add();

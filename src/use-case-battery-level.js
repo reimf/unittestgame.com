@@ -103,7 +103,7 @@ export class BatteryLevel extends UseCase {
         yield '19';
         yield 'Low Power Mode';
         // showMenuMessage
-        yield this.locale.allLinesInTheFunctionAreCoveredNow();
+        yield this.locale.allLinesInTheFunctionAreTestedNow();
         yield this.locale.iWantToSubmitTheUnitTests();
         // showMenuMessage
         yield this.locale.thisMutationOnlyReturnsNormalModeIfTheBatteryLevelIsExactly20Percent();

@@ -63,23 +63,6 @@ code {
     white-space: pre;
 }
 
-details {
-    margin-left: 1rem;
-
-    summary {
-        border-radius: 0.25rem;
-        cursor: pointer;
-        display: inline;
-        margin-left: -1rem;
-        text-decoration: underline;
-
-        &:before {
-            content: "▶ ";
-            display: inline-block;
-        }
-    }
-}
-
 form {
     span {
         display: block;
@@ -162,7 +145,7 @@ p {
     white-space: pre-wrap;
 }
 
-a, button, input, label:has(input[type="radio"]:not(:disabled)), summary:hover {
+a, button, input, label:has(input[type="radio"]:not(:disabled)) {
     &:focus-within, &:focus, &:not(:disabled):hover, &:not(:disabled):has(:focus) {
         box-shadow: 0 0 0.3rem 0.3rem var(--focus-shadow);
         opacity: 1;

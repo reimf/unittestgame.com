@@ -124,7 +124,7 @@ export class BatteryLevel extends UseCase {
         yield 'Low Power Mode'
 
         // showMenuMessage
-        yield this.locale.allLinesInTheFunctionAreCoveredNow()
+        yield this.locale.allLinesInTheFunctionAreTestedNow()
         yield this.locale.iWantToSubmitTheUnitTests()
 
         // showMenuMessage

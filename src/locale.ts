@@ -1,6 +1,6 @@
 type LocalizedText = {
-  en: string
-  nl: string
+    en: string
+    nl: string
 }
 
 export class Locale {
@@ -38,32 +38,20 @@ export class Locale {
 
     public learnToWriteEffectiveUnitTests(): string {
         return this.pick({
-            en: 'Learn to write effective unit tests using Test-Driven Development and Mutation Testing.\n' +
+            en: 'Learn to write effective unit tests using Test-Driven Development and Mutation Testing. ' +
+                '[Liever Nederlands?](?lng=nl)\n' +
                 '\n' +
-                '<details>' +
-                    '<summary>Language</summary>' +
-                    '<a href="?lng=nl">Schakel over op Nederlands</a>' +
-                '</details>' + 
-                '<details>' +
-                    '<summary>About</summary>' +
-                    'This game is written by a developer/teacher who wants better software. ' +
-                    'Good software is at least well tested by the developers. ' +
-                    'Testing software is a skill and this game helps you to write enough and effective unit tests. ' +
-                    '<a href="mailto:contact@unittestgame.com">Contact</a> <a href="mailto:feedback@unittestgame.com">Feedback</a>' +
-                '</details>',
-            nl: 'Leer effectieve unit testen te schrijven met Test-Driven Development en Mutation Testing.\n' +
+                'This game is written by a developer who wants better software. ' +
+                'Good software is at least thoroughly tested by the developers. ' +
+                'Testing software is a skill and this game helps you learn just that. ' +
+                '[Contact](mailto:contact@unittestgame.com) [Feedback](mailto:feedback@unittestgame.com)',
+            nl: 'Leer effectieve unit testen te schrijven met Test-Driven Development en Mutation Testing. ' +
+                '[Prefer English?](?lng=en)\n' +
                 '\n' +
-                '<details>' +
-                    '<summary>Language</summary>' +
-                    '<a href="?lng=en">Switch to English</a>' +
-                '</details>' + 
-                '<details>' +
-                    '<summary>Over ons</summary>' +
-                    'Deze game is geschreven door een ontwikkelaar/docent die betere software wil.' +
-                    'Goede software is op zijn minst grondig getest door de ontwikkelaars.' +
-                    'Testen van software is een kunst en deze game helpt je voldoende en effectieve unit testen te schrijven. ' +
-                    '<a href="mailto:contact@unittestgame.com">Contact</a> <a href="mailto:feedback@unittestgame.com">Feedback</a>' +
-                '</details>',
+                'Deze game is geschreven door een ontwikkelaar die betere software wil. ' +
+                'Goede software is op zijn minst grondig getest door de ontwikkelaars. ' +
+                'Testen van software is een kunst en deze game helpt je om juist dat te leren. ' +
+                '[Contact](mailto:contact@unittestgame.com) [Terugkoppeling](mailto:feedback@unittestgame.com)',
         })
     }
 
@@ -188,15 +176,15 @@ export class Locale {
 
     public definitionTDD(): string {
         return this.pick({
-            en: 'Write a unit test that fails, then write just enough code to make the unit test pass. Repeat until the code is according to the specification. [Read more](https://en.wikipedia.org/wiki/Test-driven_development)',
-            nl: 'Schrijf een unit test die faalt, schrijf dan net genoeg code om de unit test te laten slagen. Herhaal dit totdat de code aan de specificatie voldoet. [Lees meer](https://nl.wikipedia.org/wiki/Test-driven_development)',
+            en: 'Write a unit test that does NOT pass, then write just enough code to make the unit test pass. Repeat until the code is according to the specification. [Read more](https://en.wikipedia.org/wiki/Test-driven_development)',
+            nl: 'Schrijf een unit test die niet slaagt, schrijf dan net genoeg code om de unit test te laten slagen. Herhaal dit totdat de code aan de specificatie voldoet. [Lees meer](https://nl.wikipedia.org/wiki/Test-driven_development)',
         })
     }
 
     public step1TDD(): string {
         return this.pick({
-            en: 'You read the *Specification* and write *Unit Tests* that fail the *Current Function*.',
-            nl: 'Je leest de *Specificatie* en schrijft *Unit Testen* die de *Huidige Functie* laten falen.',
+            en: 'You read the *Specification* and write *Unit Tests* that do NOT pass the *Current Function*.',
+            nl: 'Je leest de *Specificatie* en schrijft *Unit Testen* die niet slagen voor de *Huidige Functie*.',
         })
     }
 
@@ -236,10 +224,10 @@ export class Locale {
             })
     }
 
-    public tryToWriteUnitTestsThatFail(): string {
+    public tryToWriteUnitTestsThatDoNotPass(): string {
         return this.pick({
-            en: 'Try to write unit tests that fail for the *Current Function*.',
-                nl: 'Probeer unit testen te schrijven die falen voor de *Huidige Functie*.',
+            en: 'Try to write unit tests that do NOT pass for the *Current Function*.',
+            nl: 'Probeer unit testen te schrijven die niet slagen voor de *Huidige Functie*.',
             })
     }
 
@@ -266,8 +254,8 @@ export class Locale {
 
     public tryToWriteAUnitTestThatIsAccordingToTheSpecification(numberOfUnitTestsStillNeeded: number): string {
         return this.pick({
-            en: `Try to write a unit test that is according to the *Specification* and fails for the *Current Function*. I think you need at least ${numberOfUnitTestsStillNeeded} more ${numberOfUnitTestsStillNeeded === 1 ? 'unit test' : 'unit tests'} to make the *Current Function* according to the *Specification*.`,
-            nl: `Probeer een unit test te schrijven die aan de *Specificatie* voldoet en faalt voor de *Huidige Functie*. Ik denk dat je nog minstens ${numberOfUnitTestsStillNeeded} meer ${numberOfUnitTestsStillNeeded === 1 ? 'unit test' : 'unit testen'} nodig hebt om de *Huidige Functie* volgens de *Specificatie* te maken.`,
+            en: `Try to write a unit test that is according to the *Specification* and does NOT pass for the *Current Function*. I think you need at least ${numberOfUnitTestsStillNeeded} more ${numberOfUnitTestsStillNeeded === 1 ? 'unit test' : 'unit tests'} to make the *Current Function* according to the *Specification*.`,
+            nl: `Probeer een unit test te schrijven die aan de *Specificatie* voldoet en niet slaagt voor de *Huidige Functie*. Ik denk dat je nog minstens ${numberOfUnitTestsStillNeeded} meer ${numberOfUnitTestsStillNeeded === 1 ? 'unit test' : 'unit testen'} nodig hebt om de *Huidige Functie* volgens de *Specificatie* te maken.`,
         })
     }
     public theCurrentFunctionIsIndeedAccordingToTheSpecification(): string {
@@ -286,8 +274,8 @@ export class Locale {
 
     public definitionMT(): string {
         return this.pick({
-            en: 'Each mutation of a fully tested function should make at least one unit test fail. Mutations are simplifications of the code, e.g. by replacing "n % 4 === 0" with "n === 4". [Read more](https://en.wikipedia.org/wiki/Mutation_testing)',
-            nl: 'Elke mutatie van een volledig geteste functie zou ten minste één unit test moeten laten falen. Mutaties zijn vereenvoudigingen van de code, bijvoorbeeld door "n % 4 === 0" te vervangen door "n === 4". [Lees meer](https://en.wikipedia.org/wiki/Mutation_testing)',
+            en: 'Each mutation of a fully tested function should make at least one unit test NOT pass. Mutations are simplifications of the code, e.g. by replacing "n % 4 === 0" with "n === 4". [Read more](https://en.wikipedia.org/wiki/Mutation_testing)',
+            nl: 'Elke mutatie van een volledig geteste functie zou ten minste één unit test niet moeten slagen. Mutaties zijn vereenvoudigingen van de code, bijvoorbeeld door "n % 4 === 0" te vervangen door "n === 4". [Lees meer](https://en.wikipedia.org/wiki/Mutation_testing)',
         })
     }
 
@@ -300,8 +288,8 @@ export class Locale {
 
     public step2MT(): string {
         return this.pick({
-            en: 'After adding a unit test, I show the line coverage of *The Function*.',
-            nl: 'Na het toevoegen van een unit test, laat ik de lijnbedekking van *De Functie* zien.',
+            en: 'After adding a unit test, I show which lines of *The Function* are tested.',
+            nl: 'Na het toevoegen van een unit test, laat ik zien welke regels van *De Functie* zijn getest.',
         })
     }
 
@@ -326,24 +314,24 @@ export class Locale {
         })
     }
 
-    public iAddedTheUnitTestButTheLineCoverageDidNotIncrease(): string {
+    public iAddedTheUnitTestButNoExtraLinesOfTheFunctionAreTested(): string {
         return this.pick({
-            en: 'I added the unit test to the *Unit Tests*, but the line coverage of *The Function* did NOT increase.',
-            nl: 'Ik heb de unit test toegevoegd aan de *Unit Testen*, maar de lijndekking van *De Functie* is NIET toegenomen.',
+            en: 'I added the unit test to the *Unit Tests*, but NO extra lines of *The Function* are tested.',
+            nl: 'Ik heb de unit test toegevoegd aan de *Unit Testen*, maar er zijn NIET meer regels van *De Functie* getest.',
         })
     }
 
-    public tryToWriteUnitTestsThatCover(): string {
+    public tryToWriteUnitTestsThatTestSomeCode(): string {
         return this.pick({
-            en: 'Try to write unit tests that cover some code that is not yet covered by other unit tests.',
-            nl: 'Probeer unit testen te schrijven die wat code dekken die nog niet door andere unit testen wordt gedekt.',
+            en: 'Try to write unit tests that test some code that is not yet tested by other unit tests.',
+            nl: 'Probeer unit testen te schrijven die wat code testen die nog niet door andere unit testen wordt getest.',
         })
     }
 
-    public iAddedTheUnitTestAndIShowedTheLineCoverage(): string {
+    public iAddedTheUnitTestAndIShowedWhichLines(): string {
         return this.pick({
-            en: 'I added the unit test to the *Unit Tests* and I showed the line coverage in *The Function*.',
-            nl: 'Ik heb de unit test toegevoegd aan de *Unit Testen* en ik heb de lijndekking in *De Functie* laten zien.',
+            en: 'I added the unit test to the *Unit Tests* and I showed which lines of *The Function* are tested.',
+            nl: 'Ik heb de unit test toegevoegd aan de *Unit Testen* en ik heb laten zien welke regels in *De Functie* zijn getest.',
         })
     }
 
@@ -363,8 +351,8 @@ export class Locale {
 
     public tryToWriteAUnitTestThatPasses(numberOfUnitTestsStillNeeded: number): string {
         return this.pick({
-            en: `Try to write a unit test that passes *The Function* and fails for this mutation. I think you need at least ${numberOfUnitTestsStillNeeded} more ${numberOfUnitTestsStillNeeded === 1 ? 'unit test' : 'unit tests'} to fully test *The Function*.`,
-            nl: `Probeer een unit test te schrijven die slaagt voor *De Functie* en faalt voor deze mutatie. Ik denk dat je nog minstens ${numberOfUnitTestsStillNeeded} meer ${numberOfUnitTestsStillNeeded === 1 ? 'unit test' : 'unit testen'} nodig hebt om *De Functie* volledig te testen.`,
+            en: `Try to write a unit test that passes *The Function* and does NOT pass for this mutation. I think you need at least ${numberOfUnitTestsStillNeeded} more ${numberOfUnitTestsStillNeeded === 1 ? 'unit test' : 'unit tests'} to fully test *The Function*.`,
+            nl: `Probeer een unit test te schrijven die slaagt voor *De Functie* en niet slaagt voor deze mutatie. Ik denk dat je nog minstens ${numberOfUnitTestsStillNeeded} meer ${numberOfUnitTestsStillNeeded === 1 ? 'unit test' : 'unit testen'} nodig hebt om *De Functie* volledig te testen.`,
         })
     }
 
@@ -461,15 +449,15 @@ export class Locale {
 
     public theFunctionDoesNotAlwaysReturnNormalMode(): string {
         return this.pick({
-            en: '*The Function* does not always return Normal Mode. When the battery level is less than 20%, the function returns Low Power Mode. So, add a unit test for a battery level less than 20%, say 19%.',
+            en: '*The Function* does NOT always return Normal Mode. When the battery level is less than 20%, the function returns Low Power Mode. So, add a unit test for a battery level less than 20%, say 19%.',
             nl: '*De Functie* geeft niet altijd Normal Mode terug. Wanneer het batterijpercentage minder dan 20% is, geeft de functie Low Power Mode terug. Voeg dus een unit test toe voor een batterijpercentage van minder dan 20%, bijvoorbeeld 19%.',
         })
     }
 
-    public allLinesInTheFunctionAreCoveredNow(): string {
+    public allLinesInTheFunctionAreTestedNow(): string {
         return this.pick({
-            en: 'All lines in *The Function* are covered now. Submit the unit tests to see if *The Function* is fully tested.',
-            nl: 'Alle regels in *De Functie* zijn nu gedekt. Dien de unit testen in om te zien of *De Functie* volledig getest is.',
+            en: 'All lines in *The Function* are tested now. Submit the unit tests to see if *The Function* is fully tested.',
+            nl: 'Alle regels in *De Functie* zijn nu getest. Dien de unit testen in om te zien of *De Functie* volledig getest is.',
         })
     }
 
@@ -531,14 +519,14 @@ export class Locale {
 
     public returnTrueIfTheYearIsALeapYearAndFalseIfItIsNot(): string {
         return this.pick({
-            en: 'Return true if the year is a leap year and false if the year is not a leap year. A year is a leap year if it is divisible by 4. The exception is that years that are divisible by 100 are not leap years, unless they are also divisible by 400.',
+            en: 'Return true if the year is a leap year and false if the year is NOT a leap year. A year is a leap year if it is divisible by 4. The exception is that years that are divisible by 100 are NOT leap years, unless they are also divisible by 400.',
             nl: 'Geef true terug als het jaar een schrikkeljaar is en false als het jaar geen schrikkeljaar is. Een jaar is een schrikkeljaar als het deelbaar is door 4. De uitzondering is dat jaren die deelbaar zijn door 100 geen schrikkeljaren zijn, tenzij ze ook deelbaar zijn door 400.',
         })
     }
 
     public returnTrueIfThePasswordIsStrongAndFalseIfItIsNot(): string {
         return this.pick({
-            en: 'Return true if the password is strong and false if the password is not strong. A password is strong if it contains at least 5 characters, an uppercase letter, a lowercase letter and a special character ("#" or "@").',
+            en: 'Return true if the password is strong and false if the password is NOT strong. A password is strong if it contains at least 5 characters, an uppercase letter, a lowercase letter and a special character ("#" or "@").',
             nl: 'Geef true terug als het wachtwoord sterk is en false als het wachtwoord niet sterk is. Een wachtwoord is sterk als het ten minste 5 tekens bevat, een hoofdletter, een kleine letter en een speciaal teken ("#" of "@").',
         })
     }

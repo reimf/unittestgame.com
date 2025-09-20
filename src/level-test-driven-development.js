@@ -31,7 +31,7 @@ export class TestDrivenDevelopment extends Level {
     }
     showUselessUnitTestMessage() {
         new ComputerMessage([this.locale.iAddedTheUnitTestButTheCurrentFunctionAlreadyPassedThisUnitTest()]).add();
-        new ComputerMessage([this.locale.tryToWriteUnitTestsThatFail()]).add();
+        new ComputerMessage([this.locale.tryToWriteUnitTestsThatDoNotPass()]).add();
     }
     showUsefulUnitTestMessage() {
         new ComputerMessage([this.locale.iAddedTheUnitTestAnd()]).add();
