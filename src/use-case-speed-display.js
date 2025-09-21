@@ -23,13 +23,11 @@ export class SpeedDisplay extends UseCase {
             [
                 'if (speed === 0.0) return "START"',
                 'if (speed < 0.5) return "START"',
-                'if (speed < 0.1) return "START"',
                 'if (speed < 1.0) return "START"',
                 '',
             ],
             [
                 'if (speed < 19.9) return speed.toFixed(1)',
-                'if (speed <= 19.9) return speed.toFixed(1)',
                 'if (speed < 20.0) return speed.toFixed(1)',
                 'if (speed <= 20.0) return speed.toFixed(1)',
                 'if (speed < 30.0) return speed.toFixed(1)',
@@ -39,12 +37,10 @@ export class SpeedDisplay extends UseCase {
                 'if (speed >= 200.0) return "DANGER"',
                 'if (speed >= 199.5) return "DANGER"',
                 'if (speed > 199.5) return "DANGER"',
-                'if (speed > 199.4) return "DANGER"',
                 'if (speed > 199.0) return "DANGER"',
                 '',
             ],
             [
-                'return Math.round(speed).toString()',
                 'return speed.toFixed()',
                 'return speed.toFixed(1)',
                 'return speed.toString()',

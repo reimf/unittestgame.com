@@ -13,10 +13,6 @@ export class TestDrivenDevelopment extends Level {
         return this.locale.testDrivenDevelopment()
     }
 
-    public showBasicDefinition(): void {
-        new Panel('test-driven-development', this.locale.testDrivenDevelopment(), [this.locale.definitionTDD()]).show()
-    }
-
     protected showWelcomeMessage(): void {
         new ComputerMessage([this.locale.step1TDD()]).add()
         new ComputerMessage([this.locale.step2TDD()]).add()

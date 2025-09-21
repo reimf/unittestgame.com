@@ -478,6 +478,12 @@ export class Locale {
             nl: 'Geef true terug als de leeftijd 18 jaar of ouder is en geef false terug als de leeftijd onder de 18 is.',
         });
     }
+    returnGoodIfThePriceIsGoodAndTheQualityIsGood() {
+        return this.pick({
+            en: 'Return "Good" if the price is less than 20 and the quality is at least 7. Return "Bad" if the price is 20 or more and the quality is less than 7. In all other cases return "Ok".',
+            nl: 'Geef "Goed" terug als de prijs minder dan 20 is en de kwaliteit ten minste 7 is. Geef "Slecht" terug als de prijs 20 of meer is en de kwaliteit minder dan 7 is. Geef in alle andere gevallen "Ok" terug.',
+        });
+    }
     or() {
         return this.pick({
             en: 'OR',

@@ -10,6 +10,7 @@ import { FizzBuzz } from './use-case-fizz-buzz.js'
 import { FloatFormat } from './use-case-float-format.js'
 import { LeapYear } from './use-case-leap-year.js'
 import { PasswordStrength } from './use-case-password-strength.js'
+import { Review } from './use-case-review.js'
 import { SpeedDisplay } from './use-case-speed-display.js'
 import { TriangleType } from './use-case-triangle-type.js'
 import { VotingAge } from './use-case-voting-age.js'
@@ -22,26 +23,23 @@ export class Main {
     private readonly votingAge = new VotingAge(this.locale)
     private readonly evenOdd = new EvenOdd(this.locale)
     private readonly fizzBuzz = new FizzBuzz(this.locale)
+    private readonly review = new Review(this.locale)
     private readonly triangleType = new TriangleType(this.locale)
     private readonly leapYear = new LeapYear(this.locale)
     private readonly floatFormat = new FloatFormat(this.locale)
     private readonly passwordStrength = new PasswordStrength(this.locale)
     private readonly speedDisplay = new SpeedDisplay(this.locale)
-    private readonly exampleTestDrivenDevelopment = new TestDrivenDevelopment(this.locale, this.batteryLevel)
-    private readonly exampleMutationTesting = new MutationTesting(this.locale, this.batteryLevel)
-    private readonly examples = [
-        this.exampleTestDrivenDevelopment,
-        this.exampleMutationTesting
-    ]
-    private readonly levels: Level[] = [
-        this.exampleTestDrivenDevelopment,
+    private readonly levels: Level[] = [        
+        new TestDrivenDevelopment(this.locale, this.batteryLevel),
         new TestDrivenDevelopment(this.locale, this.votingAge),
-        this.exampleMutationTesting,
+        new MutationTesting(this.locale, this.batteryLevel),
         new MutationTesting(this.locale, this.evenOdd),
         new TestDrivenDevelopment(this.locale, this.fizzBuzz),
         new MutationTesting(this.locale, this.triangleType),
-        new TestDrivenDevelopment(this.locale, this.evenOdd),
+        new TestDrivenDevelopment(this.locale, this.review),
         new MutationTesting(this.locale, this.votingAge),
+        new TestDrivenDevelopment(this.locale, this.evenOdd),
+        new MutationTesting(this.locale, this.review),
         new TestDrivenDevelopment(this.locale, this.triangleType),
         new MutationTesting(this.locale, this.fizzBuzz),
         new TestDrivenDevelopment(this.locale, this.leapYear),
@@ -58,8 +56,8 @@ export class Main {
         new Bug().start()
         this.showWelcomeMessage()
         this.showAboutPanel()
-        for (const example of this.examples)
-            example.showBasicDefinition()
+        this.showBasicDefinitionTestDrivenDevelopment()
+        this.showBasicDefinitionMutationTesting()
         this.continue()
     }
 
@@ -74,6 +72,14 @@ export class Main {
         level.play(() => this.continue(level))
     }
 
+    public showBasicDefinitionTestDrivenDevelopment(): void {
+        new Panel('test-driven-development', this.locale.testDrivenDevelopment(), [this.locale.definitionTDD()]).show()
+    }
+
+    public showBasicDefinitionMutationTesting(): void {
+        new Panel('mutation-testing', this.locale.mutationTesting(), [this.locale.definitionMT()]).show()
+    }
+    
     private getFinishedLevels(): Level[] {
         return this.levels.filter(level => level.isFinished())
     }

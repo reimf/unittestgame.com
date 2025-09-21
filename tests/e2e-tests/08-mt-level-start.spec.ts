@@ -5,12 +5,12 @@ test.describe('mt level start', () => {
 
     test.beforeAll(async ({ browser }) => {
         const context = await browser.newContext()
-        await context.addInitScript(_ => localStorage.setItem('Test-Driven Development - Example', '1'))
-        await context.addInitScript(_ => localStorage.setItem('Test-Driven Development - Voting Age', '1'))
+        await context.addInitScript(_ => localStorage.setItem('level-test-driven-development-battery-level-finished', '1'))
+        await context.addInitScript(_ => localStorage.setItem('level-test-driven-development-voting-age-finished', '1'))
         await context.addInitScript({ path: './tests/e2e-tests/init-script.js' })
         page = await context.newPage()
         await page.goto('/')
-        await page.getByRole('button', { name: 'I want to play Level 3 of 18 - Mutation Testing - Example - 🔓' }).click()
+        await page.getByRole('button', { name: 'I want to play Level 3 of 20 - Mutation Testing - Battery Level - 🔓' }).click()
         await page.getByRole('button', { name: 'I want to add this unit test' }).click()
         await page.getByRole('button', { name: 'I want to add this unit test' }).click()
         await page.getByRole('button', { name: 'I want to submit the unit tests' }).click()
@@ -18,7 +18,7 @@ test.describe('mt level start', () => {
         await page.getByRole('button', { name: 'I want to submit the unit tests' }).click()
         await page.getByRole('button', { name: 'I want to add this unit test' }).click()
         await page.getByRole('button', { name: 'I want to submit the unit tests' }).click()
-        await page.getByRole('button', { name: 'I want to play Level 4 of 18 - Mutation Testing - Even or Odd - 🔓' }).click()
+        await page.getByRole('button', { name: 'I want to play Level 4 of 20 - Mutation Testing - Even or Odd - 🔓' }).click()
     })
 
     test('has no unittestgame panel', async () => {

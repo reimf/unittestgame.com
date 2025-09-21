@@ -11,7 +11,7 @@ test.describe('class SpeedDisplay', () => {
     })
 
     test('has the right amount of candidates', () => {
-        expect(useCase.candidates).toHaveLength(900)
+        expect(useCase.candidates).toHaveLength(400)
     })
 
     test('has the right amount of minimal unit tests', () => {
@@ -23,7 +23,7 @@ test.describe('class SpeedDisplay', () => {
     })
 
     test('has the right amount of perfect candidates', () => {
-        expect(useCase.perfectCandidates).toHaveLength(16)
+        expect(useCase.perfectCandidates).toHaveLength(1)
     })
 
     test('has the right amount of amputees of the perfect candidate', () => {

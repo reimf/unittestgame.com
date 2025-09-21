@@ -7,9 +7,6 @@ export class MutationTesting extends Level {
     name() {
         return this.locale.mutationTesting();
     }
-    showBasicDefinition() {
-        new Panel('mutation-testing', this.locale.mutationTesting(), [this.locale.definitionMT()]).show();
-    }
     showWelcomeMessage() {
         new ComputerMessage([this.locale.step1MT()]).add();
         new ComputerMessage([this.locale.step2MT()]).add();

@@ -11,7 +11,6 @@ import { UseCase } from './use-case-base.js'
 export abstract class Level {
     public abstract identifier(): string
     public abstract name(): string
-    public abstract showBasicDefinition(): void
     protected abstract showWelcomeMessage(): void
     protected abstract showSpecificationPanel(specification: string): void
     protected abstract showCurrentFunctionPanel(currentCandidate: Candidate, previousCandidate: Candidate|undefined): void

@@ -25,8 +25,6 @@ test.describe('welcome', () => {
     })
 
     test('has link to feedback mail address', async () => {
-        const about = page.locator('summary:has-text("About")')
-        await about.click()
         const link = page.getByRole('link', { name: 'feedback' })
         expect(await link.getAttribute('href')).toBe('mailto:feedback@unittestgame.com')
     })
@@ -59,7 +57,7 @@ test.describe('welcome', () => {
     test('has see example message', async () => {
         const messages = page.getByTestId('messages')
         const button = messages.getByRole('button')
-        await expect(button).toHaveText('I want to play Level 1 of 18 - Test-Driven Development - Example - 🔓')
+        await expect(button).toHaveText('I want to play Level 1 of 20 - Test-Driven Development - Battery Level - 🔓')
     })
 
     test.afterAll(async () => {

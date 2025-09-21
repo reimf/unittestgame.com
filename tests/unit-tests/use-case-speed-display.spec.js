@@ -8,7 +8,7 @@ test.describe('class SpeedDisplay', () => {
         expect(useCase.parameters).toHaveLength(1);
     });
     test('has the right amount of candidates', () => {
-        expect(useCase.candidates).toHaveLength(900);
+        expect(useCase.candidates).toHaveLength(400);
     });
     test('has the right amount of minimal unit tests', () => {
         expect(useCase.minimalUnitTests).toHaveLength(6);
@@ -17,7 +17,7 @@ test.describe('class SpeedDisplay', () => {
         expect(useCase.subsetsOfMinimalUnitTests).toHaveLength(64);
     });
     test('has the right amount of perfect candidates', () => {
-        expect(useCase.perfectCandidates).toHaveLength(16);
+        expect(useCase.perfectCandidates).toHaveLength(1);
     });
     test('has the right amount of amputees of the perfect candidate', () => {
         expect(useCase.amputeesOfPerfectCandidate).toHaveLength(16);

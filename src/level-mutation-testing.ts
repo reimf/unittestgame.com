@@ -13,10 +13,6 @@ export class MutationTesting extends Level {
         return this.locale.mutationTesting()
     }
 
-    public showBasicDefinition(): void {
-        new Panel('mutation-testing', this.locale.mutationTesting(), [this.locale.definitionMT()]).show()
-    }
-
     protected showWelcomeMessage(): void {
         new ComputerMessage([this.locale.step1MT()]).add()
         new ComputerMessage([this.locale.step2MT()]).add()

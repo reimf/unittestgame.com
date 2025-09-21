@@ -10,6 +10,7 @@ import { TriangleType } from '../../src/use-case-triangle-type.js';
 import { LeapYear } from '../../src/use-case-leap-year.js';
 import { FloatFormat } from '../../src/use-case-float-format.js';
 import { PasswordStrength } from '../../src/use-case-password-strength.js';
+import { Review } from '../../src/use-case-review.js';
 import { SpeedDisplay } from '../../src/use-case-speed-display.js';
 import { BooleanVariable, RadioVariable } from '../../src/variable.js';
 test.describe('whole game', () => {
@@ -24,6 +25,7 @@ test.describe('whole game', () => {
         const leapYear = new LeapYear(locale);
         const floatFormat = new FloatFormat(locale);
         const passwordStrength = new PasswordStrength(locale);
+        const review = new Review(locale);
         const speedDisplay = new SpeedDisplay(locale);
         const exampleTestDrivenDevelopment = new TestDrivenDevelopment(locale, batteryLevel);
         const exampleMutationTesting = new MutationTesting(locale, batteryLevel);
@@ -35,8 +37,10 @@ test.describe('whole game', () => {
             [new MutationTesting(locale, evenOdd), evenOdd],
             [new TestDrivenDevelopment(locale, fizzBuzz), fizzBuzz],
             [new MutationTesting(locale, triangleType), triangleType],
-            [new TestDrivenDevelopment(locale, evenOdd), evenOdd],
+            [new TestDrivenDevelopment(locale, review), review],
             [new MutationTesting(locale, votingAge), votingAge],
+            [new TestDrivenDevelopment(locale, evenOdd), evenOdd],
+            [new MutationTesting(locale, review), review],
             [new TestDrivenDevelopment(locale, triangleType), triangleType],
             [new MutationTesting(locale, fizzBuzz), fizzBuzz],
             [new TestDrivenDevelopment(locale, leapYear), leapYear],

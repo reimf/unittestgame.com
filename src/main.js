@@ -9,6 +9,7 @@ import { FizzBuzz } from './use-case-fizz-buzz.js';
 import { FloatFormat } from './use-case-float-format.js';
 import { LeapYear } from './use-case-leap-year.js';
 import { PasswordStrength } from './use-case-password-strength.js';
+import { Review } from './use-case-review.js';
 import { SpeedDisplay } from './use-case-speed-display.js';
 import { TriangleType } from './use-case-triangle-type.js';
 import { VotingAge } from './use-case-voting-age.js';
@@ -20,26 +21,23 @@ export class Main {
     votingAge = new VotingAge(this.locale);
     evenOdd = new EvenOdd(this.locale);
     fizzBuzz = new FizzBuzz(this.locale);
+    review = new Review(this.locale);
     triangleType = new TriangleType(this.locale);
     leapYear = new LeapYear(this.locale);
     floatFormat = new FloatFormat(this.locale);
     passwordStrength = new PasswordStrength(this.locale);
     speedDisplay = new SpeedDisplay(this.locale);
-    exampleTestDrivenDevelopment = new TestDrivenDevelopment(this.locale, this.batteryLevel);
-    exampleMutationTesting = new MutationTesting(this.locale, this.batteryLevel);
-    examples = [
-        this.exampleTestDrivenDevelopment,
-        this.exampleMutationTesting
-    ];
     levels = [
-        this.exampleTestDrivenDevelopment,
+        new TestDrivenDevelopment(this.locale, this.batteryLevel),
         new TestDrivenDevelopment(this.locale, this.votingAge),
-        this.exampleMutationTesting,
+        new MutationTesting(this.locale, this.batteryLevel),
         new MutationTesting(this.locale, this.evenOdd),
         new TestDrivenDevelopment(this.locale, this.fizzBuzz),
         new MutationTesting(this.locale, this.triangleType),
-        new TestDrivenDevelopment(this.locale, this.evenOdd),
+        new TestDrivenDevelopment(this.locale, this.review),
         new MutationTesting(this.locale, this.votingAge),
+        new TestDrivenDevelopment(this.locale, this.evenOdd),
+        new MutationTesting(this.locale, this.review),
         new TestDrivenDevelopment(this.locale, this.triangleType),
         new MutationTesting(this.locale, this.fizzBuzz),
         new TestDrivenDevelopment(this.locale, this.leapYear),
@@ -55,8 +53,8 @@ export class Main {
         new Bug().start();
         this.showWelcomeMessage();
         this.showAboutPanel();
-        for (const example of this.examples)
-            example.showBasicDefinition();
+        this.showBasicDefinitionTestDrivenDevelopment();
+        this.showBasicDefinitionMutationTesting();
         this.continue();
     }
     continue(previousLevel) {
@@ -67,6 +65,12 @@ export class Main {
     play(level) {
         Panel.removeAll();
         level.play(() => this.continue(level));
+    }
+    showBasicDefinitionTestDrivenDevelopment() {
+        new Panel('test-driven-development', this.locale.testDrivenDevelopment(), [this.locale.definitionTDD()]).show();
+    }
+    showBasicDefinitionMutationTesting() {
+        new Panel('mutation-testing', this.locale.mutationTesting(), [this.locale.definitionMT()]).show();
     }
     getFinishedLevels() {
         return this.levels.filter(level => level.isFinished());
