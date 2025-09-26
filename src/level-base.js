@@ -8,6 +8,8 @@ import { UnitTest } from './unit-test.js';
 export class Level {
     locale;
     useCase;
+    levelNumber;
+    totalNumberOfLevels;
     isLevelFinished;
     exampleStrings;
     callback;
@@ -18,9 +20,11 @@ export class Level {
     failingTestResult = undefined;
     newUnitTest = undefined;
     numberOfSubmissions = 0;
-    constructor(locale, useCase) {
+    constructor(locale, useCase, levelNumber, totalNumberOfLevels) {
         this.locale = locale;
         this.useCase = useCase;
+        this.levelNumber = levelNumber;
+        this.totalNumberOfLevels = totalNumberOfLevels;
         this.isLevelFinished = new Completed(`level-${this.identifier()}-${useCase.identifier()}-finished`);
         this.exampleStrings = [...this.exampleStringGenerator(useCase)];
     }
@@ -77,7 +81,8 @@ export class Level {
             new ComputerMessage([exampleMessage]).add();
     }
     description() {
-        return `${this.name()} - ${this.useCase.name()}`;
+        const emoji = ['🔓', '🥇', '🥈', '🥉'].at(this.isFinished()) || '🥉';
+        return this.locale.level(this.levelNumber, this.totalNumberOfLevels, this.name(), this.useCase.name(), emoji);
     }
     isFinished() {
         return this.isLevelFinished.get();

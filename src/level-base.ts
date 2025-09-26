@@ -25,6 +25,8 @@ export abstract class Level {
 
     protected readonly locale: Locale
     private readonly useCase: UseCase
+    private readonly levelNumber: number
+    private readonly totalNumberOfLevels: number
     private readonly isLevelFinished: Completed
     private readonly exampleStrings: string[]
 
@@ -37,9 +39,11 @@ export abstract class Level {
     private newUnitTest?: UnitTest = undefined
     private numberOfSubmissions: number = 0
 
-    public constructor(locale: Locale, useCase: UseCase) {
+    public constructor(locale: Locale, useCase: UseCase, levelNumber: number, totalNumberOfLevels: number) {
         this.locale = locale
         this.useCase = useCase
+        this.levelNumber = levelNumber
+        this.totalNumberOfLevels = totalNumberOfLevels
         this.isLevelFinished = new Completed(`level-${this.identifier()}-${useCase.identifier()}-finished`)
         this.exampleStrings = [...this.exampleStringGenerator(useCase)]
     }
@@ -104,7 +108,8 @@ export abstract class Level {
     }
 
     public description(): string {
-        return `${this.name()} - ${this.useCase.name()}`
+        const emoji = ['🔓', '🥇', '🥈', '🥉'].at(this.isFinished()) || '🥉'
+        return this.locale.level(this.levelNumber, this.totalNumberOfLevels, this.name(), this.useCase.name(), emoji)
     }
 
     public isFinished(): number {

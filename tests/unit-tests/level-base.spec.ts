@@ -6,10 +6,10 @@ import { Locale } from '../../src/locale.js'
 test.describe('class Level', () => {
     const locale = new Locale('en')
     const useCase = new MockUseCase(locale)
-    const level = new MockLevel(locale, useCase)
+    const level = new MockLevel(locale, useCase, 1, 20)
 
     test('has a description', () => {
-        expect(level.description()).toBe('Mock Level - Mock Use Case')
+        expect(level.description()).toBe('Level 1 of 20 - Mock Level - Mock Use Case - 🔓')
     })
 
     test('is playable', () => {

@@ -28,26 +28,26 @@ export class Main {
     passwordStrength = new PasswordStrength(this.locale);
     speedDisplay = new SpeedDisplay(this.locale);
     levels = [
-        new TestDrivenDevelopment(this.locale, this.batteryLevel),
-        new TestDrivenDevelopment(this.locale, this.votingAge),
-        new MutationTesting(this.locale, this.batteryLevel),
-        new MutationTesting(this.locale, this.evenOdd),
-        new TestDrivenDevelopment(this.locale, this.fizzBuzz),
-        new MutationTesting(this.locale, this.triangleType),
-        new TestDrivenDevelopment(this.locale, this.review),
-        new MutationTesting(this.locale, this.votingAge),
-        new TestDrivenDevelopment(this.locale, this.evenOdd),
-        new MutationTesting(this.locale, this.review),
-        new TestDrivenDevelopment(this.locale, this.triangleType),
-        new MutationTesting(this.locale, this.fizzBuzz),
-        new TestDrivenDevelopment(this.locale, this.leapYear),
-        new MutationTesting(this.locale, this.passwordStrength),
-        new TestDrivenDevelopment(this.locale, this.speedDisplay),
-        new MutationTesting(this.locale, this.floatFormat),
-        new TestDrivenDevelopment(this.locale, this.passwordStrength),
-        new MutationTesting(this.locale, this.leapYear),
-        new TestDrivenDevelopment(this.locale, this.floatFormat),
-        new MutationTesting(this.locale, this.speedDisplay),
+        new TestDrivenDevelopment(this.locale, this.batteryLevel, 1, 20),
+        new TestDrivenDevelopment(this.locale, this.votingAge, 2, 20),
+        new MutationTesting(this.locale, this.batteryLevel, 3, 20),
+        new MutationTesting(this.locale, this.evenOdd, 4, 20),
+        new TestDrivenDevelopment(this.locale, this.fizzBuzz, 5, 20),
+        new MutationTesting(this.locale, this.triangleType, 6, 20),
+        new TestDrivenDevelopment(this.locale, this.review, 7, 20),
+        new MutationTesting(this.locale, this.votingAge, 8, 20),
+        new TestDrivenDevelopment(this.locale, this.evenOdd, 9, 20),
+        new MutationTesting(this.locale, this.review, 10, 20),
+        new TestDrivenDevelopment(this.locale, this.triangleType, 11, 20),
+        new MutationTesting(this.locale, this.fizzBuzz, 12, 20),
+        new TestDrivenDevelopment(this.locale, this.leapYear, 13, 20),
+        new MutationTesting(this.locale, this.passwordStrength, 14, 20),
+        new TestDrivenDevelopment(this.locale, this.speedDisplay, 15, 20),
+        new MutationTesting(this.locale, this.floatFormat, 16, 20),
+        new TestDrivenDevelopment(this.locale, this.passwordStrength, 17, 20),
+        new MutationTesting(this.locale, this.leapYear, 18, 20),
+        new TestDrivenDevelopment(this.locale, this.floatFormat, 19, 20),
+        new MutationTesting(this.locale, this.speedDisplay, 20, 20),
     ];
     start() {
         new Bug().start();
@@ -85,21 +85,16 @@ export class Main {
     showInvitationMessage() {
         new ComputerMessage([this.locale.whatDoYouWantToDo()]).add();
     }
-    levelDescription(level) {
-        const index = this.levels.findIndex(otherLevel => otherLevel === level);
-        const emoji = ['🔓', '🥇', '🥈', '🥉'].at(level.isFinished()) || '🥉';
-        return this.locale.level(index + 1, this.levels.length, level.description(), emoji);
-    }
     showFinishedLevelsPanel(previousLevel) {
         const finishedLevels = this.getFinishedLevels();
         if (finishedLevels.length > 0) {
-            new Panel('finished-levels', this.locale.finishedLevels(), finishedLevels.map(level => new Div().appendText(this.levelDescription(level)).addClass(level === previousLevel ? 'new' : 'old'))).show();
+            new Panel('finished-levels', this.locale.finishedLevels(), finishedLevels.map(level => new Div().appendText(level.description()).addClass(level === previousLevel ? 'new' : 'old'))).show();
         }
     }
     showNextLevel() {
         const nextLevel = this.levels.find(level => !level.isFinished());
         if (nextLevel)
-            new QuestionMessage(this.locale.iWantToPlayTheNextLevel(this.levelDescription(nextLevel)), () => this.play(nextLevel)).add();
+            new QuestionMessage(this.locale.iWantToPlayTheNextLevel(nextLevel.description()), () => this.play(nextLevel)).add();
         else
             new QuestionMessage(this.locale.iPlayedAllTheLevels(), () => this.quit()).add();
     }

@@ -6,8 +6,12 @@ export class Completed {
     }
 
     public get(): number {
+        if (typeof localStorage === 'undefined')
+            return 0
         const value = localStorage.getItem(this.key)
-        return value ? Number(value) : 0
+        if (!value)
+            return 0
+        return Number(value)
     }
 
     public set(value: number): void {

@@ -49,16 +49,16 @@ export class Locale {
             nl: 'Wat wil je doen?',
         });
     }
-    level(index, total, description, emoji) {
+    level(levelNumber, totalNumberOfLevels, levelName, useCaseName, emoji) {
         return this.pick({
-            en: `Level ${index} of ${total} - ${description} - ${emoji}`,
-            nl: `Level ${index} van ${total} - ${description} - ${emoji}`,
+            en: `Level ${levelNumber} of ${totalNumberOfLevels} - ${levelName} - ${useCaseName} - ${emoji}`,
+            nl: `Level ${levelNumber} van ${totalNumberOfLevels} - ${levelName} - ${useCaseName} - ${emoji}`,
         });
     }
-    iWantToPlayTheNextLevel(level) {
+    iWantToPlayTheNextLevel(levelDescription) {
         return this.pick({
-            en: `I want to play ${level}`,
-            nl: `Ik wil ${level} spelen`,
+            en: `I want to play ${levelDescription}`,
+            nl: `Ik wil ${levelDescription} spelen`,
         });
     }
     iPlayedAllTheLevels() {

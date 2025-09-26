@@ -4,8 +4,12 @@ export class Completed {
         this.key = key;
     }
     get() {
+        if (typeof localStorage === 'undefined')
+            return 0;
         const value = localStorage.getItem(this.key);
-        return value ? Number(value) : 0;
+        if (!value)
+            return 0;
+        return Number(value);
     }
     set(value) {
         localStorage.setItem(this.key, value.toString());

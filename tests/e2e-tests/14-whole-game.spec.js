@@ -27,30 +27,30 @@ test.describe('whole game', () => {
         const passwordStrength = new PasswordStrength(locale);
         const review = new Review(locale);
         const speedDisplay = new SpeedDisplay(locale);
-        const exampleTestDrivenDevelopment = new TestDrivenDevelopment(locale, batteryLevel);
-        const exampleMutationTesting = new MutationTesting(locale, batteryLevel);
+        const exampleTestDrivenDevelopment = new TestDrivenDevelopment(locale, batteryLevel, 1, 20);
+        const exampleMutationTesting = new MutationTesting(locale, batteryLevel, 3, 20);
         const examples = [exampleTestDrivenDevelopment, exampleMutationTesting];
         const levelsAndUseCases = [
             [exampleTestDrivenDevelopment, batteryLevel],
-            [new TestDrivenDevelopment(locale, votingAge), votingAge],
+            [new TestDrivenDevelopment(locale, votingAge, 2, 20), votingAge],
             [exampleMutationTesting, batteryLevel],
-            [new MutationTesting(locale, evenOdd), evenOdd],
-            [new TestDrivenDevelopment(locale, fizzBuzz), fizzBuzz],
-            [new MutationTesting(locale, triangleType), triangleType],
-            [new TestDrivenDevelopment(locale, review), review],
-            [new MutationTesting(locale, votingAge), votingAge],
-            [new TestDrivenDevelopment(locale, evenOdd), evenOdd],
-            [new MutationTesting(locale, review), review],
-            [new TestDrivenDevelopment(locale, triangleType), triangleType],
-            [new MutationTesting(locale, fizzBuzz), fizzBuzz],
-            [new TestDrivenDevelopment(locale, leapYear), leapYear],
-            [new MutationTesting(locale, passwordStrength), passwordStrength],
-            [new TestDrivenDevelopment(locale, speedDisplay), speedDisplay],
-            [new MutationTesting(locale, floatFormat), floatFormat],
-            [new TestDrivenDevelopment(locale, passwordStrength), passwordStrength],
-            [new MutationTesting(locale, leapYear), leapYear],
-            [new TestDrivenDevelopment(locale, floatFormat), floatFormat],
-            [new MutationTesting(locale, speedDisplay), speedDisplay],
+            [new MutationTesting(locale, evenOdd, 4, 20), evenOdd],
+            [new TestDrivenDevelopment(locale, fizzBuzz, 5, 20), fizzBuzz],
+            [new MutationTesting(locale, triangleType, 6, 20), triangleType],
+            [new TestDrivenDevelopment(locale, review, 7, 20), review],
+            [new MutationTesting(locale, votingAge, 8, 20), votingAge],
+            [new TestDrivenDevelopment(locale, evenOdd, 9, 20), evenOdd],
+            [new MutationTesting(locale, review, 10, 20), review],
+            [new TestDrivenDevelopment(locale, triangleType, 11, 20), triangleType],
+            [new MutationTesting(locale, fizzBuzz, 12, 20), fizzBuzz],
+            [new TestDrivenDevelopment(locale, leapYear, 13, 20), leapYear],
+            [new MutationTesting(locale, passwordStrength, 14, 20), passwordStrength],
+            [new TestDrivenDevelopment(locale, speedDisplay, 15, 20), speedDisplay],
+            [new MutationTesting(locale, floatFormat, 16, 20), floatFormat],
+            [new TestDrivenDevelopment(locale, passwordStrength, 17, 20), passwordStrength],
+            [new MutationTesting(locale, leapYear, 18, 20), leapYear],
+            [new TestDrivenDevelopment(locale, floatFormat, 19, 20), floatFormat],
+            [new MutationTesting(locale, speedDisplay, 20, 20), speedDisplay],
         ];
         const context = await browser.newContext();
         await context.addInitScript({ path: './tests/e2e-tests/init-script.js' });
@@ -58,7 +58,7 @@ test.describe('whole game', () => {
         await page.goto('/');
         for (let index = 0; index < levelsAndUseCases.length; index++) {
             const [level, useCase] = levelsAndUseCases[index];
-            await page.getByRole('button', { name: `I want to play Level ${index + 1} of ${levelsAndUseCases.length} - ${level.description()}` }).click();
+            await page.getByRole('button', { name: `I want to play ${level.description()}` }).click();
             if (examples.includes(level)) {
                 await page.getByRole('button', { name: 'I want to add this unit test' }).click();
                 await page.getByRole('button', { name: 'I want to add this unit test' }).click();

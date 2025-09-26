@@ -62,17 +62,17 @@ export class Locale {
         })
     }
 
-    public level(index: number, total: number, description: string, emoji: string): string {
+    public level(levelNumber: number, totalNumberOfLevels: number, levelName: string, useCaseName: string, emoji: string): string {
         return this.pick({
-            en: `Level ${index} of ${total} - ${description} - ${emoji}`,
-            nl: `Level ${index} van ${total} - ${description} - ${emoji}`,
+            en: `Level ${levelNumber} of ${totalNumberOfLevels} - ${levelName} - ${useCaseName} - ${emoji}`,
+            nl: `Level ${levelNumber} van ${totalNumberOfLevels} - ${levelName} - ${useCaseName} - ${emoji}`,
         })
     }
 
-    public iWantToPlayTheNextLevel(level: string): string {
+    public iWantToPlayTheNextLevel(levelDescription: string): string {
         return this.pick({
-            en: `I want to play ${level}`,
-            nl: `Ik wil ${level} spelen`,
+            en: `I want to play ${levelDescription}`,
+            nl: `Ik wil ${levelDescription} spelen`,
         })
     }
 
