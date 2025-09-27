@@ -1,5 +1,5 @@
 import { Panel, ComputerMessage, QuestionMessage } from './frame.js';
-import { Div } from './html.js';
+import { OrderedList, ListItem } from './html.js';
 import { MutationTesting } from './level-mutation-testing.js';
 import { TestDrivenDevelopment } from './level-test-driven-development.js';
 import { Locale } from './locale.js';
@@ -13,7 +13,6 @@ import { Review } from './use-case-review.js';
 import { SpeedDisplay } from './use-case-speed-display.js';
 import { TriangleType } from './use-case-triangle-type.js';
 import { VotingAge } from './use-case-voting-age.js';
-import { Bug } from './bug.js';
 export class Main {
     lng = (new URL(window.location.href)).searchParams.get('lng') || navigator.language.split('-')[0];
     locale = new Locale(this.lng);
@@ -50,7 +49,6 @@ export class Main {
         new MutationTesting(this.locale, this.speedDisplay, 20, 20),
     ];
     start() {
-        new Bug().start();
         this.showWelcomeMessage();
         this.showAboutPanel();
         this.showBasicDefinitionTestDrivenDevelopment();
@@ -88,7 +86,7 @@ export class Main {
     showFinishedLevelsPanel(previousLevel) {
         const finishedLevels = this.getFinishedLevels();
         if (finishedLevels.length > 0) {
-            new Panel('finished-levels', this.locale.finishedLevels(), finishedLevels.map(level => new Div().appendText(level.description()).addClass(level === previousLevel ? 'new' : 'old'))).show();
+            new Panel('finished-levels', this.locale.finishedLevels(), [new OrderedList().appendChildren(finishedLevels.map(level => new ListItem().appendText(level.description()).addClass(level === previousLevel ? 'new' : 'old')))]).show();
         }
     }
     showNextLevel() {

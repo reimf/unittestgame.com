@@ -315,9 +315,20 @@ export class Label extends Html {
         super('label');
     }
 }
+export class OrderedList extends Html {
+    constructor() {
+        super('ol');
+    }
+}
+export class ListItem extends Html {
+    constructor() {
+        super('li');
+    }
+}
 export class Code extends Html {
     constructor() {
         super('code');
+        this.addClass('language-javascript');
     }
 }
 export class Section extends Html {

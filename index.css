@@ -1,18 +1,23 @@
 :root {
-    --dark-text: #333333;
-    --light-text: #FFFFFF;
-    --panel-heading-background: #880088;
-    --input-background: #009933;
-    --human-message-background: #DDF8DD;
-    --general-background: #ECE5DD;
-    --computer-message-background: #FFFFFF;
-    --panel-background: #FFFFFF;
-    --emphasis-background: #FFFF00;
-    --button-shadow: #00000066;
-    --focus-shadow: #FF6600;
-    --separator-shadow: #00000033;
-    --disabled-background: #333333;
-    --disabled-foreground: #FFFFFF;
+    --dark-text: #333;
+    --light-text: #fff;
+    --panel-heading-background: #808;
+    --input-background: #093;
+    --human-message-background: #efe;
+    --general-background: #eee;
+    --computer-message-background: #fff;
+    --panel-body-background: #fff;
+    --button-shadow: #0006;
+    --focus-shadow: #f60;
+    --separator-shadow: #0003;
+    --disabled-background: #333;
+    --disabled-foreground: #fff;
+    --covered-background: #dfd;
+    --notcovered-background: #fdd;
+    --inserted-background: #dfd;
+    --deleted-background: #fdd;
+    --new-background: #ffb;
+    --old-background: #eee;
 }
 
 * {
@@ -58,9 +63,49 @@ b { /* markdown: **bold** */
 
 code {
     display: block;
-    margin: 0.75rem 0;
     overflow: scroll;
+    padding: 0.75rem !important;
     white-space: pre;
+
+    div {
+        &.covered {
+            background-color: var(--covered-background);
+        }
+
+        &.notcovered {
+            background-color: var(--notcovered-background);
+        }
+
+        &.unchanged {
+            &::before {
+                content: '  ';
+            }
+        }
+
+        &.inserted {
+            background-color: var(--inserted-background);
+
+            &::before {
+                content: '+ ';
+            }
+        }
+
+        &.deleted {
+            background-color: var(--deleted-background);
+
+            &::before {
+                content: '- ';
+            }
+        }
+
+        &.new {
+            background-color: var(--new-background);
+        }
+
+        &.old {
+            background-color: var(--old-background);
+        }
+    }
 }
 
 form {
@@ -145,6 +190,10 @@ p {
     white-space: pre-wrap;
 }
 
+pre {
+    margin: 0;
+}
+
 a, button, input, label:has(input[type="radio"]:not(:disabled)) {
     &:focus-within, &:focus, &:not(:disabled):hover, &:not(:disabled):has(:focus) {
         box-shadow: 0 0 0.3rem 0.3rem var(--focus-shadow);
@@ -159,15 +208,6 @@ a, button, input, label:has(input[type="radio"]:not(:disabled)) {
     &:is(button), &:is(input[type="submit"]), &.empty {
         opacity: 0.25;
     }
-}
-
-.covered, .new, div:has(> .comment) {
-    background-color: var(--emphasis-background);
-    color: var(--dark-text);
-}
-
-.comment {
-    opacity: 0.25;
 }
 
 #screen {
@@ -254,28 +294,35 @@ a, button, input, label:has(input[type="radio"]:not(:disabled)) {
         width: 40%;
 
         section {
-            background-color: var(--computer-message-background);
+            background-color: var(--panel-body-background);
             border-radius: 0.5rem;
             color: var(--dark-text);
             margin: 0.75rem;
             overflow: hidden;
-            padding: 0 0.75rem;
 
             header {
                 background-color: var(--panel-heading-background);
                 border-radius: 0.5rem 0.5rem 0 0;
                 color: var(--light-text);
-                margin: 0 -0.75rem;
                 padding: 0.75rem;
             }
 
             > div {
-                margin: 0.75rem 0;
+                p {
+                    padding-left: 0.75rem;
+                    padding-right: 0.75rem;
+                }
 
-                div {
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    white-space: pre;
+                ol {
+                    list-style-type: none;
+                    margin: 0;
+                    padding: 0.75rem;
+
+                    li {
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: pre;
+                    }
                 }
             }
         }

@@ -1,7 +1,7 @@
 import { Candidate } from './candidate.js'
 import { Completed } from './completed.js'
 import { HumanMessage, CheckingMessage, Panel, ComputerMessage } from './frame.js'
-import { Button, Div, Form, Input, StringMap } from './html.js'
+import { Button, Code, Div, Form, Input, OrderedList, ListItem, Paragraph, StringMap } from './html.js'
 import { Locale } from './locale.js'
 import { Random } from './random.js'
 import { TestResult } from './test-result.js'
@@ -143,8 +143,8 @@ export abstract class Level {
     private showUnitTestsPanel(unitTests: UnitTest[], newUnitTest: UnitTest|undefined): void {
         new Panel('unit-tests', this.locale.unitTests(),
             unitTests.length === 0
-            ? [new Div().appendText(this.locale.youHaveNotWrittenAnyUnitTestsYet())]
-            : unitTests.map(unitTest => new Div().appendText(unitTest.toString()).addClass(unitTest === newUnitTest ? 'new' : 'old'))
+            ? [new Paragraph().appendText(this.locale.youHaveNotWrittenAnyUnitTestsYet())]
+            : [new Code().appendText(unitTests.map(unitTest => unitTest.toString() + '// ' + (unitTest === newUnitTest ? 'new' : 'old')).join('\n'))]
         ).show()
     }
 

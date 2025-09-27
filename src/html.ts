@@ -373,9 +373,22 @@ export class Label extends Html {
     }
 }
 
+export class OrderedList extends Html {
+    public constructor() {
+        super('ol')
+    }
+}
+
+export class ListItem extends Html {
+    public constructor() {
+        super('li')
+    }
+}
+
 export class Code extends Html {
     public constructor() {
         super('code')
+        this.addClass('language-javascript')
     }
 }
 

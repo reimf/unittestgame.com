@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "highlight.js": "^11.11.1",
     "playwright": "^1.55.0",
     "typescript": "^5.9.2"
   },

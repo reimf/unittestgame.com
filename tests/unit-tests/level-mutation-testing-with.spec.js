@@ -6,7 +6,7 @@ test.describe('class Level Mutation Testing', () => {
     const fixtureLevelStates = new FixtureLevelStates();
     const useCase = fixtureLevelStates.useCase;
     const locale = new Locale('en');
-    const level = new MutationTesting(locale, useCase);
+    const level = new MutationTesting(locale, useCase, 1, 20);
     test.describe('method findSimplestPassingCandidate', () => {
         fixtureLevelStates.states.forEach(({ unitTests, simplestPassingCandidatesMutationTesting }) => {
             test(`finds the simplest passing candidate for unit tests ${unitTests.map(unitTest => unitTest.argumentList)}`, () => {
