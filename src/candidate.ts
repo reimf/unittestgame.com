@@ -1,5 +1,6 @@
-import { Code, Html } from './html.js'
+import { Code } from './html.js'
 import { TestResult } from './test-result.js'
+import { Highlighter } from './highlighter.js'
 import { UnitTest } from './unit-test.js'
 
 export class Candidate {
@@ -100,40 +101,39 @@ export class Candidate {
         return Math.sign(this.complexityMutationTesting - candidate.complexityMutationTesting)
     }
 
-    public toCodeBlock(lines: string[]): Html {
-        return new Code().appendText(lines.filter(line => line).join('\n'))
+    public toString(): string {
+        return this.lines.filter(line => line).join('\n')
     }
 
-    public toHtml(): Html {
-        return this.toCodeBlock(this.lines)
+    public toHtml(): Code {
+        return new Code().appendChildren(this.lines.map(line => Highlighter.highlight(line)))
     }
 
-    public toMutationHtml(): Html {
-        const linesWithComments = this.lines.map(line => line + '// covered')
-        return this.toCodeBlock(linesWithComments)
+    public toMutationHtml(): Code {
+        return new Code().appendChildren(this.lines.map(line => Highlighter.highlight(line).addClass('covered')))
     }
 
-    public toHtmlWithPrevious(previousCandidate: Candidate): Html {
-        const linesWithComments = this.zip(previousCandidate).map(([line, other]) => {
-            if (!line && !other)
-                return ''
-            if (line === other)
-                return line + '// unchanged'
-            if (!line)
-                return other + '// deleted'
-            if (!other)
-                return line + '// inserted'
-            return other + '// deleted' + '\n' + line + '// inserted'
+    public toHtmlWithPrevious(previousCandidate: Candidate): Code {
+        const code = new Code()
+        this.zip(previousCandidate).forEach(([line, other]) => {
+            if (line === other && line && other)
+                code.appendChild(Highlighter.highlight(line).addClass('unchanged'))
+            if (line !== other && other)
+                code.appendChild(Highlighter.highlight(other).addClass('deleted'))
+            if (line !== other && line)
+                code.appendChild(Highlighter.highlight(line).addClass('inserted'))
         })
-        return this.toCodeBlock(linesWithComments)
+        return code
     }
 
-    public toHtmlWithCoverage(coveredCandidate: Candidate): Html {
-        const linesWithComments = this.zip(coveredCandidate).map(([line, other]) => {
+    public toHtmlWithCoverage(coveredCandidate: Candidate): Code {
+        const code = new Code()
+        this.zip(coveredCandidate).forEach(([line, other]) => {
             if (!line.startsWith('  ') || line === other)
-                return line + '// covered'
-            return line + '// notcovered'
+                code.appendChild(Highlighter.highlight(line).addClass('covered'))
+            else
+                code.appendChild(Highlighter.highlight(line).addClass('notcovered'))
         })
-        return this.toCodeBlock(linesWithComments)
+        return code
     }
 }

@@ -1,7 +1,8 @@
 import { Candidate } from './candidate.js'
 import { Completed } from './completed.js'
 import { HumanMessage, CheckingMessage, Panel, ComputerMessage } from './frame.js'
-import { Button, Code, Div, Form, Input, OrderedList, ListItem, Paragraph, StringMap } from './html.js'
+import { Highlighter } from './highlighter.js'
+import { Button, Code, Div, Form, Input, Paragraph, StringMap } from './html.js'
 import { Locale } from './locale.js'
 import { Random } from './random.js'
 import { TestResult } from './test-result.js'
@@ -144,7 +145,9 @@ export abstract class Level {
         new Panel('unit-tests', this.locale.unitTests(),
             unitTests.length === 0
             ? [new Paragraph().appendText(this.locale.youHaveNotWrittenAnyUnitTestsYet())]
-            : [new Code().appendText(unitTests.map(unitTest => unitTest.toString() + '// ' + (unitTest === newUnitTest ? 'new' : 'old')).join('\n'))]
+            : [new Code().appendChildren(unitTests.map(unitTest => 
+                Highlighter.highlight(unitTest.toString()).addClass(unitTest === newUnitTest ? 'new' : 'old'))
+            )]
         ).show()
     }
 

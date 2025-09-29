@@ -1,4 +1,5 @@
 import { Panel, ComputerMessage } from './frame.js';
+import { Paragraph } from './html.js';
 import { Level } from './level-base.js';
 export class TestDrivenDevelopment extends Level {
     identifier() {
@@ -16,8 +17,9 @@ export class TestDrivenDevelopment extends Level {
         new Panel('specification', this.locale.specification(), [specification]).show();
     }
     showCurrentFunctionPanel(currentCandidate, previousCandidate) {
-        new Panel('current-function', this.locale.currentFunction(), [
-            previousCandidate ? currentCandidate.toHtmlWithPrevious(previousCandidate) : currentCandidate.toHtml()
+        new Panel('current-function', this.locale.currentFunction(), [currentCandidate.toHtml()]).show();
+        new Panel('diff-function', this.locale.diffFunction(), [
+            previousCandidate ? currentCandidate.toHtmlWithPrevious(previousCandidate) : new Paragraph().appendText(this.locale.noPreviousFunction())
         ]).show();
     }
     showCodeCoveragePanel(_perfectCandidate, _coveredCandidate) {

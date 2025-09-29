@@ -1,6 +1,7 @@
 import { Candidate } from './candidate.js';
 import { Completed } from './completed.js';
 import { HumanMessage, CheckingMessage, Panel, ComputerMessage } from './frame.js';
+import { Highlighter } from './highlighter.js';
 import { Button, Code, Div, Form, Input, Paragraph } from './html.js';
 import { Random } from './random.js';
 import { TestResult } from './test-result.js';
@@ -111,7 +112,7 @@ export class Level {
     showUnitTestsPanel(unitTests, newUnitTest) {
         new Panel('unit-tests', this.locale.unitTests(), unitTests.length === 0
             ? [new Paragraph().appendText(this.locale.youHaveNotWrittenAnyUnitTestsYet())]
-            : [new Code().appendText(unitTests.map(unitTest => unitTest.toString() + '// ' + (unitTest === newUnitTest ? 'new' : 'old')).join('\n'))]).show();
+            : [new Code().appendChildren(unitTests.map(unitTest => Highlighter.highlight(unitTest.toString()).addClass(unitTest === newUnitTest ? 'new' : 'old')))]).show();
     }
     menu() {
         this.showPanels();

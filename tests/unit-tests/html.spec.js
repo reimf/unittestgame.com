@@ -61,7 +61,7 @@ test.describe('class Html', () => {
     });
     test('has code', () => {
         const code = new Code().appendText('text');
-        expect(code.toString()).toBe('<code>text</code>');
+        expect(code.toString()).toBe('<code class="language-javascript">text</code>');
     });
     test('has section', () => {
         const section = new Section().appendText('text');

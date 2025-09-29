@@ -1,6 +1,5 @@
 import { Bug } from './src/bug.js'
 import { Main } from './src/main.js'
-import { Highlighter } from './src/highlighter.js'
 
 window.onerror = (message, source, lineno, colno, error) => {
     alert(`${error?.name}: ${message}\n${source}:${lineno}:${colno}`)
@@ -30,9 +29,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.location.hostname === 'localhost') {
         const originalSetTimeout = window.setTimeout
         window.setTimeout = ((callback: () => void, delay: number) => originalSetTimeout(callback, delay / 3)) as typeof setTimeout
+    } else {
+        new Bug().start()
     }
     
-    // new Bug().start()
-    new Highlighter().start()
     new Main().start()
 })

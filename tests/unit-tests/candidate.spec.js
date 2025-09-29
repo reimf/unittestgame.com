@@ -90,30 +90,136 @@ test.describe('class Candidate', () => {
     test('to html', () => {
         const candidate = new Candidate(['function nextYear(year) {', '  return year', '}']);
         const html = candidate.toHtml();
-        expect(html.toString()).toBe('<code><div>function nextYear(year) {</div><div>  return year</div><div>}</div></code>');
+        expect(html.toString()).toBe('<code class="language-javascript">' +
+            '<div>' +
+            '<span class="keyword">function</span>' +
+            '<span class="whitespace"> </span>' +
+            '<span class="function">nextYear</span>' +
+            '<span class="punctuation">(</span>' +
+            '<span class="variable">year</span>' +
+            '<span class="punctuation">)</span>' +
+            '<span class="whitespace"> </span>' +
+            '<span class="punctuation">{</span>' +
+            '</div>' +
+            '<div>' +
+            '<span class="whitespace">  </span>' +
+            '<span class="keyword">return</span>' +
+            '<span class="whitespace"> </span>' +
+            '<span class="variable">year</span>' +
+            '</div>' +
+            '<div>' +
+            '<span class="punctuation">}</span>' +
+            '</div>' +
+            '</code>');
     });
     test('to html with previous', () => {
         const candidate = new Candidate(['function nextYear(year) {', '', '', '  if (year < 0) return 0', '  return year + 1', '}']);
         const previousCandidate = new Candidate(['function nextYear(year) {', '', '  if (year === 0) return 0', '', '  return undefined', '}']);
         const html = candidate.toHtmlWithPrevious(previousCandidate);
-        expect(html.toString()).toBe('<code>' +
-            '<div>function nextYear(year) {</div>' +
-            '<div></div>' +
-            '<div><span class="comment">  // was: if (year === 0) return 0</span></div>' +
-            '<div>  if (year < 0) return 0<span class="comment"> // new</span></div>' +
-            '<div>  return year + 1<span class="comment"> // was: return undefined</span></div>' +
-            '<div>}</div>' +
+        expect(html.toString()).toBe('<code class="language-javascript">' +
+            '<div class="unchanged">' +
+            '<span class="keyword">function</span>' +
+            '<span class="whitespace"> </span>' +
+            '<span class="function">nextYear</span>' +
+            '<span class="punctuation">(</span>' +
+            '<span class="variable">year</span>' +
+            '<span class="punctuation">)</span>' +
+            '<span class="whitespace"> </span>' +
+            '<span class="punctuation">{</span>' +
+            '</div>' +
+            '<div class="deleted">' +
+            '<span class="whitespace">  </span>' +
+            '<span class="keyword">if</span>' +
+            '<span class="whitespace"> </span>' +
+            '<span class="punctuation">(</span>' +
+            '<span class="variable">year</span>' +
+            '<span class="whitespace"> </span>' +
+            '<span class="operator">===</span>' +
+            '<span class="whitespace"> </span>' +
+            '<span class="number">0</span>' +
+            '<span class="punctuation">)</span>' +
+            '<span class="whitespace"> </span>' +
+            '<span class="keyword">return</span>' +
+            '<span class="whitespace"> </span>' +
+            '<span class="number">0</span>' +
+            '</div>' +
+            '<div class="inserted">' +
+            '<span class="whitespace">  </span>' +
+            '<span class="keyword">if</span>' +
+            '<span class="whitespace"> </span>' +
+            '<span class="punctuation">(</span>' +
+            '<span class="variable">year</span>' +
+            '<span class="whitespace"> </span>' +
+            '<span class="operator">&lt;</span>' +
+            '<span class="whitespace"> </span>' +
+            '<span class="number">0</span>' +
+            '<span class="punctuation">)</span>' +
+            '<span class="whitespace"> </span>' +
+            '<span class="keyword">return</span>' +
+            '<span class="whitespace"> </span>' +
+            '<span class="number">0</span>' +
+            '</div>' +
+            '<div class="deleted">' +
+            '<span class="whitespace">  </span>' +
+            '<span class="keyword">return</span>' +
+            '<span class="whitespace"> </span>' +
+            '<span class="literal">undefined</span>' +
+            '</div>' +
+            '<div class="inserted">' +
+            '<span class="whitespace">  </span>' +
+            '<span class="keyword">return</span>' +
+            '<span class="whitespace"> </span>' +
+            '<span class="variable">year</span>' +
+            '<span class="whitespace"> </span>' +
+            '<span class="operator">+</span>' +
+            '<span class="whitespace"> </span>' +
+            '<span class="number">1</span>' +
+            '</div>' +
+            '<div class="unchanged">' +
+            '<span class="punctuation">}</span>' +
+            '</div>' +
             '</code>');
     });
     test('to html with coverage', () => {
         const candidate = new Candidate(['function nextYear(year) {', '  if (year < 0) return 0', '  return year', '}']);
         const coveredCandidate = new Candidate(['function nextYear(year) {', '', '  return 0', '}']);
         const html = candidate.toHtmlWithCoverage(coveredCandidate);
-        expect(html.toString()).toBe('<code>' +
-            '<div class="covered">function nextYear(year) {</div>' +
-            '<div class="notcovered">  if (year < 0) return 0</div>' +
-            '<div class="notcovered">  return year</div>' +
-            '<div class="covered">}</div>' +
+        expect(html.toString()).toBe('<code class="language-javascript">' +
+            '<div class="covered">' +
+            '<span class="keyword">function</span>' +
+            '<span class="whitespace"> </span>' +
+            '<span class="function">nextYear</span>' +
+            '<span class="punctuation">(</span>' +
+            '<span class="variable">year</span>' +
+            '<span class="punctuation">)</span>' +
+            '<span class="whitespace"> </span>' +
+            '<span class="punctuation">{</span>' +
+            '</div>' +
+            '<div class="notcovered">' +
+            '<span class="whitespace">  </span>' +
+            '<span class="keyword">if</span>' +
+            '<span class="whitespace"> </span>' +
+            '<span class="punctuation">(</span>' +
+            '<span class="variable">year</span>' +
+            '<span class="whitespace"> </span>' +
+            '<span class="operator">&lt;</span>' +
+            '<span class="whitespace"> </span>' +
+            '<span class="number">0</span>' +
+            '<span class="punctuation">)</span>' +
+            '<span class="whitespace"> </span>' +
+            '<span class="keyword">return</span>' +
+            '<span class="whitespace"> </span>' +
+            '<span class="number">0</span>' +
+            '</div>' +
+            '<div class="notcovered">' +
+            '<span class="whitespace">  </span>' +
+            '<span class="keyword">return</span>' +
+            '<span class="whitespace"> </span>' +
+            '<span class="variable">year</span>' +
+            '</div>' +
+            '<div class="covered">' +
+            '<span class="punctuation">}</span>' +
+            '</div>' +
             '</code>');
     });
 });

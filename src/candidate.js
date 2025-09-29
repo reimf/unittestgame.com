@@ -1,5 +1,6 @@
 import { Code } from './html.js';
 import { TestResult } from './test-result.js';
+import { Highlighter } from './highlighter.js';
 export class Candidate {
     lines;
     function;
@@ -85,36 +86,35 @@ export class Candidate {
     compareComplexityMutationTesting(candidate) {
         return Math.sign(this.complexityMutationTesting - candidate.complexityMutationTesting);
     }
-    toCodeBlock(lines) {
-        return new Code().appendText(lines.filter(line => line).join('\n'));
+    toString() {
+        return this.lines.filter(line => line).join('\n');
     }
     toHtml() {
-        return this.toCodeBlock(this.lines);
+        return new Code().appendChildren(this.lines.map(line => Highlighter.highlight(line)));
     }
     toMutationHtml() {
-        const linesWithComments = this.lines.map(line => line + '// covered');
-        return this.toCodeBlock(linesWithComments);
+        return new Code().appendChildren(this.lines.map(line => Highlighter.highlight(line).addClass('covered')));
     }
     toHtmlWithPrevious(previousCandidate) {
-        const linesWithComments = this.zip(previousCandidate).map(([line, other]) => {
-            if (!line && !other)
-                return '';
-            if (line === other)
-                return line + '// unchanged';
-            if (!line)
-                return other + '// deleted';
-            if (!other)
-                return line + '// inserted';
-            return other + '// deleted' + '\n' + line + '// inserted';
+        const code = new Code();
+        this.zip(previousCandidate).forEach(([line, other]) => {
+            if (line === other && line && other)
+                code.appendChild(Highlighter.highlight(line).addClass('unchanged'));
+            if (line !== other && other)
+                code.appendChild(Highlighter.highlight(other).addClass('deleted'));
+            if (line !== other && line)
+                code.appendChild(Highlighter.highlight(line).addClass('inserted'));
         });
-        return this.toCodeBlock(linesWithComments);
+        return code;
     }
     toHtmlWithCoverage(coveredCandidate) {
-        const linesWithComments = this.zip(coveredCandidate).map(([line, other]) => {
+        const code = new Code();
+        this.zip(coveredCandidate).forEach(([line, other]) => {
             if (!line.startsWith('  ') || line === other)
-                return line + '// covered';
-            return line + '// notcovered';
+                code.appendChild(Highlighter.highlight(line).addClass('covered'));
+            else
+                code.appendChild(Highlighter.highlight(line).addClass('notcovered'));
         });
-        return this.toCodeBlock(linesWithComments);
+        return code;
     }
 }

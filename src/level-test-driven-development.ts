@@ -1,5 +1,6 @@
 import { Candidate } from './candidate.js'
 import { Panel, ComputerMessage } from './frame.js'
+import { Paragraph } from './html.js'
 import { Level } from './level-base.js'
 import { TestResult } from './test-result.js'
 import { UseCase } from './use-case-base.js'
@@ -24,8 +25,9 @@ export class TestDrivenDevelopment extends Level {
     }
 
     protected showCurrentFunctionPanel(currentCandidate: Candidate, previousCandidate: Candidate|undefined): void {
-        new Panel('current-function', this.locale.currentFunction(), [
-            previousCandidate ? currentCandidate.toHtmlWithPrevious(previousCandidate) : currentCandidate.toHtml()
+        new Panel('current-function', this.locale.currentFunction(), [currentCandidate.toHtml()]).show()
+        new Panel('diff-function', this.locale.diffFunction(), [
+            previousCandidate ? currentCandidate.toHtmlWithPrevious(previousCandidate) : new Paragraph().appendText(this.locale.noPreviousFunction())
         ]).show()
     }
 

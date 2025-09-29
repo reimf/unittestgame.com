@@ -181,6 +181,18 @@ export class Locale {
             nl: 'Huidige Functie',
         });
     }
+    diffFunction() {
+        return this.pick({
+            en: 'Comparison (with the previous function)',
+            nl: 'Vergelijking (met de vorige functie)',
+        });
+    }
+    noPreviousFunction() {
+        return this.pick({
+            en: 'Above is the first function that I wrote',
+            nl: 'Hierboven staat de eerste functie die ik schreef',
+        });
+    }
     iAddedTheUnitTestButTheCurrentFunctionAlreadyPassedThisUnitTest() {
         return this.pick({
             en: 'I added the unit test to the *Unit Tests*, but the *Current Function* already passed this unit test, so I did NOT improve the *Current Function*.',

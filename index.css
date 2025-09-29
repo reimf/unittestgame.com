@@ -105,6 +105,36 @@ code {
         &.old {
             background-color: var(--old-background);
         }
+
+        &.empty {
+            display: none;
+        }
+
+        span {
+            &.keyword {
+                color: #c33;
+            }
+
+            &.class, &.function {
+                color: #66c;
+            }
+
+            &.variable {
+                color: #060;
+            }
+
+            &.literal, &.number, &.operator {
+                color: #06c;
+            }
+
+            &.string, &.regexp {
+                color: #036;
+            }
+            
+            &.bullet {
+                color: #660;
+            }
+        }
     }
 }
 
