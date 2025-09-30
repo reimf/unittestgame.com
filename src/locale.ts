@@ -64,8 +64,8 @@ export class Locale {
 
     public level(levelNumber: number, totalNumberOfLevels: number, levelName: string, useCaseName: string, emoji: string): string {
         return this.pick({
-            en: `Level ${levelNumber} of ${totalNumberOfLevels} - ${levelName} - ${useCaseName} - ${emoji}`,
-            nl: `Level ${levelNumber} van ${totalNumberOfLevels} - ${levelName} - ${useCaseName} - ${emoji}`,
+            en: `Level ${levelNumber} of ${totalNumberOfLevels} - ${useCaseName} - ${levelName} - ${emoji}`,
+            nl: `Level ${levelNumber} van ${totalNumberOfLevels} - ${useCaseName} - ${levelName} - ${emoji}`,
         })
     }
 

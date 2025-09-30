@@ -51,8 +51,8 @@ export class Locale {
     }
     level(levelNumber, totalNumberOfLevels, levelName, useCaseName, emoji) {
         return this.pick({
-            en: `Level ${levelNumber} of ${totalNumberOfLevels} - ${levelName} - ${useCaseName} - ${emoji}`,
-            nl: `Level ${levelNumber} van ${totalNumberOfLevels} - ${levelName} - ${useCaseName} - ${emoji}`,
+            en: `Level ${levelNumber} of ${totalNumberOfLevels} - ${useCaseName} - ${levelName} - ${emoji}`,
+            nl: `Level ${levelNumber} van ${totalNumberOfLevels} - ${useCaseName} - ${levelName} - ${emoji}`,
         });
     }
     iWantToPlayTheNextLevel(levelDescription) {

@@ -10,7 +10,7 @@ test.describe('mt level start', () => {
         await context.addInitScript({ path: './tests/e2e-tests/init-script.js' })
         page = await context.newPage()
         await page.goto('/')
-        await page.getByRole('button', { name: 'I want to play Level 3 of 20 - Mutation Testing - Battery Level - 🔓' }).click()
+        await page.getByRole('button', { name: 'I want to play Level 3 of 20 - Battery Level - Mutation Testing - 🔓' }).click()
         await page.getByRole('button', { name: 'I want to add this unit test' }).click()
         await page.getByRole('button', { name: 'I want to add this unit test' }).click()
         await page.getByRole('button', { name: 'I want to submit the unit tests' }).click()
@@ -18,7 +18,7 @@ test.describe('mt level start', () => {
         await page.getByRole('button', { name: 'I want to submit the unit tests' }).click()
         await page.getByRole('button', { name: 'I want to add this unit test' }).click()
         await page.getByRole('button', { name: 'I want to submit the unit tests' }).click()
-        await page.getByRole('button', { name: 'I want to play Level 4 of 20 - Mutation Testing - Even or Odd - 🔓' }).click()
+        await page.getByRole('button', { name: 'I want to play Level 4 of 20 - Even or Odd - Mutation Testing - 🔓' }).click()
     })
 
     test('has no unittestgame panel', async () => {
@@ -49,7 +49,7 @@ test.describe('mt level start', () => {
 
     test('has the current level panel', async () => {
         const levelPanel = page.getByTestId('current-level')
-        await expect(levelPanel).toContainText('Mutation Testing - Even or Odd')
+        await expect(levelPanel).toContainText('Even or Odd - Mutation Testing')
     })
 
     test('has contract message', async () => {

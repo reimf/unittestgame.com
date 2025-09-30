@@ -6,7 +6,7 @@ test.describe('tdd level start', () => {
         await context.addInitScript({ path: './tests/e2e-tests/init-script.js' });
         page = await context.newPage();
         await page.goto('/');
-        await page.getByRole('button', { name: 'I want to play Level 1 of 20 - Test-Driven Development - Battery Level - 🔓' }).click();
+        await page.getByRole('button', { name: 'I want to play Level 1 of 20 - Battery Level - Test-Driven Development - 🔓' }).click();
         await page.getByRole('button', { name: 'I want to add this unit test' }).click();
         await page.getByRole('button', { name: 'I want to add this unit test' }).click();
         await page.getByRole('button', { name: 'I want to submit the unit tests' }).click();
@@ -14,7 +14,7 @@ test.describe('tdd level start', () => {
         await page.getByRole('button', { name: 'I want to submit the unit tests' }).click();
         await page.getByRole('button', { name: 'I want to add this unit test' }).click();
         await page.getByRole('button', { name: 'I want to submit the unit tests' }).click();
-        await page.getByRole('button', { name: 'I want to play Level 2 of 20 - Test-Driven Development - Voting Age - 🔓' }).click();
+        await page.getByRole('button', { name: 'I want to play Level 2 of 20 - Voting Age - Test-Driven Development - 🔓' }).click();
     });
     test('has no unittestgame panel', async () => {
         const unittestgamePanel = page.getByTestId('unittestgame');
@@ -39,7 +39,7 @@ test.describe('tdd level start', () => {
     });
     test('has the current level panel', async () => {
         const levelPanel = page.getByTestId('current-level');
-        await expect(levelPanel).toContainText('Test-Driven Development - Voting Age');
+        await expect(levelPanel).toContainText('Voting Age - Test-Driven Development');
     });
     test('has contract message', async () => {
         const messages = page.getByTestId('messages');

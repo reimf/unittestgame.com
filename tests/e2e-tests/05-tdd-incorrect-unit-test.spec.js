@@ -7,7 +7,7 @@ test.describe('tdd incorrect unit test', () => {
         await context.addInitScript({ path: './tests/e2e-tests/init-script.js' });
         page = await context.newPage();
         await page.goto('/');
-        await page.getByRole('button', { name: 'I want to play Level 2 of 20 - Test-Driven Development - Voting Age - 🔓' }).click();
+        await page.getByRole('button', { name: 'I want to play Level 2 of 20 - Voting Age - Test-Driven Development - 🔓' }).click();
         await page.getByLabel('Age').fill('15');
         await page.getByLabel('true').check();
         await page.getByRole('button', { name: 'I want to add this unit test' }).click();
