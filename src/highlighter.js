@@ -1,103 +1,38 @@
 import { Div, Span } from './html.js';
 export class Highlighter {
     static highlight(text) {
-        const whitespace = [' '];
-        const digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-        const lowercase = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-        const uppercase = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-        const identifier = [...lowercase, ...uppercase];
-        const quotes = ['"'];
-        const operators = ['=', '%', '+', '-', '*', '/', '>', '<', '<', '>', '&', '|'];
-        const negators = ['!'];
-        const equalSigns = ['='];
-        const punctuations = ['(', ')', '{', '}', ','];
-        const bullets = ['.'];
-        const regexDelimiters = ['/'];
-        const terminators = ['\n'];
-        const keywords = new Set(['function', 'if', 'else', 'return', 'let', 'new']);
-        const literals = new Set(['true', 'false', 'null', 'undefined']);
-        const substitutions = new Map([['&', '&amp;'], ['<', '&lt;'], ['>', '&gt;']]);
-        const line = text + terminators[0];
+        const types = [
+            ['terminator', /^\n/],
+            ['whitespace', /^ +/],
+            ['number', /^\d+(\.\d+)?/],
+            ['keyword', /^(function|if|else|return|let|new)/],
+            ['literal', /^(true|false|undefined)/],
+            ['class', /^[A-Z][a-zA-Z]*/],
+            ['function', /^[a-zA-Z]+(?=\()/],
+            ['variable', /^[a-zA-Z]+/],
+            ['regexp', /^\/\S.*?\//],
+            ['string', /^".*?"/],
+            ['operator', /^(!=*|=+|%=?|\+=?|-=?|\*=?|\/=?|<=?|>=?|&+|\|+)/],
+            ['punctuation', /^[(){},]/],
+            ['bullet', /^\./],
+            ['error', /^.*/],
+        ];
         const div = new Div();
-        let i = 0;
-        let previousToken = '';
-        while (true) {
-            let token = line[i++];
-            if (terminators.includes(token))
-                return div;
-            let type = undefined;
-            // Whitespace: / +/
-            if (whitespace.includes(token)) {
-                while (whitespace.includes(line[i]))
-                    token += line[i++];
-                type = 'WHITESPACE';
-            }
-            // Numbers: /\d+(\.\d+)?/
-            if (digits.includes(token)) {
-                while (digits.includes(line[i]))
-                    token += line[i++];
-                if (line[i] === '.') {
-                    token += line[i++];
-                    while (digits.includes(line[i]))
-                        token += line[i++];
+        let line = text + '\n';
+        while (line.length > 0) {
+            for (const [type, regex] of types) {
+                const match = line.match(regex);
+                if (match) {
+                    const token = match[0].replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                    line = line.slice(match[0].length);
+                    if (type === 'error')
+                        throw new Error(`Unexpected character "${token}" in line "${line}"`);
+                    if (type !== 'terminator')
+                        div.appendChild(new Span().addClass(type).appendText(token));
+                    break;
                 }
-                type = 'NUMBER';
             }
-            // Identifiers: keywords / literals / classes / functions / variables: /[a-zA-Z]+/
-            if (identifier.includes(token)) {
-                while (identifier.includes(line[i]))
-                    token += line[i++];
-                if (keywords.has(token))
-                    type = 'KEYWORD';
-                else if (literals.has(token))
-                    type = 'LITERAL';
-                else if (uppercase.includes(token[0]))
-                    type = 'CLASS';
-                else if (previousToken === 'function' || previousToken === '.')
-                    type = 'FUNCTION';
-                else
-                    type = 'VARIABLE';
-            }
-            // Regular expressions: /\/.*?\//
-            if (regexDelimiters.includes(token) && !whitespace.includes(line[i])) {
-                while (!regexDelimiters.includes(line[i]))
-                    token += line[i++];
-                token += line[i++]; // closing slash
-                type = 'REGEXP';
-            }
-            // Strings: ".*?"
-            if (quotes.includes(token)) {
-                while (!quotes.includes(line[i]))
-                    token += line[i++];
-                token += line[i++]; // closing quote
-                type = 'STRING';
-            }
-            // Not (equal) operator: /!=*/
-            if (negators.includes(token)) {
-                while (equalSigns.includes(line[i]))
-                    token += line[i++];
-                type = 'OPERATOR';
-            }
-            // Operators: /[=%\+\-\*\/><>&|]+/
-            if (operators.includes(token)) {
-                token = substitutions.get(token) || token;
-                while (operators.includes(line[i])) {
-                    const char = line[i++];
-                    token += substitutions.get(char) || char;
-                }
-                type = 'OPERATOR';
-            }
-            // Punctuation: /[(){},]/
-            if (punctuations.includes(token))
-                type = 'PUNCTUATION';
-            // Bullet: /\./
-            if (bullets.includes(token))
-                type = 'BULLET';
-            if (!type)
-                throw new Error(`Unexpected character: ${token} in line: ${line}`);
-            div.appendChild(new Span().addClass(type.toLowerCase()).appendText(token));
-            if (type !== 'WHITESPACE')
-                previousToken = token;
         }
+        return div;
     }
 }
