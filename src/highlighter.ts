@@ -8,88 +8,50 @@ export class Highlighter {
         return div
     }
 
-    // inline diff
     public static lines(textFrom: string, textTo: string): Div {
         const div = new Div()
         const tokensFrom = Array.from(Highlighter.tokenize(textFrom))
         const tokensTo = Array.from(Highlighter.tokenize(textTo))
         
-        const diffs = Highlighter.diff(tokensFrom, tokensTo)
+        const identicalStart = Highlighter.numberOfIdenticalTokens(tokensFrom, tokensTo, 0, 0, +1)
+        const identicalEnd = Highlighter.numberOfIdenticalTokens(tokensFrom, tokensTo, tokensFrom.length - 1, tokensTo.length - 1, -1)
         
-        for (const [operation, type, token] of diffs) {
-            if (operation === 'equal') {
-                div.appendChild(new Span().addClass(type).appendText(token))
-            } else if (operation === 'delete') {
-                div.appendChild(new Del().addClass(type).appendText(token))
-            } else if (operation === 'insert') {
-                div.appendChild(new Ins().addClass(type).appendText(token))
-            }
-        }
+        const endFrom = tokensFrom.length - identicalEnd
+        const endTo = tokensTo.length - identicalEnd
+        
+        // Add unchanged tokens before diff
+        for (let i = 0; i < identicalStart; i++)
+            div.appendChild(new Span().addClass(tokensFrom[i][0]).appendText(tokensFrom[i][1]))
+        
+        // Add deleted tokens
+        for (let i = identicalStart; i < endFrom; i++)
+            div.appendChild(new Del().addClass(tokensFrom[i][0]).appendText(tokensFrom[i][1]))
+        
+        // Add inserted tokens
+        for (let i = identicalStart; i < endTo; i++)
+            div.appendChild(new Ins().addClass(tokensTo[i][0]).appendText(tokensTo[i][1]))
+        
+        // Add unchanged tokens after diff
+        for (let i = endTo; i < tokensTo.length; i++)
+            div.appendChild(new Span().addClass(tokensTo[i][0]).appendText(tokensTo[i][1]))
         
         return div
     }
 
-    private static diff(tokensFrom: [string, string][], tokensTo: [string, string][]): ['equal' | 'delete' | 'insert', string, string][] {
-        const result: ['equal' | 'delete' | 'insert', string, string][] = []
-        const lcs = Highlighter.longestCommonSubsequence(tokensFrom, tokensTo)
+    private static numberOfIdenticalTokens(tokensFrom: [string, string][], tokensTo: [string, string][], startFrom: number, startTo: number, direction: number): number {
+        let count = 0
+        let indexFrom = startFrom
+        let indexTo = startTo
         
-        let i = 0, j = 0, k = 0
-        
-        while (i < tokensFrom.length || j < tokensTo.length) {
-            if (k < lcs.length && i < tokensFrom.length && j < tokensTo.length &&
-                tokensFrom[i][0] === lcs[k][0] && tokensFrom[i][1] === lcs[k][1] &&
-                tokensTo[j][0] === lcs[k][0] && tokensTo[j][1] === lcs[k][1]) {
-                // Equal token
-                result.push(['equal', tokensFrom[i][0], tokensFrom[i][1]])
-                i++
-                j++
-                k++
-            } else if (i < tokensFrom.length && (k >= lcs.length || tokensFrom[i][0] !== lcs[k][0] || tokensFrom[i][1] !== lcs[k][1])) {
-                // Deleted token
-                result.push(['delete', tokensFrom[i][0], tokensFrom[i][1]])
-                i++
-            } else if (j < tokensTo.length) {
-                // Inserted token
-                result.push(['insert', tokensTo[j][0], tokensTo[j][1]])
-                j++
-            }
+        while (indexFrom >= 0 && indexFrom < tokensFrom.length && indexTo >= 0 && indexTo < tokensTo.length &&
+               tokensFrom[indexFrom][0] === tokensTo[indexTo][0] &&
+               tokensFrom[indexFrom][1] === tokensTo[indexTo][1]) {
+            count++
+            indexFrom += direction
+            indexTo += direction
         }
         
-        return result
-    }
-
-    private static longestCommonSubsequence(tokensFrom: [string, string][], tokensTo: [string, string][]): [string, string][] {
-        const m = tokensFrom.length
-        const n = tokensTo.length
-        const dp: number[][] = Array(m + 1).fill(0).map(() => Array(n + 1).fill(0))
-        
-        // Build LCS length table
-        for (let i = 1; i <= m; i++) {
-            for (let j = 1; j <= n; j++) {
-                if (tokensFrom[i - 1][0] === tokensTo[j - 1][0] && tokensFrom[i - 1][1] === tokensTo[j - 1][1]) {
-                    dp[i][j] = dp[i - 1][j - 1] + 1
-                } else {
-                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1])
-                }
-            }
-        }
-        
-        // Reconstruct LCS
-        const lcs: [string, string][] = []
-        let i = m, j = n
-        while (i > 0 && j > 0) {
-            if (tokensFrom[i - 1][0] === tokensTo[j - 1][0] && tokensFrom[i - 1][1] === tokensTo[j - 1][1]) {
-                lcs.unshift(tokensFrom[i - 1])
-                i--
-                j--
-            } else if (dp[i - 1][j] > dp[i][j - 1]) {
-                i--
-            } else {
-                j--
-            }
-        }
-        
-        return lcs
+        return count
     }
 
     private static *tokenize(text: string): Generator<[string, string]> {
@@ -97,7 +59,7 @@ export class Highlighter {
             ['whitespace', /^ +/], 
             ['number', /^\d+(\.\d+)?/],
             ['keyword', /^(function|if|else|return|let|new)\b/],
-            ['literal', /^(true|false|undefined)/],
+            ['literal', /^(true|false|undefined)\b/],
             ['class', /^[A-Z][a-zA-Z]*/],
             ['function', /^[a-zA-Z]+(?=\()/],
             ['variable', /^[a-zA-Z]+/],
