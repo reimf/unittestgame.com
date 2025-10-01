@@ -346,6 +346,16 @@ export class Span extends Html {
         super('span');
     }
 }
+export class Del extends Html {
+    constructor() {
+        super('del');
+    }
+}
+export class Ins extends Html {
+    constructor() {
+        super('ins');
+    }
+}
 export class Italic extends Html {
     constructor() {
         super('i');

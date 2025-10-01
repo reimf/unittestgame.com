@@ -146,7 +146,7 @@ export abstract class Level {
             unitTests.length === 0
             ? [new Paragraph().appendText(this.locale.youHaveNotWrittenAnyUnitTestsYet())]
             : [new Code().appendChildren(unitTests.map(unitTest => 
-                Highlighter.highlight(unitTest.toString()).addClass(unitTest === newUnitTest ? 'new' : 'old'))
+                Highlighter.line(unitTest.toString()).addClass(unitTest === newUnitTest ? 'new' : 'old'))
             )]
         ).show()
     }

@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test'
 import { Highlighter } from '../../src/highlighter.js'
 
 test.describe('class Highlighter', () => {
-    test('highlight method', () => {
+    test('line method', () => {
         const javascript = 'function isFloatFormat(text) {' +
         '  let regex = new RegExp("/#@/").test(text + "abc")' +
         '  if (!/[#@]/.test(text)) regex += speed.toFixed(1)' +
@@ -11,7 +11,7 @@ test.describe('class Highlighter', () => {
         '  return undefined' +
         '}'
 
-        const html = Highlighter.highlight(javascript).toString()
+        const html = Highlighter.line(javascript).toString()
         expect(html).toBe(
             '<div>' +
                 '<span class="keyword">function</span>' +
@@ -125,6 +125,23 @@ test.describe('class Highlighter', () => {
                 '<span class="whitespace"> </span>' +
                 '<span class="literal">undefined</span>' +
                 '<span class="punctuation">}</span>' +
+            '</div>'
+        )
+    })
+
+    test('lines method - inline diff', () => {
+        const textFrom = 'function oldName()'
+        const textTo = 'function newName()'
+
+        const html = Highlighter.lines(textFrom, textTo).toString()
+        expect(html).toBe(
+            '<div>' +
+                '<span class="keyword">function</span>' +
+                '<span class="whitespace"> </span>' +
+                '<del class="function">oldName</del>' +
+                '<ins class="function">newName</ins>' +
+                '<span class="punctuation">(</span>' +
+                '<span class="punctuation">)</span>' +
             '</div>'
         )
     })

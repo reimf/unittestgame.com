@@ -112,7 +112,7 @@ export class Level {
     showUnitTestsPanel(unitTests, newUnitTest) {
         new Panel('unit-tests', this.locale.unitTests(), unitTests.length === 0
             ? [new Paragraph().appendText(this.locale.youHaveNotWrittenAnyUnitTestsYet())]
-            : [new Code().appendChildren(unitTests.map(unitTest => Highlighter.highlight(unitTest.toString()).addClass(unitTest === newUnitTest ? 'new' : 'old')))]).show();
+            : [new Code().appendChildren(unitTests.map(unitTest => Highlighter.line(unitTest.toString()).addClass(unitTest === newUnitTest ? 'new' : 'old')))]).show();
     }
     menu() {
         this.showPanels();

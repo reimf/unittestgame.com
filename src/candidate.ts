@@ -106,22 +106,22 @@ export class Candidate {
     }
 
     public toHtml(): Code {
-        return new Code().appendChildren(this.lines.map(line => Highlighter.highlight(line)))
+        return new Code().appendChildren(this.lines.map(line => Highlighter.line(line)))
     }
 
     public toMutationHtml(): Code {
-        return new Code().appendChildren(this.lines.map(line => Highlighter.highlight(line).addClass('covered')))
+        return new Code().appendChildren(this.lines.map(line => Highlighter.line(line).addClass('covered')))
     }
 
     public toHtmlWithPrevious(previousCandidate: Candidate): Code {
         const code = new Code()
         this.zip(previousCandidate).forEach(([line, other]) => {
             if (line === other && line && other)
-                code.appendChild(Highlighter.highlight(line).addClass('unchanged'))
+                code.appendChild(Highlighter.line(line).addClass('unchanged'))
             if (line !== other && other)
-                code.appendChild(Highlighter.highlight(other).addClass('deleted'))
+                code.appendChild(Highlighter.line(other).addClass('deleted'))
             if (line !== other && line)
-                code.appendChild(Highlighter.highlight(line).addClass('inserted'))
+                code.appendChild(Highlighter.line(line).addClass('inserted'))
         })
         return code
     }
@@ -130,9 +130,9 @@ export class Candidate {
         const code = new Code()
         this.zip(coveredCandidate).forEach(([line, other]) => {
             if (!line.startsWith('  ') || line === other)
-                code.appendChild(Highlighter.highlight(line).addClass('covered'))
+                code.appendChild(Highlighter.line(line).addClass('covered'))
             else
-                code.appendChild(Highlighter.highlight(line).addClass('notcovered'))
+                code.appendChild(Highlighter.line(line).addClass('notcovered'))
         })
         return code
     }
