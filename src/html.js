@@ -138,7 +138,7 @@ class Text extends Content {
         this.text = text;
     }
     toString() {
-        return this.text;
+        return this.text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
     toNode() {
         return document.createTextNode(this.text);

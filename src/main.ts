@@ -28,7 +28,7 @@ export class Main {
     private readonly floatFormat = new FloatFormat(this.locale)
     private readonly passwordStrength = new PasswordStrength(this.locale)
     private readonly speedDisplay = new SpeedDisplay(this.locale)
-    private readonly levels: Level[] = [        
+    private readonly levels: Level[] = [
         new TestDrivenDevelopment(this.locale, this.batteryLevel, 1, 20),
         new TestDrivenDevelopment(this.locale, this.votingAge, 2, 20),
         new MutationTesting(this.locale, this.batteryLevel, 3, 20),
@@ -77,7 +77,7 @@ export class Main {
     public showBasicDefinitionMutationTesting(): void {
         new Panel('mutation-testing', this.locale.mutationTesting(), [this.locale.definitionMT()]).show()
     }
-    
+
     private getFinishedLevels(): Level[] {
         return this.levels.filter(level => level.isFinished())
     }

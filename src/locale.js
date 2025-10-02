@@ -183,8 +183,8 @@ export class Locale {
     }
     diffFunction() {
         return this.pick({
-            en: 'Comparison (with the previous function)',
-            nl: 'Vergelijking (met de vorige functie)',
+            en: 'Difference (from the previous function)',
+            nl: 'Verschil (met de vorige functie)',
         });
     }
     noPreviousFunction() {

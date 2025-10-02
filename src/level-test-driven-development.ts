@@ -9,7 +9,7 @@ export class TestDrivenDevelopment extends Level {
     public identifier(): string {
         return 'test-driven-development'
     }
-    
+
     public name(): string {
         return this.locale.testDrivenDevelopment()
     }

@@ -21,24 +21,24 @@ export class Bug {
     this.beetle.innerHTML = `
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 17" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
           <path stroke="#FF0000" fill="#FFFFFF" d="
-            M  5  6 h +6 l +1 +1 v +8 l -1 +1 h -6 l -1 -1 v -8 l +1 -1 z 
-            M  6  6 v -2 l +1 -1 h +2 l +1 +1 v +2 
+            M  5  6 h +6 l +1 +1 v +8 l -1 +1 h -6 l -1 -1 v -8 l +1 -1 z
+            M  6  6 v -2 l +1 -1 h +2 l +1 +1 v +2
           "/>
           <path stroke="#FF0000" fill="transparent" d="
-            M  4 11 h -3 
-            M 12 11 h +3 
-            M  4 14 h -2 v +1 l -1 +1 
-            M 12 14 h +2 v +1 l +1 +1 
-            M  4  8 h -2 v -1 l -1 -1 
-            M 12  8 h +2 v -1 l +1 -1 
-            M  7  3 l -2 -2 
+            M  4 11 h -3
+            M 12 11 h +3
+            M  4 14 h -2 v +1 l -1 +1
+            M 12 14 h +2 v +1 l +1 +1
+            M  4  8 h -2 v -1 l -1 -1
+            M 12  8 h +2 v -1 l +1 -1
+            M  7  3 l -2 -2
             M  9  3 l +2 -2
           "/>
           <path stroke="#FF0000" fill="transparent" d="
             M  6  8 v +2
-            M  8  8 h +2 v +2 h -2 z 
-            M  6 12 h +2 v +2 h -2 z 
-            M 10 12 v +2 
+            M  8  8 h +2 v +2 h -2 z
+            M  6 12 h +2 v +2 h -2 z
+            M 10 12 v +2
           "/>
       </svg>`
     this.beetle.addEventListener('click', () => this.beetle.style.display = 'none')
@@ -83,10 +83,10 @@ export class Bug {
           const speed = randBetween(1, 100)
           bug.velocity.x = (deltaPosition.x / distance) * speed
           bug.velocity.y = (deltaPosition.y / distance) * speed
-          
+
           bug.currentPosition.x += bug.velocity.x * (deltaTime / 1000)
           bug.currentPosition.y += bug.velocity.y * (deltaTime / 1000)
-          
+
           const targetDirection = Math.atan2(bug.velocity.y, bug.velocity.x) * (180 / Math.PI) + 90
           const deltaDirection = Math.max(-5, Math.min(+5, ((targetDirection - bug.currentDirection + 540) % 360) - 180))
           bug.currentDirection += deltaDirection

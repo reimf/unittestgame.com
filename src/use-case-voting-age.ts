@@ -5,7 +5,7 @@ export class VotingAge extends UseCase {
     public identifier(): string {
         return 'voting-age'
     }
-    
+
     public name(): string {
         return 'Voting Age'
     }

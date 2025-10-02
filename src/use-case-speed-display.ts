@@ -5,7 +5,7 @@ export class SpeedDisplay extends UseCase {
     public identifier(): string {
         return 'speed-display'
     }
-    
+
     public name(): string {
         return 'Speed Display'
     }

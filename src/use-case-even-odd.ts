@@ -9,7 +9,7 @@ export class EvenOdd extends UseCase {
     public name(): string {
         return 'Even or Odd'
     }
-    
+
     public specification(): string {
         return this.locale.returnTrueIfTheNumberIsEvenAndFalseIfItIsOdd()
     }

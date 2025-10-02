@@ -9,7 +9,7 @@ export class BatteryLevel extends UseCase {
     public name(): string {
         return 'Battery Level'
     }
-    
+
     public specification(): string {
         return this.locale.aSmartphoneNormallyOperatesInNormalMode()
     }

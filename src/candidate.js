@@ -90,31 +90,28 @@ export class Candidate {
         return this.lines.filter(line => line).join('\n');
     }
     toHtml() {
-        return new Code().appendChildren(this.lines.map(line => Highlighter.line(line)));
+        const nonEmptyLines = this.lines.filter(line => line);
+        const divs = nonEmptyLines.map(line => Highlighter.line(line));
+        return new Code().appendChildren(divs);
     }
     toMutationHtml() {
-        return new Code().appendChildren(this.lines.map(line => Highlighter.line(line).addClass('covered')));
+        const nonEmptyLines = this.lines.filter(line => line);
+        const divs = nonEmptyLines.map(line => Highlighter.line(line).addClass('covered'));
+        return new Code().appendChildren(divs);
     }
     toHtmlWithPrevious(previousCandidate) {
-        const code = new Code();
-        this.zip(previousCandidate).forEach(([line, other]) => {
-            if (line === other && line && other)
-                code.appendChild(Highlighter.line(line).addClass('unchanged'));
-            if (line !== other && other)
-                code.appendChild(Highlighter.line(other).addClass('deleted'));
-            if (line !== other && line)
-                code.appendChild(Highlighter.line(line).addClass('inserted'));
-        });
-        return code;
+        const pairs = this.zip(previousCandidate);
+        const nonEmptyPairs = pairs.filter(([current, previous]) => current || previous);
+        const divs = nonEmptyPairs.map(([current, previous]) => Highlighter.lines(current, previous));
+        return new Code().appendChildren(divs);
     }
     toHtmlWithCoverage(coveredCandidate) {
-        const code = new Code();
-        this.zip(coveredCandidate).forEach(([line, other]) => {
-            if (!line.startsWith('  ') || line === other)
-                code.appendChild(Highlighter.line(line).addClass('covered'));
-            else
-                code.appendChild(Highlighter.line(line).addClass('notcovered'));
+        const pairs = this.zip(coveredCandidate);
+        const divs = pairs.map(([current, previous]) => {
+            const isCovered = !current.startsWith('  ') || current === previous;
+            const className = isCovered ? 'covered' : 'notcovered';
+            return Highlighter.line(current).addClass(className);
         });
-        return code;
+        return new Code().appendChildren(divs);
     }
 }

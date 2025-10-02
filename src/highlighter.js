@@ -1,47 +1,21 @@
 import { Div, Span, Del, Ins } from './html.js';
-export class Highlighter {
-    static line(text) {
-        const div = new Div();
-        for (const [type, token] of Highlighter.tokenize(text))
-            div.appendChild(new Span().addClass(type).appendText(token));
-        return div;
+class Token {
+    type;
+    text;
+    constructor(type, text) {
+        this.type = type;
+        this.text = text;
     }
-    static lines(textFrom, textTo) {
-        const div = new Div();
-        const tokensFrom = Array.from(Highlighter.tokenize(textFrom));
-        const tokensTo = Array.from(Highlighter.tokenize(textTo));
-        const identicalStart = Highlighter.numberOfIdenticalTokens(tokensFrom, tokensTo, 0, 0, +1);
-        const identicalEnd = Highlighter.numberOfIdenticalTokens(tokensFrom, tokensTo, tokensFrom.length - 1, tokensTo.length - 1, -1);
-        const endFrom = tokensFrom.length - identicalEnd;
-        const endTo = tokensTo.length - identicalEnd;
-        // Add unchanged tokens before diff
-        for (let i = 0; i < identicalStart; i++)
-            div.appendChild(new Span().addClass(tokensFrom[i][0]).appendText(tokensFrom[i][1]));
-        // Add deleted tokens
-        for (let i = identicalStart; i < endFrom; i++)
-            div.appendChild(new Del().addClass(tokensFrom[i][0]).appendText(tokensFrom[i][1]));
-        // Add inserted tokens
-        for (let i = identicalStart; i < endTo; i++)
-            div.appendChild(new Ins().addClass(tokensTo[i][0]).appendText(tokensTo[i][1]));
-        // Add unchanged tokens after diff
-        for (let i = endTo; i < tokensTo.length; i++)
-            div.appendChild(new Span().addClass(tokensTo[i][0]).appendText(tokensTo[i][1]));
-        return div;
+    equals(other) {
+        return this.type === other.type && this.text === other.text;
     }
-    static numberOfIdenticalTokens(tokensFrom, tokensTo, startFrom, startTo, direction) {
-        let count = 0;
-        let indexFrom = startFrom;
-        let indexTo = startTo;
-        while (indexFrom >= 0 && indexFrom < tokensFrom.length && indexTo >= 0 && indexTo < tokensTo.length &&
-            tokensFrom[indexFrom][0] === tokensTo[indexTo][0] &&
-            tokensFrom[indexFrom][1] === tokensTo[indexTo][1]) {
-            count++;
-            indexFrom += direction;
-            indexTo += direction;
-        }
-        return count;
+}
+class Tokenizer {
+    text;
+    constructor(text) {
+        this.text = text;
     }
-    static *tokenize(text) {
+    *tokens() {
         const types = [
             ['whitespace', /^ +/],
             ['number', /^\d+(\.\d+)?/],
@@ -57,16 +31,72 @@ export class Highlighter {
             ['bullet', /^\./],
             ['error', /^.*/],
         ];
-        while (text.length > 0) {
+        while (this.text) {
             for (const [type, regex] of types) {
-                const match = text.match(regex);
+                const match = this.text.match(regex);
                 if (match) {
-                    const token = match[0].replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-                    text = text.slice(match[0].length);
-                    yield [type, token];
+                    this.text = this.text.slice(match[0].length);
+                    yield new Token(type, match[0]);
                     break;
                 }
             }
         }
+    }
+}
+export class Highlighter {
+    static line(text) {
+        const tokens = Array.from(new Tokenizer(text).tokens());
+        const spans = tokens.map(token => new Span().addClass(token.type).appendText(token.text));
+        return new Div().appendChildren(spans);
+    }
+    static lines(currentText, previousText) {
+        const previousTokens = Array.from(new Tokenizer(previousText).tokens());
+        const currentTokens = Array.from(new Tokenizer(currentText).tokens());
+        const commonTokens = Highlighter.longestCommonSubsequence(currentTokens, previousTokens);
+        const div = new Div();
+        while (previousTokens.length || currentTokens.length) {
+            if (commonTokens.length && previousTokens.length && currentTokens.length && previousTokens[0].equals(commonTokens[0]) && currentTokens[0].equals(commonTokens[0])) {
+                const token = commonTokens.shift();
+                div.appendChild(new Span().addClass(token.type).appendText(token.text));
+                previousTokens.shift();
+                currentTokens.shift();
+            }
+            else if (previousTokens.length && !(commonTokens.length && previousTokens[0].equals(commonTokens[0]))) {
+                const token = previousTokens.shift();
+                div.appendChild(new Del().addClass(token.type).appendText(token.text));
+            }
+            else if (currentTokens.length && !(commonTokens.length && currentTokens[0].equals(commonTokens[0]))) {
+                const token = currentTokens.shift();
+                div.appendChild(new Ins().addClass(token.type).appendText(token.text));
+            }
+        }
+        return div;
+    }
+    static longestCommonSubsequence(currentTokens, previousTokens) {
+        const previousLength = previousTokens.length;
+        const currentLength = currentTokens.length;
+        const commonLengths = Array(previousLength + 1).fill(0).map(() => Array(currentLength + 1).fill(0));
+        // Build LCS length table
+        for (let currentIndex = 0; currentIndex < previousLength; currentIndex++)
+            for (let previousIndex = 0; previousIndex < currentLength; previousIndex++)
+                if (previousTokens[currentIndex].equals(currentTokens[previousIndex]))
+                    commonLengths[currentIndex + 1][previousIndex + 1] = commonLengths[currentIndex][previousIndex] + 1;
+                else
+                    commonLengths[currentIndex + 1][previousIndex + 1] = Math.max(commonLengths[currentIndex][previousIndex + 1], commonLengths[currentIndex + 1][previousIndex]);
+        // Backtrack to find LCS
+        const commonTokens = [];
+        let previousIndex = previousLength;
+        let currentIndex = currentLength;
+        while (previousIndex > 0 && currentIndex > 0)
+            if (previousTokens[previousIndex - 1].equals(currentTokens[currentIndex - 1])) {
+                commonTokens.unshift(previousTokens[previousIndex - 1]);
+                previousIndex--;
+                currentIndex--;
+            }
+            else if (commonLengths[previousIndex - 1][currentIndex] > commonLengths[previousIndex][currentIndex - 1])
+                previousIndex--;
+            else
+                currentIndex--;
+        return commonTokens;
     }
 }

@@ -162,7 +162,7 @@ class Text extends Content {
     }
 
     public toString(): string {
-        return this.text
+        return this.text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
     }
 
     public toNode(): Node {

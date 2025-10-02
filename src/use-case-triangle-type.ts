@@ -5,7 +5,7 @@ export class TriangleType extends UseCase {
     public identifier(): string {
         return 'triangle-type'
     }
-    
+
     public name(): string {
         return 'Triangle Type'
     }

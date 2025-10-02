@@ -130,18 +130,28 @@ test.describe('class Highlighter', () => {
     })
 
     test('lines method - inline diff', () => {
-        const textFrom = 'function oldName()'
-        const textTo = 'function newName()'
+        const textFrom = 'if (age > 18) return true'
+        const textTo = 'if (age >= 19) return false'
 
         const html = Highlighter.lines(textFrom, textTo).toString()
         expect(html).toBe(
             '<div>' +
-                '<span class="keyword">function</span>' +
+                '<span class="keyword">if</span>' +
                 '<span class="whitespace"> </span>' +
-                '<del class="function">oldName</del>' +
-                '<ins class="function">newName</ins>' +
                 '<span class="punctuation">(</span>' +
+                '<span class="variable">age</span>' +
+                '<span class="whitespace"> </span>' +
+                '<del class="operator">&gt;</del>' +
+                '<ins class="operator">&gt;=</ins>' +
+                '<span class="whitespace"> </span>' +
+                '<del class="number">18</del>' +
+                '<ins class="number">19</ins>' +
                 '<span class="punctuation">)</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="keyword">return</span>' +
+                '<span class="whitespace"> </span>' +
+                '<del class="literal">true</del>' +
+                '<ins class="literal">false</ins>' +
             '</div>'
         )
     })

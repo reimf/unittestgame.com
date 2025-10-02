@@ -117,7 +117,7 @@ test.describe('class Candidate', () => {
         const previousCandidate = new Candidate(['function nextYear(year) {', '', '  if (year === 0) return 0', '', '  return undefined', '}']);
         const html = candidate.toHtmlWithPrevious(previousCandidate);
         expect(html.toString()).toBe('<code class="language-javascript">' +
-            '<div class="unchanged">' +
+            '<div>' +
             '<span class="keyword">function</span>' +
             '<span class="whitespace"> </span>' +
             '<span class="function">nextYear</span>' +
@@ -127,55 +127,50 @@ test.describe('class Candidate', () => {
             '<span class="whitespace"> </span>' +
             '<span class="punctuation">{</span>' +
             '</div>' +
-            '<div class="deleted">' +
-            '<span class="whitespace">  </span>' +
-            '<span class="keyword">if</span>' +
-            '<span class="whitespace"> </span>' +
-            '<span class="punctuation">(</span>' +
-            '<span class="variable">year</span>' +
-            '<span class="whitespace"> </span>' +
-            '<span class="operator">===</span>' +
-            '<span class="whitespace"> </span>' +
-            '<span class="number">0</span>' +
-            '<span class="punctuation">)</span>' +
-            '<span class="whitespace"> </span>' +
-            '<span class="keyword">return</span>' +
-            '<span class="whitespace"> </span>' +
-            '<span class="number">0</span>' +
+            '<div>' +
+            '<del class="whitespace">  </del>' +
+            '<del class="keyword">if</del>' +
+            '<del class="whitespace"> </del>' +
+            '<del class="punctuation">(</del>' +
+            '<del class="variable">year</del>' +
+            '<del class="whitespace"> </del>' +
+            '<del class="operator">===</del>' +
+            '<del class="whitespace"> </del>' +
+            '<del class="number">0</del>' +
+            '<del class="punctuation">)</del>' +
+            '<del class="whitespace"> </del>' +
+            '<del class="keyword">return</del>' +
+            '<del class="whitespace"> </del>' +
+            '<del class="number">0</del>' +
             '</div>' +
-            '<div class="inserted">' +
-            '<span class="whitespace">  </span>' +
-            '<span class="keyword">if</span>' +
-            '<span class="whitespace"> </span>' +
-            '<span class="punctuation">(</span>' +
-            '<span class="variable">year</span>' +
-            '<span class="whitespace"> </span>' +
-            '<span class="operator">&lt;</span>' +
-            '<span class="whitespace"> </span>' +
-            '<span class="number">0</span>' +
-            '<span class="punctuation">)</span>' +
-            '<span class="whitespace"> </span>' +
-            '<span class="keyword">return</span>' +
-            '<span class="whitespace"> </span>' +
-            '<span class="number">0</span>' +
+            '<div>' +
+            '<ins class="whitespace">  </ins>' +
+            '<ins class="keyword">if</ins>' +
+            '<ins class="whitespace"> </ins>' +
+            '<ins class="punctuation">(</ins>' +
+            '<ins class="variable">year</ins>' +
+            '<ins class="whitespace"> </ins>' +
+            '<ins class="operator">&lt;</ins>' +
+            '<ins class="whitespace"> </ins>' +
+            '<ins class="number">0</ins>' +
+            '<ins class="punctuation">)</ins>' +
+            '<ins class="whitespace"> </ins>' +
+            '<ins class="keyword">return</ins>' +
+            '<ins class="whitespace"> </ins>' +
+            '<ins class="number">0</ins>' +
             '</div>' +
-            '<div class="deleted">' +
-            '<span class="whitespace">  </span>' +
-            '<span class="keyword">return</span>' +
-            '<span class="whitespace"> </span>' +
-            '<span class="literal">undefined</span>' +
-            '</div>' +
-            '<div class="inserted">' +
+            '<div>' +
             '<span class="whitespace">  </span>' +
             '<span class="keyword">return</span>' +
             '<span class="whitespace"> </span>' +
-            '<span class="variable">year</span>' +
-            '<span class="whitespace"> </span>' +
-            '<span class="operator">+</span>' +
-            '<span class="whitespace"> </span>' +
-            '<span class="number">1</span>' +
+            '<del class="literal">undefined</del>' +
+            '<ins class="variable">year</ins>' +
+            '<ins class="whitespace"> </ins>' +
+            '<ins class="operator">+</ins>' +
+            '<ins class="whitespace"> </ins>' +
+            '<ins class="number">1</ins>' +
             '</div>' +
-            '<div class="unchanged">' +
+            '<div>' +
             '<span class="punctuation">}</span>' +
             '</div>' +
             '</code>');

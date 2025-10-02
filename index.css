@@ -76,64 +76,46 @@ code {
             background-color: var(--notcovered-background);
         }
 
-        &.unchanged {
-            &::before {
-                content: '  ';
-            }
-        }
-
-        &.inserted {
-            background-color: var(--inserted-background);
-
-            &::before {
-                content: '+ ';
-            }
-        }
-
-        &.deleted {
-            background-color: var(--deleted-background);
-
-            &::before {
-                content: '- ';
-            }
+        &.old {
+            background-color: var(--old-background);
         }
 
         &.new {
             background-color: var(--new-background);
         }
 
-        &.old {
-            background-color: var(--old-background);
+        ins {
+            background-color: var(--inserted-background);
+            text-decoration: none;
         }
 
-        &.empty {
-            display: none;
+        del {
+            background-color: var(--deleted-background);
+            text-decoration: none;
         }
 
-        span {
-            &.keyword {
-                color: #c33;
-            }
+        .keyword {
+            color: #c33;
+        }
 
-            &.class, &.function {
-                color: #66c;
-            }
+        .class, .function {
+            color: #66c;
+        }
 
-            &.variable {
-                color: #060;
-            }
+        .variable {
+            color: #060;
+        }
 
-            &.literal, &.number, &.operator {
-                color: #06c;
-            }
+        .literal, .number, .operator {
+            color: #06c;
+        }
 
-            &.string, &.regexp {
-                color: #036;
-            }
-            
-            &.bullet {
-                color: #660;
-            }
+        .string, .regexp {
+            color: #036;
+        }
+
+        .bullet {
+            color: #660;
         }
     }
 }

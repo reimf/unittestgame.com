@@ -5,7 +5,7 @@ export class MockUseCase extends UseCase {
     public identifier(): string {
         return 'mock-use-case'
     }
-    
+
     public name(): string {
         return 'Mock Use Case'
     }

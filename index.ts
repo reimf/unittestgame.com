@@ -32,6 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         new Bug().start()
     }
-    
+
     new Main().start()
 })

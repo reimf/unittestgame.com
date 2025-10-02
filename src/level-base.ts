@@ -145,7 +145,7 @@ export abstract class Level {
         new Panel('unit-tests', this.locale.unitTests(),
             unitTests.length === 0
             ? [new Paragraph().appendText(this.locale.youHaveNotWrittenAnyUnitTestsYet())]
-            : [new Code().appendChildren(unitTests.map(unitTest => 
+            : [new Code().appendChildren(unitTests.map(unitTest =>
                 Highlighter.line(unitTest.toString()).addClass(unitTest === newUnitTest ? 'new' : 'old'))
             )]
         ).show()

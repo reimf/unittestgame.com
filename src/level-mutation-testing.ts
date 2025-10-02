@@ -8,7 +8,7 @@ export class MutationTesting extends Level {
     public identifier(): string {
         return 'mutation-testing'
     }
-    
+
     public name(): string {
         return this.locale.mutationTesting()
     }
