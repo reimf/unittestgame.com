@@ -5,12 +5,14 @@ import { UnitTest } from './unit-test.js'
 
 export class Candidate {
     private readonly lines: string[]
+    private readonly nonEmptyLines: string[]
     private readonly function: Function
     private readonly complexityTestDrivenDevelopment: number
     private readonly complexityMutationTesting: number
 
     public constructor(lines: string[]) {
         this.lines = lines.map(line => line.replace(/\\\\/g, '\\'))
+        this.nonEmptyLines = lines.filter(line => line)
         const code = lines.join('\n')
         this.function = new Function('return ' + code)()
         this.complexityTestDrivenDevelopment = this.getComplexityTestDrivenDevelopment(code)
@@ -102,18 +104,16 @@ export class Candidate {
     }
 
     public toString(): string {
-        return this.lines.filter(line => line).join('\n')
+        return this.nonEmptyLines.join('\n')
     }
 
     public toHtml(): Code {
-        const nonEmptyLines = this.lines.filter(line => line)
-        const divs = nonEmptyLines.map(line => Highlighter.line(line))
+        const divs = this.nonEmptyLines.map(line => Highlighter.line(line))
         return new Code().appendChildren(divs)
     }
 
     public toMutationHtml(): Code {
-        const nonEmptyLines = this.lines.filter(line => line)
-        const divs = nonEmptyLines.map(line => Highlighter.line(line).addClass('covered'))
+        const divs = this.nonEmptyLines.map(line => Highlighter.line(line).addClass('covered'))
         return new Code().appendChildren(divs)
     }
 

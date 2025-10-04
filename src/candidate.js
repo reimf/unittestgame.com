@@ -3,11 +3,13 @@ import { TestResult } from './test-result.js';
 import { Highlighter } from './highlighter.js';
 export class Candidate {
     lines;
+    nonEmptyLines;
     function;
     complexityTestDrivenDevelopment;
     complexityMutationTesting;
     constructor(lines) {
         this.lines = lines.map(line => line.replace(/\\\\/g, '\\'));
+        this.nonEmptyLines = lines.filter(line => line);
         const code = lines.join('\n');
         this.function = new Function('return ' + code)();
         this.complexityTestDrivenDevelopment = this.getComplexityTestDrivenDevelopment(code);
@@ -87,16 +89,14 @@ export class Candidate {
         return Math.sign(this.complexityMutationTesting - candidate.complexityMutationTesting);
     }
     toString() {
-        return this.lines.filter(line => line).join('\n');
+        return this.nonEmptyLines.join('\n');
     }
     toHtml() {
-        const nonEmptyLines = this.lines.filter(line => line);
-        const divs = nonEmptyLines.map(line => Highlighter.line(line));
+        const divs = this.nonEmptyLines.map(line => Highlighter.line(line));
         return new Code().appendChildren(divs);
     }
     toMutationHtml() {
-        const nonEmptyLines = this.lines.filter(line => line);
-        const divs = nonEmptyLines.map(line => Highlighter.line(line).addClass('covered'));
+        const divs = this.nonEmptyLines.map(line => Highlighter.line(line).addClass('covered'));
         return new Code().appendChildren(divs);
     }
     toHtmlWithPrevious(previousCandidate) {
