@@ -12,12 +12,12 @@
     --separator-shadow: #0003;
     --disabled-background: #333;
     --disabled-foreground: #fff;
-    --covered-background: #dfd;
-    --notcovered-background: #fdd;
+    --covered-background: #ffb;
+    --notcovered-background: #eee;
     --inserted-background: #dfd;
     --deleted-background: #fdd;
-    --new-background: #ffb;
-    --old-background: #eee;
+    --new-background: #ddf;
+    --old-background: #fff;
 }
 
 * {
@@ -64,7 +64,6 @@ b { /* markdown: **bold** */
 code {
     display: block;
     overflow: scroll;
-    padding: 0.75rem !important;
     white-space: pre;
 
     div {
@@ -245,9 +244,15 @@ a, button, input, label:has(input[type="radio"]:not(:disabled)) {
             > div {
                 border-radius: 1.25rem;
                 color: var(--dark-text);
+                display: flow-root;
                 margin: 0.75rem;
                 overflow: hidden;
                 padding: 0 0.75rem;
+
+                code {
+                    margin-bottom: 0.75rem;
+                    margin-top: 0.75rem;
+                }
             }
 
             &:before {
@@ -320,21 +325,31 @@ a, button, input, label:has(input[type="radio"]:not(:disabled)) {
             }
 
             > div {
-                p {
-                    padding-left: 0.75rem;
-                    padding-right: 0.75rem;
+                display: flow-root;
+
+                code {
+                    margin: 0.75rem;
                 }
 
                 ol {
                     list-style-type: none;
-                    margin: 0;
-                    padding: 0.75rem;
+                    margin: 0.75rem;
+                    padding: 0;
 
                     li {
                         overflow: hidden;
                         text-overflow: ellipsis;
                         white-space: pre;
+
+                        code {
+                            margin: 0;
+                        }
                     }
+                }
+                
+                p {
+                    margin-left: 0.75rem;
+                    margin-right: 0.75rem;
                 }
             }
         }

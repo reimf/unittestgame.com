@@ -1,4 +1,5 @@
 import { Candidate } from './candidate.js'
+import { Div } from './html.js'
 import { UnitTest } from './unit-test.js'
 
 export class TestResult {
@@ -12,7 +13,7 @@ export class TestResult {
         this.passes = this.result === unitTest.expected
     }
 
-    public toString(): string {
-        return this.unitTest.toStringWithResult(this.result)
+    public toHtml(): Div {
+        return this.unitTest.toHtmlWithResult(this.result)
     }
 }

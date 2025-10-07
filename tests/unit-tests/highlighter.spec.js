@@ -127,7 +127,7 @@ test.describe('class Highlighter', () => {
     test('lines method - inline diff', () => {
         const textFrom = 'if (age > 18) return true';
         const textTo = 'if (age >= 19) return false';
-        const html = Highlighter.lines(textFrom, textTo).toString();
+        const html = Highlighter.lines(textTo, textFrom).toString();
         expect(html).toBe('<div>' +
             '<span class="keyword">if</span>' +
             '<span class="whitespace"> </span>' +

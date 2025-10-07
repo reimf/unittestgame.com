@@ -1,3 +1,5 @@
+import { Div } from './html.js'
+import { Highlighter } from './highlighter.js'
 import { Variable } from './variable.js'
 
 export class UnitTest {
@@ -13,12 +15,13 @@ export class UnitTest {
         this.expected = expected
     }
 
-    public toStringWithResult(result: any): string {
+    public toHtmlWithResult(result: any): Div {
         const argumentsText = this.argumentList.map((value, index) => this.parameters[index].format(value)).join(', ')
-        return `${this.unit.name}(${argumentsText}) === ${this.unit.format(result)}`
+        const text = `${this.unit.name}(${argumentsText}) === ${this.unit.format(result)}`
+        return Highlighter.line(text)
     }
 
-    public toString(): string {
-        return this.toStringWithResult(this.expected)
+    public toHtml(): Div {
+        return this.toHtmlWithResult(this.expected)
     }
 }

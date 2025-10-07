@@ -183,16 +183,16 @@ export class Locale {
 
     public step1TDD(): string {
         return this.pick({
-            en: 'You read the *Specification* and write *Unit Tests* that do NOT pass the *Current Function*.',
-            nl: 'Je leest de *Specificatie* en schrijft *Unit Testen* die niet slagen voor de *Huidige Functie*.',
+            en: 'First, you read the *Specification* and then you write *Unit Tests* that do NOT pass the *Current Function*.',
+            nl: 'Eerst lees je de *Specificatie* en daarna schrijf je *Unit Testen* die niet slagen voor de *Huidige Functie*.',
         })
     }
 
 
     public step2TDD(): string {
         return this.pick({
-            en: 'After adding a unit test I (the AI bot) rewrite the *Current Function* such that the *Unit Tests* pass.',
-            nl: 'Na het toevoegen van een unit test herschrijf ik (de AI-bot) de *Huidige Functie* zodat de *Unit Testen* slagen.',
+            en: 'After adding a unit test I (the AI bot) improve the *Current Function* such that the *Unit Tests* pass.',
+            nl: 'Na het toevoegen van een unit test verbeter ik (de AI-bot) de *Huidige Functie* zodat de *Unit Testen* slagen.',
         })
     }
 
@@ -391,10 +391,10 @@ export class Locale {
         })
     }
 
-    public meanwhileKeepAnEyeOnTheYellowMarkedChangesInTheSidebar(): string {
+    public meanwhileKeepAnEyeOnTheChangesInTheSidebar(): string {
         return this.pick({
-            en: 'Meanwhile, keep an eye on the yellow marked changes in the sidebar.',
-            nl: 'Houd ondertussen de geel gemarkeerde wijzigingen in de zijbalk in de gaten.',
+            en: 'Meanwhile, keep an eye on the changes in the sidebar.',
+            nl: 'Houd ondertussen de wijzigingen in de zijbalk in de gaten.',
         })
     }
 

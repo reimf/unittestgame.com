@@ -1,8 +1,7 @@
 import { Candidate } from './candidate.js';
 import { Completed } from './completed.js';
 import { HumanMessage, CheckingMessage, Panel, ComputerMessage } from './frame.js';
-import { Highlighter } from './highlighter.js';
-import { Button, Code, Div, Form, Input, Paragraph } from './html.js';
+import { Button, Code, Div, Form, Input, ListItem, OrderedList, Paragraph } from './html.js';
 import { Random } from './random.js';
 import { TestResult } from './test-result.js';
 import { UnitTest } from './unit-test.js';
@@ -112,7 +111,7 @@ export class Level {
     showUnitTestsPanel(unitTests, newUnitTest) {
         new Panel('unit-tests', this.locale.unitTests(), unitTests.length === 0
             ? [new Paragraph().appendText(this.locale.youHaveNotWrittenAnyUnitTestsYet())]
-            : [new Code().appendChildren(unitTests.map(unitTest => Highlighter.line(unitTest.toString()).addClass(unitTest === newUnitTest ? 'new' : 'old')))]).show();
+            : [new OrderedList().appendChildren(unitTests.map(unitTest => new ListItem().appendChild(new Code().appendChild(unitTest.toHtml().addClass(unitTest === newUnitTest ? 'new' : 'old')))))]).show();
     }
     menu() {
         this.showPanels();
@@ -158,7 +157,7 @@ export class Level {
         const argumentList = this.useCase.parameters.map(parameter => parameter.getInput(formData.get(parameter.name)));
         const expected = this.useCase.unit.getInput(formData.get(this.useCase.unit.name));
         const unitTest = new UnitTest(this.useCase.parameters, argumentList, this.useCase.unit, expected);
-        new HumanMessage([unitTest.toString()]).add();
+        new HumanMessage([new Code().appendChild(unitTest.toHtml().addClass('new'))]).add();
         new CheckingMessage(this.locale.checkingTheNewUnitTest(), this.locale.iCheckedTheNewUnitTest(), () => this.addUnitTest(unitTest), 2000 + this.humanUnitTests.length * 500).add();
     }
     addUnitTest(unitTest) {

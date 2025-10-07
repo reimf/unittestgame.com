@@ -29,6 +29,20 @@ test.describe('class TestResult', () => {
         const unit = new BooleanVariable('Is next number', 'isNextNumber')
         const unitTest = new UnitTest(parameters, [6, 7], unit, true)
         const testResult = new TestResult(candidate, unitTest)
-        expect(testResult.toString()).toBe('isNextNumber(6, 7) === true')
+        expect(testResult.toHtml().toString()).toBe(
+            '<div>' +
+                '<span class="function">isNextNumber</span>' +
+                '<span class="punctuation">(</span>' +
+                '<span class="number">6</span>' +
+                '<span class="punctuation">,</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="number">7</span>' +
+                '<span class="punctuation">)</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="operator">===</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="literal">true</span>' +
+            '</div>'
+        )
     })
 })

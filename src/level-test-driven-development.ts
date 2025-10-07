@@ -1,6 +1,6 @@
 import { Candidate } from './candidate.js'
 import { Panel, ComputerMessage } from './frame.js'
-import { Paragraph } from './html.js'
+import { Code, Paragraph } from './html.js'
 import { Level } from './level-base.js'
 import { TestResult } from './test-result.js'
 import { UseCase } from './use-case-base.js'
@@ -50,7 +50,7 @@ export class TestDrivenDevelopment extends Level {
 
     protected showBugFoundMessage(_currentCandidate: Candidate, failingTestResult: TestResult, numberOfUnitTestsStillNeeded: number): void {
         new ComputerMessage([this.locale.theCurrentFunctionIsNotAccordingToTheSpecification()]).add()
-        new ComputerMessage([this.locale.itProducesTheFollowingIncorrectResult(), failingTestResult.toString()]).add()
+        new ComputerMessage([this.locale.itProducesTheFollowingIncorrectResult(), new Code().appendChild(failingTestResult.toHtml().addClass('new'))]).add()
         new ComputerMessage([this.locale.tryToWriteAUnitTestThatIsAccordingToTheSpecification(numberOfUnitTestsStillNeeded)]).add()
     }
 

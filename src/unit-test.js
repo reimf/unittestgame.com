@@ -1,3 +1,4 @@
+import { Highlighter } from './highlighter.js';
 export class UnitTest {
     parameters;
     argumentList;
@@ -9,11 +10,12 @@ export class UnitTest {
         this.unit = unit;
         this.expected = expected;
     }
-    toStringWithResult(result) {
+    toHtmlWithResult(result) {
         const argumentsText = this.argumentList.map((value, index) => this.parameters[index].format(value)).join(', ');
-        return `${this.unit.name}(${argumentsText}) === ${this.unit.format(result)}`;
+        const text = `${this.unit.name}(${argumentsText}) === ${this.unit.format(result)}`;
+        return Highlighter.line(text);
     }
-    toString() {
-        return this.toStringWithResult(this.expected);
+    toHtml() {
+        return this.toHtmlWithResult(this.expected);
     }
 }

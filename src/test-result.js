@@ -7,7 +7,7 @@ export class TestResult {
         this.result = candidate.execute(unitTest.argumentList);
         this.passes = this.result === unitTest.expected;
     }
-    toString() {
-        return this.unitTest.toStringWithResult(this.result);
+    toHtml() {
+        return this.unitTest.toHtmlWithResult(this.result);
     }
 }
