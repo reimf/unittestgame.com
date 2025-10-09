@@ -63,7 +63,7 @@ b { /* markdown: **bold** */
 
 code {
     display: block;
-    overflow: scroll;
+    overflow: hidden;
     white-space: pre;
 
     div {
