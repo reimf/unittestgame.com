@@ -1,0 +1,4 @@
+[?] introduceer de (mogelijke) mutaties voordat je die tegenkomt
+[X] haal de scrollbars weg bij de codefragmenten
+[X] maak bij FizzBuzz duidelijk dat en hoe een getal als verwachte waarde weergeeft als string
+[?] geef een tip als je vastloopt (gebeurt dat nu niet al? wanneer ben je vastgelopen? wat voor tip zou je dan willen krijgen?)
