@@ -199,7 +199,7 @@ export class Locale {
     public step3TDD(): string {
         return this.pick({
             en: 'When you think the *Current Function* is according to the *Specification*, you submit the *Unit Tests*.',
-            nl: 'Wanneer je denkt dat de *Huidige Functie* aan de *Specificatie* voldoet, dien je de *Unit Testen* in.',
+            nl: 'Wanneer je denkt dat de *Huidige Functie* aan de *Specificatie* voldoet, lever je de *Unit Testen* in.',
         })
     }
 
@@ -288,8 +288,8 @@ export class Locale {
 
     public definitionMT(): string {
         return this.pick({
-            en: 'Each mutation of a fully tested function should make at least one unit test NOT pass. Mutations are simplifications of the code, e.g. by replacing "n % 4 === 0" with "n === 4". [Read more](https://en.wikipedia.org/wiki/Mutation_testing)',
-            nl: 'Elke mutatie van een volledig geteste functie zou ten minste één unit test niet moeten slagen. Mutaties zijn vereenvoudigingen van de code, bijvoorbeeld door "n % 4 === 0" te vervangen door "n === 4". [Lees meer](https://en.wikipedia.org/wiki/Mutation_testing)',
+            en: 'Each mutation of a fully tested function should make at least one unit test NOT pass. Mutations are small changes of the code, e.g. by replacing "n % 4 === 0" with "n === 4". [Read more](https://en.wikipedia.org/wiki/Mutation_testing)',
+            nl: 'Elke mutatie van een volledig geteste functie zou ten minste één unit test niet moeten slagen. Mutaties zijn kleine veranderingen van de code, bijvoorbeeld door "n % 4 === 0" te vervangen door "n === 4". [Lees meer](https://en.wikipedia.org/wiki/Mutation_testing)',
         })
     }
 
@@ -310,7 +310,7 @@ export class Locale {
     public step3MT(): string {
         return this.pick({
             en: 'When you think *The Function* is fully tested, you submit the *Unit Tests*.',
-            nl: 'Wanneer je denkt dat *De Functie* volledig getest is, dien je de *Unit Testen* in.',
+            nl: 'Wanneer je denkt dat *De Functie* volledig getest is, lever je de *Unit Testen* in.',
         })
     }
 
@@ -415,7 +415,7 @@ export class Locale {
     public theCurrentFunctionNowSometimesReturnsNormalModeAndSometimesLowPowerMode(): string {
         return this.pick({
             en: 'The *Current Function* now sometimes returns Normal Mode and sometimes Low Power Mode. Submit the unit tests to see if the *Current Function* is according to the *Specification*.',
-            nl: 'De *Huidige Functie* geeft nu soms Normal Mode terug en soms Low Power Mode. Dien de unit testen in om te zien of de *Huidige Functie* aan de *Specificatie* voldoet.',
+            nl: 'De *Huidige Functie* geeft nu soms Normal Mode terug en soms Low Power Mode. Lever de unit testen in om te zien of de *Huidige Functie* aan de *Specificatie* voldoet.',
         })
     }
 
@@ -429,7 +429,7 @@ export class Locale {
     public submitTheUnitTestsAgainToSeeIfTheCurrentFunctionIsAccordingToTheSpecification(): string {
         return this.pick({
             en: 'Submit the unit tests again to see if the *Current Function* is according to the *Specification*.',
-            nl: 'Dien de unit testen opnieuw in om te zien of de *Huidige Functie* aan de *Specificatie* voldoet.',
+            nl: 'Lever de unit testen opnieuw in om te zien of de *Huidige Functie* aan de *Specificatie* voldoet.',
         })
     }
 
@@ -443,7 +443,7 @@ export class Locale {
     public submitTheUnitTestsAgainToSeeIfTheCurrentFunctionIsFinallyAccordingToTheSpecification(): string {
         return this.pick({
             en: 'Submit the unit tests again to see if the *Current Function* is finally according to the *Specification*.',
-            nl: 'Dien de unit testen opnieuw in om te zien of de *Huidige Functie* eindelijk aan de *Specificatie* voldoet.',
+            nl: 'Lever de unit testen opnieuw in om te zien of de *Huidige Functie* eindelijk aan de *Specificatie* voldoet.',
         })
     }
 
@@ -471,7 +471,7 @@ export class Locale {
     public allLinesInTheFunctionAreTestedNow(): string {
         return this.pick({
             en: 'All lines in *The Function* are tested now. Submit the unit tests to see if *The Function* is fully tested.',
-            nl: 'Alle regels in *De Functie* zijn nu getest. Dien de unit testen in om te zien of *De Functie* volledig getest is.',
+            nl: 'Alle regels in *De Functie* zijn nu getest. Lever de unit testen in om te zien of *De Functie* volledig getest is.',
         })
     }
 
@@ -485,7 +485,7 @@ export class Locale {
     public submitTheUnitTestsAgainToSeeIfTheFunctionIsFullyTestedNow(): string {
         return this.pick({
             en: 'Submit the unit tests again to see if *The Function* is fully tested now.',
-            nl: 'Dien de unit testen opnieuw in om te zien of *De Functie* nu volledig getest is.',
+            nl: 'Lever de unit testen opnieuw in om te zien of *De Functie* nu volledig getest is.',
         })
     }
 
@@ -499,7 +499,7 @@ export class Locale {
     public submitTheUnitTestsAgainToSeeIfTheFunctionIsFinallyFullyTestedNow(): string {
         return this.pick({
             en: 'Submit the unit tests again to see if *The Function* is finally fully tested.',
-            nl: 'Dien de unit testen opnieuw in om te zien of *De Functie* eindelijk volledig getest is.',
+            nl: 'Lever de unit testen opnieuw in om te zien of *De Functie* eindelijk volledig getest is.',
         })
     }
 
@@ -519,8 +519,8 @@ export class Locale {
 
     public returnFizzIfTheNumberIsDivisibleBy3(): string {
         return this.pick({
-            en: 'Return "Fizz" if the number is divisible by 3, "Buzz" if the number is divisible by 5, "FizzBuzz" if the number is divisible by both 3 and 5, and a string containing the number otherwise.',
-            nl: 'Geef "Fizz" terug als het getal deelbaar is door 3, "Buzz" als het getal deelbaar is door 5, "FizzBuzz" als het getal deelbaar is door zowel 3 als 5, en een string die het getal anders bevat.',
+            en: 'Return "Fizz" if the number is divisible by 3, "Buzz" if the number is divisible by 5, "FizzBuzz" if the number is divisible by both 3 and 5, and for all other numbers the number itself.',
+            nl: 'Geef "Fizz" terug als het getal deelbaar is door 3, "Buzz" als het getal deelbaar is door 5, "FizzBuzz" als het getal deelbaar is door zowel 3 als 5, en voor alle andere getallen het getal zelf.',
         })
     }
 
