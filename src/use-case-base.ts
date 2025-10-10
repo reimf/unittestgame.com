@@ -32,7 +32,7 @@ export abstract class UseCase {
         this.locale = locale
     }
 
-    private *generateCandidates(listOfListOfLines: string[][], lines: string[]): Generator<Candidate> {
+    private* generateCandidates(listOfListOfLines: string[][], lines: string[]): Generator<Candidate> {
         if (listOfListOfLines.length > 0) {
             const [firstListOfLines, ...remainingListOfListOfLines] = listOfListOfLines
             for (const line of firstListOfLines)
@@ -56,7 +56,7 @@ export abstract class UseCase {
         return this.candidates.filter(candidate => candidate.isAmputeeOf(this.perfectCandidate))
     }
 
-    private *generateMinimalUnitTests(): Generator<UnitTest> {
+    private* generateMinimalUnitTests(): Generator<UnitTest> {
         for (const [argumentList, expected] of this.minimalUnitTestGenerator()) {
             yield new UnitTest(this.parameters, argumentList, this.unit, expected)
         }
@@ -74,7 +74,7 @@ export abstract class UseCase {
         }
     }
 
-    private *generateHints(): Generator<UnitTest> {
+    private* generateHints(): Generator<UnitTest> {
         for (const argumentList of this.hintGenerator())
             yield new UnitTest(this.parameters, argumentList, this.unit, this.perfectCandidate.execute(argumentList))
     }

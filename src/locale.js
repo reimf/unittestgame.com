@@ -4,8 +4,8 @@ export class Locale {
         const lng = ['en', 'nl'].includes(lang) ? lang : 'en';
         this.lng = lng;
     }
-    pick(options) {
-        return options[this.lng];
+    pick(localisedText) {
+        return localisedText[this.lng];
     }
     welcomeToUnittestgame() {
         return this.pick({
@@ -15,7 +15,7 @@ export class Locale {
     }
     iAmAnAiBot() {
         return this.pick({
-            en: 'I am an AI bot specialized in *Test-Driven Development* and *Mutation Testing*.',
+            en: 'I am an AI bot specialised in *Test-Driven Development* and *Mutation Testing*.',
             nl: 'Ik ben een AI-bot gespecialiseerd in *Test-Driven Development* en *Mutation Testing*.',
         });
     }
@@ -28,6 +28,7 @@ export class Locale {
     learnToWriteEffectiveUnitTests() {
         return this.pick({
             en: 'Learn to write effective unit tests using Test-Driven Development and Mutation Testing. ' +
+                '\n' +
                 '[Liever Nederlands?](?lng=nl)\n' +
                 '\n' +
                 'This game is written by a developer who wants better software. ' +
@@ -35,6 +36,7 @@ export class Locale {
                 'Testing software is a skill and this game helps you learn just that. ' +
                 '[Contact](mailto:contact@unittestgame.com) [Feedback](mailto:feedback@unittestgame.com)',
             nl: 'Leer effectieve unit testen te schrijven met Test-Driven Development en Mutation Testing. ' +
+                '\n' +
                 '[Prefer English?](?lng=en)\n' +
                 '\n' +
                 'Deze game is geschreven door een ontwikkelaar die betere software wil. ' +
@@ -274,7 +276,7 @@ export class Locale {
     finishedLevels() {
         return this.pick({
             en: 'Finished levels',
-            nl: 'Voltooide levels',
+            nl: 'Gespeelde levels',
         });
     }
     iAddedTheUnitTestButNoExtraLinesOfTheFunctionAreTested() {

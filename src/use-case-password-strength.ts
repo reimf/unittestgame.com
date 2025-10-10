@@ -65,7 +65,7 @@ export class PasswordStrength extends UseCase {
         yield [['@6jB'], false]
     }
 
-    private *generateDigits(): Generator<string[]> {
+    private* generateDigits(): Generator<string[]> {
         for (let d1 = 0; d1 < 10; d1++) {
             for (let d2 = d1; d2 < 10; d2++) {
                 if (d1 + d2 === 13) yield [d1.toString(), d2.toString()]
@@ -79,7 +79,7 @@ export class PasswordStrength extends UseCase {
         }
     }
 
-    private *generateUppercase(): Generator<string[]> {
+    private* generateUppercase(): Generator<string[]> {
         const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
         for (const upper1 of uppercase) {
             yield [upper1]
@@ -90,7 +90,7 @@ export class PasswordStrength extends UseCase {
         }
     }
 
-    private *generateLowercase(): Generator<string[]> {
+    private* generateLowercase(): Generator<string[]> {
         const lowercase = 'abcdefghijklmnopqrstuvwxyz'
         for (const lower1 of lowercase) {
             yield [lower1]
@@ -101,7 +101,7 @@ export class PasswordStrength extends UseCase {
         }
     }
 
-    private *generateSpecialCharacters(): Generator<string[]> {
+    private* generateSpecialCharacters(): Generator<string[]> {
         const specialChars = '@#!'
         for (const special1 of specialChars) {
             yield [special1]

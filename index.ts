@@ -6,22 +6,19 @@ window.onerror = (message, source, lineno, colno, error) => {
 }
 
 document.addEventListener('keydown', event => {
-    const up = event.key === 'ArrowUp' ? true : event.key === 'ArrowDown' ? false : undefined
-    if (up === undefined)
-        return
-    const oldFocused = document.activeElement
-    if (!oldFocused)
-        return
-    const allFocusables = Array.from(document.querySelectorAll('input, button'))
-    const allTops = allFocusables.map(focusable => focusable.getBoundingClientRect().top)
-    const oldTop = oldFocused.getBoundingClientRect().top
-    const newTop = up ? Math.max(...allTops.filter(top => top < oldTop)) : Math.min(...allTops.filter(top => top > oldTop))
-    const sameLineFocusables = allFocusables.filter(focusable => focusable.getBoundingClientRect().top === newTop)
-    if (sameLineFocusables.length === 0)
-        return
-    const checkedFocusables = sameLineFocusables.filter(focusable => focusable instanceof HTMLInputElement && focusable.checked)
-    const newFocused = (checkedFocusables.length === 1 ? checkedFocusables[0] : sameLineFocusables[0]) as HTMLElement
-    newFocused.focus()
+    const direction = event.key === 'ArrowUp' ? -1 : event.key === 'ArrowDown' ? 1 : 0
+    if (!direction) return
+    const focusableElements = [...document.querySelectorAll<HTMLElement>('input, button')]
+    const currentElement = document.activeElement as HTMLElement | null
+    if (!currentElement || !focusableElements.includes(currentElement)) return
+    const tops = new Map(focusableElements.map(focusable => [focusable, focusable.getBoundingClientRect().top]))
+    const uniqueTops = [...new Set(tops.values())].sort()
+    const currentIndex = uniqueTops.indexOf(tops.get(currentElement) ?? 0)
+    const targetTop = uniqueTops[(currentIndex + direction + uniqueTops.length) % uniqueTops.length]
+    const possibleTargets = focusableElements.filter(focusable => tops.get(focusable) === targetTop)
+    const preferableTargets = possibleTargets.filter(focusable => focusable instanceof HTMLInputElement && focusable.checked)
+    const targetElement = preferableTargets[0] ?? possibleTargets[0]
+    targetElement.focus()
     event.preventDefault()
 })
 
@@ -32,6 +29,5 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         new Bug().start()
     }
-
     new Main().start()
 })

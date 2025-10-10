@@ -1,18 +1,18 @@
-type LocalizedText = {
+type LocalisedText = {
     en: string
     nl: string
 }
 
 export class Locale {
-    private readonly lng: keyof LocalizedText
+    private readonly lng: keyof LocalisedText
 
     public constructor(lang: string) {
         const lng = ['en', 'nl'].includes(lang) ? lang : 'en'
-        this.lng = lng as keyof LocalizedText
+        this.lng = lng as keyof LocalisedText
     }
 
-    private pick(options: LocalizedText): string {
-        return options[this.lng]
+    private pick(localisedText: LocalisedText): string {
+        return localisedText[this.lng]
     }
 
     public welcomeToUnittestgame(): string {
@@ -24,7 +24,7 @@ export class Locale {
 
     public iAmAnAiBot(): string {
         return this.pick({
-            en: 'I am an AI bot specialized in *Test-Driven Development* and *Mutation Testing*.',
+            en: 'I am an AI bot specialised in *Test-Driven Development* and *Mutation Testing*.',
             nl: 'Ik ben een AI-bot gespecialiseerd in *Test-Driven Development* en *Mutation Testing*.',
         })
     }
@@ -39,6 +39,7 @@ export class Locale {
     public learnToWriteEffectiveUnitTests(): string {
         return this.pick({
             en: 'Learn to write effective unit tests using Test-Driven Development and Mutation Testing. ' +
+                '\n' +
                 '[Liever Nederlands?](?lng=nl)\n' +
                 '\n' +
                 'This game is written by a developer who wants better software. ' +
@@ -46,6 +47,7 @@ export class Locale {
                 'Testing software is a skill and this game helps you learn just that. ' +
                 '[Contact](mailto:contact@unittestgame.com) [Feedback](mailto:feedback@unittestgame.com)',
             nl: 'Leer effectieve unit testen te schrijven met Test-Driven Development en Mutation Testing. ' +
+                '\n' +
                 '[Prefer English?](?lng=en)\n' +
                 '\n' +
                 'Deze game is geschreven door een ontwikkelaar die betere software wil. ' +
@@ -324,7 +326,7 @@ export class Locale {
     public finishedLevels(): string {
         return this.pick({
             en: 'Finished levels',
-            nl: 'Voltooide levels',
+            nl: 'Gespeelde levels',
         })
     }
 

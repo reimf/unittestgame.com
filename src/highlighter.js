@@ -12,33 +12,31 @@ class Token {
 }
 class Tokenizer {
     text;
+    tokenTypes = [
+        { name: 'whitespace', regexp: /^( +)/ },
+        { name: 'number', regexp: /^(\d+(?:\.\d+)?)/ },
+        { name: 'keyword', regexp: /^(function|if|else|return|let|new)\b/ },
+        { name: 'literal', regexp: /^(true|false|undefined)\b/ },
+        { name: 'class', regexp: /^([A-Z][a-zA-Z]*)/ },
+        { name: 'function', regexp: /^([a-zA-Z]+)\(/ },
+        { name: 'variable', regexp: /^([a-zA-Z]+)/ },
+        { name: 'regexp', regexp: /^(\/\S.*?\/)/ },
+        { name: 'string', regexp: /^(".*?")/ },
+        { name: 'operator', regexp: /^(!=*|=+|%=?|\+=?|-=?|\*=?|\/=?|<=?|>=?|&+|\|+)/ },
+        { name: 'punctuation', regexp: /^([(){},])/ },
+        { name: 'bullet', regexp: /^(\.)/ },
+        { name: 'error', regexp: /^(.+)/ },
+    ];
     constructor(text) {
         this.text = text;
     }
-    *tokens() {
-        const types = [
-            ['whitespace', /^ +/],
-            ['number', /^\d+(\.\d+)?/],
-            ['keyword', /^(function|if|else|return|let|new)\b/],
-            ['literal', /^(true|false|undefined)\b/],
-            ['class', /^[A-Z][a-zA-Z]*/],
-            ['function', /^[a-zA-Z]+(?=\()/],
-            ['variable', /^[a-zA-Z]+/],
-            ['regexp', /^\/\S.*?\//],
-            ['string', /^".*?"/],
-            ['operator', /^(!=*|=+|%=?|\+=?|-=?|\*=?|\/=?|<=?|>=?|&+|\|+)/],
-            ['punctuation', /^[(){},]/],
-            ['bullet', /^\./],
-            ['error', /^.*/],
-        ];
-        while (this.text) {
-            for (const [type, regex] of types) {
-                const match = this.text.match(regex);
-                if (match) {
-                    this.text = this.text.slice(match[0].length);
-                    yield new Token(type, match[0]);
-                    break;
-                }
+    *tokens(index = 0) {
+        for (const tokenType of this.tokenTypes) {
+            const match = this.text.slice(index).match(tokenType.regexp);
+            if (match) {
+                yield new Token(tokenType.name, match[1]);
+                yield* this.tokens(index + match[1].length);
+                return;
             }
         }
     }
@@ -73,30 +71,27 @@ export class Highlighter {
         return div;
     }
     static longestCommonSubsequence(currentTokens, previousTokens) {
-        const previousLength = previousTokens.length;
-        const currentLength = currentTokens.length;
+        const [previousLength, currentLength] = [previousTokens.length, currentTokens.length];
         const commonLengths = Array(previousLength + 1).fill(0).map(() => Array(currentLength + 1).fill(0));
         // Build LCS length table
-        for (let currentIndex = 0; currentIndex < previousLength; currentIndex++)
-            for (let previousIndex = 0; previousIndex < currentLength; previousIndex++)
-                if (previousTokens[currentIndex].equals(currentTokens[previousIndex]))
-                    commonLengths[currentIndex + 1][previousIndex + 1] = commonLengths[currentIndex][previousIndex] + 1;
-                else
-                    commonLengths[currentIndex + 1][previousIndex + 1] = Math.max(commonLengths[currentIndex][previousIndex + 1], commonLengths[currentIndex + 1][previousIndex]);
+        for (let current = 0; current < previousLength; current++)
+            for (let previous = 0; previous < currentLength; previous++)
+                commonLengths[current + 1][previous + 1] = previousTokens[current].equals(currentTokens[previous])
+                    ? commonLengths[current][previous] + 1
+                    : Math.max(commonLengths[current][previous + 1], commonLengths[current + 1][previous]);
         // Backtrack to find LCS
         const commonTokens = [];
-        let previousIndex = previousLength;
-        let currentIndex = currentLength;
-        while (previousIndex > 0 && currentIndex > 0)
-            if (previousTokens[previousIndex - 1].equals(currentTokens[currentIndex - 1])) {
-                commonTokens.unshift(previousTokens[previousIndex - 1]);
-                previousIndex--;
-                currentIndex--;
+        let [previous, current] = [previousLength, currentLength];
+        while (previous > 0 && current > 0)
+            if (previousTokens[previous - 1].equals(currentTokens[current - 1])) {
+                commonTokens.unshift(previousTokens[previous - 1]);
+                previous--;
+                current--;
             }
-            else if (commonLengths[previousIndex - 1][currentIndex] > commonLengths[previousIndex][currentIndex - 1])
-                previousIndex--;
+            else if (commonLengths[previous - 1][current] > commonLengths[previous][current - 1])
+                previous--;
             else
-                currentIndex--;
+                current--;
         return commonTokens;
     }
 }
