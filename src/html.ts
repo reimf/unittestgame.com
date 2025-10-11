@@ -111,7 +111,7 @@ export class Html extends Content {
         return this
     }
 
-    public appendChildren(children: Content[]): this {
+    public appendChildren(children: readonly Content[]): this {
         this.children.push(...children)
         return this
     }

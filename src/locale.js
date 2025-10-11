@@ -443,8 +443,8 @@ export class Locale {
     }
     returnFizzIfTheNumberIsDivisibleBy3() {
         return this.pick({
-            en: 'Return "Fizz" if the number is divisible by 3, "Buzz" if the number is divisible by 5, "FizzBuzz" if the number is divisible by both 3 and 5, and for all other numbers the number itself.',
-            nl: 'Geef "Fizz" terug als het getal deelbaar is door 3, "Buzz" als het getal deelbaar is door 5, "FizzBuzz" als het getal deelbaar is door zowel 3 als 5, en voor alle andere getallen het getal zelf.',
+            en: 'Return "Fizz" if the number is divisible by 3, "Buzz" if the number is divisible by 5, "FizzBuzz" if the number is divisible by both 3 and 5, and "Other" for all other numbers.',
+            nl: 'Geef "Fizz" terug als het getal deelbaar is door 3, "Buzz" als het getal deelbaar is door 5, "FizzBuzz" als het getal deelbaar is door zowel 3 als 5, en "Other" voor alle andere getallen.',
         });
     }
     returnTrueIfTheTextRepresentsAFloatAndFalseIfItDoesnt() {

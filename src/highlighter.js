@@ -13,19 +13,19 @@ class Token {
 class Tokenizer {
     text;
     tokenTypes = [
-        { name: 'whitespace', regexp: /^( +)/ },
-        { name: 'number', regexp: /^(\d+(?:\.\d+)?)/ },
+        { name: 'whitespace', regexp: /^ +/ },
+        { name: 'number', regexp: /^\d+(\.\d+)?/ },
         { name: 'keyword', regexp: /^(function|if|else|return|let|new)\b/ },
         { name: 'literal', regexp: /^(true|false|undefined)\b/ },
-        { name: 'class', regexp: /^([A-Z][a-zA-Z]*)/ },
-        { name: 'function', regexp: /^([a-zA-Z]+)\(/ },
-        { name: 'variable', regexp: /^([a-zA-Z]+)/ },
-        { name: 'regexp', regexp: /^(\/\S.*?\/)/ },
-        { name: 'string', regexp: /^(".*?")/ },
+        { name: 'class', regexp: /^[A-Z][a-zA-Z]*/ },
+        { name: 'function', regexp: /^[a-zA-Z]+(?=\()/ },
+        { name: 'variable', regexp: /^[a-zA-Z]+/ },
+        { name: 'regexp', regexp: /^\/\S.*?\// },
+        { name: 'string', regexp: /^".*?"/ },
         { name: 'operator', regexp: /^(!=*|=+|%=?|\+=?|-=?|\*=?|\/=?|<=?|>=?|&+|\|+)/ },
-        { name: 'punctuation', regexp: /^([(){},])/ },
-        { name: 'bullet', regexp: /^(\.)/ },
-        { name: 'error', regexp: /^(.+)/ },
+        { name: 'punctuation', regexp: /^[(){},]/ },
+        { name: 'bullet', regexp: /^\./ },
+        { name: 'error', regexp: /^.+/ },
     ];
     constructor(text) {
         this.text = text;
@@ -34,23 +34,34 @@ class Tokenizer {
         for (const tokenType of this.tokenTypes) {
             const match = this.text.slice(index).match(tokenType.regexp);
             if (match) {
-                yield new Token(tokenType.name, match[1]);
-                yield* this.tokens(index + match[1].length);
+                yield new Token(tokenType.name, match[0]);
+                yield* this.tokens(index + match[0].length);
                 return;
             }
         }
     }
 }
 export class Highlighter {
-    static line(text) {
-        const tokens = Array.from(new Tokenizer(text).tokens());
+    currentLine;
+    previousLine;
+    constructor(currentLine, previousLine) {
+        this.currentLine = currentLine;
+        this.previousLine = previousLine;
+    }
+    highlight() {
+        if (this.previousLine === undefined)
+            return this.highlightLine(this.currentLine);
+        return this.highlightDiff(this.currentLine, this.previousLine);
+    }
+    highlightLine(currentLine) {
+        const tokens = Array.from(new Tokenizer(currentLine).tokens());
         const spans = tokens.map(token => new Span().addClass(token.type).appendText(token.text));
         return new Div().appendChildren(spans);
     }
-    static lines(currentText, previousText) {
-        const previousTokens = Array.from(new Tokenizer(previousText).tokens());
-        const currentTokens = Array.from(new Tokenizer(currentText).tokens());
-        const commonTokens = Highlighter.longestCommonSubsequence(currentTokens, previousTokens);
+    highlightDiff(currentLine, previousLine) {
+        const previousTokens = Array.from(new Tokenizer(previousLine).tokens());
+        const currentTokens = Array.from(new Tokenizer(currentLine).tokens());
+        const commonTokens = this.longestCommonSubsequence(currentTokens, previousTokens);
         const div = new Div();
         while (previousTokens.length || currentTokens.length) {
             if (commonTokens.length && previousTokens.length && currentTokens.length && previousTokens[0].equals(commonTokens[0]) && currentTokens[0].equals(commonTokens[0])) {
@@ -70,7 +81,7 @@ export class Highlighter {
         }
         return div;
     }
-    static longestCommonSubsequence(currentTokens, previousTokens) {
+    longestCommonSubsequence(currentTokens, previousTokens) {
         const [previousLength, currentLength] = [previousTokens.length, currentTokens.length];
         const commonLengths = Array(previousLength + 1).fill(0).map(() => Array(currentLength + 1).fill(0));
         // Build LCS length table

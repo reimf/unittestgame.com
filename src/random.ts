@@ -1,5 +1,5 @@
 export class Random {
-    public static elementFrom<T>(list: T[]): T {
+    public static elementFrom<T>(list: readonly T[]): T {
         return list[this.integerUnder(list.length)]
     }
 

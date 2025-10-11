@@ -1,7 +1,7 @@
 import { Button, Div, Html, Header, Paragraph, Section } from './html.js'
 
 abstract class Frame extends Section {
-    protected constructor(elements: (Html|string)[]) {
+    protected constructor(elements: readonly (Html|string)[]) {
         super()
         const children = elements.map(element => element instanceof Html ? element : new Paragraph().appendMarkdown(element))
         this.appendChild(new Div().appendChildren(children))
@@ -19,7 +19,7 @@ abstract class Frame extends Section {
 }
 
 export class Panel extends Frame {
-    public constructor(id: string, title: string, elements: (Html|string)[]) {
+    public constructor(id: string, title: string, elements: readonly (Html|string)[]) {
         super(elements)
         this.setId(id).prependChild(new Header().appendText(title))
     }
@@ -38,7 +38,7 @@ export class Panel extends Frame {
 }
 
 abstract class Message extends Frame {
-    protected constructor(elements: (Html|string)[]) {
+    protected constructor(elements: readonly (Html|string)[]) {
         super(elements)
     }
 
@@ -59,7 +59,7 @@ abstract class Message extends Frame {
 }
 
 export class ComputerMessage extends Message {
-    public constructor(elements: (Html|string)[]) {
+    public constructor(elements: readonly (Html|string)[]) {
         super(elements)
         this.addClass('computer')
     }
@@ -88,7 +88,7 @@ export class CheckingMessage extends ComputerMessage {
 }
 
 export class HumanMessage extends Message {
-    public constructor(children: (Html|string)[]) {
+    public constructor(children: readonly (Html|string)[]) {
         super(children)
         this.addClass('human')
     }

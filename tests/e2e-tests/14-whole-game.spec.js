@@ -75,7 +75,7 @@ test.describe('whole game', () => {
                     for (let i = 0; i < variables.length; i++) {
                         const [variable, value] = [variables[i], values[i]];
                         if (variable instanceof RadioVariable || variable instanceof BooleanVariable)
-                            await page.getByLabel(value.toString()).check();
+                            await page.getByLabel(value.toString(), { exact: true }).check();
                         else
                             await page.getByLabel(variable.label).fill(value.toString());
                     }

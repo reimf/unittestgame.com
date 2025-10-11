@@ -1,5 +1,5 @@
 import { UseCase } from './use-case-base.js';
-import { TextVariable, IntegerVariable } from './variable.js';
+import { RadioVariable, IntegerVariable } from './variable.js';
 export class FizzBuzz extends UseCase {
     identifier() {
         return 'fizz-buzz';
@@ -16,7 +16,7 @@ export class FizzBuzz extends UseCase {
         ];
     }
     getUnit() {
-        return new TextVariable('Output', 'fizzBuzz');
+        return new RadioVariable('Output', 'fizzBuzz', ['Fizz', 'Buzz', 'FizzBuzz', 'Other']);
     }
     getCandidateElements() {
         return [
@@ -39,7 +39,7 @@ export class FizzBuzz extends UseCase {
                 'return "Fizz"',
                 'return "Buzz"',
                 'return "FizzBuzz"',
-                'return num.toString()',
+                'return "Other"',
                 'return undefined',
             ],
         ];
@@ -48,7 +48,7 @@ export class FizzBuzz extends UseCase {
         yield [[6], 'Fizz'];
         yield [[25], 'Buzz'];
         yield [[30], 'FizzBuzz'];
-        yield [[1], '1'];
+        yield [[1], 'Other'];
     }
     *hintGenerator() {
         for (let num = 0; num < 100; num += 1)

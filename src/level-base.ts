@@ -48,7 +48,7 @@ export abstract class Level {
         this.exampleStrings = [...this.exampleStringGenerator(useCase)]
     }
 
-    private findSimplestCandidate(candidates: Candidate[]): Candidate {
+    private findSimplestCandidate(candidates: readonly Candidate[]): Candidate {
         const simplestCandidates = candidates.reduce((simplestCandidatesSoFar: Candidate[], candidate) => {
             if (simplestCandidatesSoFar.length === 0)
                 return [candidate]
@@ -62,7 +62,7 @@ export abstract class Level {
         return Random.elementFrom(simplestCandidates)
     }
 
-    public findSimplestPassingCandidate(candidates: Candidate[], perfectCandidates: Candidate[], unitTests: UnitTest[]): Candidate {
+    public findSimplestPassingCandidate(candidates: readonly Candidate[], perfectCandidates: readonly Candidate[], unitTests: readonly UnitTest[]): Candidate {
         const passingCandidates = candidates.filter(candidate => candidate.passes(unitTests))
         const passingImperfectCandidates = passingCandidates.filter(candidate => !perfectCandidates.includes(candidate))
         if (passingImperfectCandidates.length === 0)
@@ -70,7 +70,7 @@ export abstract class Level {
         return this.findSimplestCandidate(passingImperfectCandidates)
     }
 
-    public findSimplestCoveredCandidate(amputeesOfPerfectCandidate: Candidate[], unitTests: UnitTest[]): Candidate {
+    public findSimplestCoveredCandidate(amputeesOfPerfectCandidate: readonly Candidate[], unitTests: readonly UnitTest[]): Candidate {
         return unitTests.reduce((simplestCoveredCandidateSoFar: Candidate, unitTest: UnitTest) => {
             const passingCandidates = amputeesOfPerfectCandidate.filter(candidate => candidate.passes([unitTest]))
             const simplestPassingCandidate = this.findSimplestCandidate(passingCandidates)
@@ -78,7 +78,7 @@ export abstract class Level {
         }, this.findSimplestPassingCandidate(amputeesOfPerfectCandidate, [], []))
     }
 
-    public findFailingTestResult(candidate: Candidate, hints: UnitTest[], minimalUnitTestsList: UnitTest[]): TestResult|undefined {
+    public findFailingTestResult(candidate: Candidate, hints: readonly UnitTest[], minimalUnitTestsList: readonly UnitTest[]): TestResult|undefined {
         for (const unitTests of [hints, minimalUnitTestsList]) {
             const failingUnitTests = candidate.failingTestResults(unitTests)
             if (failingUnitTests.length > 0)
@@ -87,7 +87,7 @@ export abstract class Level {
         return undefined
     }
 
-    public findNumberOfUnitTestsStillNeeded(unitTests: UnitTest[], subsetsOfMinimalUnitTests: UnitTest[][], candidates: Candidate[], numberOfPerfectCandidates: number): number {
+    public findNumberOfUnitTestsStillNeeded(unitTests: readonly UnitTest[], subsetsOfMinimalUnitTests: readonly UnitTest[][], candidates: readonly Candidate[], numberOfPerfectCandidates: number): number {
         for (const subsetOfMinimalUnitTests of subsetsOfMinimalUnitTests) {
             const extendedUnitTests = [...unitTests, ...subsetOfMinimalUnitTests]
             const passingCandidates = candidates.filter(candidate => candidate.passes(extendedUnitTests))
@@ -140,7 +140,7 @@ export abstract class Level {
         new Panel('current-level', this.locale.currentLevel(), [this.description()]).show()
     }
 
-    private showUnitTestsPanel(unitTests: UnitTest[], newUnitTest: UnitTest|undefined): void {
+    private showUnitTestsPanel(unitTests: readonly UnitTest[], newUnitTest?: UnitTest): void {
         new Panel('unit-tests', this.locale.unitTests(),
             unitTests.length === 0
             ? [new Paragraph().appendText(this.locale.youHaveNotWrittenAnyUnitTestsYet())]

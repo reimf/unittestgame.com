@@ -92,17 +92,17 @@ export class Candidate {
         return this.nonEmptyLines.join('\n');
     }
     toHtml() {
-        const divs = this.nonEmptyLines.map(line => Highlighter.line(line));
+        const divs = this.nonEmptyLines.map(line => new Highlighter(line).highlight());
         return new Code().appendChildren(divs);
     }
     toMutationHtml() {
-        const divs = this.nonEmptyLines.map(line => Highlighter.line(line).addClass('covered'));
+        const divs = this.nonEmptyLines.map(line => new Highlighter(line).highlight().addClass('covered'));
         return new Code().appendChildren(divs);
     }
     toHtmlWithPrevious(previousCandidate) {
         const pairs = this.zip(previousCandidate);
         const nonEmptyPairs = pairs.filter(([current, previous]) => current || previous);
-        const divs = nonEmptyPairs.map(([current, previous]) => Highlighter.lines(current, previous));
+        const divs = nonEmptyPairs.map(([current, previous]) => new Highlighter(current, previous).highlight());
         return new Code().appendChildren(divs);
     }
     toHtmlWithCoverage(coveredCandidate) {
@@ -110,7 +110,7 @@ export class Candidate {
         const divs = pairs.map(([current, previous]) => {
             const isCovered = !current.startsWith('  ') || current === previous;
             const className = isCovered ? 'covered' : 'notcovered';
-            return Highlighter.line(current).addClass(className);
+            return new Highlighter(current).highlight().addClass(className);
         });
         return new Code().appendChildren(divs);
     }

@@ -42,7 +42,7 @@ export abstract class UseCase {
             yield this.createCandidate(lines)
     }
 
-    private createCandidate(lines: string[]): Candidate {
+    private createCandidate(lines: readonly string[]): Candidate {
         const parameterList = this.parameters.map(parameter => parameter.name).join(', ')
         const indentedLines = [
             `function ${this.unit.name}(${parameterList}) {`,

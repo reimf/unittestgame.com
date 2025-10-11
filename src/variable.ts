@@ -27,9 +27,9 @@ export abstract class Variable {
 }
 
 export class RadioVariable extends Variable {
-    private readonly texts: string[]
+    private readonly texts: readonly string[]
 
-    public constructor(label: string, name: string, texts: string[]) {
+    public constructor(label: string, name: string, texts: readonly string[]) {
         super(label, name)
         this.texts = texts
     }

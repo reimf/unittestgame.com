@@ -10,7 +10,7 @@ export class Candidate {
     private readonly complexityTestDrivenDevelopment: number
     private readonly complexityMutationTesting: number
 
-    public constructor(lines: string[]) {
+    public constructor(lines: readonly string[]) {
         this.lines = lines.map(line => line.replace(/\\\\/g, '\\'))
         this.nonEmptyLines = lines.filter(line => line)
         const code = lines.join('\n')
@@ -70,11 +70,11 @@ export class Candidate {
         return tokens.length
     }
 
-    private getComplexityMutationTesting(lines: string[]): number {
+    private getComplexityMutationTesting(lines: readonly string[]): number {
         return lines.reduce((subtotal, line, index) => subtotal + (line && line.trim() !== 'return undefined' ? Math.pow(2, index) : 0), 0)
     }
 
-    public execute(argumentsList: any[]): any {
+    public execute(argumentsList: readonly any[]): any {
         try {
             return this.function(...argumentsList)
         }
@@ -83,11 +83,11 @@ export class Candidate {
         }
     }
 
-    public failingTestResults(unitTests: UnitTest[]): TestResult[] {
+    public failingTestResults(unitTests: readonly UnitTest[]): TestResult[] {
         return unitTests.map(unitTest => new TestResult(this, unitTest)).filter(testResult => !testResult.passes)
     }
 
-    public passes(unitTests: UnitTest[]): boolean {
+    public passes(unitTests: readonly UnitTest[]): boolean {
         return this.failingTestResults(unitTests).length === 0
     }
 
@@ -108,19 +108,19 @@ export class Candidate {
     }
 
     public toHtml(): Code {
-        const divs = this.nonEmptyLines.map(line => Highlighter.line(line))
+        const divs = this.nonEmptyLines.map(line => new Highlighter(line).highlight())
         return new Code().appendChildren(divs)
     }
 
     public toMutationHtml(): Code {
-        const divs = this.nonEmptyLines.map(line => Highlighter.line(line).addClass('covered'))
+        const divs = this.nonEmptyLines.map(line => new Highlighter(line).highlight().addClass('covered'))
         return new Code().appendChildren(divs)
     }
 
     public toHtmlWithPrevious(previousCandidate: Candidate): Code {
         const pairs = this.zip(previousCandidate)
         const nonEmptyPairs = pairs.filter(([current, previous]) => current || previous)
-        const divs = nonEmptyPairs.map(([current, previous]) => Highlighter.lines(current, previous))
+        const divs = nonEmptyPairs.map(([current, previous]) => new Highlighter(current, previous).highlight())
         return new Code().appendChildren(divs)
     }
 
@@ -129,7 +129,7 @@ export class Candidate {
         const divs = pairs.map(([current, previous]) => {
             const isCovered = !current.startsWith('  ') || current === previous
             const className = isCovered ? 'covered' : 'notcovered'
-            return Highlighter.line(current).addClass(className)
+            return new Highlighter(current).highlight().addClass(className)
         })
         return new Code().appendChildren(divs)
     }

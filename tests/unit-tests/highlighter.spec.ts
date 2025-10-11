@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test'
 import { Highlighter } from '../../src/highlighter.js'
 
 test.describe('class Highlighter', () => {
-    test('line method', () => {
+    test('highlight with 1 argument', () => {
         const javascript = 'function isFloatFormat(text) {' +
         '  let regex = new RegExp("/#@/").test(text + "abc")' +
         '  if (!/[#@]/.test(text)) regex += speed.toFixed(1)' +
@@ -11,7 +11,7 @@ test.describe('class Highlighter', () => {
         '  return undefined' +
         '}'
 
-        const html = Highlighter.line(javascript).toString()
+        const html = new Highlighter(javascript).highlight().toString()
         expect(html).toBe(
             '<div>' +
                 '<span class="keyword">function</span>' +
@@ -133,7 +133,7 @@ test.describe('class Highlighter', () => {
         const textFrom = 'if (age > 18) return true'
         const textTo = 'if (age >= 19) return false'
 
-        const html = Highlighter.lines(textTo, textFrom).toString()
+        const html = new Highlighter(textTo, textFrom).highlight().toString()
         expect(html).toBe(
             '<div>' +
                 '<span class="keyword">if</span>' +

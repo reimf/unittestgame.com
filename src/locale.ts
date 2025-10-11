@@ -1,17 +1,17 @@
-type LocalisedText = {
+type LocalisableText = {
     en: string
     nl: string
 }
 
 export class Locale {
-    private readonly lng: keyof LocalisedText
+    private readonly lng: keyof LocalisableText
 
     public constructor(lang: string) {
         const lng = ['en', 'nl'].includes(lang) ? lang : 'en'
-        this.lng = lng as keyof LocalisedText
+        this.lng = lng as keyof LocalisableText
     }
 
-    private pick(localisedText: LocalisedText): string {
+    private pick(localisedText: LocalisableText): string {
         return localisedText[this.lng]
     }
 
@@ -521,8 +521,8 @@ export class Locale {
 
     public returnFizzIfTheNumberIsDivisibleBy3(): string {
         return this.pick({
-            en: 'Return "Fizz" if the number is divisible by 3, "Buzz" if the number is divisible by 5, "FizzBuzz" if the number is divisible by both 3 and 5, and for all other numbers the number itself.',
-            nl: 'Geef "Fizz" terug als het getal deelbaar is door 3, "Buzz" als het getal deelbaar is door 5, "FizzBuzz" als het getal deelbaar is door zowel 3 als 5, en voor alle andere getallen het getal zelf.',
+            en: 'Return "Fizz" if the number is divisible by 3, "Buzz" if the number is divisible by 5, "FizzBuzz" if the number is divisible by both 3 and 5, and "Other" for all other numbers.',
+            nl: 'Geef "Fizz" terug als het getal deelbaar is door 3, "Buzz" als het getal deelbaar is door 5, "FizzBuzz" als het getal deelbaar is door zowel 3 als 5, en "Other" voor alle andere getallen.',
         })
     }
 

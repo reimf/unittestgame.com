@@ -13,7 +13,7 @@ export class UnitTest {
     toHtmlWithResult(result) {
         const argumentsText = this.argumentList.map((value, index) => this.parameters[index].format(value)).join(', ');
         const text = `${this.unit.name}(${argumentsText}) === ${this.unit.format(result)}`;
-        return Highlighter.line(text);
+        return new Highlighter(text).highlight();
     }
     toHtml() {
         return this.toHtmlWithResult(this.expected);
