@@ -25,7 +25,7 @@ export abstract class Level {
 
     protected readonly locale: Locale
     private readonly useCase: UseCase
-    private readonly levelNumber: number
+    public readonly levelNumber: number
     private readonly totalNumberOfLevels: number
     private readonly isLevelFinished: Completed
     private readonly exampleStrings: string[]

@@ -1,5 +1,5 @@
 import { Panel, ComputerMessage, QuestionMessage } from './frame.js';
-import { OrderedList, ListItem } from './html.js';
+import { Div, Span, OrderedList, ListItem } from './html.js';
 import { MutationTesting } from './level-mutation-testing.js';
 import { TestDrivenDevelopment } from './level-test-driven-development.js';
 import { Locale } from './locale.js';
@@ -86,7 +86,11 @@ export class Main {
     showFinishedLevelsPanel(previousLevel) {
         const finishedLevels = this.getFinishedLevels();
         if (finishedLevels.length > 0) {
-            new Panel('finished-levels', this.locale.finishedLevels(), [new OrderedList().appendChildren(finishedLevels.map(level => new ListItem().appendText(level.description()).addClass(level === previousLevel ? 'new' : 'old')))]).show();
+            const spans = this.levels.map(level => new Span().appendText(`${level.levelNumber}`).addClass(finishedLevels.includes(level) ? 'finished' : 'notfinished'));
+            const div = new Div().addClass('levelnumbers').appendChildren(spans);
+            const listItems = finishedLevels.map(level => new ListItem().appendText(level.description()).addClass(level === previousLevel ? 'new' : 'old'));
+            const orderedList = new OrderedList().appendChildren(listItems);
+            new Panel('finished-levels', this.locale.finishedLevels(), [div, orderedList]).show();
         }
     }
     showNextLevel() {

@@ -18,6 +18,8 @@
     --deleted-background: #fdd;
     --new-background: #ddf;
     --old-background: #fff;
+    --finished-background: #449;
+    --notfinished-background: #ccc;
 }
 
 * {
@@ -349,8 +351,28 @@ a, button, input, label:has(input[type="radio"]:not(:disabled)) {
                 }
                 
                 p {
-                    margin-left: 0.75rem;
-                    margin-right: 0.75rem;
+                    margin: 0.75rem;
+                }
+
+                .levelnumbers {
+                    margin: 0.75rem;
+                    
+                    span {
+                        display: inline-block;
+                        margin: 0.1rem;
+                        padding: 0 0.2rem;
+                        transform: skew(-15deg);
+
+                        &.finished {
+                            background-color: var(--finished-background);
+                            color: var(--light-text);
+                        }
+
+                        &.notfinished {
+                            background-color: var(--notfinished-background);
+                            color: var(--light-text);
+                        }
+                    }
                 }
             }
         }
