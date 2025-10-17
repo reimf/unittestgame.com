@@ -64,10 +64,10 @@ export class Locale {
         })
     }
 
-    public level(levelNumber: number, totalNumberOfLevels: number, levelName: string, useCaseName: string, emoji: string): string {
+    public level(levelNumber: number, levelName: string, useCaseName: string, emoji: string): string {
         return this.pick({
-            en: `Level ${levelNumber} of ${totalNumberOfLevels} - ${useCaseName} - ${levelName} - ${emoji}`,
-            nl: `Level ${levelNumber} van ${totalNumberOfLevels} - ${useCaseName} - ${levelName} - ${emoji}`,
+            en: `Level ${levelNumber} - ${useCaseName} - ${levelName} - ${emoji}`,
+            nl: `Level ${levelNumber} - ${useCaseName} - ${levelName} - ${emoji}`,
         })
     }
 
@@ -560,8 +560,8 @@ export class Locale {
             '+-------------------+'
         )
         return this.pick({
-            en: 'The function receives the speed in kilometers per hour with at most one decimal. If possible, show one decimal (e.g. 13 displays "13.0"). Otherwise, round to an integer (e.g. 87.6 displays "88"). Instead of "0.0" display "START". If the speed no longer fits on the display, then display "DANGER" (e.g. 300 displays "DANGER").\nThe display looks like this, where every X is a LED light:\n' + display,
-            nl: 'De functie ontvangt de snelheid in kilometers per uur met maximaal één decimaal. Indien mogelijk, toon één decimaal (bijv. 13 toont "13.0"). Rond anders af op een geheel getal (bijv. 87.6 toont "88"). In plaats van "0.0" toon "START". Als de snelheid niet meer op het scherm past, toon dan "DANGER" (bijv. 300 toont "DANGER").\nHet scherm ziet er zo uit, waarbij elke X een LED-lampje is:\n' + display,
+            en: 'The function receives the speed in kilometers per hour with at most one decimal. If possible, show one decimal (e.g. 13 displays "13.0"). Otherwise, round to an integer (e.g. 87.6 displays "88"). If the car isn\'t moving, then display "START". If the speed no longer fits on the display, then display "DANGER" (e.g. 300 displays "DANGER").\nThe display looks like this, where every X is a LED light:\n' + display,
+            nl: 'De functie ontvangt de snelheid in kilometers per uur met maximaal één decimaal. Indien mogelijk, toon één decimaal (bijv. 13 toont "13.0"). Rond anders af op een geheel getal (bijv. 87.6 toont "88"). Als de auto niet beweegt, toon dan "START". Als de snelheid niet meer op het scherm past, toon dan "DANGER" (bijv. 300 toont "DANGER").\nHet scherm ziet er zo uit, waarbij elke X een LED-lampje is:\n' + display,
         })
     }
 
@@ -572,14 +572,14 @@ export class Locale {
         })
     }
 
-    public returnTrueIfTheAgeIs18YearsOrOverAndFalseIfTheAgeIsUnder18(): string {
+    public returnTrueIfTheAgeIs18YearsOrOverAndReturnFalseIfTheAgeIsUnder18(): string {
         return this.pick({
             en: 'Return true if the age is 18 years or over and return false if the age is under 18.',
             nl: 'Geef true terug als de leeftijd 18 jaar of ouder is en geef false terug als de leeftijd onder de 18 is.',
         })
     }
 
-    public returnGoodIfThePriceIsGoodAndTheQualityIsGood(): string {
+    public returnGoodIfThePriceIsLessThan20AndTheQualityIsAtLeast7(): string {
         return this.pick({
             en: 'Return "Good" if the price is less than 20 and the quality is at least 7. Return "Bad" if the price is 20 or more and the quality is less than 7. In all other cases return "Ok".',
             nl: 'Geef "Goed" terug als de prijs minder dan 20 is en de kwaliteit ten minste 7 is. Geef "Slecht" terug als de prijs 20 of meer is en de kwaliteit minder dan 7 is. Geef in alle andere gevallen "Ok" terug.',

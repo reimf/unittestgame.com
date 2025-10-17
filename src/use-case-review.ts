@@ -10,7 +10,7 @@ export class Review extends UseCase {
         return 'Review'
     }
     public specification(): string {
-        return this.locale.returnGoodIfThePriceIsGoodAndTheQualityIsGood()
+        return this.locale.returnGoodIfThePriceIsLessThan20AndTheQualityIsAtLeast7()
     }
 
     protected getParameters(): Variable[] {

@@ -8,7 +8,7 @@ export class Review extends UseCase {
         return 'Review';
     }
     specification() {
-        return this.locale.returnGoodIfThePriceIsGoodAndTheQualityIsGood();
+        return this.locale.returnGoodIfThePriceIsLessThan20AndTheQualityIsAtLeast7();
     }
     getParameters() {
         return [

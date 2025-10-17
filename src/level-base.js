@@ -80,9 +80,11 @@ export class Level {
         if (exampleMessage)
             new ComputerMessage([exampleMessage]).add();
     }
+    emoji() {
+        return ['🔓', '🥇', '🥈', '🥉'].at(this.isFinished()) || '🥉';
+    }
     description() {
-        const emoji = ['🔓', '🥇', '🥈', '🥉'].at(this.isFinished()) || '🥉';
-        return this.locale.level(this.levelNumber, this.totalNumberOfLevels, this.name(), this.useCase.name(), emoji);
+        return this.locale.level(this.levelNumber, this.name(), this.useCase.name(), this.emoji());
     }
     isFinished() {
         return this.isLevelFinished.get();
