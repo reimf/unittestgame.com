@@ -18,8 +18,8 @@
     --deleted-background: #fdd;
     --new-background: #ddf;
     --old-background: #fff;
-    --finished-background: #449;
-    --notfinished-background: #ccc;
+    --levelnumbers-background: #449;
+    --levelnumbers-foreground: #ccc;
 }
 
 * {
@@ -355,22 +355,33 @@ a, button, input, label:has(input[type="radio"]:not(:disabled)) {
                 }
 
                 .levelnumbers {
+                    display: inline-flex;
+                    flex-direction: row;
+                    flex-wrap: wrap;
                     margin: 0.75rem;
-                    
-                    span {
-                        display: inline-block;
-                        margin: 0.1rem;
-                        padding: 0 0.2rem;
-                        transform: skew(-15deg);
+                    overflow: hidden;
 
-                        &.finished {
-                            background-color: var(--finished-background);
-                            color: var(--light-text);
-                        }
+                    div {
+                        display: flex;
+                        flex: 1;
+                        flex-direction: row;
 
-                        &.notfinished {
-                            background-color: var(--notfinished-background);
-                            color: var(--light-text);
+                        .cell {
+                            display: inline-block;
+                            flex: 1;
+                            line-height: 2rem;
+                            text-align: center;
+                            white-space: nowrap;
+
+                            .number {
+                                display: inline-block;
+                                text-align: center;
+                                width: 1rem;
+                            }
+
+                            .emoji {
+                                font-size: 1.75rem;
+                            }
                         }
                     }
                 }

@@ -38,14 +38,14 @@ test.describe('welcome', () => {
         const link = page.getByTestId('mutation-testing').getByRole('link', { name: 'more' });
         expect(await link.getAttribute('href')).toBe('https://en.wikipedia.org/wiki/Mutation_testing');
     });
-    test('has no levels panel', async () => {
-        const levelsPanel = page.getByTestId('levels');
-        await expect(levelsPanel).not.toBeAttached();
+    test('has finished levels panel', async () => {
+        const levelsPanel = page.getByTestId('finished-levels');
+        await expect(levelsPanel).toContainText('1▶️2🔒3🔒4🔒5🔒');
     });
     test('has see example message', async () => {
         const messages = page.getByTestId('messages');
         const button = messages.getByRole('button');
-        await expect(button).toHaveText('I want to play Level 1 of 20 - Battery Level - Test-Driven Development - 🔓');
+        await expect(button).toHaveText('I want to play Level 1 - Battery Level - Test-Driven Development');
     });
     test.afterAll(async () => {
         await page.close();

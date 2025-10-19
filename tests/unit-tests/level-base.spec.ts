@@ -9,7 +9,7 @@ test.describe('class Level', () => {
     const level = new MockLevel(locale, useCase, 1, 20)
 
     test('has a description', () => {
-        expect(level.description()).toBe('Level 1 of 20 - Mock Use Case - Mock Level - 🔓')
+        expect(level.description()).toBe('Level 1 - Mock Use Case - Mock Level')
     })
 
     test('is playable', () => {

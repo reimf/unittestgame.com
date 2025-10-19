@@ -51,10 +51,10 @@ export class Locale {
             nl: 'Wat wil je doen?',
         });
     }
-    level(levelNumber, levelName, useCaseName, emoji) {
+    level(levelNumber, levelName, useCaseName) {
         return this.pick({
-            en: `Level ${levelNumber} - ${useCaseName} - ${levelName} - ${emoji}`,
-            nl: `Level ${levelNumber} - ${useCaseName} - ${levelName} - ${emoji}`,
+            en: `Level ${levelNumber} - ${useCaseName} - ${levelName}`,
+            nl: `Level ${levelNumber} - ${useCaseName} - ${levelName}`,
         });
     }
     iWantToPlayTheNextLevel(levelDescription) {

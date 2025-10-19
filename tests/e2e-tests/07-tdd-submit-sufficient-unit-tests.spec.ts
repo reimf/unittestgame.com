@@ -9,7 +9,7 @@ test.describe('tdd submit sufficient unit test', () => {
         await context.addInitScript({ path: './tests/e2e-tests/init-script.js' })
         page = await context.newPage()
         await page.goto('/')
-        await page.getByRole('button', { name: 'I want to play Level 2 of 20 - Voting Age - Test-Driven Development - 🔓' }).click()
+        await page.getByRole('button', { name: 'I want to play Level 2 - Voting Age - Test-Driven Development' }).click()
 
         await page.getByLabel('Age').fill('16')
         await page.getByLabel('false').check()
@@ -37,13 +37,13 @@ test.describe('tdd submit sufficient unit test', () => {
 
     test('has finished levels panel', async () => {
         const finishedLevels = page.getByTestId('finished-levels')
-        await expect(finishedLevels).toContainText('Level 2 of 20 - Voting Age - Test-Driven Development')
+        await expect(finishedLevels).toContainText('1🥇2🥇3▶️4🔒5🔒')
     })
 
     test('has see example message', async () => {
         const messages = page.getByTestId('messages')
         const button = messages.getByRole('button')
-        await expect(button).toHaveText('I want to play Level 3 of 20 - Battery Level - Mutation Testing - 🔓')
+        await expect(button).toHaveText('I want to play Level 3 - Battery Level - Mutation Testing')
     })
 
     test.afterAll(async () => {

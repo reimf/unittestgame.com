@@ -1,5 +1,5 @@
 import { Panel, ComputerMessage, QuestionMessage } from './frame.js';
-import { Div, Span, OrderedList, ListItem } from './html.js';
+import { Div, Span } from './html.js';
 import { MutationTesting } from './level-mutation-testing.js';
 import { TestDrivenDevelopment } from './level-test-driven-development.js';
 import { Locale } from './locale.js';
@@ -55,23 +55,20 @@ export class Main {
         this.showBasicDefinitionMutationTesting();
         this.continue();
     }
-    continue(previousLevel) {
-        this.showFinishedLevelsPanel(previousLevel);
+    continue() {
+        this.showFinishedLevelsPanel();
         this.showInvitationMessage();
         this.showNextLevel();
     }
     play(level) {
         Panel.removeAll();
-        level.play(() => this.continue(level));
+        level.play(() => this.continue());
     }
     showBasicDefinitionTestDrivenDevelopment() {
         new Panel('test-driven-development', this.locale.testDrivenDevelopment(), [this.locale.definitionTDD()]).show();
     }
     showBasicDefinitionMutationTesting() {
         new Panel('mutation-testing', this.locale.mutationTesting(), [this.locale.definitionMT()]).show();
-    }
-    getFinishedLevels() {
-        return this.levels.filter(level => level.isFinished());
     }
     showWelcomeMessage() {
         new ComputerMessage([this.locale.welcomeToUnittestgame()]).add();
@@ -83,15 +80,19 @@ export class Main {
     showInvitationMessage() {
         new ComputerMessage([this.locale.whatDoYouWantToDo()]).add();
     }
-    showFinishedLevelsPanel(previousLevel) {
-        const finishedLevels = this.getFinishedLevels();
-        if (finishedLevels.length > 0) {
-            const spans = this.levels.map(level => new Span().appendText(`${level.levelNumber}`).addClass(finishedLevels.includes(level) ? 'finished' : 'notfinished'));
-            const div = new Div().addClass('levelnumbers').appendChildren(spans);
-            const listItems = finishedLevels.map(level => new ListItem().appendText(level.description()).addClass(level === previousLevel ? 'new' : 'old'));
-            const orderedList = new OrderedList().appendChildren(listItems);
-            new Panel('finished-levels', this.locale.finishedLevels(), [div, orderedList]).show();
-        }
+    showFinishedLevelsPanel() {
+        const cells = this.levels.map(level => new Span().addClass('cell').appendChildren([
+            new Span().addClass('number').appendText(`${level.levelNumber}`),
+            new Span().addClass('emoji').appendText(`${level.emoji(this.isNextLevel(level))}`)
+        ]));
+        const numberOfRows = 4;
+        const cellsPerRow = cells.length / numberOfRows;
+        const rows = [...Array(numberOfRows)].map((_, index) => new Div().appendChildren(cells.slice(index * cellsPerRow, (index + 1) * cellsPerRow)));
+        const table = new Div().addClass('levelnumbers').appendChildren(rows);
+        new Panel('finished-levels', this.locale.finishedLevels(), [table]).show();
+    }
+    isNextLevel(level) {
+        return level === this.levels.find(level => !level.isFinished());
     }
     showNextLevel() {
         const nextLevel = this.levels.find(level => !level.isFinished());

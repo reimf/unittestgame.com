@@ -59,15 +59,15 @@ export class Main {
         this.continue()
     }
 
-    private continue(previousLevel?: Level): void {
-        this.showFinishedLevelsPanel(previousLevel)
+    private continue(): void {
+        this.showFinishedLevelsPanel()
         this.showInvitationMessage()
         this.showNextLevel()
     }
 
     private play(level: Level): void {
         Panel.removeAll()
-        level.play(() => this.continue(level))
+        level.play(() => this.continue())
     }
 
     public showBasicDefinitionTestDrivenDevelopment(): void {
@@ -76,10 +76,6 @@ export class Main {
 
     public showBasicDefinitionMutationTesting(): void {
         new Panel('mutation-testing', this.locale.mutationTesting(), [this.locale.definitionMT()]).show()
-    }
-
-    private getFinishedLevels(): Level[] {
-        return this.levels.filter(level => level.isFinished())
     }
 
     private showWelcomeMessage(): void {
@@ -95,15 +91,26 @@ export class Main {
         new ComputerMessage([this.locale.whatDoYouWantToDo()]).add()
     }
 
-    private showFinishedLevelsPanel(previousLevel?: Level): void {
-        const finishedLevels = this.getFinishedLevels()
-        if (finishedLevels.length > 0) {
-            const spans = this.levels.map(level => new Span().appendText(`${level.levelNumber}`).addClass(finishedLevels.includes(level) ? 'finished' : 'notfinished'))
-            const div = new Div().addClass('levelnumbers').appendChildren(spans)
-            const listItems = finishedLevels.map(level => new ListItem().appendText(level.description()).addClass(level === previousLevel ? 'new' : 'old'))
-            const orderedList = new OrderedList().appendChildren(listItems)
-            new Panel('finished-levels', this.locale.finishedLevels(), [div, orderedList]).show()
-        }
+    private showFinishedLevelsPanel(): void {
+        const cells = this.levels.map(level =>
+            new Span().addClass('cell').appendChildren([
+                new Span().addClass('number').appendText(`${level.levelNumber}`),
+                new Span().addClass('emoji').appendText(`${level.emoji(this.isNextLevel(level))}`)
+            ])
+        )
+        const numberOfRows = 4
+        const cellsPerRow = cells.length / numberOfRows
+        const rows = [...Array(numberOfRows)].map((_, index) =>
+            new Div().appendChildren(
+                cells.slice(index * cellsPerRow, (index + 1) * cellsPerRow)
+            )
+        )
+        const table = new Div().addClass('levelnumbers').appendChildren(rows)
+        new Panel('finished-levels', this.locale.finishedLevels(), [table]).show()
+    }
+
+    private isNextLevel(level: Level): boolean {
+        return level === this.levels.find(level => !level.isFinished())        
     }
 
     private showNextLevel(): void {

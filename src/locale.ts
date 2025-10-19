@@ -64,10 +64,10 @@ export class Locale {
         })
     }
 
-    public level(levelNumber: number, levelName: string, useCaseName: string, emoji: string): string {
+    public level(levelNumber: number, levelName: string, useCaseName: string): string {
         return this.pick({
-            en: `Level ${levelNumber} - ${useCaseName} - ${levelName} - ${emoji}`,
-            nl: `Level ${levelNumber} - ${useCaseName} - ${levelName} - ${emoji}`,
+            en: `Level ${levelNumber} - ${useCaseName} - ${levelName}`,
+            nl: `Level ${levelNumber} - ${useCaseName} - ${levelName}`,
         })
     }
 

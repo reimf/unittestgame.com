@@ -9,7 +9,7 @@ test.describe('mt submit sufficient unit test', () => {
         await context.addInitScript({ path: './tests/e2e-tests/init-script.js' });
         page = await context.newPage();
         await page.goto('/');
-        await page.getByRole('button', { name: 'I want to play Level 4 of 20 - Even or Odd - Mutation Testing - 🔓' }).click();
+        await page.getByRole('button', { name: 'I want to play Level 4 - Even or Odd - Mutation Testing' }).click();
         await page.getByLabel('Number').fill('42');
         await page.getByLabel('true').check();
         await page.getByRole('button', { name: 'I want to add this unit test' }).click();
@@ -24,12 +24,12 @@ test.describe('mt submit sufficient unit test', () => {
     });
     test('has finished levels panel', async () => {
         const finishedLevels = page.getByTestId('finished-levels');
-        await expect(finishedLevels).toContainText('Level 4 of 20 - Even or Odd - Mutation Testing');
+        await expect(finishedLevels).toContainText('1🥇2🥇3🥇4🥇5▶️');
     });
     test('has level menu message', async () => {
         const messages = page.getByTestId('messages');
         const button = messages.getByRole('button');
-        await expect(button).toHaveText('I want to play Level 5 of 20 - FizzBuzz - Test-Driven Development - 🔓');
+        await expect(button).toHaveText('I want to play Level 5 - FizzBuzz - Test-Driven Development');
     });
     test.afterAll(async () => {
         await page.close();

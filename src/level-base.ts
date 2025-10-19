@@ -107,12 +107,14 @@ export abstract class Level {
             new ComputerMessage([exampleMessage]).add()
     }
 
-    private emoji(): string {
-        return ['🔓', '🥇', '🥈', '🥉'].at(this.isFinished()) || '🥉'
+    public emoji(isNextLevel: boolean): string {
+        if (isNextLevel)
+            return '▶️'
+        return ['🔒', '🥇', '🥈', '🥉'].at(this.isFinished()) || '🥉'
     }
 
     public description(): string {
-        return this.locale.level(this.levelNumber, this.name(), this.useCase.name(), this.emoji())
+        return this.locale.level(this.levelNumber, this.name(), this.useCase.name())
     }
 
     public isFinished(): number {

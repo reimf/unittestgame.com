@@ -80,11 +80,13 @@ export class Level {
         if (exampleMessage)
             new ComputerMessage([exampleMessage]).add();
     }
-    emoji() {
-        return ['🔓', '🥇', '🥈', '🥉'].at(this.isFinished()) || '🥉';
+    emoji(isNextLevel) {
+        if (isNextLevel)
+            return '▶️';
+        return ['🔒', '🥇', '🥈', '🥉'].at(this.isFinished()) || '🥉';
     }
     description() {
-        return this.locale.level(this.levelNumber, this.name(), this.useCase.name(), this.emoji());
+        return this.locale.level(this.levelNumber, this.name(), this.useCase.name());
     }
     isFinished() {
         return this.isLevelFinished.get();
