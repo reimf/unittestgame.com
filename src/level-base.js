@@ -9,7 +9,6 @@ export class Level {
     locale;
     useCase;
     levelNumber;
-    totalNumberOfLevels;
     isLevelFinished;
     exampleStrings;
     callback;
@@ -20,11 +19,10 @@ export class Level {
     failingTestResult = undefined;
     newUnitTest = undefined;
     numberOfSubmissions = 0;
-    constructor(locale, useCase, levelNumber, totalNumberOfLevels) {
+    constructor(locale, useCase, levelNumber) {
         this.locale = locale;
         this.useCase = useCase;
         this.levelNumber = levelNumber;
-        this.totalNumberOfLevels = totalNumberOfLevels;
         this.isLevelFinished = new Completed(`level-${this.identifier()}-${useCase.identifier()}-finished`);
         this.exampleStrings = [...this.exampleStringGenerator(useCase)];
     }
@@ -80,10 +78,8 @@ export class Level {
         if (exampleMessage)
             new ComputerMessage([exampleMessage]).add();
     }
-    emoji(isNextLevel) {
-        if (isNextLevel)
-            return '▶️';
-        return ['🔒', '🥇', '🥈', '🥉'].at(this.isFinished()) || '🥉';
+    emoji(nextLevel) {
+        return this === nextLevel ? '▶️' : ['🔒', '🥇', '🥈', '🥉'].at(this.isFinished()) || '🥉';
     }
     description() {
         return this.locale.level(this.levelNumber, this.name(), this.useCase.name());

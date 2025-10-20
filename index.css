@@ -18,8 +18,10 @@
     --deleted-background: #fdd;
     --new-background: #ddf;
     --old-background: #fff;
-    --levelnumbers-background: #449;
-    --levelnumbers-foreground: #ccc;
+    --unlocked-background: #c33;
+    --unlocked-foreground: #fff;
+    --locked-background: #ccc;
+    --locked-foreground: #999;
 }
 
 * {
@@ -354,35 +356,34 @@ a, button, input, label:has(input[type="radio"]:not(:disabled)) {
                     margin: 0.75rem;
                 }
 
-                .levelnumbers {
-                    display: inline-flex;
-                    flex-direction: row;
-                    flex-wrap: wrap;
-                    margin: 0.75rem;
-                    overflow: hidden;
+                .cell {
+                    border-radius: 0.5rem;
+                    display: inline-block;
+                    margin: 0 0.5rem 0.5rem 0;
+                    padding: 0.5rem;
+                    text-align: center;
+                    white-space: nowrap;
 
-                    div {
-                        display: flex;
-                        flex: 1;
-                        flex-direction: row;
+                    &.unlocked {
+                        background-color: var(--unlocked-background);
+                        color: var(--unlocked-foreground);
+                    }
 
-                        .cell {
-                            display: inline-block;
-                            flex: 1;
-                            line-height: 2rem;
-                            text-align: center;
-                            white-space: nowrap;
+                    &.locked {
+                        background-color: var(--locked-background);
+                        color: var(--locked-foreground);
+                        opacity: 0.5;
+                    }
 
-                            .number {
-                                display: inline-block;
-                                text-align: center;
-                                width: 1rem;
-                            }
+                    .number {
+                        display: inline-block;
+                        text-align: center;
+                        width: 1rem;
+                    }
 
-                            .emoji {
-                                font-size: 1.75rem;
-                            }
-                        }
+                    .emoji {
+                        font-size: 1.75rem;
+                        vertical-align: middle;
                     }
                 }
             }

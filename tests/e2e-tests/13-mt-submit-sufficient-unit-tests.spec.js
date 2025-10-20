@@ -22,9 +22,9 @@ test.describe('mt submit sufficient unit test', () => {
         const messages = page.getByTestId('messages');
         await expect(messages).toContainText('The Function is indeed fully tested');
     });
-    test('has finished levels panel', async () => {
-        const finishedLevels = page.getByTestId('finished-levels');
-        await expect(finishedLevels).toContainText('1🥇2🥇3🥇4🥇5▶️');
+    test('has level overview panel', async () => {
+        const levelOverview = page.getByTestId('level-overview');
+        await expect(levelOverview).toContainText('1🥇2🥇3🥇4🥇5▶️');
     });
     test('has level menu message', async () => {
         const messages = page.getByTestId('messages');

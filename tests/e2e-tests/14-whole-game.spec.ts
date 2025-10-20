@@ -34,30 +34,30 @@ test.describe('whole game', () => {
         const review: UseCase = new Review(locale)
         const speedDisplay: UseCase = new SpeedDisplay(locale)
 
-        const exampleTestDrivenDevelopment: Level = new TestDrivenDevelopment(locale, batteryLevel, 1, 20)
-        const exampleMutationTesting: Level = new MutationTesting(locale, batteryLevel, 3, 20)
+        const exampleTestDrivenDevelopment: Level = new TestDrivenDevelopment(locale, batteryLevel, 1)
+        const exampleMutationTesting: Level = new MutationTesting(locale, batteryLevel, 3)
         const examples = [exampleTestDrivenDevelopment, exampleMutationTesting]
         const levelsAndUseCases: LevelAndUseCase[] = [
             [exampleTestDrivenDevelopment, batteryLevel],
-            [new TestDrivenDevelopment(locale, votingAge, 2, 20), votingAge],
+            [new TestDrivenDevelopment(locale, votingAge, 2), votingAge],
             [exampleMutationTesting, batteryLevel],
-            [new MutationTesting(locale, evenOdd, 4, 20), evenOdd],
-            [new TestDrivenDevelopment(locale, fizzBuzz, 5, 20), fizzBuzz],
-            [new MutationTesting(locale, triangleType, 6, 20), triangleType],
-            [new TestDrivenDevelopment(locale, review, 7, 20), review],
-            [new MutationTesting(locale, votingAge, 8, 20), votingAge],
-            [new TestDrivenDevelopment(locale, evenOdd, 9, 20), evenOdd],
-            [new MutationTesting(locale, review, 10, 20), review],
-            [new TestDrivenDevelopment(locale, triangleType, 11, 20), triangleType],
-            [new MutationTesting(locale, fizzBuzz, 12, 20), fizzBuzz],
-            [new TestDrivenDevelopment(locale, leapYear, 13, 20), leapYear],
-            [new MutationTesting(locale, passwordStrength, 14, 20), passwordStrength],
-            [new TestDrivenDevelopment(locale, speedDisplay, 15, 20), speedDisplay],
-            [new MutationTesting(locale, floatFormat, 16, 20), floatFormat],
-            [new TestDrivenDevelopment(locale, passwordStrength, 17, 20), passwordStrength],
-            [new MutationTesting(locale, leapYear, 18, 20), leapYear],
-            [new TestDrivenDevelopment(locale, floatFormat, 19, 20), floatFormat],
-            [new MutationTesting(locale, speedDisplay, 20, 20), speedDisplay],
+            [new MutationTesting(locale, evenOdd, 4), evenOdd],
+            [new TestDrivenDevelopment(locale, fizzBuzz, 5), fizzBuzz],
+            [new MutationTesting(locale, triangleType, 6), triangleType],
+            [new TestDrivenDevelopment(locale, review, 7), review],
+            [new MutationTesting(locale, votingAge, 8), votingAge],
+            [new TestDrivenDevelopment(locale, evenOdd, 9), evenOdd],
+            [new MutationTesting(locale, review, 10), review],
+            [new TestDrivenDevelopment(locale, triangleType, 11), triangleType],
+            [new MutationTesting(locale, fizzBuzz, 12), fizzBuzz],
+            [new TestDrivenDevelopment(locale, leapYear, 13), leapYear],
+            [new MutationTesting(locale, passwordStrength, 14), passwordStrength],
+            [new TestDrivenDevelopment(locale, speedDisplay, 15), speedDisplay],
+            [new MutationTesting(locale, floatFormat, 16), floatFormat],
+            [new TestDrivenDevelopment(locale, passwordStrength, 17), passwordStrength],
+            [new MutationTesting(locale, leapYear, 18), leapYear],
+            [new TestDrivenDevelopment(locale, floatFormat, 19), floatFormat],
+            [new MutationTesting(locale, speedDisplay, 20), speedDisplay],
         ]
 
         const context = await browser.newContext()

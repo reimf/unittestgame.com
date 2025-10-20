@@ -273,10 +273,10 @@ export class Locale {
             nl: 'De Functie',
         });
     }
-    finishedLevels() {
+    levelOverview() {
         return this.pick({
-            en: 'Finished levels',
-            nl: 'Gespeelde levels',
+            en: 'Level Overview',
+            nl: 'Level Overzicht',
         });
     }
     iAddedTheUnitTestButNoExtraLinesOfTheFunctionAreTested() {

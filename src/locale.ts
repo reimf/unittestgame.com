@@ -323,10 +323,10 @@ export class Locale {
         })
     }
 
-    public finishedLevels(): string {
+    public levelOverview(): string {
         return this.pick({
-            en: 'Finished levels',
-            nl: 'Gespeelde levels',
+            en: 'Level Overview',
+            nl: 'Level Overzicht',
         })
     }
 

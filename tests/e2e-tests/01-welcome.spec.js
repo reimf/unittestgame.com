@@ -38,8 +38,8 @@ test.describe('welcome', () => {
         const link = page.getByTestId('mutation-testing').getByRole('link', { name: 'more' });
         expect(await link.getAttribute('href')).toBe('https://en.wikipedia.org/wiki/Mutation_testing');
     });
-    test('has finished levels panel', async () => {
-        const levelsPanel = page.getByTestId('finished-levels');
+    test('has level overview panel', async () => {
+        const levelsPanel = page.getByTestId('level-overview');
         await expect(levelsPanel).toContainText('1▶️2🔒3🔒4🔒5🔒');
     });
     test('has see example message', async () => {

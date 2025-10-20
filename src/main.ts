@@ -1,5 +1,5 @@
 import { Panel, ComputerMessage, QuestionMessage } from './frame.js'
-import { Div, Span, OrderedList, ListItem } from './html.js'
+import { Span, Paragraph } from './html.js'
 import { Level } from './level-base.js'
 import { MutationTesting } from './level-mutation-testing.js'
 import { TestDrivenDevelopment } from './level-test-driven-development.js'
@@ -29,26 +29,26 @@ export class Main {
     private readonly passwordStrength = new PasswordStrength(this.locale)
     private readonly speedDisplay = new SpeedDisplay(this.locale)
     private readonly levels: Level[] = [
-        new TestDrivenDevelopment(this.locale, this.batteryLevel, 1, 20),
-        new TestDrivenDevelopment(this.locale, this.votingAge, 2, 20),
-        new MutationTesting(this.locale, this.batteryLevel, 3, 20),
-        new MutationTesting(this.locale, this.evenOdd, 4, 20),
-        new TestDrivenDevelopment(this.locale, this.fizzBuzz, 5, 20),
-        new MutationTesting(this.locale, this.triangleType, 6, 20),
-        new TestDrivenDevelopment(this.locale, this.review, 7, 20),
-        new MutationTesting(this.locale, this.votingAge, 8, 20),
-        new TestDrivenDevelopment(this.locale, this.evenOdd, 9, 20),
-        new MutationTesting(this.locale, this.review, 10, 20),
-        new TestDrivenDevelopment(this.locale, this.triangleType, 11, 20),
-        new MutationTesting(this.locale, this.fizzBuzz, 12, 20),
-        new TestDrivenDevelopment(this.locale, this.leapYear, 13, 20),
-        new MutationTesting(this.locale, this.passwordStrength, 14, 20),
-        new TestDrivenDevelopment(this.locale, this.speedDisplay, 15, 20),
-        new MutationTesting(this.locale, this.floatFormat, 16, 20),
-        new TestDrivenDevelopment(this.locale, this.passwordStrength, 17, 20),
-        new MutationTesting(this.locale, this.leapYear, 18, 20),
-        new TestDrivenDevelopment(this.locale, this.floatFormat, 19, 20),
-        new MutationTesting(this.locale, this.speedDisplay, 20, 20),
+        new TestDrivenDevelopment(this.locale, this.batteryLevel, 1),
+        new TestDrivenDevelopment(this.locale, this.votingAge, 2),
+        new MutationTesting(this.locale, this.batteryLevel, 3),
+        new MutationTesting(this.locale, this.evenOdd, 4),
+        new TestDrivenDevelopment(this.locale, this.fizzBuzz, 5),
+        new MutationTesting(this.locale, this.triangleType, 6),
+        new TestDrivenDevelopment(this.locale, this.review, 7),
+        new MutationTesting(this.locale, this.votingAge, 8),
+        new TestDrivenDevelopment(this.locale, this.evenOdd, 9),
+        new MutationTesting(this.locale, this.review, 10),
+        new TestDrivenDevelopment(this.locale, this.triangleType, 11),
+        new MutationTesting(this.locale, this.fizzBuzz, 12),
+        new TestDrivenDevelopment(this.locale, this.leapYear, 13),
+        new MutationTesting(this.locale, this.passwordStrength, 14),
+        new TestDrivenDevelopment(this.locale, this.speedDisplay, 15),
+        new MutationTesting(this.locale, this.floatFormat, 16),
+        new TestDrivenDevelopment(this.locale, this.passwordStrength, 17),
+        new MutationTesting(this.locale, this.leapYear, 18),
+        new TestDrivenDevelopment(this.locale, this.floatFormat, 19),
+        new MutationTesting(this.locale, this.speedDisplay, 20),
     ]
 
     public start(): void {
@@ -60,7 +60,7 @@ export class Main {
     }
 
     private continue(): void {
-        this.showFinishedLevelsPanel()
+        this.showLevelOverviewPanel()
         this.showInvitationMessage()
         this.showNextLevel()
     }
@@ -91,26 +91,18 @@ export class Main {
         new ComputerMessage([this.locale.whatDoYouWantToDo()]).add()
     }
 
-    private showFinishedLevelsPanel(): void {
-        const cells = this.levels.map(level =>
-            new Span().addClass('cell').appendChildren([
+    private showLevelOverviewPanel(): void {
+        const nextLevel = this.levels.find(level => !level.isFinished())
+        const cells = this.levels.map(level => {
+            const emoji = level.emoji(nextLevel)
+            const state = level === nextLevel || level.isFinished() ? 'unlocked' : 'locked'
+            return new Span().addClass('cell').addClass(state).appendChildren([
                 new Span().addClass('number').appendText(`${level.levelNumber}`),
-                new Span().addClass('emoji').appendText(`${level.emoji(this.isNextLevel(level))}`)
+                new Span().addClass('emoji').appendText(emoji)
             ])
-        )
-        const numberOfRows = 4
-        const cellsPerRow = cells.length / numberOfRows
-        const rows = [...Array(numberOfRows)].map((_, index) =>
-            new Div().appendChildren(
-                cells.slice(index * cellsPerRow, (index + 1) * cellsPerRow)
-            )
-        )
-        const table = new Div().addClass('levelnumbers').appendChildren(rows)
-        new Panel('finished-levels', this.locale.finishedLevels(), [table]).show()
-    }
-
-    private isNextLevel(level: Level): boolean {
-        return level === this.levels.find(level => !level.isFinished())        
+        })
+        const paragraph = new Paragraph().appendChildren(cells)
+        new Panel('level-overview', this.locale.levelOverview(), [paragraph]).show()
     }
 
     private showNextLevel(): void {

@@ -35,9 +35,9 @@ test.describe('tdd submit sufficient unit test', () => {
         await expect(messages).toContainText('The Current Function is indeed according to the Specification')
     })
 
-    test('has finished levels panel', async () => {
-        const finishedLevels = page.getByTestId('finished-levels')
-        await expect(finishedLevels).toContainText('1🥇2🥇3▶️4🔒5🔒')
+    test('has level overview panel', async () => {
+        const levelOverview = page.getByTestId('level-overview')
+        await expect(levelOverview).toContainText('1🥇2🥇3▶️4🔒5🔒')
     })
 
     test('has see example message', async () => {
