@@ -6,7 +6,7 @@ test.describe('class Level Test-Driven Development', () => {
     const fixtureLevelStates = new FixtureLevelStates();
     const useCase = fixtureLevelStates.useCase;
     const locale = new Locale('en');
-    const level = new TestDrivenDevelopment(locale, useCase, 1, 20);
+    const level = new TestDrivenDevelopment(locale, useCase, 1);
     test.describe('method findSimplestPassingCandidate', () => {
         fixtureLevelStates.states.forEach(({ unitTests, simplestPassingCandidatesTestDrivenDevelopment }) => {
             test(`finds the simplest passing candidate for unit tests ${unitTests.map(unitTest => unitTest.argumentList)}`, () => {
