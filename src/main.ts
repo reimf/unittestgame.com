@@ -1,5 +1,5 @@
 import { Panel, ComputerMessage, QuestionMessage } from './frame.js'
-import { Span, Paragraph } from './html.js'
+import { Div, Span, Paragraph } from './html.js'
 import { Level } from './level-base.js'
 import { MutationTesting } from './level-mutation-testing.js'
 import { TestDrivenDevelopment } from './level-test-driven-development.js'
@@ -101,7 +101,8 @@ export class Main {
                 new Span().addClass('emoji').appendText(emoji)
             ])
         })
-        const paragraph = new Paragraph().appendChildren(cells)
+        const div = new Div().addClass('level-board').appendChildren(cells)
+        const paragraph = new Paragraph().appendChild(div)
         new Panel('level-overview', this.locale.levelOverview(), [paragraph]).show()
     }
 

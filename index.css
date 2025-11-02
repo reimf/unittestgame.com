@@ -18,10 +18,10 @@
     --deleted-background: #fdd;
     --new-background: #ddf;
     --old-background: #fff;
-    --unlocked-background: #c33;
+    --unlocked-background: #333;
     --unlocked-foreground: #fff;
-    --locked-background: #ccc;
-    --locked-foreground: #999;
+    --locked-background: #ddd;
+    --locked-foreground: #666;
 }
 
 * {
@@ -356,34 +356,39 @@ a, button, input, label:has(input[type="radio"]:not(:disabled)) {
                     margin: 0.75rem;
                 }
 
-                .cell {
-                    border-radius: 0.5rem;
-                    display: inline-block;
-                    margin: 0 0.5rem 0.5rem 0;
-                    padding: 0.5rem;
-                    text-align: center;
-                    white-space: nowrap;
+                .level-board {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 0.5rem;
 
-                    &.unlocked {
-                        background-color: var(--unlocked-background);
-                        color: var(--unlocked-foreground);
-                    }
-
-                    &.locked {
-                        background-color: var(--locked-background);
-                        color: var(--locked-foreground);
-                        opacity: 0.5;
-                    }
-
-                    .number {
+                    .cell {
+                        border-radius: 0.5rem;
                         display: inline-block;
+                        padding: 0.5rem;
                         text-align: center;
-                        width: 1rem;
-                    }
+                        white-space: nowrap;
 
-                    .emoji {
-                        font-size: 1.75rem;
-                        vertical-align: middle;
+                        &.unlocked {
+                            background-color: var(--unlocked-background);
+                            color: var(--unlocked-foreground);
+                        }
+
+                        &.locked {
+                            background-color: var(--locked-background);
+                            color: var(--locked-foreground);
+                            opacity: 0.3;
+                        }
+
+                        .number {
+                            display: inline-block;
+                            text-align: center;
+                            width: 1rem;
+                        }
+
+                        .emoji {
+                            font-size: 1.75rem;
+                            vertical-align: middle;
+                        }
                     }
                 }
             }
