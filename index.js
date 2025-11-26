@@ -26,8 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const originalSetTimeout = window.setTimeout;
         window.setTimeout = ((callback, delay) => originalSetTimeout(callback, delay / 3));
     }
-    else {
+    else
         new Bug().start();
-    }
     new Main().start();
 });

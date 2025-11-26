@@ -24,10 +24,11 @@ export abstract class Level {
     protected abstract compareComplexity(candidate: Candidate, otherCandidate: Candidate): number
 
     protected readonly locale: Locale
-    private readonly useCase: UseCase
+    public readonly useCase: UseCase
     public readonly levelNumber: number
     private readonly isLevelFinished: Completed
     private readonly exampleStrings: string[]
+    public readonly isExample: boolean
 
     private callback?: () => void
     private humanUnitTests: UnitTest[] = []
@@ -44,6 +45,7 @@ export abstract class Level {
         this.levelNumber = levelNumber
         this.isLevelFinished = new Completed(`level-${this.identifier()}-${useCase.identifier()}-finished`)
         this.exampleStrings = [...this.exampleStringGenerator(useCase)]
+        this.isExample = this.exampleStrings.length > 0
     }
 
     private findSimplestCandidate(candidates: readonly Candidate[]): Candidate {
@@ -99,10 +101,9 @@ export abstract class Level {
         return this.exampleStrings.shift() || ''
     }
 
-    private showExampleMessage(): void {
-        const exampleMessage = this.nextExampleString()
-        if (exampleMessage)
-            new ComputerMessage([exampleMessage]).add()
+    private showMessageIfExample(): void {
+        if (this.isExample)
+            new ComputerMessage([this.nextExampleString()]).add()
     }
 
     public emoji(nextLevel?: Level): string {
@@ -131,8 +132,8 @@ export abstract class Level {
         this.callback = callback
         this.initialize()
         this.showCurrentLevelPanel()
-        this.showExampleMessage()
-        this.showExampleMessage()
+        this.showMessageIfExample()
+        this.showMessageIfExample()
         this.showWelcomeMessage()
         this.menu()
     }
@@ -171,33 +172,29 @@ export abstract class Level {
     }
 
     private showMenuMessage(): void {
-        this.showExampleMessage()
-        const buttonText = this.nextExampleString()
-        const elementsToShow = []
-        const disableIWantToAddThisUnitTest = buttonText !== '' && buttonText !== this.locale.iWantToAddThisUnitTest().toString()
-        const variables = [...this.useCase.parameters, this.useCase.unit]
-        if (buttonText === this.locale.iWantToAddThisUnitTest().toString())
-            variables.forEach(variable => variable.setValue(this.nextExampleString()).setDisabled(true))
-        else
-            variables.forEach(variable => variable.setValue(''))
+        this.showMessageIfExample()
         const addThisUnitTestButton = new Input()
             .setType('submit')
-            .setValue(this.locale.iWantToAddThisUnitTest().toString())
-            .setDisabled(disableIWantToAddThisUnitTest)
+            .setValue(this.locale.iWantToAddThisUnitTest())
+        const submitTheUnitTestsButton = new Button()
+            .appendText(this.locale.iWantToSubmitTheUnitTests())
+            .onClick(() => this.prepareSubmitUnitTests())
+        const variables = [...this.useCase.parameters, this.useCase.unit]
+        if (this.isExample) {
+            const buttonText = this.nextExampleString()
+            if (buttonText === this.locale.iWantToAddThisUnitTest()) {
+                variables.forEach(variable => variable.setValue(this.nextExampleString()).setDisabled(true))
+                submitTheUnitTestsButton.setDisabled(true)
+            }
+            if (buttonText === this.locale.iWantToSubmitTheUnitTests())
+                addThisUnitTestButton.setDisabled(true)
+        }
         const form = new Form()
             .onSubmit(formData => this.prepareAddUnitTest(formData))
             .appendChildren(variables.map(variable => variable.toHtml()))
             .appendChild(addThisUnitTestButton)
-        elementsToShow.push(form)
         const divider = new Div().appendText(this.locale.or()).addClass('or')
-        elementsToShow.push(divider)
-        const disableIWantToSubmitTheUnitTests = buttonText !== '' && buttonText !== this.locale.iWantToSubmitTheUnitTests().toString()
-        const submitTheUnitTestsButton = new Button()
-            .appendText(this.locale.iWantToSubmitTheUnitTests())
-            .onClick(() => this.prepareSubmitUnitTests())
-            .setDisabled(disableIWantToSubmitTheUnitTests)
-        elementsToShow.push(submitTheUnitTestsButton)
-        new HumanMessage(elementsToShow).add()
+        new HumanMessage([form, divider, submitTheUnitTestsButton]).add()
     }
 
     private prepareAddUnitTest(formData: StringMap): void {
@@ -244,14 +241,14 @@ export abstract class Level {
     }
 
     private end(): void {
-        if (this.exampleStrings)
+        if (this.isExample)
             this.numberOfSubmissions = 1
         this.isLevelFinished.set(this.numberOfSubmissions)
         this.previousCandidate = undefined
         this.coveredCandidate = undefined
         this.showPanels()
         this.showEndMessage()
-        this.showExampleMessage()
+        this.showMessageIfExample()
         this.callback!()
     }
 }

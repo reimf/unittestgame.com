@@ -15,7 +15,7 @@ The goal: **Write a function that meets the given specification.**
 4. **Submit** the unit tests.
 5. **Validation**: The AI bot checks if the function meets the specification.
    - ✅ If correct, you’ve successfully implemented the function!
-   - ❌ If incorrect, the AI bot shows **a valid unit test** that the function fails.
+   - ❌ If incorrect, the AI bot shows **a valid unit test** that the function does NOT pass.
 
 ---
 

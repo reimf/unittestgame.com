@@ -11,6 +11,7 @@ export class Level {
     levelNumber;
     isLevelFinished;
     exampleStrings;
+    isExample;
     callback;
     humanUnitTests = [];
     previousCandidate = undefined;
@@ -25,6 +26,7 @@ export class Level {
         this.levelNumber = levelNumber;
         this.isLevelFinished = new Completed(`level-${this.identifier()}-${useCase.identifier()}-finished`);
         this.exampleStrings = [...this.exampleStringGenerator(useCase)];
+        this.isExample = this.exampleStrings.length > 0;
     }
     findSimplestCandidate(candidates) {
         const simplestCandidates = candidates.reduce((simplestCandidatesSoFar, candidate) => {
@@ -73,10 +75,9 @@ export class Level {
     nextExampleString() {
         return this.exampleStrings.shift() || '';
     }
-    showExampleMessage() {
-        const exampleMessage = this.nextExampleString();
-        if (exampleMessage)
-            new ComputerMessage([exampleMessage]).add();
+    showMessageIfExample() {
+        if (this.isExample)
+            new ComputerMessage([this.nextExampleString()]).add();
     }
     emoji(nextLevel) {
         return this === nextLevel ? '▶️' : ['🔒', '🥇', '🥈', '🥉'].at(this.isFinished()) || '🥉';
@@ -100,8 +101,8 @@ export class Level {
         this.callback = callback;
         this.initialize();
         this.showCurrentLevelPanel();
-        this.showExampleMessage();
-        this.showExampleMessage();
+        this.showMessageIfExample();
+        this.showMessageIfExample();
         this.showWelcomeMessage();
         this.menu();
     }
@@ -125,33 +126,29 @@ export class Level {
         this.newUnitTest = undefined;
     }
     showMenuMessage() {
-        this.showExampleMessage();
-        const buttonText = this.nextExampleString();
-        const elementsToShow = [];
-        const disableIWantToAddThisUnitTest = buttonText !== '' && buttonText !== this.locale.iWantToAddThisUnitTest().toString();
-        const variables = [...this.useCase.parameters, this.useCase.unit];
-        if (buttonText === this.locale.iWantToAddThisUnitTest().toString())
-            variables.forEach(variable => variable.setValue(this.nextExampleString()).setDisabled(true));
-        else
-            variables.forEach(variable => variable.setValue(''));
+        this.showMessageIfExample();
         const addThisUnitTestButton = new Input()
             .setType('submit')
-            .setValue(this.locale.iWantToAddThisUnitTest().toString())
-            .setDisabled(disableIWantToAddThisUnitTest);
+            .setValue(this.locale.iWantToAddThisUnitTest());
+        const submitTheUnitTestsButton = new Button()
+            .appendText(this.locale.iWantToSubmitTheUnitTests())
+            .onClick(() => this.prepareSubmitUnitTests());
+        const variables = [...this.useCase.parameters, this.useCase.unit];
+        if (this.isExample) {
+            const buttonText = this.nextExampleString();
+            if (buttonText === this.locale.iWantToAddThisUnitTest()) {
+                variables.forEach(variable => variable.setValue(this.nextExampleString()).setDisabled(true));
+                submitTheUnitTestsButton.setDisabled(true);
+            }
+            if (buttonText === this.locale.iWantToSubmitTheUnitTests())
+                addThisUnitTestButton.setDisabled(true);
+        }
         const form = new Form()
             .onSubmit(formData => this.prepareAddUnitTest(formData))
             .appendChildren(variables.map(variable => variable.toHtml()))
             .appendChild(addThisUnitTestButton);
-        elementsToShow.push(form);
         const divider = new Div().appendText(this.locale.or()).addClass('or');
-        elementsToShow.push(divider);
-        const disableIWantToSubmitTheUnitTests = buttonText !== '' && buttonText !== this.locale.iWantToSubmitTheUnitTests().toString();
-        const submitTheUnitTestsButton = new Button()
-            .appendText(this.locale.iWantToSubmitTheUnitTests())
-            .onClick(() => this.prepareSubmitUnitTests())
-            .setDisabled(disableIWantToSubmitTheUnitTests);
-        elementsToShow.push(submitTheUnitTestsButton);
-        new HumanMessage(elementsToShow).add();
+        new HumanMessage([form, divider, submitTheUnitTestsButton]).add();
     }
     prepareAddUnitTest(formData) {
         const argumentList = this.useCase.parameters.map(parameter => parameter.getInput(formData.get(parameter.name)));
@@ -193,14 +190,14 @@ export class Level {
             this.end();
     }
     end() {
-        if (this.exampleStrings)
+        if (this.isExample)
             this.numberOfSubmissions = 1;
         this.isLevelFinished.set(this.numberOfSubmissions);
         this.previousCandidate = undefined;
         this.coveredCandidate = undefined;
         this.showPanels();
         this.showEndMessage();
-        this.showExampleMessage();
+        this.showMessageIfExample();
         this.callback();
     }
 }

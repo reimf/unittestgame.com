@@ -1,53 +1,11 @@
+import { Config } from './config.js';
 import { Panel, ComputerMessage, QuestionMessage } from './frame.js';
 import { Div, Span, Paragraph } from './html.js';
-import { MutationTesting } from './level-mutation-testing.js';
-import { TestDrivenDevelopment } from './level-test-driven-development.js';
-import { Locale } from './locale.js';
-import { BatteryLevel } from './use-case-battery-level.js';
-import { EvenOdd } from './use-case-even-odd.js';
-import { FizzBuzz } from './use-case-fizz-buzz.js';
-import { FloatFormat } from './use-case-float-format.js';
-import { LeapYear } from './use-case-leap-year.js';
-import { PasswordStrength } from './use-case-password-strength.js';
-import { Review } from './use-case-review.js';
-import { SpeedDisplay } from './use-case-speed-display.js';
-import { TriangleType } from './use-case-triangle-type.js';
-import { VotingAge } from './use-case-voting-age.js';
 export class Main {
     lng = (new URL(window.location.href)).searchParams.get('lng') || navigator.language.split('-')[0];
-    locale = new Locale(this.lng);
-    batteryLevel = new BatteryLevel(this.locale);
-    votingAge = new VotingAge(this.locale);
-    evenOdd = new EvenOdd(this.locale);
-    fizzBuzz = new FizzBuzz(this.locale);
-    review = new Review(this.locale);
-    triangleType = new TriangleType(this.locale);
-    leapYear = new LeapYear(this.locale);
-    floatFormat = new FloatFormat(this.locale);
-    passwordStrength = new PasswordStrength(this.locale);
-    speedDisplay = new SpeedDisplay(this.locale);
-    levels = [
-        new TestDrivenDevelopment(this.locale, this.batteryLevel, 1),
-        new TestDrivenDevelopment(this.locale, this.votingAge, 2),
-        new MutationTesting(this.locale, this.batteryLevel, 3),
-        new MutationTesting(this.locale, this.evenOdd, 4),
-        new TestDrivenDevelopment(this.locale, this.fizzBuzz, 5),
-        new MutationTesting(this.locale, this.triangleType, 6),
-        new TestDrivenDevelopment(this.locale, this.review, 7),
-        new MutationTesting(this.locale, this.votingAge, 8),
-        new TestDrivenDevelopment(this.locale, this.evenOdd, 9),
-        new MutationTesting(this.locale, this.review, 10),
-        new TestDrivenDevelopment(this.locale, this.triangleType, 11),
-        new MutationTesting(this.locale, this.fizzBuzz, 12),
-        new TestDrivenDevelopment(this.locale, this.leapYear, 13),
-        new MutationTesting(this.locale, this.passwordStrength, 14),
-        new TestDrivenDevelopment(this.locale, this.speedDisplay, 15),
-        new MutationTesting(this.locale, this.floatFormat, 16),
-        new TestDrivenDevelopment(this.locale, this.passwordStrength, 17),
-        new MutationTesting(this.locale, this.leapYear, 18),
-        new TestDrivenDevelopment(this.locale, this.floatFormat, 19),
-        new MutationTesting(this.locale, this.speedDisplay, 20),
-    ];
+    config = new Config(this.lng);
+    locale = this.config.locale;
+    levels = this.config.allLevels();
     start() {
         this.showWelcomeMessage();
         this.showAboutPanel();

@@ -26,8 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.location.hostname === 'localhost') {
         const originalSetTimeout = window.setTimeout
         window.setTimeout = ((callback: () => void, delay: number) => originalSetTimeout(callback, delay / 3)) as typeof setTimeout
-    } else {
-        new Bug().start()
     }
+    else
+        new Bug().start()
     new Main().start()
 })
