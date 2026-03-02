@@ -32,11 +32,11 @@ export abstract class Level {
 
     private callback?: () => void
     private humanUnitTests: UnitTest[] = []
-    private previousCandidate?: Candidate = undefined
-    private coveredCandidate?: Candidate = undefined
+    private previousCandidate: Candidate|undefined = undefined
+    private coveredCandidate: Candidate|undefined = undefined
     private currentCandidate: Candidate = new Candidate([])
-    private failingTestResult?: TestResult = undefined
-    private newUnitTest?: UnitTest = undefined
+    private failingTestResult: TestResult|undefined = undefined
+    private newUnitTest: UnitTest|undefined = undefined
     private numberOfSubmissions: number = 0
 
     public constructor(locale: Locale, useCase: UseCase, levelNumber: number) {
@@ -52,7 +52,7 @@ export abstract class Level {
         const simplestCandidates = candidates.reduce((simplestCandidatesSoFar: Candidate[], candidate) => {
             if (simplestCandidatesSoFar.length === 0)
                 return [candidate]
-            const sign = this.compareComplexity(candidate, simplestCandidatesSoFar[0])
+            const sign = this.compareComplexity(candidate, simplestCandidatesSoFar[0]!)
             if (sign < 0)
                 return [candidate]
             if (sign > 0)

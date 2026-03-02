@@ -20,8 +20,9 @@ export class UseCase {
     *generateCandidates(listOfListOfLines, lines) {
         if (listOfListOfLines.length > 0) {
             const [firstListOfLines, ...remainingListOfListOfLines] = listOfListOfLines;
-            for (const line of firstListOfLines)
-                yield* this.generateCandidates(remainingListOfListOfLines, [...lines, line]);
+            if (firstListOfLines)
+                for (const line of firstListOfLines)
+                    yield* this.generateCandidates(remainingListOfListOfLines, [...lines, line]);
         }
         else
             yield this.createCandidate(lines);

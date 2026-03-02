@@ -18,7 +18,8 @@ document.addEventListener('keydown', event => {
     const possibleTargets = focusableElements.filter(focusable => tops.get(focusable) === targetTop);
     const preferableTargets = possibleTargets.filter(focusable => focusable instanceof HTMLInputElement && focusable.checked);
     const targetElement = preferableTargets[0] ?? possibleTargets[0];
-    targetElement.focus();
+    if (targetElement)
+        targetElement.focus();
     event.preventDefault();
 });
 document.addEventListener('DOMContentLoaded', () => {

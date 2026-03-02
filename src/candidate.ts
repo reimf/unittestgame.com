@@ -19,9 +19,9 @@ export class Candidate {
         this.complexityMutationTesting = this.getComplexityMutationTesting(this.lines)
     }
 
-    private zip(candidate: Candidate): string[][] {
+    private zip(candidate: Candidate): [string, string][] {
         const indexes = [...this.lines.keys()]
-        return indexes.map(index => [this.lines[index], candidate.lines[index]])
+        return indexes.map(index => [this.lines[index]!, candidate.lines[index]!])
     }
 
     public combine(candidate: Candidate|undefined): Candidate {
@@ -33,7 +33,7 @@ export class Candidate {
 
     private getRegEx(code: string, regex: RegExp): RegExp {
         const matches = code.matchAll(regex)
-        const names = [...matches].flatMap(match => match[1].split(/,\s*/))
+        const names = [...matches].flatMap(match => match[1]!.split(/,\s*/))
         return new RegExp(`\\b(${names.join('|')})\\b`, 'g')
     }
 

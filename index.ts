@@ -9,7 +9,7 @@ document.addEventListener('keydown', event => {
     const direction = event.key === 'ArrowUp' ? -1 : event.key === 'ArrowDown' ? 1 : 0
     if (!direction) return
     const focusableElements = [...document.querySelectorAll<HTMLElement>('input, button')]
-    const currentElement = document.activeElement as HTMLElement | null
+    const currentElement = document.activeElement as HTMLElement|null
     if (!currentElement || !focusableElements.includes(currentElement)) return
     const tops = new Map(focusableElements.map(focusable => [focusable, focusable.getBoundingClientRect().top]))
     const uniqueTops = [...new Set(tops.values())].sort()
@@ -18,7 +18,8 @@ document.addEventListener('keydown', event => {
     const possibleTargets = focusableElements.filter(focusable => tops.get(focusable) === targetTop)
     const preferableTargets = possibleTargets.filter(focusable => focusable instanceof HTMLInputElement && focusable.checked)
     const targetElement = preferableTargets[0] ?? possibleTargets[0]
-    targetElement.focus()
+    if (targetElement)
+      targetElement.focus()
     event.preventDefault()
 })
 

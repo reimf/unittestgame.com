@@ -77,7 +77,7 @@ export class CheckingMessage extends ComputerMessage {
         this.delay = delay
     }
 
-    public add(): void {
+    public override add(): void {
         super.add(
             () => window.setTimeout(() => {
                 this.replaceEnclosingMessageContent(this.existingElement()!, this.finalText)

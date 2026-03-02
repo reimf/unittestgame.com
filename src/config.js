@@ -40,14 +40,14 @@ export class Config {
             new MutationTesting(this.locale, review, 10),
             new TestDrivenDevelopment(this.locale, triangleType, 11),
             new MutationTesting(this.locale, fizzBuzz, 12),
-            new TestDrivenDevelopment(this.locale, leapYear, 13),
-            new MutationTesting(this.locale, passwordStrength, 14),
-            new TestDrivenDevelopment(this.locale, speedDisplay, 15),
-            new MutationTesting(this.locale, floatFormat, 16),
-            new TestDrivenDevelopment(this.locale, passwordStrength, 17),
-            new MutationTesting(this.locale, leapYear, 18),
-            new TestDrivenDevelopment(this.locale, floatFormat, 19),
-            new MutationTesting(this.locale, speedDisplay, 20),
+            new TestDrivenDevelopment(this.locale, speedDisplay, 13),
+            new MutationTesting(this.locale, floatFormat, 14),
+            new TestDrivenDevelopment(this.locale, passwordStrength, 15),
+            new MutationTesting(this.locale, leapYear, 16),
+            new TestDrivenDevelopment(this.locale, floatFormat, 17),
+            new MutationTesting(this.locale, speedDisplay, 18),
+            new TestDrivenDevelopment(this.locale, leapYear, 19),
+            new MutationTesting(this.locale, passwordStrength, 20),
         ];
     }
 }

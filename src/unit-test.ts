@@ -16,7 +16,7 @@ export class UnitTest {
     }
 
     public toHtmlWithResult(result: any): Div {
-        const argumentsText = this.argumentList.map((value, index) => this.parameters[index].format(value)).join(', ')
+        const argumentsText = this.argumentList.map((value, index) => this.parameters[index]!.format(value)).join(', ')
         const text = `${this.unit.name}(${argumentsText}) === ${this.unit.format(result)}`
         return new Highlighter(text).highlight()
     }

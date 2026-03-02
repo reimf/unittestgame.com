@@ -90,7 +90,7 @@ export class Html extends Content {
             }
 
             // Plain text
-            buffer.push(markdown[pos])
+            buffer.push(markdown[pos]!)
         }
         flush(buffer)
         return this
@@ -170,27 +170,6 @@ class Text extends Content {
     }
 }
 
-class Other extends Content {
-    private readonly html: string
-
-    public constructor(html: string) {
-        super()
-        this.html = html
-    }
-
-    public toString(): string {
-        return this.html
-    }
-
-    public toNode(): Node {
-        const template = document.createElement('template')
-        template.innerHTML = this.html
-        if (template.content.childNodes.length === 1)
-            return template.content.firstChild!
-        return (new Text("ERROR")).toNode()
-    }
-}
-
 class FormControl extends Html {
     private disabled: boolean = false
 
@@ -199,14 +178,14 @@ class FormControl extends Html {
         return this
     }
 
-    protected toAttributes(): string[] {
+    protected override toAttributes(): string[] {
         const attributes = super.toAttributes()
         if (this.disabled)
             attributes.push('disabled="disabled"')
         return attributes
     }
 
-    public toNode(): Node {
+    public override toNode(): Node {
         const node = super.toNode() as HTMLElement
         if (this.disabled)
             node.setAttribute('disabled', 'disabled')
@@ -262,7 +241,7 @@ export class Input extends FormControl {
         return this
     }
 
-    protected toAttributes(): string[] {
+    protected override toAttributes(): string[] {
         const attributes = super.toAttributes()
         if (this.type)
             attributes.push(`type="${this.type}"`)
@@ -281,7 +260,7 @@ export class Input extends FormControl {
         return attributes
     }
 
-    public toNode(): Node {
+    public override toNode(): Node {
         const node = super.toNode() as HTMLInputElement
         if (this.type)
             node.type = this.type
@@ -316,7 +295,7 @@ export class Form extends Html {
         return this
     }
 
-    public toNode(): Node {
+    public override toNode(): Node {
         const node = super.toNode() as HTMLFormElement
         if (this.onSubmitCallback)
             node.addEventListener('submit', event => {
@@ -355,7 +334,7 @@ export class Button extends FormControl {
         return this
     }
 
-    public toNode(): Node {
+    public override toNode(): Node {
         const node = super.toNode() as HTMLButtonElement
         if (this.onClickCallback)
             node.addEventListener('click', event => {
@@ -446,14 +425,14 @@ export class Anchor extends Html {
         return this
     }
 
-    protected toAttributes(): string[] {
+    protected override toAttributes(): string[] {
         const attributes = super.toAttributes()
         if (this.href)
             attributes.push(`href="${this.href}"`)
         return attributes
     }
 
-    public toNode(): Node {
+    public override toNode(): Node {
         const node = super.toNode() as HTMLAnchorElement
         if (this.href)
             node.href = this.href

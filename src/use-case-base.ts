@@ -35,8 +35,9 @@ export abstract class UseCase {
     private* generateCandidates(listOfListOfLines: string[][], lines: string[]): Generator<Candidate> {
         if (listOfListOfLines.length > 0) {
             const [firstListOfLines, ...remainingListOfListOfLines] = listOfListOfLines
-            for (const line of firstListOfLines)
-                yield* this.generateCandidates(remainingListOfListOfLines, [...lines, line])
+            if (firstListOfLines)
+                for (const line of firstListOfLines)
+                    yield* this.generateCandidates(remainingListOfListOfLines, [...lines, line])
         }
         else
             yield this.createCandidate(lines)

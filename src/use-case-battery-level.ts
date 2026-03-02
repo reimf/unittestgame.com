@@ -61,7 +61,7 @@ export class BatteryLevel extends UseCase {
             yield [batteryLevel]
     }
 
-    public* exampleStringGeneratorTestDrivenDevelopment(): Generator<string> {
+    public override* exampleStringGeneratorTestDrivenDevelopment(): Generator<string> {
         // play
         yield this.locale.inThisExampleYouOnlyHaveToClickTheGreenButton()
         yield this.locale.meanwhileKeepAnEyeOnTheChangesInTheSidebar()
@@ -106,7 +106,7 @@ export class BatteryLevel extends UseCase {
         yield this.locale.congratulationsNowYouUnderstandTheBasicsOfTestDrivenDevelopment()
     }
 
-    public* exampleStringGeneratorMutationTesting(): Generator<string> {
+    public override* exampleStringGeneratorMutationTesting(): Generator<string> {
         // play
         yield this.locale.inThisExampleYouOnlyHaveToClickTheGreenButton()
         yield this.locale.meanwhileKeepAnEyeOnTheChangesInTheSidebar()

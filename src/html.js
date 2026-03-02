@@ -144,23 +144,6 @@ class Text extends Content {
         return document.createTextNode(this.text);
     }
 }
-class Other extends Content {
-    html;
-    constructor(html) {
-        super();
-        this.html = html;
-    }
-    toString() {
-        return this.html;
-    }
-    toNode() {
-        const template = document.createElement('template');
-        template.innerHTML = this.html;
-        if (template.content.childNodes.length === 1)
-            return template.content.firstChild;
-        return (new Text("ERROR")).toNode();
-    }
-}
 class FormControl extends Html {
     disabled = false;
     setDisabled(disabled) {

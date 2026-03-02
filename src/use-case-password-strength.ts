@@ -138,8 +138,8 @@ export class PasswordStrength extends UseCase {
     private shuffleArray(array: string[]): void {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Random.integerUnder(i + 1)
-            const swap = array[i]
-            array[i] = array[j]
+            const swap = array[i]!
+            array[i] = array[j]!
             array[j] = swap
         }
     }

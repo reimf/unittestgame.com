@@ -36,7 +36,7 @@ test.describe('whole game', () => {
                 for (const unitTest of useCase.minimalUnitTests) {
                     const values = [...unitTest.argumentList, unitTest.expected]
                     for (let i = 0; i < variables.length; i++) {
-                        const [variable, value] = [variables[i], values[i]]
+                        const [variable, value] = [variables[i]!, values[i]]
                         if (variable instanceof RadioVariable || variable instanceof BooleanVariable)
                             await page.getByLabel(value.toString(), { exact: true }).check()
                         else

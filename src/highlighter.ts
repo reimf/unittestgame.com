@@ -55,7 +55,7 @@ class Tokenizer {
 
 export class Highlighter {
     private readonly currentLine: string
-    private readonly previousLine?: string
+    private readonly previousLine: string|undefined
 
     public constructor(currentLine: string, previousLine?: string) {
         this.currentLine = currentLine
@@ -80,17 +80,17 @@ export class Highlighter {
         const commonTokens = this.longestCommonSubsequence(currentTokens, previousTokens)
         const div = new Div()
         while (previousTokens.length || currentTokens.length) {
-            if (commonTokens.length && previousTokens.length && currentTokens.length && previousTokens[0].equals(commonTokens[0]) && currentTokens[0].equals(commonTokens[0])) {
+            if (commonTokens.length && previousTokens.length && currentTokens.length && previousTokens[0]!.equals(commonTokens[0]!) && currentTokens[0]!.equals(commonTokens[0]!)) {
                 const token = commonTokens.shift()!
                 div.appendChild(new Span().addClass(token.type).appendText(token.text))
                 previousTokens.shift()
                 currentTokens.shift()
             }
-            else if (previousTokens.length && !(commonTokens.length && previousTokens[0].equals(commonTokens[0]))) {
+            else if (previousTokens.length && !(commonTokens.length && previousTokens[0]!.equals(commonTokens[0]!))) {
                 const token = previousTokens.shift()!
                 div.appendChild(new Del().addClass(token.type).appendText(token.text))
             }
-            else if (currentTokens.length && !(commonTokens.length && currentTokens[0].equals(commonTokens[0]))) {
+            else if (currentTokens.length && !(commonTokens.length && currentTokens[0]!.equals(commonTokens[0]!))) {
                 const token = currentTokens.shift()!
                 div.appendChild(new Ins().addClass(token.type).appendText(token.text))
             }
@@ -104,19 +104,19 @@ export class Highlighter {
         // Build LCS length table
         for (let current = 0; current < previousLength; current++)
             for (let previous = 0; previous < currentLength; previous++)
-                commonLengths[current + 1][previous + 1] = previousTokens[current].equals(currentTokens[previous])
-                    ? commonLengths[current][previous] + 1
-                    : Math.max(commonLengths[current][previous + 1], commonLengths[current + 1][previous])
+                commonLengths[current + 1]![previous + 1] = previousTokens[current]!.equals(currentTokens[previous]!)
+                    ? commonLengths[current]![previous]! + 1
+                    : Math.max(commonLengths[current]![previous + 1]!, commonLengths[current + 1]![previous]!)
         // Backtrack to find LCS
         const commonTokens: Token[] = []
         let [previous, current] = [previousLength, currentLength]
         while (previous > 0 && current > 0)
-            if (previousTokens[previous - 1].equals(currentTokens[current - 1])) {
-                commonTokens.unshift(previousTokens[previous - 1])
+            if (previousTokens[previous - 1]!.equals(currentTokens[current - 1]!)) {
+                commonTokens.unshift(previousTokens[previous - 1]!)
                 previous--
                 current--
             }
-            else if (commonLengths[previous - 1][current] > commonLengths[previous][current - 1])
+            else if (commonLengths[previous - 1]![current]! > commonLengths[previous]![current - 1]!)
                 previous--
             else
                 current--

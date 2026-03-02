@@ -14,7 +14,7 @@ test.describe('class UseCase', () => {
     test('has parameters', () => {
         expect(useCase.parameters.length).toBe(1);
         expect(useCase.parameters[0]).toBeInstanceOf(IntegerVariable);
-        expect(useCase.parameters[0].name).toBe('year');
+        expect(useCase.parameters[0]?.name).toBe('year');
     });
     test('has a unit', () => {
         expect(useCase.unit).toBeInstanceOf(BooleanVariable);
