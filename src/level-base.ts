@@ -186,8 +186,10 @@ export abstract class Level {
                 variables.forEach(variable => variable.setValue(this.nextExampleString()).setDisabled(true))
                 submitTheUnitTestsButton.setDisabled(true)
             }
-            if (buttonText === this.locale.iWantToSubmitTheUnitTests())
+            if (buttonText === this.locale.iWantToSubmitTheUnitTests()) {
+                variables.forEach(variable => variable.setValue("").setDisabled(true))
                 addThisUnitTestButton.setDisabled(true)
+            }
         }
         const form = new Form()
             .onSubmit(formData => this.prepareAddUnitTest(formData))
