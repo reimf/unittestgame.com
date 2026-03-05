@@ -318,8 +318,8 @@ export class Locale {
 
     public theFunction(): string {
         return this.pick({
-            en: 'The Function',
-            nl: 'De Functie',
+            en: 'The Function (with tested lines in yellow)',
+            nl: 'De Functie (met geteste regels in geel)',
         })
     }
 
