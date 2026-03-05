@@ -1,4 +1,3 @@
-import { Bug } from './src/bug.js';
 import { Main } from './src/main.js';
 window.onerror = (message, source, lineno, colno, error) => {
     alert(`${error?.name}: ${message}\n${source}:${lineno}:${colno}`);
@@ -23,7 +22,5 @@ document.addEventListener('keydown', event => {
     event.preventDefault();
 });
 document.addEventListener('DOMContentLoaded', () => {
-    if (window.location.hostname !== 'localhost')
-        new Bug().start();
     new Main().start();
 });

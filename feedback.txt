@@ -1,13 +1,13 @@
-[V] haal de scrollbars weg bij de codefragmenten
-[V] maak bij FizzBuzz duidelijk dat en hoe je een getal teruggeeft als string
-[ ] introduceer de (mogelijke) mutaties voordat je die tegenkomt
-
-[ ] geef een hint als de speler vastloopt
-[ ] doe de "introductie-levels" met een andere use-case
-[ ] maak meer verschil tussen de "introductie-levels" 
-[X] vergelijk jezelf met andere spelers 
-[ ] clear de chat na elk level
-[ ] maak de chatbot sneller
-[ ] toon een loading bar tijdens het uitvoeren van unit-testen
-[ ] maak zichtbaar welk unittesten overbodig zijn
-[X] skip een leven / ga een level terug
+✅ haal de scrollbars weg bij de codefragmenten
+✅ maak bij FizzBuzz duidelijk dat en hoe je een getal teruggeeft als string
+✅ maak de chatbot sneller
+✅ haal de lopende bug weg
+❌ vergelijk jezelf met andere spelers 
+❓ introduceer de (mogelijke) mutaties voordat je die tegenkomt
+❓ geef een hint als de speler vastloopt
+❓ doe de "introductie-levels" met een andere use-case
+❓ maak meer verschil tussen de "introductie-levels" 
+❓ clear de chat na elk level
+❓ toon een loading bar tijdens het uitvoeren van unit-testen
+❓ maak zichtbaar welke unittesten overbodig zijn
+❓ skip een leven / ga een level terug
