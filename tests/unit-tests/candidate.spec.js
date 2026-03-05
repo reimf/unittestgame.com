@@ -114,8 +114,8 @@ test.describe('class Candidate', () => {
     });
     test('to html with previous', () => {
         const candidate = new Candidate(['function nextYear(year) {', '', '', '  if (year < 0) return 0', '  return year + 1', '}']);
-        const previousCandidate = new Candidate(['function nextYear(year) {', '', '  if (year === 0) return 0', '', '  return undefined', '}']);
-        const html = candidate.toHtmlWithPrevious(previousCandidate);
+        const previousCurrentCandidate = new Candidate(['function nextYear(year) {', '', '  if (year === 0) return 0', '', '  return undefined', '}']);
+        const html = candidate.toHtmlWithPreviousCurrent(previousCurrentCandidate);
         expect(html.toString()).toBe('<code class="language-javascript">' +
             '<div>' +
             '<span class="keyword">function</span>' +
@@ -175,10 +175,10 @@ test.describe('class Candidate', () => {
             '</div>' +
             '</code>');
     });
-    test('to html with coverage', () => {
+    test('to html with covered', () => {
         const candidate = new Candidate(['function nextYear(year) {', '  if (year < 0) return 0', '  return year', '}']);
         const coveredCandidate = new Candidate(['function nextYear(year) {', '', '  return 0', '}']);
-        const html = candidate.toHtmlWithCoverage(coveredCandidate);
+        const html = candidate.toHtmlWithCovered(coveredCandidate);
         expect(html.toString()).toBe('<code class="language-javascript">' +
             '<div class="covered">' +
             '<span class="keyword">function</span>' +

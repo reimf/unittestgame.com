@@ -7,7 +7,7 @@ export class MockLevel extends Level {
     showWelcomeMessage() { }
     showSpecificationPanel(_specification) { }
     showCurrentFunctionPanel(_currentCandidate, _previousCandidate) { }
-    showCodeCoveragePanel(_perfectCandidate, _coveredCandidate) { }
+    showTheFunctionPanel(_perfectCandidate, _coveredCandidate, _lastCoveredCandidate) { }
     showIncorrectUnitTestMessage() { }
     showUselessUnitTestMessage() { }
     showUsefulUnitTestMessage() { }

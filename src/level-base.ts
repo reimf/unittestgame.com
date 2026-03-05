@@ -13,8 +13,8 @@ export abstract class Level {
     public abstract name(): string
     protected abstract showWelcomeMessage(): void
     protected abstract showSpecificationPanel(specification: string): void
-    protected abstract showCurrentFunctionPanel(currentCandidate: Candidate, previousCandidate: Candidate|undefined): void
-    protected abstract showCodeCoveragePanel(perfectCandidate: Candidate, coveredCandidate: Candidate|undefined): void
+    protected abstract showCurrentFunctionPanel(currentCandidate: Candidate, previousCurrentCandidate: Candidate|undefined): void
+    protected abstract showTheFunctionPanel(perfectCandidate: Candidate, coveredCandidate: Candidate|undefined, previousCoveredCandidate: Candidate|undefined, lastCoveredCandidate: Candidate|undefined): void
     protected abstract showBugFoundMessage(currentCandidate: Candidate, failingTestResult: TestResult, numberOfUnitTestsStillNeeded: number): void
     protected abstract showEndMessage(): void
     protected abstract showIncorrectUnitTestMessage(): void
@@ -32,11 +32,13 @@ export abstract class Level {
 
     private callback?: () => void
     private humanUnitTests: UnitTest[] = []
-    private previousCandidate: Candidate|undefined = undefined
     private coveredCandidate: Candidate|undefined = undefined
+    private previousCoveredCandidate: Candidate|undefined = undefined
+    private lastCoveredCandidate: Candidate|undefined = undefined
     private currentCandidate: Candidate = new Candidate([])
+    private previousCurrentCandidate: Candidate|undefined = undefined
     private failingTestResult: TestResult|undefined = undefined
-    private newUnitTest: UnitTest|undefined = undefined
+    private lastUnitTest: UnitTest|undefined = undefined
     private numberOfSubmissions: number = 0
 
     public constructor(locale: Locale, useCase: UseCase, levelNumber: number) {
@@ -120,11 +122,13 @@ export abstract class Level {
 
     private initialize(): void {
         this.humanUnitTests = []
-        this.previousCandidate = undefined
         this.coveredCandidate = undefined
+        this.previousCoveredCandidate = undefined
+        this.lastCoveredCandidate = undefined
         this.currentCandidate = this.findSimplestPassingCandidate(this.useCase.candidates, this.useCase.perfectCandidates, this.humanUnitTests)
+        this.previousCurrentCandidate = undefined
         this.failingTestResult = this.findFailingTestResult(this.currentCandidate, this.useCase.hints, this.useCase.minimalUnitTests)
-        this.newUnitTest = undefined
+        this.lastUnitTest = undefined
         this.numberOfSubmissions = 0
     }
 
@@ -165,10 +169,9 @@ export abstract class Level {
 
     private showPanels(): void {
         this.showSpecificationPanel(this.useCase.specification())
-        this.showCurrentFunctionPanel(this.currentCandidate, this.previousCandidate)
-        this.showCodeCoveragePanel(this.useCase.perfectCandidate, this.coveredCandidate)
-        this.showUnitTestsPanel(this.humanUnitTests, this.newUnitTest)
-        this.newUnitTest = undefined
+        this.showCurrentFunctionPanel(this.currentCandidate, this.previousCurrentCandidate)
+        this.showTheFunctionPanel(this.useCase.perfectCandidate, this.coveredCandidate, this.previousCoveredCandidate, this.lastCoveredCandidate)
+        this.showUnitTestsPanel(this.humanUnitTests, this.lastUnitTest)
     }
 
     private showMenuMessage(): void {
@@ -210,9 +213,11 @@ export abstract class Level {
     private addUnitTest(unitTest: UnitTest): void {
         const unitTestIsCorrect = new TestResult(this.useCase.perfectCandidate, unitTest).passes
         if (unitTestIsCorrect) {
-            this.newUnitTest = unitTest
+            this.lastUnitTest = unitTest
             this.humanUnitTests.push(unitTest)
-            this.previousCandidate = this.currentCandidate
+            this.previousCurrentCandidate = this.currentCandidate
+            this.lastCoveredCandidate = this.findSimplestCoveredCandidate(this.useCase.amputeesOfPerfectCandidate, [unitTest])
+            this.previousCoveredCandidate = this.coveredCandidate
             this.coveredCandidate = this.findSimplestCoveredCandidate(this.useCase.amputeesOfPerfectCandidate, this.humanUnitTests)
             if (new TestResult(this.currentCandidate, unitTest).passes)
                 this.showUselessUnitTestMessage()
@@ -246,8 +251,10 @@ export abstract class Level {
         if (this.isExample)
             this.numberOfSubmissions = 1
         this.isLevelFinished.set(this.numberOfSubmissions)
-        this.previousCandidate = undefined
+        this.previousCurrentCandidate = undefined
         this.coveredCandidate = undefined
+        this.previousCoveredCandidate = undefined
+        this.lastCoveredCandidate = undefined
         this.showPanels()
         this.showEndMessage()
         this.showMessageIfExample()

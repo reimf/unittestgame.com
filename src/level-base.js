@@ -14,11 +14,13 @@ export class Level {
     isExample;
     callback;
     humanUnitTests = [];
-    previousCandidate = undefined;
     coveredCandidate = undefined;
+    previousCoveredCandidate = undefined;
+    lastCoveredCandidate = undefined;
     currentCandidate = new Candidate([]);
+    previousCurrentCandidate = undefined;
     failingTestResult = undefined;
-    newUnitTest = undefined;
+    lastUnitTest = undefined;
     numberOfSubmissions = 0;
     constructor(locale, useCase, levelNumber) {
         this.locale = locale;
@@ -90,11 +92,13 @@ export class Level {
     }
     initialize() {
         this.humanUnitTests = [];
-        this.previousCandidate = undefined;
         this.coveredCandidate = undefined;
+        this.previousCoveredCandidate = undefined;
+        this.lastCoveredCandidate = undefined;
         this.currentCandidate = this.findSimplestPassingCandidate(this.useCase.candidates, this.useCase.perfectCandidates, this.humanUnitTests);
+        this.previousCurrentCandidate = undefined;
         this.failingTestResult = this.findFailingTestResult(this.currentCandidate, this.useCase.hints, this.useCase.minimalUnitTests);
-        this.newUnitTest = undefined;
+        this.lastUnitTest = undefined;
         this.numberOfSubmissions = 0;
     }
     play(callback) {
@@ -120,10 +124,9 @@ export class Level {
     }
     showPanels() {
         this.showSpecificationPanel(this.useCase.specification());
-        this.showCurrentFunctionPanel(this.currentCandidate, this.previousCandidate);
-        this.showCodeCoveragePanel(this.useCase.perfectCandidate, this.coveredCandidate);
-        this.showUnitTestsPanel(this.humanUnitTests, this.newUnitTest);
-        this.newUnitTest = undefined;
+        this.showCurrentFunctionPanel(this.currentCandidate, this.previousCurrentCandidate);
+        this.showTheFunctionPanel(this.useCase.perfectCandidate, this.coveredCandidate, this.previousCoveredCandidate, this.lastCoveredCandidate);
+        this.showUnitTestsPanel(this.humanUnitTests, this.lastUnitTest);
     }
     showMenuMessage() {
         this.showMessageIfExample();
@@ -162,9 +165,11 @@ export class Level {
     addUnitTest(unitTest) {
         const unitTestIsCorrect = new TestResult(this.useCase.perfectCandidate, unitTest).passes;
         if (unitTestIsCorrect) {
-            this.newUnitTest = unitTest;
+            this.lastUnitTest = unitTest;
             this.humanUnitTests.push(unitTest);
-            this.previousCandidate = this.currentCandidate;
+            this.previousCurrentCandidate = this.currentCandidate;
+            this.lastCoveredCandidate = this.findSimplestCoveredCandidate(this.useCase.amputeesOfPerfectCandidate, [unitTest]);
+            this.previousCoveredCandidate = this.coveredCandidate;
             this.coveredCandidate = this.findSimplestCoveredCandidate(this.useCase.amputeesOfPerfectCandidate, this.humanUnitTests);
             if (new TestResult(this.currentCandidate, unitTest).passes)
                 this.showUselessUnitTestMessage();
@@ -195,8 +200,10 @@ export class Level {
         if (this.isExample)
             this.numberOfSubmissions = 1;
         this.isLevelFinished.set(this.numberOfSubmissions);
-        this.previousCandidate = undefined;
+        this.previousCurrentCandidate = undefined;
         this.coveredCandidate = undefined;
+        this.previousCoveredCandidate = undefined;
+        this.lastCoveredCandidate = undefined;
         this.showPanels();
         this.showEndMessage();
         this.showMessageIfExample();

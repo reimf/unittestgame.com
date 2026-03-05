@@ -16,13 +16,20 @@ export class TestDrivenDevelopment extends Level {
     showSpecificationPanel(specification) {
         new Panel('specification', this.locale.specification(), [specification]).show();
     }
-    showCurrentFunctionPanel(currentCandidate, previousCandidate) {
-        new Panel('current-function', this.locale.currentFunction(), [currentCandidate.toHtml()]).show();
-        new Panel('diff-function', this.locale.diffFunction(), [
-            previousCandidate ? currentCandidate.toHtmlWithPrevious(previousCandidate) : new Paragraph().appendText(this.locale.noPreviousFunction())
+    getDifferenceCurrentHtml(currentCandidate, previousCurrentCandidate) {
+        if (previousCurrentCandidate)
+            return currentCandidate.toHtmlWithPreviousCurrent(previousCurrentCandidate);
+        return new Paragraph().appendText(this.locale.noPreviousCurrentFunction());
+    }
+    showCurrentFunctionPanel(currentCandidate, previousCurrentCandidate) {
+        new Panel('current-function', this.locale.currentFunction(), [
+            currentCandidate.toHtml()
+        ]).show();
+        new Panel('difference-current-function', this.locale.differenceFromThePreviousCurrentFunction(), [
+            this.getDifferenceCurrentHtml(currentCandidate, previousCurrentCandidate)
         ]).show();
     }
-    showCodeCoveragePanel(_perfectCandidate, _coveredCandidate) {
+    showTheFunctionPanel(_perfectCandidate, _coveredCandidate, _lastCoveredCandidate) {
         // nothing
     }
     showIncorrectUnitTestMessage() {

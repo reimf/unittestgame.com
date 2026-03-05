@@ -1,5 +1,6 @@
 import { Candidate } from './candidate.js'
 import { Panel, ComputerMessage } from './frame.js'
+import { Html, Paragraph } from './html.js'
 import { Level } from './level-base.js'
 import { TestResult } from './test-result.js'
 import { UseCase } from './use-case-base.js'
@@ -27,9 +28,20 @@ export class MutationTesting extends Level {
         // nothing
     }
 
-    protected showCodeCoveragePanel(perfectCandidate: Candidate, coveredCandidate: Candidate|undefined): void {
+    private getLastCoveredHtml(perfectCandidate: Candidate, previousCoveredCandidate: Candidate|undefined, lastCoveredCandidate: Candidate|undefined): Html {
+        if (previousCoveredCandidate && lastCoveredCandidate)
+            return perfectCandidate.toHtmlWithLastAndPreviousCovered(lastCoveredCandidate, previousCoveredCandidate)
+        if (lastCoveredCandidate)
+            return perfectCandidate.toHtmlWithLastCovered(lastCoveredCandidate)
+        return new Paragraph().appendText(this.locale.noLastCoveredFunction())
+    }
+
+    protected showTheFunctionPanel(perfectCandidate: Candidate, coveredCandidate: Candidate|undefined, previousCoveredCandidate: Candidate|undefined, lastCoveredCandidate: Candidate|undefined): void {
         new Panel('the-function', this.locale.theFunction(), [
-            coveredCandidate ? perfectCandidate.toHtmlWithCoverage(coveredCandidate) : perfectCandidate.toHtml()
+            coveredCandidate ? perfectCandidate.toHtmlWithCovered(coveredCandidate) : perfectCandidate.toHtml()
+        ]).show()
+        new Panel('last-covered-function', this.locale.differenceFromThePreviousCoveredFunction(), [
+            this.getLastCoveredHtml(perfectCandidate, previousCoveredCandidate, lastCoveredCandidate)
         ]).show()
     }
 

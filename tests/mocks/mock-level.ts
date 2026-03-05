@@ -10,7 +10,7 @@ export class MockLevel extends Level {
     protected showWelcomeMessage(): void { }
     protected showSpecificationPanel(_specification: string): void { }
     protected showCurrentFunctionPanel(_currentCandidate: Candidate, _previousCandidate: Candidate|undefined): void {}
-    protected showCodeCoveragePanel(_perfectCandidate: Candidate, _coveredCandidate: Candidate|undefined): void { }
+    protected showTheFunctionPanel(_perfectCandidate: Candidate, _coveredCandidate: Candidate|undefined, _lastCoveredCandidate: Candidate|undefined): void { }
 
     protected showIncorrectUnitTestMessage(): void { }
     protected showUselessUnitTestMessage(): void { }

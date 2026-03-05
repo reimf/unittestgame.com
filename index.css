@@ -13,6 +13,7 @@
     --disabled-background: #333;
     --disabled-foreground: #fff;
     --covered-background: #ffb;
+    --newlycovered-background: #dfd;
     --notcovered-background: #fff;
     --inserted-background: #dfd;
     --deleted-background: #fdd;
@@ -74,6 +75,10 @@ code {
     div {
         &.covered {
             background-color: var(--covered-background);
+        }
+
+        &.newlycovered {
+            background-color: var(--newlycovered-background);
         }
 
         &.notcovered {

@@ -83,8 +83,8 @@ export class Locale {
     }
     unitTests() {
         return this.pick({
-            en: 'Unit Tests',
-            nl: 'Unit Testen',
+            en: 'Unit Tests (last one in color)',
+            nl: 'Unit Testen (laatste in kleur)',
         });
     }
     youHaveNotWrittenAnyUnitTestsYet() {
@@ -183,13 +183,13 @@ export class Locale {
             nl: 'Huidige Functie',
         });
     }
-    diffFunction() {
+    differenceFromThePreviousCurrentFunction() {
         return this.pick({
             en: 'Difference (from the previous function)',
             nl: 'Verschil (met de vorige functie)',
         });
     }
-    noPreviousFunction() {
+    noPreviousCurrentFunction() {
         return this.pick({
             en: 'Above is the first function that I wrote',
             nl: 'Hierboven staat de eerste functie die ik schreef',
@@ -269,8 +269,20 @@ export class Locale {
     }
     theFunction() {
         return this.pick({
-            en: 'The Function (with tested lines in yellow)',
-            nl: 'De Functie (met geteste regels in geel)',
+            en: 'The Function (all tested lines in color)',
+            nl: 'De Functie (alle geteste regels in kleur)',
+        });
+    }
+    noLastCoveredFunction() {
+        return this.pick({
+            en: 'You have not written any unit tests yet.',
+            nl: 'Je hebt nog geen unit testen geschreven.',
+        });
+    }
+    differenceFromThePreviousCoveredFunction() {
+        return this.pick({
+            en: 'Last Unit Test (tested lines in color)',
+            nl: 'Laatste Unit Test (geteste regels in kleur)',
         });
     }
     levelOverview() {
@@ -299,8 +311,8 @@ export class Locale {
     }
     theFunctionIsNotFullyTested() {
         return this.pick({
-            en: 'The *Function* is NOT fully tested.',
-            nl: 'De *Functie* is NIET volledig getest.',
+            en: '*The Function* is NOT fully tested.',
+            nl: '*De Functie* is NIET volledig getest.',
         });
     }
     aMutationOfTheFunction() {
@@ -317,8 +329,8 @@ export class Locale {
     }
     theFunctionIsIndeedFullyTested() {
         return this.pick({
-            en: 'The *Function* is indeed fully tested.',
-            nl: 'De *Functie* is inderdaad volledig getest.',
+            en: '*The Function* is indeed fully tested.',
+            nl: '*De Functie* is inderdaad volledig getest.',
         });
     }
     aSmartphoneNormallyOperatesInNormalMode() {

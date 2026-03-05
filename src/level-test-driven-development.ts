@@ -1,6 +1,6 @@
 import { Candidate } from './candidate.js'
 import { Panel, ComputerMessage } from './frame.js'
-import { Code, Paragraph } from './html.js'
+import { Code, Html, Paragraph } from './html.js'
 import { Level } from './level-base.js'
 import { TestResult } from './test-result.js'
 import { UseCase } from './use-case-base.js'
@@ -24,14 +24,22 @@ export class TestDrivenDevelopment extends Level {
         new Panel('specification', this.locale.specification(), [specification]).show()
     }
 
-    protected showCurrentFunctionPanel(currentCandidate: Candidate, previousCandidate: Candidate|undefined): void {
-        new Panel('current-function', this.locale.currentFunction(), [currentCandidate.toHtml()]).show()
-        new Panel('diff-function', this.locale.diffFunction(), [
-            previousCandidate ? currentCandidate.toHtmlWithPrevious(previousCandidate) : new Paragraph().appendText(this.locale.noPreviousFunction())
+    private getDifferenceCurrentHtml(currentCandidate: Candidate, previousCurrentCandidate: Candidate|undefined): Html {
+        if (previousCurrentCandidate)
+            return currentCandidate.toHtmlWithPreviousCurrent(previousCurrentCandidate)
+        return new Paragraph().appendText(this.locale.noPreviousCurrentFunction())
+    }
+
+    protected showCurrentFunctionPanel(currentCandidate: Candidate, previousCurrentCandidate: Candidate|undefined): void {
+        new Panel('current-function', this.locale.currentFunction(), [
+            currentCandidate.toHtml()
+        ]).show()
+        new Panel('difference-current-function', this.locale.differenceFromThePreviousCurrentFunction(), [
+            this.getDifferenceCurrentHtml(currentCandidate, previousCurrentCandidate)
         ]).show()
     }
 
-    protected showCodeCoveragePanel(_perfectCandidate: Candidate, _coveredCandidate: Candidate|undefined): void {
+    protected showTheFunctionPanel(_perfectCandidate: Candidate, _coveredCandidate: Candidate|undefined, _lastCoveredCandidate: Candidate|undefined): void {
         // nothing
     }
 

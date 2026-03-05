@@ -15,14 +15,18 @@ export class Candidate {
         this.complexityTestDrivenDevelopment = this.getComplexityTestDrivenDevelopment(code);
         this.complexityMutationTesting = this.getComplexityMutationTesting(this.lines);
     }
-    zip(candidate) {
+    zip2(candidate) {
         const indexes = [...this.lines.keys()];
         return indexes.map(index => [this.lines[index], candidate.lines[index]]);
+    }
+    zip3(candidate1, candidate2) {
+        const indexes = [...this.lines.keys()];
+        return indexes.map(index => [this.lines[index], candidate1.lines[index], candidate2.lines[index]]);
     }
     combine(candidate) {
         if (!candidate)
             return this;
-        const lines = this.zip(candidate).map(([line, other]) => line && line.trim() !== 'return undefined' ? line : other);
+        const lines = this.zip2(candidate).map(([line, other]) => line && line.trim() !== 'return undefined' ? line : other);
         return new Candidate(lines);
     }
     getRegEx(code, regex) {
@@ -80,7 +84,7 @@ export class Candidate {
         return this.failingTestResults(unitTests).length === 0;
     }
     isAmputeeOf(candidate) {
-        return this.zip(candidate).every(([line, other]) => !line || line === other || line.trim() === 'return undefined');
+        return this.zip2(candidate).every(([line, other]) => !line || line === other || line.trim() === 'return undefined');
     }
     compareComplexityTestDrivenDevelopment(candidate) {
         return Math.sign(this.complexityTestDrivenDevelopment - candidate.complexityTestDrivenDevelopment);
@@ -99,18 +103,39 @@ export class Candidate {
         const divs = this.nonEmptyLines.map(line => new Highlighter(line).highlight().addClass('covered'));
         return new Code().appendChildren(divs);
     }
-    toHtmlWithPrevious(previousCandidate) {
-        const pairs = this.zip(previousCandidate);
+    toHtmlWithPreviousCurrent(previousCurrentCandidate) {
+        const pairs = this.zip2(previousCurrentCandidate);
         const nonEmptyPairs = pairs.filter(([current, previous]) => current || previous);
         const divs = nonEmptyPairs.map(([current, previous]) => new Highlighter(current, previous).highlight());
         return new Code().appendChildren(divs);
     }
-    toHtmlWithCoverage(coveredCandidate) {
-        const pairs = this.zip(coveredCandidate);
-        const divs = pairs.map(([current, previous]) => {
-            const isCovered = !current.startsWith('  ') || current === previous;
+    toHtmlWithCovered(coveredCandidate) {
+        const pairs = this.zip2(coveredCandidate);
+        const divs = pairs.map(([perfect, covered]) => {
+            const isCovered = !perfect.startsWith('  ') || perfect === covered;
             const className = isCovered ? 'covered' : 'notcovered';
-            return new Highlighter(current).highlight().addClass(className);
+            return new Highlighter(perfect).highlight().addClass(className);
+        });
+        return new Code().appendChildren(divs);
+    }
+    toHtmlWithLastCovered(lastCoveredCandidate) {
+        const pairs = this.zip2(lastCoveredCandidate);
+        const divs = pairs.map(([perfect, lastCovered]) => {
+            const isCovered = !perfect.startsWith('  ') || perfect === lastCovered;
+            const className = isCovered ? 'newlycovered' : 'notcovered';
+            return new Highlighter(perfect).highlight().addClass(className);
+        });
+        return new Code().appendChildren(divs);
+    }
+    toHtmlWithLastAndPreviousCovered(lastCoveredCandidate, previousCoveredCandidate) {
+        const pairs = this.zip3(lastCoveredCandidate, previousCoveredCandidate);
+        const divs = pairs.map(([perfect, lastCovered, previousCovered]) => {
+            const isCovered = !perfect.startsWith('  ') || perfect === lastCovered;
+            const wasCovered = !perfect.startsWith('  ') || perfect === previousCovered;
+            const isNewlyCovered = isCovered && !wasCovered;
+            console.log(perfect, lastCovered, previousCovered, isCovered, wasCovered, isNewlyCovered);
+            const className = isNewlyCovered ? 'newlycovered' : (isCovered ? 'covered' : 'notcovered');
+            return new Highlighter(perfect).highlight().addClass(className);
         });
         return new Code().appendChildren(divs);
     }

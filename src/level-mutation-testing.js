@@ -1,4 +1,5 @@
 import { Panel, ComputerMessage } from './frame.js';
+import { Paragraph } from './html.js';
 import { Level } from './level-base.js';
 export class MutationTesting extends Level {
     identifier() {
@@ -18,9 +19,19 @@ export class MutationTesting extends Level {
     showCurrentFunctionPanel(_currentCandidate, _previousCandidate) {
         // nothing
     }
-    showCodeCoveragePanel(perfectCandidate, coveredCandidate) {
+    getLastCoveredHtml(perfectCandidate, previousCoveredCandidate, lastCoveredCandidate) {
+        if (previousCoveredCandidate && lastCoveredCandidate)
+            return perfectCandidate.toHtmlWithLastAndPreviousCovered(lastCoveredCandidate, previousCoveredCandidate);
+        if (lastCoveredCandidate)
+            return perfectCandidate.toHtmlWithLastCovered(lastCoveredCandidate);
+        return new Paragraph().appendText(this.locale.noLastCoveredFunction());
+    }
+    showTheFunctionPanel(perfectCandidate, coveredCandidate, previousCoveredCandidate, lastCoveredCandidate) {
         new Panel('the-function', this.locale.theFunction(), [
-            coveredCandidate ? perfectCandidate.toHtmlWithCoverage(coveredCandidate) : perfectCandidate.toHtml()
+            coveredCandidate ? perfectCandidate.toHtmlWithCovered(coveredCandidate) : perfectCandidate.toHtml()
+        ]).show();
+        new Panel('last-covered-function', this.locale.differenceFromThePreviousCoveredFunction(), [
+            this.getLastCoveredHtml(perfectCandidate, previousCoveredCandidate, lastCoveredCandidate)
         ]).show();
     }
     showIncorrectUnitTestMessage() {
