@@ -43,7 +43,7 @@ export class MutationTesting extends Level {
     }
 
     protected showUsefulUnitTestMessage(): void {
-        new ComputerMessage([this.locale.iAddedTheUnitTestAnd()]).add()
+        new ComputerMessage([this.locale.iAddedTheUnitTestAndIShowedWhichLinesOfTheFunctionAreTested()]).add()
     }
 
     protected showBugFoundMessage(currentCandidate: Candidate, _failingTestResult: TestResult, numberOfUnitTestsStillNeeded: number): void {

@@ -247,7 +247,7 @@ export class Locale {
             })
     }
 
-    public iAddedTheUnitTestAnd(): string {
+    public iAddedTheUnitTestAndImprovedTheCurrentFunction(): string {
         return this.pick({
             en: 'I added the unit test to the *Unit Tests* and I improved the *Current Function* such that the new unit test passes.',
             nl: 'Ik heb de unit test toegevoegd aan de *Unit Testen* en ik heb de *Huidige Functie* zo verbeterd dat de nieuwe unit test slaagt.',
@@ -344,7 +344,7 @@ export class Locale {
         })
     }
 
-    public iAddedTheUnitTestAndIShowedWhichLines(): string {
+    public iAddedTheUnitTestAndIShowedWhichLinesOfTheFunctionAreTested(): string {
         return this.pick({
             en: 'I added the unit test to the *Unit Tests* and I showed which lines of *The Function* are tested.',
             nl: 'Ik heb de unit test toegevoegd aan de *Unit Testen* en ik heb laten zien welke regels in *De Functie* zijn getest.',

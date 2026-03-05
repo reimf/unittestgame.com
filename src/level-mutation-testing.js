@@ -31,7 +31,7 @@ export class MutationTesting extends Level {
         new ComputerMessage([this.locale.tryToWriteUnitTestsThatDoNotPass()]).add();
     }
     showUsefulUnitTestMessage() {
-        new ComputerMessage([this.locale.iAddedTheUnitTestAnd()]).add();
+        new ComputerMessage([this.locale.iAddedTheUnitTestAndIShowedWhichLinesOfTheFunctionAreTested()]).add();
     }
     showBugFoundMessage(currentCandidate, _failingTestResult, numberOfUnitTestsStillNeeded) {
         new ComputerMessage([this.locale.theFunctionIsNotFullyTested()]).add();

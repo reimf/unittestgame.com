@@ -207,7 +207,7 @@ export class Locale {
             nl: 'Probeer unit testen te schrijven die niet slagen voor de *Huidige Functie*.',
         });
     }
-    iAddedTheUnitTestAnd() {
+    iAddedTheUnitTestAndImprovedTheCurrentFunction() {
         return this.pick({
             en: 'I added the unit test to the *Unit Tests* and I improved the *Current Function* such that the new unit test passes.',
             nl: 'Ik heb de unit test toegevoegd aan de *Unit Testen* en ik heb de *Huidige Functie* zo verbeterd dat de nieuwe unit test slaagt.',
@@ -291,7 +291,7 @@ export class Locale {
             nl: 'Probeer unit testen te schrijven die wat code testen die nog niet door andere unit testen wordt getest.',
         });
     }
-    iAddedTheUnitTestAndIShowedWhichLines() {
+    iAddedTheUnitTestAndIShowedWhichLinesOfTheFunctionAreTested() {
         return this.pick({
             en: 'I added the unit test to the *Unit Tests* and I showed which lines of *The Function* are tested.',
             nl: 'Ik heb de unit test toegevoegd aan de *Unit Testen* en ik heb laten zien welke regels in *De Functie* zijn getest.',

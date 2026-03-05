@@ -45,7 +45,7 @@ export class TestDrivenDevelopment extends Level {
     }
 
     protected showUsefulUnitTestMessage(): void {
-        new ComputerMessage([this.locale.iAddedTheUnitTestAnd()]).add()
+        new ComputerMessage([this.locale.iAddedTheUnitTestAndImprovedTheCurrentFunction()]).add()
     }
 
     protected showBugFoundMessage(_currentCandidate: Candidate, failingTestResult: TestResult, numberOfUnitTestsStillNeeded: number): void {

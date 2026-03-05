@@ -33,7 +33,7 @@ export class TestDrivenDevelopment extends Level {
         new ComputerMessage([this.locale.tryToWriteUnitTestsThatDoNotPass()]).add();
     }
     showUsefulUnitTestMessage() {
-        new ComputerMessage([this.locale.iAddedTheUnitTestAnd()]).add();
+        new ComputerMessage([this.locale.iAddedTheUnitTestAndImprovedTheCurrentFunction()]).add();
     }
     showBugFoundMessage(_currentCandidate, failingTestResult, numberOfUnitTestsStillNeeded) {
         new ComputerMessage([this.locale.theCurrentFunctionIsNotAccordingToTheSpecification()]).add();
