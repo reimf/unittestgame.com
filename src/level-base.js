@@ -14,6 +14,8 @@ export class Level {
     isExample;
     callback;
     humanUnitTests = [];
+    perfectCandidate;
+    amputeesOfPerfectCandidate;
     coveredCandidate = undefined;
     previousCoveredCandidate = undefined;
     lastCoveredCandidate = undefined;
@@ -29,6 +31,13 @@ export class Level {
         this.isLevelFinished = new Completed(`level-${this.identifier()}-${useCase.identifier()}-finished`);
         this.exampleStrings = [...this.exampleStringGenerator(useCase)];
         this.isExample = this.exampleStrings.length > 0;
+        this.perfectCandidate = this.getRandomElementFrom(this.useCase.perfectCandidates);
+        this.amputeesOfPerfectCandidate = this.useCase.findAmputeesOf(this.perfectCandidate);
+    }
+    getRandomElementFrom(elements) {
+        if (this.isExample)
+            return elements[0];
+        return Random.elementFrom(elements);
     }
     findSimplestCandidate(candidates) {
         const simplestCandidates = candidates.reduce((simplestCandidatesSoFar, candidate) => {
@@ -41,27 +50,27 @@ export class Level {
                 return simplestCandidatesSoFar;
             return [...simplestCandidatesSoFar, candidate];
         }, []);
-        return Random.elementFrom(simplestCandidates);
+        return this.getRandomElementFrom(simplestCandidates);
     }
     findSimplestPassingCandidate(candidates, perfectCandidates, unitTests) {
         const passingCandidates = candidates.filter(candidate => candidate.passes(unitTests));
         const passingImperfectCandidates = passingCandidates.filter(candidate => !perfectCandidates.includes(candidate));
         if (passingImperfectCandidates.length === 0)
-            return Random.elementFrom(perfectCandidates);
+            return this.getRandomElementFrom(perfectCandidates);
         return this.findSimplestCandidate(passingImperfectCandidates);
     }
-    findSimplestCoveredCandidate(amputeesOfPerfectCandidate, unitTests) {
+    findSimplestCoveredCandidate(unitTests) {
         return unitTests.reduce((simplestCoveredCandidateSoFar, unitTest) => {
-            const passingCandidates = amputeesOfPerfectCandidate.filter(candidate => candidate.passes([unitTest]));
+            const passingCandidates = this.amputeesOfPerfectCandidate.filter(candidate => candidate.passes([unitTest]));
             const simplestPassingCandidate = this.findSimplestCandidate(passingCandidates);
             return simplestPassingCandidate.combine(simplestCoveredCandidateSoFar);
-        }, this.findSimplestPassingCandidate(amputeesOfPerfectCandidate, [], []));
+        }, this.findSimplestPassingCandidate(this.amputeesOfPerfectCandidate, [], []));
     }
     findFailingTestResult(candidate, hints, minimalUnitTestsList) {
         for (const unitTests of [hints, minimalUnitTestsList]) {
             const failingUnitTests = candidate.failingTestResults(unitTests);
             if (failingUnitTests.length > 0)
-                return Random.elementFrom(failingUnitTests);
+                return this.getRandomElementFrom(failingUnitTests);
         }
         return undefined;
     }
@@ -125,7 +134,7 @@ export class Level {
     showPanels() {
         this.showSpecificationPanel(this.useCase.specification());
         this.showCurrentFunctionPanel(this.currentCandidate, this.previousCurrentCandidate);
-        this.showTheFunctionPanel(this.useCase.perfectCandidate, this.coveredCandidate, this.previousCoveredCandidate, this.lastCoveredCandidate);
+        this.showTheFunctionPanel(this.perfectCandidate, this.coveredCandidate, this.previousCoveredCandidate, this.lastCoveredCandidate);
         this.showUnitTestsPanel(this.humanUnitTests, this.lastUnitTest);
     }
     showMenuMessage() {
@@ -137,14 +146,15 @@ export class Level {
             .appendText(this.locale.iWantToSubmitTheUnitTests())
             .onClick(() => this.prepareSubmitUnitTests());
         const variables = [...this.useCase.parameters, this.useCase.unit];
+        variables.forEach(variable => variable.setDisabled(this.isExample));
         if (this.isExample) {
             const buttonText = this.nextExampleString();
             if (buttonText === this.locale.iWantToAddThisUnitTest()) {
-                variables.forEach(variable => variable.setValue(this.nextExampleString()).setDisabled(true));
+                variables.forEach(variable => variable.setValue(this.nextExampleString()));
                 submitTheUnitTestsButton.setDisabled(true);
             }
             if (buttonText === this.locale.iWantToSubmitTheUnitTests()) {
-                variables.forEach(variable => variable.setValue("").setDisabled(true));
+                variables.forEach(variable => variable.setValue(""));
                 addThisUnitTestButton.setDisabled(true);
             }
         }
@@ -163,14 +173,14 @@ export class Level {
         new CheckingMessage(this.locale.checkingTheNewUnitTest(), this.locale.iCheckedTheNewUnitTest(), () => this.addUnitTest(unitTest), 500 + this.humanUnitTests.length * 250).add();
     }
     addUnitTest(unitTest) {
-        const unitTestIsCorrect = new TestResult(this.useCase.perfectCandidate, unitTest).passes;
+        const unitTestIsCorrect = new TestResult(this.perfectCandidate, unitTest).passes;
         if (unitTestIsCorrect) {
             this.lastUnitTest = unitTest;
             this.humanUnitTests.push(unitTest);
             this.previousCurrentCandidate = this.currentCandidate;
-            this.lastCoveredCandidate = this.findSimplestCoveredCandidate(this.useCase.amputeesOfPerfectCandidate, [unitTest]);
+            this.lastCoveredCandidate = this.findSimplestCoveredCandidate([unitTest]);
             this.previousCoveredCandidate = this.coveredCandidate;
-            this.coveredCandidate = this.findSimplestCoveredCandidate(this.useCase.amputeesOfPerfectCandidate, this.humanUnitTests);
+            this.coveredCandidate = this.findSimplestCoveredCandidate(this.humanUnitTests);
             if (new TestResult(this.currentCandidate, unitTest).passes)
                 this.showUselessUnitTestMessage();
             else {

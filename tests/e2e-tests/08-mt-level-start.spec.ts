@@ -6,11 +6,11 @@ test.describe('mt level start', () => {
     test.beforeAll(async ({ browser }) => {
         const context = await browser.newContext()
         await context.addInitScript(_ => localStorage.setItem('level-test-driven-development-battery-level-finished', '1'))
-        await context.addInitScript(_ => localStorage.setItem('level-test-driven-development-voting-age-finished', '1'))
+        await context.addInitScript(_ => localStorage.setItem('level-test-driven-development-even-odd-finished', '1'))
         await context.addInitScript({ path: './tests/e2e-tests/init-script.js' })
         page = await context.newPage()
         await page.goto('/')
-        await page.getByRole('button', { name: 'I want to play Level 3 - Battery Level - Mutation Testing' }).click()
+        await page.getByRole('button', { name: 'I want to play Level 3 - Voting Age - Mutation Testing' }).click()
         await page.getByRole('button', { name: 'I want to add this unit test' }).click()
         await page.getByRole('button', { name: 'I want to add this unit test' }).click()
         await page.getByRole('button', { name: 'I want to submit the unit tests' }).click()
@@ -18,7 +18,7 @@ test.describe('mt level start', () => {
         await page.getByRole('button', { name: 'I want to submit the unit tests' }).click()
         await page.getByRole('button', { name: 'I want to add this unit test' }).click()
         await page.getByRole('button', { name: 'I want to submit the unit tests' }).click()
-        await page.getByRole('button', { name: 'I want to play Level 4 - Even or Odd - Mutation Testing' }).click()
+        await page.getByRole('button', { name: 'I want to play Level 4 - Battery Level - Mutation Testing' }).click()
     })
 
     test('has no unittestgame panel', async () => {
@@ -44,12 +44,12 @@ test.describe('mt level start', () => {
     test('has the perfect candidate in the function panel', async () => {
         const theFunctionPanel = page.getByTestId('the-function')
         const codeLines = theFunctionPanel.locator('code > div')
-        await expect(codeLines).toContainText(['function isEven(num) {', '  if (num % 2 !== 0) return false', '  return true', '}'])
+        await expect(codeLines).toContainText(['function powerMode(batteryLevel) {', '  if (batteryLevel >= 20) return "Normal Mode"', '  return "Low Power Mode"', '}'])
     })
 
     test('has the current level panel', async () => {
         const levelPanel = page.getByTestId('current-level')
-        await expect(levelPanel).toContainText('Even or Odd - Mutation Testing')
+        await expect(levelPanel).toContainText('Battery Level - Mutation Testing')
     })
 
     test('has contract message', async () => {

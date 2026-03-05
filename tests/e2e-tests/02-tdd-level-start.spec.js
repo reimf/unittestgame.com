@@ -14,7 +14,7 @@ test.describe('tdd level start', () => {
         await page.getByRole('button', { name: 'I want to submit the unit tests' }).click();
         await page.getByRole('button', { name: 'I want to add this unit test' }).click();
         await page.getByRole('button', { name: 'I want to submit the unit tests' }).click();
-        await page.getByRole('button', { name: 'I want to play Level 2 - Voting Age - Test-Driven Development' }).click();
+        await page.getByRole('button', { name: 'I want to play Level 2 - Even or Odd - Test-Driven Development' }).click();
     });
     test('has no unittestgame panel', async () => {
         const unittestgamePanel = page.getByTestId('unittestgame');
@@ -22,7 +22,7 @@ test.describe('tdd level start', () => {
     });
     test('has specification panel', async () => {
         const specificationPanel = page.getByTestId('specification');
-        await expect(specificationPanel).toContainText('Return true if the age is 18 years or over and return false if the age is under 18 ');
+        await expect(specificationPanel).toContainText('Return true if the number is even and false if it is odd.');
     });
     test('has no unit tests in the unit tests panel', async () => {
         const unitTestsPanel = page.getByTestId('unit-tests');
@@ -31,7 +31,7 @@ test.describe('tdd level start', () => {
     test('has the simplest candidate in the current function panel', async () => {
         const currentFunctionPanel = page.getByTestId('current-function');
         const codeLines = currentFunctionPanel.locator('code');
-        await expect(codeLines).toContainText('function isAllowedToVote(age) {  return undefined}');
+        await expect(codeLines).toContainText('function isEven(num) {  return undefined}');
     });
     test('has no the function panel', async () => {
         const theFunctionPanel = page.getByTestId('the-function');
@@ -39,7 +39,7 @@ test.describe('tdd level start', () => {
     });
     test('has the current level panel', async () => {
         const levelPanel = page.getByTestId('current-level');
-        await expect(levelPanel).toContainText('Voting Age - Test-Driven Development');
+        await expect(levelPanel).toContainText('Level 2 - Even or Odd - Test-Driven Development');
     });
     test('has contract message', async () => {
         const messages = page.getByTestId('messages');

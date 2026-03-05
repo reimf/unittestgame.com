@@ -26,11 +26,11 @@ export class BatteryLevel extends UseCase {
                 'if (batteryLevel >= 20) return "Normal Mode"',
                 'if (batteryLevel >= 21) return "Normal Mode"',
                 'if (batteryLevel >= 22) return "Normal Mode"',
-                'if (batteryLevel < 19) return "Low Power Mode"',
-                'if (batteryLevel < 20) return "Low Power Mode"',
-                'if (batteryLevel < 21) return "Low Power Mode"',
-                'if (batteryLevel < 22) return "Low Power Mode"',
-                'if (batteryLevel < 23) return "Low Power Mode"',
+                'if (batteryLevel <= 19) return "Low Power Mode"',
+                'if (batteryLevel <= 20) return "Low Power Mode"',
+                'if (batteryLevel <= 21) return "Low Power Mode"',
+                'if (batteryLevel <= 22) return "Low Power Mode"',
+                'if (batteryLevel <= 23) return "Low Power Mode"',
                 'if (batteryLevel === 20) return "Normal Mode"',
                 'if (batteryLevel === 19) return "Low Power Mode"',
                 '',
@@ -87,41 +87,5 @@ export class BatteryLevel extends UseCase {
         yield this.locale.iWantToSubmitTheUnitTests();
         // end
         yield this.locale.congratulationsNowYouUnderstandTheBasicsOfTestDrivenDevelopment();
-    }
-    *exampleStringGeneratorMutationTesting() {
-        // play
-        yield this.locale.inThisExampleYouOnlyHaveToClickTheGreenButton();
-        yield this.locale.meanwhileKeepAnEyeOnTheChangesInTheSidebar();
-        // showMenuMessage
-        yield this.locale.theFunctionContainsTheNumber20();
-        yield this.locale.iWantToAddThisUnitTest();
-        yield '20';
-        yield 'Normal Mode';
-        // showMenuMessage
-        yield this.locale.theFunctionDoesNotAlwaysReturnNormalMode();
-        yield this.locale.iWantToAddThisUnitTest();
-        yield '19';
-        yield 'Low Power Mode';
-        // showMenuMessage
-        yield this.locale.allLinesInTheFunctionAreTestedNow();
-        yield this.locale.iWantToSubmitTheUnitTests();
-        // showMenuMessage
-        yield this.locale.thisMutationOnlyReturnsNormalModeIfTheBatteryLevelIsExactly20Percent();
-        yield this.locale.iWantToAddThisUnitTest();
-        yield '21';
-        yield 'Normal Mode';
-        // showMenuMessage
-        yield this.locale.submitTheUnitTestsAgainToSeeIfTheFunctionIsFullyTestedNow();
-        yield this.locale.iWantToSubmitTheUnitTests();
-        // showMenuMessage
-        yield this.locale.thisMutationOnlyReturnsLowPowerModeIfTheBatteryLevelIsExactly19Percent();
-        yield this.locale.iWantToAddThisUnitTest();
-        yield '18';
-        yield 'Low Power Mode';
-        // showMenuMessage
-        yield this.locale.submitTheUnitTestsAgainToSeeIfTheFunctionIsFinallyFullyTestedNow();
-        yield this.locale.iWantToSubmitTheUnitTests();
-        // end
-        yield this.locale.congratulationsNowYouUnderstandTheBasicsOfMutationTesting();
     }
 }

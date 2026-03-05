@@ -25,9 +25,10 @@ export class FixtureLevelStates {
     }
 
     private enrich(states: FixtureLevelState[]): FixtureLevelState[] {
+        const perfectCandidate = this.useCase.perfectCandidates[0]!
         const years = states.flatMap(state => state.years)
         const yearUnitTestPairs: [number, UnitTest][] = [...new Set(years)].map(year =>
-            [year, new UnitTest(this.useCase.parameters, [year], this.useCase.unit, this.useCase.perfectCandidate.execute([year]))]
+            [year, new UnitTest(this.useCase.parameters, [year], this.useCase.unit, perfectCandidate.execute([year]))]
         )
         const unitTestMap = new Map(yearUnitTestPairs)
         for (const state of states)

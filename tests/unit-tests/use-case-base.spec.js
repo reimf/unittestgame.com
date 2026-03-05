@@ -29,8 +29,8 @@ test.describe('class UseCase', () => {
     test('has perfect candidates', () => {
         expect(useCase.perfectCandidates.length).toBe(1);
     });
-    test('has amputees of the perfect candidate', () => {
-        expect(useCase.amputeesOfPerfectCandidate.length).toBe(16);
+    test('has amputees of perfect candidates', () => {
+        useCase.perfectCandidates.forEach(candidate => expect(useCase.findAmputeesOf(candidate).length).toBe(16));
     });
     test('has hints', () => {
         expect(useCase.hints.length).toBe(51);

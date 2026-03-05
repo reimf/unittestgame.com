@@ -133,7 +133,6 @@ export class Candidate {
             const isCovered = !perfect.startsWith('  ') || perfect === lastCovered;
             const wasCovered = !perfect.startsWith('  ') || perfect === previousCovered;
             const isNewlyCovered = isCovered && !wasCovered;
-            console.log(perfect, lastCovered, previousCovered, isCovered, wasCovered, isNewlyCovered);
             const className = isNewlyCovered ? 'newlycovered' : (isCovered ? 'covered' : 'notcovered');
             return new Highlighter(perfect).highlight().addClass(className);
         });

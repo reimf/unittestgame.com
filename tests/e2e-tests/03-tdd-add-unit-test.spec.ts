@@ -9,17 +9,17 @@ test.describe('tdd I want to add this unit test', () => {
         await context.addInitScript({ path: './tests/e2e-tests/init-script.js' })
         page = await context.newPage()
         await page.goto('/')
-        await page.getByRole('button', { name: 'I want to play Level 2 - Voting Age - Test-Driven Development' }).click()
+        await page.getByRole('button', { name: 'I want to play Level 2 - Even or Odd - Test-Driven Development' }).click()
     })
 
-    test('has age number field', async () => {
-        const age = page.getByLabel('Age')
+    test('has a number field', async () => {
+        const age = page.getByLabel('Number')
         await expect(age).toBeInViewport()
     })
 
-    test('asks is allowed to vote', async () => {
+    test('asks is even', async () => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('Is allowed to vote')
+        await expect(messages).toContainText('Is even')
     })
 
     test('has add this unit test button', async () => {

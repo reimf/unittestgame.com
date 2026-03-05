@@ -26,8 +26,8 @@ test.describe('class TriangleType', () => {
         expect(useCase.perfectCandidates).toHaveLength(2)
     })
 
-    test('has the right amount of amputees of the perfect candidate', () => {
-        expect(useCase.amputeesOfPerfectCandidate).toHaveLength(8)
+    test('has the right amount of amputees of perfect candidates', () => {
+        useCase.perfectCandidates.forEach(candidate => expect(useCase.findAmputeesOf(candidate).length).toBe(8))
     })
 
     test('perfect candidates pass all hints', () => {

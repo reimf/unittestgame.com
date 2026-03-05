@@ -27,10 +27,11 @@ export class VotingAge extends UseCase {
                 'if (age >= 19) return true',
                 'if (age >= 20) return true',
                 'if (age <= 16) return false',
-                'if (age <= 17) return false',
-                'if (age <= 18) return false',
-                'if (age <= 19) return false',
-                'if (age <= 20) return false',
+                'if (age < 17) return false',
+                'if (age < 18) return false',
+                'if (age < 19) return false',
+                'if (age < 20) return false',
+                'if (age < 21) return false',
                 'if (age === 18) return true',
                 'if (age === 17) return false',
                 '',
@@ -51,5 +52,41 @@ export class VotingAge extends UseCase {
     *hintGenerator() {
         for (let age = 1; age <= 40; age += 1)
             yield [age];
+    }
+    *exampleStringGeneratorMutationTesting() {
+        // play
+        yield this.locale.inThisExampleYouOnlyHaveToClickTheGreenButton();
+        yield this.locale.meanwhileKeepAnEyeOnTheChangesInTheSidebar();
+        // showMenuMessage
+        yield this.locale.theFunctionContainsTheNumber18();
+        yield this.locale.iWantToAddThisUnitTest();
+        yield '18';
+        yield 'true';
+        // showMenuMessage
+        yield this.locale.theFunctionDoesNotAlwaysReturnTrue();
+        yield this.locale.iWantToAddThisUnitTest();
+        yield '17';
+        yield 'false';
+        // showMenuMessage
+        yield this.locale.allLinesInTheFunctionAreTestedNow();
+        yield this.locale.iWantToSubmitTheUnitTests();
+        // showMenuMessage
+        yield this.locale.thisMutationOnlyReturnsTrueIfTheAgeIsExactly18();
+        yield this.locale.iWantToAddThisUnitTest();
+        yield '19';
+        yield 'true';
+        // showMenuMessage
+        yield this.locale.submitTheUnitTestsAgainToSeeIfTheFunctionIsFullyTestedNow();
+        yield this.locale.iWantToSubmitTheUnitTests();
+        // showMenuMessage
+        yield this.locale.thisMutationOnlyReturnsFalseIfTheAgeIsExactly17();
+        yield this.locale.iWantToAddThisUnitTest();
+        yield '16';
+        yield 'false';
+        // showMenuMessage
+        yield this.locale.submitTheUnitTestsAgainToSeeIfTheFunctionIsFinallyFullyTestedNow();
+        yield this.locale.iWantToSubmitTheUnitTests();
+        // end
+        yield this.locale.congratulationsNowYouUnderstandTheBasicsOfMutationTesting();
     }
 }

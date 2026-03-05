@@ -470,17 +470,17 @@ export class Locale {
         })
     }
 
-    public theFunctionContainsTheNumber20(): string {
+    public theFunctionContainsTheNumber18(): string {
         return this.pick({
-            en: '*The Function* contains the number 20. That is a good starting point for a unit test. When the battery level is 20%, the function returns Normal Mode.',
-            nl: '*De Functie* bevat het getal 20. Dat is een goed startpunt voor een unit test. Wanneer het batterijpercentage 20% is, geeft de functie Normal Mode terug.',
+            en: '*The Function* contains the number 18. That is a good starting point for a unit test. When the age is 18, then the function returns true.',
+            nl: '*De Functie* bevat het getal 18. Dat is een goed startpunt voor een unit test. Wanneer de leeftijd 18 is, dan geeft de functie true terug.',
         })
     }
 
-    public theFunctionDoesNotAlwaysReturnNormalMode(): string {
+    public theFunctionDoesNotAlwaysReturnTrue(): string {
         return this.pick({
-            en: '*The Function* does NOT always return Normal Mode. When the battery level is less than 20%, the function returns Low Power Mode. So, add a unit test for a battery level less than 20%, say 19%.',
-            nl: '*De Functie* geeft niet altijd Normal Mode terug. Wanneer het batterijpercentage minder dan 20% is, geeft de functie Low Power Mode terug. Voeg dus een unit test toe voor een batterijpercentage van minder dan 20%, bijvoorbeeld 19%.',
+            en: '*The Function* does NOT always return true. When the age is less than 18, the function returns false. So, add a unit test for an age less than 18, say 17.',
+            nl: '*De Functie* geeft niet altijd true terug. Wanneer de leeftijd minder dan 18 is, geeft de functie false terug. Voeg dus een unit test toe voor een leeftijd van minder dan 18, bijvoorbeeld 17.',
         })
     }
 
@@ -491,10 +491,10 @@ export class Locale {
         })
     }
 
-    public thisMutationOnlyReturnsNormalModeIfTheBatteryLevelIsExactly20Percent(): string {
+    public thisMutationOnlyReturnsTrueIfTheAgeIsExactly18(): string {
         return this.pick({
-            en: 'This mutation only returns Normal Mode if the battery level is exactly 20%. Add a unit test for another battery level *The Function* returns Normal Mode for, say 21%.',
-            nl: 'Deze mutatie geeft alleen Normal Mode terug als het batterijpercentage precies 20% is. Voeg een unit test toe voor een ander batterijpercentage waarvoor *De Functie* Normal Mode terug geeft, bijvoorbeeld 21%.',
+            en: 'This mutation only returns true if the age is exactly 18. Add a unit test for another age where *The Function* returns true, say 19.',
+            nl: 'Deze mutatie geeft alleen true terug als de leeftijd precies 18 is. Voeg een unit test toe voor een andere leeftijd waarvoor *De Functie* true terug geeft, bijvoorbeeld 19.',
         })
     }
 
@@ -505,10 +505,10 @@ export class Locale {
         })
     }
 
-    public thisMutationOnlyReturnsLowPowerModeIfTheBatteryLevelIsExactly19Percent(): string {
+    public thisMutationOnlyReturnsFalseIfTheAgeIsExactly17(): string {
         return this.pick({
-            en: 'This mutation only returns Low Power Mode if the battery level is exactly 19%. Add a unit test for another battery level *The Function* returns Low Power Mode for, say 18%.',
-            nl: 'Deze mutatie geeft alleen Low Power Mode terug als het batterijpercentage precies 19% is. Voeg een unit test toe voor een ander batterijpercentage waarvoor *De Functie* Low Power Mode terug geeft, bijvoorbeeld 18%.',
+            en: 'This mutation only returns false if the age is exactly 17. Add a unit test for another age where *The Function* returns false, say 16.',
+            nl: 'Deze mutatie geeft alleen false terug als de leeftijd precies 17 is. Voeg een unit test toe voor een andere leeftijd waarvoor *De Functie* false terug geeft, bijvoorbeeld 16.',
         })
     }
 

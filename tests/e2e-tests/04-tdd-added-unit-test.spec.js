@@ -7,14 +7,14 @@ test.describe('tdd added unit test', () => {
         await context.addInitScript({ path: './tests/e2e-tests/init-script.js' });
         page = await context.newPage();
         await page.goto('/');
-        await page.getByRole('button', { name: 'I want to play Level 2 - Voting Age - Test-Driven Development' }).click();
-        await page.getByLabel('Age').fill('12');
-        await page.getByLabel('false').check();
+        await page.getByRole('button', { name: 'I want to play Level 2 - Even or Odd - Test-Driven Development' }).click();
+        await page.getByLabel('Number').fill('12');
+        await page.getByLabel('true').check();
         await page.getByRole('button', { name: 'I want to add this unit test' }).click();
     });
     test('has I want to add this unit test message', async () => {
         const messages = page.getByTestId('messages');
-        await expect(messages).toContainText('isAllowedToVote(12) === false');
+        await expect(messages).toContainText('isEven(12) === true');
     });
     test('has added unit test message', async () => {
         const messages = page.getByTestId('messages');
@@ -22,12 +22,12 @@ test.describe('tdd added unit test', () => {
     });
     test('has added unit test in unit tests panel', async () => {
         const unitTestsPanel = page.getByTestId('unit-tests');
-        await expect(unitTestsPanel).toContainText('isAllowedToVote(12) === false');
+        await expect(unitTestsPanel).toContainText('isEven(12) === true');
     });
     test('has another candidate in the current function panel', async () => {
         const currentFunctionPanel = page.getByTestId('current-function');
         const codeLines = currentFunctionPanel.locator('code > div');
-        await expect(codeLines).toContainText(['function isAllowedToVote(age) {', '  return false', '}']);
+        await expect(codeLines).toContainText(['function isEven(num) {', '  return true', '}']);
     });
     test('has action menu message', async () => {
         const messages = page.getByTestId('messages');

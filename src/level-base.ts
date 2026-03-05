@@ -32,6 +32,8 @@ export abstract class Level {
 
     private callback?: () => void
     private humanUnitTests: UnitTest[] = []
+    private perfectCandidate: Candidate
+    private amputeesOfPerfectCandidate: Candidate[]
     private coveredCandidate: Candidate|undefined = undefined
     private previousCoveredCandidate: Candidate|undefined = undefined
     private lastCoveredCandidate: Candidate|undefined = undefined
@@ -48,6 +50,14 @@ export abstract class Level {
         this.isLevelFinished = new Completed(`level-${this.identifier()}-${useCase.identifier()}-finished`)
         this.exampleStrings = [...this.exampleStringGenerator(useCase)]
         this.isExample = this.exampleStrings.length > 0
+        this.perfectCandidate = this.getRandomElementFrom(this.useCase.perfectCandidates)
+        this.amputeesOfPerfectCandidate = this.useCase.findAmputeesOf(this.perfectCandidate)
+    }
+
+    private getRandomElementFrom<T>(elements: readonly T[]): T {
+        if (this.isExample)
+            return elements[0]!
+        return Random.elementFrom(elements)
     }
 
     private findSimplestCandidate(candidates: readonly Candidate[]): Candidate {
@@ -61,30 +71,30 @@ export abstract class Level {
                 return simplestCandidatesSoFar
             return [...simplestCandidatesSoFar, candidate]
         }, [])
-        return Random.elementFrom(simplestCandidates)
+        return this.getRandomElementFrom(simplestCandidates)
     }
 
     public findSimplestPassingCandidate(candidates: readonly Candidate[], perfectCandidates: readonly Candidate[], unitTests: readonly UnitTest[]): Candidate {
         const passingCandidates = candidates.filter(candidate => candidate.passes(unitTests))
         const passingImperfectCandidates = passingCandidates.filter(candidate => !perfectCandidates.includes(candidate))
         if (passingImperfectCandidates.length === 0)
-            return Random.elementFrom(perfectCandidates)
+            return this.getRandomElementFrom(perfectCandidates)
         return this.findSimplestCandidate(passingImperfectCandidates)
     }
 
-    public findSimplestCoveredCandidate(amputeesOfPerfectCandidate: readonly Candidate[], unitTests: readonly UnitTest[]): Candidate {
+    public findSimplestCoveredCandidate(unitTests: readonly UnitTest[]): Candidate {
         return unitTests.reduce((simplestCoveredCandidateSoFar: Candidate, unitTest: UnitTest) => {
-            const passingCandidates = amputeesOfPerfectCandidate.filter(candidate => candidate.passes([unitTest]))
+            const passingCandidates = this.amputeesOfPerfectCandidate.filter(candidate => candidate.passes([unitTest]))
             const simplestPassingCandidate = this.findSimplestCandidate(passingCandidates)
             return simplestPassingCandidate.combine(simplestCoveredCandidateSoFar)
-        }, this.findSimplestPassingCandidate(amputeesOfPerfectCandidate, [], []))
+        }, this.findSimplestPassingCandidate(this.amputeesOfPerfectCandidate, [], []))
     }
 
     public findFailingTestResult(candidate: Candidate, hints: readonly UnitTest[], minimalUnitTestsList: readonly UnitTest[]): TestResult|undefined {
         for (const unitTests of [hints, minimalUnitTestsList]) {
             const failingUnitTests = candidate.failingTestResults(unitTests)
             if (failingUnitTests.length > 0)
-                return Random.elementFrom(failingUnitTests)
+                return this.getRandomElementFrom(failingUnitTests)
         }
         return undefined
     }
@@ -170,7 +180,7 @@ export abstract class Level {
     private showPanels(): void {
         this.showSpecificationPanel(this.useCase.specification())
         this.showCurrentFunctionPanel(this.currentCandidate, this.previousCurrentCandidate)
-        this.showTheFunctionPanel(this.useCase.perfectCandidate, this.coveredCandidate, this.previousCoveredCandidate, this.lastCoveredCandidate)
+        this.showTheFunctionPanel(this.perfectCandidate, this.coveredCandidate, this.previousCoveredCandidate, this.lastCoveredCandidate)
         this.showUnitTestsPanel(this.humanUnitTests, this.lastUnitTest)
     }
 
@@ -183,14 +193,15 @@ export abstract class Level {
             .appendText(this.locale.iWantToSubmitTheUnitTests())
             .onClick(() => this.prepareSubmitUnitTests())
         const variables = [...this.useCase.parameters, this.useCase.unit]
+        variables.forEach(variable => variable.setDisabled(this.isExample))
         if (this.isExample) {
             const buttonText = this.nextExampleString()
             if (buttonText === this.locale.iWantToAddThisUnitTest()) {
-                variables.forEach(variable => variable.setValue(this.nextExampleString()).setDisabled(true))
+                variables.forEach(variable => variable.setValue(this.nextExampleString()))
                 submitTheUnitTestsButton.setDisabled(true)
             }
             if (buttonText === this.locale.iWantToSubmitTheUnitTests()) {
-                variables.forEach(variable => variable.setValue("").setDisabled(true))
+                variables.forEach(variable => variable.setValue(""))
                 addThisUnitTestButton.setDisabled(true)
             }
         }
@@ -211,14 +222,14 @@ export abstract class Level {
     }
 
     private addUnitTest(unitTest: UnitTest): void {
-        const unitTestIsCorrect = new TestResult(this.useCase.perfectCandidate, unitTest).passes
+        const unitTestIsCorrect = new TestResult(this.perfectCandidate, unitTest).passes
         if (unitTestIsCorrect) {
             this.lastUnitTest = unitTest
             this.humanUnitTests.push(unitTest)
             this.previousCurrentCandidate = this.currentCandidate
-            this.lastCoveredCandidate = this.findSimplestCoveredCandidate(this.useCase.amputeesOfPerfectCandidate, [unitTest])
+            this.lastCoveredCandidate = this.findSimplestCoveredCandidate([unitTest])
             this.previousCoveredCandidate = this.coveredCandidate
-            this.coveredCandidate = this.findSimplestCoveredCandidate(this.useCase.amputeesOfPerfectCandidate, this.humanUnitTests)
+            this.coveredCandidate = this.findSimplestCoveredCandidate(this.humanUnitTests)
             if (new TestResult(this.currentCandidate, unitTest).passes)
                 this.showUselessUnitTestMessage()
             else {

@@ -1,6 +1,5 @@
 import { Candidate } from './candidate.js'
 import { Locale } from './locale.js'
-import { Random } from './random.js'
 import { UnitTest } from './unit-test.js'
 import { Variable } from './variable.js'
 
@@ -24,8 +23,6 @@ export abstract class UseCase {
     public readonly minimalUnitTests: UnitTest[] = [...this.generateMinimalUnitTests()]
     public readonly subsetsOfMinimalUnitTests: UnitTest[][] = [...this.generateSubsets(this.minimalUnitTests)]
     public readonly perfectCandidates: Candidate[] = this.findPerfectCandidates()
-    public readonly perfectCandidate: Candidate = Random.elementFrom(this.perfectCandidates)
-    public readonly amputeesOfPerfectCandidate: Candidate[] = this.findAmputeesOfPerfectCandidate()
     public readonly hints: UnitTest[] = [...this.generateHints()]
 
     public constructor(locale: Locale) {
@@ -53,8 +50,8 @@ export abstract class UseCase {
         return new Candidate(indentedLines)
     }
 
-    private findAmputeesOfPerfectCandidate(): Candidate[] {
-        return this.candidates.filter(candidate => candidate.isAmputeeOf(this.perfectCandidate))
+    public findAmputeesOf(perfectCandidate: Candidate): Candidate[] {
+        return this.candidates.filter(candidate => candidate.isAmputeeOf(perfectCandidate))
     }
 
     private* generateMinimalUnitTests(): Generator<UnitTest> {
@@ -76,8 +73,9 @@ export abstract class UseCase {
     }
 
     private* generateHints(): Generator<UnitTest> {
+        const perfectCandidate = this.perfectCandidates[0]!
         for (const argumentList of this.hintGenerator())
-            yield new UnitTest(this.parameters, argumentList, this.unit, this.perfectCandidate.execute(argumentList))
+            yield new UnitTest(this.parameters, argumentList, this.unit, perfectCandidate.execute(argumentList))
     }
 
     private findPerfectCandidates(): Candidate[] {

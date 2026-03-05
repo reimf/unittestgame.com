@@ -1,5 +1,4 @@
 import { Candidate } from './candidate.js';
-import { Random } from './random.js';
 import { UnitTest } from './unit-test.js';
 export class UseCase {
     *exampleStringGeneratorTestDrivenDevelopment() { }
@@ -11,8 +10,6 @@ export class UseCase {
     minimalUnitTests = [...this.generateMinimalUnitTests()];
     subsetsOfMinimalUnitTests = [...this.generateSubsets(this.minimalUnitTests)];
     perfectCandidates = this.findPerfectCandidates();
-    perfectCandidate = Random.elementFrom(this.perfectCandidates);
-    amputeesOfPerfectCandidate = this.findAmputeesOfPerfectCandidate();
     hints = [...this.generateHints()];
     constructor(locale) {
         this.locale = locale;
@@ -36,8 +33,8 @@ export class UseCase {
         ];
         return new Candidate(indentedLines);
     }
-    findAmputeesOfPerfectCandidate() {
-        return this.candidates.filter(candidate => candidate.isAmputeeOf(this.perfectCandidate));
+    findAmputeesOf(perfectCandidate) {
+        return this.candidates.filter(candidate => candidate.isAmputeeOf(perfectCandidate));
     }
     *generateMinimalUnitTests() {
         for (const [argumentList, expected] of this.minimalUnitTestGenerator()) {
@@ -56,8 +53,9 @@ export class UseCase {
         }
     }
     *generateHints() {
+        const perfectCandidate = this.perfectCandidates[0];
         for (const argumentList of this.hintGenerator())
-            yield new UnitTest(this.parameters, argumentList, this.unit, this.perfectCandidate.execute(argumentList));
+            yield new UnitTest(this.parameters, argumentList, this.unit, perfectCandidate.execute(argumentList));
     }
     findPerfectCandidates() {
         return this.candidates.filter(candidate => candidate.passes(this.minimalUnitTests));

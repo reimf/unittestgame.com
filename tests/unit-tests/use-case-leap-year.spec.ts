@@ -26,8 +26,8 @@ test.describe('class LeapYear', () => {
         expect(useCase.perfectCandidates).toHaveLength(1)
     })
 
-    test('has the right amount of amputees of the perfect candidate', () => {
-        expect(useCase.amputeesOfPerfectCandidate).toHaveLength(16)
+    test('has the right amount of amputees of perfect candidates', () => {
+        useCase.perfectCandidates.forEach(candidate => expect(useCase.findAmputeesOf(candidate).length).toBe(16))
     })
 
     test('perfect candidates pass all hints', () => {

@@ -13,8 +13,9 @@ export class FixtureLevelStates {
         this.states = this.enrich(JSON.parse(text));
     }
     enrich(states) {
+        const perfectCandidate = this.useCase.perfectCandidates[0];
         const years = states.flatMap(state => state.years);
-        const yearUnitTestPairs = [...new Set(years)].map(year => [year, new UnitTest(this.useCase.parameters, [year], this.useCase.unit, this.useCase.perfectCandidate.execute([year]))]);
+        const yearUnitTestPairs = [...new Set(years)].map(year => [year, new UnitTest(this.useCase.parameters, [year], this.useCase.unit, perfectCandidate.execute([year]))]);
         const unitTestMap = new Map(yearUnitTestPairs);
         for (const state of states)
             state.unitTests = state.years.map(year => unitTestMap.get(year));

@@ -11,7 +11,7 @@ test.describe('class VotingAge', () => {
     })
 
     test('has the right amount of candidates', () => {
-        expect(useCase.candidates).toHaveLength(39)
+        expect(useCase.candidates).toHaveLength(42)
     })
 
     test('has the right amount of minimal unit tests', () => {
@@ -26,8 +26,8 @@ test.describe('class VotingAge', () => {
         expect(useCase.perfectCandidates).toHaveLength(2)
     })
 
-    test('has the right amount of amputees of the perfect candidate', () => {
-        expect(useCase.amputeesOfPerfectCandidate).toHaveLength(4)
+    test('has the right amount of amputees of perfect candidates', () => {
+        useCase.perfectCandidates.forEach(candidate => expect(useCase.findAmputeesOf(candidate).length).toBe(4))
     })
 
     test('perfect candidates pass all hints', () => {

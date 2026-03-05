@@ -21,7 +21,7 @@ test.describe('class Level Mutation Testing', () => {
     test.describe('method findSimplestCoveredCandidate', () => {
         fixtureLevelStates.states.forEach(({ unitTests, simplestCoveredCandidate }) => {
             test(`finds the simplest covered candidate with unit tests ${unitTests.map(unitTest => unitTest.argumentList)}`, () => {
-                const code = level.findSimplestCoveredCandidate(useCase.amputeesOfPerfectCandidate, unitTests).toString()
+                const code = level.findSimplestCoveredCandidate(unitTests).toString()
                 expect(code).toBe(simplestCoveredCandidate)
             })
         })

@@ -4,17 +4,23 @@ test.describe('mt submit sufficient unit test', () => {
     test.beforeAll(async ({ browser }) => {
         const context = await browser.newContext();
         await context.addInitScript(_ => localStorage.setItem('level-test-driven-development-battery-level-finished', '1'));
-        await context.addInitScript(_ => localStorage.setItem('level-test-driven-development-voting-age-finished', '1'));
-        await context.addInitScript(_ => localStorage.setItem('level-mutation-testing-battery-level-finished', '1'));
+        await context.addInitScript(_ => localStorage.setItem('level-test-driven-development-even-odd-finished', '1'));
+        await context.addInitScript(_ => localStorage.setItem('level-mutation-testing-voting-age-finished', '1'));
         await context.addInitScript({ path: './tests/e2e-tests/init-script.js' });
         page = await context.newPage();
         await page.goto('/');
-        await page.getByRole('button', { name: 'I want to play Level 4 - Even or Odd - Mutation Testing' }).click();
-        await page.getByLabel('Number').fill('42');
-        await page.getByLabel('true').check();
+        await page.getByRole('button', { name: 'I want to play Level 4 - Battery Level - Mutation Testing' }).click();
+        await page.getByLabel('Battery Level').fill('20');
+        await page.getByLabel('Normal Mode').check();
         await page.getByRole('button', { name: 'I want to add this unit test' }).click();
-        await page.getByLabel('Number').fill('43');
-        await page.getByLabel('false').check();
+        await page.getByLabel('Battery Level').fill('19');
+        await page.getByLabel('Low Power Mode').check();
+        await page.getByRole('button', { name: 'I want to add this unit test' }).click();
+        await page.getByLabel('Battery Level').fill('21');
+        await page.getByLabel('Normal Mode').check();
+        await page.getByRole('button', { name: 'I want to add this unit test' }).click();
+        await page.getByLabel('Battery Level').fill('18');
+        await page.getByLabel('Low Power Mode').check();
         await page.getByRole('button', { name: 'I want to add this unit test' }).click();
         await page.getByRole('button', { name: 'I want to submit the unit tests' }).click();
     });
@@ -29,7 +35,7 @@ test.describe('mt submit sufficient unit test', () => {
     test('has level menu message', async () => {
         const messages = page.getByTestId('messages');
         const button = messages.getByRole('button');
-        await expect(button).toHaveText('I want to play Level 5 - FizzBuzz - Test-Driven Development');
+        await expect(button).toHaveText('I want to play Level 5 - Voting Age - Test-Driven Development');
     });
     test.afterAll(async () => {
         await page.close();
