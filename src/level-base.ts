@@ -202,7 +202,7 @@ export abstract class Level {
         const expected = this.useCase.unit.getInput(formData.get(this.useCase.unit.name)!)
         const unitTest = new UnitTest(this.useCase.parameters, argumentList, this.useCase.unit, expected)
         new HumanMessage([new Code().appendChild(unitTest.toHtml().addClass('new'))]).add()
-        new CheckingMessage(this.locale.checkingTheNewUnitTest(), this.locale.iCheckedTheNewUnitTest(), () => this.addUnitTest(unitTest), 2000 + this.humanUnitTests.length * 500).add()
+        new CheckingMessage(this.locale.checkingTheNewUnitTest(), this.locale.iCheckedTheNewUnitTest(), () => this.addUnitTest(unitTest), 500 + this.humanUnitTests.length * 250).add()
     }
 
     private addUnitTest(unitTest: UnitTest): void {
@@ -226,7 +226,7 @@ export abstract class Level {
     }
 
     private prepareSubmitUnitTests(): void {
-        new CheckingMessage(this.locale.checkingTheUnitTests(), this.locale.iCheckedTheUnitTests(), () => this.submitUnitTests(), 2000 + this.humanUnitTests.length * 500).add()
+        new CheckingMessage(this.locale.checkingTheUnitTests(), this.locale.iCheckedTheUnitTests(), () => this.submitUnitTests(), 500 + this.humanUnitTests.length * 250).add()
     }
 
     private submitUnitTests(): void {

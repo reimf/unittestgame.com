@@ -24,11 +24,7 @@ document.addEventListener('keydown', event => {
 })
 
 document.addEventListener('DOMContentLoaded', () => {
-    if (window.location.hostname === 'localhost') {
-        const originalSetTimeout = window.setTimeout
-        window.setTimeout = ((callback: () => void, delay: number) => originalSetTimeout(callback, delay / 3)) as typeof setTimeout
-    }
-    else
+    if (window.location.hostname !== 'localhost')
         new Bug().start()
     new Main().start()
 })

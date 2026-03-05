@@ -2,7 +2,7 @@ class Content {
     static timeOfLastDelayedCall = 0;
     callDelayed(callback) {
         const now = Date.now();
-        const delay = Math.max(0, 500 + Html.timeOfLastDelayedCall - now);
+        const delay = Math.max(0, 250 + Html.timeOfLastDelayedCall - now);
         Html.timeOfLastDelayedCall = now + delay;
         window.setTimeout(() => callback(), delay);
     }
