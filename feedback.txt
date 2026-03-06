@@ -1,17 +1,14 @@
-✅ haal de scrollbars weg bij de codefragmenten
-✅ maak bij FizzBuzz duidelijk dat en hoe je een getal teruggeeft als string
-✅ maak de chatbot sneller
-✅ haal de lopende bug weg
-✅ maak de inputs leeg in de voorbeeld-levels als alleen de knop "I want to submit the unit tests" zichtbaar is
-✅ laat de geteste regels zien voor de laatst toegevoegde unit test bij mutation testing
-✅ doe de voorbeeld-levels met een verschillende use-case
-✅ clear de chat na elk level
-❌ vergelijk jezelf met andere spelers 
-❌ skip een leven / ga een level terug
-❌ introduceer de (mogelijke) mutaties voordat je die tegenkomt
-❌ geef een hint als de speler vastloopt (gebeurt al als je de unit testen inlevert)
-❓ maak meer visueel verschil tussen de voorbeeld-levels
+✅ perf: maak de chatbot sneller
+✅ feat: haal de lopende bug weg
+✅ fix: maak de inputs leeg in de voorbeeld-levels als alleen de knop "I want to submit the unit tests" zichtbaar is
+✅ feat: laat de geteste regels zien voor de laatst toegevoegde unit test bij mutation testing
+✅ feat: doe de voorbeeld-levels met een verschillende use-case
+✅ feat: clear de chat na elk level
+❌ feat: vergelijk jezelf met andere spelers (spel is nu individueel; wellicht later)
+❌ feat: skip een leven / ga een level terug (de keuzemogelijkheden zijn nu met opzet beperkt)
+❌ feat: geef een hint als de speler vastloopt (gebeurt al als je de unit testen inlevert)
+❓ feat: maak meer visueel verschil tussen de voorbeeld-levels (hoe?)
     TDD = Current Level + Specification + Current Function + Difference + Unit Tests
-    MT = Current Level + The Function + Unit Tests
-❓ toon een loading bar tijdens het uitvoeren van unit-testen
-❓ maak zichtbaar welke unittesten overbodig zijn
+    MT = Current Level + The Function + Tested Lines + Unit Tests
+❓ feat: toon een loading bar tijdens het uitvoeren van unit-testen (is dit nog zinvol nu de chatbot sneller is?)
+❓ feat: maak zichtbaar welke unittesten overbodig zijn (als er 3 unittesten waar 1 volstaat, zijn ze dan alle 3 overbodig?)
