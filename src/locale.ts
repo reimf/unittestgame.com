@@ -178,23 +178,23 @@ export class Locale {
 
     public definitionTDD(): string {
         return this.pick({
-            en: 'Write a unit test that does NOT pass, then write just enough code to make the unit test pass. Repeat until the code is according to the specification. [Read more](https://en.wikipedia.org/wiki/Test-driven_development)',
-            nl: 'Schrijf een unit test die niet slaagt, schrijf dan net genoeg code om de unit test te laten slagen. Herhaal dit totdat de code aan de specificatie voldoet. [Lees meer](https://nl.wikipedia.org/wiki/Test-driven_development)',
+            en: 'Write a unit test that does NOT yet pass, then write just enough code to make the unit test pass. Repeat until the code is according to the specification. [Read more](https://en.wikipedia.org/wiki/Test-driven_development)',
+            nl: 'Schrijf een unit test die nog niet slaagt, schrijf dan net genoeg code om de unit test te laten slagen. Herhaal dit totdat de code aan de specificatie voldoet. [Lees meer](https://nl.wikipedia.org/wiki/Test-driven_development)',
         })
     }
 
     public step1TDD(): string {
         return this.pick({
-            en: 'First, you read the *Specification* and then you write *Unit Tests* that do NOT pass the *Current Function*.',
-            nl: 'Eerst lees je de *Specificatie* en daarna schrijf je *Unit Testen* die niet slagen voor de *Huidige Functie*.',
+            en: 'First, you read the *Specification* and then you write a *Unit Tests* that does NOT pass the *Current Function*.',
+            nl: 'Eerst lees je de *Specificatie* en daarna schrijf je een *Unit Testen* die niet slaagt voor de *Huidige Functie*.',
         })
     }
 
 
     public step2TDD(): string {
         return this.pick({
-            en: 'After adding a unit test I (the AI bot) improve the *Current Function* such that the *Unit Tests* pass.',
-            nl: 'Na het toevoegen van een unit test verbeter ik (de AI-bot) de *Huidige Functie* zodat de *Unit Testen* slagen.',
+            en: 'After adding a unit test I (the AI bot) improve the *Current Function* such that all *Unit Tests* pass.',
+            nl: 'Na het toevoegen van een unit test verbeter ik (de AI-bot) de *Huidige Functie* zodat alle *Unit Testen* slagen.',
         })
     }
 
@@ -237,20 +237,20 @@ export class Locale {
         return this.pick({
             en: 'I added the unit test to the *Unit Tests*, but the *Current Function* already passed this unit test, so I did NOT improve the *Current Function*.',
             nl: 'Ik heb de unit test toegevoegd aan de *Unit Testen*, maar de *Huidige Functie* slaagde al voor deze unit test, dus ik heb de *Huidige Functie* NIET verbeterd.',
-            })
+        })
     }
 
     public tryToWriteUnitTestsThatDoNotPass(): string {
         return this.pick({
-            en: 'Try to write unit tests that do NOT pass for the *Current Function*.',
+            en: 'Try to write unit tests that do NOT pass the *Current Function*.',
             nl: 'Probeer unit testen te schrijven die niet slagen voor de *Huidige Functie*.',
-            })
+        })
     }
 
     public iAddedTheUnitTestAndImprovedTheCurrentFunction(): string {
         return this.pick({
-            en: 'I added the unit test to the *Unit Tests* and I improved the *Current Function* such that the new unit test passes.',
-            nl: 'Ik heb de unit test toegevoegd aan de *Unit Testen* en ik heb de *Huidige Functie* zo verbeterd dat de nieuwe unit test slaagt.',
+            en: 'I added the unit test to the *Unit Tests* and I improved the *Current Function* such that the new unit test also passes.',
+            nl: 'Ik heb de unit test toegevoegd aan de *Unit Testen* en ik heb de *Huidige Functie* zo verbeterd dat de nieuwe unit test ook slaagt.',
         })
     }
 
@@ -268,10 +268,10 @@ export class Locale {
         })
     }
 
-    public tryToWriteAUnitTestThatIsAccordingToTheSpecification(numberOfUnitTestsStillNeeded: number): string {
+    public writeAUnitTestThatIsAccordingToTheSpecification(numberOfUnitTestsStillNeeded: number): string {
         return this.pick({
-            en: `Try to write a unit test that is according to the *Specification* and does NOT pass for the *Current Function*. I think you need at least ${numberOfUnitTestsStillNeeded} more ${numberOfUnitTestsStillNeeded === 1 ? 'unit test' : 'unit tests'} to make the *Current Function* according to the *Specification*.`,
-            nl: `Probeer een unit test te schrijven die aan de *Specificatie* voldoet en niet slaagt voor de *Huidige Functie*. Ik denk dat je nog minstens ${numberOfUnitTestsStillNeeded} meer ${numberOfUnitTestsStillNeeded === 1 ? 'unit test' : 'unit testen'} nodig hebt om de *Huidige Functie* volgens de *Specificatie* te maken.`,
+            en: `Write a unit test that is according to the *Specification* and does NOT pass the *Current Function*. I think you need at least ${numberOfUnitTestsStillNeeded} more ${numberOfUnitTestsStillNeeded === 1 ? 'unit test' : 'unit tests'} to make the *Current Function* according to the *Specification*.`,
+            nl: `Schrijf een unit test die aan de *Specificatie* voldoet en niet slaagt voor de *Huidige Functie*. Ik denk dat je nog minstens ${numberOfUnitTestsStillNeeded} meer ${numberOfUnitTestsStillNeeded === 1 ? 'unit test' : 'unit testen'} nodig hebt om de *Huidige Functie* volgens de *Specificatie* te maken.`,
         })
     }
     public theCurrentFunctionIsIndeedAccordingToTheSpecification(): string {
@@ -353,8 +353,8 @@ export class Locale {
 
     public tryToWriteUnitTestsThatTestSomeCode(): string {
         return this.pick({
-            en: 'Try to write unit tests that test some code that is not yet tested by other unit tests.',
-            nl: 'Probeer unit testen te schrijven die wat code testen die nog niet door andere unit testen wordt getest.',
+            en: 'Try to write unit tests that test some lines that is not yet tested by other unit tests.',
+            nl: 'Probeer unit testen te schrijven die wat regels testen die nog niet door andere unit testen wordt getest.',
         })
     }
 
@@ -381,7 +381,7 @@ export class Locale {
 
     public tryToWriteAUnitTestThatPasses(numberOfUnitTestsStillNeeded: number): string {
         return this.pick({
-            en: `Try to write a unit test that passes *The Function* and does NOT pass for this mutation. I think you need at least ${numberOfUnitTestsStillNeeded} more ${numberOfUnitTestsStillNeeded === 1 ? 'unit test' : 'unit tests'} to fully test *The Function*.`,
+            en: `Try to write a unit test that passes *The Function* and does NOT pass this mutation. I think you need at least ${numberOfUnitTestsStillNeeded} more ${numberOfUnitTestsStillNeeded === 1 ? 'unit test' : 'unit tests'} to fully test *The Function*.`,
             nl: `Probeer een unit test te schrijven die slaagt voor *De Functie* en niet slaagt voor deze mutatie. Ik denk dat je nog minstens ${numberOfUnitTestsStillNeeded} meer ${numberOfUnitTestsStillNeeded === 1 ? 'unit test' : 'unit testen'} nodig hebt om *De Functie* volledig te testen.`,
         })
     }

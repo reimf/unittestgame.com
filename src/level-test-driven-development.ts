@@ -59,7 +59,7 @@ export class TestDrivenDevelopment extends Level {
     protected showBugFoundMessage(_currentCandidate: Candidate, failingTestResult: TestResult, numberOfUnitTestsStillNeeded: number): void {
         new ComputerMessage([this.locale.theCurrentFunctionIsNotAccordingToTheSpecification()]).add()
         new ComputerMessage([this.locale.itProducesTheFollowingIncorrectResult(), new Code().appendChild(failingTestResult.toHtml().addClass('new'))]).add()
-        new ComputerMessage([this.locale.tryToWriteAUnitTestThatIsAccordingToTheSpecification(numberOfUnitTestsStillNeeded)]).add()
+        new ComputerMessage([this.locale.writeAUnitTestThatIsAccordingToTheSpecification(numberOfUnitTestsStillNeeded)]).add()
     }
 
     protected showEndMessage(): void {
