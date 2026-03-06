@@ -8,44 +8,50 @@ class Frame extends Section {
     existingElement() {
         return document.querySelector('#' + this.getId());
     }
-    addTo(parentId) {
+    addTo(parent) {
         const node = this.toNode();
-        document.querySelector('#' + parentId).appendChild(node);
+        parent.appendChild(node);
         return node;
     }
 }
 export class Panel extends Frame {
+    static panelsElement = document.querySelector('#panels');
     constructor(id, title, elements) {
         super(elements);
         this.setId(id).prependChild(new Header().appendText(title));
     }
     static removeAll() {
-        document.querySelector('#panels')?.replaceChildren();
+        this.panelsElement.replaceChildren();
     }
     show() {
         const existingElement = this.existingElement();
         if (existingElement)
             existingElement.replaceWith(this.toNode());
         else
-            this.addTo('panels');
+            this.addTo(Panel.panelsElement);
     }
 }
-class Message extends Frame {
+export class Message extends Frame {
+    static messagesElement = document.querySelector('#messages');
     constructor(elements) {
         super(elements);
     }
-    add(extra) {
+    static hideAllButLast() {
+        const messages = [...Message.messagesElement.children];
+        const messagesButLast = messages.slice(0, messages.length - 1);
+        messagesButLast.forEach(message => message.classList.add('hidden'));
+    }
+    add(extra = () => { }) {
         this.callDelayed(() => {
-            const count = document.querySelector('#messages').childElementCount;
+            const count = Message.messagesElement.childElementCount;
             this.setId(`message-${count}`);
-            const node = this.addTo('messages');
+            const node = this.addTo(Message.messagesElement);
             node.classList.add('reveal');
             node.scrollIntoView();
             const focusable = document.querySelector('button:not([disabled]), input:not([disabled])');
             if (focusable)
                 focusable.focus();
-            if (extra)
-                extra();
+            extra();
         });
     }
 }

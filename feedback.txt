@@ -5,13 +5,13 @@
 ✅ maak de inputs leeg in de voorbeeld-levels als alleen de knop "I want to submit the unit tests" zichtbaar is
 ✅ laat de geteste regels zien voor de laatst toegevoegde unit test bij mutation testing
 ✅ doe de voorbeeld-levels met een verschillende use-case
+✅ clear de chat na elk level
 ❌ vergelijk jezelf met andere spelers 
 ❓ introduceer de (mogelijke) mutaties voordat je die tegenkomt
 ❓ geef een hint als de speler vastloopt
 ❓ maak meer visueel verschil tussen de voorbeeld-levels
     TDD = Current Level + Specification + Current Function + Difference + Unit Tests
     MT = Current Level + The Function + Unit Tests
-❓ clear de chat na elk level
 ❓ toon een loading bar tijdens het uitvoeren van unit-testen
 ❓ maak zichtbaar welke unittesten overbodig zijn
 ❓ skip een leven / ga een level terug

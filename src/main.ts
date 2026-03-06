@@ -1,5 +1,5 @@
 import { Config } from './config.js'
-import { Panel, ComputerMessage, QuestionMessage } from './frame.js'
+import { Panel, Message, ComputerMessage, QuestionMessage } from './frame.js'
 import { Div, Span, Paragraph } from './html.js'
 import { Level } from './level-base.js'
 
@@ -24,6 +24,7 @@ export class Main {
     }
 
     private play(level: Level): void {
+        Message.hideAllButLast()
         Panel.removeAll()
         level.play(() => this.continue())
     }

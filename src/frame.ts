@@ -11,21 +11,23 @@ abstract class Frame extends Section {
         return document.querySelector('#' + this.getId())
     }
 
-    protected addTo(parentId: string): Node {
+    protected addTo(parent: Element): Node {
         const node = this.toNode()
-        document.querySelector('#' + parentId)!.appendChild(node)
+        parent.appendChild(node)
         return node
     }
 }
 
 export class Panel extends Frame {
+    private static readonly panelsElement = document.querySelector('#panels')!
+
     public constructor(id: string, title: string, elements: readonly (Html|string)[]) {
         super(elements)
         this.setId(id).prependChild(new Header().appendText(title))
     }
 
     public static removeAll(): void {
-        document.querySelector('#panels')?.replaceChildren()
+        this.panelsElement.replaceChildren()
     }
 
     public show(): void {
@@ -33,27 +35,34 @@ export class Panel extends Frame {
         if (existingElement)
             existingElement.replaceWith(this.toNode())
         else
-            this.addTo('panels')
+            this.addTo(Panel.panelsElement)
     }
 }
 
-abstract class Message extends Frame {
+export abstract class Message extends Frame {
+    private static messagesElement = document.querySelector('#messages')!
+
     protected constructor(elements: readonly (Html|string)[]) {
         super(elements)
     }
 
-    public add(extra?: () => void): void {
+    public static hideAllButLast(): void {
+        const messages = [...Message.messagesElement.children]
+        const messagesButLast = messages.slice(0, messages.length - 1)
+        messagesButLast.forEach(message => message.classList.add('hidden'))
+    }
+
+    public add(extra: () => void=() => {}): void {
         this.callDelayed(() => {
-            const count = document.querySelector('#messages')!.childElementCount
+            const count = Message.messagesElement.childElementCount
             this.setId(`message-${count}`)
-            const node = this.addTo('messages') as HTMLElement
+            const node = this.addTo(Message.messagesElement) as HTMLElement
             node.classList.add('reveal')
             node.scrollIntoView()
             const focusable = document.querySelector('button:not([disabled]), input:not([disabled])')
             if (focusable)
                 (focusable as HTMLElement).focus()
-            if (extra)
-                extra()
+            extra()
         })
     }
 }

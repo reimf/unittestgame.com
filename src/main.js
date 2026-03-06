@@ -1,5 +1,5 @@
 import { Config } from './config.js';
-import { Panel, ComputerMessage, QuestionMessage } from './frame.js';
+import { Panel, Message, ComputerMessage, QuestionMessage } from './frame.js';
 import { Div, Span, Paragraph } from './html.js';
 export class Main {
     lng = (new URL(window.location.href)).searchParams.get('lng') || navigator.language.split('-')[0];
@@ -19,6 +19,7 @@ export class Main {
         this.showNextLevel();
     }
     play(level) {
+        Message.hideAllButLast();
         Panel.removeAll();
         level.play(() => this.continue());
     }
