@@ -156,7 +156,7 @@ export abstract class Level {
         new Panel('current-level', this.locale.currentLevel(), [this.description()]).show()
     }
 
-    private showUnitTestsPanel(unitTests: readonly UnitTest[], newUnitTest?: UnitTest): void {
+    private showUnitTestsPanel(unitTests: readonly UnitTest[], lastUnitTest?: UnitTest): void {
         new Panel('unit-tests', this.locale.unitTests(),
             unitTests.length === 0
             ? [new Paragraph().appendText(this.locale.youHaveNotWrittenAnyUnitTestsYet())]
@@ -164,7 +164,7 @@ export abstract class Level {
                 unitTests.map(unitTest =>
                     new ListItem().appendChild(
                         new Code().appendChild(
-                            unitTest.toHtml().addClass(unitTest === newUnitTest ? 'new' : 'old')
+                            unitTest.toHtml().addClass(unitTest === lastUnitTest ? 'new' : 'old')
                         )
                     )
                 )

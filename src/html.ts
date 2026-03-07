@@ -133,8 +133,8 @@ export class Html extends Content {
 
     public toNode(): Node {
         const node = document.createElement(this.tagName)
-        for (const klasse of this.classList)
-            node.classList.add(klasse)
+        for (const class_ of this.classList)
+            node.classList.add(class_)
         if (this.id)
             node.id = this.id
         for (const child of this.children)

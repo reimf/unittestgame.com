@@ -11,4 +11,5 @@
     TDD = Current Level + Specification + Current Function + Difference + Unit Tests
     MT = Current Level + The Function + Tested Lines + Unit Tests
 ❓ feat: toon een loading bar tijdens het uitvoeren van unit-testen (is dit nog zinvol nu de chatbot sneller is?)
-❓ feat: maak zichtbaar welke unittesten overbodig zijn (als er 3 unittesten waar 1 volstaat, zijn ze dan alle 3 overbodig?)
+❓ feat: maak zichtbaar welke unittesten overbodig zijn (kan pas aan het einde van het level)
+❓ feat: alleen TDD, geen MT (MT is lastig, spelers zien het verschil niet zo, de mutaties zijn groter dan in het echt)
