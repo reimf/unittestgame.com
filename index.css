@@ -238,7 +238,7 @@ a, button, input, label:has(input[type="radio"]:not(:disabled)) {
         box-shadow: 0.25rem 0 0.5rem var(--separator-shadow);
         display: flex;
         flex-direction: column;
-        height: 100vh;
+        min-height: 100vh;
         overflow-y: scroll;
         scrollbar-width: none;
         width: 60%;
