@@ -15,37 +15,41 @@ class Frame extends Section {
     }
 }
 export class Panel extends Frame {
-    static panelsElement = document.querySelector('#panels');
     constructor(id, title, elements) {
         super(elements);
         this.setId(id).prependChild(new Header().appendText(title));
     }
+    static getPanelsElement() {
+        return document.querySelector('#panels');
+    }
     static removeAll() {
-        this.panelsElement.replaceChildren();
+        this.getPanelsElement().replaceChildren();
     }
     show() {
         const existingElement = this.existingElement();
         if (existingElement)
             existingElement.replaceWith(this.toNode());
         else
-            this.addTo(Panel.panelsElement);
+            this.addTo(Panel.getPanelsElement());
     }
 }
 export class Message extends Frame {
-    static messagesElement = document.querySelector('#messages');
     constructor(elements) {
         super(elements);
     }
+    static getMessagesElement() {
+        return document.querySelector('#messages');
+    }
     static hideAllButLast() {
-        const messages = [...Message.messagesElement.children];
+        const messages = [...Message.getMessagesElement().children];
         const messagesButLast = messages.slice(0, messages.length - 1);
         messagesButLast.forEach(message => message.classList.add('hidden'));
     }
     add(extra = () => { }) {
         this.callDelayed(() => {
-            const count = Message.messagesElement.childElementCount;
+            const count = Message.getMessagesElement().childElementCount;
             this.setId(`message-${count}`);
-            const node = this.addTo(Message.messagesElement);
+            const node = this.addTo(Message.getMessagesElement());
             node.classList.add('reveal');
             node.scrollIntoView();
             const focusable = document.querySelector('button:not([disabled]), input:not([disabled])');

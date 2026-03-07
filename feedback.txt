@@ -4,12 +4,13 @@
 ✅ feat: laat de geteste regels zien voor de laatst toegevoegde unit test bij mutation testing
 ✅ feat: doe de voorbeeld-levels met een verschillende use-case
 ✅ feat: clear de chat na elk level
+✅ fix: beperk de inputs in lengte, getallen tot lengte 4 (plus eventueel een punt en een cijfer achter de komma) en tekst tot lengte 10
 ❌ feat: vergelijk jezelf met andere spelers (spel is nu individueel; wellicht later)
 ❌ feat: skip een leven / ga een level terug (de keuzemogelijkheden zijn nu met opzet beperkt)
 ❌ feat: geef een hint als de speler vastloopt (gebeurt al als je de unit testen inlevert)
+❌ feat: toon een loading bar tijdens het uitvoeren van unit-testen (de chatbot is nu veel sneller)
 ❓ feat: maak meer visueel verschil tussen de voorbeeld-levels (hoe?)
     TDD = Current Level + Specification + Current Function + Difference + Unit Tests
     MT = Current Level + The Function + Tested Lines + Unit Tests
-❓ feat: toon een loading bar tijdens het uitvoeren van unit-testen (is dit nog zinvol nu de chatbot sneller is?)
-❓ feat: maak zichtbaar welke unittesten overbodig zijn (kan pas aan het einde van het level)
-❓ feat: alleen TDD, geen MT (MT is lastig, spelers zien het verschil niet zo, de mutaties zijn groter dan in het echt)
+❓ feat: maak zichtbaar welke unittesten overbodig zijn (kan wel pas zinvol aan het einde van het level)
+❓ feat: alleen TDD, geen MT (MT is lastig, spelers zien het verschil niet zo, de mutaties zijn groter dan in het echt, de terugkoppeling van geteste regels is te karig)

@@ -19,15 +19,17 @@ abstract class Frame extends Section {
 }
 
 export class Panel extends Frame {
-    private static readonly panelsElement = document.querySelector('#panels')!
-
     public constructor(id: string, title: string, elements: readonly (Html|string)[]) {
         super(elements)
         this.setId(id).prependChild(new Header().appendText(title))
     }
 
+    private static getPanelsElement(): HTMLElement {
+        return document.querySelector('#panels')!
+    }
+
     public static removeAll(): void {
-        this.panelsElement.replaceChildren()
+        this.getPanelsElement().replaceChildren()
     }
 
     public show(): void {
@@ -35,28 +37,30 @@ export class Panel extends Frame {
         if (existingElement)
             existingElement.replaceWith(this.toNode())
         else
-            this.addTo(Panel.panelsElement)
+            this.addTo(Panel.getPanelsElement())
     }
 }
 
 export abstract class Message extends Frame {
-    private static messagesElement = document.querySelector('#messages')!
-
     protected constructor(elements: readonly (Html|string)[]) {
         super(elements)
     }
 
+    private static getMessagesElement(): HTMLElement {
+        return document.querySelector('#messages')!
+    }
+
     public static hideAllButLast(): void {
-        const messages = [...Message.messagesElement.children]
+        const messages = [...Message.getMessagesElement().children]
         const messagesButLast = messages.slice(0, messages.length - 1)
         messagesButLast.forEach(message => message.classList.add('hidden'))
     }
 
     public add(extra: () => void=() => {}): void {
         this.callDelayed(() => {
-            const count = Message.messagesElement.childElementCount
+            const count = Message.getMessagesElement().childElementCount
             this.setId(`message-${count}`)
-            const node = this.addTo(Message.messagesElement) as HTMLElement
+            const node = this.addTo(Message.getMessagesElement()) as HTMLElement
             node.classList.add('reveal')
             node.scrollIntoView()
             const focusable = document.querySelector('button:not([disabled]), input:not([disabled])')
