@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { Locale } from '../../src/locale.js';
-import { BatteryLevel } from '../../src/use-case-battery-level.js';
+import { BatteryLevel } from '../../src/level-battery-level.js';
 test.describe('class BatteryLevel', () => {
     const locale = new Locale('en');
     const useCase = new BatteryLevel(locale);
@@ -18,9 +18,6 @@ test.describe('class BatteryLevel', () => {
     });
     test('has the right amount of perfect candidates', () => {
         expect(useCase.perfectCandidates).toHaveLength(2);
-    });
-    test('has the right amount of amputees of perfect candidates', () => {
-        useCase.perfectCandidates.forEach(candidate => expect(useCase.findAmputeesOf(candidate).length).toBe(4));
     });
     test('perfect candidates pass all hints', () => {
         const failingCandidates = useCase.perfectCandidates.filter(candidate => !candidate.passes(useCase.hints));

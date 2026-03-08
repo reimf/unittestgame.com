@@ -10,7 +10,6 @@ export class Main {
         this.showWelcomeMessage();
         this.showAboutPanel();
         this.showBasicDefinitionTestDrivenDevelopment();
-        this.showBasicDefinitionMutationTesting();
         this.continue();
     }
     continue() {
@@ -25,9 +24,6 @@ export class Main {
     }
     showBasicDefinitionTestDrivenDevelopment() {
         new Panel('test-driven-development', this.locale.testDrivenDevelopment(), [this.locale.definitionTDD()]).show();
-    }
-    showBasicDefinitionMutationTesting() {
-        new Panel('mutation-testing', this.locale.mutationTesting(), [this.locale.definitionMT()]).show();
     }
     showWelcomeMessage() {
         new ComputerMessage([this.locale.welcomeToUnittestgame()]).add();

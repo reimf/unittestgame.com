@@ -1,21 +1,19 @@
 import * as fs from 'fs'
 import * as path from 'path'
-import { MockUseCase } from '../mocks/mock-use-case.js'
 import { Locale } from '../../src/locale.js'
 import { UnitTest } from '../../src/unit-test.js'
+import { LeapYear } from '../../src/level-leap-year.js'
 
 type FixtureLevelState = {
     years: number[],
     unitTests: UnitTest[],
-    simplestCoveredCandidate: string,
-    simplestPassingCandidatesMutationTesting: string[],
     simplestPassingCandidatesTestDrivenDevelopment: string[],
     numberOfUnitTestsStillNeeded: number,
 }
 
 export class FixtureLevelStates {
     private readonly locale = new Locale('en')
-    public readonly useCase = new MockUseCase(this.locale)
+    public readonly level = new LeapYear(this.locale, 1)
     public readonly states: FixtureLevelState[]
 
     public constructor() {
@@ -25,10 +23,10 @@ export class FixtureLevelStates {
     }
 
     private enrich(states: FixtureLevelState[]): FixtureLevelState[] {
-        const perfectCandidate = this.useCase.perfectCandidates[0]!
+        const perfectCandidate = this.level.perfectCandidates[0]!
         const years = states.flatMap(state => state.years)
         const yearUnitTestPairs: [number, UnitTest][] = [...new Set(years)].map(year =>
-            [year, new UnitTest(this.useCase.parameters, [year], this.useCase.unit, perfectCandidate.execute([year]))]
+            [year, new UnitTest(this.level.parameters, [year], this.level.unit, perfectCandidate.execute([year]))]
         )
         const unitTestMap = new Map(yearUnitTestPairs)
         for (const state of states)

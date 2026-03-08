@@ -39,16 +39,6 @@ test.describe('welcome', () => {
         expect(await link.getAttribute('href')).toBe('https://en.wikipedia.org/wiki/Test-driven_development')
     })
 
-    test('has basics of mutation testing panel', async () => {
-        const basicsMutationTestingPanel = page.getByTestId('mutation-testing')
-        await expect(basicsMutationTestingPanel).toContainText('Mutation Testing')
-    })
-
-    test('has more info on Mutation Testing', async () => {
-        const link = page.getByTestId('mutation-testing').getByRole('link', { name: 'more' })
-        expect(await link.getAttribute('href')).toBe('https://en.wikipedia.org/wiki/Mutation_testing')
-    })
-
     test('has level overview panel', async () => {
         const levelsPanel = page.getByTestId('level-overview')
         await expect(levelsPanel).toContainText('1▶️2🔒3🔒4🔒5🔒')
@@ -57,7 +47,7 @@ test.describe('welcome', () => {
     test('has see example message', async () => {
         const messages = page.getByTestId('messages')
         const button = messages.getByRole('button')
-        await expect(button).toHaveText('I want to play Level 1 - Battery Level - Test-Driven Development')
+        await expect(button).toHaveText('I want to play Level 1 - Battery Level')
     })
 
     test.afterAll(async () => {

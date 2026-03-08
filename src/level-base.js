@@ -7,37 +7,81 @@ import { TestResult } from './test-result.js';
 import { UnitTest } from './unit-test.js';
 export class Level {
     locale;
-    useCase;
     levelNumber;
     isLevelFinished;
     exampleStrings;
     isExample;
+    *exampleStringGenerator() { }
     callback;
     humanUnitTests = [];
     perfectCandidate;
-    amputeesOfPerfectCandidate;
-    coveredCandidate = undefined;
-    previousCoveredCandidate = undefined;
-    lastCoveredCandidate = undefined;
     currentCandidate = new Candidate([]);
     previousCurrentCandidate = undefined;
     failingTestResult = undefined;
     lastUnitTest = undefined;
     numberOfSubmissions = 0;
-    constructor(locale, useCase, levelNumber) {
+    parameters = this.getParameters();
+    unit = this.getUnit();
+    candidates = [...this.generateCandidates(this.getCandidateElements(), [])];
+    minimalUnitTests = [...this.generateMinimalUnitTests()];
+    subsetsOfMinimalUnitTests = [...this.generateSubsets(this.minimalUnitTests)];
+    perfectCandidates = this.findPerfectCandidates();
+    hints = [...this.generateHints()];
+    constructor(locale, levelNumber) {
         this.locale = locale;
-        this.useCase = useCase;
         this.levelNumber = levelNumber;
-        this.isLevelFinished = new Completed(`level-${this.identifier()}-${useCase.identifier()}-finished`);
-        this.exampleStrings = [...this.exampleStringGenerator(useCase)];
+        this.isLevelFinished = new Completed(`level-${this.identifier()}-finished`);
+        this.exampleStrings = [...this.exampleStringGenerator()];
         this.isExample = this.exampleStrings.length > 0;
-        this.perfectCandidate = this.getRandomElementFrom(this.useCase.perfectCandidates);
-        this.amputeesOfPerfectCandidate = this.useCase.findAmputeesOf(this.perfectCandidate);
+        this.perfectCandidate = this.getRandomElementFrom(this.perfectCandidates);
     }
     getRandomElementFrom(elements) {
         if (this.isExample)
             return elements[0];
         return Random.elementFrom(elements);
+    }
+    *generateCandidates(listOfListOfLines, lines) {
+        if (listOfListOfLines.length > 0) {
+            const [firstListOfLines, ...remainingListOfListOfLines] = listOfListOfLines;
+            if (firstListOfLines)
+                for (const line of firstListOfLines)
+                    yield* this.generateCandidates(remainingListOfListOfLines, [...lines, line]);
+        }
+        else
+            yield this.createCandidate(lines);
+    }
+    createCandidate(lines) {
+        const parameterList = this.parameters.map(parameter => parameter.name).join(', ');
+        const indentedLines = [
+            `function ${this.unit.name}(${parameterList}) {`,
+            ...lines.map(line => line ? '  ' + line : ''),
+            '}',
+        ];
+        return new Candidate(indentedLines);
+    }
+    *generateMinimalUnitTests() {
+        for (const [argumentList, expected] of this.minimalUnitTestGenerator()) {
+            yield new UnitTest(this.parameters, argumentList, this.unit, expected);
+        }
+    }
+    *generateSubsets(unitTests) {
+        const n = unitTests.length;
+        const total = 1 << n;
+        for (let size = 0; size <= n; size++) {
+            for (let mask = 0; mask < total; mask++) {
+                const subset = unitTests.filter((_, i) => mask & (1 << i));
+                if (subset.length === size)
+                    yield subset;
+            }
+        }
+    }
+    *generateHints() {
+        const perfectCandidate = this.perfectCandidates[0];
+        for (const argumentList of this.hintGenerator())
+            yield new UnitTest(this.parameters, argumentList, this.unit, perfectCandidate.execute(argumentList));
+    }
+    findPerfectCandidates() {
+        return this.candidates.filter(candidate => candidate.passes(this.minimalUnitTests));
     }
     findSimplestCandidate(candidates) {
         const simplestCandidates = candidates.reduce((simplestCandidatesSoFar, candidate) => {
@@ -58,13 +102,6 @@ export class Level {
         if (passingImperfectCandidates.length === 0)
             return this.getRandomElementFrom(perfectCandidates);
         return this.findSimplestCandidate(passingImperfectCandidates);
-    }
-    findSimplestCoveredCandidate(unitTests) {
-        return unitTests.reduce((simplestCoveredCandidateSoFar, unitTest) => {
-            const passingCandidates = this.amputeesOfPerfectCandidate.filter(candidate => candidate.passes([unitTest]));
-            const simplestPassingCandidate = this.findSimplestCandidate(passingCandidates);
-            return simplestPassingCandidate.combine(simplestCoveredCandidateSoFar);
-        }, this.findSimplestPassingCandidate(this.amputeesOfPerfectCandidate, [], []));
     }
     findFailingTestResult(candidate, hints, minimalUnitTestsList) {
         for (const unitTests of [hints, minimalUnitTestsList]) {
@@ -94,19 +131,16 @@ export class Level {
         return this === nextLevel ? '▶️' : ['🔒', '🥇', '🥈', '🥉'].at(this.isFinished()) || '🥉';
     }
     description() {
-        return this.locale.level(this.levelNumber, this.name(), this.useCase.name());
+        return this.locale.level(this.levelNumber, this.name());
     }
     isFinished() {
         return this.isLevelFinished.get();
     }
     initialize() {
         this.humanUnitTests = [];
-        this.coveredCandidate = undefined;
-        this.previousCoveredCandidate = undefined;
-        this.lastCoveredCandidate = undefined;
-        this.currentCandidate = this.findSimplestPassingCandidate(this.useCase.candidates, this.useCase.perfectCandidates, this.humanUnitTests);
+        this.currentCandidate = this.findSimplestPassingCandidate(this.candidates, this.perfectCandidates, this.humanUnitTests);
         this.previousCurrentCandidate = undefined;
-        this.failingTestResult = this.findFailingTestResult(this.currentCandidate, this.useCase.hints, this.useCase.minimalUnitTests);
+        this.failingTestResult = this.findFailingTestResult(this.currentCandidate, this.hints, this.minimalUnitTests);
         this.lastUnitTest = undefined;
         this.numberOfSubmissions = 0;
     }
@@ -132,9 +166,8 @@ export class Level {
         this.showMenuMessage();
     }
     showPanels() {
-        this.showSpecificationPanel(this.useCase.specification());
+        this.showSpecificationPanel(this.specification());
         this.showCurrentFunctionPanel(this.currentCandidate, this.previousCurrentCandidate);
-        this.showTheFunctionPanel(this.perfectCandidate, this.coveredCandidate, this.previousCoveredCandidate, this.lastCoveredCandidate);
         this.showUnitTestsPanel(this.humanUnitTests, this.lastUnitTest);
     }
     showMenuMessage() {
@@ -145,7 +178,7 @@ export class Level {
         const submitTheUnitTestsButton = new Button()
             .appendText(this.locale.iWantToSubmitTheUnitTests())
             .onClick(() => this.prepareSubmitUnitTests());
-        const variables = [...this.useCase.parameters, this.useCase.unit];
+        const variables = [...this.parameters, this.unit];
         variables.forEach(variable => variable.setDisabled(this.isExample));
         if (this.isExample) {
             const buttonText = this.nextExampleString();
@@ -166,9 +199,9 @@ export class Level {
         new HumanMessage([form, divider, submitTheUnitTestsButton]).add();
     }
     prepareAddUnitTest(formData) {
-        const argumentList = this.useCase.parameters.map(parameter => parameter.getInput(formData.get(parameter.name)));
-        const expected = this.useCase.unit.getInput(formData.get(this.useCase.unit.name));
-        const unitTest = new UnitTest(this.useCase.parameters, argumentList, this.useCase.unit, expected);
+        const argumentList = this.parameters.map(parameter => parameter.getInput(formData.get(parameter.name)));
+        const expected = this.unit.getInput(formData.get(this.unit.name));
+        const unitTest = new UnitTest(this.parameters, argumentList, this.unit, expected);
         new HumanMessage([new Code().appendChild(unitTest.toHtml().addClass('new'))]).add();
         new CheckingMessage(this.locale.checkingTheNewUnitTest(), this.locale.iCheckedTheNewUnitTest(), () => this.addUnitTest(unitTest), 500 + this.humanUnitTests.length * 250).add();
     }
@@ -178,15 +211,12 @@ export class Level {
             this.lastUnitTest = unitTest;
             this.humanUnitTests.push(unitTest);
             this.previousCurrentCandidate = this.currentCandidate;
-            this.lastCoveredCandidate = this.findSimplestCoveredCandidate([unitTest]);
-            this.previousCoveredCandidate = this.coveredCandidate;
-            this.coveredCandidate = this.findSimplestCoveredCandidate(this.humanUnitTests);
             if (new TestResult(this.currentCandidate, unitTest).passes)
                 this.showUselessUnitTestMessage();
             else {
                 this.showUsefulUnitTestMessage();
-                this.currentCandidate = this.findSimplestPassingCandidate(this.useCase.candidates, this.useCase.perfectCandidates, this.humanUnitTests);
-                this.failingTestResult = this.findFailingTestResult(this.currentCandidate, this.useCase.hints, this.useCase.minimalUnitTests);
+                this.currentCandidate = this.findSimplestPassingCandidate(this.candidates, this.perfectCandidates, this.humanUnitTests);
+                this.failingTestResult = this.findFailingTestResult(this.currentCandidate, this.hints, this.minimalUnitTests);
             }
         }
         else
@@ -199,7 +229,7 @@ export class Level {
     submitUnitTests() {
         this.numberOfSubmissions += 1;
         if (this.failingTestResult) {
-            const numberOfUnitTestsStillNeeded = this.findNumberOfUnitTestsStillNeeded(this.humanUnitTests, this.useCase.subsetsOfMinimalUnitTests, this.useCase.candidates, this.useCase.perfectCandidates.length);
+            const numberOfUnitTestsStillNeeded = this.findNumberOfUnitTestsStillNeeded(this.humanUnitTests, this.subsetsOfMinimalUnitTests, this.candidates, this.perfectCandidates.length);
             this.showBugFoundMessage(this.currentCandidate, this.failingTestResult, numberOfUnitTestsStillNeeded);
             this.menu();
         }
@@ -211,12 +241,52 @@ export class Level {
             this.numberOfSubmissions = 1;
         this.isLevelFinished.set(this.numberOfSubmissions);
         this.previousCurrentCandidate = undefined;
-        this.coveredCandidate = undefined;
-        this.previousCoveredCandidate = undefined;
-        this.lastCoveredCandidate = undefined;
         this.showPanels();
         this.showEndMessage();
         this.showMessageIfExample();
         this.callback();
+    }
+    showWelcomeMessage() {
+        new ComputerMessage([this.locale.step1TDD()]).add();
+        new ComputerMessage([this.locale.step2TDD()]).add();
+        new ComputerMessage([this.locale.step3TDD()]).add();
+    }
+    showSpecificationPanel(specification) {
+        new Panel('specification', this.locale.specification(), [specification]).show();
+    }
+    getDifferenceCurrentHtml(currentCandidate, previousCurrentCandidate) {
+        if (previousCurrentCandidate)
+            return currentCandidate.toHtmlWithPreviousCurrent(previousCurrentCandidate);
+        return new Paragraph().appendText(this.locale.noPreviousCurrentFunction());
+    }
+    showCurrentFunctionPanel(currentCandidate, previousCurrentCandidate) {
+        new Panel('current-function', this.locale.currentFunction(), [
+            currentCandidate.toHtml()
+        ]).show();
+        new Panel('difference-current-function', this.locale.differenceFromThePreviousCurrentFunction(), [
+            this.getDifferenceCurrentHtml(currentCandidate, previousCurrentCandidate)
+        ]).show();
+    }
+    showIncorrectUnitTestMessage() {
+        new ComputerMessage([this.locale.iDidNotAddTheUnitTest()]).add();
+    }
+    showUselessUnitTestMessage() {
+        new ComputerMessage([this.locale.iAddedTheUnitTestButTheCurrentFunctionAlreadyPassedThisUnitTest()]).add();
+        new ComputerMessage([this.locale.tryToWriteUnitTestsThatDoNotPass()]).add();
+    }
+    showUsefulUnitTestMessage() {
+        new ComputerMessage([this.locale.iAddedTheUnitTestAndImprovedTheCurrentFunction()]).add();
+    }
+    showBugFoundMessage(_currentCandidate, failingTestResult, numberOfUnitTestsStillNeeded) {
+        new ComputerMessage([this.locale.theCurrentFunctionIsNotAccordingToTheSpecification()]).add();
+        new ComputerMessage([this.locale.itProducesTheFollowingIncorrectResult(), new Code().appendChild(failingTestResult.toHtml().addClass('new'))]).add();
+        new ComputerMessage([this.locale.writeAUnitTestThatIsAccordingToTheSpecification(numberOfUnitTestsStillNeeded)]).add();
+    }
+    showEndMessage() {
+        new ComputerMessage([this.locale.theCurrentFunctionIsIndeedAccordingToTheSpecification()]).add();
+        new ComputerMessage([this.locale.wellDone()]).add();
+    }
+    compareComplexity(candidate, otherCandidate) {
+        return candidate.compareComplexity(otherCandidate);
     }
 }

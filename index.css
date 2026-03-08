@@ -12,9 +12,6 @@
     --separator-shadow: #0003;
     --disabled-background: #333;
     --disabled-foreground: #fff;
-    --covered-background: #ffb;
-    --newlycovered-background: #dfd;
-    --notcovered-background: #fff;
     --inserted-background: #dfd;
     --deleted-background: #fdd;
     --new-background: #ddf;
@@ -73,18 +70,6 @@ code {
     white-space: pre;
 
     div {
-        &.covered {
-            background-color: var(--covered-background);
-        }
-
-        &.newlycovered {
-            background-color: var(--newlycovered-background);
-        }
-
-        &.notcovered {
-            background-color: var(--notcovered-background);
-        }
-
         &.old {
             background-color: var(--old-background);
         }
@@ -238,7 +223,7 @@ a, button, input, label:has(input[type="radio"]:not(:disabled)) {
         box-shadow: 0.25rem 0 0.5rem var(--separator-shadow);
         display: flex;
         flex-direction: column;
-        min-height: 100vh;
+        height: 100vh;
         overflow-y: scroll;
         scrollbar-width: none;
         width: 60%;

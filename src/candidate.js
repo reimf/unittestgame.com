@@ -5,28 +5,22 @@ export class Candidate {
     lines;
     nonEmptyLines;
     function;
-    complexityTestDrivenDevelopment;
-    complexityMutationTesting;
+    complexity;
     constructor(lines) {
         this.lines = lines.map(line => line.replace(/\\\\/g, '\\'));
         this.nonEmptyLines = lines.filter(line => line);
         const code = lines.join('\n');
         this.function = new Function('return ' + code)();
-        this.complexityTestDrivenDevelopment = this.getComplexityTestDrivenDevelopment(code);
-        this.complexityMutationTesting = this.getComplexityMutationTesting(this.lines);
+        this.complexity = this.getComplexity(code);
     }
-    zip2(candidate) {
+    zip(candidate) {
         const indexes = [...this.lines.keys()];
         return indexes.map(index => [this.lines[index], candidate.lines[index]]);
-    }
-    zip3(candidate1, candidate2) {
-        const indexes = [...this.lines.keys()];
-        return indexes.map(index => [this.lines[index], candidate1.lines[index], candidate2.lines[index]]);
     }
     combine(candidate) {
         if (!candidate)
             return this;
-        const lines = this.zip2(candidate).map(([line, other]) => line && line.trim() !== 'return undefined' ? line : other);
+        const lines = this.zip(candidate).map(([line, other]) => line && line.trim() !== 'return undefined' ? line : other);
         return new Candidate(lines);
     }
     getRegEx(code, regex) {
@@ -34,7 +28,7 @@ export class Candidate {
         const names = [...matches].flatMap(match => match[1].split(/,\s*/));
         return new RegExp(`\\b(${names.join('|')})\\b`, 'g');
     }
-    getComplexityTestDrivenDevelopment(code) {
+    getComplexity(code) {
         const functions = this.getRegEx(code, /\bfunction\s+(\w+)\b/g);
         const parameters = this.getRegEx(code, /\bfunction\s+\w+\((.*?)\)/g);
         const variables = this.getRegEx(code, /\blet\s+(\w+)\b/g);
@@ -66,9 +60,6 @@ export class Candidate {
             throw new Error(`Unknown tokens: ${unknownTokens.join(', ')}`);
         return tokens.length;
     }
-    getComplexityMutationTesting(lines) {
-        return lines.reduce((subtotal, line, index) => subtotal + (line && line.trim() !== 'return undefined' ? Math.pow(2, index) : 0), 0);
-    }
     execute(argumentsList) {
         try {
             return this.function(...argumentsList);
@@ -83,14 +74,8 @@ export class Candidate {
     passes(unitTests) {
         return this.failingTestResults(unitTests).length === 0;
     }
-    isAmputeeOf(candidate) {
-        return this.zip2(candidate).every(([line, other]) => !line || line === other || line.trim() === 'return undefined');
-    }
-    compareComplexityTestDrivenDevelopment(candidate) {
-        return Math.sign(this.complexityTestDrivenDevelopment - candidate.complexityTestDrivenDevelopment);
-    }
-    compareComplexityMutationTesting(candidate) {
-        return Math.sign(this.complexityMutationTesting - candidate.complexityMutationTesting);
+    compareComplexity(candidate) {
+        return Math.sign(this.complexity - candidate.complexity);
     }
     toString() {
         return this.nonEmptyLines.join('\n');
@@ -99,43 +84,10 @@ export class Candidate {
         const divs = this.nonEmptyLines.map(line => new Highlighter(line).highlight());
         return new Code().appendChildren(divs);
     }
-    toMutationHtml() {
-        const divs = this.nonEmptyLines.map(line => new Highlighter(line).highlight().addClass('covered'));
-        return new Code().appendChildren(divs);
-    }
     toHtmlWithPreviousCurrent(previousCurrentCandidate) {
-        const pairs = this.zip2(previousCurrentCandidate);
+        const pairs = this.zip(previousCurrentCandidate);
         const nonEmptyPairs = pairs.filter(([current, previous]) => current || previous);
         const divs = nonEmptyPairs.map(([current, previous]) => new Highlighter(current, previous).highlight());
-        return new Code().appendChildren(divs);
-    }
-    toHtmlWithCovered(coveredCandidate) {
-        const pairs = this.zip2(coveredCandidate);
-        const divs = pairs.map(([perfect, covered]) => {
-            const isCovered = !perfect.startsWith('  ') || perfect === covered;
-            const className = isCovered ? 'covered' : 'notcovered';
-            return new Highlighter(perfect).highlight().addClass(className);
-        });
-        return new Code().appendChildren(divs);
-    }
-    toHtmlWithLastCovered(lastCoveredCandidate) {
-        const pairs = this.zip2(lastCoveredCandidate);
-        const divs = pairs.map(([perfect, lastCovered]) => {
-            const isCovered = !perfect.startsWith('  ') || perfect === lastCovered;
-            const className = isCovered ? 'newlycovered' : 'notcovered';
-            return new Highlighter(perfect).highlight().addClass(className);
-        });
-        return new Code().appendChildren(divs);
-    }
-    toHtmlWithLastAndPreviousCovered(lastCoveredCandidate, previousCoveredCandidate) {
-        const pairs = this.zip3(lastCoveredCandidate, previousCoveredCandidate);
-        const divs = pairs.map(([perfect, lastCovered, previousCovered]) => {
-            const isCovered = !perfect.startsWith('  ') || perfect === lastCovered;
-            const wasCovered = !perfect.startsWith('  ') || perfect === previousCovered;
-            const isNewlyCovered = isCovered && !wasCovered;
-            const className = isNewlyCovered ? 'newlycovered' : (isCovered ? 'covered' : 'notcovered');
-            return new Highlighter(perfect).highlight().addClass(className);
-        });
         return new Code().appendChildren(divs);
     }
 }

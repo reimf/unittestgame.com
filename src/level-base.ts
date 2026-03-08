@@ -6,58 +6,102 @@ import { Locale } from './locale.js'
 import { Random } from './random.js'
 import { TestResult } from './test-result.js'
 import { UnitTest } from './unit-test.js'
-import { UseCase } from './use-case-base.js'
+import { Variable } from './variable.js'
 
 export abstract class Level {
-    public abstract identifier(): string
-    public abstract name(): string
-    protected abstract showWelcomeMessage(): void
-    protected abstract showSpecificationPanel(specification: string): void
-    protected abstract showCurrentFunctionPanel(currentCandidate: Candidate, previousCurrentCandidate: Candidate|undefined): void
-    protected abstract showTheFunctionPanel(perfectCandidate: Candidate, coveredCandidate: Candidate|undefined, previousCoveredCandidate: Candidate|undefined, lastCoveredCandidate: Candidate|undefined): void
-    protected abstract showBugFoundMessage(currentCandidate: Candidate, failingTestResult: TestResult, numberOfUnitTestsStillNeeded: number): void
-    protected abstract showEndMessage(): void
-    protected abstract showIncorrectUnitTestMessage(): void
-    protected abstract showUselessUnitTestMessage(): void
-    protected abstract showUsefulUnitTestMessage(): void
-    protected abstract exampleStringGenerator(useCase: UseCase): Generator<string>
-    protected abstract compareComplexity(candidate: Candidate, otherCandidate: Candidate): number
-
     protected readonly locale: Locale
-    public readonly useCase: UseCase
     public readonly levelNumber: number
     private readonly isLevelFinished: Completed
     private readonly exampleStrings: string[]
     public readonly isExample: boolean
+    public abstract identifier(): string
+    public abstract name(): string
+    public abstract specification(): string
+    protected abstract getParameters(): Variable[]
+    protected abstract getUnit(): Variable
+    protected abstract getCandidateElements(): string[][]
+    protected abstract minimalUnitTestGenerator(): Generator<any[]>
+    protected abstract hintGenerator(): Generator<any[]>
+    protected* exampleStringGenerator(): Generator<string> { }
 
     private callback?: () => void
     private humanUnitTests: UnitTest[] = []
     private perfectCandidate: Candidate
-    private amputeesOfPerfectCandidate: Candidate[]
-    private coveredCandidate: Candidate|undefined = undefined
-    private previousCoveredCandidate: Candidate|undefined = undefined
-    private lastCoveredCandidate: Candidate|undefined = undefined
     private currentCandidate: Candidate = new Candidate([])
     private previousCurrentCandidate: Candidate|undefined = undefined
     private failingTestResult: TestResult|undefined = undefined
     private lastUnitTest: UnitTest|undefined = undefined
     private numberOfSubmissions: number = 0
+    public readonly parameters: Variable[] = this.getParameters()
+    public readonly unit: Variable = this.getUnit()
+    public readonly candidates: Candidate[] = [...this.generateCandidates(this.getCandidateElements(), [])]
+    public readonly minimalUnitTests: UnitTest[] = [...this.generateMinimalUnitTests()]
+    public readonly subsetsOfMinimalUnitTests: UnitTest[][] = [...this.generateSubsets(this.minimalUnitTests)]
+    public readonly perfectCandidates: Candidate[] = this.findPerfectCandidates()
+    public readonly hints: UnitTest[] = [...this.generateHints()]
 
-    public constructor(locale: Locale, useCase: UseCase, levelNumber: number) {
+    public constructor(locale: Locale, levelNumber: number) {
         this.locale = locale
-        this.useCase = useCase
         this.levelNumber = levelNumber
-        this.isLevelFinished = new Completed(`level-${this.identifier()}-${useCase.identifier()}-finished`)
-        this.exampleStrings = [...this.exampleStringGenerator(useCase)]
+        this.isLevelFinished = new Completed(`level-${this.identifier()}-finished`)
+        this.exampleStrings = [...this.exampleStringGenerator()]
         this.isExample = this.exampleStrings.length > 0
-        this.perfectCandidate = this.getRandomElementFrom(this.useCase.perfectCandidates)
-        this.amputeesOfPerfectCandidate = this.useCase.findAmputeesOf(this.perfectCandidate)
+        this.perfectCandidate = this.getRandomElementFrom(this.perfectCandidates)
     }
 
     private getRandomElementFrom<T>(elements: readonly T[]): T {
         if (this.isExample)
             return elements[0]!
         return Random.elementFrom(elements)
+    }
+
+    private* generateCandidates(listOfListOfLines: string[][], lines: string[]): Generator<Candidate> {
+        if (listOfListOfLines.length > 0) {
+            const [firstListOfLines, ...remainingListOfListOfLines] = listOfListOfLines
+            if (firstListOfLines)
+                for (const line of firstListOfLines)
+                    yield* this.generateCandidates(remainingListOfListOfLines, [...lines, line])
+        }
+        else
+            yield this.createCandidate(lines)
+    }
+
+    private createCandidate(lines: readonly string[]): Candidate {
+        const parameterList = this.parameters.map(parameter => parameter.name).join(', ')
+        const indentedLines = [
+            `function ${this.unit.name}(${parameterList}) {`,
+                ...lines.map(line => line ? '  ' + line : ''),
+            '}',
+        ]
+        return new Candidate(indentedLines)
+    }
+
+    private* generateMinimalUnitTests(): Generator<UnitTest> {
+        for (const [argumentList, expected] of this.minimalUnitTestGenerator()) {
+            yield new UnitTest(this.parameters, argumentList, this.unit, expected)
+        }
+    }
+
+    private* generateSubsets(unitTests: UnitTest[]): Generator<UnitTest[]> {
+        const n = unitTests.length
+        const total = 1 << n
+        for (let size = 0; size <= n; size++) {
+            for (let mask = 0; mask < total; mask++) {
+                const subset = unitTests.filter((_, i) => mask & (1 << i))
+                if (subset.length === size)
+                    yield subset
+            }
+        }
+    }
+
+    private* generateHints(): Generator<UnitTest> {
+        const perfectCandidate = this.perfectCandidates[0]!
+        for (const argumentList of this.hintGenerator())
+            yield new UnitTest(this.parameters, argumentList, this.unit, perfectCandidate.execute(argumentList))
+    }
+
+    private findPerfectCandidates(): Candidate[] {
+        return this.candidates.filter(candidate => candidate.passes(this.minimalUnitTests))
     }
 
     private findSimplestCandidate(candidates: readonly Candidate[]): Candidate {
@@ -80,14 +124,6 @@ export abstract class Level {
         if (passingImperfectCandidates.length === 0)
             return this.getRandomElementFrom(perfectCandidates)
         return this.findSimplestCandidate(passingImperfectCandidates)
-    }
-
-    public findSimplestCoveredCandidate(unitTests: readonly UnitTest[]): Candidate {
-        return unitTests.reduce((simplestCoveredCandidateSoFar: Candidate, unitTest: UnitTest) => {
-            const passingCandidates = this.amputeesOfPerfectCandidate.filter(candidate => candidate.passes([unitTest]))
-            const simplestPassingCandidate = this.findSimplestCandidate(passingCandidates)
-            return simplestPassingCandidate.combine(simplestCoveredCandidateSoFar)
-        }, this.findSimplestPassingCandidate(this.amputeesOfPerfectCandidate, [], []))
     }
 
     public findFailingTestResult(candidate: Candidate, hints: readonly UnitTest[], minimalUnitTestsList: readonly UnitTest[]): TestResult|undefined {
@@ -123,7 +159,7 @@ export abstract class Level {
     }
 
     public description(): string {
-        return this.locale.level(this.levelNumber, this.name(), this.useCase.name())
+        return this.locale.level(this.levelNumber, this.name())
     }
 
     public isFinished(): number {
@@ -132,12 +168,9 @@ export abstract class Level {
 
     private initialize(): void {
         this.humanUnitTests = []
-        this.coveredCandidate = undefined
-        this.previousCoveredCandidate = undefined
-        this.lastCoveredCandidate = undefined
-        this.currentCandidate = this.findSimplestPassingCandidate(this.useCase.candidates, this.useCase.perfectCandidates, this.humanUnitTests)
+        this.currentCandidate = this.findSimplestPassingCandidate(this.candidates, this.perfectCandidates, this.humanUnitTests)
         this.previousCurrentCandidate = undefined
-        this.failingTestResult = this.findFailingTestResult(this.currentCandidate, this.useCase.hints, this.useCase.minimalUnitTests)
+        this.failingTestResult = this.findFailingTestResult(this.currentCandidate, this.hints, this.minimalUnitTests)
         this.lastUnitTest = undefined
         this.numberOfSubmissions = 0
     }
@@ -178,9 +211,8 @@ export abstract class Level {
     }
 
     private showPanels(): void {
-        this.showSpecificationPanel(this.useCase.specification())
+        this.showSpecificationPanel(this.specification())
         this.showCurrentFunctionPanel(this.currentCandidate, this.previousCurrentCandidate)
-        this.showTheFunctionPanel(this.perfectCandidate, this.coveredCandidate, this.previousCoveredCandidate, this.lastCoveredCandidate)
         this.showUnitTestsPanel(this.humanUnitTests, this.lastUnitTest)
     }
 
@@ -192,7 +224,7 @@ export abstract class Level {
         const submitTheUnitTestsButton = new Button()
             .appendText(this.locale.iWantToSubmitTheUnitTests())
             .onClick(() => this.prepareSubmitUnitTests())
-        const variables = [...this.useCase.parameters, this.useCase.unit]
+        const variables = [...this.parameters, this.unit]
         variables.forEach(variable => variable.setDisabled(this.isExample))
         if (this.isExample) {
             const buttonText = this.nextExampleString()
@@ -214,9 +246,9 @@ export abstract class Level {
     }
 
     private prepareAddUnitTest(formData: StringMap): void {
-        const argumentList = this.useCase.parameters.map(parameter => parameter.getInput(formData.get(parameter.name)!))
-        const expected = this.useCase.unit.getInput(formData.get(this.useCase.unit.name)!)
-        const unitTest = new UnitTest(this.useCase.parameters, argumentList, this.useCase.unit, expected)
+        const argumentList = this.parameters.map(parameter => parameter.getInput(formData.get(parameter.name)!))
+        const expected = this.unit.getInput(formData.get(this.unit.name)!)
+        const unitTest = new UnitTest(this.parameters, argumentList, this.unit, expected)
         new HumanMessage([new Code().appendChild(unitTest.toHtml().addClass('new'))]).add()
         new CheckingMessage(this.locale.checkingTheNewUnitTest(), this.locale.iCheckedTheNewUnitTest(), () => this.addUnitTest(unitTest), 500 + this.humanUnitTests.length * 250).add()
     }
@@ -227,15 +259,12 @@ export abstract class Level {
             this.lastUnitTest = unitTest
             this.humanUnitTests.push(unitTest)
             this.previousCurrentCandidate = this.currentCandidate
-            this.lastCoveredCandidate = this.findSimplestCoveredCandidate([unitTest])
-            this.previousCoveredCandidate = this.coveredCandidate
-            this.coveredCandidate = this.findSimplestCoveredCandidate(this.humanUnitTests)
             if (new TestResult(this.currentCandidate, unitTest).passes)
                 this.showUselessUnitTestMessage()
             else {
                 this.showUsefulUnitTestMessage()
-                this.currentCandidate = this.findSimplestPassingCandidate(this.useCase.candidates, this.useCase.perfectCandidates, this.humanUnitTests)
-                this.failingTestResult = this.findFailingTestResult(this.currentCandidate, this.useCase.hints, this.useCase.minimalUnitTests)
+                this.currentCandidate = this.findSimplestPassingCandidate(this.candidates, this.perfectCandidates, this.humanUnitTests)
+                this.failingTestResult = this.findFailingTestResult(this.currentCandidate, this.hints, this.minimalUnitTests)
             }
         }
         else
@@ -250,7 +279,7 @@ export abstract class Level {
     private submitUnitTests(): void {
         this.numberOfSubmissions += 1
         if (this.failingTestResult) {
-            const numberOfUnitTestsStillNeeded = this.findNumberOfUnitTestsStillNeeded(this.humanUnitTests, this.useCase.subsetsOfMinimalUnitTests, this.useCase.candidates, this.useCase.perfectCandidates.length)
+            const numberOfUnitTestsStillNeeded = this.findNumberOfUnitTestsStillNeeded(this.humanUnitTests, this.subsetsOfMinimalUnitTests, this.candidates, this.perfectCandidates.length)
             this.showBugFoundMessage(this.currentCandidate, this.failingTestResult, numberOfUnitTestsStillNeeded)
             this.menu()
         }
@@ -263,12 +292,62 @@ export abstract class Level {
             this.numberOfSubmissions = 1
         this.isLevelFinished.set(this.numberOfSubmissions)
         this.previousCurrentCandidate = undefined
-        this.coveredCandidate = undefined
-        this.previousCoveredCandidate = undefined
-        this.lastCoveredCandidate = undefined
         this.showPanels()
         this.showEndMessage()
         this.showMessageIfExample()
         this.callback!()
+    }
+
+    protected showWelcomeMessage(): void {
+        new ComputerMessage([this.locale.step1TDD()]).add()
+        new ComputerMessage([this.locale.step2TDD()]).add()
+        new ComputerMessage([this.locale.step3TDD()]).add()
+    }
+
+    protected showSpecificationPanel(specification: string): void {
+        new Panel('specification', this.locale.specification(), [specification]).show()
+    }
+
+    private getDifferenceCurrentHtml(currentCandidate: Candidate, previousCurrentCandidate: Candidate|undefined): Paragraph {
+        if (previousCurrentCandidate)
+            return currentCandidate.toHtmlWithPreviousCurrent(previousCurrentCandidate)
+        return new Paragraph().appendText(this.locale.noPreviousCurrentFunction())
+    }
+
+    protected showCurrentFunctionPanel(currentCandidate: Candidate, previousCurrentCandidate: Candidate|undefined): void {
+        new Panel('current-function', this.locale.currentFunction(), [
+            currentCandidate.toHtml()
+        ]).show()
+        new Panel('difference-current-function', this.locale.differenceFromThePreviousCurrentFunction(), [
+            this.getDifferenceCurrentHtml(currentCandidate, previousCurrentCandidate)
+        ]).show()
+    }
+
+    protected showIncorrectUnitTestMessage(): void {
+        new ComputerMessage([this.locale.iDidNotAddTheUnitTest()]).add()
+    }
+
+    protected showUselessUnitTestMessage(): void {
+        new ComputerMessage([this.locale.iAddedTheUnitTestButTheCurrentFunctionAlreadyPassedThisUnitTest()]).add()
+        new ComputerMessage([this.locale.tryToWriteUnitTestsThatDoNotPass()]).add()
+    }
+
+    protected showUsefulUnitTestMessage(): void {
+        new ComputerMessage([this.locale.iAddedTheUnitTestAndImprovedTheCurrentFunction()]).add()
+    }
+
+    protected showBugFoundMessage(_currentCandidate: Candidate, failingTestResult: TestResult, numberOfUnitTestsStillNeeded: number): void {
+        new ComputerMessage([this.locale.theCurrentFunctionIsNotAccordingToTheSpecification()]).add()
+        new ComputerMessage([this.locale.itProducesTheFollowingIncorrectResult(), new Code().appendChild(failingTestResult.toHtml().addClass('new'))]).add()
+        new ComputerMessage([this.locale.writeAUnitTestThatIsAccordingToTheSpecification(numberOfUnitTestsStillNeeded)]).add()
+    }
+
+    protected showEndMessage(): void {
+        new ComputerMessage([this.locale.theCurrentFunctionIsIndeedAccordingToTheSpecification()]).add()
+        new ComputerMessage([this.locale.wellDone()]).add()
+    }
+
+    protected compareComplexity(candidate: Candidate, otherCandidate: Candidate): number {
+        return candidate.compareComplexity(otherCandidate)
     }
 }

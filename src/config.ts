@@ -1,17 +1,15 @@
 import { Level } from './level-base.js'
-import { MutationTesting } from './level-mutation-testing.js'
-import { TestDrivenDevelopment } from './level-test-driven-development.js'
 import { Locale } from './locale.js'
-import { BatteryLevel } from './use-case-battery-level.js'
-import { EvenOdd } from './use-case-even-odd.js'
-import { FizzBuzz } from './use-case-fizz-buzz.js'
-import { FloatFormat } from './use-case-float-format.js'
-import { LeapYear } from './use-case-leap-year.js'
-import { PasswordStrength } from './use-case-password-strength.js'
-import { Review } from './use-case-review.js'
-import { SpeedDisplay } from './use-case-speed-display.js'
-import { TriangleType } from './use-case-triangle-type.js'
-import { VotingAge } from './use-case-voting-age.js'
+import { BatteryLevel } from './level-battery-level.js'
+import { EvenOdd } from './level-even-odd.js'
+import { FizzBuzz } from './level-fizz-buzz.js'
+import { FloatFormat } from './level-float-format.js'
+import { LeapYear } from './level-leap-year.js'
+import { PasswordStrength } from './level-password-strength.js'
+import { Review } from './level-review.js'
+import { SpeedDisplay } from './level-speed-display.js'
+import { TriangleType } from './level-triangle-type.js'
+import { VotingAge } from './level-voting-age.js'
 
 export class Config {
     public readonly locale: Locale
@@ -21,38 +19,17 @@ export class Config {
     }
 
     public allLevels(): Level[] {
-        const batteryLevel = new BatteryLevel(this.locale)
-        const votingAge = new VotingAge(this.locale)
-        const evenOdd = new EvenOdd(this.locale)
-        const fizzBuzz = new FizzBuzz(this.locale)
-        const review = new Review(this.locale)
-        const triangleType = new TriangleType(this.locale)
-        const leapYear = new LeapYear(this.locale)
-        const floatFormat = new FloatFormat(this.locale)
-        const passwordStrength = new PasswordStrength(this.locale)
-        const speedDisplay = new SpeedDisplay(this.locale)
-
         return [
-            new TestDrivenDevelopment(this.locale, batteryLevel, 1),
-            new TestDrivenDevelopment(this.locale, evenOdd, 2),
-            new MutationTesting(this.locale, votingAge, 3),
-            new MutationTesting(this.locale, batteryLevel, 4),
-            new TestDrivenDevelopment(this.locale, votingAge, 5),
-            new MutationTesting(this.locale, evenOdd, 6),
-            new TestDrivenDevelopment(this.locale, review, 7),
-            new MutationTesting(this.locale, triangleType, 8),
-            new TestDrivenDevelopment(this.locale, fizzBuzz, 9),
-            new MutationTesting(this.locale, review, 10),
-            new TestDrivenDevelopment(this.locale, triangleType, 11),
-            new MutationTesting(this.locale, fizzBuzz, 12),
-            new TestDrivenDevelopment(this.locale, speedDisplay, 13),
-            new MutationTesting(this.locale, floatFormat, 14),
-            new TestDrivenDevelopment(this.locale, passwordStrength, 15),
-            new MutationTesting(this.locale, leapYear, 16),
-            new TestDrivenDevelopment(this.locale, floatFormat, 17),
-            new MutationTesting(this.locale, speedDisplay, 18),
-            new TestDrivenDevelopment(this.locale, leapYear, 19),
-            new MutationTesting(this.locale, passwordStrength, 20),
+            new BatteryLevel(this.locale, 1),
+            new EvenOdd(this.locale, 2),
+            new VotingAge(this.locale, 3),
+            new Review(this.locale, 4),
+            new FizzBuzz(this.locale, 5),
+            new TriangleType(this.locale, 6),
+            new SpeedDisplay(this.locale, 7),
+            new FloatFormat(this.locale, 8),
+            new LeapYear(this.locale, 9),
+            new PasswordStrength(this.locale, 10),
         ]
     }
 }

@@ -7,32 +7,25 @@ export class Candidate {
     private readonly lines: string[]
     private readonly nonEmptyLines: string[]
     private readonly function: Function
-    private readonly complexityTestDrivenDevelopment: number
-    private readonly complexityMutationTesting: number
+    private readonly complexity: number
 
     public constructor(lines: readonly string[]) {
         this.lines = lines.map(line => line.replace(/\\\\/g, '\\'))
         this.nonEmptyLines = lines.filter(line => line)
         const code = lines.join('\n')
         this.function = new Function('return ' + code)()
-        this.complexityTestDrivenDevelopment = this.getComplexityTestDrivenDevelopment(code)
-        this.complexityMutationTesting = this.getComplexityMutationTesting(this.lines)
+        this.complexity = this.getComplexity(code)
     }
 
-    private zip2(candidate: Candidate): [string, string][] {
+    private zip(candidate: Candidate): [string, string][] {
         const indexes = [...this.lines.keys()]
         return indexes.map(index => [this.lines[index]!, candidate.lines[index]!])
-    }
-
-    private zip3(candidate1: Candidate, candidate2: Candidate): [string, string, string][] {
-        const indexes = [...this.lines.keys()]
-        return indexes.map(index => [this.lines[index]!, candidate1.lines[index]!, candidate2.lines[index]!])
     }
 
     public combine(candidate: Candidate|undefined): Candidate {
         if (!candidate)
             return this
-        const lines = this.zip2(candidate).map(([line, other]) => line && line.trim() !== 'return undefined' ? line : other)
+        const lines = this.zip(candidate).map(([line, other]) => line && line.trim() !== 'return undefined' ? line : other)
         return new Candidate(lines)
     }
 
@@ -42,7 +35,7 @@ export class Candidate {
         return new RegExp(`\\b(${names.join('|')})\\b`, 'g')
     }
 
-    private getComplexityTestDrivenDevelopment(code: string): number {
+    private getComplexity(code: string): number {
         const functions = this.getRegEx(code, /\bfunction\s+(\w+)\b/g)
         const parameters = this.getRegEx(code, /\bfunction\s+\w+\((.*?)\)/g)
         const variables = this.getRegEx(code, /\blet\s+(\w+)\b/g)
@@ -75,10 +68,6 @@ export class Candidate {
         return tokens.length
     }
 
-    private getComplexityMutationTesting(lines: readonly string[]): number {
-        return lines.reduce((subtotal, line, index) => subtotal + (line && line.trim() !== 'return undefined' ? Math.pow(2, index) : 0), 0)
-    }
-
     public execute(argumentsList: readonly any[]): any {
         try {
             return this.function(...argumentsList)
@@ -96,16 +85,8 @@ export class Candidate {
         return this.failingTestResults(unitTests).length === 0
     }
 
-    public isAmputeeOf(candidate: Candidate): boolean {
-        return this.zip2(candidate).every(([line, other]) => !line || line === other || line.trim() === 'return undefined')
-    }
-
-    public compareComplexityTestDrivenDevelopment(candidate: Candidate): number {
-        return Math.sign(this.complexityTestDrivenDevelopment - candidate.complexityTestDrivenDevelopment)
-    }
-
-    public compareComplexityMutationTesting(candidate: Candidate): number {
-        return Math.sign(this.complexityMutationTesting - candidate.complexityMutationTesting)
+    public compareComplexity(candidate: Candidate): number {
+        return Math.sign(this.complexity - candidate.complexity)
     }
 
     public toString(): string {
@@ -117,47 +98,10 @@ export class Candidate {
         return new Code().appendChildren(divs)
     }
 
-    public toMutationHtml(): Code {
-        const divs = this.nonEmptyLines.map(line => new Highlighter(line).highlight().addClass('covered'))
-        return new Code().appendChildren(divs)
-    }
-
     public toHtmlWithPreviousCurrent(previousCurrentCandidate: Candidate): Code {
-        const pairs = this.zip2(previousCurrentCandidate)
+        const pairs = this.zip(previousCurrentCandidate)
         const nonEmptyPairs = pairs.filter(([current, previous]) => current || previous)
         const divs = nonEmptyPairs.map(([current, previous]) => new Highlighter(current, previous).highlight())
-        return new Code().appendChildren(divs)
-    }
-
-    public toHtmlWithCovered(coveredCandidate: Candidate): Code {
-        const pairs = this.zip2(coveredCandidate)
-        const divs = pairs.map(([perfect, covered]) => {
-            const isCovered = !perfect.startsWith('  ') || perfect === covered
-            const className = isCovered ? 'covered' : 'notcovered'
-            return new Highlighter(perfect).highlight().addClass(className)
-        })
-        return new Code().appendChildren(divs)
-    }
-
-    public toHtmlWithLastCovered(lastCoveredCandidate: Candidate): Code {
-        const pairs = this.zip2(lastCoveredCandidate)
-        const divs = pairs.map(([perfect, lastCovered]) => {
-            const isCovered = !perfect.startsWith('  ') || perfect === lastCovered
-            const className = isCovered ? 'newlycovered' : 'notcovered'
-            return new Highlighter(perfect).highlight().addClass(className)
-        })
-        return new Code().appendChildren(divs)
-    }
-
-    public toHtmlWithLastAndPreviousCovered(lastCoveredCandidate: Candidate, previousCoveredCandidate: Candidate): Code {
-        const pairs = this.zip3(lastCoveredCandidate, previousCoveredCandidate)
-        const divs = pairs.map(([perfect, lastCovered, previousCovered]) => {
-            const isCovered = !perfect.startsWith('  ') || perfect === lastCovered
-            const wasCovered = !perfect.startsWith('  ') || perfect === previousCovered
-            const isNewlyCovered = isCovered && !wasCovered
-            const className = isNewlyCovered ? 'newlycovered' : (isCovered ? 'covered' : 'notcovered')
-            return new Highlighter(perfect).highlight().addClass(className)
-        })
         return new Code().appendChildren(divs)
     }
 }

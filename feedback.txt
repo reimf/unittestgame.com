@@ -5,6 +5,7 @@
 ✅ feat: doe de voorbeeld-levels met een verschillende use-case
 ✅ feat: clear de chat na elk level
 ✅ fix: beperk de inputs in lengte, getallen tot lengte 4 (plus eventueel een punt en een cijfer achter de komma) en tekst tot lengte 10
+✅ feat: verwijder Mutation Testing (MT is lastig, spelers zien het verschil niet zo, de mutaties zijn groter dan in het echt, de terugkoppeling van geteste regels is te karig)
 ❌ feat: vergelijk jezelf met andere spelers (spel is nu individueel; wellicht later)
 ❌ feat: skip een leven / ga een level terug (de keuzemogelijkheden zijn nu met opzet beperkt)
 ❌ feat: geef een hint als de speler vastloopt (gebeurt al als je de unit testen inlevert)
@@ -13,4 +14,3 @@
     TDD = Current Level + Specification + Current Function + Difference + Unit Tests
     MT = Current Level + The Function + Tested Lines + Unit Tests
 ❓ feat: maak zichtbaar welke unittesten overbodig zijn (kan wel pas zinvol aan het einde van het level)
-❓ feat: alleen TDD, geen MT (MT is lastig, spelers zien het verschil niet zo, de mutaties zijn groter dan in het echt, de terugkoppeling van geteste regels is te karig)

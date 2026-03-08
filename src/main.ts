@@ -13,7 +13,6 @@ export class Main {
         this.showWelcomeMessage()
         this.showAboutPanel()
         this.showBasicDefinitionTestDrivenDevelopment()
-        this.showBasicDefinitionMutationTesting()
         this.continue()
     }
 
@@ -31,10 +30,6 @@ export class Main {
 
     public showBasicDefinitionTestDrivenDevelopment(): void {
         new Panel('test-driven-development', this.locale.testDrivenDevelopment(), [this.locale.definitionTDD()]).show()
-    }
-
-    public showBasicDefinitionMutationTesting(): void {
-        new Panel('mutation-testing', this.locale.mutationTesting(), [this.locale.definitionMT()]).show()
     }
 
     private showWelcomeMessage(): void {

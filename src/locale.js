@@ -15,8 +15,8 @@ export class Locale {
     }
     iAmAnAiBot() {
         return this.pick({
-            en: 'I am an AI bot specialised in *Test-Driven Development* and *Mutation Testing*.',
-            nl: 'Ik ben een AI-bot gespecialiseerd in *Test-Driven Development* en *Mutation Testing*.',
+            en: 'I am an AI bot specialised in *Test-Driven Development*.',
+            nl: 'Ik ben een AI-bot gespecialiseerd in *Test-Driven Development*.',
         });
     }
     about() {
@@ -27,7 +27,7 @@ export class Locale {
     }
     learnToWriteEffectiveUnitTests() {
         return this.pick({
-            en: 'Learn to write effective unit tests using Test-Driven Development and Mutation Testing. ' +
+            en: 'Learn to write effective unit tests using Test-Driven Development. ' +
                 '\n' +
                 '[Liever Nederlands?](?lng=nl)\n' +
                 '\n' +
@@ -35,7 +35,7 @@ export class Locale {
                 'Good software is at least thoroughly tested by the developers. ' +
                 'Testing software is a skill and this game helps you learn just that. ' +
                 '[Contact](mailto:contact@unittestgame.com) [Feedback](mailto:feedback@unittestgame.com)',
-            nl: 'Leer effectieve unit testen te schrijven met Test-Driven Development en Mutation Testing. ' +
+            nl: 'Leer effectieve unit testen te schrijven met Test-Driven Development. ' +
                 '\n' +
                 '[Prefer English?](?lng=en)\n' +
                 '\n' +
@@ -51,10 +51,10 @@ export class Locale {
             nl: 'Wat wil je doen?',
         });
     }
-    level(levelNumber, levelName, useCaseName) {
+    level(levelNumber, levelName) {
         return this.pick({
-            en: `Level ${levelNumber} - ${useCaseName} - ${levelName}`,
-            nl: `Level ${levelNumber} - ${useCaseName} - ${levelName}`,
+            en: `Level ${levelNumber} - ${levelName}`,
+            nl: `Level ${levelNumber} - ${levelName}`,
         });
     }
     iWantToPlayTheNextLevel(levelDescription) {
@@ -237,100 +237,10 @@ export class Locale {
             nl: 'De *Huidige Functie* voldoet inderdaad aan de *Specificatie*.',
         });
     }
-    mutationTesting() {
-        return this.pick({
-            en: 'Mutation Testing',
-            nl: 'Mutation Testing',
-        });
-    }
-    definitionMT() {
-        return this.pick({
-            en: 'Each mutation of a fully tested function should make at least one unit test NOT pass. Mutations are small changes of the code, e.g. by replacing "n % 4 === 0" with "n === 4". [Read more](https://en.wikipedia.org/wiki/Mutation_testing)',
-            nl: 'Elke mutatie van een volledig geteste functie zou ten minste één unit test niet moeten slagen. Mutaties zijn kleine veranderingen van de code, bijvoorbeeld door "n % 4 === 0" te vervangen door "n === 4". [Lees meer](https://en.wikipedia.org/wiki/Mutation_testing)',
-        });
-    }
-    step1MT() {
-        return this.pick({
-            en: 'You read *The Function* and write *Unit Tests* that pass.',
-            nl: 'Je leest *De Functie* en schrijft *Unit Testen* die slagen.',
-        });
-    }
-    step2MT() {
-        return this.pick({
-            en: 'After adding a unit test, I show which lines of *The Function* are tested.',
-            nl: 'Na het toevoegen van een unit test, laat ik zien welke regels van *De Functie* zijn getest.',
-        });
-    }
-    step3MT() {
-        return this.pick({
-            en: 'When you think *The Function* is fully tested, you submit the *Unit Tests*.',
-            nl: 'Wanneer je denkt dat *De Functie* volledig getest is, lever je de *Unit Testen* in.',
-        });
-    }
-    theFunction() {
-        return this.pick({
-            en: 'The Function (all tested lines in color)',
-            nl: 'De Functie (alle geteste regels in kleur)',
-        });
-    }
-    noLastCoveredFunction() {
-        return this.pick({
-            en: 'You have not written any unit tests yet.',
-            nl: 'Je hebt nog geen unit testen geschreven.',
-        });
-    }
-    differenceFromThePreviousCoveredFunction() {
-        return this.pick({
-            en: 'Last Unit Test (tested lines in color)',
-            nl: 'Laatste Unit Test (geteste regels in kleur)',
-        });
-    }
     levelOverview() {
         return this.pick({
             en: 'Level Overview',
             nl: 'Level Overzicht',
-        });
-    }
-    iAddedTheUnitTestButNoExtraLinesOfTheFunctionAreTested() {
-        return this.pick({
-            en: 'I added the unit test to the *Unit Tests*, but NO extra lines of *The Function* are tested.',
-            nl: 'Ik heb de unit test toegevoegd aan de *Unit Testen*, maar er zijn NIET meer regels van *De Functie* getest.',
-        });
-    }
-    tryToWriteUnitTestsThatTestSomeCode() {
-        return this.pick({
-            en: 'Try to write unit tests that test some lines that is not yet tested by other unit tests.',
-            nl: 'Probeer unit testen te schrijven die wat regels testen die nog niet door andere unit testen wordt getest.',
-        });
-    }
-    iAddedTheUnitTestAndIShowedWhichLinesOfTheFunctionAreTested() {
-        return this.pick({
-            en: 'I added the unit test to the *Unit Tests* and I showed which lines of *The Function* are tested.',
-            nl: 'Ik heb de unit test toegevoegd aan de *Unit Testen* en ik heb laten zien welke regels in *De Functie* zijn getest.',
-        });
-    }
-    theFunctionIsNotFullyTested() {
-        return this.pick({
-            en: '*The Function* is NOT fully tested.',
-            nl: '*De Functie* is NIET volledig getest.',
-        });
-    }
-    aMutationOfTheFunction() {
-        return this.pick({
-            en: 'A mutation of *The Function* that is NOT correct, but still makes your unit tests pass, is the following.',
-            nl: 'Een mutatie van *De Functie* die NIET correct is, maar nog steeds je unit testen laat slagen, is de volgende.',
-        });
-    }
-    tryToWriteAUnitTestThatPasses(numberOfUnitTestsStillNeeded) {
-        return this.pick({
-            en: `Try to write a unit test that passes *The Function* and does NOT pass this mutation. I think you need at least ${numberOfUnitTestsStillNeeded} more ${numberOfUnitTestsStillNeeded === 1 ? 'unit test' : 'unit tests'} to fully test *The Function*.`,
-            nl: `Probeer een unit test te schrijven die slaagt voor *De Functie* en niet slaagt voor deze mutatie. Ik denk dat je nog minstens ${numberOfUnitTestsStillNeeded} meer ${numberOfUnitTestsStillNeeded === 1 ? 'unit test' : 'unit testen'} nodig hebt om *De Functie* volledig te testen.`,
-        });
-    }
-    theFunctionIsIndeedFullyTested() {
-        return this.pick({
-            en: '*The Function* is indeed fully tested.',
-            nl: '*De Functie* is inderdaad volledig getest.',
         });
     }
     aSmartphoneNormallyOperatesInNormalMode() {
@@ -397,54 +307,6 @@ export class Locale {
         return this.pick({
             en: 'Congratulations, now you understand the basics of Test-Driven Development.',
             nl: 'Gefeliciteerd, nu begrijp je de basis van Test-Driven Development.',
-        });
-    }
-    theFunctionContainsTheNumber18() {
-        return this.pick({
-            en: '*The Function* contains the number 18. That is a good starting point for a unit test. When the age is 18, then the function returns true.',
-            nl: '*De Functie* bevat het getal 18. Dat is een goed startpunt voor een unit test. Wanneer de leeftijd 18 is, dan geeft de functie true terug.',
-        });
-    }
-    theFunctionDoesNotAlwaysReturnTrue() {
-        return this.pick({
-            en: '*The Function* does NOT always return true. When the age is less than 18, the function returns false. So, add a unit test for an age less than 18, say 17.',
-            nl: '*De Functie* geeft niet altijd true terug. Wanneer de leeftijd minder dan 18 is, geeft de functie false terug. Voeg dus een unit test toe voor een leeftijd van minder dan 18, bijvoorbeeld 17.',
-        });
-    }
-    allLinesInTheFunctionAreTestedNow() {
-        return this.pick({
-            en: 'All lines in *The Function* are tested now. Submit the unit tests to see if *The Function* is fully tested.',
-            nl: 'Alle regels in *De Functie* zijn nu getest. Lever de unit testen in om te zien of *De Functie* volledig getest is.',
-        });
-    }
-    thisMutationOnlyReturnsTrueIfTheAgeIsExactly18() {
-        return this.pick({
-            en: 'This mutation only returns true if the age is exactly 18. Add a unit test for another age where *The Function* returns true, say 19.',
-            nl: 'Deze mutatie geeft alleen true terug als de leeftijd precies 18 is. Voeg een unit test toe voor een andere leeftijd waarvoor *De Functie* true terug geeft, bijvoorbeeld 19.',
-        });
-    }
-    submitTheUnitTestsAgainToSeeIfTheFunctionIsFullyTestedNow() {
-        return this.pick({
-            en: 'Submit the unit tests again to see if *The Function* is fully tested now.',
-            nl: 'Lever de unit testen opnieuw in om te zien of *De Functie* nu volledig getest is.',
-        });
-    }
-    thisMutationOnlyReturnsFalseIfTheAgeIsExactly17() {
-        return this.pick({
-            en: 'This mutation only returns false if the age is exactly 17. Add a unit test for another age where *The Function* returns false, say 16.',
-            nl: 'Deze mutatie geeft alleen false terug als de leeftijd precies 17 is. Voeg een unit test toe voor een andere leeftijd waarvoor *De Functie* false terug geeft, bijvoorbeeld 16.',
-        });
-    }
-    submitTheUnitTestsAgainToSeeIfTheFunctionIsFinallyFullyTestedNow() {
-        return this.pick({
-            en: 'Submit the unit tests again to see if *The Function* is finally fully tested.',
-            nl: 'Lever de unit testen opnieuw in om te zien of *De Functie* eindelijk volledig getest is.',
-        });
-    }
-    congratulationsNowYouUnderstandTheBasicsOfMutationTesting() {
-        return this.pick({
-            en: 'Congratulations, now you understand the basics of Mutation Testing.',
-            nl: 'Gefeliciteerd, nu begrijp je de basis van Mutation Testing.',
         });
     }
     returnTrueIfTheNumberIsEvenAndFalseIfItIsOdd() {
