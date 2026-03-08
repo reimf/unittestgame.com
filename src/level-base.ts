@@ -193,15 +193,14 @@ export abstract class Level {
         this.initialize()
         this.showMessageIfExample()
         this.showMessageIfExample()
-        this.showWelcomeMessage()
+        this.showStepMessages()
         this.menu()
     }
 
     private showUnitTestsPanel(): void {
         new Panel('unit-tests', this.locale.unitTests(),
-            this.humanUnitTests.length === 0
-            ? [new Paragraph().appendText(this.locale.youHaveNotWrittenAnyUnitTestsYet())]
-            : [new OrderedList().appendChildren(
+            this.humanUnitTests.length > 0
+            ? [new OrderedList().appendChildren(
                 this.humanUnitTests.map(humanUnitTest =>
                     new ListItem().appendChild(
                         new Code().appendChild(
@@ -210,6 +209,7 @@ export abstract class Level {
                     )
                 )
             )]
+            : [new Paragraph().appendText(this.locale.youHaveNotWrittenAnyUnitTestsYet())]
         ).show()
     }
 
@@ -305,10 +305,10 @@ export abstract class Level {
         this.callback!()
     }
 
-    private showWelcomeMessage(): void {
-        new ComputerMessage([this.locale.step1TDD()]).add()
-        new ComputerMessage([this.locale.step2TDD()]).add()
-        new ComputerMessage([this.locale.step3TDD()]).add()
+    private showStepMessages(): void {
+        new ComputerMessage([this.locale.step1()]).add()
+        new ComputerMessage([this.locale.step2()]).add()
+        new ComputerMessage([this.locale.step3()]).add()
     }
 
     private showSpecificationPanel(): void {

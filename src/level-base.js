@@ -159,13 +159,13 @@ export class Level {
         this.initialize();
         this.showMessageIfExample();
         this.showMessageIfExample();
-        this.showWelcomeMessage();
+        this.showStepMessages();
         this.menu();
     }
     showUnitTestsPanel() {
-        new Panel('unit-tests', this.locale.unitTests(), this.humanUnitTests.length === 0
-            ? [new Paragraph().appendText(this.locale.youHaveNotWrittenAnyUnitTestsYet())]
-            : [new OrderedList().appendChildren(this.humanUnitTests.map(humanUnitTest => new ListItem().appendChild(new Code().appendChild(humanUnitTest.toHtml().addClass(humanUnitTest === this.lastUnitTest ? 'new' : 'old')))))]).show();
+        new Panel('unit-tests', this.locale.unitTests(), this.humanUnitTests.length > 0
+            ? [new OrderedList().appendChildren(this.humanUnitTests.map(humanUnitTest => new ListItem().appendChild(new Code().appendChild(humanUnitTest.toHtml().addClass(humanUnitTest === this.lastUnitTest ? 'new' : 'old')))))]
+            : [new Paragraph().appendText(this.locale.youHaveNotWrittenAnyUnitTestsYet())]).show();
     }
     menu() {
         this.showPanels();
@@ -251,10 +251,10 @@ export class Level {
         this.showMessageIfExample();
         this.callback();
     }
-    showWelcomeMessage() {
-        new ComputerMessage([this.locale.step1TDD()]).add();
-        new ComputerMessage([this.locale.step2TDD()]).add();
-        new ComputerMessage([this.locale.step3TDD()]).add();
+    showStepMessages() {
+        new ComputerMessage([this.locale.step1()]).add();
+        new ComputerMessage([this.locale.step2()]).add();
+        new ComputerMessage([this.locale.step3()]).add();
     }
     showSpecificationPanel() {
         const title = `${this.locale.specification()} (${this.description()})`;

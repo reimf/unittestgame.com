@@ -17,18 +17,6 @@ export class Candidate {
         this.complexity = this.getComplexity(code)
     }
 
-    private zip(candidate: Candidate): [string, string][] {
-        const indexes = [...this.lines.keys()]
-        return indexes.map(index => [this.lines[index]!, candidate.lines[index]!])
-    }
-
-    public combine(candidate: Candidate|undefined): Candidate {
-        if (!candidate)
-            return this
-        const lines = this.zip(candidate).map(([line, other]) => line && line.trim() !== 'return undefined' ? line : other)
-        return new Candidate(lines)
-    }
-
     private getRegEx(code: string, regex: RegExp): RegExp {
         const matches = code.matchAll(regex)
         const names = [...matches].flatMap(match => match[1]!.split(/,\s*/))
@@ -99,9 +87,9 @@ export class Candidate {
     }
 
     public toHtmlWithPrevious(previousCandidate: Candidate): Code {
-        const pairs = this.zip(previousCandidate)
-        const nonEmptyPairs = pairs.filter(([current, previous]) => current || previous)
-        const divs = nonEmptyPairs.map(([current, previous]) => new Highlighter(current, previous).highlight())
+        const pairs = this.lines.map((line, index) => [line, previousCandidate.lines[index]!]) as [string, string][]
+        const nonEmptyPairs = pairs.filter(([currentLine, previousLine]) => currentLine || previousLine)
+        const divs = nonEmptyPairs.map(([currentLine, previousLine]) => new Highlighter(currentLine, previousLine).highlight())
         return new Code().appendChildren(divs)
     }
 }

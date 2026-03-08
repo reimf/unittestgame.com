@@ -159,7 +159,7 @@ export class Locale {
         })
     }
 
-    public step1TDD(): string {
+    public step1(): string {
         return this.pick({
             en: 'First, you read the *Specification* and then you write a *Unit Tests* that does NOT pass the *Current Function*.',
             nl: 'Eerst lees je de *Specificatie* en daarna schrijf je een *Unit Testen* die niet slaagt voor de *Huidige Functie*.',
@@ -167,14 +167,14 @@ export class Locale {
     }
 
 
-    public step2TDD(): string {
+    public step2(): string {
         return this.pick({
             en: 'After adding a unit test I (the AI bot) improve the *Current Function* such that all *Unit Tests* pass and I show the *Difference* from the previous function.',
             nl: 'Na het toevoegen van een unit test verbeter ik (de AI-bot) de *Huidige Functie* zodat alle *Unit Testen* slagen en ik toon het *Verschil* met de vorige functie.',
         })
     }
 
-    public step3TDD(): string {
+    public step3(): string {
         return this.pick({
             en: 'When you think the *Current Function* is according to the *Specification*, you submit the *Unit Tests*.',
             nl: 'Wanneer je denkt dat de *Huidige Functie* aan de *Specificatie* voldoet, lever je de *Unit Testen* in.',

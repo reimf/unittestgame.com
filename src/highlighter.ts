@@ -79,18 +79,18 @@ export class Highlighter {
         const currentTokens = Array.from(new Tokenizer(currentLine).tokens())
         const commonTokens = this.longestCommonSubsequence(currentTokens, previousTokens)
         const div = new Div()
-        while (previousTokens.length || currentTokens.length) {
-            if (commonTokens.length && previousTokens.length && currentTokens.length && previousTokens[0]!.equals(commonTokens[0]!) && currentTokens[0]!.equals(commonTokens[0]!)) {
+        while (previousTokens.length > 0 || currentTokens.length > 0) {
+            if (commonTokens.length > 0 && previousTokens.length > 0 && currentTokens.length > 0 && previousTokens[0]!.equals(commonTokens[0]!) && currentTokens[0]!.equals(commonTokens[0]!)) {
                 const token = commonTokens.shift()!
                 div.appendChild(new Span().addClass(token.type).appendText(token.text))
                 previousTokens.shift()
                 currentTokens.shift()
             }
-            else if (previousTokens.length && !(commonTokens.length && previousTokens[0]!.equals(commonTokens[0]!))) {
+            else if (previousTokens.length > 0 && !(commonTokens.length > 0 && previousTokens[0]!.equals(commonTokens[0]!))) {
                 const token = previousTokens.shift()!
                 div.appendChild(new Del().addClass(token.type).appendText(token.text))
             }
-            else if (currentTokens.length && !(commonTokens.length && currentTokens[0]!.equals(commonTokens[0]!))) {
+            else if (currentTokens.length > 0 && !(commonTokens.length > 0 && currentTokens[0]!.equals(commonTokens[0]!))) {
                 const token = currentTokens.shift()!
                 div.appendChild(new Ins().addClass(token.type).appendText(token.text))
             }

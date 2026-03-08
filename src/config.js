@@ -15,17 +15,7 @@ export class Config {
         this.locale = new Locale(lng);
     }
     allLevels() {
-        return [
-            new BatteryLevel(this.locale, 1),
-            new EvenOdd(this.locale, 2),
-            new VotingAge(this.locale, 3),
-            new Review(this.locale, 4),
-            new FizzBuzz(this.locale, 5),
-            new TriangleType(this.locale, 6),
-            new SpeedDisplay(this.locale, 7),
-            new FloatFormat(this.locale, 8),
-            new LeapYear(this.locale, 9),
-            new PasswordStrength(this.locale, 10),
-        ];
+        const levelClasses = [BatteryLevel, EvenOdd, VotingAge, Review, FizzBuzz, LeapYear, TriangleType, SpeedDisplay, FloatFormat, PasswordStrength];
+        return levelClasses.map((levelClass, index) => new levelClass(this.locale, index + 1));
     }
 }
