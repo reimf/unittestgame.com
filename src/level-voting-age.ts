@@ -2,15 +2,15 @@ import { Level } from './level-base.js'
 import { Variable, BooleanVariable, IntegerVariable } from './variable.js'
 
 export class VotingAge extends Level {
-    public identifier(): string {
+    protected identifier(): string {
         return 'voting-age'
     }
 
-    public name(): string {
+    protected name(): string {
         return 'Voting Age'
     }
 
-    public specification(): string {
+    protected specification(): string {
         return this.locale.returnTrueIfTheAgeIs18YearsOrOverAndReturnFalseIfTheAgeIsUnder18()
     }
 

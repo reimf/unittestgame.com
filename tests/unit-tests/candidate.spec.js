@@ -98,8 +98,8 @@ test.describe('class Candidate', () => {
     });
     test('to html with previous', () => {
         const candidate = new Candidate(['function nextYear(year) {', '', '', '  if (year < 0) return 0', '  return year + 1', '}']);
-        const previousCurrentCandidate = new Candidate(['function nextYear(year) {', '', '  if (year === 0) return 0', '', '  return undefined', '}']);
-        const html = candidate.toHtmlWithPreviousCurrent(previousCurrentCandidate);
+        const previousCandidate = new Candidate(['function nextYear(year) {', '', '  if (year === 0) return 0', '', '  return undefined', '}']);
+        const html = candidate.toHtmlWithPrevious(previousCandidate);
         expect(html.toString()).toBe('<code class="language-javascript">' +
             '<div>' +
             '<span class="keyword">function</span>' +

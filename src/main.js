@@ -9,7 +9,6 @@ export class Main {
     start() {
         this.showWelcomeMessage();
         this.showAboutPanel();
-        this.showBasicDefinitionTestDrivenDevelopment();
         this.continue();
     }
     continue() {
@@ -22,15 +21,11 @@ export class Main {
         Panel.removeAll();
         level.play(() => this.continue());
     }
-    showBasicDefinitionTestDrivenDevelopment() {
-        new Panel('test-driven-development', this.locale.testDrivenDevelopment(), [this.locale.definitionTDD()]).show();
-    }
     showWelcomeMessage() {
-        new ComputerMessage([this.locale.welcomeToUnittestgame()]).add();
-        new ComputerMessage([this.locale.iAmAnAiBot()]).add();
+        new ComputerMessage([this.locale.welcome()]).add();
     }
     showAboutPanel() {
-        new Panel('unittestgame', this.locale.about(), [this.locale.learnToWriteEffectiveUnitTests()]).show();
+        new Panel('unittestgame', this.locale.about(), [this.locale.controllingAnAIBotWithTestDrivenDevelopment()]).show();
     }
     showInvitationMessage() {
         new ComputerMessage([this.locale.whatDoYouWantToDo()]).add();

@@ -3,15 +3,15 @@ import { Random } from './random.js'
 import { Variable, BooleanVariable, TextVariable } from './variable.js'
 
 export class FloatFormat extends Level {
-    public identifier(): string {
+    protected identifier(): string {
         return 'float-format'
     }
 
-    public name(): string {
+    protected name(): string {
         return 'Float Format'
     }
 
-    public specification(): string {
+    protected specification(): string {
         return this.locale.returnTrueIfTheTextRepresentsAFloatAndFalseIfItDoesnt()
     }
 

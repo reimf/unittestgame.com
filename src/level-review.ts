@@ -2,14 +2,14 @@ import { Level } from './level-base.js'
 import { Variable, IntegerVariable, RadioVariable } from './variable.js'
 
 export class Review extends Level {
-    public identifier(): string {
+    protected identifier(): string {
         return 'review'
     }
 
-    public name(): string {
+    protected name(): string {
         return 'Review'
     }
-    public specification(): string {
+    protected specification(): string {
         return this.locale.returnGoodIfThePriceIsLessThan20AndTheQualityIsAtLeast7()
     }
 

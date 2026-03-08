@@ -12,22 +12,22 @@ test.describe('welcome', () => {
     });
     test('has welcome message', async () => {
         const messages = page.getByTestId('messages');
-        await expect(messages).toContainText('Welcome to UnitTestGame where you can learn to write effective unit tests.');
+        await expect(messages).toContainText('Hi, I am an AI bot and I can write code to make unit tests pass.');
     });
     test('has unittestgame panel', async () => {
         const unittestgamePanel = page.getByTestId('unittestgame');
         await expect(unittestgamePanel).toContainText('UnitTestGame');
     });
+    test('has link to site in Dutch', async () => {
+        const link = page.getByRole('link', { name: 'Nederlands' });
+        expect(await link.getAttribute('href')).toBe('?lng=nl');
+    });
     test('has link to feedback mail address', async () => {
         const link = page.getByRole('link', { name: 'feedback' });
         expect(await link.getAttribute('href')).toBe('mailto:feedback@unittestgame.com');
     });
-    test('has basics of test-driven development panel', async () => {
-        const basicsTestDrivenDevelopmentPanel = page.getByTestId('test-driven-development');
-        await expect(basicsTestDrivenDevelopmentPanel).toContainText('Test-Driven Development');
-    });
     test('has more info on Test-Driven Development', async () => {
-        const link = page.getByTestId('test-driven-development').getByRole('link', { name: 'Read more' });
+        const link = page.getByRole('link', { name: 'TDD on Wikipedia' });
         expect(await link.getAttribute('href')).toBe('https://en.wikipedia.org/wiki/Test-driven_development');
     });
     test('has level overview panel', async () => {

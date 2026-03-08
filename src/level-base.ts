@@ -11,34 +11,27 @@ import { Variable } from './variable.js'
 export abstract class Level {
     protected readonly locale: Locale
     public readonly levelNumber: number
+
+    // the following attributes should all be private, but some are public because they are used in tests
     private readonly isLevelFinished: Completed
     private readonly exampleStrings: string[]
     public readonly isExample: boolean
-    public abstract identifier(): string
-    public abstract name(): string
-    public abstract specification(): string
-    protected abstract getParameters(): Variable[]
-    protected abstract getUnit(): Variable
-    protected abstract getCandidateElements(): string[][]
-    protected abstract minimalUnitTestGenerator(): Generator<any[]>
-    protected abstract hintGenerator(): Generator<any[]>
-    protected* exampleStringGenerator(): Generator<string> { }
+    public readonly parameters: Variable[]
+    public readonly unit: Variable
+    public readonly candidates: Candidate[]
+    public readonly minimalUnitTests: UnitTest[]
+    public readonly subsetsOfMinimalUnitTests: UnitTest[][]
+    public readonly perfectCandidates: Candidate[]
+    private readonly perfectCandidate: Candidate
+    public readonly hints: UnitTest[]
 
     private callback?: () => void
     private humanUnitTests: UnitTest[] = []
-    private perfectCandidate: Candidate
     private currentCandidate: Candidate = new Candidate([])
-    private previousCurrentCandidate: Candidate|undefined = undefined
+    private previousCandidate: Candidate|undefined = undefined
     private failingTestResult: TestResult|undefined = undefined
     private lastUnitTest: UnitTest|undefined = undefined
     private numberOfSubmissions: number = 0
-    public readonly parameters: Variable[] = this.getParameters()
-    public readonly unit: Variable = this.getUnit()
-    public readonly candidates: Candidate[] = [...this.generateCandidates(this.getCandidateElements(), [])]
-    public readonly minimalUnitTests: UnitTest[] = [...this.generateMinimalUnitTests()]
-    public readonly subsetsOfMinimalUnitTests: UnitTest[][] = [...this.generateSubsets(this.minimalUnitTests)]
-    public readonly perfectCandidates: Candidate[] = this.findPerfectCandidates()
-    public readonly hints: UnitTest[] = [...this.generateHints()]
 
     public constructor(locale: Locale, levelNumber: number) {
         this.locale = locale
@@ -46,7 +39,27 @@ export abstract class Level {
         this.isLevelFinished = new Completed(`level-${this.identifier()}-finished`)
         this.exampleStrings = [...this.exampleStringGenerator()]
         this.isExample = this.exampleStrings.length > 0
+        this.parameters = this.getParameters()
+        this.unit = this.getUnit()
+        this.candidates = [...this.generateCandidates(this.getCandidateElements(), [])]
+        this.minimalUnitTests = [...this.generateMinimalUnitTests()]
+        this.subsetsOfMinimalUnitTests = [...this.generateSubsets(this.minimalUnitTests)]
+        this.perfectCandidates = this.findPerfectCandidates()
         this.perfectCandidate = this.getRandomElementFrom(this.perfectCandidates)
+        this.hints = [...this.generateHints()]
+    }
+
+    protected abstract identifier(): string
+    protected abstract name(): string
+    protected abstract specification(): string
+    protected abstract getParameters(): Variable[]
+    protected abstract getUnit(): Variable
+    protected abstract getCandidateElements(): string[][]
+    protected abstract minimalUnitTestGenerator(): Generator<any[]>
+    protected abstract hintGenerator(): Generator<any[]>
+
+    protected* exampleStringGenerator(): Generator<string> {
+        // empty
     }
 
     private getRandomElementFrom<T>(elements: readonly T[]): T {
@@ -108,7 +121,7 @@ export abstract class Level {
         const simplestCandidates = candidates.reduce((simplestCandidatesSoFar: Candidate[], candidate) => {
             if (simplestCandidatesSoFar.length === 0)
                 return [candidate]
-            const sign = this.compareComplexity(candidate, simplestCandidatesSoFar[0]!)
+            const sign = candidate.compareComplexity(simplestCandidatesSoFar[0]!)
             if (sign < 0)
                 return [candidate]
             if (sign > 0)
@@ -118,7 +131,7 @@ export abstract class Level {
         return this.getRandomElementFrom(simplestCandidates)
     }
 
-    public findSimplestPassingCandidate(candidates: readonly Candidate[], perfectCandidates: readonly Candidate[], unitTests: readonly UnitTest[]): Candidate {
+    private findSimplestPassingCandidate(candidates: readonly Candidate[], perfectCandidates: readonly Candidate[], unitTests: readonly UnitTest[]): Candidate {
         const passingCandidates = candidates.filter(candidate => candidate.passes(unitTests))
         const passingImperfectCandidates = passingCandidates.filter(candidate => !perfectCandidates.includes(candidate))
         if (passingImperfectCandidates.length === 0)
@@ -126,7 +139,7 @@ export abstract class Level {
         return this.findSimplestCandidate(passingImperfectCandidates)
     }
 
-    public findFailingTestResult(candidate: Candidate, hints: readonly UnitTest[], minimalUnitTestsList: readonly UnitTest[]): TestResult|undefined {
+    private findFailingTestResult(candidate: Candidate, hints: readonly UnitTest[], minimalUnitTestsList: readonly UnitTest[]): TestResult|undefined {
         for (const unitTests of [hints, minimalUnitTestsList]) {
             const failingUnitTests = candidate.failingTestResults(unitTests)
             if (failingUnitTests.length > 0)
@@ -135,7 +148,7 @@ export abstract class Level {
         return undefined
     }
 
-    public findNumberOfUnitTestsStillNeeded(unitTests: readonly UnitTest[], subsetsOfMinimalUnitTests: readonly UnitTest[][], candidates: readonly Candidate[], numberOfPerfectCandidates: number): number {
+    private findNumberOfUnitTestsStillNeeded(unitTests: readonly UnitTest[], subsetsOfMinimalUnitTests: readonly UnitTest[][], candidates: readonly Candidate[], numberOfPerfectCandidates: number): number {
         for (const subsetOfMinimalUnitTests of subsetsOfMinimalUnitTests) {
             const extendedUnitTests = [...unitTests, ...subsetOfMinimalUnitTests]
             const passingCandidates = candidates.filter(candidate => candidate.passes(extendedUnitTests))
@@ -155,7 +168,7 @@ export abstract class Level {
     }
 
     public emoji(nextLevel?: Level): string {
-        return this === nextLevel ? '▶️' : ['🔒', '🥇', '🥈', '🥉'].at(this.isFinished()) || '🥉'
+        return this === nextLevel ? '▶️' : ['🔒', '🥇', '🥈', '🥉'].at(this.isFinished()) || '👎'
     }
 
     public description(): string {
@@ -169,7 +182,7 @@ export abstract class Level {
     private initialize(): void {
         this.humanUnitTests = []
         this.currentCandidate = this.findSimplestPassingCandidate(this.candidates, this.perfectCandidates, this.humanUnitTests)
-        this.previousCurrentCandidate = undefined
+        this.previousCandidate = undefined
         this.failingTestResult = this.findFailingTestResult(this.currentCandidate, this.hints, this.minimalUnitTests)
         this.lastUnitTest = undefined
         this.numberOfSubmissions = 0
@@ -178,26 +191,21 @@ export abstract class Level {
     public play(callback: () => void): void {
         this.callback = callback
         this.initialize()
-        this.showCurrentLevelPanel()
         this.showMessageIfExample()
         this.showMessageIfExample()
         this.showWelcomeMessage()
         this.menu()
     }
 
-    private showCurrentLevelPanel(): void {
-        new Panel('current-level', this.locale.currentLevel(), [this.description()]).show()
-    }
-
-    private showUnitTestsPanel(unitTests: readonly UnitTest[], lastUnitTest?: UnitTest): void {
+    private showUnitTestsPanel(): void {
         new Panel('unit-tests', this.locale.unitTests(),
-            unitTests.length === 0
+            this.humanUnitTests.length === 0
             ? [new Paragraph().appendText(this.locale.youHaveNotWrittenAnyUnitTestsYet())]
             : [new OrderedList().appendChildren(
-                unitTests.map(unitTest =>
+                this.humanUnitTests.map(humanUnitTest =>
                     new ListItem().appendChild(
                         new Code().appendChild(
-                            unitTest.toHtml().addClass(unitTest === lastUnitTest ? 'new' : 'old')
+                            humanUnitTest.toHtml().addClass(humanUnitTest === this.lastUnitTest ? 'new' : 'old')
                         )
                     )
                 )
@@ -211,9 +219,9 @@ export abstract class Level {
     }
 
     private showPanels(): void {
-        this.showSpecificationPanel(this.specification())
-        this.showCurrentFunctionPanel(this.currentCandidate, this.previousCurrentCandidate)
-        this.showUnitTestsPanel(this.humanUnitTests, this.lastUnitTest)
+        this.showSpecificationPanel()
+        this.showCurrentFunctionPanel()
+        this.showUnitTestsPanel()
     }
 
     private showMenuMessage(): void {
@@ -258,7 +266,7 @@ export abstract class Level {
         if (unitTestIsCorrect) {
             this.lastUnitTest = unitTest
             this.humanUnitTests.push(unitTest)
-            this.previousCurrentCandidate = this.currentCandidate
+            this.previousCandidate = this.currentCandidate
             if (new TestResult(this.currentCandidate, unitTest).passes)
                 this.showUselessUnitTestMessage()
             else {
@@ -279,8 +287,7 @@ export abstract class Level {
     private submitUnitTests(): void {
         this.numberOfSubmissions += 1
         if (this.failingTestResult) {
-            const numberOfUnitTestsStillNeeded = this.findNumberOfUnitTestsStillNeeded(this.humanUnitTests, this.subsetsOfMinimalUnitTests, this.candidates, this.perfectCandidates.length)
-            this.showBugFoundMessage(this.currentCandidate, this.failingTestResult, numberOfUnitTestsStillNeeded)
+            this.showBugFoundMessage()
             this.menu()
         }
         else
@@ -291,63 +298,57 @@ export abstract class Level {
         if (this.isExample)
             this.numberOfSubmissions = 1
         this.isLevelFinished.set(this.numberOfSubmissions)
-        this.previousCurrentCandidate = undefined
+        this.previousCandidate = undefined
         this.showPanels()
         this.showEndMessage()
         this.showMessageIfExample()
         this.callback!()
     }
 
-    protected showWelcomeMessage(): void {
+    private showWelcomeMessage(): void {
         new ComputerMessage([this.locale.step1TDD()]).add()
         new ComputerMessage([this.locale.step2TDD()]).add()
         new ComputerMessage([this.locale.step3TDD()]).add()
     }
 
-    protected showSpecificationPanel(specification: string): void {
-        new Panel('specification', this.locale.specification(), [specification]).show()
+    private showSpecificationPanel(): void {
+        const title = `${this.locale.specification()} (${this.description()})`
+        new Panel('specification', title, [this.specification()]).show()
     }
 
-    private getDifferenceCurrentHtml(currentCandidate: Candidate, previousCurrentCandidate: Candidate|undefined): Paragraph {
-        if (previousCurrentCandidate)
-            return currentCandidate.toHtmlWithPreviousCurrent(previousCurrentCandidate)
-        return new Paragraph().appendText(this.locale.noPreviousCurrentFunction())
-    }
-
-    protected showCurrentFunctionPanel(currentCandidate: Candidate, previousCurrentCandidate: Candidate|undefined): void {
+    private showCurrentFunctionPanel(): void {
         new Panel('current-function', this.locale.currentFunction(), [
-            currentCandidate.toHtml()
+            this.currentCandidate.toHtml()
         ]).show()
-        new Panel('difference-current-function', this.locale.differenceFromThePreviousCurrentFunction(), [
-            this.getDifferenceCurrentHtml(currentCandidate, previousCurrentCandidate)
+        new Panel('difference-current-function', this.locale.differenceFromThePreviousFunction(), [
+            this.previousCandidate
+            ? this.currentCandidate.toHtmlWithPrevious(this.previousCandidate)
+            : new Paragraph().appendText(this.locale.noPreviousFunction())
         ]).show()
     }
 
-    protected showIncorrectUnitTestMessage(): void {
+    private showIncorrectUnitTestMessage(): void {
         new ComputerMessage([this.locale.iDidNotAddTheUnitTest()]).add()
     }
 
-    protected showUselessUnitTestMessage(): void {
+    private showUselessUnitTestMessage(): void {
         new ComputerMessage([this.locale.iAddedTheUnitTestButTheCurrentFunctionAlreadyPassedThisUnitTest()]).add()
         new ComputerMessage([this.locale.tryToWriteUnitTestsThatDoNotPass()]).add()
     }
 
-    protected showUsefulUnitTestMessage(): void {
+    private showUsefulUnitTestMessage(): void {
         new ComputerMessage([this.locale.iAddedTheUnitTestAndImprovedTheCurrentFunction()]).add()
     }
 
-    protected showBugFoundMessage(_currentCandidate: Candidate, failingTestResult: TestResult, numberOfUnitTestsStillNeeded: number): void {
+    private showBugFoundMessage(): void {
+        const numberOfUnitTestsStillNeeded = this.findNumberOfUnitTestsStillNeeded(this.humanUnitTests, this.subsetsOfMinimalUnitTests, this.candidates, this.perfectCandidates.length)
         new ComputerMessage([this.locale.theCurrentFunctionIsNotAccordingToTheSpecification()]).add()
-        new ComputerMessage([this.locale.itProducesTheFollowingIncorrectResult(), new Code().appendChild(failingTestResult.toHtml().addClass('new'))]).add()
+        new ComputerMessage([this.locale.itProducesTheFollowingIncorrectResult(), new Code().appendChild(this.failingTestResult!.toHtml().addClass('new'))]).add()
         new ComputerMessage([this.locale.writeAUnitTestThatIsAccordingToTheSpecification(numberOfUnitTestsStillNeeded)]).add()
     }
 
-    protected showEndMessage(): void {
+    private showEndMessage(): void {
         new ComputerMessage([this.locale.theCurrentFunctionIsIndeedAccordingToTheSpecification()]).add()
         new ComputerMessage([this.locale.wellDone()]).add()
-    }
-
-    protected compareComplexity(candidate: Candidate, otherCandidate: Candidate): number {
-        return candidate.compareComplexity(otherCandidate)
     }
 }

@@ -22,6 +22,7 @@ test.describe('level start', () => {
     });
     test('has specification panel', async () => {
         const specificationPanel = page.getByTestId('specification');
+        await expect(specificationPanel).toContainText('Specification (Level 2 - Even or Odd)');
         await expect(specificationPanel).toContainText('Return true if the number is even and false if it is odd.');
     });
     test('has no unit tests in the unit tests panel', async () => {
@@ -36,10 +37,6 @@ test.describe('level start', () => {
     test('has no the function panel', async () => {
         const theFunctionPanel = page.getByTestId('the-function');
         await expect(theFunctionPanel).not.toBeAttached();
-    });
-    test('has the current level panel', async () => {
-        const levelPanel = page.getByTestId('current-level');
-        await expect(levelPanel).toContainText('Level 2 - Even or Odd');
     });
     test('has contract message', async () => {
         const messages = page.getByTestId('messages');

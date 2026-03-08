@@ -3,15 +3,15 @@ import { Random } from './random.js'
 import { Variable, BooleanVariable, TextVariable } from './variable.js'
 
 export class PasswordStrength extends Level {
-    public identifier(): string {
+    protected identifier(): string {
         return 'password-strength'
     }
 
-    public name(): string {
+    protected name(): string {
         return 'Password Strength'
     }
 
-    public specification(): string {
+    protected specification(): string {
         return this.locale.returnTrueIfThePasswordIsStrongAndFalseIfItIsNot()
     }
 

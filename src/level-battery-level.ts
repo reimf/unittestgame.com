@@ -2,15 +2,15 @@ import { Level } from './level-base.js'
 import { Variable, IntegerVariable, RadioVariable } from './variable.js'
 
 export class BatteryLevel extends Level {
-    public identifier(): string {
+    protected identifier(): string {
         return 'battery-level'
     }
 
-    public name(): string {
+    protected name(): string {
         return 'Battery Level'
     }
 
-    public specification(): string {
+    protected specification(): string {
         return this.locale.aSmartphoneNormallyOperatesInNormalMode()
     }
 
@@ -63,7 +63,7 @@ export class BatteryLevel extends Level {
 
     protected override* exampleStringGenerator(): Generator<string> {
         // play
-        yield this.locale.inThisExampleYouOnlyHaveToClickTheGreenButton()
+        yield this.locale.inThisLevelYouOnlyHaveToClickTheGreenButton()
         yield this.locale.meanwhileKeepAnEyeOnTheChangesInTheSidebar()
 
         // showMenuMessage

@@ -12,7 +12,6 @@ export class Main {
     public start(): void {
         this.showWelcomeMessage()
         this.showAboutPanel()
-        this.showBasicDefinitionTestDrivenDevelopment()
         this.continue()
     }
 
@@ -28,17 +27,12 @@ export class Main {
         level.play(() => this.continue())
     }
 
-    public showBasicDefinitionTestDrivenDevelopment(): void {
-        new Panel('test-driven-development', this.locale.testDrivenDevelopment(), [this.locale.definitionTDD()]).show()
-    }
-
     private showWelcomeMessage(): void {
-        new ComputerMessage([this.locale.welcomeToUnittestgame()]).add()
-        new ComputerMessage([this.locale.iAmAnAiBot()]).add()
+        new ComputerMessage([this.locale.welcome()]).add()
     }
 
     private showAboutPanel(): void {
-        new Panel('unittestgame', this.locale.about(), [this.locale.learnToWriteEffectiveUnitTests()]).show()
+        new Panel('unittestgame', this.locale.about(), [this.locale.controllingAnAIBotWithTestDrivenDevelopment()]).show()
     }
 
     private showInvitationMessage(): void {

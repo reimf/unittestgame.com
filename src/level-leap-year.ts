@@ -2,15 +2,15 @@ import { Level } from './level-base.js'
 import { Variable, BooleanVariable, IntegerVariable } from './variable.js'
 
 export class LeapYear extends Level {
-    public identifier(): string {
+    protected identifier(): string {
         return 'leap-year'
     }
 
-    public name(): string {
+    protected name(): string {
         return 'Leap Year'
     }
 
-    public specification(): string {
+    protected specification(): string {
         return this.locale.returnTrueIfTheYearIsALeapYearAndFalseIfItIsNot()
     }
 

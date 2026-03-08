@@ -2,15 +2,15 @@ import { Level } from './level-base.js'
 import { Variable, RadioVariable, IntegerVariable } from './variable.js'
 
 export class TriangleType extends Level {
-    public identifier(): string {
+    protected identifier(): string {
         return 'triangle-type'
     }
 
-    public name(): string {
+    protected name(): string {
         return 'Triangle Type'
     }
 
-    public specification(): string {
+    protected specification(): string {
         return this.locale.returnTheTypeOfTheTriangle()
     }
 

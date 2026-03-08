@@ -7,16 +7,10 @@ export class Locale {
     pick(localisedText) {
         return localisedText[this.lng];
     }
-    welcomeToUnittestgame() {
+    welcome() {
         return this.pick({
-            en: 'Welcome to *UnitTestGame* where you can learn to write effective unit tests.',
-            nl: 'Welkom bij *UnitTestGame* waar je leert effectieve unit testen te schrijven.',
-        });
-    }
-    iAmAnAiBot() {
-        return this.pick({
-            en: 'I am an AI bot specialised in *Test-Driven Development*.',
-            nl: 'Ik ben een AI-bot gespecialiseerd in *Test-Driven Development*.',
+            en: 'Hi, I am an AI bot and I can write code to make unit tests pass.',
+            nl: 'Hallo, ik ben een AI bot en ik kan code schrijven om unit testen te laten slagen.',
         });
     }
     about() {
@@ -25,24 +19,28 @@ export class Locale {
             nl: 'UnitTestGame',
         });
     }
-    learnToWriteEffectiveUnitTests() {
+    controllingAnAIBotWithTestDrivenDevelopment() {
         return this.pick({
-            en: 'Learn to write effective unit tests using Test-Driven Development. ' +
+            en: 'Controlling an AI bot with Test-Driven Development.\n' +
                 '\n' +
-                '[Liever Nederlands?](?lng=nl)\n' +
+                '1. Write a test that does NOT pass.\n' +
+                '2. Write just enough code to make the test pass.\n' +
+                '3. Repeat until the code meets the specification.\n' +
                 '\n' +
-                'This game is written by a developer who wants better software. ' +
-                'Good software is at least thoroughly tested by the developers. ' +
-                'Testing software is a skill and this game helps you learn just that. ' +
-                '[Contact](mailto:contact@unittestgame.com) [Feedback](mailto:feedback@unittestgame.com)',
-            nl: 'Leer effectieve unit testen te schrijven met Test-Driven Development. ' +
+                '[Nederlands](?lng=nl) ' +
+                '[TDD on Wikipedia](https://en.wikipedia.org/wiki/Test-driven_development) ' +
+                '[Contact](mailto:contact@unittestgame.com) ' +
+                '[Feedback](mailto:feedback@unittestgame.com)',
+            nl: 'Beteugel een AI bot met Test-Driven Development.\n' +
                 '\n' +
-                '[Prefer English?](?lng=en)\n' +
+                '1. Schrijf een test die NIET slaagt.\n' +
+                '2. Schrijf net genoeg code om de test te laten slagen.\n' +
+                '3. Herhaal totdat de code voldoet aan de specificatie.\n' +
                 '\n' +
-                'Deze game is geschreven door een ontwikkelaar die betere software wil. ' +
-                'Goede software is op zijn minst grondig getest door de ontwikkelaars. ' +
-                'Testen van software is een kunst en deze game helpt je om juist dat te leren. ' +
-                '[Contact](mailto:contact@unittestgame.com) [Terugkoppeling](mailto:feedback@unittestgame.com)',
+                '[English](?lng=en) ' +
+                '[TDD op Wikipedia](https://nl.wikipedia.org/wiki/Test-driven_development) ' +
+                '[Contact](mailto:contact@unittestgame.com) ' +
+                '[Reactie](mailto:feedback@unittestgame.com)',
         });
     }
     whatDoYouWantToDo() {
@@ -73,12 +71,6 @@ export class Locale {
         return this.pick({
             en: 'Well done! You can close this tab now and start writing effective unit tests for your real-world projects.',
             nl: 'Goed gedaan! Je kunt deze tab nu sluiten en beginnen met het schrijven van effectieve unit testen voor je echte projecten.',
-        });
-    }
-    currentLevel() {
-        return this.pick({
-            en: 'Current Level',
-            nl: 'Huidige Level',
         });
     }
     unitTests() {
@@ -141,18 +133,6 @@ export class Locale {
             nl: 'Goed gedaan!',
         });
     }
-    testDrivenDevelopment() {
-        return this.pick({
-            en: 'Test-Driven Development',
-            nl: 'Test-Driven Development',
-        });
-    }
-    definitionTDD() {
-        return this.pick({
-            en: 'Write a unit test that does NOT yet pass, then write just enough code to make the unit test pass. Repeat until the code is according to the specification. [Read more](https://en.wikipedia.org/wiki/Test-driven_development)',
-            nl: 'Schrijf een unit test die nog niet slaagt, schrijf dan net genoeg code om de unit test te laten slagen. Herhaal dit totdat de code aan de specificatie voldoet. [Lees meer](https://nl.wikipedia.org/wiki/Test-driven_development)',
-        });
-    }
     step1TDD() {
         return this.pick({
             en: 'First, you read the *Specification* and then you write a *Unit Tests* that does NOT pass the *Current Function*.',
@@ -161,8 +141,8 @@ export class Locale {
     }
     step2TDD() {
         return this.pick({
-            en: 'After adding a unit test I (the AI bot) improve the *Current Function* such that all *Unit Tests* pass.',
-            nl: 'Na het toevoegen van een unit test verbeter ik (de AI-bot) de *Huidige Functie* zodat alle *Unit Testen* slagen.',
+            en: 'After adding a unit test I (the AI bot) improve the *Current Function* such that all *Unit Tests* pass and I show the *Difference* from the previous function.',
+            nl: 'Na het toevoegen van een unit test verbeter ik (de AI-bot) de *Huidige Functie* zodat alle *Unit Testen* slagen en ik toon het *Verschil* met de vorige functie.',
         });
     }
     step3TDD() {
@@ -183,13 +163,13 @@ export class Locale {
             nl: 'Huidige Functie',
         });
     }
-    differenceFromThePreviousCurrentFunction() {
+    differenceFromThePreviousFunction() {
         return this.pick({
             en: 'Difference (from the previous function)',
             nl: 'Verschil (met de vorige functie)',
         });
     }
-    noPreviousCurrentFunction() {
+    noPreviousFunction() {
         return this.pick({
             en: 'Above is the first function that I wrote',
             nl: 'Hierboven staat de eerste functie die ik schreef',
@@ -209,8 +189,8 @@ export class Locale {
     }
     iAddedTheUnitTestAndImprovedTheCurrentFunction() {
         return this.pick({
-            en: 'I added the unit test to the *Unit Tests* and I improved the *Current Function* such that the new unit test also passes.',
-            nl: 'Ik heb de unit test toegevoegd aan de *Unit Testen* en ik heb de *Huidige Functie* zo verbeterd dat de nieuwe unit test ook slaagt.',
+            en: 'I added the unit test to the *Unit Tests* and I improved the *Current Function* such that the new unit test also passes and I showed the *Difference* from the previous function.',
+            nl: 'Ik heb de unit test toegevoegd aan de *Unit Testen* en ik heb de *Huidige Functie* zo verbeterd dat de nieuwe unit test ook slaagt en ik heb het *Verschil* met de vorige functie getoond.',
         });
     }
     theCurrentFunctionIsNotAccordingToTheSpecification() {
@@ -249,10 +229,10 @@ export class Locale {
             nl: 'Een smartphone werkt normaal in Normal Mode, maar wanneer het batterijpercentage minder dan 20% is, werkt hij in Low Power Mode.',
         });
     }
-    inThisExampleYouOnlyHaveToClickTheGreenButton() {
+    inThisLevelYouOnlyHaveToClickTheGreenButton() {
         return this.pick({
-            en: 'In this example you only have to click the green button.',
-            nl: 'In dit voorbeeld hoef je alleen maar op de groene knop te klikken.',
+            en: 'In this level you only have to click the green button.',
+            nl: 'In dit level hoef je alleen maar op de groene knop te klikken.',
         });
     }
     meanwhileKeepAnEyeOnTheChangesInTheSidebar() {

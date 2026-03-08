@@ -54,7 +54,7 @@ export class BatteryLevel extends Level {
     }
     *exampleStringGenerator() {
         // play
-        yield this.locale.inThisExampleYouOnlyHaveToClickTheGreenButton();
+        yield this.locale.inThisLevelYouOnlyHaveToClickTheGreenButton();
         yield this.locale.meanwhileKeepAnEyeOnTheChangesInTheSidebar();
         // showMenuMessage
         yield this.locale.theSpecificationContainsTheNumber20();

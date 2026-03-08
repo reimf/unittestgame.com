@@ -2,15 +2,15 @@ import { Level } from './level-base.js'
 import { Variable, TextVariable, FloatVariable } from './variable.js'
 
 export class SpeedDisplay extends Level {
-    public identifier(): string {
+    protected identifier(): string {
         return 'speed-display'
     }
 
-    public name(): string {
+    protected name(): string {
         return 'Speed Display'
     }
 
-    public specification(): string {
+    protected specification(): string {
         return this.locale.theFunctionReceivesTheSpeedInKilometersPerHourWithAtMostOneDecimal()
     }
 

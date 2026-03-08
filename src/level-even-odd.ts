@@ -2,15 +2,15 @@ import { Level } from './level-base.js'
 import { Variable, BooleanVariable, IntegerVariable } from './variable.js'
 
 export class EvenOdd extends Level {
-    public identifier(): string {
+    protected identifier(): string {
         return 'even-odd'
     }
 
-    public name(): string {
+    protected name(): string {
         return 'Even or Odd'
     }
 
-    public specification(): string {
+    protected specification(): string {
         return this.locale.returnTrueIfTheNumberIsEvenAndFalseIfItIsOdd()
     }
 

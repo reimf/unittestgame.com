@@ -98,8 +98,8 @@ export class Candidate {
         return new Code().appendChildren(divs)
     }
 
-    public toHtmlWithPreviousCurrent(previousCurrentCandidate: Candidate): Code {
-        const pairs = this.zip(previousCurrentCandidate)
+    public toHtmlWithPrevious(previousCandidate: Candidate): Code {
+        const pairs = this.zip(previousCandidate)
         const nonEmptyPairs = pairs.filter(([current, previous]) => current || previous)
         const divs = nonEmptyPairs.map(([current, previous]) => new Highlighter(current, previous).highlight())
         return new Code().appendChildren(divs)
