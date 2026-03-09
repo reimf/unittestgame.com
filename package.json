@@ -1,11 +1,11 @@
 {
   "dependencies": {
-    "playwright": "^1.55.0",
-    "typescript": "^5.9.2"
+    "playwright": "^1.58.2",
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
-    "@playwright/test": "^1.55.0",
-    "@types/node": "^24.3.1",
+    "@playwright/test": "^1.58.2",
+    "@types/node": "^25.3.5",
     "http-server": "^14.1.1"
   }
 }
