@@ -219,94 +219,91 @@ a, button, input, label:has(input[type="radio"]:not(:disabled)) {
 #screen {
     display: flex;
 
-    #conversation {
+    #messages {
         box-shadow: 0.25rem 0 0.5rem var(--separator-shadow);
         display: flex;
         flex-direction: column;
         height: 100vh;
         overflow-y: scroll;
+        padding-bottom: 2rem;
         scrollbar-width: none;
         width: 60%;
 
-        #messages {
-            padding-bottom: 2rem;
+        section {
+            position: relative;
+            opacity: 0;
 
-            section {
-                position: relative;
-                opacity: 0;
+            > div {
+                border-radius: 1.25rem;
+                color: var(--dark-text);
+                display: flow-root;
+                margin: 0.75rem;
+                overflow: hidden;
+                padding: 0 0.75rem;
 
-                > div {
-                    border-radius: 1.25rem;
-                    color: var(--dark-text);
-                    display: flow-root;
-                    margin: 0.75rem;
-                    overflow: hidden;
-                    padding: 0 0.75rem;
-
-                    code {
-                        margin-bottom: 0.75rem;
-                        margin-top: 0.75rem;
-                    }
+                code {
+                    margin-bottom: 0.75rem;
+                    margin-top: 0.75rem;
                 }
+            }
+
+            &:before {
+                content: '';
+                background-size: contain;
+                display: block;
+                height: 1.5rem;
+                width: 1.5rem;
+                position: absolute;
+                bottom: 0;
+            }
+
+            &.human {
+                margin-left: 20%;
 
                 &:before {
-                    content: '';
-                    background-size: contain;
-                    display: block;
-                    height: 1.5rem;
-                    width: 1.5rem;
-                    position: absolute;
-                    bottom: 0;
+                    background-image: url('avatar-human.png');
+                    right: 0.5rem;
                 }
 
-                &.human {
-                    margin-left: 20%;
-
-                    &:before {
-                        background-image: url('avatar-human.png');
-                        right: 0.5rem;
-                    }
-
-                    &.reveal {
-                        animation: revealHuman 0.25s linear forwards;
-                    }
-
-                    > div {
-                        background-color: var(--human-message-background);
-                        border-bottom-right-radius: 0;
-                        color: var(--dark-text);
-                        margin-right: 2.5rem;
-                    }
+                &.reveal {
+                    animation: revealHuman 0.25s linear forwards;
                 }
 
-                &.computer {
-                    margin-right: 20%;
+                > div {
+                    background-color: var(--human-message-background);
+                    border-bottom-right-radius: 0;
+                    color: var(--dark-text);
+                    margin-right: 2.5rem;
+                }
+            }
 
-                    &:before {
-                        background-image: url('avatar-computer.png');
-                        left: 0.5rem;
-                    }
+            &.computer {
+                margin-right: 20%;
 
-                    &.reveal {
-                        animation: revealComputer 0.25s linear forwards;
-                    }
-
-                    > div {
-                        background-color: var(--computer-message-background);
-                        border-bottom-left-radius: 0;
-                        color: var(--dark-text);
-                        margin-left: 2.5rem;
-                    }
+                &:before {
+                    background-image: url('avatar-computer.png');
+                    left: 0.5rem;
                 }
 
-                &.hidden {
-                    display: none;
+                &.reveal {
+                    animation: revealComputer 0.25s linear forwards;
                 }
+
+                > div {
+                    background-color: var(--computer-message-background);
+                    border-bottom-left-radius: 0;
+                    color: var(--dark-text);
+                    margin-left: 2.5rem;
+                }
+            }
+
+            &.hidden {
+                display: none;
             }
         }
     }
 
-    #sidebar {
+    #panels {
         width: 40%;
 
         section {
