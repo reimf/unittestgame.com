@@ -7,6 +7,7 @@ pages:
     - rm *.config.ts
     - rm -rf playwright-tests
     - npm install typescript
+    - npx tsc --build --clean
     - npx tsc --build --verbose
     - mkdir public
     - cp *.{css,html,ico,js,png} public
