@@ -50,7 +50,7 @@ export class VotingAge extends Level {
         yield [[19], true];
     }
     *hintGenerator() {
-        for (let age = 1; age <= 40; age += 1)
+        for (let age = 0; age <= 40; age += 1)
             yield [age];
     }
 }

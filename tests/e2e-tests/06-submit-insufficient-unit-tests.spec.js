@@ -7,7 +7,7 @@ test.describe('submit insufficient unit test', () => {
         await context.addInitScript({ path: './tests/e2e-tests/init-script.js' });
         page = await context.newPage();
         await page.goto('/');
-        await page.getByRole('button', { name: 'I want to play Level 2 - Even or Odd' }).click();
+        await page.getByRole('button', { name: 'I want to play Level 2 - Voting Age' }).click();
         await page.getByRole('button', { name: 'I want to submit the unit tests' }).click();
     });
     test('has bug found message', async () => {
@@ -16,7 +16,7 @@ test.describe('submit insufficient unit test', () => {
     });
     test('has unit test in bug found message', async () => {
         const messages = page.getByTestId('messages');
-        await expect(messages).toContainText('isEven(0) === undefined');
+        await expect(messages).toContainText('isAllowedToVote(0) === undefined');
     });
     test('has action menu message', async () => {
         const messages = page.getByTestId('messages');

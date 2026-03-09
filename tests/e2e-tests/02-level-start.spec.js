@@ -14,7 +14,7 @@ test.describe('level start', () => {
         await page.getByRole('button', { name: 'I want to submit the unit tests' }).click();
         await page.getByRole('button', { name: 'I want to add this unit test' }).click();
         await page.getByRole('button', { name: 'I want to submit the unit tests' }).click();
-        await page.getByRole('button', { name: 'I want to play Level 2 - Even or Odd' }).click();
+        await page.getByRole('button', { name: 'I want to play Level 2 - Voting Age' }).click();
     });
     test('has no unittestgame panel', async () => {
         const unittestgamePanel = page.getByTestId('unittestgame');
@@ -22,8 +22,8 @@ test.describe('level start', () => {
     });
     test('has specification panel', async () => {
         const specificationPanel = page.getByTestId('specification');
-        await expect(specificationPanel).toContainText('Specification (Level 2 - Even or Odd)');
-        await expect(specificationPanel).toContainText('Return true if the number is even and false if it is odd.');
+        await expect(specificationPanel).toContainText('Specification (Level 2 - Voting Age)');
+        await expect(specificationPanel).toContainText('Return true if the age is 18 years or over and return false if the age is under 18.');
     });
     test('has no unit tests in the unit tests panel', async () => {
         const unitTestsPanel = page.getByTestId('unit-tests');
@@ -32,7 +32,7 @@ test.describe('level start', () => {
     test('has the simplest candidate in the current function panel', async () => {
         const currentFunctionPanel = page.getByTestId('current-function');
         const codeLines = currentFunctionPanel.locator('code');
-        await expect(codeLines).toContainText('function isEven(num) {  return undefined}');
+        await expect(codeLines).toContainText('function isAllowedToVote(age) {  return undefined}');
     });
     test('has no the function panel', async () => {
         const theFunctionPanel = page.getByTestId('the-function');

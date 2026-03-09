@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-test.describe('added unit test', () => {
+test.describe('correct unit test', () => {
     let page;
     test.beforeAll(async ({ browser }) => {
         const context = await browser.newContext();
@@ -7,14 +7,14 @@ test.describe('added unit test', () => {
         await context.addInitScript({ path: './tests/e2e-tests/init-script.js' });
         page = await context.newPage();
         await page.goto('/');
-        await page.getByRole('button', { name: 'I want to play Level 2 - Even or Odd' }).click();
-        await page.getByLabel('Number').fill('12');
+        await page.getByRole('button', { name: 'I want to play Level 2 - Voting Age' }).click();
+        await page.getByLabel('Age').fill('18');
         await page.getByLabel('true').check();
         await page.getByRole('button', { name: 'I want to add this unit test' }).click();
     });
     test('has I want to add this unit test message', async () => {
         const messages = page.getByTestId('messages');
-        await expect(messages).toContainText('isEven(12) === true');
+        await expect(messages).toContainText('isAllowedToVote(18) === true');
     });
     test('has added unit test message', async () => {
         const messages = page.getByTestId('messages');
@@ -22,12 +22,12 @@ test.describe('added unit test', () => {
     });
     test('has added unit test in unit tests panel', async () => {
         const unitTestsPanel = page.getByTestId('unit-tests');
-        await expect(unitTestsPanel).toContainText('isEven(12) === true');
+        await expect(unitTestsPanel).toContainText('isAllowedToVote(18) === true');
     });
     test('has another candidate in the current function panel', async () => {
         const currentFunctionPanel = page.getByTestId('current-function');
         const codeLines = currentFunctionPanel.locator('code > div');
-        await expect(codeLines).toContainText(['function isEven(num) {', '  return true', '}']);
+        await expect(codeLines).toContainText(['function isAllowedToVote(age) {', '  return true', '}']);
     });
     test('has action menu message', async () => {
         const messages = page.getByTestId('messages');
