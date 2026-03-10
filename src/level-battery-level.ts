@@ -70,10 +70,6 @@ export class BatteryLevel extends Level {
             yield [batteryLevel]
     }
 
-    public override isExample(): boolean {
-        return true
-    }
-
     private exampleForms: FormStringsType[] = [
         {
             message: this.locale.theSpecificationContainsTheNumber20(),
@@ -112,8 +108,20 @@ export class BatteryLevel extends Level {
         }
     ]
 
-    protected override beforeMenuMessage(): string {
-        return this.exampleForms[0]!.message
+    protected override showInstructionsMessage(): void {
+        new ComputerMessage([this.locale.inThisLevelYouOnlyHaveToFollowTheInstructions()]).add()
+    }
+
+    protected override showSidebarMessage(): void {
+        new ComputerMessage([this.locale.meanwhileKeepAnEyeOnTheChangesInTheSidebar()]).add()
+    }
+
+    protected override showBeforeMenuMessage(): void {
+        new ComputerMessage([this.exampleForms[0]!.message]).add()
+    }
+
+    protected override showCongratulationsMessage(): void {
+        new ComputerMessage([this.locale.congratulationsNowYouUnderstandTheBasicsOfTestDrivenDevelopment()]).add()
     }
 
     private showWarning() {
@@ -131,5 +139,13 @@ export class BatteryLevel extends Level {
         this.showWarning()
         this.showMenuMessage()
         return false
+    }
+
+    protected override newNumberOfSubmissions(_oldNumberOfSubmissions: number): number {
+        return 1
+    }
+
+    protected override getRandomElementFrom<T>(elements: readonly T[]): T {
+        return elements[0]!
     }
 }

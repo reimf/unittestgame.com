@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { Config } from '../../src/config.js';
 import { BooleanVariable, RadioVariable } from '../../src/variable.js';
+import { BatteryLevel } from '../../src/level-battery-level.js';
 test.describe('whole game', () => {
     let page;
     test.beforeAll(async ({ browser }) => {
@@ -15,7 +16,7 @@ test.describe('whole game', () => {
         const levels = config.allLevels();
         for (const level of levels) {
             await page.getByRole('button', { name: `I want to play ${level.description()}` }).click();
-            if (level.isExample()) {
+            if (level instanceof BatteryLevel) {
                 await page.getByLabel('Battery Level').fill('20');
                 await page.getByLabel('Normal Mode').check();
                 await page.getByRole('button', { name: 'I want to add this unit test' }).click();

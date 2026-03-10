@@ -53,9 +53,6 @@ export class BatteryLevel extends Level {
         for (let batteryLevel = 18; batteryLevel <= 21; batteryLevel += 1)
             yield [batteryLevel];
     }
-    isExample() {
-        return true;
-    }
     exampleForms = [
         {
             message: this.locale.theSpecificationContainsTheNumber20(),
@@ -93,8 +90,17 @@ export class BatteryLevel extends Level {
             powerMode: undefined
         }
     ];
-    beforeMenuMessage() {
-        return this.exampleForms[0].message;
+    showInstructionsMessage() {
+        new ComputerMessage([this.locale.inThisLevelYouOnlyHaveToFollowTheInstructions()]).add();
+    }
+    showSidebarMessage() {
+        new ComputerMessage([this.locale.meanwhileKeepAnEyeOnTheChangesInTheSidebar()]).add();
+    }
+    showBeforeMenuMessage() {
+        new ComputerMessage([this.exampleForms[0].message]).add();
+    }
+    showCongratulationsMessage() {
+        new ComputerMessage([this.locale.congratulationsNowYouUnderstandTheBasicsOfTestDrivenDevelopment()]).add();
     }
     showWarning() {
         new ComputerMessage([this.locale.thatIsNotWhatIAskedFor()]).add();
@@ -110,5 +116,11 @@ export class BatteryLevel extends Level {
         this.showWarning();
         this.showMenuMessage();
         return false;
+    }
+    newNumberOfSubmissions(_oldNumberOfSubmissions) {
+        return 1;
+    }
+    getRandomElementFrom(elements) {
+        return elements[0];
     }
 }

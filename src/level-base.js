@@ -37,10 +37,10 @@ export class Level {
         this.perfectCandidates = this.findPerfectCandidates();
         this.perfectCandidate = this.getRandomElementFrom(this.perfectCandidates);
         this.hints = [...this.generateHints()];
+        this.currentCandidate = this.findSimplestPassingCandidate(this.candidates, this.perfectCandidates, this.humanUnitTests);
+        this.failingTestResult = this.findFailingTestResult(this.currentCandidate, this.hints, this.minimalUnitTests);
     }
     getRandomElementFrom(elements) {
-        if (this.isExample())
-            return elements[0];
         return Random.elementFrom(elements);
     }
     *generateCandidates(listOfListOfLines, lines) {
@@ -123,18 +123,11 @@ export class Level {
         }
         return Infinity;
     }
-    isExample() {
-        return false;
-    }
     beforeMenuMessage() {
         return '';
     }
     isFormDataOk(_formData) {
         return true;
-    }
-    showMessageIfExample(message) {
-        if (this.isExample())
-            new ComputerMessage([message]).add();
     }
     emoji(nextLevel) {
         return this === nextLevel ? '▶️' : ['🔒', '🥇', '🥈', '🥉'].at(this.isFinished()) || '👎';
@@ -145,26 +138,12 @@ export class Level {
     isFinished() {
         return this.isLevelFinished.get();
     }
-    initialize() {
-        this.humanUnitTests = [];
-        this.currentCandidate = this.findSimplestPassingCandidate(this.candidates, this.perfectCandidates, this.humanUnitTests);
-        this.previousCandidate = undefined;
-        this.failingTestResult = this.findFailingTestResult(this.currentCandidate, this.hints, this.minimalUnitTests);
-        this.lastUnitTest = undefined;
-        this.numberOfSubmissions = 0;
-    }
     play(callback) {
         this.callback = callback;
-        this.initialize();
-        this.showMessageIfExample(this.locale.inThisLevelYouOnlyHaveToFollowTheInstructions());
-        this.showMessageIfExample(this.locale.meanwhileKeepAnEyeOnTheChangesInTheSidebar());
+        this.showInstructionsMessage();
+        this.showSidebarMessage();
         this.showStepMessages();
         this.menu();
-    }
-    showUnitTestsPanel() {
-        new Panel('unit-tests', this.locale.unitTests(), this.humanUnitTests.length > 0
-            ? [new OrderedList().appendChildren(this.humanUnitTests.map(humanUnitTest => new ListItem().appendChild(new Code().appendChild(humanUnitTest.toHtml().addClass(humanUnitTest === this.lastUnitTest ? 'new' : 'old')))))]
-            : [new Paragraph().appendText(this.locale.youHaveNotWrittenAnyUnitTestsYet())]).show();
     }
     menu() {
         this.showPanels();
@@ -173,10 +152,11 @@ export class Level {
     showPanels() {
         this.showSpecificationPanel();
         this.showCurrentFunctionPanel();
+        this.showDifferencePanel();
         this.showUnitTestsPanel();
     }
     showMenuMessage() {
-        this.showMessageIfExample(this.beforeMenuMessage());
+        this.showBeforeMenuMessage();
         const addThisUnitTestButton = new Input()
             .setType('submit')
             .setValue(this.locale.iWantToAddThisUnitTest());
@@ -197,7 +177,7 @@ export class Level {
         const unitTest = new UnitTest(this.parameters, argumentList, this.unit, expected);
         Message.addToLast([new Code().appendChild(unitTest.toHtml().addClass('new'))]);
         if (this.isFormDataOk(formData))
-            new CheckingMessage(this.locale.checkingTheNewUnitTest(), this.locale.iCheckedTheNewUnitTest(), () => this.addUnitTest(unitTest), 500 + this.humanUnitTests.length * 250).add();
+            new CheckingMessage(this.locale.checkingTheUnitTest(), this.locale.iCheckedTheUnitTest(), () => this.addUnitTest(unitTest), 500 + this.humanUnitTests.length * 250).add();
     }
     addUnitTest(unitTest) {
         const unitTestIsCorrect = new TestResult(this.perfectCandidate, unitTest).passes;
@@ -221,8 +201,11 @@ export class Level {
         if (this.isFormDataOk(new Map()))
             new CheckingMessage(this.locale.checkingTheUnitTests(), this.locale.iCheckedTheUnitTests(), () => this.submitUnitTests(), 500 + this.humanUnitTests.length * 250).add();
     }
+    newNumberOfSubmissions(oldNumberOfSubmissions) {
+        return oldNumberOfSubmissions + 1;
+    }
     submitUnitTests() {
-        this.numberOfSubmissions += 1;
+        this.numberOfSubmissions = this.newNumberOfSubmissions(this.numberOfSubmissions);
         if (this.failingTestResult) {
             this.showBugFoundMessage();
             this.menu();
@@ -231,33 +214,25 @@ export class Level {
             this.end();
     }
     end() {
-        if (this.isExample())
-            this.numberOfSubmissions = 1;
         this.isLevelFinished.set(this.numberOfSubmissions);
-        this.previousCandidate = undefined;
         this.showPanels();
         this.showEndMessage();
-        this.showMessageIfExample(this.locale.congratulationsNowYouUnderstandTheBasicsOfTestDrivenDevelopment());
+        this.showCongratulationsMessage();
         this.callback();
     }
+    showInstructionsMessage() {
+        //nothing
+    }
+    showSidebarMessage() {
+        //nothing
+    }
     showStepMessages() {
-        new ComputerMessage([this.locale.step1()]).add();
-        new ComputerMessage([this.locale.step2()]).add();
-        new ComputerMessage([this.locale.step3()]).add();
+        new ComputerMessage([this.locale.firstYouReadTheSpecification()]).add();
+        new ComputerMessage([this.locale.afterAddingAUnitTest()]).add();
+        new ComputerMessage([this.locale.whenYouThinkTheCurrentFunction()]).add();
     }
-    showSpecificationPanel() {
-        const title = `${this.locale.specification()} (${this.description()})`;
-        new Panel('specification', title, [this.specification()]).show();
-    }
-    showCurrentFunctionPanel() {
-        new Panel('current-function', this.locale.currentFunction(), [
-            this.currentCandidate.toHtml()
-        ]).show();
-        new Panel('difference-current-function', this.locale.differenceFromThePreviousFunction(), [
-            this.previousCandidate
-                ? this.currentCandidate.toHtmlWithPrevious(this.previousCandidate)
-                : new Paragraph().appendText(this.locale.noPreviousFunction())
-        ]).show();
+    showBeforeMenuMessage() {
+        //nothing
     }
     showIncorrectUnitTestMessage() {
         new ComputerMessage([this.locale.iDidNotAddTheUnitTest()]).add();
@@ -279,5 +254,28 @@ export class Level {
     showEndMessage() {
         new ComputerMessage([this.locale.theCurrentFunctionIsIndeedAccordingToTheSpecification()]).add();
         new ComputerMessage([this.locale.wellDone()]).add();
+    }
+    showCongratulationsMessage() {
+        // nothing
+    }
+    showSpecificationPanel() {
+        new Panel('specification', this.locale.specification(this.description()), [this.specification()]).show();
+    }
+    showCurrentFunctionPanel() {
+        new Panel('current-function', this.locale.currentFunction(), [
+            this.currentCandidate.toHtml()
+        ]).show();
+    }
+    showDifferencePanel() {
+        new Panel('difference-current-function', this.locale.differenceFromThePreviousFunction(), [
+            this.previousCandidate
+                ? this.currentCandidate.toHtmlWithPrevious(this.previousCandidate)
+                : new Paragraph().appendText(this.locale.noPreviousFunction())
+        ]).show();
+    }
+    showUnitTestsPanel() {
+        new Panel('unit-tests', this.locale.unitTests(), this.humanUnitTests.length > 0
+            ? [new OrderedList().appendChildren(this.humanUnitTests.map(humanUnitTest => new ListItem().appendChild(new Code().appendChild(humanUnitTest.toHtml().addClass(humanUnitTest === this.lastUnitTest ? 'new' : 'old')))))]
+            : [new Paragraph().appendText(this.locale.youHaveNotWrittenAnyUnitTestsYet())]).show();
     }
 }

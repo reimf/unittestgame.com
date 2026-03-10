@@ -23,7 +23,7 @@ test.describe('welcome', () => {
         expect(await link.getAttribute('href')).toBe('?lng=nl');
     });
     test('has more info on Test-Driven Development', async () => {
-        const link = page.getByRole('link', { name: 'TDD on Wikipedia' });
+        const link = page.getByRole('link', { name: 'Read more about TDD' });
         expect(await link.getAttribute('href')).toBe('https://en.wikipedia.org/wiki/Test-driven_development');
     });
     test('has link to contact mail address', async () => {

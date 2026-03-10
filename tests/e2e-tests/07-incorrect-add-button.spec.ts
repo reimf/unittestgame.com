@@ -43,7 +43,7 @@ test.describe('incorrect add button test', () => {
 
     test('has TWO before menu messages', async () => {
         const messages = page.getByTestId('messages')
-        const beforeMenuMessages = messages.getByText('The Current Function now sometimes returns Normal Mode and sometimes Low Power Mode.')
+        const beforeMenuMessages = messages.getByText('The Current Function now sometimes returns "Normal Mode" and sometimes "Low Power Mode".')
         await expect(beforeMenuMessages).toHaveCount(2)
     })
 

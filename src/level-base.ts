@@ -43,6 +43,8 @@ export abstract class Level {
         this.perfectCandidates = this.findPerfectCandidates()
         this.perfectCandidate = this.getRandomElementFrom(this.perfectCandidates)
         this.hints = [...this.generateHints()]
+        this.currentCandidate = this.findSimplestPassingCandidate(this.candidates, this.perfectCandidates, this.humanUnitTests)
+        this.failingTestResult = this.findFailingTestResult(this.currentCandidate, this.hints, this.minimalUnitTests)
     }
 
     protected abstract identifier(): string
@@ -54,9 +56,7 @@ export abstract class Level {
     protected abstract minimalUnitTestGenerator(): Generator<any[]>
     protected abstract hintGenerator(): Generator<any[]>
 
-    private getRandomElementFrom<T>(elements: readonly T[]): T {
-        if (this.isExample())
-            return elements[0]!
+    protected getRandomElementFrom<T>(elements: readonly T[]): T {
         return Random.elementFrom(elements)
     }
 
@@ -150,21 +150,12 @@ export abstract class Level {
         return Infinity
     }
 
-    public isExample(): boolean {
-        return false
-    }
-
     protected beforeMenuMessage(): string {
         return ''
     }
 
     protected isFormDataOk(_formData: StringMap): boolean {
         return true
-    }
-
-    private showMessageIfExample(message: string): void {
-        if (this.isExample())
-            new ComputerMessage([message]).add()
     }
 
     public emoji(nextLevel?: Level): string {
@@ -179,38 +170,12 @@ export abstract class Level {
         return this.isLevelFinished.get()
     }
 
-    private initialize(): void {
-        this.humanUnitTests = []
-        this.currentCandidate = this.findSimplestPassingCandidate(this.candidates, this.perfectCandidates, this.humanUnitTests)
-        this.previousCandidate = undefined
-        this.failingTestResult = this.findFailingTestResult(this.currentCandidate, this.hints, this.minimalUnitTests)
-        this.lastUnitTest = undefined
-        this.numberOfSubmissions = 0
-    }
-
     public play(callback: () => void): void {
         this.callback = callback
-        this.initialize()
-        this.showMessageIfExample(this.locale.inThisLevelYouOnlyHaveToFollowTheInstructions())
-        this.showMessageIfExample(this.locale.meanwhileKeepAnEyeOnTheChangesInTheSidebar())
+        this.showInstructionsMessage()
+        this.showSidebarMessage()
         this.showStepMessages()
         this.menu()
-    }
-
-    private showUnitTestsPanel(): void {
-        new Panel('unit-tests', this.locale.unitTests(),
-            this.humanUnitTests.length > 0
-            ? [new OrderedList().appendChildren(
-                this.humanUnitTests.map(humanUnitTest =>
-                    new ListItem().appendChild(
-                        new Code().appendChild(
-                            humanUnitTest.toHtml().addClass(humanUnitTest === this.lastUnitTest ? 'new' : 'old')
-                        )
-                    )
-                )
-            )]
-            : [new Paragraph().appendText(this.locale.youHaveNotWrittenAnyUnitTestsYet())]
-        ).show()
     }
 
     private menu(): void {
@@ -221,11 +186,12 @@ export abstract class Level {
     private showPanels(): void {
         this.showSpecificationPanel()
         this.showCurrentFunctionPanel()
+        this.showDifferencePanel()
         this.showUnitTestsPanel()
     }
 
     protected showMenuMessage(): void {
-        this.showMessageIfExample(this.beforeMenuMessage())
+        this.showBeforeMenuMessage()
         const addThisUnitTestButton = new Input()
             .setType('submit')
             .setValue(this.locale.iWantToAddThisUnitTest())
@@ -247,7 +213,7 @@ export abstract class Level {
         const unitTest = new UnitTest(this.parameters, argumentList, this.unit, expected)
         Message.addToLast([new Code().appendChild(unitTest.toHtml().addClass('new'))])
         if (this.isFormDataOk(formData))
-            new CheckingMessage(this.locale.checkingTheNewUnitTest(), this.locale.iCheckedTheNewUnitTest(), () => this.addUnitTest(unitTest), 500 + this.humanUnitTests.length * 250).add()
+            new CheckingMessage(this.locale.checkingTheUnitTest(), this.locale.iCheckedTheUnitTest(), () => this.addUnitTest(unitTest), 500 + this.humanUnitTests.length * 250).add()
     }
 
     private addUnitTest(unitTest: UnitTest): void {
@@ -274,8 +240,12 @@ export abstract class Level {
             new CheckingMessage(this.locale.checkingTheUnitTests(), this.locale.iCheckedTheUnitTests(), () => this.submitUnitTests(), 500 + this.humanUnitTests.length * 250).add()
     }
 
+    protected newNumberOfSubmissions(oldNumberOfSubmissions: number): number {
+        return oldNumberOfSubmissions + 1
+    }
+
     private submitUnitTests(): void {
-        this.numberOfSubmissions += 1
+        this.numberOfSubmissions = this.newNumberOfSubmissions(this.numberOfSubmissions)
         if (this.failingTestResult) {
             this.showBugFoundMessage()
             this.menu()
@@ -285,36 +255,29 @@ export abstract class Level {
     }
 
     private end(): void {
-        if (this.isExample())
-            this.numberOfSubmissions = 1
         this.isLevelFinished.set(this.numberOfSubmissions)
-        this.previousCandidate = undefined
         this.showPanels()
         this.showEndMessage()
-        this.showMessageIfExample(this.locale.congratulationsNowYouUnderstandTheBasicsOfTestDrivenDevelopment())
+        this.showCongratulationsMessage()
         this.callback!()
     }
 
+    protected showInstructionsMessage(): void {
+        //nothing
+    }
+
+    protected showSidebarMessage(): void {
+        //nothing
+    }
+
     private showStepMessages(): void {
-        new ComputerMessage([this.locale.step1()]).add()
-        new ComputerMessage([this.locale.step2()]).add()
-        new ComputerMessage([this.locale.step3()]).add()
+        new ComputerMessage([this.locale.firstYouReadTheSpecification()]).add()
+        new ComputerMessage([this.locale.afterAddingAUnitTest()]).add()
+        new ComputerMessage([this.locale.whenYouThinkTheCurrentFunction()]).add()
     }
 
-    private showSpecificationPanel(): void {
-        const title = `${this.locale.specification()} (${this.description()})`
-        new Panel('specification', title, [this.specification()]).show()
-    }
-
-    private showCurrentFunctionPanel(): void {
-        new Panel('current-function', this.locale.currentFunction(), [
-            this.currentCandidate.toHtml()
-        ]).show()
-        new Panel('difference-current-function', this.locale.differenceFromThePreviousFunction(), [
-            this.previousCandidate
-            ? this.currentCandidate.toHtmlWithPrevious(this.previousCandidate)
-            : new Paragraph().appendText(this.locale.noPreviousFunction())
-        ]).show()
+    protected showBeforeMenuMessage(): void {
+        //nothing
     }
 
     private showIncorrectUnitTestMessage(): void {
@@ -341,5 +304,43 @@ export abstract class Level {
     private showEndMessage(): void {
         new ComputerMessage([this.locale.theCurrentFunctionIsIndeedAccordingToTheSpecification()]).add()
         new ComputerMessage([this.locale.wellDone()]).add()
+    }
+
+    protected showCongratulationsMessage(): void {
+        // nothing
+    }
+
+    private showSpecificationPanel(): void {
+        new Panel('specification', this.locale.specification(this.description()), [this.specification()]).show()
+    }
+
+    private showCurrentFunctionPanel(): void {
+        new Panel('current-function', this.locale.currentFunction(), [
+            this.currentCandidate.toHtml()
+        ]).show()
+    }
+
+    private showDifferencePanel(): void {
+        new Panel('difference-current-function', this.locale.differenceFromThePreviousFunction(), [
+            this.previousCandidate
+            ? this.currentCandidate.toHtmlWithPrevious(this.previousCandidate)
+            : new Paragraph().appendText(this.locale.noPreviousFunction())
+        ]).show()
+    }
+
+    private showUnitTestsPanel(): void {
+        new Panel('unit-tests', this.locale.unitTests(),
+            this.humanUnitTests.length > 0
+            ? [new OrderedList().appendChildren(
+                this.humanUnitTests.map(humanUnitTest =>
+                    new ListItem().appendChild(
+                        new Code().appendChild(
+                            humanUnitTest.toHtml().addClass(humanUnitTest === this.lastUnitTest ? 'new' : 'old')
+                        )
+                    )
+                )
+            )]
+            : [new Paragraph().appendText(this.locale.youHaveNotWrittenAnyUnitTestsYet())]
+        ).show()
     }
 }

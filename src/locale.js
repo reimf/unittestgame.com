@@ -23,21 +23,13 @@ export class Locale {
         return this.pick({
             en: 'Controlling an AI bot with Test-Driven Development.\n' +
                 '\n' +
-                '1. Write a test that does NOT pass.\n' +
-                '2. Write just enough code to make the test pass.\n' +
-                '3. Repeat until the code meets the specification.\n' +
-                '\n' +
-                '[Nederlands](?lng=nl) ' +
-                '[TDD on Wikipedia](https://en.wikipedia.org/wiki/Test-driven_development) ' +
+                '[Read more about TDD](https://en.wikipedia.org/wiki/Test-driven_development)\n' +
+                '[Overschakelen op het Nederlands](?lng=nl)\n' +
                 '[Contact](mailto:contact@unittestgame.com)',
             nl: 'Beteugel een AI bot met Test-Driven Development.\n' +
                 '\n' +
-                '1. Schrijf een test die NIET slaagt.\n' +
-                '2. Schrijf net genoeg code om de test te laten slagen.\n' +
-                '3. Herhaal totdat de code voldoet aan de specificatie.\n' +
-                '\n' +
-                '[English](?lng=en) ' +
-                '[TDD op Wikipedia](https://nl.wikipedia.org/wiki/Test-driven_development) ' +
+                '[Lees meer over TDD](https://nl.wikipedia.org/wiki/Test-driven_development)\n' +
+                '[Switch to English](?lng=en)\n' +
                 '[Contact](mailto:contact@unittestgame.com)',
         });
     }
@@ -67,8 +59,8 @@ export class Locale {
     }
     wellDoneYouCanCloseThisTab() {
         return this.pick({
-            en: 'Well done! You can close this tab now and start writing effective unit tests for your real-world projects.',
-            nl: 'Goed gedaan! Je kunt deze tab nu sluiten en beginnen met het schrijven van effectieve unit testen voor je echte projecten.',
+            en: 'Well done! You can close this browser tab now and start writing effective unit tests for your real-world projects.',
+            nl: 'Goed gedaan! Je kunt deze browser tab nu sluiten en beginnen met het schrijven van effectieve unit testen voor je echte projecten.',
         });
     }
     unitTests() {
@@ -95,16 +87,16 @@ export class Locale {
             nl: 'Ik wil de unit testen inleveren',
         });
     }
-    checkingTheNewUnitTest() {
+    checkingTheUnitTest() {
         return this.pick({
             en: 'Checking the unit test',
             nl: 'De nieuwe unit test wordt gecontroleerd',
         });
     }
-    iCheckedTheNewUnitTest() {
+    iCheckedTheUnitTest() {
         return this.pick({
             en: 'I checked the unit test',
-            nl: 'Ik heb de nieuwe unit test gecontroleerd',
+            nl: 'Ik heb de unit test gecontroleerd',
         });
     }
     checkingTheUnitTests() {
@@ -131,28 +123,28 @@ export class Locale {
             nl: 'Goed gedaan!',
         });
     }
-    step1() {
+    firstYouReadTheSpecification() {
         return this.pick({
-            en: 'First, you read the *Specification* and then you write *Unit Tests* that do NOT pass the *Current Function*.',
-            nl: 'Eerst lees je de *Specificatie* en daarna schrijf je *Unit Testen* die niet slagen voor de *Huidige Functie*.',
+            en: 'First, you read the *Specification* and then you write a unit test that does NOT pass the *Current Function*.',
+            nl: 'Eerst lees je de *Specificatie* en daarna schrijf je een unit test die NIET slaagt voor de *Huidige Functie*.',
         });
     }
-    step2() {
+    afterAddingAUnitTest() {
         return this.pick({
-            en: 'After adding a unit test I (the AI bot) improve the *Current Function* such that all *Unit Tests* pass and I show the *Difference* from the previous function.',
-            nl: 'Na het toevoegen van een unit test verbeter ik (de AI-bot) de *Huidige Functie* zodat alle *Unit Testen* slagen en ik toon het *Verschil* met de vorige functie.',
+            en: 'After adding a unit test I will improve the *Current Function* such that all *Unit Tests* pass and I show the *Difference* from the previous function.',
+            nl: 'Na het toevoegen van een unit test zal ik de *Huidige Functie* verbeteren zodat alle *Unit Testen* slagen en ik toon het *Verschil* met de vorige functie.',
         });
     }
-    step3() {
+    whenYouThinkTheCurrentFunction() {
         return this.pick({
             en: 'When you think the *Current Function* is according to the *Specification*, you submit the *Unit Tests*.',
             nl: 'Wanneer je denkt dat de *Huidige Functie* aan de *Specificatie* voldoet, lever je de *Unit Testen* in.',
         });
     }
-    specification() {
+    specification(description) {
         return this.pick({
-            en: 'Specification',
-            nl: 'Specificatie',
+            en: `Specification (${description})`,
+            nl: `Specificatie (${description})`,
         });
     }
     currentFunction() {
@@ -182,12 +174,12 @@ export class Locale {
     tryToWriteUnitTestsThatDoNotPass() {
         return this.pick({
             en: 'Try to write unit tests that do NOT pass the *Current Function*.',
-            nl: 'Probeer unit testen te schrijven die niet slagen voor de *Huidige Functie*.',
+            nl: 'Probeer unit testen te schrijven die NIET slagen voor de *Huidige Functie*.',
         });
     }
     iAddedTheUnitTestAndImprovedTheCurrentFunction() {
         return this.pick({
-            en: 'I added the unit test to the *Unit Tests* and I improved the *Current Function* such that the unit test also passes and I showed the *Difference* from the previous function.',
+            en: 'I added the unit test to the *Unit Tests* and I improved the *Current Function* such that the new unit test also passes and I showed the *Difference* from the previous function.',
             nl: 'Ik heb de unit test toegevoegd aan de *Unit Testen* en ik heb de *Huidige Functie* zo verbeterd dat de nieuwe unit test ook slaagt en ik heb het *Verschil* met de vorige functie getoond.',
         });
     }
@@ -206,7 +198,7 @@ export class Locale {
     writeAUnitTestThatIsAccordingToTheSpecification() {
         return this.pick({
             en: 'Write a unit test that is according to the *Specification* and does NOT pass the *Current Function*.',
-            nl: 'Schrijf een unit test die aan de *Specificatie* voldoet en niet slaagt voor de *Huidige Functie*.',
+            nl: 'Schrijf een unit test die aan de *Specificatie* voldoet en NIET slaagt voor de *Huidige Functie*.',
         });
     }
     iThinkYouNeedAtLeastThisManyMoreUnitTests(numberOfUnitTestsStillNeeded) {
@@ -229,8 +221,8 @@ export class Locale {
     }
     aSmartphoneNormallyOperatesInNormalMode() {
         return this.pick({
-            en: 'A smartphone normally operates in Normal Mode, but when the battery level is less than 20%, it operates in Low Power Mode.',
-            nl: 'Een smartphone werkt normaal in Normal Mode, maar wanneer het batterijpercentage minder dan 20% is, werkt hij in Low Power Mode.',
+            en: 'A smartphone normally operates in "Normal Mode", but when the battery level is less than 20%, it operates in "Low Power Mode".',
+            nl: 'Een smartphone werkt normaal in "Normal Mode", maar wanneer het batterijpercentage minder dan 20% is, werkt hij in "Low Power Mode".',
         });
     }
     thatIsNotWhatIAskedFor() {
@@ -253,26 +245,26 @@ export class Locale {
     }
     theSpecificationContainsTheNumber20() {
         return this.pick({
-            en: 'The *Specification* contains the number 20. That is a good starting point for a unit test. When the battery level is 20%, the function should return Normal Mode.',
-            nl: 'De *Specificatie* bevat het getal 20. Dat is een goed startpunt voor een unit test. Wanneer het batterijpercentage 20% is, zou de functie Normal Mode terug moeten geven.',
+            en: 'The *Specification* contains the number 20. That is a good starting point for a unit test. When the battery level is 20%, the function should return "Normal Mode".',
+            nl: 'De *Specificatie* bevat het getal 20. Dat is een goed startpunt voor een unit test. Wanneer het batterijpercentage 20% is, zou de functie "Normal Mode" terug moeten geven.',
         });
     }
     theCurrentFunctionNowAlwaysReturnsNormalMode() {
         return this.pick({
-            en: 'The *Current Function* now always returns Normal Mode. The *Specification* says that when the battery level is less than 20%, the function should return Low Power Mode. So, add a unit test for a battery level less than 20%, say 19%.',
-            nl: 'De *Huidige Functie* geeft nu altijd Normal Mode terug. De *Specificatie* zegt dat wanneer het batterijpercentage minder dan 20% is, de functie Low Power Mode terug zou moeten geven. Voeg dus een unit test toe voor een batterijpercentage van minder dan 20%, bijvoorbeeld 19%.',
+            en: 'The *Current Function* now always returns "Normal Mode". The *Specification* says that when the battery level is less than 20%, the function should return "Low Power Mode". So, add a unit test for a battery level less than 20%, say 19%.',
+            nl: 'De *Huidige Functie* geeft nu altijd "Normal Mode" terug. De *Specificatie* zegt dat wanneer het batterijpercentage minder dan 20% is, de functie "Low Power Mode" terug zou moeten geven. Voeg dus een unit test toe voor een batterijpercentage van minder dan 20%, bijvoorbeeld 19%.',
         });
     }
     theCurrentFunctionNowSometimesReturnsNormalModeAndSometimesLowPowerMode() {
         return this.pick({
-            en: 'The *Current Function* now sometimes returns Normal Mode and sometimes Low Power Mode. Submit the unit tests to see if the *Current Function* is according to the *Specification*.',
-            nl: 'De *Huidige Functie* geeft nu soms Normal Mode terug en soms Low Power Mode. Lever de unit testen in om te zien of de *Huidige Functie* aan de *Specificatie* voldoet.',
+            en: 'The *Current Function* now sometimes returns "Normal Mode" and sometimes "Low Power Mode". Submit the unit tests to see if the *Current Function* is according to the *Specification*.',
+            nl: 'De *Huidige Functie* geeft nu soms "Normal Mode" terug en soms "Low Power Mode". Lever de unit testen in om te zien of de *Huidige Functie* aan de *Specificatie* voldoet.',
         });
     }
     theCurrentFunctionNowReturnsNormalModeOnlyForBatteryLevel20Percent() {
         return this.pick({
-            en: 'The *Current Function* now returns Normal Mode only for battery level 20%. Add a unit test for another battery level, say 21%, because the *Specification* says it should return Normal Mode for battery level 21% as well.',
-            nl: 'De *Huidige Functie* geeft nu alleen Normal Mode terug voor een batterijpercentage van 20%. Voeg een unit test toe voor een ander batterijpercentage, bijvoorbeeld 21%, omdat de *Specificatie* zegt dat het ook Normal Mode terug zou moeten geven voor een batterijpercentage van 21%.',
+            en: 'The *Current Function* now returns "Normal Mode" only for battery level 20%. Add a unit test for another battery level, say 21%, because the *Specification* says it should return "Normal Mode" for battery level 21% as well.',
+            nl: 'De *Huidige Functie* geeft nu alleen "Normal Mode" terug voor een batterijpercentage van 20%. Voeg een unit test toe voor een ander batterijpercentage, bijvoorbeeld 21%, omdat de *Specificatie* zegt dat het ook "Normal Mode" terug zou moeten geven voor een batterijpercentage van 21%.',
         });
     }
     submitTheUnitTestsAgainToSeeIfTheCurrentFunctionIsAccordingToTheSpecification() {
@@ -283,8 +275,8 @@ export class Locale {
     }
     theCurrentFunctionNowReturnsLowPowerModeOnlyForBatteryLevel19Percent() {
         return this.pick({
-            en: 'The *Current Function* now returns Low Power Mode only for battery level 19%. Add a unit test for another battery level, say 18%, because the *Specification* says it should return Low Power Mode for battery level 18% as well.',
-            nl: 'De *Huidige Functie* geeft nu alleen Low Power Mode terug voor een batterijpercentage van 19%. Voeg een unit test toe voor een ander batterijpercentage, bijvoorbeeld 18%, omdat de *Specificatie* zegt dat het ook Low Power Mode terug zou moeten geven voor een batterijpercentage van 18%.',
+            en: 'The *Current Function* now returns "Low Power Mode" only for battery level 19%. Add a unit test for another battery level, say 18%, because the *Specification* says it should return "Low Power Mode" for battery level 18% as well.',
+            nl: 'De *Huidige Functie* geeft nu alleen "Low Power Mode" terug voor een batterijpercentage van 19%. Voeg een unit test toe voor een ander batterijpercentage, bijvoorbeeld 18%, omdat de *Specificatie* zegt dat het ook "Low Power Mode" terug zou moeten geven voor een batterijpercentage van 18%.',
         });
     }
     submitTheUnitTestsAgainToSeeIfTheCurrentFunctionIsFinallyAccordingToTheSpecification() {
@@ -314,18 +306,18 @@ export class Locale {
     returnTrueIfTheTextRepresentsAFloatAndFalseIfItDoesnt() {
         return this.pick({
             en: 'Return true if the text represents a float and returns false if it doesn\'t. A float may start with a plus or a minus sign. This is followed by one or more digits. If that is followed by a dot, then one or more digits follow.',
-            nl: 'Geef true terug als de tekst een gebroken getal voorstelt en return false als dat niet zo is. Een gebroken getal kan beginnen met een plus- of minteken. Hierna volgen één of meer cijfers. Als dit wordt gevolgd door een punt, dan volgen één of meer cijfers.',
+            nl: 'Geef true terug als de tekst een gebroken getal voorstelt en return false als dat niet zo is. Een gebroken getal kan beginnen met een plus- of minteken. Hierna volgen één of meer cijfers. Als dit wordt gevolgd door een punt, dan volgen nog één of meer cijfers.',
         });
     }
     returnTrueIfTheYearIsALeapYearAndFalseIfItIsNot() {
         return this.pick({
-            en: 'Return true if the year is a leap year and false if the year is NOT a leap year. A year is a leap year if it is divisible by 4. The exception is that years that are divisible by 100 are NOT leap years, unless they are also divisible by 400.',
+            en: 'Return true if the year is a leap year and false if the year is not a leap year. A year is a leap year if it is divisible by 4. The exception is that years that are divisible by 100 are not leap years, unless they are also divisible by 400.',
             nl: 'Geef true terug als het jaar een schrikkeljaar is en false als het jaar geen schrikkeljaar is. Een jaar is een schrikkeljaar als het deelbaar is door 4. De uitzondering is dat jaren die deelbaar zijn door 100 geen schrikkeljaren zijn, tenzij ze ook deelbaar zijn door 400.',
         });
     }
     returnTrueIfThePasswordIsStrongAndFalseIfItIsNot() {
         return this.pick({
-            en: 'Return true if the password is strong and false if the password is NOT strong. A password is strong if it contains at least 5 characters, an uppercase letter, a lowercase letter and a special character ("#" or "@").',
+            en: 'Return true if the password is strong and false if the password is not strong. A password is strong if it contains at least 5 characters, an uppercase letter, a lowercase letter and a special character ("#" or "@").',
             nl: 'Geef true terug als het wachtwoord sterk is en false als het wachtwoord niet sterk is. Een wachtwoord is sterk als het ten minste 5 tekens bevat, een hoofdletter, een kleine letter en een speciaal teken ("#" of "@").',
         });
     }
@@ -340,8 +332,8 @@ export class Locale {
             '| X START  DANGER X |\n' +
             '+-------------------+');
         return this.pick({
-            en: 'The function receives the speed in kilometers per hour with at most one decimal. If possible, show one decimal (e.g. 13 displays "13.0"). Otherwise, round to an integer (e.g. 87.6 displays "88"). If the car isn\'t moving, then display "START". If the speed no longer fits on the display, then display "DANGER" (e.g. 300 displays "DANGER").\nThe display looks like this, where every X is a LED light:\n' + display,
-            nl: 'De functie ontvangt de snelheid in kilometers per uur met maximaal één decimaal. Indien mogelijk, toon één decimaal (bijv. 13 toont "13.0"). Rond anders af op een geheel getal (bijv. 87.6 toont "88"). Als de auto niet beweegt, toon dan "START". Als de snelheid niet meer op het scherm past, toon dan "DANGER" (bijv. 300 toont "DANGER").\nHet scherm ziet er zo uit, waarbij elke X een LED-lampje is:\n' + display,
+            en: 'Return the formatted speed in kilometers per hour with at most one decimal. Return one decimal if that is possible (e.g. 13 returns "13.0"). Otherwise, round to an integer (e.g. 87.6 returns "88"). If the car isn\'t moving, then return "START". If the speed no longer fits on the display, then return "DANGER" (e.g. 300 returns "DANGER").\nThe display looks like this, where every X is a LED light:\n' + display,
+            nl: 'Geef de geformatteerde snelheid in kilometers per uur met maximaal één decimaal. Geef één decimaal terug als dat mogelijk is (bijv. 13 geeft "13.0"). Rond anders af op een geheel getal (bijv. 87.6 geeft "88"). Als de auto niet beweegt, geef dan "START" terug. Als de snelheid niet meer op het scherm past, geef dan "DANGER" terug (bijv. 300 geeft "DANGER").\nHet scherm ziet er zo uit, waarbij elke X een LED-lampje is:\n' + display,
         });
     }
     returnTheTypeOfTheTriangle() {
@@ -353,13 +345,13 @@ export class Locale {
     returnTrueIfTheAgeIs18YearsOrOverAndReturnFalseIfTheAgeIsUnder18() {
         return this.pick({
             en: 'Return true if the age is 18 years or over and return false if the age is under 18.',
-            nl: 'Geef true terug als de leeftijd 18 jaar of ouder is en geef false terug als de leeftijd onder de 18 is.',
+            nl: 'Geef true terug als de leeftijd 18 jaar of hoger is en geef false terug als de leeftijd onder de 18 is.',
         });
     }
     returnGoodIfThePriceIsLessThan20AndTheQualityIsAtLeast7() {
         return this.pick({
             en: 'Return "Good" if the price is less than 20 and the quality is at least 7. Return "Bad" if the price is 20 or more and the quality is less than 7. In all other cases return "Ok".',
-            nl: 'Geef "Goed" terug als de prijs minder dan 20 is en de kwaliteit ten minste 7 is. Geef "Slecht" terug als de prijs 20 of meer is en de kwaliteit minder dan 7 is. Geef in alle andere gevallen "Ok" terug.',
+            nl: 'Geef "Good" terug als de prijs minder dan 20 is en de kwaliteit ten minste 7 is. Geef "Bad" terug als de prijs 20 of meer is en de kwaliteit minder dan 7 is. Geef in alle andere gevallen "Ok" terug.',
         });
     }
     or() {
