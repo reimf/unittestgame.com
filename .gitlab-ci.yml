@@ -5,9 +5,8 @@ pages:
   script:
     - rm *.js
     - rm *.config.ts
-    - rm -rf playwright-tests
     - npm install typescript
-    - npx tsc --build --verbose
+    - npx tsc --build --force --verbose
     - mkdir public
     - cp *.{css,html,ico,js,png} public
     - mkdir public/src

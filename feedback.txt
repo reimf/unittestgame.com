@@ -10,7 +10,5 @@
 ❌ feat: skip een leven / ga een level terug (de keuzemogelijkheden zijn nu met opzet beperkt)
 ❌ feat: geef een hint als de speler vastloopt (gebeurt al als je de unit testen inlevert)
 ❌ feat: toon een loading bar tijdens het uitvoeren van unit-testen (de chatbot is nu veel sneller)
-❓ feat: maak meer visueel verschil tussen de voorbeeld-levels (hoe?)
-    TDD = Current Level + Specification + Current Function + Difference + Unit Tests
-    MT = Current Level + The Function + Tested Lines + Unit Tests
-❓ feat: maak zichtbaar welke unittesten overbodig zijn (kan wel pas zinvol aan het einde van het level)
+❌ feat: maak meer visueel verschil tussen de voorbeeld-levels (niet meer nodig met alleen TDD)
+❌ feat: maak zichtbaar welke unittesten overbodig zijn (battery level 30, battery level 20 = nu overbodig, later zinvol)
