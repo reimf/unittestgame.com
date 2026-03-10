@@ -7,14 +7,6 @@ test.describe('level start', () => {
         page = await context.newPage();
         await page.goto('/');
         await page.getByRole('button', { name: 'I want to play Level 1 - Battery Level' }).click();
-        await page.getByRole('button', { name: 'I want to add this unit test' }).click();
-        await page.getByRole('button', { name: 'I want to add this unit test' }).click();
-        await page.getByRole('button', { name: 'I want to submit the unit tests' }).click();
-        await page.getByRole('button', { name: 'I want to add this unit test' }).click();
-        await page.getByRole('button', { name: 'I want to submit the unit tests' }).click();
-        await page.getByRole('button', { name: 'I want to add this unit test' }).click();
-        await page.getByRole('button', { name: 'I want to submit the unit tests' }).click();
-        await page.getByRole('button', { name: 'I want to play Level 2 - Voting Age' }).click();
     });
     test('has no unittestgame panel', async () => {
         const unittestgamePanel = page.getByTestId('unittestgame');
@@ -22,8 +14,8 @@ test.describe('level start', () => {
     });
     test('has specification panel', async () => {
         const specificationPanel = page.getByTestId('specification');
-        await expect(specificationPanel).toContainText('Specification (Level 2 - Voting Age)');
-        await expect(specificationPanel).toContainText('Return true if the age is 18 years or over and return false if the age is under 18.');
+        await expect(specificationPanel).toContainText('Specification (Level 1 - Battery Level)');
+        await expect(specificationPanel).toContainText('A smartphone normally operates in Normal Mode, but when the battery level is less than 20%, it operates in Low Power Mode.');
     });
     test('has no unit tests in the unit tests panel', async () => {
         const unitTestsPanel = page.getByTestId('unit-tests');
@@ -32,23 +24,47 @@ test.describe('level start', () => {
     test('has the simplest candidate in the current function panel', async () => {
         const currentFunctionPanel = page.getByTestId('current-function');
         const codeLines = currentFunctionPanel.locator('code');
-        await expect(codeLines).toContainText('function isAllowedToVote(age) {  return undefined}');
+        await expect(codeLines).toContainText('function powerMode(batteryLevel) {  return undefined}');
     });
     test('has no the function panel', async () => {
         const theFunctionPanel = page.getByTestId('the-function');
         await expect(theFunctionPanel).not.toBeAttached();
     });
-    test('has contract message', async () => {
+    test('has instructions message', async () => {
         const messages = page.getByTestId('messages');
-        await expect(messages).toContainText('First, you read the Specification and then you write a Unit Test');
+        await expect(messages).toContainText('In this level you only have to follow the instructions.');
     });
-    test('has action menu message', async () => {
+    test('has read specification message', async () => {
         const messages = page.getByTestId('messages');
-        const buttons = messages.getByRole('button');
-        await expect(buttons).toHaveText([
-            'I want to add this unit test',
-            'I want to submit the unit tests',
-        ]);
+        await expect(messages).toContainText('First, you read the Specification and then you write Unit Tests');
+    });
+    test('has improve function message', async () => {
+        const messages = page.getByTestId('messages');
+        await expect(messages).toContainText('After adding a unit test I (the AI bot) improve the Current Function');
+    });
+    test('has submit message', async () => {
+        const messages = page.getByTestId('messages');
+        await expect(messages).toContainText('When you think the Current Function is according to the Specification');
+    });
+    test('has before menu message', async () => {
+        const messages = page.getByTestId('messages');
+        await expect(messages).toContainText('The Specification contains the number 20.');
+    });
+    test('has a battery level field', async () => {
+        const batteryLevel = page.getByRole('textbox', { name: 'Battery level' });
+        await expect(batteryLevel).toBeVisible();
+    });
+    test('has a power mode field', async () => {
+        const powerMode = page.getByRole('radio', { name: 'Power Mode' });
+        await expect(powerMode).toBeVisible();
+    });
+    test('has add this unit test button', async () => {
+        const button = page.getByRole('button', { name: 'I want to add this unit test' });
+        await expect(button).toBeVisible();
+    });
+    test('has submit unit tests button', async () => {
+        const button = page.getByRole('button', { name: 'I want to submit the unit tests' });
+        await expect(button).toBeVisible();
     });
     test.afterAll(async () => {
         await page.close();

@@ -15,12 +15,20 @@ test.describe('whole game', () => {
         const levels = config.allLevels();
         for (const level of levels) {
             await page.getByRole('button', { name: `I want to play ${level.description()}` }).click();
-            if (level.isExample) {
+            if (level.isExample()) {
+                await page.getByLabel('Battery Level').fill('20');
+                await page.getByLabel('Normal Mode').check();
                 await page.getByRole('button', { name: 'I want to add this unit test' }).click();
+                await page.getByLabel('Battery Level').fill('19');
+                await page.getByLabel('Low Power Mode').check();
                 await page.getByRole('button', { name: 'I want to add this unit test' }).click();
                 await page.getByRole('button', { name: 'I want to submit the unit tests' }).click();
+                await page.getByLabel('Battery Level').fill('21');
+                await page.getByLabel('Normal Mode').check();
                 await page.getByRole('button', { name: 'I want to add this unit test' }).click();
                 await page.getByRole('button', { name: 'I want to submit the unit tests' }).click();
+                await page.getByLabel('Battery Level').fill('18');
+                await page.getByLabel('Low Power Mode').check();
                 await page.getByRole('button', { name: 'I want to add this unit test' }).click();
                 await page.getByRole('button', { name: 'I want to submit the unit tests' }).click();
             }
@@ -41,6 +49,6 @@ test.describe('whole game', () => {
             }
         }
         const button = page.getByRole('button', { name: 'I played all the levels' });
-        await expect(button).toBeInViewport();
+        await expect(button).toBeVisible();
     });
 });

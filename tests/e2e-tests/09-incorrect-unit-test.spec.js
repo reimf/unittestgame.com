@@ -12,7 +12,7 @@ test.describe('incorrect unit test', () => {
         await page.getByLabel('true').check();
         await page.getByRole('button', { name: 'I want to add this unit test' }).click();
     });
-    test('has I want to add this unit test message', async () => {
+    test('has unit test message', async () => {
         const messages = page.getByTestId('messages');
         await expect(messages).toContainText('isAllowedToVote(17) === true');
     });
@@ -24,13 +24,25 @@ test.describe('incorrect unit test', () => {
         const unitTestsPanel = page.getByTestId('unit-tests');
         await expect(unitTestsPanel).not.toContainText('isAllowedToVote(17) === true');
     });
-    test('has action menu message', async () => {
-        const messages = page.getByTestId('messages');
-        const buttons = messages.getByRole('button');
-        await expect(buttons).toHaveText([
-            'I want to add this unit test',
-            'I want to submit the unit tests',
-        ]);
+    test('has age field', async () => {
+        const age = page.getByRole('textbox', { name: 'Age' });
+        await expect(age).toBeVisible();
+    });
+    test('has allowed to vote true field', async () => {
+        const isAllowedToVoteTrue = page.getByRole('radio', { name: 'true' });
+        await expect(isAllowedToVoteTrue).toBeVisible();
+    });
+    test('has allowed to vote false field', async () => {
+        const isAllowedToVoteFalse = page.getByRole('radio', { name: 'false' });
+        await expect(isAllowedToVoteFalse).toBeVisible();
+    });
+    test('has add this unit test button', async () => {
+        const button = page.getByRole('button', { name: 'I want to add this unit test' });
+        await expect(button).toBeVisible();
+    });
+    test('has submit unit tests button', async () => {
+        const button = page.getByRole('button', { name: 'I want to submit the unit tests' });
+        await expect(button).toBeVisible();
     });
     test.afterAll(async () => {
         await page.close();

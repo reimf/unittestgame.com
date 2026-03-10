@@ -29,19 +29,19 @@ test.describe('welcome', () => {
         expect(await link.getAttribute('href')).toBe('?lng=nl')
     })
 
-    test('has link to feedback mail address', async () => {
-        const link = page.getByRole('link', { name: 'feedback' })
-        expect(await link.getAttribute('href')).toBe('mailto:feedback@unittestgame.com')
-    })
-
     test('has more info on Test-Driven Development', async () => {
         const link = page.getByRole('link', { name: 'TDD on Wikipedia' })
         expect(await link.getAttribute('href')).toBe('https://en.wikipedia.org/wiki/Test-driven_development')
     })
 
+    test('has link to contact mail address', async () => {
+        const link = page.getByRole('link', { name: 'contact' })
+        expect(await link.getAttribute('href')).toBe('mailto:contact@unittestgame.com')
+    })
+
     test('has level overview panel', async () => {
         const levelsPanel = page.getByTestId('level-overview')
-        await expect(levelsPanel).toContainText('1▶️2🔒3🔒4🔒5🔒')
+        await expect(levelsPanel).toContainText('1▶️2🔒3🔒4🔒5🔒6🔒7🔒8🔒9🔒10🔒')
     })
 
     test('has see example message', async () => {

@@ -1,3 +1,4 @@
+import { ComputerMessage } from './frame.js';
 import { Level } from './level-base.js';
 import { IntegerVariable, RadioVariable } from './variable.js';
 export class BatteryLevel extends Level {
@@ -52,40 +53,62 @@ export class BatteryLevel extends Level {
         for (let batteryLevel = 18; batteryLevel <= 21; batteryLevel += 1)
             yield [batteryLevel];
     }
-    *exampleStringGenerator() {
-        // play
-        yield this.locale.inThisLevelYouOnlyHaveToClickTheGreenButton();
-        yield this.locale.meanwhileKeepAnEyeOnTheChangesInTheSidebar();
-        // showMenuMessage
-        yield this.locale.theSpecificationContainsTheNumber20();
-        yield this.locale.iWantToAddThisUnitTest();
-        yield '20';
-        yield 'Normal Mode';
-        // showMenuMessage
-        yield this.locale.theCurrentFunctionNowAlwaysReturnsNormalMode();
-        yield this.locale.iWantToAddThisUnitTest();
-        yield '19';
-        yield 'Low Power Mode';
-        // showMenuMessage
-        yield this.locale.theCurrentFunctionNowSometimesReturnsNormalModeAndSometimesLowPowerMode();
-        yield this.locale.iWantToSubmitTheUnitTests();
-        // showMenuMessage
-        yield this.locale.theCurrentFunctionNowReturnsNormalModeOnlyForBatteryLevel20Percent();
-        yield this.locale.iWantToAddThisUnitTest();
-        yield '21';
-        yield 'Normal Mode';
-        // showMenuMessage
-        yield this.locale.submitTheUnitTestsAgainToSeeIfTheCurrentFunctionIsAccordingToTheSpecification();
-        yield this.locale.iWantToSubmitTheUnitTests();
-        // showMenuMessage
-        yield this.locale.theCurrentFunctionNowReturnsLowPowerModeOnlyForBatteryLevel19Percent();
-        yield this.locale.iWantToAddThisUnitTest();
-        yield '18';
-        yield 'Low Power Mode';
-        // showMenuMessage
-        yield this.locale.submitTheUnitTestsAgainToSeeIfTheCurrentFunctionIsFinallyAccordingToTheSpecification();
-        yield this.locale.iWantToSubmitTheUnitTests();
-        // end
-        yield this.locale.congratulationsNowYouUnderstandTheBasicsOfTestDrivenDevelopment();
+    isExample() {
+        return true;
+    }
+    exampleForms = [
+        {
+            message: this.locale.theSpecificationContainsTheNumber20(),
+            batteryLevel: '20',
+            powerMode: 'Normal Mode'
+        },
+        {
+            message: this.locale.theCurrentFunctionNowAlwaysReturnsNormalMode(),
+            batteryLevel: '19',
+            powerMode: 'Low Power Mode'
+        },
+        {
+            message: this.locale.theCurrentFunctionNowSometimesReturnsNormalModeAndSometimesLowPowerMode(),
+            batteryLevel: undefined,
+            powerMode: undefined
+        },
+        {
+            message: this.locale.theCurrentFunctionNowReturnsNormalModeOnlyForBatteryLevel20Percent(),
+            batteryLevel: '21',
+            powerMode: 'Normal Mode'
+        },
+        {
+            message: this.locale.submitTheUnitTestsAgainToSeeIfTheCurrentFunctionIsAccordingToTheSpecification(),
+            batteryLevel: undefined,
+            powerMode: undefined
+        },
+        {
+            message: this.locale.theCurrentFunctionNowReturnsLowPowerModeOnlyForBatteryLevel19Percent(),
+            batteryLevel: '18',
+            powerMode: 'Low Power Mode'
+        },
+        {
+            message: this.locale.submitTheUnitTestsAgainToSeeIfTheCurrentFunctionIsFinallyAccordingToTheSpecification(),
+            batteryLevel: undefined,
+            powerMode: undefined
+        }
+    ];
+    beforeMenuMessage() {
+        return this.exampleForms[0].message;
+    }
+    showWarning() {
+        new ComputerMessage([this.locale.thatIsNotWhatIAskedFor()]).add();
+    }
+    isFormDataOk(formData) {
+        const exampleForm = this.exampleForms[0];
+        const batteryLevelOk = formData.get('batteryLevel') === exampleForm.batteryLevel;
+        const powerModeOk = formData.get('powerMode') === exampleForm.powerMode;
+        if (batteryLevelOk && powerModeOk) {
+            this.exampleForms.shift();
+            return true;
+        }
+        this.showWarning();
+        this.showMenuMessage();
+        return false;
     }
 }

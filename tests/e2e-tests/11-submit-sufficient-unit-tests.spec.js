@@ -28,7 +28,7 @@ test.describe('submit sufficient unit test', () => {
     });
     test('has level overview panel', async () => {
         const levelOverview = page.getByTestId('level-overview');
-        await expect(levelOverview).toContainText('1🥇2🥇3▶️4🔒5🔒');
+        await expect(levelOverview).toContainText('1🥇2🥇3▶️4🔒5🔒6🔒7🔒8🔒9🔒10🔒');
     });
     test('has see example message', async () => {
         const messages = page.getByTestId('messages');

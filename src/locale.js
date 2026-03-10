@@ -29,8 +29,7 @@ export class Locale {
                 '\n' +
                 '[Nederlands](?lng=nl) ' +
                 '[TDD on Wikipedia](https://en.wikipedia.org/wiki/Test-driven_development) ' +
-                '[Contact](mailto:contact@unittestgame.com) ' +
-                '[Feedback](mailto:feedback@unittestgame.com)',
+                '[Contact](mailto:contact@unittestgame.com)',
             nl: 'Beteugel een AI bot met Test-Driven Development.\n' +
                 '\n' +
                 '1. Schrijf een test die NIET slaagt.\n' +
@@ -39,8 +38,7 @@ export class Locale {
                 '\n' +
                 '[English](?lng=en) ' +
                 '[TDD op Wikipedia](https://nl.wikipedia.org/wiki/Test-driven_development) ' +
-                '[Contact](mailto:contact@unittestgame.com) ' +
-                '[Reactie](mailto:feedback@unittestgame.com)',
+                '[Contact](mailto:contact@unittestgame.com)',
         });
     }
     whatDoYouWantToDo() {
@@ -99,13 +97,13 @@ export class Locale {
     }
     checkingTheNewUnitTest() {
         return this.pick({
-            en: 'Checking the new unit test',
+            en: 'Checking the unit test',
             nl: 'De nieuwe unit test wordt gecontroleerd',
         });
     }
     iCheckedTheNewUnitTest() {
         return this.pick({
-            en: 'I checked the new unit test',
+            en: 'I checked the unit test',
             nl: 'Ik heb de nieuwe unit test gecontroleerd',
         });
     }
@@ -135,8 +133,8 @@ export class Locale {
     }
     step1() {
         return this.pick({
-            en: 'First, you read the *Specification* and then you write a *Unit Tests* that does NOT pass the *Current Function*.',
-            nl: 'Eerst lees je de *Specificatie* en daarna schrijf je een *Unit Testen* die niet slaagt voor de *Huidige Functie*.',
+            en: 'First, you read the *Specification* and then you write *Unit Tests* that do NOT pass the *Current Function*.',
+            nl: 'Eerst lees je de *Specificatie* en daarna schrijf je *Unit Testen* die niet slagen voor de *Huidige Functie*.',
         });
     }
     step2() {
@@ -189,7 +187,7 @@ export class Locale {
     }
     iAddedTheUnitTestAndImprovedTheCurrentFunction() {
         return this.pick({
-            en: 'I added the unit test to the *Unit Tests* and I improved the *Current Function* such that the new unit test also passes and I showed the *Difference* from the previous function.',
+            en: 'I added the unit test to the *Unit Tests* and I improved the *Current Function* such that the unit test also passes and I showed the *Difference* from the previous function.',
             nl: 'Ik heb de unit test toegevoegd aan de *Unit Testen* en ik heb de *Huidige Functie* zo verbeterd dat de nieuwe unit test ook slaagt en ik heb het *Verschil* met de vorige functie getoond.',
         });
     }
@@ -205,10 +203,16 @@ export class Locale {
             nl: 'Het produceert de volgende onjuiste uitkomst.',
         });
     }
-    writeAUnitTestThatIsAccordingToTheSpecification(numberOfUnitTestsStillNeeded) {
+    writeAUnitTestThatIsAccordingToTheSpecification() {
         return this.pick({
-            en: `Write a unit test that is according to the *Specification* and does NOT pass the *Current Function*. I think you need at least ${numberOfUnitTestsStillNeeded} more ${numberOfUnitTestsStillNeeded === 1 ? 'unit test' : 'unit tests'} to make the *Current Function* according to the *Specification*.`,
-            nl: `Schrijf een unit test die aan de *Specificatie* voldoet en niet slaagt voor de *Huidige Functie*. Ik denk dat je nog minstens ${numberOfUnitTestsStillNeeded} meer ${numberOfUnitTestsStillNeeded === 1 ? 'unit test' : 'unit testen'} nodig hebt om de *Huidige Functie* volgens de *Specificatie* te maken.`,
+            en: 'Write a unit test that is according to the *Specification* and does NOT pass the *Current Function*.',
+            nl: 'Schrijf een unit test die aan de *Specificatie* voldoet en niet slaagt voor de *Huidige Functie*.',
+        });
+    }
+    iThinkYouNeedAtLeastThisManyMoreUnitTests(numberOfUnitTestsStillNeeded) {
+        return this.pick({
+            en: `I think you need at least ${numberOfUnitTestsStillNeeded} more ${numberOfUnitTestsStillNeeded === 1 ? 'unit test' : 'unit tests'} to make the *Current Function* according to the *Specification*.`,
+            nl: `Ik denk dat je nog minstens ${numberOfUnitTestsStillNeeded} meer ${numberOfUnitTestsStillNeeded === 1 ? 'unit test' : 'unit testen'} nodig hebt om de *Huidige Functie* volgens de *Specificatie* te maken.`,
         });
     }
     theCurrentFunctionIsIndeedAccordingToTheSpecification() {
@@ -229,10 +233,16 @@ export class Locale {
             nl: 'Een smartphone werkt normaal in Normal Mode, maar wanneer het batterijpercentage minder dan 20% is, werkt hij in Low Power Mode.',
         });
     }
-    inThisLevelYouOnlyHaveToClickTheGreenButton() {
+    thatIsNotWhatIAskedFor() {
         return this.pick({
-            en: 'In this level you only have to click the green button.',
-            nl: 'In dit level hoef je alleen maar op de groene knop te klikken.',
+            en: 'That is NOT what I asked for!',
+            nl: 'Dat is NIET wat ik vroeg!',
+        });
+    }
+    inThisLevelYouOnlyHaveToFollowTheInstructions() {
+        return this.pick({
+            en: 'In this level you only have to follow the instructions.',
+            nl: 'In dit level hoef je alleen maar de instructies op te volgen.',
         });
     }
     meanwhileKeepAnEyeOnTheChangesInTheSidebar() {

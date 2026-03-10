@@ -1,5 +1,14 @@
+import { ComputerMessage } from './frame.js'
+import { StringMap } from './html.js'
 import { Level } from './level-base.js'
 import { Variable, IntegerVariable, RadioVariable } from './variable.js'
+
+type FormStringsType = {
+    message: string
+    batteryLevel: string|undefined
+    powerMode: string|undefined
+}
+
 
 export class BatteryLevel extends Level {
     protected identifier(): string {
@@ -61,48 +70,66 @@ export class BatteryLevel extends Level {
             yield [batteryLevel]
     }
 
-    protected override* exampleStringGenerator(): Generator<string> {
-        // play
-        yield this.locale.inThisLevelYouOnlyHaveToClickTheGreenButton()
-        yield this.locale.meanwhileKeepAnEyeOnTheChangesInTheSidebar()
+    public override isExample(): boolean {
+        return true
+    }
 
-        // showMenuMessage
-        yield this.locale.theSpecificationContainsTheNumber20()
-        yield this.locale.iWantToAddThisUnitTest()
-        yield '20'
-        yield 'Normal Mode'
+    private exampleForms: FormStringsType[] = [
+        {
+            message: this.locale.theSpecificationContainsTheNumber20(),
+            batteryLevel: '20',
+            powerMode: 'Normal Mode'
+        },
+        {
+            message: this.locale.theCurrentFunctionNowAlwaysReturnsNormalMode(),
+            batteryLevel: '19', 
+            powerMode: 'Low Power Mode'
+        },
+        {
+            message: this.locale.theCurrentFunctionNowSometimesReturnsNormalModeAndSometimesLowPowerMode(),
+            batteryLevel: undefined,
+            powerMode: undefined
+        },
+        {
+            message: this.locale.theCurrentFunctionNowReturnsNormalModeOnlyForBatteryLevel20Percent(),
+            batteryLevel: '21', 
+            powerMode: 'Normal Mode'
+        },
+        {
+            message: this.locale.submitTheUnitTestsAgainToSeeIfTheCurrentFunctionIsAccordingToTheSpecification(),
+            batteryLevel: undefined,
+            powerMode: undefined
+        },
+        {
+            message: this.locale.theCurrentFunctionNowReturnsLowPowerModeOnlyForBatteryLevel19Percent(),
+            batteryLevel: '18', 
+            powerMode: 'Low Power Mode'
+        },
+        {
+            message: this.locale.submitTheUnitTestsAgainToSeeIfTheCurrentFunctionIsFinallyAccordingToTheSpecification(),
+            batteryLevel: undefined,
+            powerMode: undefined
+        }
+    ]
 
-        // showMenuMessage
-        yield this.locale.theCurrentFunctionNowAlwaysReturnsNormalMode()
-        yield this.locale.iWantToAddThisUnitTest()
-        yield '19'
-        yield 'Low Power Mode'
+    protected override beforeMenuMessage(): string {
+        return this.exampleForms[0]!.message
+    }
 
-        // showMenuMessage
-        yield this.locale.theCurrentFunctionNowSometimesReturnsNormalModeAndSometimesLowPowerMode()
-        yield this.locale.iWantToSubmitTheUnitTests()
+    private showWarning() {
+        new ComputerMessage([this.locale.thatIsNotWhatIAskedFor()]).add()
+    }
 
-        // showMenuMessage
-        yield this.locale.theCurrentFunctionNowReturnsNormalModeOnlyForBatteryLevel20Percent()
-        yield this.locale.iWantToAddThisUnitTest()
-        yield '21'
-        yield 'Normal Mode'
-
-        // showMenuMessage
-        yield this.locale.submitTheUnitTestsAgainToSeeIfTheCurrentFunctionIsAccordingToTheSpecification()
-        yield this.locale.iWantToSubmitTheUnitTests()
-
-        // showMenuMessage
-        yield this.locale.theCurrentFunctionNowReturnsLowPowerModeOnlyForBatteryLevel19Percent()
-        yield this.locale.iWantToAddThisUnitTest()
-        yield '18'
-        yield 'Low Power Mode'
-
-        // showMenuMessage
-        yield this.locale.submitTheUnitTestsAgainToSeeIfTheCurrentFunctionIsFinallyAccordingToTheSpecification()
-        yield this.locale.iWantToSubmitTheUnitTests()
-
-        // end
-        yield this.locale.congratulationsNowYouUnderstandTheBasicsOfTestDrivenDevelopment()
+    protected override isFormDataOk(formData: StringMap): boolean {
+        const exampleForm = this.exampleForms[0]!
+        const batteryLevelOk = formData.get('batteryLevel') === exampleForm.batteryLevel
+        const powerModeOk = formData.get('powerMode') === exampleForm.powerMode
+        if (batteryLevelOk && powerModeOk) {
+            this.exampleForms.shift()
+            return true
+        }
+        this.showWarning()
+        this.showMenuMessage()
+        return false
     }
 }

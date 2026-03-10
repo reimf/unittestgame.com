@@ -1,6 +1,6 @@
 import { Candidate } from './candidate.js';
 import { Completed } from './completed.js';
-import { HumanMessage, CheckingMessage, Panel, ComputerMessage } from './frame.js';
+import { Message, HumanMessage, CheckingMessage, Panel, ComputerMessage } from './frame.js';
 import { Button, Code, Div, Form, Input, ListItem, OrderedList, Paragraph } from './html.js';
 import { Random } from './random.js';
 import { TestResult } from './test-result.js';
@@ -10,8 +10,6 @@ export class Level {
     levelNumber;
     // the following attributes should all be private, but some are public because they are used in tests
     isLevelFinished;
-    exampleStrings;
-    isExample;
     parameters;
     unit;
     candidates;
@@ -31,8 +29,6 @@ export class Level {
         this.locale = locale;
         this.levelNumber = levelNumber;
         this.isLevelFinished = new Completed(`level-${this.identifier()}-finished`);
-        this.exampleStrings = [...this.exampleStringGenerator()];
-        this.isExample = this.exampleStrings.length > 0;
         this.parameters = this.getParameters();
         this.unit = this.getUnit();
         this.candidates = [...this.generateCandidates(this.getCandidateElements(), [])];
@@ -42,11 +38,8 @@ export class Level {
         this.perfectCandidate = this.getRandomElementFrom(this.perfectCandidates);
         this.hints = [...this.generateHints()];
     }
-    *exampleStringGenerator() {
-        // empty
-    }
     getRandomElementFrom(elements) {
-        if (this.isExample)
+        if (this.isExample())
             return elements[0];
         return Random.elementFrom(elements);
     }
@@ -130,12 +123,18 @@ export class Level {
         }
         return Infinity;
     }
-    nextExampleString() {
-        return this.exampleStrings.shift() || '';
+    isExample() {
+        return false;
     }
-    showMessageIfExample() {
-        if (this.isExample)
-            new ComputerMessage([this.nextExampleString()]).add();
+    beforeMenuMessage() {
+        return '';
+    }
+    isFormDataOk(_formData) {
+        return true;
+    }
+    showMessageIfExample(message) {
+        if (this.isExample())
+            new ComputerMessage([message]).add();
     }
     emoji(nextLevel) {
         return this === nextLevel ? '▶️' : ['🔒', '🥇', '🥈', '🥉'].at(this.isFinished()) || '👎';
@@ -157,8 +156,8 @@ export class Level {
     play(callback) {
         this.callback = callback;
         this.initialize();
-        this.showMessageIfExample();
-        this.showMessageIfExample();
+        this.showMessageIfExample(this.locale.inThisLevelYouOnlyHaveToFollowTheInstructions());
+        this.showMessageIfExample(this.locale.meanwhileKeepAnEyeOnTheChangesInTheSidebar());
         this.showStepMessages();
         this.menu();
     }
@@ -177,7 +176,7 @@ export class Level {
         this.showUnitTestsPanel();
     }
     showMenuMessage() {
-        this.showMessageIfExample();
+        this.showMessageIfExample(this.beforeMenuMessage());
         const addThisUnitTestButton = new Input()
             .setType('submit')
             .setValue(this.locale.iWantToAddThisUnitTest());
@@ -185,18 +184,6 @@ export class Level {
             .appendText(this.locale.iWantToSubmitTheUnitTests())
             .onClick(() => this.prepareSubmitUnitTests());
         const variables = [...this.parameters, this.unit];
-        variables.forEach(variable => variable.setDisabled(this.isExample));
-        if (this.isExample) {
-            const buttonText = this.nextExampleString();
-            if (buttonText === this.locale.iWantToAddThisUnitTest()) {
-                variables.forEach(variable => variable.setValue(this.nextExampleString()));
-                submitTheUnitTestsButton.setDisabled(true);
-            }
-            if (buttonText === this.locale.iWantToSubmitTheUnitTests()) {
-                variables.forEach(variable => variable.setValue(""));
-                addThisUnitTestButton.setDisabled(true);
-            }
-        }
         const form = new Form()
             .onSubmit(formData => this.prepareAddUnitTest(formData))
             .appendChildren(variables.map(variable => variable.toHtml()))
@@ -208,8 +195,9 @@ export class Level {
         const argumentList = this.parameters.map(parameter => parameter.getInput(formData.get(parameter.name)));
         const expected = this.unit.getInput(formData.get(this.unit.name));
         const unitTest = new UnitTest(this.parameters, argumentList, this.unit, expected);
-        new HumanMessage([new Code().appendChild(unitTest.toHtml().addClass('new'))]).add();
-        new CheckingMessage(this.locale.checkingTheNewUnitTest(), this.locale.iCheckedTheNewUnitTest(), () => this.addUnitTest(unitTest), 500 + this.humanUnitTests.length * 250).add();
+        Message.addToLast([new Code().appendChild(unitTest.toHtml().addClass('new'))]);
+        if (this.isFormDataOk(formData))
+            new CheckingMessage(this.locale.checkingTheNewUnitTest(), this.locale.iCheckedTheNewUnitTest(), () => this.addUnitTest(unitTest), 500 + this.humanUnitTests.length * 250).add();
     }
     addUnitTest(unitTest) {
         const unitTestIsCorrect = new TestResult(this.perfectCandidate, unitTest).passes;
@@ -230,7 +218,8 @@ export class Level {
         this.menu();
     }
     prepareSubmitUnitTests() {
-        new CheckingMessage(this.locale.checkingTheUnitTests(), this.locale.iCheckedTheUnitTests(), () => this.submitUnitTests(), 500 + this.humanUnitTests.length * 250).add();
+        if (this.isFormDataOk(new Map()))
+            new CheckingMessage(this.locale.checkingTheUnitTests(), this.locale.iCheckedTheUnitTests(), () => this.submitUnitTests(), 500 + this.humanUnitTests.length * 250).add();
     }
     submitUnitTests() {
         this.numberOfSubmissions += 1;
@@ -242,13 +231,13 @@ export class Level {
             this.end();
     }
     end() {
-        if (this.isExample)
+        if (this.isExample())
             this.numberOfSubmissions = 1;
         this.isLevelFinished.set(this.numberOfSubmissions);
         this.previousCandidate = undefined;
         this.showPanels();
         this.showEndMessage();
-        this.showMessageIfExample();
+        this.showMessageIfExample(this.locale.congratulationsNowYouUnderstandTheBasicsOfTestDrivenDevelopment());
         this.callback();
     }
     showStepMessages() {
@@ -284,7 +273,8 @@ export class Level {
         const numberOfUnitTestsStillNeeded = this.findNumberOfUnitTestsStillNeeded(this.humanUnitTests, this.subsetsOfMinimalUnitTests, this.candidates, this.perfectCandidates.length);
         new ComputerMessage([this.locale.theCurrentFunctionIsNotAccordingToTheSpecification()]).add();
         new ComputerMessage([this.locale.itProducesTheFollowingIncorrectResult(), new Code().appendChild(this.failingTestResult.toHtml().addClass('new'))]).add();
-        new ComputerMessage([this.locale.writeAUnitTestThatIsAccordingToTheSpecification(numberOfUnitTestsStillNeeded)]).add();
+        new ComputerMessage([this.locale.writeAUnitTestThatIsAccordingToTheSpecification()]).add();
+        new ComputerMessage([this.locale.iThinkYouNeedAtLeastThisManyMoreUnitTests(numberOfUnitTestsStillNeeded)]).add();
     }
     showEndMessage() {
         new ComputerMessage([this.locale.theCurrentFunctionIsIndeedAccordingToTheSpecification()]).add();

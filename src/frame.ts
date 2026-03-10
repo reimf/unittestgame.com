@@ -56,6 +56,12 @@ export abstract class Message extends Frame {
         messagesButLast.forEach(message => message.classList.add('hidden'))
     }
 
+    public static addToLast(elements: Html[]): void {
+        const lastMessage = Message.getMessagesElement().lastElementChild!
+        const lastDiv = lastMessage.querySelector('div')!
+        elements.forEach(element => lastDiv.appendChild(element.toNode()))
+    }
+
     public add(extra: () => void=() => {}): void {
         this.callDelayed(() => {
             const count = Message.getMessagesElement().childElementCount

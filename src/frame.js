@@ -45,6 +45,11 @@ export class Message extends Frame {
         const messagesButLast = messages.slice(0, messages.length - 1);
         messagesButLast.forEach(message => message.classList.add('hidden'));
     }
+    static addToLast(elements) {
+        const lastMessage = Message.getMessagesElement().lastElementChild;
+        const lastDiv = lastMessage.querySelector('div');
+        elements.forEach(element => lastDiv.appendChild(element.toNode()));
+    }
     add(extra = () => { }) {
         this.callDelayed(() => {
             const count = Message.getMessagesElement().childElementCount;
