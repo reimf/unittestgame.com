@@ -39,7 +39,7 @@ export abstract class Level {
         this.unit = this.getUnit()
         this.candidates = [...this.generateCandidates(this.getCandidateElements(), [])]
         this.minimalUnitTests = [...this.generateMinimalUnitTests()]
-        this.subsetsOfMinimalUnitTests = [...this.generateSubsets(this.minimalUnitTests)]
+        this.subsetsOfMinimalUnitTests = [...this.generateAllSubsetsOrderedBySize(this.minimalUnitTests)]
         this.perfectCandidates = this.findPerfectCandidates()
         this.perfectCandidate = this.getRandomElementFrom(this.perfectCandidates)
         this.hints = [...this.generateHints()]
@@ -87,16 +87,17 @@ export abstract class Level {
         }
     }
 
-    private* generateSubsets(unitTests: UnitTest[]): Generator<UnitTest[]> {
-        const n = unitTests.length
-        const total = 1 << n
-        for (let size = 0; size <= n; size++) {
-            for (let mask = 0; mask < total; mask++) {
-                const subset = unitTests.filter((_, i) => mask & (1 << i))
-                if (subset.length === size)
-                    yield subset
-            }
-        }
+    private* generateSubsetsOfGivenSize(unitTests: UnitTest[], size: number, current: UnitTest[]): Generator<UnitTest[]> {
+        if (current.length === size)
+            yield current
+        else
+            for (let index = 0; index < unitTests.length; index++)
+                yield* this.generateSubsetsOfGivenSize(unitTests.slice(index + 1), size, [...current, unitTests[index]])
+    }
+
+    private* generateAllSubsetsOrderedBySize(unitTests: UnitTest[]): Generator<UnitTest[]> {
+        for (let size = 0; size <= unitTests.length; size++)
+            yield* this.generateSubsetsOfGivenSize(unitTests, size, [])
     }
 
     private* generateHints(): Generator<UnitTest> {
