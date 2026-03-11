@@ -220,17 +220,10 @@ export class Locale {
         })
     }
 
-    public theCurrentFunctionIsNotAccordingToTheSpecification(): string {
+    public theFollowingUnitTestIsNotAccordingToTheSpecification(): string {
         return this.pick({
-            en: 'The *Current Function* is NOT according to the *Specification*.',
-            nl: 'De *Huidige Functie* voldoet NIET aan de *Specificatie*.',
-        })
-    }
-
-    public itProducesTheFollowingIncorrectResult(): string {
-        return this.pick({
-            en: 'It produces the following incorrect result.',
-            nl: 'Het produceert de volgende onjuiste uitkomst.',
+            en: 'The following unit test is NOT according to the *Specification*, but passes the *Current Function*.',
+            nl: 'De volgende unit test voldoet NIET aan de *Specificatie*, maar slaagt voor de *Huidige Functie*.',
         })
     }
 
@@ -241,10 +234,10 @@ export class Locale {
         })
     }
 
-    public iThinkYouNeedAtLeastThisManyMoreUnitTests(numberOfUnitTestsStillNeeded: number): string {
+    public youNeedAtLeastThisManyMoreUnitTests(numberOfUnitTestsStillNeeded: number): string {
         return this.pick({
-            en: `I think you need at least ${numberOfUnitTestsStillNeeded} more ${numberOfUnitTestsStillNeeded === 1 ? 'unit test' : 'unit tests'} to make the *Current Function* according to the *Specification*.`,
-            nl: `Ik denk dat je nog minstens ${numberOfUnitTestsStillNeeded} meer ${numberOfUnitTestsStillNeeded === 1 ? 'unit test' : 'unit testen'} nodig hebt om de *Huidige Functie* volgens de *Specificatie* te maken.`,
+            en: `You need at least ${numberOfUnitTestsStillNeeded} more ${numberOfUnitTestsStillNeeded === 1 ? 'unit test' : 'unit tests'} to make the *Current Function* according to the *Specification*.`,
+            nl: `Je hebt nog minstens ${numberOfUnitTestsStillNeeded} meer ${numberOfUnitTestsStillNeeded === 1 ? 'unit test' : 'unit testen'} nodig hebt om de *Huidige Functie* volgens de *Specificatie* te maken.`,
         })
     }
 

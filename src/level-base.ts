@@ -309,10 +309,9 @@ export abstract class Level {
 
     private showBugFoundMessage(): void {
         const numberOfUnitTestsStillNeeded = this.findNumberOfUnitTestsStillNeeded(this.humanUnitTests, this.subsetsOfMinimalUnitTests, this.candidates, this.perfectCandidates.length)
-        new ComputerMessage([this.locale.theCurrentFunctionIsNotAccordingToTheSpecification()]).add()
-        new ComputerMessage([this.locale.itProducesTheFollowingIncorrectResult(), new Code().appendChild(this.failingTestResult!.toHtml().addClass('new'))]).add()
+        new ComputerMessage([this.locale.theFollowingUnitTestIsNotAccordingToTheSpecification(), new Code().appendChild(this.failingTestResult!.toHtml().addClass('new'))]).add()
         new ComputerMessage([this.locale.writeAUnitTestThatIsAccordingToTheSpecification()]).add()
-        new ComputerMessage([this.locale.iThinkYouNeedAtLeastThisManyMoreUnitTests(numberOfUnitTestsStillNeeded)]).add()
+        new ComputerMessage([this.locale.youNeedAtLeastThisManyMoreUnitTests(numberOfUnitTestsStillNeeded)]).add()
     }
 
     private showEndMessage(): void {
