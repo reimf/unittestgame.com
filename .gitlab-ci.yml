@@ -11,7 +11,7 @@ playwright:
   script:
     - npm ci
     - npx playwright install --with-deps
-    - npx playwright test
+    - npx playwright test --quiet
   artifacts:
     paths:
       - playwright-report/
@@ -32,7 +32,6 @@ typescript:
 pages:
   stage: deploy
   script:
-    - rm *.config.js
     - mkdir public
     - cp *.{css,html,ico,js,png} public
     - mkdir public/src
