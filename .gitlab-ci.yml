@@ -13,8 +13,7 @@ typescript:
     - npx tsc --build --force --verbose
   artifacts:
     paths:
-      - src/*.js
-      - tests/**/*.js
+      - "**/*.js"
   only:
     - main
 
