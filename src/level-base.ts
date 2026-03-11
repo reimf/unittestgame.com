@@ -217,22 +217,35 @@ export abstract class Level {
     }
 
     private addUnitTest(unitTest: UnitTest): void {
-        const unitTestIsCorrect = new TestResult(this.perfectCandidate, unitTest).passes
-        if (unitTestIsCorrect) {
-            this.lastUnitTest = unitTest
-            this.humanUnitTests.push(unitTest)
-            this.previousCandidate = this.currentCandidate
-            if (new TestResult(this.currentCandidate, unitTest).passes)
-                this.showUselessUnitTestMessage()
-            else {
-                this.showUsefulUnitTestMessage()
-                this.currentCandidate = this.findSimplestPassingCandidate(this.candidates, this.perfectCandidates, this.humanUnitTests)
-                this.failingTestResult = this.findFailingTestResult(this.currentCandidate, this.hints, this.minimalUnitTests)
-            }
-        }
+        if (!new TestResult(this.perfectCandidate, unitTest).passes)
+            this.handleIncorrectUnitTest()
+        else if (new TestResult(this.currentCandidate, unitTest).passes)
+            this.handleUselessUnitTest(unitTest)
         else
-            this.showIncorrectUnitTestMessage()
+            this.handleUsefulUnitTest(unitTest)
         this.menu()
+    }
+
+    private handleIncorrectUnitTest(): void {
+        this.showIncorrectUnitTestMessage()
+    }
+
+    private handleUselessUnitTest(unitTest: UnitTest): void {
+        this.acceptUnitTest(unitTest)
+        this.showUselessUnitTestMessage()
+    }
+
+    private handleUsefulUnitTest(unitTest: UnitTest): void {
+        this.acceptUnitTest(unitTest)
+        this.showUsefulUnitTestMessage()
+        this.currentCandidate = this.findSimplestPassingCandidate(this.candidates, this.perfectCandidates, this.humanUnitTests)
+        this.failingTestResult = this.findFailingTestResult(this.currentCandidate, this.hints, this.minimalUnitTests)
+    }
+
+    private acceptUnitTest(unitTest: UnitTest): void {
+        this.lastUnitTest = unitTest
+        this.humanUnitTests.push(unitTest)
+        this.previousCandidate = this.currentCandidate
     }
 
     private prepareSubmitUnitTests(): void {
