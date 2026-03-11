@@ -1,12 +1,38 @@
 default:
   image: node:latest
 
-pages:
+stages:
+  - test
+  - compile
+  - deploy
+
+playwright:
+  stage: test
   script:
-    - rm *.js
-    - rm *.config.ts
-    - npm install typescript
+    - npm ci
+    - npx playwright install --with-deps
+    - npx playwright test
+  artifacts:
+    paths:
+      - playwright-report/
+  only:
+    - main
+
+typescript:
+  stage: compile
+  script:
+    - npm ci
     - npx tsc --build --force --verbose
+  artifacts:
+    paths:
+      - src/*.js
+  only:
+    - main
+
+pages:
+  stage: deploy
+  script:
+    - rm *.config.js
     - mkdir public
     - cp *.{css,html,ico,js,png} public
     - mkdir public/src
