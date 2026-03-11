@@ -24,11 +24,6 @@ test.describe('asked unit test', () => {
         await expect(messages).not.toContainText('That is NOT what I asked for!')
     })
 
-    test('has checked unit test message', async () => {
-        const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('I checked the unit test')
-    })
-
     test('has added unit test message', async () => {
         const messages = page.getByTestId('messages')
         await expect(messages).toContainText('I added the unit test')

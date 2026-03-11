@@ -1,6 +1,6 @@
 import { Candidate } from './candidate.js';
 import { Completed } from './completed.js';
-import { Message, HumanMessage, CheckingMessage, Panel, ComputerMessage } from './frame.js';
+import { Message, HumanMessage, Panel, ComputerMessage } from './frame.js';
 import { Button, Code, Div, Form, Input, ListItem, OrderedList, Paragraph } from './html.js';
 import { Random } from './random.js';
 import { TestResult } from './test-result.js';
@@ -33,7 +33,7 @@ export class Level {
         this.unit = this.getUnit();
         this.candidates = [...this.generateCandidates(this.getCandidateElements(), [])];
         this.minimalUnitTests = [...this.generateMinimalUnitTests()];
-        this.subsetsOfMinimalUnitTests = [...this.generateSubsets(this.minimalUnitTests)];
+        this.subsetsOfMinimalUnitTests = [...this.generateAllSubsetsOrderedBySize(this.minimalUnitTests)];
         this.perfectCandidates = this.findPerfectCandidates();
         this.perfectCandidate = this.getRandomElementFrom(this.perfectCandidates);
         this.hints = [...this.generateHints()];
@@ -67,16 +67,16 @@ export class Level {
             yield new UnitTest(this.parameters, argumentList, this.unit, expected);
         }
     }
-    *generateSubsets(unitTests) {
-        const n = unitTests.length;
-        const total = 1 << n;
-        for (let size = 0; size <= n; size++) {
-            for (let mask = 0; mask < total; mask++) {
-                const subset = unitTests.filter((_, i) => mask & (1 << i));
-                if (subset.length === size)
-                    yield subset;
-            }
-        }
+    *generateSubsetsOfGivenSize(unitTests, size, current) {
+        if (current.length === size)
+            yield current;
+        else
+            for (let index = 0; index < unitTests.length; index++)
+                yield* this.generateSubsetsOfGivenSize(unitTests.slice(index + 1), size, [...current, unitTests[index]]);
+    }
+    *generateAllSubsetsOrderedBySize(unitTests) {
+        for (let size = 0; size <= unitTests.length; size++)
+            yield* this.generateSubsetsOfGivenSize(unitTests, size, []);
     }
     *generateHints() {
         const perfectCandidate = this.perfectCandidates[0];
@@ -177,7 +177,7 @@ export class Level {
         const unitTest = new UnitTest(this.parameters, argumentList, this.unit, expected);
         Message.addToLast([new Code().appendChild(unitTest.toHtml().addClass('new'))]);
         if (this.isFormDataOk(formData))
-            new CheckingMessage(this.locale.checkingTheUnitTest(), this.locale.iCheckedTheUnitTest(), () => this.addUnitTest(unitTest), 500 + this.humanUnitTests.length * 250).add();
+            this.addUnitTest(unitTest);
     }
     addUnitTest(unitTest) {
         if (!new TestResult(this.perfectCandidate, unitTest).passes)
@@ -208,7 +208,7 @@ export class Level {
     }
     prepareSubmitUnitTests() {
         if (this.isFormDataOk(new Map()))
-            new CheckingMessage(this.locale.checkingTheUnitTests(), this.locale.iCheckedTheUnitTests(), () => this.submitUnitTests(), 500 + this.humanUnitTests.length * 250).add();
+            this.submitUnitTests();
     }
     newNumberOfSubmissions(oldNumberOfSubmissions) {
         return oldNumberOfSubmissions + 1;
@@ -255,10 +255,9 @@ export class Level {
     }
     showBugFoundMessage() {
         const numberOfUnitTestsStillNeeded = this.findNumberOfUnitTestsStillNeeded(this.humanUnitTests, this.subsetsOfMinimalUnitTests, this.candidates, this.perfectCandidates.length);
-        new ComputerMessage([this.locale.theCurrentFunctionIsNotAccordingToTheSpecification()]).add();
-        new ComputerMessage([this.locale.itProducesTheFollowingIncorrectResult(), new Code().appendChild(this.failingTestResult.toHtml().addClass('new'))]).add();
+        new ComputerMessage([this.locale.theFollowingUnitTestIsNotAccordingToTheSpecification(), new Code().appendChild(this.failingTestResult.toHtml().addClass('new'))]).add();
         new ComputerMessage([this.locale.writeAUnitTestThatIsAccordingToTheSpecification()]).add();
-        new ComputerMessage([this.locale.iThinkYouNeedAtLeastThisManyMoreUnitTests(numberOfUnitTestsStillNeeded)]).add();
+        new ComputerMessage([this.locale.youNeedAtLeastThisManyMoreUnitTests(numberOfUnitTestsStillNeeded)]).add();
     }
     showEndMessage() {
         new ComputerMessage([this.locale.theCurrentFunctionIsIndeedAccordingToTheSpecification()]).add();

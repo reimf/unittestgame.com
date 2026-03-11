@@ -84,28 +84,6 @@ export class ComputerMessage extends Message {
     }
 }
 
-export class CheckingMessage extends ComputerMessage {
-    private readonly callback: () => void
-    private readonly delay: number
-    private readonly finalText: string
-
-    public constructor(checkingText: string, finalText: string, callback: () => void, delay: number) {
-        super([new Paragraph().appendMarkdown(checkingText + '...').addClass('checking')])
-        this.finalText = finalText
-        this.callback = callback
-        this.delay = delay
-    }
-
-    public override add(): void {
-        super.add(
-            () => window.setTimeout(() => {
-                this.replaceEnclosingMessageContent(this.existingElement()!, this.finalText)
-                this.callback()
-            }, this.delay)
-        )
-    }
-}
-
 export class HumanMessage extends Message {
     public constructor(children: readonly (Html|string)[]) {
         super(children)

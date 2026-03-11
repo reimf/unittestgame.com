@@ -1,6 +1,6 @@
 import { Candidate } from './candidate.js'
 import { Completed } from './completed.js'
-import { Message, HumanMessage, CheckingMessage, Panel, ComputerMessage } from './frame.js'
+import { Message, HumanMessage, Panel, ComputerMessage } from './frame.js'
 import { Button, Code, Div, Form, Input, ListItem, OrderedList, Paragraph, StringMap } from './html.js'
 import { Locale } from './locale.js'
 import { Random } from './random.js'
@@ -214,7 +214,7 @@ export abstract class Level {
         const unitTest = new UnitTest(this.parameters, argumentList, this.unit, expected)
         Message.addToLast([new Code().appendChild(unitTest.toHtml().addClass('new'))])
         if (this.isFormDataOk(formData))
-            new CheckingMessage(this.locale.checkingTheUnitTest(), this.locale.iCheckedTheUnitTest(), () => this.addUnitTest(unitTest), 500 + this.humanUnitTests.length * 250).add()
+            this.addUnitTest(unitTest)
     }
 
     private addUnitTest(unitTest: UnitTest): void {
@@ -251,7 +251,7 @@ export abstract class Level {
 
     private prepareSubmitUnitTests(): void {
         if (this.isFormDataOk(new Map() as StringMap))
-            new CheckingMessage(this.locale.checkingTheUnitTests(), this.locale.iCheckedTheUnitTests(), () => this.submitUnitTests(), 500 + this.humanUnitTests.length * 250).add()
+            this.submitUnitTests()
     }
 
     protected newNumberOfSubmissions(oldNumberOfSubmissions: number): number {

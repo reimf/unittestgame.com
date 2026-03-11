@@ -70,23 +70,6 @@ export class ComputerMessage extends Message {
         this.addClass('computer');
     }
 }
-export class CheckingMessage extends ComputerMessage {
-    callback;
-    delay;
-    finalText;
-    constructor(checkingText, finalText, callback, delay) {
-        super([new Paragraph().appendMarkdown(checkingText + '...').addClass('checking')]);
-        this.finalText = finalText;
-        this.callback = callback;
-        this.delay = delay;
-    }
-    add() {
-        super.add(() => window.setTimeout(() => {
-            this.replaceEnclosingMessageContent(this.existingElement(), this.finalText);
-            this.callback();
-        }, this.delay));
-    }
-}
 export class HumanMessage extends Message {
     constructor(children) {
         super(children);

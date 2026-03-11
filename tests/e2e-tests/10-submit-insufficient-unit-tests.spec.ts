@@ -15,7 +15,7 @@ test.describe('submit insufficient unit tests', () => {
 
     test('has not according message', async () => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('The Current Function is NOT according to the Specification')
+        await expect(messages).toContainText('The following unit test is NOT according to the Specification, but passes the Current Function.')
     })
 
     test('has unit test in not according message', async () => {

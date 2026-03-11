@@ -6,10 +6,10 @@
 ✅ feat: clear de chat na elk level
 ✅ fix: beperk de inputs in lengte, getallen tot lengte 4 (plus eventueel een punt en een cijfer achter de komma) en tekst tot lengte 10
 ✅ feat: verwijder Mutation Testing (MT is lastig, spelers zien het verschil niet zo, de mutaties zijn groter dan in het echt, de terugkoppeling van geteste regels is te karig)
+✅ perf: verwijder de class CheckingMessage
 ❌ feat: vergelijk jezelf met andere spelers (spel is nu individueel; wellicht later)
 ❌ feat: skip een leven / ga een level terug (de keuzemogelijkheden zijn nu met opzet beperkt)
 ❌ feat: geef een hint als de speler vastloopt (gebeurt al als je de unit testen inlevert)
 ❌ feat: toon een loading bar tijdens het uitvoeren van unit-testen (de chatbot is nu veel sneller)
 ❌ feat: maak meer visueel verschil tussen de voorbeeld-levels (niet meer nodig met alleen TDD)
 ❌ feat: maak zichtbaar welke unittesten overbodig zijn (battery level 30, battery level 20 = nu overbodig, later zinvol)
-❓ perf: verwijder de class CheckingMessage

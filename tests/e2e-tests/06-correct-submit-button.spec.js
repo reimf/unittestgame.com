@@ -15,10 +15,6 @@ test.describe('correct submit button test', () => {
         await page.getByRole('button', { name: 'I want to add this unit test' }).click();
         await page.getByRole('button', { name: 'I want to submit the unit tests' }).click();
     });
-    test('has checked unit tests message', async () => {
-        const messages = page.getByTestId('messages');
-        await expect(messages).toContainText('I checked the unit tests.');
-    });
     test('has NOT not asked message', async () => {
         const messages = page.getByTestId('messages');
         await expect(messages).not.toContainText('That is NOT what I asked for!');
@@ -30,11 +26,11 @@ test.describe('correct submit button test', () => {
     });
     test('has not according message', async () => {
         const messages = page.getByTestId('messages');
-        await expect(messages).toContainText('The Current Function is NOT according to the Specification');
+        await expect(messages).toContainText('The following unit test is NOT according to the Specification, but passes the Current Function.');
     });
     test('has failing unit test message', async () => {
         const messages = page.getByTestId('messages');
-        await expect(messages).toContainText('It produces the following incorrect result.powerMode(21) === "Low Power Mode"');
+        await expect(messages).toContainText('powerMode(21) === "Low Power Mode"');
     });
     test('has hint message', async () => {
         const messages = page.getByTestId('messages');
@@ -42,7 +38,7 @@ test.describe('correct submit button test', () => {
     });
     test('has need message', async () => {
         const messages = page.getByTestId('messages');
-        await expect(messages).toContainText('I think you need at least 2 more unit tests to make the Current Function according to the Specification.');
+        await expect(messages).toContainText('You need at least 2 more unit tests to make the Current Function according to the Specification.');
     });
     test('has a battery level field', async () => {
         const batteryLevel = page.getByRole('textbox', { name: 'Battery level' });

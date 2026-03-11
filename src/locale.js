@@ -183,16 +183,10 @@ export class Locale {
             nl: 'Ik heb de unit test toegevoegd aan de *Unit Testen* en ik heb de *Huidige Functie* zo verbeterd dat de nieuwe unit test ook slaagt en ik heb het *Verschil* met de vorige functie getoond.',
         });
     }
-    theCurrentFunctionIsNotAccordingToTheSpecification() {
+    theFollowingUnitTestIsNotAccordingToTheSpecification() {
         return this.pick({
-            en: 'The *Current Function* is NOT according to the *Specification*.',
-            nl: 'De *Huidige Functie* voldoet NIET aan de *Specificatie*.',
-        });
-    }
-    itProducesTheFollowingIncorrectResult() {
-        return this.pick({
-            en: 'It produces the following incorrect result.',
-            nl: 'Het produceert de volgende onjuiste uitkomst.',
+            en: 'The following unit test is NOT according to the *Specification*, but passes the *Current Function*.',
+            nl: 'De volgende unit test voldoet NIET aan de *Specificatie*, maar slaagt voor de *Huidige Functie*.',
         });
     }
     writeAUnitTestThatIsAccordingToTheSpecification() {
@@ -201,10 +195,10 @@ export class Locale {
             nl: 'Schrijf een unit test die aan de *Specificatie* voldoet en NIET slaagt voor de *Huidige Functie*.',
         });
     }
-    iThinkYouNeedAtLeastThisManyMoreUnitTests(numberOfUnitTestsStillNeeded) {
+    youNeedAtLeastThisManyMoreUnitTests(numberOfUnitTestsStillNeeded) {
         return this.pick({
-            en: `I think you need at least ${numberOfUnitTestsStillNeeded} more ${numberOfUnitTestsStillNeeded === 1 ? 'unit test' : 'unit tests'} to make the *Current Function* according to the *Specification*.`,
-            nl: `Ik denk dat je nog minstens ${numberOfUnitTestsStillNeeded} meer ${numberOfUnitTestsStillNeeded === 1 ? 'unit test' : 'unit testen'} nodig hebt om de *Huidige Functie* volgens de *Specificatie* te maken.`,
+            en: `You need at least ${numberOfUnitTestsStillNeeded} more ${numberOfUnitTestsStillNeeded === 1 ? 'unit test' : 'unit tests'} to make the *Current Function* according to the *Specification*.`,
+            nl: `Je hebt nog minstens ${numberOfUnitTestsStillNeeded} meer ${numberOfUnitTestsStillNeeded === 1 ? 'unit test' : 'unit testen'} nodig hebt om de *Huidige Functie* volgens de *Specificatie* te maken.`,
         });
     }
     theCurrentFunctionIsIndeedAccordingToTheSpecification() {
