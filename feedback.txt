@@ -12,3 +12,4 @@
 ❌ feat: toon een loading bar tijdens het uitvoeren van unit-testen (de chatbot is nu veel sneller)
 ❌ feat: maak meer visueel verschil tussen de voorbeeld-levels (niet meer nodig met alleen TDD)
 ❌ feat: maak zichtbaar welke unittesten overbodig zijn (battery level 30, battery level 20 = nu overbodig, later zinvol)
+❓ perf: verwijder de class CheckingMessage
