@@ -92,7 +92,7 @@ export abstract class Level {
             yield current
         else
             for (let index = 0; index < unitTests.length; index++)
-                yield* this.generateSubsetsOfGivenSize(unitTests.slice(index + 1), size, [...current, unitTests[index]])
+                yield* this.generateSubsetsOfGivenSize(unitTests.slice(index + 1), size, [...current, unitTests[index]!])
     }
 
     private* generateAllSubsetsOrderedBySize(unitTests: UnitTest[]): Generator<UnitTest[]> {
