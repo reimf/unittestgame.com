@@ -2,9 +2,21 @@ default:
   image: node:latest
 
 stages:
-  - test
   - compile
+  - test
   - deploy
+
+typescript:
+  stage: compile
+  script:
+    - npm ci
+    - npx tsc --build --force --verbose
+  artifacts:
+    paths:
+      - src/*.js
+      - tests/**/*.js
+  only:
+    - main
 
 playwright:
   stage: test
@@ -15,17 +27,6 @@ playwright:
   artifacts:
     paths:
       - playwright-report/
-  only:
-    - main
-
-typescript:
-  stage: compile
-  script:
-    - npm ci
-    - npx tsc --build --force --verbose
-  artifacts:
-    paths:
-      - src/*.js
   only:
     - main
 
