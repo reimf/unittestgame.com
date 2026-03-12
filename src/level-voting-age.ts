@@ -11,7 +11,7 @@ export class VotingAge extends Level {
     }
 
     protected specification(): string {
-        return this.locale.returnTrueIfTheAgeIs18YearsOrOverAndReturnFalseIfTheAgeIsUnder18()
+        return this.locale.votingAgeSpecification()
     }
 
     protected getParameters(): Variable[] {

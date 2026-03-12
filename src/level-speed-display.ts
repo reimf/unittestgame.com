@@ -11,7 +11,7 @@ export class SpeedDisplay extends Level {
     }
 
     protected specification(): string {
-        return this.locale.theFunctionReceivesTheSpeedInKilometersPerHourWithAtMostOneDecimal()
+        return this.locale.speedDisplaySpecification()
     }
 
     protected getParameters(): Variable[] {

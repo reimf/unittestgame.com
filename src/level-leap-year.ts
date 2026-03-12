@@ -11,7 +11,7 @@ export class LeapYear extends Level {
     }
 
     protected specification(): string {
-        return this.locale.returnTrueIfTheYearIsALeapYearAndFalseIfItIsNot()
+        return this.locale.leapYearSpecification()
     }
 
     protected getParameters(): Variable[] {

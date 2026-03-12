@@ -32,7 +32,7 @@ export class Main {
     }
 
     private showAboutPanel(): void {
-        new Panel('unittestgame', this.locale.about(), [this.locale.controllingAnAIBotWithTestDrivenDevelopment()]).show()
+        new Panel('unittestgame', this.locale.unitTestGameTitle(), [this.locale.sloganAndLinks()]).show()
     }
 
     private showInvitationMessage(): void {
@@ -51,18 +51,18 @@ export class Main {
         })
         const div = new Div().addClass('level-board').appendChildren(cells)
         const paragraph = new Paragraph().appendChild(div)
-        new Panel('level-overview', this.locale.levelOverview(), [paragraph]).show()
+        new Panel('level-overview', this.locale.levelOverviewTitle(), [paragraph]).show()
     }
 
     private showNextLevel(): void {
         const nextLevel = this.levels.find(level => !level.isFinished())
         if (nextLevel)
-            new QuestionMessage(this.locale.iWantToPlayTheNextLevel(nextLevel.description()), () => this.play(nextLevel)).add()
+            new QuestionMessage(this.locale.nextLevelButton(nextLevel.description()), () => this.play(nextLevel)).add()
         else
-            new QuestionMessage(this.locale.iPlayedAllTheLevels(), () => this.quit()).add()
+            new QuestionMessage(this.locale.allLevels(), () => this.quit()).add()
     }
 
     private quit(): void {
-        new ComputerMessage([this.locale.wellDoneYouCanCloseThisTab()]).add()
+        new ComputerMessage([this.locale.closeTab()]).add()
     }
 }

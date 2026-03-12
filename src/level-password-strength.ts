@@ -12,7 +12,7 @@ export class PasswordStrength extends Level {
     }
 
     protected specification(): string {
-        return this.locale.returnTrueIfThePasswordIsStrongAndFalseIfItIsNot()
+        return this.locale.passwordStrengthSpecification()
     }
 
     protected getParameters(): Variable[] {

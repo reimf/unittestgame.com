@@ -20,7 +20,7 @@ export class BatteryLevel extends Level {
     }
 
     protected specification(): string {
-        return this.locale.aSmartphoneNormallyOperatesInNormalMode()
+        return this.locale.batteryLevelSpecification()
     }
 
     protected getParameters(): Variable[] {
@@ -72,48 +72,48 @@ export class BatteryLevel extends Level {
 
     private exampleForms: FormStringsType[] = [
         {
-            message: this.locale.theSpecificationContainsTheNumber20(),
+            message: this.locale.addBatteryLevel20(),
             batteryLevel: '20',
             powerMode: 'Normal Mode'
         },
         {
-            message: this.locale.theCurrentFunctionNowAlwaysReturnsNormalMode(),
+            message: this.locale.addBatteryLevel19(),
             batteryLevel: '19', 
             powerMode: 'Low Power Mode'
         },
         {
-            message: this.locale.theCurrentFunctionNowSometimesReturnsNormalModeAndSometimesLowPowerMode(),
+            message: this.locale.submitUnitTestsFirst(),
             batteryLevel: undefined,
             powerMode: undefined
         },
         {
-            message: this.locale.theCurrentFunctionNowReturnsNormalModeOnlyForBatteryLevel20Percent(),
+            message: this.locale.addBatteryLevel21(),
             batteryLevel: '21', 
             powerMode: 'Normal Mode'
         },
         {
-            message: this.locale.submitTheUnitTestsAgainToSeeIfTheCurrentFunctionIsAccordingToTheSpecification(),
+            message: this.locale.submitUnitTestsSecond(),
             batteryLevel: undefined,
             powerMode: undefined
         },
         {
-            message: this.locale.theCurrentFunctionNowReturnsLowPowerModeOnlyForBatteryLevel19Percent(),
+            message: this.locale.addBatteryLevel18(),
             batteryLevel: '18', 
             powerMode: 'Low Power Mode'
         },
         {
-            message: this.locale.submitTheUnitTestsAgainToSeeIfTheCurrentFunctionIsFinallyAccordingToTheSpecification(),
+            message: this.locale.submitUnitTestsThird(),
             batteryLevel: undefined,
             powerMode: undefined
         }
     ]
 
     protected override showInstructionsMessage(): void {
-        new ComputerMessage([this.locale.inThisLevelYouOnlyHaveToFollowTheInstructions()]).add()
+        new ComputerMessage([this.locale.followInstructions()]).add()
     }
 
     protected override showSidebarMessage(): void {
-        new ComputerMessage([this.locale.meanwhileKeepAnEyeOnTheChangesInTheSidebar()]).add()
+        new ComputerMessage([this.locale.watchSidebar()]).add()
     }
 
     protected override showBeforeMenuMessage(): void {
@@ -121,11 +121,11 @@ export class BatteryLevel extends Level {
     }
 
     protected override showCongratulationsMessage(): void {
-        new ComputerMessage([this.locale.congratulationsNowYouUnderstandTheBasicsOfTestDrivenDevelopment()]).add()
+        new ComputerMessage([this.locale.congratulations()]).add()
     }
 
     private showWarning() {
-        new ComputerMessage([this.locale.thatIsNotWhatIAskedFor()]).add()
+        new ComputerMessage([this.locale.wrongAction()]).add()
     }
 
     protected override isFormDataOk(formData: StringMap): boolean {

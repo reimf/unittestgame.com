@@ -10,7 +10,7 @@ export class Review extends Level {
         return 'Review'
     }
     protected specification(): string {
-        return this.locale.returnGoodIfThePriceIsLessThan20AndTheQualityIsAtLeast7()
+        return this.locale.reviewSpecification()
     }
 
     protected getParameters(): Variable[] {
@@ -54,6 +54,7 @@ export class Review extends Level {
                 'return "Good"',
                 'return "Bad"',
                 'return "Ok"',
+                'return undefined',
             ],
         ]
     }

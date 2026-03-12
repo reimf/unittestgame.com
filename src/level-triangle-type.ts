@@ -11,7 +11,7 @@ export class TriangleType extends Level {
     }
 
     protected specification(): string {
-        return this.locale.returnTheTypeOfTheTriangle()
+        return this.locale.triangleTypeSpecification()
     }
 
     protected getParameters(): Variable[] {

@@ -10,7 +10,7 @@ export class FizzBuzz extends Level {
         return 'FizzBuzz'
     }
     protected specification(): string {
-        return this.locale.returnFizzIfTheNumberIsDivisibleBy3()
+        return this.locale.fizzBuzzSpecification()
     }
 
     protected getParameters(): Variable[] {

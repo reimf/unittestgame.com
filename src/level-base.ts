@@ -1,7 +1,7 @@
 import { Candidate } from './candidate.js'
 import { Completed } from './completed.js'
-import { Message, HumanMessage, Panel, ComputerMessage } from './frame.js'
-import { Button, Code, Div, Form, Input, ListItem, OrderedList, Paragraph, StringMap } from './html.js'
+import { ComputerMessage, HumanMessage, Message, Panel } from './frame.js'
+import { Button, Code, Div, Form, Input, OrderedList, StringMap } from './html.js'
 import { Locale } from './locale.js'
 import { Random } from './random.js'
 import { TestResult } from './test-result.js'
@@ -160,7 +160,7 @@ export abstract class Level {
     }
 
     public emoji(nextLevel?: Level): string {
-        return this === nextLevel ? '▶️' : ['🔒', '🥇', '🥈', '🥉'].at(this.isFinished()) || '👎'
+        return this === nextLevel ? '▶️' : ['🔒', '🥇', '🥈', '🥉'].at(this.isFinished()) || '💩'
     }
 
     public description(): string {
@@ -195,9 +195,9 @@ export abstract class Level {
         this.showBeforeMenuMessage()
         const addThisUnitTestButton = new Input()
             .setType('submit')
-            .setValue(this.locale.iWantToAddThisUnitTest())
+            .setValue(this.locale.addUnitTestButton())
         const submitTheUnitTestsButton = new Button()
-            .appendText(this.locale.iWantToSubmitTheUnitTests())
+            .appendText(this.locale.submitUnitTestsButton())
             .onClick(() => this.prepareSubmitUnitTests())
         const variables = [...this.parameters, this.unit]
         const form = new Form()
@@ -285,9 +285,9 @@ export abstract class Level {
     }
 
     private showStepMessages(): void {
-        new ComputerMessage([this.locale.firstYouReadTheSpecification()]).add()
-        new ComputerMessage([this.locale.afterAddingAUnitTest()]).add()
-        new ComputerMessage([this.locale.whenYouThinkTheCurrentFunction()]).add()
+        new ComputerMessage([this.locale.readSpecification()]).add()
+        new ComputerMessage([this.locale.improveCurrentFunction()]).add()
+        new ComputerMessage([this.locale.submitUnitTests()]).add()
     }
 
     protected showBeforeMenuMessage(): void {
@@ -295,28 +295,41 @@ export abstract class Level {
     }
 
     private showIncorrectUnitTestMessage(): void {
-        new ComputerMessage([this.locale.iDidNotAddTheUnitTest()]).add()
+        new ComputerMessage([this.locale.unitTestNotAdded()]).add()
     }
 
     private showUselessUnitTestMessage(): void {
-        new ComputerMessage([this.locale.iAddedTheUnitTestButTheCurrentFunctionAlreadyPassedThisUnitTest()]).add()
-        new ComputerMessage([this.locale.tryToWriteUnitTestsThatDoNotPass()]).add()
+        new ComputerMessage([this.locale.currentFunctionNotImproved()]).add()
+        new ComputerMessage([this.locale.hint()]).add()
     }
 
     private showUsefulUnitTestMessage(): void {
-        new ComputerMessage([this.locale.iAddedTheUnitTestAndImprovedTheCurrentFunction()]).add()
+        new ComputerMessage([this.locale.currentFunctionImproved()]).add()
     }
 
     private showBugFoundMessage(): void {
         const numberOfUnitTestsStillNeeded = this.findNumberOfUnitTestsStillNeeded(this.humanUnitTests, this.subsetsOfMinimalUnitTests, this.candidates, this.perfectCandidates.length)
-        new ComputerMessage([this.locale.theFollowingUnitTestIsNotAccordingToTheSpecification(), new Code().appendChild(this.failingTestResult!.toHtml().addClass('new'))]).add()
-        new ComputerMessage([this.locale.writeAUnitTestThatIsAccordingToTheSpecification()]).add()
-        new ComputerMessage([this.locale.youNeedAtLeastThisManyMoreUnitTests(numberOfUnitTestsStillNeeded)]).add()
+        new ComputerMessage([this.locale.unitTestInvalid(), new Code().appendChild(this.failingTestResult!.toHtml().addClass('new'))]).add()
+        new ComputerMessage([this.locale.writeValidUnitTest()]).add()
+        new ComputerMessage([this.locale.moreUnitTests(numberOfUnitTestsStillNeeded)]).add()
+    }
+
+    private findRedundantUnitTests(): UnitTest[] {
+        return this.humanUnitTests.filter(unitTest => {
+            const reducedTests = this.humanUnitTests.filter(t => t !== unitTest)
+            return this.candidates.filter(candidate => candidate.passes(reducedTests)).every(candidate => this.perfectCandidates.includes(candidate))
+        })
     }
 
     private showEndMessage(): void {
-        new ComputerMessage([this.locale.theCurrentFunctionIsIndeedAccordingToTheSpecification()]).add()
+        new ComputerMessage([this.locale.currentFunctionCorrect()]).add()
         new ComputerMessage([this.locale.wellDone()]).add()
+        const numberOfUnneccessaryUnitTests = this.humanUnitTests.length - this.minimalUnitTests.length
+        if (numberOfUnneccessaryUnitTests > 0) {
+            const redundantUnitTests = this.findRedundantUnitTests()
+            const codeBlocks = redundantUnitTests.map(unitTest => new Code().appendChild(unitTest.toHtml()))
+            new ComputerMessage([this.locale.tooManyUnitTests(numberOfUnneccessaryUnitTests, redundantUnitTests.length), new OrderedList(codeBlocks)]).add()
+        }
     }
 
     protected showCongratulationsMessage(): void {
@@ -324,36 +337,31 @@ export abstract class Level {
     }
 
     private showSpecificationPanel(): void {
-        new Panel('specification', this.locale.specification(this.description()), [this.specification()]).show()
+        new Panel('specification', this.locale.specificationTitle(this.description()), [this.specification()]).show()
     }
 
     private showCurrentFunctionPanel(): void {
-        new Panel('current-function', this.locale.currentFunction(), [
+        new Panel('current-function', this.locale.currentFunctionTitle(), [
             this.currentCandidate.toHtml()
         ]).show()
     }
 
     private showDifferencePanel(): void {
-        new Panel('difference-current-function', this.locale.differenceFromThePreviousFunction(), [
-            this.previousCandidate
-            ? this.currentCandidate.toHtmlWithPrevious(this.previousCandidate)
-            : new Paragraph().appendText(this.locale.noPreviousFunction())
+        if (!this.previousCandidate)
+            return
+        new Panel('difference-current-function', this.locale.differenceTitle(), [
+            this.currentCandidate.toHtmlWithPrevious(this.previousCandidate)
         ]).show()
     }
 
     private showUnitTestsPanel(): void {
-        new Panel('unit-tests', this.locale.unitTests(),
-            this.humanUnitTests.length > 0
-            ? [new OrderedList().appendChildren(
-                this.humanUnitTests.map(humanUnitTest =>
-                    new ListItem().appendChild(
-                        new Code().appendChild(
-                            humanUnitTest.toHtml().addClass(humanUnitTest === this.lastUnitTest ? 'new' : 'old')
-                        )
-                    )
-                )
-            )]
-            : [new Paragraph().appendText(this.locale.youHaveNotWrittenAnyUnitTestsYet())]
+        if (this.humanUnitTests.length === 0)
+            return
+        const codeBlocks = this.humanUnitTests.map(unitTest =>
+            new Code().appendChild(unitTest.toHtml().addClass(unitTest === this.lastUnitTest ? 'new' : 'old'))
+        )
+        new Panel('unit-tests', this.locale.unitTestsTitle(),
+            [new OrderedList(codeBlocks)]
         ).show()
     }
 }

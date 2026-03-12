@@ -1,17 +1,17 @@
 import { test, expect } from '@playwright/test'
 import { Locale } from '../../src/locale.js'
-import { EvenOdd } from '../../src/level-even-odd.js'
+import { EvenOrOdd } from '../../src/level-even-or-odd.js'
 
-test.describe('class EvenOdd', () => {
+test.describe('class EvenOrOdd', () => {
     const locale = new Locale('en')
-    const useCase = new EvenOdd(locale, 2)
+    const useCase = new EvenOrOdd(locale, 2)
 
     test('has the right amount of parameters', () => {
         expect(useCase.parameters).toHaveLength(1)
     })
 
     test('has the right amount of candidates', () => {
-        expect(useCase.candidates).toHaveLength(105)
+        expect(useCase.candidates).toHaveLength(21)
     })
 
     test('has the right amount of minimal unit tests', () => {

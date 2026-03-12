@@ -12,7 +12,7 @@ export class FloatFormat extends Level {
     }
 
     protected specification(): string {
-        return this.locale.returnTrueIfTheTextRepresentsAFloatAndFalseIfItDoesnt()
+        return this.locale.floatFormatSpecification()
     }
 
     protected getParameters(): Variable[] {

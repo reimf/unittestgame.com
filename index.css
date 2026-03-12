@@ -245,6 +245,22 @@ a, button, input, label:has(input[type="radio"]:not(:disabled)) {
                     margin-bottom: 0.75rem;
                     margin-top: 0.75rem;
                 }
+
+                ol {
+                    list-style-type: none;
+                    margin: 0.75rem 0;
+                    padding: 0;
+
+                    li {
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: pre;
+
+                        code {
+                            margin: 0;
+                        }
+                    }
+                }
             }
 
             &:before {

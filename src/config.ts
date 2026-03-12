@@ -1,7 +1,7 @@
 import { Level } from './level-base.js'
 import { Locale } from './locale.js'
 import { BatteryLevel } from './level-battery-level.js'
-import { EvenOdd } from './level-even-odd.js'
+import { EvenOrOdd } from './level-even-or-odd.js'
 import { FizzBuzz } from './level-fizz-buzz.js'
 import { FloatFormat } from './level-float-format.js'
 import { LeapYear } from './level-leap-year.js'
@@ -19,7 +19,7 @@ export class Config {
     }
 
     public allLevels(): Level[] {
-        const levelClasses = [BatteryLevel, VotingAge, EvenOdd, Review, FizzBuzz, LeapYear, TriangleType, SpeedDisplay, FloatFormat, PasswordStrength]
+        const levelClasses = [BatteryLevel, VotingAge, EvenOrOdd, Review, FizzBuzz, LeapYear, TriangleType, SpeedDisplay, FloatFormat, PasswordStrength]
         return levelClasses.map((levelClass, index) => new levelClass(this.locale, index + 1))
     }
 }
