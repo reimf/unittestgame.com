@@ -35,8 +35,8 @@ test.describe('class Html', () => {
     })
 
     test('appends italic in markdown', () => {
-        const header = new Header().appendMarkdown('this is *italic*')
-        expect(header.toString()).toBe('<header>this is <i>italic</i></header>')
+        const header = new Header().appendMarkdown('this is *italic* and this is not')
+        expect(header.toString()).toBe('<header>this is <i>italic</i> and this is not</header>')
     })
 
     test('appends anchor in markdown', () => {

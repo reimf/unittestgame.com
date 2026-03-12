@@ -39,60 +39,55 @@ export class Html extends Content {
     }
 
     public appendMarkdown(markdown: string): this {
-        const buffer: string[] = []
-        const flush = (buffer: string[]) => {
-            if (buffer.length > 0) {
-                this.appendText(buffer.join(''))
-                buffer.length = 0
-            }
-        }
-        for (let pos = 0; pos < markdown.length; pos++) {
+        let begin = 0
+        while (begin < markdown.length) {
             // Bold: **text**
-            if (markdown.slice(pos, pos + 2) === '**') {
-                const end = markdown.indexOf('**', pos + 2)
-                if (end > pos) {
-                    flush(buffer)
-                    const text = markdown.slice(pos + 2, end)
+            if (markdown.slice(begin, begin + 2) === '**') {
+                const end = markdown.indexOf('**', begin + 2)
+                if (end > begin) {
+                    const text = markdown.slice(begin + 2, end)
                     const bold = new Bold().appendMarkdown(text)
                     this.appendChild(bold)
-                    pos = end + 1
+                    begin = end + 2
                     continue
                 }
             }
 
             // Italic: *text*
-            if (markdown[pos] === '*') {
-                const end = markdown.indexOf('*', pos + 1)
-                if (end > pos) {
-                    flush(buffer)
-                    const text = markdown.slice(pos + 1, end)
+            if (markdown[begin] === '*') {
+                const end = markdown.indexOf('*', begin + 1)
+                if (end > begin) {
+                    const text = markdown.slice(begin + 1, end)
                     const italic = new Italic().appendMarkdown(text)
                     this.appendChild(italic)
-                    pos = end
+                    begin = end + 1
                     continue
                 }
             }
 
             // Link: [text](url)
-            if (markdown[pos] === '[') {
-                const closeBracket = markdown.indexOf(']', pos)
+            if (markdown[begin] === '[') {
+                const closeBracket = markdown.indexOf(']', begin)
                 const openParen = markdown.indexOf('(', closeBracket)
                 const closeParen = markdown.indexOf(')', openParen)
-                if (closeBracket > pos && openParen === closeBracket + 1 && closeParen > openParen) {
-                    flush(buffer)
-                    const text = markdown.slice(pos + 1, closeBracket)
+                if (closeBracket > begin && openParen === closeBracket + 1 && closeParen > openParen) {
+                    const text = markdown.slice(begin + 1, closeBracket)
                     const url = markdown.slice(openParen + 1, closeParen)
                     const anchor = new Anchor().setHref(url).appendMarkdown(text)
                     this.appendChild(anchor)
-                    pos = closeParen
+                    begin = closeParen + 1
                     continue
                 }
             }
 
-            // Plain text
-            buffer.push(markdown[pos]!)
+            // Plain text: consume up to the next possible special character
+            const star = markdown.indexOf('*', begin + 1)
+            const openBracket = markdown.indexOf('[', begin + 1)
+            const end = Math.min(star > begin ? star : markdown.length, openBracket > begin ? openBracket : markdown.length)
+            const text = markdown.slice(begin, end)
+            this.appendText(text)
+            begin = end
         }
-        flush(buffer)
         return this
     }
 
@@ -353,12 +348,13 @@ export class Label extends Html {
 }
 
 export class OrderedList extends Html {
-    public constructor() {
+    public constructor(elements: Html[]) {
         super('ol')
+        this.appendChildren(elements.map(element => new ListItem().appendChild(element)))
     }
 }
 
-export class ListItem extends Html {
+class ListItem extends Html {
     public constructor() {
         super('li')
     }
