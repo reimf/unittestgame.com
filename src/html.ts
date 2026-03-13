@@ -283,28 +283,26 @@ export class Submit extends Input {
     }
 }
 
-export type StringMap = Map<string, string>
-
 export class Form extends Html {
-    private readonly callback: (formData: StringMap) => void
+    private readonly callback: (formData: FormData) => void
 
-    public constructor(callback: (formData: StringMap) => void) {
+    public constructor(callback: (formData: FormData) => void) {
         super('form')
         this.callback = callback
     }
 
     public override toNode(): Node {
-        const node = super.toNode() as HTMLFormElement
+        const form = super.toNode() as HTMLFormElement
         if (this.callback)
-            node.addEventListener('submit', event => {
+            form.addEventListener('submit', event => {
                 event.preventDefault()
-                node.querySelectorAll('input').forEach(input => input.disabled = false)
-                const formData = new Map<string, string>(new FormData(node).entries() as Iterable<[string, string]>)
-                const submit = node.querySelector('input[type="submit"]') as HTMLInputElement
-                this.replaceEnclosingMessageContent(node, submit.value)
+                form.querySelectorAll('input').forEach(input => input.disabled = false)
+                const formData = new FormData(form)
+                const submit = form.querySelector('input[type="submit"]') as HTMLInputElement
+                this.replaceEnclosingMessageContent(form, submit.value)
                 this.callback!(formData)
             })
-        return node
+        return form
     }
 }
 
@@ -321,7 +319,7 @@ export class Paragraph extends Html {
 }
 
 export class Button extends FormControl {
-    private readonly callback: (event: Event) => void
+    private readonly callback: () => void
 
     public constructor(text: string, callback: () => void) {
         super('button')
@@ -330,14 +328,14 @@ export class Button extends FormControl {
     }
 
     public override toNode(): Node {
-        const node = super.toNode() as HTMLButtonElement
+        const button = super.toNode() as HTMLButtonElement
         if (this.callback)
-            node.addEventListener('click', event => {
+            button.addEventListener('click', event => {
                 event.preventDefault()
-                this.replaceEnclosingMessageContent(node, node.textContent || 'ERROR')
-                this.callback!(event)
+                this.replaceEnclosingMessageContent(button, button.textContent || 'ERROR')
+                this.callback!()
             })
-        return node
+        return button
     }
 }
 

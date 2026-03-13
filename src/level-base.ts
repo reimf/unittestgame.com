@@ -1,7 +1,7 @@
 import { Candidate } from './candidate.js'
 import { Completed } from './completed.js'
 import { ComputerMessage, HumanMessage, Message, Panel } from './frame.js'
-import { Button, Code, Div, Form, OrderedList, StringMap, Submit } from './html.js'
+import { Button, Code, Div, Form, OrderedList, Submit } from './html.js'
 import { Locale } from './locale.js'
 import { Random } from './random.js'
 import { TestResult } from './test-result.js'
@@ -155,7 +155,7 @@ export abstract class Level {
         return ''
     }
 
-    protected isFormDataOk(_formData: StringMap): boolean {
+    protected isFormDataOk(_formData: FormData): boolean {
         return true
     }
 
@@ -201,9 +201,9 @@ export abstract class Level {
         new HumanMessage([form, divider, submitButton]).add()
     }
 
-    private addUnitTest(formData: StringMap): void {
-        const argumentList = this.parameters.map(parameter => parameter.getInput(formData.get(parameter.name)!))
-        const expected = this.unit.getInput(formData.get(this.unit.name)!)
+    private addUnitTest(formData: FormData): void {
+        const argumentList = this.parameters.map(parameter => parameter.getInput(formData.get(parameter.name)! as string))
+        const expected = this.unit.getInput(formData.get(this.unit.name)! as string)
         const unitTest = new UnitTest(this.parameters, argumentList, this.unit, expected)
         Message.addToLast([new Code().appendChild(unitTest.toHtml().addClass('new'))])
         if (!this.isFormDataOk(formData))
@@ -240,11 +240,11 @@ export abstract class Level {
     }
 
     private submitUnitTests(): void {
-        if (!this.isFormDataOk(new Map() as StringMap))
+        if (!this.isFormDataOk(new FormData()))
             return
         this.numberOfSubmissions = this.newNumberOfSubmissions(this.numberOfSubmissions)
         if (this.failingTestResult) {
-            this.showBugFoundMessage()
+            this.showInvalidUnitTestMessage()
             this.menu()
         }
         else
@@ -294,9 +294,9 @@ export abstract class Level {
         new ComputerMessage([this.locale.currentFunctionImproved()]).add()
     }
 
-    private showBugFoundMessage(): void {
+    private showInvalidUnitTestMessage(): void {
         const numberOfUnitTestsStillNeeded = this.findNumberOfUnitTestsStillNeeded(this.humanUnitTests, this.subsetsOfMinimalUnitTests, this.candidates, this.perfectCandidates.length)
-        new ComputerMessage([this.locale.unitTestInvalid(), new Code().appendChild(this.failingTestResult!.toHtml().addClass('new'))]).add()
+        new ComputerMessage([this.locale.invalidUnitTest(), new Code().appendChild(this.failingTestResult!.toHtml().addClass('new'))]).add()
         new ComputerMessage([this.locale.writeValidUnitTest()]).add()
         new ComputerMessage([this.locale.moreUnitTests(numberOfUnitTestsStillNeeded)]).add()
     }

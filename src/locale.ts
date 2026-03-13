@@ -190,7 +190,7 @@ export class Locale {
         })
     }
 
-    public unitTestInvalid(): string {
+    public invalidUnitTest(): string {
         return this.pick({
             en: 'The following unit test is NOT according to the *Specification*, but passes the *Current Function*.',
             nl: 'De volgende unit test voldoet NIET aan de *Specificatie*, maar slaagt voor de *Huidige Functie*.',

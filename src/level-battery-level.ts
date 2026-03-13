@@ -1,12 +1,11 @@
 import { ComputerMessage } from './frame.js'
-import { StringMap } from './html.js'
 import { Level } from './level-base.js'
 import { Variable, IntegerVariable, RadioVariable } from './variable.js'
 
 type FormStringsType = {
     message: string
-    batteryLevel: string|undefined
-    powerMode: string|undefined
+    batteryLevel: string|null
+    powerMode: string|null
 }
 
 
@@ -83,8 +82,8 @@ export class BatteryLevel extends Level {
         },
         {
             message: this.locale.submitUnitTestsFirst(),
-            batteryLevel: undefined,
-            powerMode: undefined
+            batteryLevel: null,
+            powerMode: null
         },
         {
             message: this.locale.addBatteryLevel21(),
@@ -93,8 +92,8 @@ export class BatteryLevel extends Level {
         },
         {
             message: this.locale.submitUnitTestsSecond(),
-            batteryLevel: undefined,
-            powerMode: undefined
+            batteryLevel: null,
+            powerMode: null
         },
         {
             message: this.locale.addBatteryLevel18(),
@@ -103,8 +102,8 @@ export class BatteryLevel extends Level {
         },
         {
             message: this.locale.submitUnitTestsThird(),
-            batteryLevel: undefined,
-            powerMode: undefined
+            batteryLevel: null,
+            powerMode: null
         }
     ]
 
@@ -128,7 +127,7 @@ export class BatteryLevel extends Level {
         new ComputerMessage([this.locale.wrongAction()]).add()
     }
 
-    protected override isFormDataOk(formData: StringMap): boolean {
+    protected override isFormDataOk(formData: FormData): boolean {
         const exampleForm = this.exampleForms[0]!
         const batteryLevelOk = formData.get('batteryLevel') === exampleForm.batteryLevel
         const powerModeOk = formData.get('powerMode') === exampleForm.powerMode
