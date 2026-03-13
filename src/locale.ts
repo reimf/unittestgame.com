@@ -11,8 +11,8 @@ export class Locale {
         this.lng = lng as keyof LocalisableText
     }
 
-    private pick(localisedText: LocalisableText): string {
-        return localisedText[this.lng]
+    private pick(localisableText: LocalisableText): string {
+        return localisableText[this.lng]
     }
 
     public welcome(): string {
@@ -29,22 +29,25 @@ export class Locale {
         })
     }
 
-    public sloganAndLinks(): string {
+    public slogan(): string {
         return this.pick({
-            en: 'Controlling an AI bot with Test-Driven Development.\n' +
-                '\n' +
-                '[Read more about TDD](https://en.wikipedia.org/wiki/Test-driven_development)\n' +
-                '[Overschakelen op het Nederlands](?lng=nl)\n' +
+            en: 'Controlling an AI bot with Test-Driven Development.',
+            nl: 'Beteugel een AI bot met Test-Driven Development.',
+        })
+    }
+
+    public links(): string {
+        return this.pick({
+            en: '[Read more about TDD on Wikipedia](https://en.wikipedia.org/wiki/Test-driven_development)\n' +
+                '[Overschakelen op Nederlands](?lng=nl)\n' +
                 '[Contact](mailto:contact@unittestgame.com)',
-            nl: 'Beteugel een AI bot met Test-Driven Development.\n' +
-                '\n' +
-                '[Lees meer over TDD](https://nl.wikipedia.org/wiki/Test-driven_development)\n' +
+            nl: '[Lees meer over TDD op Wikipedia](https://nl.wikipedia.org/wiki/Test-driven_development)\n' +
                 '[Switch to English](?lng=en)\n' +
                 '[Contact](mailto:contact@unittestgame.com)',
         })
     }
 
-    public whatDoYouWantToDo(): string {
+    public invitation(): string {
         return this.pick({
             en: 'What do you want to do?',
             nl: 'Wat wil je doen?',
@@ -382,8 +385,8 @@ export class Locale {
 
     public or(): string {
         return this.pick({
-            en: 'OR',
-            nl: 'OF',
+            en: 'or',
+            nl: 'of',
         })
     }
 }

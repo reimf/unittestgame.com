@@ -20,6 +20,16 @@
     --unlocked-foreground: #fff;
     --locked-background: #ddd;
     --locked-foreground: #666;
+    --highlight-keyword: #c33;
+    --highlight-class: #66c;
+    --highlight-function: #66c;
+    --highlight-variable: #060;
+    --highlight-literal: #06c;
+    --highlight-number: #06c;
+    --highlight-operator: #06c;
+    --highlight-string: #036;
+    --highlight-regexp: #036;
+    --highlight-dot: #660;
 }
 
 * {
@@ -89,27 +99,43 @@ code {
         }
 
         .keyword {
-            color: #c33;
+            color: var(--highlight-keyword);
         }
 
-        .class, .function {
-            color: #66c;
+        .class {
+            color: var(--highlight-class);
+        }
+        
+        .function {
+            color: var(--highlight-function);
         }
 
         .variable {
-            color: #060;
+            color: var(--highlight-variable);
         }
 
-        .literal, .number, .operator {
-            color: #06c;
+        .literal {
+            color: var(--highlight-literal);
+        }
+        
+        .number {
+            color: var(--highlight-number);
+        }
+        
+        .operator {
+            color: var(--highlight-operator);
         }
 
-        .string, .regexp {
-            color: #036;
+        .string {
+            color: var(--highlight-string);
+        }
+        
+        .regexp {
+            color: var(--highlight-regexp);
         }
 
-        .bullet {
-            color: #660;
+        .dot {
+            color: var(--highlight-dot);
         }
     }
 }
@@ -223,7 +249,7 @@ a, button, input, label:has(input[type="radio"]:not(:disabled)) {
         box-shadow: 0.25rem 0 0.5rem var(--separator-shadow);
         display: flex;
         flex-direction: column;
-        height: 100vh;
+        min-height: 100vh;
         overflow-y: scroll;
         padding-bottom: 2rem;
         scrollbar-width: none;
@@ -232,36 +258,6 @@ a, button, input, label:has(input[type="radio"]:not(:disabled)) {
         section {
             position: relative;
             opacity: 0;
-
-            > div {
-                border-radius: 1.25rem;
-                color: var(--dark-text);
-                display: flow-root;
-                margin: 0.75rem;
-                overflow: hidden;
-                padding: 0 0.75rem;
-
-                code {
-                    margin-bottom: 0.75rem;
-                    margin-top: 0.75rem;
-                }
-
-                ol {
-                    list-style-type: none;
-                    margin: 0.75rem 0;
-                    padding: 0;
-
-                    li {
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        white-space: pre;
-
-                        code {
-                            margin: 0;
-                        }
-                    }
-                }
-            }
 
             &:before {
                 content: '';
@@ -316,10 +312,43 @@ a, button, input, label:has(input[type="radio"]:not(:disabled)) {
             &.hidden {
                 display: none;
             }
+
+            > div {
+                border-radius: 1.25rem;
+                color: var(--dark-text);
+                display: flow-root;
+                margin: 0.75rem;
+                overflow: hidden;
+                padding: 0 0.75rem;
+
+                code {
+                    margin-bottom: 0.75rem;
+                    margin-top: 0.75rem;
+                }
+
+                ol {
+                    list-style-type: none;
+                    margin: 0.75rem 0;
+                    padding: 0;
+
+                    li {
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: pre;
+
+                        code {
+                            margin: 0;
+                        }
+                    }
+                }
+            }
         }
     }
 
     #panels {
+        align-self: flex-start;
+        position: sticky;
+        top: 0;
         width: 40%;
 
         section {
@@ -337,15 +366,14 @@ a, button, input, label:has(input[type="radio"]:not(:disabled)) {
             }
 
             > div {
-                display: flow-root;
-
-                code {
-                    margin: 0.75rem;
-                }
+                display: flex;
+                flex-direction: column;
+                gap: 0.75rem;
+                margin: 0.75rem;
 
                 ol {
                     list-style-type: none;
-                    margin: 0.75rem;
+                    margin: 0;
                     padding: 0;
 
                     li {
@@ -360,7 +388,7 @@ a, button, input, label:has(input[type="radio"]:not(:disabled)) {
                 }
                 
                 p {
-                    margin: 0.75rem;
+                    margin: 0;
                 }
 
                 .level-board {
@@ -406,6 +434,7 @@ a, button, input, label:has(input[type="radio"]:not(:disabled)) {
 .or {
     overflow: hidden;
     text-align: center;
+    text-transform: uppercase;
 
     &:before, &:after {
         content: "";
@@ -425,19 +454,6 @@ a, button, input, label:has(input[type="radio"]:not(:disabled)) {
     &:after {
         left: 1rem;
         margin-right: -50%;
-    }
-}
-
-.checking {
-    animation: pulseOpacity 0.5s infinite alternate;
-}
-
-@keyframes pulseOpacity {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
     }
 }
 

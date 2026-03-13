@@ -1,7 +1,7 @@
 import { Candidate } from './candidate.js'
 import { Completed } from './completed.js'
 import { ComputerMessage, HumanMessage, Message, Panel } from './frame.js'
-import { Button, Code, Div, Form, Input, OrderedList, StringMap } from './html.js'
+import { Button, Code, Div, Form, OrderedList, StringMap, Submit } from './html.js'
 import { Locale } from './locale.js'
 import { Random } from './random.js'
 import { TestResult } from './test-result.js'
@@ -21,10 +21,10 @@ export abstract class Level {
     public readonly subsetsOfMinimalUnitTests: UnitTest[][]
     public readonly perfectCandidates: Candidate[]
     private readonly perfectCandidate: Candidate
+    private readonly humanUnitTests: UnitTest[] = []
     public readonly hints: UnitTest[]
 
     private callback?: () => void
-    private humanUnitTests: UnitTest[] = []
     private currentCandidate: Candidate = new Candidate([])
     private previousCandidate: Candidate|undefined = undefined
     private failingTestResult: TestResult|undefined = undefined
@@ -193,31 +193,21 @@ export abstract class Level {
 
     protected showMenuMessage(): void {
         this.showBeforeMenuMessage()
-        const addThisUnitTestButton = new Input()
-            .setType('submit')
-            .setValue(this.locale.addUnitTestButton())
-        const submitTheUnitTestsButton = new Button()
-            .appendText(this.locale.submitUnitTestsButton())
-            .onClick(() => this.prepareSubmitUnitTests())
-        const variables = [...this.parameters, this.unit]
-        const form = new Form()
-            .onSubmit(formData => this.prepareAddUnitTest(formData))
-            .appendChildren(variables.map(variable => variable.toHtml()))
-            .appendChild(addThisUnitTestButton)
+        const addButton = new Submit(this.locale.addUnitTestButton())
+        const submitButton = new Button(this.locale.submitUnitTestsButton(), () => this.submitUnitTests())
+        const variables = [...this.parameters, this.unit].map(variable => variable.toHtml())
+        const form = new Form(formData => this.addUnitTest(formData)).appendChildren([...variables, addButton])
         const divider = new Div().appendText(this.locale.or()).addClass('or')
-        new HumanMessage([form, divider, submitTheUnitTestsButton]).add()
+        new HumanMessage([form, divider, submitButton]).add()
     }
 
-    private prepareAddUnitTest(formData: StringMap): void {
+    private addUnitTest(formData: StringMap): void {
         const argumentList = this.parameters.map(parameter => parameter.getInput(formData.get(parameter.name)!))
         const expected = this.unit.getInput(formData.get(this.unit.name)!)
         const unitTest = new UnitTest(this.parameters, argumentList, this.unit, expected)
         Message.addToLast([new Code().appendChild(unitTest.toHtml().addClass('new'))])
-        if (this.isFormDataOk(formData))
-            this.addUnitTest(unitTest)
-    }
-
-    private addUnitTest(unitTest: UnitTest): void {
+        if (!this.isFormDataOk(formData))
+            return
         if (!new TestResult(this.perfectCandidate, unitTest).passes)
             this.handleIncorrectUnitTest()
         else if (new TestResult(this.currentCandidate, unitTest).passes)
@@ -249,16 +239,9 @@ export abstract class Level {
         this.previousCandidate = this.currentCandidate
     }
 
-    private prepareSubmitUnitTests(): void {
-        if (this.isFormDataOk(new Map() as StringMap))
-            this.submitUnitTests()
-    }
-
-    protected newNumberOfSubmissions(oldNumberOfSubmissions: number): number {
-        return oldNumberOfSubmissions + 1
-    }
-
     private submitUnitTests(): void {
+        if (!this.isFormDataOk(new Map() as StringMap))
+            return
         this.numberOfSubmissions = this.newNumberOfSubmissions(this.numberOfSubmissions)
         if (this.failingTestResult) {
             this.showBugFoundMessage()
@@ -266,6 +249,10 @@ export abstract class Level {
         }
         else
             this.end()
+    }
+
+    protected newNumberOfSubmissions(oldNumberOfSubmissions: number): number {
+        return oldNumberOfSubmissions + 1
     }
 
     private end(): void {
@@ -316,7 +303,7 @@ export abstract class Level {
 
     private findRedundantUnitTests(): UnitTest[] {
         return this.humanUnitTests.filter(unitTest => {
-            const reducedTests = this.humanUnitTests.filter(t => t !== unitTest)
+            const reducedTests = this.humanUnitTests.filter(humanUnitTest => humanUnitTest !== unitTest)
             return this.candidates.filter(candidate => candidate.passes(reducedTests)).every(candidate => this.perfectCandidates.includes(candidate))
         })
     }
@@ -341,27 +328,24 @@ export abstract class Level {
     }
 
     private showCurrentFunctionPanel(): void {
-        new Panel('current-function', this.locale.currentFunctionTitle(), [
-            this.currentCandidate.toHtml()
-        ]).show()
+        new Panel('current-function', this.locale.currentFunctionTitle(), [this.currentCandidate.toHtml()]).show()
     }
 
     private showDifferencePanel(): void {
         if (!this.previousCandidate)
             return
-        new Panel('difference-current-function', this.locale.differenceTitle(), [
-            this.currentCandidate.toHtmlWithPrevious(this.previousCandidate)
-        ]).show()
+        const difference = this.currentCandidate.toHtmlWithPrevious(this.previousCandidate)
+        new Panel('difference-current-function', this.locale.differenceTitle(), [difference]).show()
     }
 
     private showUnitTestsPanel(): void {
         if (this.humanUnitTests.length === 0)
             return
-        const codeBlocks = this.humanUnitTests.map(unitTest =>
-            new Code().appendChild(unitTest.toHtml().addClass(unitTest === this.lastUnitTest ? 'new' : 'old'))
-        )
-        new Panel('unit-tests', this.locale.unitTestsTitle(),
-            [new OrderedList(codeBlocks)]
-        ).show()
+        const codeBlocks = this.humanUnitTests.map(unitTest => {
+            const className = unitTest === this.lastUnitTest ? 'new' : 'old'
+            return new Code().appendChild(unitTest.toHtml().addClass(className))
+        })
+        const orderedList = new OrderedList(codeBlocks)
+        new Panel('unit-tests', this.locale.unitTestsTitle(), [orderedList]).show()
     }
 }

@@ -32,11 +32,11 @@ export class Main {
     }
 
     private showAboutPanel(): void {
-        new Panel('unittestgame', this.locale.unitTestGameTitle(), [this.locale.sloganAndLinks()]).show()
+        new Panel('unittestgame', this.locale.unitTestGameTitle(), [this.locale.slogan(), this.locale.links()]).show()
     }
 
     private showInvitationMessage(): void {
-        new ComputerMessage([this.locale.whatDoYouWantToDo()]).add()
+        new ComputerMessage([this.locale.invitation()]).add()
     }
 
     private showLevelOverviewPanel(): void {

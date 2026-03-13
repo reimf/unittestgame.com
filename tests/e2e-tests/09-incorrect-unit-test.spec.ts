@@ -25,9 +25,9 @@ test.describe('incorrect unit test', () => {
         await expect(messages).toContainText('I did NOT add the unit test')
     })
 
-    test('has NOT added unit test in unit tests panel', async () => {
+    test('has NO unit tests panel', async () => {
         const unitTestsPanel = page.getByTestId('unit-tests')
-        await expect(unitTestsPanel).not.toContainText('isAllowedToVote(17) === true')
+        await expect(unitTestsPanel).not.toBeVisible()
     })
 
     test('has age field', async () => {

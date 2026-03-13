@@ -11,9 +11,9 @@ test.describe('level start', () => {
         await page.getByRole('button', { name: 'I want to play Level 1 - Battery Level' }).click()
     })
 
-    test('has no unittestgame panel', async () => {
+    test('has NO unittestgame panel', async () => {
         const unittestgamePanel = page.getByTestId('unittestgame')
-        await expect(unittestgamePanel).not.toBeAttached()
+        await expect(unittestgamePanel).not.toBeVisible()
     })
 
     test('has specification panel', async () => {
@@ -22,9 +22,9 @@ test.describe('level start', () => {
         await expect(specificationPanel).toContainText('A smartphone normally operates in "Normal Mode", but when the battery level is less than 20%, it operates in "Low Power Mode".')
     })
 
-    test('has no unit tests in the unit tests panel', async () => {
+    test('has NO unit tests panel', async () => {
         const unitTestsPanel = page.getByTestId('unit-tests')
-        await expect(unitTestsPanel).toContainText('You have not written any unit tests yet')
+        await expect(unitTestsPanel).not.toBeVisible()
     })
 
     test('has the simplest candidate in the current function panel', async () => {
@@ -33,9 +33,9 @@ test.describe('level start', () => {
         await expect(codeLines).toContainText('function powerMode(batteryLevel) {  return undefined}')
     })
 
-    test('has no the function panel', async () => {
+    test('has NO the function panel', async () => {
         const theFunctionPanel = page.getByTestId('the-function')
-        await expect(theFunctionPanel).not.toBeAttached()
+        await expect(theFunctionPanel).not.toBeVisible()
     })
 
     test('has instructions message', async () => {

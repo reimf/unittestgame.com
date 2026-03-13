@@ -33,7 +33,7 @@ class Tokenizer {
         { name: 'string', regexp: /^".*?"/ },
         { name: 'operator', regexp: /^(!=*|=+|%=?|\+=?|-=?|\*=?|\/=?|<=?|>=?|&+|\|+)/ },
         { name: 'punctuation', regexp: /^[(){},]/ },
-        { name: 'bullet', regexp: /^\./},
+        { name: 'dot', regexp: /^\./},
         { name: 'error', regexp: /^.+/ },
     ]
 

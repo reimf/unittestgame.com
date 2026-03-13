@@ -29,9 +29,9 @@ test.describe('other unit test', () => {
         await expect(messages).toContainText('That is NOT what I asked for!')
     })
 
-    test('has NOT added unit test in unit tests panel', async () => {
+    test('has NO unit tests panel', async () => {
         const unitTestsPanel = page.getByTestId('unit-tests')
-        await expect(unitTestsPanel).not.toContainText('powerMode(80) === "Normal Mode"')
+        await expect(unitTestsPanel).not.toBeVisible()
     })
 
     test('has NOT updated the current function panel', async () => {

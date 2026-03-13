@@ -13,7 +13,7 @@ abstract class Content {
 }
 
 export class Html extends Content {
-    private tagName: string
+    private readonly tagName: string
     private id: string = ''
     private readonly classList: string[] = []
     private readonly children: Content[] = []
@@ -128,8 +128,8 @@ export class Html extends Content {
 
     public toNode(): Node {
         const node = document.createElement(this.tagName)
-        for (const class_ of this.classList)
-            node.classList.add(class_)
+        for (const className of this.classList)
+            node.classList.add(className)
         if (this.id)
             node.id = this.id
         for (const child of this.children)
@@ -276,30 +276,33 @@ export class Input extends FormControl {
     }
 }
 
+export class Submit extends Input {
+    public constructor(text: string) {
+        super()
+        this.setType('submit').setValue(text)
+    }
+}
+
 export type StringMap = Map<string, string>
 
 export class Form extends Html {
-    private onSubmitCallback?: (formData: StringMap) => void = undefined
+    private readonly callback: (formData: StringMap) => void
 
-    public constructor() {
+    public constructor(callback: (formData: StringMap) => void) {
         super('form')
-    }
-
-    public onSubmit(callback: (formData: StringMap) => void): this {
-        this.onSubmitCallback = callback
-        return this
+        this.callback = callback
     }
 
     public override toNode(): Node {
         const node = super.toNode() as HTMLFormElement
-        if (this.onSubmitCallback)
+        if (this.callback)
             node.addEventListener('submit', event => {
                 event.preventDefault()
                 node.querySelectorAll('input').forEach(input => input.disabled = false)
                 const formData = new Map<string, string>(new FormData(node).entries() as Iterable<[string, string]>)
                 const submit = node.querySelector('input[type="submit"]') as HTMLInputElement
                 this.replaceEnclosingMessageContent(node, submit.value)
-                this.onSubmitCallback!(formData)
+                this.callback!(formData)
             })
         return node
     }
@@ -318,24 +321,21 @@ export class Paragraph extends Html {
 }
 
 export class Button extends FormControl {
-    private onClickCallback?: (event: Event) => void = undefined
+    private readonly callback: (event: Event) => void
 
-    public constructor() {
+    public constructor(text: string, callback: () => void) {
         super('button')
-    }
-
-    public onClick(callback: (event: Event) => void): this {
-        this.onClickCallback = callback
-        return this
+        this.appendText(text)
+        this.callback = callback
     }
 
     public override toNode(): Node {
         const node = super.toNode() as HTMLButtonElement
-        if (this.onClickCallback)
+        if (this.callback)
             node.addEventListener('click', event => {
                 event.preventDefault()
                 this.replaceEnclosingMessageContent(node, node.textContent || 'ERROR')
-                this.onClickCallback!(event)
+                this.callback!(event)
             })
         return node
     }

@@ -50,7 +50,7 @@ test.describe('class Html', () => {
     })
 
     test('has form', () => {
-        const form = new Form().onSubmit(_ => {})
+        const form = new Form(_ => {})
         expect(form.toString()).toBe('<form></form>')
     })
 
