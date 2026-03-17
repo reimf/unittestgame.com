@@ -196,6 +196,7 @@ export class Input extends FormControl {
     private checked: string = ''
     private required: string = ''
     private pattern: string = ''
+    private title: string = ''
 
     public constructor() {
         super('input')
@@ -231,8 +232,9 @@ export class Input extends FormControl {
         return this
     }
 
-    public setPattern(pattern: string): this {
+    public setPattern(pattern: string, title: string): this {
         this.pattern = pattern
+        this.title = title
         return this
     }
 
@@ -252,6 +254,8 @@ export class Input extends FormControl {
             attributes.push(`required="${this.required}"`)
         if (this.pattern)
             attributes.push(`pattern="${this.pattern}"`)
+        if (this.title)
+            attributes.push(`title="${this.title}"`)
         return attributes
     }
 
@@ -271,6 +275,8 @@ export class Input extends FormControl {
             node.required = true
         if (this.pattern)
             node.pattern = this.pattern
+        if (this.title)
+            node.title = this.title
         node.addEventListener('focus', () => node.checked = true)
         return node
     }
