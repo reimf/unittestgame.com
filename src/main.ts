@@ -1,6 +1,6 @@
 import { Config } from './config.js'
 import { Panel, Message, ComputerMessage, QuestionMessage } from './frame.js'
-import { Div, Span, Paragraph } from './html.js'
+import { Div, Span } from './html.js'
 import { Level } from './level-base.js'
 
 export class Main {
@@ -28,7 +28,7 @@ export class Main {
     }
 
     private showWelcomeMessage(): void {
-        new ComputerMessage([this.locale.welcome()]).add()
+        new ComputerMessage([this.locale.welcome()]).show()
     }
 
     private showAboutPanel(): void {
@@ -36,11 +36,11 @@ export class Main {
     }
 
     private showInvitationMessage(): void {
-        new ComputerMessage([this.locale.invitation()]).add()
+        new ComputerMessage([this.locale.invitation()]).show()
     }
 
     private showLevelOverviewPanel(): void {
-        const nextLevel = this.levels.find(level => !level.isFinished())
+        const nextLevel = this.levels.find(level => !level.isFinished())!
         const cells = this.levels.map(level => {
             const emoji = level.emoji(nextLevel)
             const state = level === nextLevel || level.isFinished() ? 'unlocked' : 'locked'
@@ -50,19 +50,18 @@ export class Main {
             ])
         })
         const div = new Div().addClass('level-board').appendChildren(cells)
-        const paragraph = new Paragraph().appendChild(div)
-        new Panel('level-overview', this.locale.levelOverviewTitle(), [paragraph]).show()
+        new Panel('level-overview', this.locale.levelOverviewTitle(), [div]).show()
     }
 
     private showNextLevel(): void {
         const nextLevel = this.levels.find(level => !level.isFinished())
         if (nextLevel)
-            new QuestionMessage(this.locale.nextLevelButton(nextLevel.description()), () => this.play(nextLevel)).add()
+            new QuestionMessage(this.locale.nextLevelButton(nextLevel.description()), () => this.play(nextLevel)).show()
         else
-            new QuestionMessage(this.locale.allLevels(), () => this.quit()).add()
+            new QuestionMessage(this.locale.allLevels(), () => this.quit()).show()
     }
 
     private quit(): void {
-        new ComputerMessage([this.locale.closeTab()]).add()
+        new ComputerMessage([this.locale.closeTab()]).show()
     }
 }

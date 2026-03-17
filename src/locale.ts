@@ -119,13 +119,6 @@ export class Locale {
         })
     }    
 
-    public wellDone(): string {
-        return this.pick({
-            en: 'Well done!',
-            nl: 'Goed gedaan!',
-        })
-    }
-
     public readSpecification(): string {
         return this.pick({
             en: 'First, you read the *Specification* and then you write a unit test that does NOT pass the *Current Function*.',
@@ -213,8 +206,8 @@ export class Locale {
 
     public currentFunctionCorrect(): string {
         return this.pick({
-            en: 'The *Current Function* is indeed according to the *Specification*.',
-            nl: 'De *Huidige Functie* voldoet inderdaad aan de *Specificatie*.',
+            en: 'Well done! The *Current Function* is indeed according to the *Specification*.',
+            nl: 'Goed gedaan! De *Huidige Functie* voldoet inderdaad aan de *Specificatie*.',
         })
     }
 
@@ -236,20 +229,6 @@ export class Locale {
         return this.pick({
             en: 'That is NOT what I asked for!',
             nl: 'Dat is NIET wat ik vroeg!',
-        })
-    }
-
-    public followInstructions(): string {
-        return this.pick({
-            en: 'In this level you only have to follow the instructions.',
-            nl: 'In dit level hoef je alleen maar de instructies op te volgen.',
-        })
-    }
-
-    public watchSidebar(): string {
-        return this.pick({
-            en: 'Meanwhile, keep an eye on the changes in the sidebar.',
-            nl: 'Houd ondertussen de wijzigingen in de zijbalk in de gaten.',
         })
     }
 
@@ -299,13 +278,6 @@ export class Locale {
         return this.pick({
             en: 'Submit the unit tests again to see if the *Current Function* is finally according to the *Specification*.',
             nl: 'Lever de unit testen opnieuw in om te zien of de *Huidige Functie* eindelijk aan de *Specificatie* voldoet.',
-        })
-    }
-
-    public congratulations(): string {
-        return this.pick({
-            en: 'Congratulations, now you understand the basics of Test-Driven Development.',
-            nl: 'Gefeliciteerd, nu begrijp je de basis van Test-Driven Development.',
         })
     }
 

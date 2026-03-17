@@ -159,7 +159,7 @@ export abstract class Level {
         return true
     }
 
-    public emoji(nextLevel?: Level): string {
+    public emoji(nextLevel: Level): string {
         return this === nextLevel ? '▶️' : ['🔒', '🥇', '🥈', '🥉'].at(this.isFinished()) || '💩'
     }
 
@@ -198,7 +198,7 @@ export abstract class Level {
         const variables = [...this.parameters, this.unit].map(variable => variable.toHtml())
         const form = new Form(formData => this.addUnitTest(formData)).appendChildren([...variables, addButton])
         const divider = new Div().appendText(this.locale.or()).addClass('or')
-        new HumanMessage([form, divider, submitButton]).add()
+        new HumanMessage([form, divider, submitButton]).show()
     }
 
     private addUnitTest(formData: FormData): void {
@@ -259,7 +259,6 @@ export abstract class Level {
         this.isLevelFinished.set(this.numberOfSubmissions)
         this.showPanels()
         this.showEndMessage()
-        this.showCongratulationsMessage()
         this.callback!()
     }
 
@@ -272,9 +271,9 @@ export abstract class Level {
     }
 
     private showStepMessages(): void {
-        new ComputerMessage([this.locale.readSpecification()]).add()
-        new ComputerMessage([this.locale.improveCurrentFunction()]).add()
-        new ComputerMessage([this.locale.submitUnitTests()]).add()
+        new ComputerMessage([this.locale.readSpecification()]).show()
+        new ComputerMessage([this.locale.improveCurrentFunction()]).show()
+        new ComputerMessage([this.locale.submitUnitTests()]).show()
     }
 
     protected showBeforeMenuMessage(): void {
@@ -282,23 +281,23 @@ export abstract class Level {
     }
 
     private showIncorrectUnitTestMessage(): void {
-        new ComputerMessage([this.locale.unitTestNotAdded()]).add()
+        new ComputerMessage([this.locale.unitTestNotAdded()]).show()
     }
 
     private showUselessUnitTestMessage(): void {
-        new ComputerMessage([this.locale.currentFunctionNotImproved()]).add()
-        new ComputerMessage([this.locale.hint()]).add()
+        new ComputerMessage([this.locale.currentFunctionNotImproved()]).show()
+        new ComputerMessage([this.locale.hint()]).show()
     }
 
     private showUsefulUnitTestMessage(): void {
-        new ComputerMessage([this.locale.currentFunctionImproved()]).add()
+        new ComputerMessage([this.locale.currentFunctionImproved()]).show()
     }
 
     private showInvalidUnitTestMessage(): void {
         const numberOfUnitTestsStillNeeded = this.findNumberOfUnitTestsStillNeeded(this.humanUnitTests, this.subsetsOfMinimalUnitTests, this.candidates, this.perfectCandidates.length)
-        new ComputerMessage([this.locale.invalidUnitTest(), new Code().appendChild(this.failingTestResult!.toHtml().addClass('new'))]).add()
-        new ComputerMessage([this.locale.writeValidUnitTest()]).add()
-        new ComputerMessage([this.locale.moreUnitTests(numberOfUnitTestsStillNeeded)]).add()
+        new ComputerMessage([this.locale.invalidUnitTest(), new Code().appendChild(this.failingTestResult!.toHtml().addClass('new'))]).show()
+        new ComputerMessage([this.locale.writeValidUnitTest()]).show()
+        new ComputerMessage([this.locale.moreUnitTests(numberOfUnitTestsStillNeeded)]).show()
     }
 
     private findRedundantUnitTests(): UnitTest[] {
@@ -309,18 +308,13 @@ export abstract class Level {
     }
 
     private showEndMessage(): void {
-        new ComputerMessage([this.locale.currentFunctionCorrect()]).add()
-        new ComputerMessage([this.locale.wellDone()]).add()
+        new ComputerMessage([this.locale.currentFunctionCorrect()]).show()
         const numberOfUnneccessaryUnitTests = this.humanUnitTests.length - this.minimalUnitTests.length
         if (numberOfUnneccessaryUnitTests > 0) {
             const redundantUnitTests = this.findRedundantUnitTests()
             const codeBlocks = redundantUnitTests.map(unitTest => new Code().appendChild(unitTest.toHtml()))
-            new ComputerMessage([this.locale.tooManyUnitTests(numberOfUnneccessaryUnitTests, redundantUnitTests.length), new OrderedList(codeBlocks)]).add()
+            new ComputerMessage([this.locale.tooManyUnitTests(numberOfUnneccessaryUnitTests, redundantUnitTests.length), new OrderedList(codeBlocks)]).show()
         }
-    }
-
-    protected showCongratulationsMessage(): void {
-        // nothing
     }
 
     private showSpecificationPanel(): void {

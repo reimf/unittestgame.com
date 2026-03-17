@@ -107,24 +107,12 @@ export class BatteryLevel extends Level {
         }
     ]
 
-    protected override showInstructionsMessage(): void {
-        new ComputerMessage([this.locale.followInstructions()]).add()
-    }
-
-    protected override showSidebarMessage(): void {
-        new ComputerMessage([this.locale.watchSidebar()]).add()
-    }
-
     protected override showBeforeMenuMessage(): void {
-        new ComputerMessage([this.exampleForms[0]!.message]).add()
-    }
-
-    protected override showCongratulationsMessage(): void {
-        new ComputerMessage([this.locale.congratulations()]).add()
+        new ComputerMessage([this.exampleForms[0]!.message]).show()
     }
 
     private showWarning() {
-        new ComputerMessage([this.locale.wrongAction()]).add()
+        new ComputerMessage([this.locale.wrongAction()]).show()
     }
 
     protected override isFormDataOk(formData: FormData): boolean {

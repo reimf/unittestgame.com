@@ -62,7 +62,7 @@ export abstract class Message extends Frame {
         elements.forEach(element => lastDiv.appendChild(element.toNode()))
     }
 
-    public add(extra: () => void=() => {}): void {
+    public show(extra: () => void=() => {}): void {
         this.callDelayed(() => {
             const count = Message.getMessagesElement().childElementCount
             this.setId(`message-${count}`)
