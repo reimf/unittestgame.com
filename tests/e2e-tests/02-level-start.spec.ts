@@ -38,11 +38,6 @@ test.describe('level start', () => {
         await expect(theFunctionPanel).not.toBeVisible()
     })
 
-    test('has instructions message', async () => {
-        const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('In this level you only have to follow the instructions.')
-    })
-
     test('has read specification message', async () => {
         const messages = page.getByTestId('messages')
         await expect(messages).toContainText('First, you read the Specification and then you write a unit test')

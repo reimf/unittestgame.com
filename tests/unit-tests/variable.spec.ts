@@ -15,16 +15,16 @@ test.describe('class Variable', () => {
 
     test('subclass TextVariable', () => {
         const variable = new TextVariable('Output', 'fizzBuzz')
-        expect(variable.toHtml().toString()).toBe('<p><label><span>Output</span><input autocomplete="off" class="empty" name="fizzBuzz" pattern=".{1,10}" required="required" type="text"></input></label></p>')
+        expect(variable.toHtml().toString()).toBe('<p><label><span>Output</span><input autocomplete="off" class="empty" name="fizzBuzz" pattern=".{1,10}" required="required" title="a text with at most 10 characters" type="text"></input></label></p>')
     })
 
     test('subclass IntegerVariable', () => {
         const variable = new IntegerVariable('Number', 'number')
-        expect(variable.toHtml().toString()).toBe('<p><label><span>Number</span><input autocomplete="off" class="empty" name="number" pattern="[0-9]{1,4}" required="required" type="text"></input></label></p>')
+        expect(variable.toHtml().toString()).toBe('<p><label><span>Number</span><input autocomplete="off" class="empty" name="number" pattern="[0-9]{1,4}" required="required" title="an integer number with at most 4 digits" type="text"></input></label></p>')
     })
 
     test('subclass FloatVariable', () => {
         const variable = new FloatVariable('Number', 'number')
-        expect(variable.toHtml().toString()).toBe('<p><label><span>Number</span><input autocomplete="off" class="empty" name="number" pattern="[0-9]{1,4}(\.[0-9])?" required="required" type="text"></input></label></p>')
+        expect(variable.toHtml().toString()).toBe('<p><label><span>Number</span><input autocomplete="off" class="empty" name="number" pattern="[0-9]{1,4}(\.[0-9])?" required="required" title="a floating-point number with at most 4 digits, an optional decimal point and an optional decimal" type="text"></input></label></p>')
     })
 })

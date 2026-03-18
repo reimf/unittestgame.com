@@ -127,7 +127,7 @@ export class FloatVariable extends Variable {
 
     public toHtml(): Html {
         const displayValue = this.value ? Number(this.value).toFixed(1) : ''
-        const input = new Input().setType('text').setName(this.name).setAutocomplete(false).setValue(displayValue).addClass(displayValue ? 'preset' : 'empty').setDisabled(this.disabled).setRequired().setPattern('[0-9]{1,4}(\.[0-9])?', 'a number with at most 4 digits, an optional decimal point and an optional decimal')
+        const input = new Input().setType('text').setName(this.name).setAutocomplete(false).setValue(displayValue).addClass(displayValue ? 'preset' : 'empty').setDisabled(this.disabled).setRequired().setPattern('[0-9]{1,4}(\.[0-9])?', 'a floating-point number with at most 4 digits, an optional decimal point and an optional decimal')
         const label = new Label().appendChild(new Span().appendText(this.label)).appendChild(input)
         return new Paragraph().appendChild(label)
     }
