@@ -26,7 +26,7 @@ test.describe('asked unit test', () => {
 
     test('has added unit test message', async () => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('I added the unit test')
+        await expect(messages).toContainText('I\'ve added the unit test')
     })
 
     test('has added unit test in unit tests panel', async () => {
@@ -42,7 +42,7 @@ test.describe('asked unit test', () => {
 
     test('has before menu message', async () => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('The Current Function now always returns "Normal Mode".')
+        await expect(messages).toContainText('The Current Function now always returns "Normal Mode"')
     })
 
     test('has a battery level field', async () => {

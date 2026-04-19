@@ -56,7 +56,7 @@ test.describe('whole game', () => {
             }
         }
 
-        const button = page.getByRole('button', { name: 'I played all the levels' })
+        const button = page.getByRole('button', { name: 'I\'ve completed all the levels' })
         await expect(button).toBeVisible()
     })
 })

@@ -27,7 +27,7 @@ test.describe('incorrect add button test', () => {
 
     test('has not asked message', async () => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('That is NOT what I asked for!')
+        await expect(messages).toContainText('Hmm, that\'s not quite right. Try again.')
     })
 
     test('has NOT added unit test in unit tests panel', async () => {
@@ -43,7 +43,7 @@ test.describe('incorrect add button test', () => {
 
     test('has TWO before menu messages', async () => {
         const messages = page.getByTestId('messages')
-        const beforeMenuMessages = messages.getByText('The Current Function now sometimes returns "Normal Mode" and sometimes "Low Power Mode".')
+        const beforeMenuMessages = messages.getByText('The Current Function can now return either "Normal Mode" or "Low Power Mode".', { exact: false })
         await expect(beforeMenuMessages).toHaveCount(2)
     })
 

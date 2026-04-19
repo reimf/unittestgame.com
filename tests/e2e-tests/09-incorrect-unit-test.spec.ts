@@ -22,7 +22,7 @@ test.describe('incorrect unit test', () => {
 
     test('has incorrect unit test message', async () => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('I did NOT add the unit test')
+        await expect(messages).toContainText('I didn\'t add the unit test')
     })
 
     test('has NO unit tests panel', async () => {

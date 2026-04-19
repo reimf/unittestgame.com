@@ -124,7 +124,7 @@ export abstract class Level {
         return this.getRandomElementFrom(simplestCandidates)
     }
 
-    private findSimplestPassingCandidate(candidates: readonly Candidate[], perfectCandidates: readonly Candidate[], unitTests: readonly UnitTest[]): Candidate {
+    public findSimplestPassingCandidate(candidates: readonly Candidate[], perfectCandidates: readonly Candidate[], unitTests: readonly UnitTest[]): Candidate {
         const passingCandidates = candidates.filter(candidate => candidate.passes(unitTests))
         const passingImperfectCandidates = passingCandidates.filter(candidate => !perfectCandidates.includes(candidate))
         if (passingImperfectCandidates.length === 0)
@@ -141,7 +141,7 @@ export abstract class Level {
         return undefined
     }
 
-    private findNumberOfUnitTestsStillNeeded(unitTests: readonly UnitTest[], subsetsOfMinimalUnitTests: readonly UnitTest[][], candidates: readonly Candidate[], numberOfPerfectCandidates: number): number {
+    public findNumberOfUnitTestsStillNeeded(unitTests: readonly UnitTest[], subsetsOfMinimalUnitTests: readonly UnitTest[][], candidates: readonly Candidate[], numberOfPerfectCandidates: number): number {
         for (const subsetOfMinimalUnitTests of subsetsOfMinimalUnitTests) {
             const extendedUnitTests = [...unitTests, ...subsetOfMinimalUnitTests]
             const passingCandidates = candidates.filter(candidate => candidate.passes(extendedUnitTests))

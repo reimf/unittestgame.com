@@ -19,7 +19,7 @@ test.describe('incorrect submit button test', () => {
 
     test('has not asked message', async () => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('That is NOT what I asked for!')
+        await expect(messages).toContainText('Hmm, that\'s not quite right. Try again.')
     })
 
     test('has NOT updated the current function panel', async () => {
@@ -30,7 +30,7 @@ test.describe('incorrect submit button test', () => {
 
     test('has TWO before menu messages', async () => {
         const messages = page.getByTestId('messages')
-        const beforeMenuMessages = messages.getByText('The Specification contains the number 20.')
+        const beforeMenuMessages = messages.getByText('The Specification contains the number 20', { exact: false })
         await expect(beforeMenuMessages).toHaveCount(2)
     })
 

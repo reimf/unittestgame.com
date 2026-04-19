@@ -31,7 +31,7 @@ test.describe('correct submit button test', () => {
 
     test('has not according message', async () => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('The following unit test is NOT according to the Specification, but passes the Current Function.')
+        await expect(messages).toContainText('The following unit test doesn\'t match the Specification, but the Current Function passes it.')
     })
 
     test('has failing unit test message', async () => {
@@ -41,12 +41,12 @@ test.describe('correct submit button test', () => {
 
     test('has hint message', async () => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('Write a unit test that is according to the Specification and does NOT pass the Current Function.')
+        await expect(messages).toContainText('Write a unit test that matches the Specification and that the Current Function fails.')
     })
 
     test('has need message', async () => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('You need at least 2 more unit tests to make the Current Function according to the Specification.') 
+        await expect(messages).toContainText('The Current Function doesn\'t match the Specification yet. You need at least 2 more unit tests.')
     })
 
     test('has a battery level field', async () => {

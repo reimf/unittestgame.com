@@ -40,22 +40,22 @@ test.describe('level start', () => {
 
     test('has read specification message', async () => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('First, you read the Specification and then you write a unit test')
+        await expect(messages).toContainText('First, read the Specification. Then write a unit test')
     })
 
     test('has improve function message', async () => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('After adding a unit test I will improve the Current Function')
+        await expect(messages).toContainText('After adding a unit test, I\'ll improve the Current Function')
     })
 
     test('has submit message', async () => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('When you think the Current Function is according to the Specification')
+        await expect(messages).toContainText('when you think the Current Function matches the Specification')
     })
 
     test('has before menu message', async () => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('The Specification contains the number 20.')
+        await expect(messages).toContainText('The Specification contains the number 20')
     })
 
     test('has a battery level field', async () => {

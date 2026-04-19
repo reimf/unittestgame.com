@@ -1,8 +1,7 @@
-import * as fs from 'fs'
-import * as path from 'path'
 import { Locale } from '../../src/locale.js'
 import { UnitTest } from '../../src/unit-test.js'
 import { LeapYear } from '../../src/level-leap-year.js'
+import fixtureData from './fixture-level-states.json' with { type: 'json' }
 
 type FixtureLevelState = {
     years: number[],
@@ -17,9 +16,7 @@ export class FixtureLevelStates {
     public readonly states: FixtureLevelState[]
 
     public constructor() {
-        const pathname = path.resolve(__dirname, 'fixture-level-states.json')
-        const text = fs.readFileSync(pathname, 'utf8')
-        this.states = this.enrich(JSON.parse(text) as FixtureLevelState[])
+        this.states = this.enrich(fixtureData as FixtureLevelState[])
     }
 
     private enrich(states: FixtureLevelState[]): FixtureLevelState[] {
