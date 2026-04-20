@@ -1,20 +1,20 @@
 export class Completed {
     private readonly key: string
+    private readonly storage: Storage
 
-    constructor(key: string) {
+    constructor(key: string, storage: Storage) {
         this.key = key
+        this.storage = storage
     }
 
     public get(): number {
-        if (typeof localStorage === 'undefined')
-            return 0
-        const value = localStorage.getItem(this.key)
+        const value = this.storage.getItem(this.key)
         if (!value)
             return 0
         return Number(value)
     }
 
     public set(value: number): void {
-        localStorage.setItem(this.key, value.toString())
+        this.storage.setItem(this.key, value.toString())
     }
 }

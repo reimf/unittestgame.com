@@ -4,14 +4,12 @@ import { MockStorage } from '../mocks/mock-storage.js'
 
 test.describe('class Completed', () => {
     test('gets 0 by default', () => {
-        global.localStorage = new MockStorage()
-        const completed = new Completed('test')
+        const completed = new Completed('test', new MockStorage())
         expect(completed.get()).toBe(0)
     })
 
     test('gets value after set', () => {
-        global.localStorage = new MockStorage()
-        const completed = new Completed('test')
+        const completed = new Completed('test', new MockStorage())
         completed.set(42)
         expect(completed.get()).toBe(42)
     })

@@ -34,7 +34,7 @@ export abstract class Level {
     public constructor(locale: Locale, levelNumber: number) {
         this.locale = locale
         this.levelNumber = levelNumber
-        this.isLevelFinished = new Completed(`level-${this.identifier()}-finished`)
+        this.isLevelFinished = new Completed(`level-${this.identifier()}-finished`, localStorage)
         this.parameters = this.getParameters()
         this.unit = this.getUnit()
         this.candidates = [...this.generateCandidates(this.getCandidateElements(), [])]
