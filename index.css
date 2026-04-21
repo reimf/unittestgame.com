@@ -30,6 +30,8 @@
     --highlight-string: #036;
     --highlight-regexp: #036;
     --highlight-dot: #660;
+    --code-background: #093;
+    --code-foreground: #fff;
 }
 
 * {
@@ -74,68 +76,77 @@ b { /* markdown: **bold** */
 }
 
 code {
-    display: block;
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space: pre;
+    &:not(.block) {
+        background-color: var(--code-background);
+        border-radius: 0.25rem;
+        color: var(--code-foreground);
+        padding: 0.1rem 0.25rem;
+        white-space: pre;
+    }
 
-    div {
-        &.old {
-            background-color: var(--old-background);
-        }
+    &.block {
+        display: block;
+        overflow-x: auto;
+        overflow-y: hidden;
 
-        &.new {
-            background-color: var(--new-background);
-        }
+        div {
+            &.old {
+                background-color: var(--old-background);
+            }
 
-        ins {
-            background-color: var(--inserted-background);
-            text-decoration: none;
-        }
+            &.new {
+                background-color: var(--new-background);
+            }
 
-        del {
-            background-color: var(--deleted-background);
-            text-decoration: none;
-        }
+            ins {
+                background-color: var(--inserted-background);
+                text-decoration: none;
+            }
 
-        .keyword {
-            color: var(--highlight-keyword);
-        }
+            del {
+                background-color: var(--deleted-background);
+                text-decoration: none;
+            }
 
-        .class {
-            color: var(--highlight-class);
-        }
-        
-        .function {
-            color: var(--highlight-function);
-        }
+            .keyword {
+                color: var(--highlight-keyword);
+            }
 
-        .variable {
-            color: var(--highlight-variable);
-        }
+            .class {
+                color: var(--highlight-class);
+            }
+            
+            .function {
+                color: var(--highlight-function);
+            }
 
-        .literal {
-            color: var(--highlight-literal);
-        }
-        
-        .number {
-            color: var(--highlight-number);
-        }
-        
-        .operator {
-            color: var(--highlight-operator);
-        }
+            .variable {
+                color: var(--highlight-variable);
+            }
 
-        .string {
-            color: var(--highlight-string);
-        }
-        
-        .regexp {
-            color: var(--highlight-regexp);
-        }
+            .literal {
+                color: var(--highlight-literal);
+            }
+            
+            .number {
+                color: var(--highlight-number);
+            }
+            
+            .operator {
+                color: var(--highlight-operator);
+            }
 
-        .dot {
-            color: var(--highlight-dot);
+            .string {
+                color: var(--highlight-string);
+            }
+            
+            .regexp {
+                color: var(--highlight-regexp);
+            }
+
+            .dot {
+                color: var(--highlight-dot);
+            }
         }
     }
 }

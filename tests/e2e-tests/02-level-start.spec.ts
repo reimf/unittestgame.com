@@ -19,7 +19,7 @@ test.describe('level start', () => {
     test('has specification panel', async () => {
         const specificationPanel = page.getByTestId('specification')
         await expect(specificationPanel).toContainText('Specification (Level 1 - Battery Level)')
-        await expect(specificationPanel).toContainText('A smartphone normally operates in "Normal Mode", but when the battery level is less than 20%, it operates in "Low Power Mode".')
+        await expect(specificationPanel).toContainText('A smartphone normally operates in Normal Mode, but when the battery level is less than 20, it operates in Low Power Mode.')
     })
 
     test('has NO unit tests panel', async () => {
@@ -41,11 +41,6 @@ test.describe('level start', () => {
     test('has read specification message', async () => {
         const messages = page.getByTestId('messages')
         await expect(messages).toContainText('First, read the Specification. Then write a unit test')
-    })
-
-    test('has improve function message', async () => {
-        const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('After adding a unit test, I\'ll improve the Current Function')
     })
 
     test('has submit message', async () => {

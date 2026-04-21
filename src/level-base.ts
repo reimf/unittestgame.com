@@ -1,7 +1,7 @@
 import { Candidate } from './candidate.js'
 import { Completed } from './completed.js'
 import { ComputerMessage, HumanMessage, Message, Panel } from './frame.js'
-import { Button, Code, Div, Form, OrderedList, Submit } from './html.js'
+import { Button, CodeBlock, Div, Form, OrderedList, Submit } from './html.js'
 import { Locale } from './locale.js'
 import { Random } from './random.js'
 import { TestResult } from './test-result.js'
@@ -31,10 +31,10 @@ export abstract class Level {
     private lastUnitTest: UnitTest|undefined = undefined
     private numberOfSubmissions: number = 0
 
-    public constructor(locale: Locale, levelNumber: number) {
+    public constructor(locale: Locale, levelNumber: number, storage: Storage) {
         this.locale = locale
         this.levelNumber = levelNumber
-        this.isLevelFinished = new Completed(`level-${this.identifier()}-finished`, localStorage)
+        this.isLevelFinished = new Completed(`level-${this.identifier()}-finished`, storage)
         this.parameters = this.getParameters()
         this.unit = this.getUnit()
         this.candidates = [...this.generateCandidates(this.getCandidateElements(), [])]
@@ -205,7 +205,7 @@ export abstract class Level {
         const argumentList = this.parameters.map(parameter => parameter.getInput(formData.get(parameter.name)! as string))
         const expected = this.unit.getInput(formData.get(this.unit.name)! as string)
         const unitTest = new UnitTest(this.parameters, argumentList, this.unit, expected)
-        Message.addToLast([new Code().appendChild(unitTest.toHtml().addClass('new'))])
+        Message.addToLast([new CodeBlock().appendChild(unitTest.toHtml().addClass('new'))])
         if (!this.isFormDataOk(formData))
             return
         if (!new TestResult(this.perfectCandidate, unitTest).passes)
@@ -290,13 +290,12 @@ export abstract class Level {
     }
 
     private showUsefulUnitTestMessage(): void {
-        new ComputerMessage([this.locale.currentFunctionImproved()]).show()
+        new ComputerMessage([this.locale.currentFunctionImproved(this.humanUnitTests.length)]).show()
     }
 
     private showInvalidUnitTestMessage(): void {
         const numberOfUnitTestsStillNeeded = this.findNumberOfUnitTestsStillNeeded(this.humanUnitTests, this.subsetsOfMinimalUnitTests, this.candidates, this.perfectCandidates.length)
-        new ComputerMessage([this.locale.invalidUnitTest(), new Code().appendChild(this.failingTestResult!.toHtml().addClass('new'))]).show()
-        new ComputerMessage([this.locale.writeValidUnitTest()]).show()
+        new ComputerMessage([this.locale.invalidUnitTest(), new CodeBlock().appendChild(this.failingTestResult!.toHtml().addClass('new'))]).show()
         new ComputerMessage([this.locale.moreUnitTests(numberOfUnitTestsStillNeeded)]).show()
     }
 
@@ -312,7 +311,7 @@ export abstract class Level {
         const numberOfUnneccessaryUnitTests = this.humanUnitTests.length - this.minimalUnitTests.length
         if (numberOfUnneccessaryUnitTests > 0) {
             const redundantUnitTests = this.findRedundantUnitTests()
-            const codeBlocks = redundantUnitTests.map(unitTest => new Code().appendChild(unitTest.toHtml()))
+            const codeBlocks = redundantUnitTests.map(unitTest => new CodeBlock().appendChild(unitTest.toHtml()))
             new ComputerMessage([this.locale.tooManyUnitTests(numberOfUnneccessaryUnitTests, redundantUnitTests.length), new OrderedList(codeBlocks)]).show()
         }
     }
@@ -337,7 +336,7 @@ export abstract class Level {
             return
         const codeBlocks = this.humanUnitTests.map(unitTest => {
             const className = unitTest === this.lastUnitTest ? 'new' : 'old'
-            return new Code().appendChild(unitTest.toHtml().addClass(className))
+            return new CodeBlock().appendChild(unitTest.toHtml().addClass(className))
         })
         const orderedList = new OrderedList(codeBlocks)
         new Panel('unit-tests', this.locale.unitTestsTitle(), [orderedList]).show()

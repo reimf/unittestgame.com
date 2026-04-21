@@ -2,6 +2,7 @@ import { test, expect, Page } from '@playwright/test'
 import { Config } from '../../src/config.js'
 import { BooleanVariable, RadioVariable } from '../../src/variable.js'
 import { BatteryLevel } from '../../src/level-battery-level.js'
+import { MockStorage } from '../mocks/mock-storage.js'
 
 test.describe('whole game', () => {
     let page: Page
@@ -17,7 +18,7 @@ test.describe('whole game', () => {
         test.slow()
 
         const config = new Config('en')
-        const levels = config.allLevels()
+        const levels = config.allLevels(new MockStorage())
 
         for (const level of levels) {
             await page.getByRole('button', { name: `I want to play ${level.description()}` }).click()

@@ -1,6 +1,7 @@
 import { Locale } from '../../src/locale.js'
 import { UnitTest } from '../../src/unit-test.js'
 import { LeapYear } from '../../src/level-leap-year.js'
+import { MockStorage } from '../mocks/mock-storage.js'
 import fixtureData from './fixture-level-states.json' with { type: 'json' }
 
 type FixtureLevelState = {
@@ -12,7 +13,7 @@ type FixtureLevelState = {
 
 export class FixtureLevelStates {
     private readonly locale = new Locale('en')
-    public readonly level = new LeapYear(this.locale, 1)
+    public readonly level = new LeapYear(this.locale, 1, new MockStorage())
     public readonly states: FixtureLevelState[]
 
     public constructor() {

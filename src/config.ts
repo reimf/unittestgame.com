@@ -18,8 +18,8 @@ export class Config {
         this.locale = new Locale(lng)
     }
 
-    public allLevels(): Level[] {
+    public allLevels(storage: Storage): Level[] {
         const levelClasses = [BatteryLevel, VotingAge, EvenOrOdd, Review, FizzBuzz, LeapYear, TriangleType, SpeedDisplay, FloatFormat, PasswordStrength]
-        return levelClasses.map((levelClass, index) => new levelClass(this.locale, index + 1))
+        return levelClasses.map((levelClass, index) => new levelClass(this.locale, index + 1, storage))
     }
 }

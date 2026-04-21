@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test'
-import { Span, Div, Section, Code, Label, Paragraph, Form, Header, Input, Bold, Italic, Anchor } from '../../src/html.js'
+import { Span, Div, Section, Code, CodeBlock, Label, Paragraph, Form, Header, Input, Bold, Italic, Anchor } from '../../src/html.js'
 
 
 test.describe('class Html', () => {
@@ -44,6 +44,11 @@ test.describe('class Html', () => {
         expect(header.toString()).toBe('<header>this is a <a href="https://example.com">website</a></header>')
     })
 
+    test('appends code in markdown', () => {
+        const header = new Header().appendMarkdown('this is `code` here')
+        expect(header.toString()).toBe('<header>this is <code class="language-javascript">code</code> here</header>')
+    })
+
     test('has input', () => {
         const input = new Input()
         expect(input.toString()).toBe('<input></input>')
@@ -77,6 +82,11 @@ test.describe('class Html', () => {
     test('has code', () => {
         const code = new Code().appendText('text')
         expect(code.toString()).toBe('<code class="language-javascript">text</code>')
+    })
+
+    test('has code block', () => {
+        const code = new CodeBlock().appendText('text')
+        expect(code.toString()).toBe('<code class="language-javascript block">text</code>')
     })
 
     test('has section', () => {

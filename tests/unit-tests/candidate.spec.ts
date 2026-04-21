@@ -89,7 +89,7 @@ test.describe('class Candidate', () => {
         const candidate = new Candidate(['function nextYear(year) {', '  return year', '}'])
         const html = candidate.toHtml()
         expect(html.toString()).toBe(
-            '<code class="language-javascript">' +
+            '<code class="language-javascript block">' +
                 '<div>' +
                     '<span class="keyword">function</span>' +
                     '<span class="whitespace"> </span>' +
@@ -118,7 +118,7 @@ test.describe('class Candidate', () => {
         const previousCandidate = new Candidate(['function nextYear(year) {', '', '  if (year === 0) return 0', '', '  return undefined', '}'])
         const html = candidate.toHtmlWithPrevious(previousCandidate)
         expect(html.toString()).toBe(
-            '<code class="language-javascript">' +
+            '<code class="language-javascript block">' +
                 '<div>' +
                     '<span class="keyword">function</span>' +
                     '<span class="whitespace"> </span>' +

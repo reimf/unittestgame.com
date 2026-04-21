@@ -1,4 +1,4 @@
-import { Code } from './html.js'
+import { CodeBlock } from './html.js'
 import { TestResult } from './test-result.js'
 import { Highlighter } from './highlighter.js'
 import { UnitTest } from './unit-test.js'
@@ -81,15 +81,15 @@ export class Candidate {
         return this.nonEmptyLines.join('\n')
     }
 
-    public toHtml(): Code {
+    public toHtml(): CodeBlock {
         const divs = this.nonEmptyLines.map(line => new Highlighter(line).highlight())
-        return new Code().appendChildren(divs)
+        return new CodeBlock().appendChildren(divs)
     }
 
-    public toHtmlWithPrevious(previousCandidate: Candidate): Code {
+    public toHtmlWithPrevious(previousCandidate: Candidate): CodeBlock {
         const pairs = this.lines.map((line, index) => [line, previousCandidate.lines[index]!]) as [string, string][]
         const nonEmptyPairs = pairs.filter(([currentLine, previousLine]) => currentLine || previousLine)
         const divs = nonEmptyPairs.map(([currentLine, previousLine]) => new Highlighter(currentLine, previousLine).highlight())
-        return new Code().appendChildren(divs)
+        return new CodeBlock().appendChildren(divs)
     }
 }

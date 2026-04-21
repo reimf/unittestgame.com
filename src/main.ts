@@ -7,7 +7,7 @@ export class Main {
     private readonly lng = (new URL(window.location.href)).searchParams.get('lng') || navigator.language.split('-')[0]!
     private readonly config = new Config(this.lng)
     private readonly locale = this.config.locale
-    private readonly levels = this.config.allLevels()
+    private readonly levels = this.config.allLevels(localStorage)
 
     public start(): void {
         this.showWelcomeMessage()

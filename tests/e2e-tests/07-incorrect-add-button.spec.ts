@@ -41,12 +41,6 @@ test.describe('incorrect add button test', () => {
         await expect(codeLines).toContainText(['function powerMode(batteryLevel) {', '  if (batteryLevel === 20) return "Normal Mode"', '  return "Low Power Mode"', '}'])
     })
 
-    test('has TWO before menu messages', async () => {
-        const messages = page.getByTestId('messages')
-        const beforeMenuMessages = messages.getByText('The Current Function can now return either "Normal Mode" or "Low Power Mode".', { exact: false })
-        await expect(beforeMenuMessages).toHaveCount(2)
-    })
-
     test('has a battery level field', async () => {
         const batteryLevel = page.getByRole('textbox', { name: 'Battery level' })
         await expect(batteryLevel).toBeVisible()

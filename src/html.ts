@@ -65,6 +65,18 @@ export class Html extends Content {
                 }
             }
 
+            // Code: `text`
+            if (markdown[begin] === '`') {
+                const end = markdown.indexOf('`', begin + 1)
+                if (end > begin) {
+                    const text = markdown.slice(begin + 1, end)
+                    const code = new Code().appendMarkdown(text)
+                    this.appendChild(code)
+                    begin = end + 1
+                    continue
+                }
+            }
+
             // Link: [text](url)
             if (markdown[begin] === '[') {
                 const closeBracket = markdown.indexOf(']', begin)
@@ -83,7 +95,12 @@ export class Html extends Content {
             // Plain text: consume up to the next possible special character
             const star = markdown.indexOf('*', begin + 1)
             const openBracket = markdown.indexOf('[', begin + 1)
-            const end = Math.min(star > begin ? star : markdown.length, openBracket > begin ? openBracket : markdown.length)
+            const backTick = markdown.indexOf('`', begin + 1)
+            const end = Math.min(
+                star > begin ? star : markdown.length, 
+                openBracket > begin ? openBracket : markdown.length,
+                backTick > begin ? backTick : markdown.length
+            )
             const text = markdown.slice(begin, end)
             this.appendText(text)
             begin = end
@@ -368,6 +385,13 @@ export class Code extends Html {
     public constructor() {
         super('code')
         this.addClass('language-javascript')
+    }
+}
+
+export class CodeBlock extends Code {
+    public constructor() {
+        super()
+        this.addClass('block')
     }
 }
 

@@ -39,14 +39,10 @@ test.describe('correct submit button test', () => {
         await expect(messages).toContainText('powerMode(21) === "Low Power Mode"')
     })
 
-    test('has hint message', async () => {
-        const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('Write a unit test that matches the Specification and that the Current Function fails.')
-    })
 
     test('has need message', async () => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('The Current Function doesn\'t match the Specification yet. You need at least 2 more unit tests.')
+        await expect(messages).toContainText('The Current Function doesn\'t match the Specification yet. You need at least 2 more unit tests, so write a unit test that matches the Specification and that the Current Function fails.')
     })
 
     test('has a battery level field', async () => {
