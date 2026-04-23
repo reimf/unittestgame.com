@@ -1,4 +1,5 @@
 import { Level } from './level-base.js'
+import { Locale, LocalizedText } from './locale.js'
 import { Variable, RadioVariable, IntegerVariable } from './variable.js'
 
 export class FizzBuzz extends Level {
@@ -9,18 +10,18 @@ export class FizzBuzz extends Level {
     protected name(): string {
         return 'FizzBuzz'
     }
-    protected specification(): string {
+    protected specification(): LocalizedText {
         return this.locale.fizzBuzzSpecification()
     }
 
     protected getParameters(): Variable[] {
         return [
-            new IntegerVariable('Number', 'num'),
+            new IntegerVariable(Locale.bless('Number'), 'num'),
         ]
     }
 
     protected getUnit(): Variable {
-        return new RadioVariable('Output', 'fizzBuzz', ['Fizz', 'Buzz', 'FizzBuzz', 'Other'])
+        return new RadioVariable(Locale.bless('Output'), 'fizzBuzz', [Locale.bless('Fizz'), Locale.bless('Buzz'), Locale.bless('FizzBuzz'), Locale.bless('Other')])
     }
 
     protected getCandidateElements(): string[][] {

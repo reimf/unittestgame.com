@@ -1,3 +1,5 @@
+import type { LocalizedText } from './locale.js'
+
 abstract class Content {
     private static timeOfLastDelayedCall: number = 0
 
@@ -38,77 +40,33 @@ export class Html extends Content {
         return this
     }
 
-    public appendMarkdown(markdown: string): this {
-        let begin = 0
-        while (begin < markdown.length) {
-            // Bold: **text**
-            if (markdown.slice(begin, begin + 2) === '**') {
-                const end = markdown.indexOf('**', begin + 2)
-                if (end > begin) {
-                    const text = markdown.slice(begin + 2, end)
-                    const bold = new Bold().appendMarkdown(text)
-                    this.appendChild(bold)
-                    begin = end + 2
-                    continue
-                }
-            }
+    public appendMarkdown(markdown: LocalizedText): this {
+        const patterns = [
+            /\*\*(?<bold>.+?)\*\*/,
+            /\*(?<italic>.+?)\*/,
+            /`(?<code>.+?)`/,
+            /\[(?<linkText>.+?)\]\((?<linkUrl>.+?)\)/,
+            /(?<plain>[^*`[]+)/,
+        ]
+        const pattern = new RegExp(patterns.map(regexp => regexp.source).join('|'), 'g')
 
-            // Italic: *text*
-            if (markdown[begin] === '*') {
-                const end = markdown.indexOf('*', begin + 1)
-                if (end > begin) {
-                    const text = markdown.slice(begin + 1, end)
-                    const italic = new Italic().appendMarkdown(text)
-                    this.appendChild(italic)
-                    begin = end + 1
-                    continue
-                }
-            }
-
-            // Code: `text`
-            if (markdown[begin] === '`') {
-                const end = markdown.indexOf('`', begin + 1)
-                if (end > begin) {
-                    const text = markdown.slice(begin + 1, end)
-                    const code = new Code().appendMarkdown(text)
-                    this.appendChild(code)
-                    begin = end + 1
-                    continue
-                }
-            }
-
-            // Link: [text](url)
-            if (markdown[begin] === '[') {
-                const closeBracket = markdown.indexOf(']', begin)
-                const openParen = markdown.indexOf('(', closeBracket)
-                const closeParen = markdown.indexOf(')', openParen)
-                if (closeBracket > begin && openParen === closeBracket + 1 && closeParen > openParen) {
-                    const text = markdown.slice(begin + 1, closeBracket)
-                    const url = markdown.slice(openParen + 1, closeParen)
-                    const anchor = new Anchor().setHref(url).appendMarkdown(text)
-                    this.appendChild(anchor)
-                    begin = closeParen + 1
-                    continue
-                }
-            }
-
-            // Plain text: consume up to the next possible special character
-            const star = markdown.indexOf('*', begin + 1)
-            const openBracket = markdown.indexOf('[', begin + 1)
-            const backTick = markdown.indexOf('`', begin + 1)
-            const end = Math.min(
-                star > begin ? star : markdown.length, 
-                openBracket > begin ? openBracket : markdown.length,
-                backTick > begin ? backTick : markdown.length
-            )
-            const text = markdown.slice(begin, end)
-            this.appendText(text)
-            begin = end
+        for (const { groups } of markdown.matchAll(pattern)) {
+            const { bold, italic, code, linkText, linkUrl, plain } = groups!
+            if (bold)
+                this.appendChild(new Bold().appendMarkdown(bold as LocalizedText))
+            else if (italic)
+                this.appendChild(new Italic().appendMarkdown(italic as LocalizedText))
+            else if (code)
+                this.appendChild(new Code().appendMarkdown(code as LocalizedText))
+            else if (linkText && linkUrl)
+                this.appendChild(new Anchor().setHref(linkUrl).appendMarkdown(linkText as LocalizedText))
+            else if (plain)
+                this.appendText(plain as LocalizedText)
         }
         return this
     }
 
-    public appendText(text: string): this {
+    public appendText(text: LocalizedText): this {
         this.children.push(new Text(text))
         return this
     }
@@ -168,7 +126,7 @@ export class Html extends Content {
 class Text extends Content {
     private readonly text: string
 
-    public constructor(text: string) {
+    public constructor(text: LocalizedText) {
         super()
         this.text = text
     }
@@ -300,7 +258,7 @@ export class Input extends FormControl {
 }
 
 export class Submit extends Input {
-    public constructor(text: string) {
+    public constructor(text: LocalizedText) {
         super()
         this.setType('submit').setValue(text)
     }
@@ -344,7 +302,7 @@ export class Paragraph extends Html {
 export class Button extends FormControl {
     private readonly callback: () => void
 
-    public constructor(text: string, callback: () => void) {
+    public constructor(text: LocalizedText, callback: () => void) {
         super('button')
         this.appendText(text)
         this.callback = callback

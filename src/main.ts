@@ -2,6 +2,7 @@ import { Config } from './config.js'
 import { Panel, Message, ComputerMessage, QuestionMessage } from './frame.js'
 import { Div, Span } from './html.js'
 import { Level } from './level-base.js'
+import { Locale } from './locale.js'
 
 export class Main {
     private readonly lng = (new URL(window.location.href)).searchParams.get('lng') || navigator.language.split('-')[0]!
@@ -45,8 +46,8 @@ export class Main {
             const emoji = level.emoji(nextLevel)
             const state = level === nextLevel || level.isFinished() ? 'unlocked' : 'locked'
             return new Span().addClass('cell').addClass(state).appendChildren([
-                new Span().addClass('number').appendText(`${level.levelNumber}`),
-                new Span().addClass('emoji').appendText(emoji)
+                new Span().addClass('number').appendText(Locale.bless(`${level.levelNumber}`)),
+                new Span().addClass('emoji').appendText(Locale.bless(emoji))
             ])
         })
         const div = new Div().addClass('level-board').appendChildren(cells)

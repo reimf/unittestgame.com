@@ -1,4 +1,5 @@
 import { Level } from './level-base.js'
+import { Locale, LocalizedText } from './locale.js'
 import { Random } from './random.js'
 import { Variable, BooleanVariable, TextVariable } from './variable.js'
 
@@ -11,18 +12,18 @@ export class PasswordStrength extends Level {
         return 'Password Strength'
     }
 
-    protected specification(): string {
+    protected specification(): LocalizedText {
         return this.locale.passwordStrengthSpecification()
     }
 
     protected getParameters(): Variable[] {
         return [
-            new TextVariable('Password', 'password')
+            new TextVariable(Locale.bless('Password'), 'password')
         ]
     }
 
     protected getUnit(): Variable {
-        return new BooleanVariable('Is strong password', 'isStrongPassword')
+        return new BooleanVariable(Locale.bless('Is strong password'), 'isStrongPassword')
     }
 
     protected getCandidateElements(): string[][] {

@@ -1,4 +1,5 @@
 import { Level } from './level-base.js'
+import { Locale, LocalizedText } from './locale.js'
 import { Random } from './random.js'
 import { Variable, BooleanVariable, TextVariable } from './variable.js'
 
@@ -11,18 +12,18 @@ export class FloatFormat extends Level {
         return 'Float Format'
     }
 
-    protected specification(): string {
+    protected specification(): LocalizedText {
         return this.locale.floatFormatSpecification()
     }
 
     protected getParameters(): Variable[] {
         return [
-            new TextVariable('Text', 'text')
+            new TextVariable(Locale.bless('Text'), 'text')
         ]
     }
 
     protected getUnit(): Variable {
-        return new BooleanVariable('Represents a float', 'isFloatFormat')
+        return new BooleanVariable(Locale.bless('Represents a float'), 'isFloatFormat')
     }
 
     protected getCandidateElements(): string[][] {

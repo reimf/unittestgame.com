@@ -1,4 +1,5 @@
 import { Level } from './level-base.js'
+import { Locale, LocalizedText } from './locale.js'
 import { Variable, TextVariable, FloatVariable } from './variable.js'
 
 export class SpeedDisplay extends Level {
@@ -10,18 +11,18 @@ export class SpeedDisplay extends Level {
         return 'Speed Display'
     }
 
-    protected specification(): string {
+    protected specification(): LocalizedText {
         return this.locale.speedDisplaySpecification()
     }
 
     protected getParameters(): Variable[] {
         return [
-            new FloatVariable('Speed', 'speed')
+            new FloatVariable(Locale.bless('Speed'), 'speed')
         ]
     }
 
     protected getUnit(): Variable {
-        return new TextVariable('Display', 'display')
+        return new TextVariable(Locale.bless('Display'), 'display')
     }
 
     protected getCandidateElements(): string[][] {

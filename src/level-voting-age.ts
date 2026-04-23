@@ -1,4 +1,5 @@
 import { Level } from './level-base.js'
+import { Locale, LocalizedText } from './locale.js'
 import { Variable, BooleanVariable, IntegerVariable } from './variable.js'
 
 export class VotingAge extends Level {
@@ -10,18 +11,18 @@ export class VotingAge extends Level {
         return 'Voting Age'
     }
 
-    protected specification(): string {
+    protected specification(): LocalizedText {
         return this.locale.votingAgeSpecification()
     }
 
     protected getParameters(): Variable[] {
         return [
-            new IntegerVariable('Age', 'age'),
+            new IntegerVariable(Locale.bless('Age'), 'age'),
         ]
     }
 
     protected getUnit(): Variable {
-        return new BooleanVariable('Is allowed to vote', 'isAllowedToVote')
+        return new BooleanVariable(Locale.bless('Is allowed to vote'), 'isAllowedToVote')
     }
 
     protected getCandidateElements(): string[][] {

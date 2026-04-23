@@ -1,12 +1,13 @@
 import { Html, Input, Label, Paragraph, Span } from './html.js'
+import { Locale, LocalizedText } from './locale.js'
 
 export abstract class Variable {
-    public readonly label: string
+    public readonly label: LocalizedText
     protected value: string = ''
     public readonly name: string
     protected disabled: boolean = false
 
-    protected constructor(label: string, name: string) {
+    protected constructor(label: LocalizedText, name: string) {
         this.label = label
         this.name = name
     }
@@ -27,9 +28,9 @@ export abstract class Variable {
 }
 
 export class RadioVariable extends Variable {
-    private readonly texts: readonly string[]
+    private readonly texts: readonly LocalizedText[]
 
-    public constructor(label: string, name: string, texts: readonly string[]) {
+    public constructor(label: LocalizedText, name: string, texts: readonly LocalizedText[]) {
         super(label, name)
         this.texts = texts
     }
@@ -53,7 +54,7 @@ export class RadioVariable extends Variable {
 }
 
 export class BooleanVariable extends Variable {
-    public constructor(label: string, name: string) {
+    public constructor(label: LocalizedText, name: string) {
         super(label, name)
     }
 
@@ -62,7 +63,7 @@ export class BooleanVariable extends Variable {
     }
 
     public toHtml(): Html {
-        const radioButtons = ['true', 'false'].map(text => {
+        const radioButtons = [Locale.bless('true'), Locale.bless('false')].map(text => {
             const input = new Input().setType('radio').setName(this.name).setValue(text).setChecked(text === this.value).setDisabled(this.disabled).setRequired()
             return new Label().appendChild(input).appendText(text)
         })
@@ -76,7 +77,7 @@ export class BooleanVariable extends Variable {
 }
 
 export class TextVariable extends Variable {
-    public constructor(label: string, name: string) {
+    public constructor(label: LocalizedText, name: string) {
         super(label, name)
     }
 
@@ -96,7 +97,7 @@ export class TextVariable extends Variable {
 }
 
 export class IntegerVariable extends Variable {
-    public constructor(label: string, name: string) {
+    public constructor(label: LocalizedText, name: string) {
         super(label, name)
     }
 
@@ -117,7 +118,7 @@ export class IntegerVariable extends Variable {
 }
 
 export class FloatVariable extends Variable {
-    public constructor(label: string, name: string) {
+    public constructor(label: LocalizedText, name: string) {
         super(label, name)
     }
 

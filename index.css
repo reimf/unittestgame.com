@@ -115,7 +115,7 @@ code {
             .class {
                 color: var(--highlight-class);
             }
-            
+
             .function {
                 color: var(--highlight-function);
             }
@@ -127,11 +127,11 @@ code {
             .literal {
                 color: var(--highlight-literal);
             }
-            
+
             .number {
                 color: var(--highlight-number);
             }
-            
+
             .operator {
                 color: var(--highlight-operator);
             }
@@ -139,7 +139,7 @@ code {
             .string {
                 color: var(--highlight-string);
             }
-            
+
             .regexp {
                 color: var(--highlight-regexp);
             }
@@ -397,7 +397,7 @@ a, button, input, label:has(input[type="radio"]:not(:disabled)) {
                         }
                     }
                 }
-                
+
                 p {
                     margin: 0;
                 }

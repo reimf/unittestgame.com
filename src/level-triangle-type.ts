@@ -1,4 +1,5 @@
 import { Level } from './level-base.js'
+import { Locale, LocalizedText } from './locale.js'
 import { Variable, RadioVariable, IntegerVariable } from './variable.js'
 
 export class TriangleType extends Level {
@@ -10,20 +11,20 @@ export class TriangleType extends Level {
         return 'Triangle Type'
     }
 
-    protected specification(): string {
+    protected specification(): LocalizedText {
         return this.locale.triangleTypeSpecification()
     }
 
     protected getParameters(): Variable[] {
         return [
-            new IntegerVariable('Side A', 'a'),
-            new IntegerVariable('Side B', 'b'),
-            new IntegerVariable('Side C', 'c'),
+            new IntegerVariable(Locale.bless('Side A'), 'a'),
+            new IntegerVariable(Locale.bless('Side B'), 'b'),
+            new IntegerVariable(Locale.bless('Side C'), 'c'),
         ]
     }
 
     protected getUnit(): Variable {
-        return new RadioVariable('Type of triangle', 'triangleType', ['equilateral', 'isosceles', 'scalene'])
+        return new RadioVariable(Locale.bless('Type of triangle'), 'triangleType', [Locale.bless('equilateral'), Locale.bless('isosceles'), Locale.bless('scalene')])
     }
 
     protected getCandidateElements(): string[][] {

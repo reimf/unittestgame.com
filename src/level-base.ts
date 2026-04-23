@@ -2,7 +2,7 @@ import { Candidate } from './candidate.js'
 import { Completed } from './completed.js'
 import { ComputerMessage, HumanMessage, Message, Panel } from './frame.js'
 import { Button, CodeBlock, Div, Form, OrderedList, Submit } from './html.js'
-import { Locale } from './locale.js'
+import { Locale, LocalizedText } from './locale.js'
 import { Random } from './random.js'
 import { TestResult } from './test-result.js'
 import { UnitTest } from './unit-test.js'
@@ -49,7 +49,7 @@ export abstract class Level {
 
     protected abstract identifier(): string
     protected abstract name(): string
-    protected abstract specification(): string
+    protected abstract specification(): LocalizedText
     protected abstract getParameters(): Variable[]
     protected abstract getUnit(): Variable
     protected abstract getCandidateElements(): string[][]

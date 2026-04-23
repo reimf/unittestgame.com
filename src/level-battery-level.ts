@@ -1,9 +1,10 @@
 import { ComputerMessage } from './frame.js'
 import { Level } from './level-base.js'
+import { Locale, LocalizedText } from './locale.js'
 import { Variable, IntegerVariable, RadioVariable } from './variable.js'
 
 type FormStringsType = {
-    message: string
+    message: LocalizedText
     batteryLevel: string|null
     powerMode: string|null
 }
@@ -18,18 +19,18 @@ export class BatteryLevel extends Level {
         return 'Battery Level'
     }
 
-    protected specification(): string {
+    protected specification(): LocalizedText {
         return this.locale.batteryLevelSpecification()
     }
 
     protected getParameters(): Variable[] {
         return [
-            new IntegerVariable('Battery Level', 'batteryLevel'),
+            new IntegerVariable(Locale.bless('Battery Level'), 'batteryLevel'),
         ]
     }
 
     protected getUnit(): Variable {
-        return new RadioVariable('Power Mode', 'powerMode', ['Normal Mode', 'Low Power Mode'])
+        return new RadioVariable(Locale.bless('Power Mode'), 'powerMode', [Locale.bless('Normal Mode'), Locale.bless('Low Power Mode')])
     }
 
     protected getCandidateElements(): string[][] {
@@ -77,7 +78,7 @@ export class BatteryLevel extends Level {
         },
         {
             message: this.locale.addBatteryLevel19(),
-            batteryLevel: '19', 
+            batteryLevel: '19',
             powerMode: 'Low Power Mode'
         },
         {
@@ -87,7 +88,7 @@ export class BatteryLevel extends Level {
         },
         {
             message: this.locale.addBatteryLevel21(),
-            batteryLevel: '21', 
+            batteryLevel: '21',
             powerMode: 'Normal Mode'
         },
         {
@@ -97,7 +98,7 @@ export class BatteryLevel extends Level {
         },
         {
             message: this.locale.addBatteryLevel18(),
-            batteryLevel: '18', 
+            batteryLevel: '18',
             powerMode: 'Low Power Mode'
         },
         {

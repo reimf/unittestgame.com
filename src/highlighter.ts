@@ -1,4 +1,5 @@
 import { Div, Span, Del, Ins } from './html.js'
+import { Locale } from './locale.js'
 
 type TokenType = {
     name: string
@@ -70,7 +71,7 @@ export class Highlighter {
 
     private highlightLine(currentLine: string): Div {
         const tokens = Array.from(new Tokenizer(currentLine).tokens())
-        const spans = tokens.map(token => new Span().addClass(token.type).appendText(token.text))
+        const spans = tokens.map(token => new Span().addClass(token.type).appendText(Locale.bless(token.text)))
         return new Div().appendChildren(spans)
     }
 
@@ -82,17 +83,17 @@ export class Highlighter {
         while (previousTokens.length > 0 || currentTokens.length > 0) {
             if (commonTokens.length > 0 && previousTokens.length > 0 && currentTokens.length > 0 && previousTokens[0]!.equals(commonTokens[0]!) && currentTokens[0]!.equals(commonTokens[0]!)) {
                 const token = commonTokens.shift()!
-                div.appendChild(new Span().addClass(token.type).appendText(token.text))
+                div.appendChild(new Span().addClass(token.type).appendText(Locale.bless(token.text)))
                 previousTokens.shift()
                 currentTokens.shift()
             }
             else if (previousTokens.length > 0 && !(commonTokens.length > 0 && previousTokens[0]!.equals(commonTokens[0]!))) {
                 const token = previousTokens.shift()!
-                div.appendChild(new Del().addClass(token.type).appendText(token.text))
+                div.appendChild(new Del().addClass(token.type).appendText(Locale.bless(token.text)))
             }
             else if (currentTokens.length > 0 && !(commonTokens.length > 0 && currentTokens[0]!.equals(commonTokens[0]!))) {
                 const token = currentTokens.shift()!
-                div.appendChild(new Ins().addClass(token.type).appendText(token.text))
+                div.appendChild(new Ins().addClass(token.type).appendText(Locale.bless(token.text)))
             }
         }
         return div

@@ -1,4 +1,5 @@
 import { Level } from './level-base.js'
+import { Locale, LocalizedText } from './locale.js'
 import { Variable, BooleanVariable, IntegerVariable } from './variable.js'
 
 export class LeapYear extends Level {
@@ -10,18 +11,18 @@ export class LeapYear extends Level {
         return 'Leap Year'
     }
 
-    protected specification(): string {
+    protected specification(): LocalizedText {
         return this.locale.leapYearSpecification()
     }
 
     protected getParameters(): Variable[] {
         return [
-            new IntegerVariable('Year', 'year'),
+            new IntegerVariable(Locale.bless('Year'), 'year'),
         ]
     }
 
     protected getUnit(): Variable {
-        return new BooleanVariable('Is a leap year', 'isLeapYear')
+        return new BooleanVariable(Locale.bless('Is a leap year'), 'isLeapYear')
     }
 
     protected getCandidateElements(): string[][] {

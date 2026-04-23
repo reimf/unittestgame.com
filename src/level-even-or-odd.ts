@@ -1,4 +1,5 @@
 import { Level } from './level-base.js'
+import { Locale, LocalizedText } from './locale.js'
 import { Variable, BooleanVariable, IntegerVariable } from './variable.js'
 
 export class EvenOrOdd extends Level {
@@ -10,18 +11,18 @@ export class EvenOrOdd extends Level {
         return 'Even or Odd'
     }
 
-    protected specification(): string {
+    protected specification(): LocalizedText {
         return this.locale.evenOddSpecification()
     }
 
     protected getParameters(): Variable[] {
         return [
-            new IntegerVariable('Number', 'num'),
+            new IntegerVariable(Locale.bless('Number'), 'num'),
         ]
     }
 
     protected getUnit(): Variable {
-        return new BooleanVariable('Is even', 'isEven')
+        return new BooleanVariable(Locale.bless('Is even'), 'isEven')
     }
 
     protected getCandidateElements(): string[][] {

@@ -1,4 +1,5 @@
 import { Level } from './level-base.js'
+import { Locale, LocalizedText } from './locale.js'
 import { Variable, IntegerVariable, RadioVariable } from './variable.js'
 
 export class Review extends Level {
@@ -9,19 +10,19 @@ export class Review extends Level {
     protected name(): string {
         return 'Review'
     }
-    protected specification(): string {
+    protected specification(): LocalizedText {
         return this.locale.reviewSpecification()
     }
 
     protected getParameters(): Variable[] {
         return [
-            new IntegerVariable('Price', 'price'),
-            new IntegerVariable('Quality', 'quality'),
+            new IntegerVariable(Locale.bless('Price'), 'price'),
+            new IntegerVariable(Locale.bless('Quality'), 'quality'),
         ]
     }
 
     protected getUnit(): Variable {
-        return new RadioVariable('Output', 'review', ['Good', 'Bad', 'Ok'])
+        return new RadioVariable(Locale.bless('Output'), 'review', [Locale.bless('Good'), Locale.bless('Bad'), Locale.bless('Ok')])
     }
 
     protected getCandidateElements(): string[][] {

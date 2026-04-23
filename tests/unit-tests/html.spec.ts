@@ -1,51 +1,52 @@
 import { test, expect } from '@playwright/test'
 import { Span, Div, Section, Code, CodeBlock, Label, Paragraph, Form, Header, Input, Bold, Italic, Anchor } from '../../src/html.js'
+import { Locale } from '../../src/locale.js'
 
 
 test.describe('class Html', () => {
     test('appends text', () => {
-        const header = new Header().appendText('abc')
+        const header = new Header().appendText(Locale.bless('abc'))
         expect(header.toString()).toBe('<header>abc</header>')
     })
 
     test('appends child', () => {
-        const span = new Span().appendMarkdown('abc')
+        const span = new Span().appendMarkdown(Locale.bless('abc'))
         const header = new Header().appendChild(span)
         expect(header.toString()).toBe('<header><span>abc</span></header>')
     })
 
     test('appends children', () => {
-        const span1 = new Span().appendMarkdown('abc')
-        const span2 = new Span().appendMarkdown('def')
+        const span1 = new Span().appendMarkdown(Locale.bless('abc'))
+        const span2 = new Span().appendMarkdown(Locale.bless('def'))
         const header = new Header().appendChildren([span1, span2])
         expect(header.toString()).toBe('<header><span>abc</span><span>def</span></header>')
     })
 
     test('prepends child', () => {
-        const span1 = new Span().appendMarkdown('abc')
-        const span2 = new Span().appendMarkdown('def')
+        const span1 = new Span().appendMarkdown(Locale.bless('abc'))
+        const span2 = new Span().appendMarkdown(Locale.bless('def'))
         const header = new Header().appendChild(span2)
         header.prependChild(span1)
         expect(header.toString()).toBe('<header><span>abc</span><span>def</span></header>')
     })
 
     test('appends bold in markdown', () => {
-        const header = new Header().appendMarkdown('this is **bold**')
+        const header = new Header().appendMarkdown(Locale.bless('this is **bold**'))
         expect(header.toString()).toBe('<header>this is <b>bold</b></header>')
     })
 
     test('appends italic in markdown', () => {
-        const header = new Header().appendMarkdown('this is *italic* and this is not')
+        const header = new Header().appendMarkdown(Locale.bless('this is *italic* and this is not'))
         expect(header.toString()).toBe('<header>this is <i>italic</i> and this is not</header>')
     })
 
     test('appends anchor in markdown', () => {
-        const header = new Header().appendMarkdown('this is a [website](https://example.com)')
+        const header = new Header().appendMarkdown(Locale.bless('this is a [website](https://example.com)'))
         expect(header.toString()).toBe('<header>this is a <a href="https://example.com">website</a></header>')
     })
 
     test('appends code in markdown', () => {
-        const header = new Header().appendMarkdown('this is `code` here')
+        const header = new Header().appendMarkdown(Locale.bless('this is `code` here'))
         expect(header.toString()).toBe('<header>this is <code class="language-javascript">code</code> here</header>')
     })
 
@@ -60,12 +61,12 @@ test.describe('class Html', () => {
     })
 
     test('has header', () => {
-        const header = new Header().appendText('title')
+        const header = new Header().appendText(Locale.bless('title'))
         expect(header.toString()).toBe('<header>title</header>')
     })
 
     test('has paragraph', () => {
-        const paragraph = new Paragraph().appendText('text')
+        const paragraph = new Paragraph().appendText(Locale.bless('text'))
         expect(paragraph.toString()).toBe('<p>text</p>')
     })
 
@@ -75,42 +76,42 @@ test.describe('class Html', () => {
     })
 
     test('has label', () => {
-        const label = new Label().appendText('text')
+        const label = new Label().appendText(Locale.bless('text'))
         expect(label.toString()).toBe('<label>text</label>')
     })
 
     test('has code', () => {
-        const code = new Code().appendText('text')
+        const code = new Code().appendText(Locale.bless('text'))
         expect(code.toString()).toBe('<code class="language-javascript">text</code>')
     })
 
     test('has code block', () => {
-        const code = new CodeBlock().appendText('text')
+        const code = new CodeBlock().appendText(Locale.bless('text'))
         expect(code.toString()).toBe('<code class="language-javascript block">text</code>')
     })
 
     test('has section', () => {
-        const section = new Section().appendText('text')
+        const section = new Section().appendText(Locale.bless('text'))
         expect(section.toString()).toBe('<section>text</section>')
     })
 
     test('has div', () => {
-        const div = new Div().appendText('text')
+        const div = new Div().appendText(Locale.bless('text'))
         expect(div.toString()).toBe('<div>text</div>')
     })
 
     test('has span', () => {
-        const span = new Span().appendText('text')
+        const span = new Span().appendText(Locale.bless('text'))
         expect(span.toString()).toBe('<span>text</span>')
     })
 
     test('has italic', () => {
-        const italic = new Italic().appendText('text')
+        const italic = new Italic().appendText(Locale.bless('text'))
         expect(italic.toString()).toBe('<i>text</i>')
     })
 
     test('has bold', () => {
-        const bold = new Bold().appendText('text')
+        const bold = new Bold().appendText(Locale.bless('text'))
         expect(bold.toString()).toBe('<b>text</b>')
     })
 })
