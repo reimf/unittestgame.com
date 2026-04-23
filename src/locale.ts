@@ -203,10 +203,10 @@ export class Locale {
 
     public currentFunctionImproved(numberOfUnitTests: number): LocalizedText {
         return this.pick({
-            en: `I've added the unit test to the *Unit Tests* and improved the *Current Function* ' +
-                'so the new unit test now passes${numberOfUnitTests === 1 ? '' : ' as well'}.`,
-            nl: `Ik heb de unit test toegevoegd aan de *Unit Testen* en de *Huidige Functie* verbeterd ' +
-                'zodat de nieuwe unit test nu${numberOfUnitTests === 1 ? '' : ' ook'} slaagt.`,
+            en: `I've added the unit test to the *Unit Tests* and improved the *Current Function* ` +
+                `so the new unit test now passes${numberOfUnitTests === 1 ? '' : ' as well'}.`,
+            nl: `Ik heb de unit test toegevoegd aan de *Unit Testen* en de *Huidige Functie* verbeterd ` +
+                `zodat de nieuwe unit test nu${numberOfUnitTests === 1 ? '' : ' ook'} slaagt.`,
         })
     }
 
