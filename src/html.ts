@@ -1,4 +1,4 @@
-import type { LocalizedText } from './locale.js'
+import { Locale, LocalizedText } from './locale.js'
 
 abstract class Content {
     private static timeOfLastDelayedCall: number = 0
@@ -53,15 +53,15 @@ export class Html extends Content {
         for (const { groups } of markdown.matchAll(pattern)) {
             const { bold, italic, code, linkText, linkUrl, plain } = groups!
             if (bold)
-                this.appendChild(new Bold().appendMarkdown(bold as LocalizedText))
+                this.appendChild(new Bold().appendMarkdown(Locale.bless(bold)))
             else if (italic)
-                this.appendChild(new Italic().appendMarkdown(italic as LocalizedText))
+                this.appendChild(new Italic().appendMarkdown(Locale.bless(italic)))
             else if (code)
-                this.appendChild(new Code().appendMarkdown(code as LocalizedText))
+                this.appendChild(new Code().appendMarkdown(Locale.bless(code)))
             else if (linkText && linkUrl)
-                this.appendChild(new Anchor().setHref(linkUrl).appendMarkdown(linkText as LocalizedText))
+                this.appendChild(new Anchor().setHref(linkUrl).appendMarkdown(Locale.bless(linkText)))
             else if (plain)
-                this.appendText(plain as LocalizedText)
+                this.appendText(Locale.bless(plain))
         }
         return this
     }
@@ -103,16 +103,14 @@ export class Html extends Content {
 
     public toNode(): Node {
         const node = document.createElement(this.tagName)
-        for (const className of this.classList)
-            node.classList.add(className)
         if (this.id)
             node.id = this.id
-        for (const child of this.children)
-            node.appendChild(child.toNode())
+        node.classList.add(...this.classList)
+        node.replaceChildren(...this.children.map(child => child.toNode()))
         return node
     }
 
-    protected replaceEnclosingMessageContent(element: HTMLElement, text: string): void {
+    protected replaceEnclosingMessageContent(element: HTMLElement, text: LocalizedText): void {
         const section = element.closest('section')!
         section.classList.remove('reveal')
         const textNode = document.createTextNode(text + '.')
@@ -124,7 +122,7 @@ export class Html extends Content {
 }
 
 class Text extends Content {
-    private readonly text: string
+    private readonly text: LocalizedText
 
     public constructor(text: LocalizedText) {
         super()
@@ -280,7 +278,7 @@ export class Form extends Html {
                 form.querySelectorAll('input').forEach(input => input.disabled = false)
                 const formData = new FormData(form)
                 const submit = form.querySelector('input[type="submit"]') as HTMLInputElement
-                this.replaceEnclosingMessageContent(form, submit.value)
+                this.replaceEnclosingMessageContent(form, Locale.bless(submit.value))
                 this.callback!(formData)
             })
         return form
@@ -313,7 +311,7 @@ export class Button extends FormControl {
         if (this.callback)
             button.addEventListener('click', event => {
                 event.preventDefault()
-                this.replaceEnclosingMessageContent(button, button.textContent || 'ERROR')
+                this.replaceEnclosingMessageContent(button, Locale.bless(button.textContent))
                 this.callback!()
             })
         return button
