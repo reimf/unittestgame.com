@@ -13,9 +13,9 @@ abstract class Frame extends Section {
     }
 
     protected addTo(parent: HTMLElement): HTMLElement {
-        const node = this.toDomElement()
-        parent.appendChild(node)
-        return node
+        const element = this.getElement()
+        parent.appendChild(element)
+        return element
     }
 }
 
@@ -36,7 +36,7 @@ export class Panel extends Frame {
     public show(): void {
         const existingElement = this.existingElement()
         if (existingElement)
-            existingElement.replaceWith(this.toDomElement())
+            existingElement.replaceWith(this.getElement())
         else
             this.addTo(Panel.getPanelsElement())
     }
@@ -60,16 +60,16 @@ export abstract class Message extends Frame {
     public static addToLast(elements: Html[]): void {
         const lastMessage = Message.getMessagesElement().lastElementChild!
         const lastDiv = lastMessage.querySelector('div')!
-        elements.forEach(element => lastDiv.appendChild(element.toDomElement()))
+        elements.forEach(element => lastDiv.appendChild(element.getElement()))
     }
 
     public show(extra: () => void=() => {}): void {
         this.callDelayed(() => {
             const count = Message.getMessagesElement().childElementCount
             this.setId(`message-${count}`)
-            const node = this.addTo(Message.getMessagesElement()) as HTMLElement
-            node.classList.add('reveal')
-            node.scrollIntoView()
+            const element = this.addTo(Message.getMessagesElement())
+            element.classList.add('reveal')
+            element.scrollIntoView()
             const focusable = document.querySelector('button:not([disabled]), input:not([disabled])')
             if (focusable)
                 (focusable as HTMLElement).focus()

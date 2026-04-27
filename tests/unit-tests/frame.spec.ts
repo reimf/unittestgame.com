@@ -9,7 +9,7 @@ global.document = document
 test.describe('class Frame', () => {
     test('subclass Panel', () => {
         const panel = new Panel('current-level', Locale.bless('Current Level'), [Locale.bless('Level 1')])
-        expect(panel.toDomElement().outerHTML).toBe(
+        expect(panel.getElement().outerHTML).toBe(
             '<section id="current-level">' +
                 '<header>Current Level</header>' +
                 '<div>' +
@@ -21,7 +21,7 @@ test.describe('class Frame', () => {
 
     test('subclass ComputerMessage', () => {
         const computerMessage = new ComputerMessage([Locale.bless('Hello'), Locale.bless('World')])
-        expect(computerMessage.toDomElement().outerHTML).toBe(
+        expect(computerMessage.getElement().outerHTML).toBe(
             '<section class="computer">' +
                 '<div>' +
                    '<p>Hello</p>' +
@@ -33,7 +33,7 @@ test.describe('class Frame', () => {
 
     test('subclass HumanMessage', () => {
         const humanMessage = new HumanMessage([Locale.bless('Hello'), Locale.bless('World')])
-        expect(humanMessage.toDomElement().outerHTML).toBe(
+        expect(humanMessage.getElement().outerHTML).toBe(
             '<section class="human">' +
                 '<div>' +
                     '<p>Hello</p>' +
@@ -45,7 +45,7 @@ test.describe('class Frame', () => {
 
     test('subclass QuestionMessage', () => {
         const questionMessage = new QuestionMessage(Locale.bless('Hello'), () => {})
-        expect(questionMessage.toDomElement().outerHTML).toBe(
+        expect(questionMessage.getElement().outerHTML).toBe(
             '<section class="human">' +
                 '<div>' +
                    '<button>Hello</button>' +

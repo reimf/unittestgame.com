@@ -15,7 +15,7 @@ test.describe('class Highlighter', () => {
             '  return undefined' +
             '}'
         const highlighted = new Highlighter(javascript).highlight()
-        expect(highlighted.toDomElement().outerHTML).toBe(
+        expect(highlighted.getElement().outerHTML).toBe(
             '<div>' +
                 '<span class="keyword">function</span>' +
                 '<span class="whitespace"> </span>' +
@@ -136,7 +136,7 @@ test.describe('class Highlighter', () => {
         const textFrom = 'if (age > 18) return true'
         const textTo = 'if (age >= 19) return false'
         const highlighted = new Highlighter(textTo, textFrom).highlight()
-        expect(highlighted.toDomElement().outerHTML).toBe(
+        expect(highlighted.getElement().outerHTML).toBe(
             '<div>' +
                 '<span class="keyword">if</span>' +
                 '<span class="whitespace"> </span>' +

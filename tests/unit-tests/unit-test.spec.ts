@@ -13,7 +13,7 @@ test.describe('class UnitTest', () => {
         const unit = new IntegerVariable(Locale.bless('Divide'), 'divide')
         const unitTest = new UnitTest(parameters, [6, 3], unit, 2)
         const html = unitTest.toHtml()
-        expect(html.toDomElement().outerHTML).toBe(
+        expect(html.getElement().outerHTML).toBe(
             '<div>' +
                 '<span class="function">divide</span>' +
                 '<span class="punctuation">(</span>' +
@@ -35,7 +35,7 @@ test.describe('class UnitTest', () => {
         const unit = new IntegerVariable(Locale.bless('Divide'), 'divide')
         const unitTest = new UnitTest(parameters, [6, 3], unit, 2)
         const htmlWithResult = unitTest.toHtmlWithResult(5)
-        expect(htmlWithResult.toDomElement().outerHTML).toBe(
+        expect(htmlWithResult.getElement().outerHTML).toBe(
             '<div>' +
                 '<span class="function">divide</span>' +
                 '<span class="punctuation">(</span>' +

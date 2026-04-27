@@ -35,7 +35,7 @@ test.describe('class TestResult', () => {
         const unitTest = new UnitTest(parameters, [6, 7], unit, true)
         const testResult = new TestResult(candidate, unitTest)
         const html = testResult.toHtml()
-        expect(html.toDomElement().outerHTML).toBe(
+        expect(html.getElement().outerHTML).toBe(
             '<div>' +
                 '<span class="function">isNextNumber</span>' +
                 '<span class="punctuation">(</span>' +

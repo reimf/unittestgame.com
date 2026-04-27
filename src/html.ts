@@ -2,6 +2,15 @@ import { Locale, LocalizedText } from './locale.js'
 
 abstract class Content {
     private static timeOfLastDelayedCall: number = 0
+    protected node: Node
+
+    protected constructor(node: Node) {
+        this.node = node
+    }
+
+    public getNode(): Node {
+        return this.node
+    }
 
     protected callDelayed(callback: () => void): void {
         const now = Date.now()
@@ -9,33 +18,30 @@ abstract class Content {
         Html.timeOfLastDelayedCall = now + delay
         window.setTimeout(() => callback(), delay)
     }
-
-    public abstract toNode(): Node
 }
 
-export class Html extends Content {
-    private readonly tagName: string
-    private id: string = ''
-    private readonly classList: string[] = []
-    private readonly children: Content[] = []
-
+export abstract class Html extends Content {
     protected constructor(tagName: string) {
-        super()
-        this.tagName = tagName
+        const element = document.createElement(tagName)
+        super(element)
+    }
+
+    public getElement(): HTMLElement {
+        return this.node as HTMLElement
     }
 
     public setId(id: string): this {
-        this.id = id
+        this.getElement().id = id
         return this
     }
 
     public getId(): string {
-        return this.id
+        return this.getElement().id
     }
 
     public addClass(value: string): this {
         if (value)
-            this.classList.push(value)
+            this.getElement().classList.add(value)
         return this
     }
 
@@ -66,36 +72,23 @@ export class Html extends Content {
     }
 
     public appendText(text: LocalizedText): this {
-        this.children.push(new Text(text))
+        this.getElement().append(new Text(text).getNode())
         return this
     }
 
     public prependChild(child: Content): this {
-        this.children.unshift(child)
+        this.getElement().prepend(child.getNode())
         return this
     }
 
     public appendChild(child: Content): this {
-        this.children.push(child)
+        this.getElement().append(child.getNode())
         return this
     }
 
     public appendChildren(children: readonly Content[]): this {
-        this.children.push(...children)
+        this.getElement().append(...(children.map(child => child.getNode())))
         return this
-    }
-
-    public toNode(): Node {
-        return this.toDomElement()
-    }
-
-    public toDomElement(): HTMLElement {
-        const element = document.createElement(this.tagName)
-        if (this.id)
-            element.id = this.id
-        element.classList.add(...this.classList)
-        element.replaceChildren(...this.children.map(child => child.toNode()))
-        return element
     }
 
     protected replaceEnclosingMessageContent(element: HTMLElement, text: LocalizedText): void {
@@ -110,104 +103,65 @@ export class Html extends Content {
 }
 
 class Text extends Content {
-    private readonly text: LocalizedText
-
     public constructor(text: LocalizedText) {
-        super()
-        this.text = text
-    }
-
-    public toNode(): Node {
-        return document.createTextNode(this.text)
+        const textNode = document.createTextNode(text)
+        super(textNode)
     }
 }
 
-class FormControl extends Html {
-    private disabled: boolean = false
-
-    public setDisabled(disabled: boolean): this {
-        this.disabled = disabled
-        return this
-    }
-
-    public override toDomElement(): HTMLElement {
-        const element = super.toDomElement()
-        if (this.disabled)
-            element.setAttribute('disabled', 'disabled')
-        return element
-    }
-}
-
-export class Input extends FormControl {
-    private type: string = ''
-    private name: string = ''
-    private value: string = ''
-    private autocomplete: boolean|undefined = undefined
-    private checked: boolean = false
-    private required: boolean = false
-    private pattern: string = ''
-    private title: string = ''
-
+export class Input extends Html {
     public constructor() {
         super('input')
+        this.getInputElement().addEventListener('focus', () => this.getInputElement().checked = true)
+    }
+
+    private getInputElement(): HTMLInputElement {
+        return this.getElement() as HTMLInputElement
     }
 
     public setType(type: string): this {
-        this.type = type
+        this.getInputElement().type = type
         return this
     }
 
     public setName(name: string): this {
-        this.name = name
+        this.getInputElement().name = name
         return this
     }
 
     public setValue(value: string): this {
-        this.value = value
+        this.getInputElement().value = value
+        return this
+    }
+
+    public setDisabled(disabled: boolean): this {
+        this.getInputElement().disabled = disabled
         return this
     }
 
     public setAutocomplete(autocomplete: boolean = true): this {
-        this.autocomplete = autocomplete
+        this.getInputElement().autocomplete = autocomplete ? 'on' : 'off'
         return this
     }
 
     public setChecked(checked: boolean = true): this {
-        this.checked = checked
+        this.getInputElement().checked = checked
         return this
     }
 
     public setRequired(required: boolean = true): this {
-        this.required = required
+        this.getInputElement().required = required
         return this
     }
 
-    public setPattern(pattern: RegExp, title: string): this {
-        this.pattern = pattern.toString().replaceAll('/', '')
-        this.title = title
+    public setPattern(pattern: RegExp): this {
+        this.getInputElement().pattern = pattern.toString().replaceAll('/', '')
         return this
     }
 
-    public override toDomElement(): HTMLElement {
-        const input = super.toDomElement() as HTMLInputElement
-        if (this.type)
-            input.type = this.type
-        if (this.name)
-            input.name = this.name
-        if (this.value)
-            input.value = this.value
-        if (this.autocomplete !== undefined)
-            input.autocomplete = this.autocomplete ? "on" : "off"
-        if (this.checked)
-            input.checked = true
-        if (this.required)
-            input.required = true
-        if (this.pattern)
-            input.pattern = this.pattern
-        if (this.title)
-            input.title = this.title
-        input.addEventListener('focus', () => input.checked = true)
-        return input
+    public setTitle(title: string): this {
+        this.getInputElement().title = title
+        return this
     }
 }
 
@@ -219,25 +173,20 @@ export class Submit extends Input {
 }
 
 export class Form extends Html {
-    private readonly callback: (formData: FormData) => void
-
     public constructor(callback: (formData: FormData) => void) {
         super('form')
-        this.callback = callback
+        this.getFormElement().addEventListener('submit', event => {
+            event.preventDefault()
+            this.getFormElement().querySelectorAll('input').forEach(input => input.disabled = false)
+            const formData = new FormData(this.getFormElement())
+            const submit = this.getFormElement().querySelector('input[type="submit"]') as HTMLInputElement
+            this.replaceEnclosingMessageContent(this.getFormElement(), Locale.bless(submit.value))
+            callback(formData)
+        })
     }
 
-    public override toDomElement(): HTMLElement {
-        const form = super.toDomElement() as HTMLFormElement
-        if (this.callback)
-            form.addEventListener('submit', event => {
-                event.preventDefault()
-                form.querySelectorAll('input').forEach(input => input.disabled = false)
-                const formData = new FormData(form)
-                const submit = form.querySelector('input[type="submit"]') as HTMLInputElement
-                this.replaceEnclosingMessageContent(form, Locale.bless(submit.value))
-                this.callback!(formData)
-            })
-        return form
+    private getFormElement(): HTMLFormElement {
+        return this.getElement() as HTMLFormElement
     }
 }
 
@@ -253,24 +202,15 @@ export class Paragraph extends Html {
     }
 }
 
-export class Button extends FormControl {
-    private readonly callback: () => void
-
+export class Button extends Html {
     public constructor(text: LocalizedText, callback: () => void) {
         super('button')
         this.appendText(text)
-        this.callback = callback
-    }
-
-    public override toDomElement(): HTMLElement {
-        const button = super.toDomElement() as HTMLButtonElement
-        if (this.callback)
-            button.addEventListener('click', event => {
-                event.preventDefault()
-                this.replaceEnclosingMessageContent(button, Locale.bless(button.textContent))
-                this.callback!()
-            })
-        return button
+        this.getElement().addEventListener('click', event => {
+            event.preventDefault()
+            this.replaceEnclosingMessageContent(this.getElement(), Locale.bless(this.getElement().textContent))
+            callback()
+        })
     }
 }
 
@@ -349,21 +289,16 @@ export class Bold extends Html {
 }
 
 export class Anchor extends Html {
-    private href: string = ''
-
     public constructor() {
         super('a')
     }
 
-    public setHref(href: string): this {
-        this.href = href
-        return this
+    private getAnchorElement(): HTMLAnchorElement {
+        return this.getElement() as HTMLAnchorElement
     }
 
-    public override toDomElement(): HTMLElement {
-        const anchor = super.toDomElement() as HTMLAnchorElement
-        if (this.href)
-            anchor.href = this.href
-        return anchor
+    public setHref(href: string): this {
+        this.getAnchorElement().href = href
+        return this
     }
 }
