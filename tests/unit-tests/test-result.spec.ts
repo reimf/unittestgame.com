@@ -1,9 +1,13 @@
 import { test, expect } from '@playwright/test'
+import { JSDOM } from 'jsdom'
 import { TestResult } from '../../src/test-result.js'
 import { Candidate } from '../../src/candidate.js'
 import { UnitTest } from '../../src/unit-test.js'
 import { IntegerVariable, BooleanVariable } from '../../src/variable.js'
 import { Locale } from '../../src/locale.js'
+
+const { document } = new JSDOM('<!DOCTYPE html>').window
+global.document = document
 
 test.describe('class TestResult', () => {
     test('passes', () => {
@@ -30,7 +34,8 @@ test.describe('class TestResult', () => {
         const unit = new BooleanVariable(Locale.bless('Is next number'), 'isNextNumber')
         const unitTest = new UnitTest(parameters, [6, 7], unit, true)
         const testResult = new TestResult(candidate, unitTest)
-        expect(testResult.toHtml().toString()).toBe(
+        const html = testResult.toHtml()
+        expect(html.toDomElement().outerHTML).toBe(
             '<div>' +
                 '<span class="function">isNextNumber</span>' +
                 '<span class="punctuation">(</span>' +

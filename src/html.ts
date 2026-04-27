@@ -10,7 +10,6 @@ abstract class Content {
         window.setTimeout(() => callback(), delay)
     }
 
-    public abstract toString(): string
     public abstract toNode(): Node
 }
 
@@ -86,28 +85,17 @@ export class Html extends Content {
         return this
     }
 
-    protected toAttributes(): string[] {
-        const attributes: string[] = []
-        if (this.classList.length > 0)
-            attributes.push(`class="${this.classList.join(' ')}"`)
-        if (this.id)
-            attributes.push(`id="${this.id}"`)
-        return attributes
-    }
-
-    public toString(): string {
-        return '<' + this.tagName + this.toAttributes().sort().map(attribute => ' ' + attribute).join('') + '>' +
-            this.children.map(child => child.toString()).join('') +
-            '</' + this.tagName + '>'
-    }
-
     public toNode(): Node {
-        const node = document.createElement(this.tagName)
+        return this.toDomElement()
+    }
+
+    public toDomElement(): HTMLElement {
+        const element = document.createElement(this.tagName)
         if (this.id)
-            node.id = this.id
-        node.classList.add(...this.classList)
-        node.replaceChildren(...this.children.map(child => child.toNode()))
-        return node
+            element.id = this.id
+        element.classList.add(...this.classList)
+        element.replaceChildren(...this.children.map(child => child.toNode()))
+        return element
     }
 
     protected replaceEnclosingMessageContent(element: HTMLElement, text: LocalizedText): void {
@@ -129,10 +117,6 @@ class Text extends Content {
         this.text = text
     }
 
-    public toString(): string {
-        return this.text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-    }
-
     public toNode(): Node {
         return document.createTextNode(this.text)
     }
@@ -146,18 +130,11 @@ class FormControl extends Html {
         return this
     }
 
-    protected override toAttributes(): string[] {
-        const attributes = super.toAttributes()
+    public override toDomElement(): HTMLElement {
+        const element = super.toDomElement()
         if (this.disabled)
-            attributes.push('disabled="disabled"')
-        return attributes
-    }
-
-    public override toNode(): Node {
-        const node = super.toNode() as HTMLElement
-        if (this.disabled)
-            node.setAttribute('disabled', 'disabled')
-        return node
+            element.setAttribute('disabled', 'disabled')
+        return element
     }
 }
 
@@ -165,9 +142,9 @@ export class Input extends FormControl {
     private type: string = ''
     private name: string = ''
     private value: string = ''
-    private autocomplete: AutoFillBase = ''
-    private checked: string = ''
-    private required: string = ''
+    private autocomplete: boolean|undefined = undefined
+    private checked: boolean = false
+    private required: boolean = false
     private pattern: string = ''
     private title: string = ''
 
@@ -191,67 +168,46 @@ export class Input extends FormControl {
     }
 
     public setAutocomplete(autocomplete: boolean = true): this {
-        this.autocomplete = autocomplete ? 'on' : 'off'
+        this.autocomplete = autocomplete
         return this
     }
 
     public setChecked(checked: boolean = true): this {
-        this.checked = checked ? 'checked' : ''
+        this.checked = checked
         return this
     }
 
     public setRequired(required: boolean = true): this {
-        this.required = required ? 'required' : ''
+        this.required = required
         return this
     }
 
-    public setPattern(pattern: string, title: string): this {
-        this.pattern = pattern
+    public setPattern(pattern: RegExp, title: string): this {
+        this.pattern = pattern.toString().replaceAll('/', '')
         this.title = title
         return this
     }
 
-    protected override toAttributes(): string[] {
-        const attributes = super.toAttributes()
+    public override toDomElement(): HTMLElement {
+        const input = super.toDomElement() as HTMLInputElement
         if (this.type)
-            attributes.push(`type="${this.type}"`)
+            input.type = this.type
         if (this.name)
-            attributes.push(`name="${this.name}"`)
+            input.name = this.name
         if (this.value)
-            attributes.push(`value="${this.value}"`)
-        if (this.autocomplete)
-            attributes.push(`autocomplete="${this.autocomplete}"`)
+            input.value = this.value
+        if (this.autocomplete !== undefined)
+            input.autocomplete = this.autocomplete ? "on" : "off"
         if (this.checked)
-            attributes.push(`checked="${this.checked}"`)
+            input.checked = true
         if (this.required)
-            attributes.push(`required="${this.required}"`)
+            input.required = true
         if (this.pattern)
-            attributes.push(`pattern="${this.pattern}"`)
+            input.pattern = this.pattern
         if (this.title)
-            attributes.push(`title="${this.title}"`)
-        return attributes
-    }
-
-    public override toNode(): Node {
-        const node = super.toNode() as HTMLInputElement
-        if (this.type)
-            node.type = this.type
-        if (this.name)
-            node.name = this.name
-        if (this.value)
-            node.value = this.value
-        if (this.autocomplete)
-            node.autocomplete = this.autocomplete
-        if (this.checked)
-            node.checked = true
-        if (this.required)
-            node.required = true
-        if (this.pattern)
-            node.pattern = this.pattern
-        if (this.title)
-            node.title = this.title
-        node.addEventListener('focus', () => node.checked = true)
-        return node
+            input.title = this.title
+        input.addEventListener('focus', () => input.checked = true)
+        return input
     }
 }
 
@@ -270,8 +226,8 @@ export class Form extends Html {
         this.callback = callback
     }
 
-    public override toNode(): Node {
-        const form = super.toNode() as HTMLFormElement
+    public override toDomElement(): HTMLElement {
+        const form = super.toDomElement() as HTMLFormElement
         if (this.callback)
             form.addEventListener('submit', event => {
                 event.preventDefault()
@@ -306,8 +262,8 @@ export class Button extends FormControl {
         this.callback = callback
     }
 
-    public override toNode(): Node {
-        const button = super.toNode() as HTMLButtonElement
+    public override toDomElement(): HTMLElement {
+        const button = super.toDomElement() as HTMLButtonElement
         if (this.callback)
             button.addEventListener('click', event => {
                 event.preventDefault()
@@ -340,7 +296,6 @@ class ListItem extends Html {
 export class Code extends Html {
     public constructor() {
         super('code')
-        this.addClass('language-javascript')
     }
 }
 
@@ -405,17 +360,10 @@ export class Anchor extends Html {
         return this
     }
 
-    protected override toAttributes(): string[] {
-        const attributes = super.toAttributes()
+    public override toDomElement(): HTMLElement {
+        const anchor = super.toDomElement() as HTMLAnchorElement
         if (this.href)
-            attributes.push(`href="${this.href}"`)
-        return attributes
-    }
-
-    public override toNode(): Node {
-        const node = super.toNode() as HTMLAnchorElement
-        if (this.href)
-            node.href = this.href
-        return node
+            anchor.href = this.href
+        return anchor
     }
 }

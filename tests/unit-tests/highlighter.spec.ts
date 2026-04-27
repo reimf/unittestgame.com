@@ -1,18 +1,21 @@
 import { test, expect } from '@playwright/test'
+import { JSDOM } from 'jsdom'
 import { Highlighter } from '../../src/highlighter.js'
+
+const { document } = new JSDOM('<!DOCTYPE html>').window
+global.document = document
 
 test.describe('class Highlighter', () => {
     test('highlight with 1 argument', () => {
         const javascript = 'function isFloatFormat(text) {' +
-        '  let regex = new RegExp("/#@/").test(text + "abc")' +
-        '  if (!/[#@]/.test(text)) regex += speed.toFixed(1)' +
-        '  if (a < Math.abs(20.0) && a >= c && b !== c) return true' +
-        '  if (num % 2 === 0) return false' +
-        '  return undefined' +
-        '}'
-
-        const html = new Highlighter(javascript).highlight().toString()
-        expect(html).toBe(
+            '  let regex = new RegExp("/#@/").test(text + "abc")' +
+            '  if (!/[#@]/.test(text)) regex += speed.toFixed(1)' +
+            '  if (a < Math.abs(20.0) && a >= c && b !== c) return true' +
+            '  if (num % 2 === 0) return false' +
+            '  return undefined' +
+            '}'
+        const highlighted = new Highlighter(javascript).highlight()
+        expect(highlighted.toDomElement().outerHTML).toBe(
             '<div>' +
                 '<span class="keyword">function</span>' +
                 '<span class="whitespace"> </span>' +
@@ -132,9 +135,8 @@ test.describe('class Highlighter', () => {
     test('lines method - inline diff', () => {
         const textFrom = 'if (age > 18) return true'
         const textTo = 'if (age >= 19) return false'
-
-        const html = new Highlighter(textTo, textFrom).highlight().toString()
-        expect(html).toBe(
+        const highlighted = new Highlighter(textTo, textFrom).highlight()
+        expect(highlighted.toDomElement().outerHTML).toBe(
             '<div>' +
                 '<span class="keyword">if</span>' +
                 '<span class="whitespace"> </span>' +

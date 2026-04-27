@@ -1,5 +1,9 @@
 import { test, expect } from '@playwright/test'
+import { JSDOM } from 'jsdom'
 import { Candidate } from '../../src/candidate.js'
+
+const { document } = new JSDOM('<!DOCTYPE html>').window
+global.document = document
 
 test.describe('class Candidate', () => {
     test('compares test-driven development complexity of simple and complex function', () => {
@@ -88,8 +92,8 @@ test.describe('class Candidate', () => {
     test('to html', () => {
         const candidate = new Candidate(['function nextYear(year) {', '  return year', '}'])
         const html = candidate.toHtml()
-        expect(html.toString()).toBe(
-            '<code class="language-javascript block">' +
+        expect(html.toDomElement().outerHTML).toBe(
+            '<code class="block">' +
                 '<div>' +
                     '<span class="keyword">function</span>' +
                     '<span class="whitespace"> </span>' +
@@ -116,9 +120,9 @@ test.describe('class Candidate', () => {
     test('to html with previous', () => {
         const candidate = new Candidate(['function nextYear(year) {', '', '', '  if (year < 0) return 0', '  return year + 1', '}'])
         const previousCandidate = new Candidate(['function nextYear(year) {', '', '  if (year === 0) return 0', '', '  return undefined', '}'])
-        const html = candidate.toHtmlWithPrevious(previousCandidate)
-        expect(html.toString()).toBe(
-            '<code class="language-javascript block">' +
+        const htmlWithPrevious = candidate.toHtmlWithPrevious(previousCandidate)
+        expect(htmlWithPrevious.toDomElement().outerHTML).toBe(
+            '<code class="block">' +
                 '<div>' +
                     '<span class="keyword">function</span>' +
                     '<span class="whitespace"> </span>' +

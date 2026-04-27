@@ -12,8 +12,8 @@ abstract class Frame extends Section {
         return document.querySelector('#' + this.getId())
     }
 
-    protected addTo(parent: Element): Node {
-        const node = this.toNode()
+    protected addTo(parent: HTMLElement): HTMLElement {
+        const node = this.toDomElement()
         parent.appendChild(node)
         return node
     }
@@ -36,7 +36,7 @@ export class Panel extends Frame {
     public show(): void {
         const existingElement = this.existingElement()
         if (existingElement)
-            existingElement.replaceWith(this.toNode())
+            existingElement.replaceWith(this.toDomElement())
         else
             this.addTo(Panel.getPanelsElement())
     }
@@ -60,7 +60,7 @@ export abstract class Message extends Frame {
     public static addToLast(elements: Html[]): void {
         const lastMessage = Message.getMessagesElement().lastElementChild!
         const lastDiv = lastMessage.querySelector('div')!
-        elements.forEach(element => lastDiv.appendChild(element.toNode()))
+        elements.forEach(element => lastDiv.appendChild(element.toDomElement()))
     }
 
     public show(extra: () => void=() => {}): void {

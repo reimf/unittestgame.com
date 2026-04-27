@@ -1,25 +1,39 @@
 import { test, expect } from '@playwright/test'
-import { Span, Div, Section, Code, CodeBlock, Label, Paragraph, Form, Header, Input, Bold, Italic, Anchor } from '../../src/html.js'
+import { JSDOM } from 'jsdom'
+import { Span, Div, Section, Code, CodeBlock, Label, Paragraph, Form, Header, Input, Bold, Italic, Anchor, Submit } from '../../src/html.js'
 import { Locale } from '../../src/locale.js'
 
+const { document } = new JSDOM('<!DOCTYPE html>').window
+global.document = document
 
 test.describe('class Html', () => {
     test('appends text', () => {
         const header = new Header().appendText(Locale.bless('abc'))
-        expect(header.toString()).toBe('<header>abc</header>')
+        expect(header.toDomElement().outerHTML).toBe(
+            '<header>abc</header>'
+        )
     })
 
     test('appends child', () => {
         const span = new Span().appendMarkdown(Locale.bless('abc'))
         const header = new Header().appendChild(span)
-        expect(header.toString()).toBe('<header><span>abc</span></header>')
+        expect(header.toDomElement().outerHTML).toBe(
+            '<header>' +
+                '<span>abc</span>' +
+            '</header>'
+        )
     })
 
     test('appends children', () => {
         const span1 = new Span().appendMarkdown(Locale.bless('abc'))
         const span2 = new Span().appendMarkdown(Locale.bless('def'))
         const header = new Header().appendChildren([span1, span2])
-        expect(header.toString()).toBe('<header><span>abc</span><span>def</span></header>')
+        expect(header.toDomElement().outerHTML).toBe(
+            '<header>' +
+                '<span>abc</span>' +
+                '<span>def</span>' +
+            '</header>'
+        )
     })
 
     test('prepends child', () => {
@@ -27,91 +41,137 @@ test.describe('class Html', () => {
         const span2 = new Span().appendMarkdown(Locale.bless('def'))
         const header = new Header().appendChild(span2)
         header.prependChild(span1)
-        expect(header.toString()).toBe('<header><span>abc</span><span>def</span></header>')
+        expect(header.toDomElement().outerHTML).toBe(
+            '<header>' +
+                '<span>abc</span>' +
+                '<span>def</span>' +
+            '</header>'
+        )
     })
 
     test('appends bold in markdown', () => {
-        const header = new Header().appendMarkdown(Locale.bless('this is **bold**'))
-        expect(header.toString()).toBe('<header>this is <b>bold</b></header>')
+        const header = new Header().appendMarkdown(Locale.bless('this is **bold** and this is not'))
+        expect(header.toDomElement().outerHTML).toBe(
+            '<header>this is <b>bold</b> and this is not</header>'
+        )
     })
 
     test('appends italic in markdown', () => {
         const header = new Header().appendMarkdown(Locale.bless('this is *italic* and this is not'))
-        expect(header.toString()).toBe('<header>this is <i>italic</i> and this is not</header>')
+        expect(header.toDomElement().outerHTML).toBe(
+            '<header>this is <i>italic</i> and this is not</header>'
+        )
+    })
+
+    test('appends code in markdown', () => {
+        const header = new Header().appendMarkdown(Locale.bless('this is `code` and this is not')) 
+        expect(header.toDomElement().outerHTML).toBe(
+            '<header>this is <code>code</code> and this is not</header>'
+        )
     })
 
     test('appends anchor in markdown', () => {
         const header = new Header().appendMarkdown(Locale.bless('this is a [website](https://example.com)'))
-        expect(header.toString()).toBe('<header>this is a <a href="https://example.com">website</a></header>')
-    })
-
-    test('appends code in markdown', () => {
-        const header = new Header().appendMarkdown(Locale.bless('this is `code` here'))
-        expect(header.toString()).toBe('<header>this is <code class="language-javascript">code</code> here</header>')
+        expect(header.toDomElement().outerHTML).toBe(
+            '<header>this is a <a href="https://example.com">website</a></header>'
+        )
     })
 
     test('has input', () => {
-        const input = new Input()
-        expect(input.toString()).toBe('<input></input>')
+        const input = new Input().setType('text').setName('postcode').setValue('value').setAutocomplete(false).setRequired().setPattern(/[0-9]{4}[A-Z]{2}/, 'ongeldige postcode')
+        expect(input.toDomElement().outerHTML).toBe(
+            '<input type="text" name="postcode" autocomplete="off" required="" pattern="[0-9]{4}[A-Z]{2}" title="ongeldige postcode">'
+        )
+    })
+
+    test('has submit', () => {
+        const submit = new Submit(Locale.bless('Click me'))
+        expect(submit.toDomElement().outerHTML).toBe(
+            '<input type="submit" value="Click me">'
+        )
     })
 
     test('has form', () => {
         const form = new Form(_ => {})
-        expect(form.toString()).toBe('<form></form>')
+        expect(form.toDomElement().outerHTML).toBe(
+            '<form></form>'
+        )
     })
 
     test('has header', () => {
         const header = new Header().appendText(Locale.bless('title'))
-        expect(header.toString()).toBe('<header>title</header>')
+        expect(header.toDomElement().outerHTML).toBe(
+            '<header>title</header>'
+        )
     })
 
     test('has paragraph', () => {
         const paragraph = new Paragraph().appendText(Locale.bless('text'))
-        expect(paragraph.toString()).toBe('<p>text</p>')
+        expect(paragraph.toDomElement().outerHTML).toBe(
+            '<p>text</p>'
+        )
     })
 
-    test('has button', () => {
-        const button = new Anchor()
-        expect(button.toString()).toBe('<a></a>')
+    test('has anchor', () => {
+        const anchor = new Anchor().setHref('https://example.com').appendText(Locale.bless('website'))
+        expect(anchor.toDomElement().outerHTML).toBe(
+            '<a href="https://example.com">website</a>'
+        )
     })
 
     test('has label', () => {
         const label = new Label().appendText(Locale.bless('text'))
-        expect(label.toString()).toBe('<label>text</label>')
+        expect(label.toDomElement().outerHTML).toBe(
+            '<label>text</label>'
+        )
     })
 
     test('has code', () => {
         const code = new Code().appendText(Locale.bless('text'))
-        expect(code.toString()).toBe('<code class="language-javascript">text</code>')
+        expect(code.toDomElement().outerHTML).toBe(
+            '<code>text</code>'
+        )
     })
 
     test('has code block', () => {
-        const code = new CodeBlock().appendText(Locale.bless('text'))
-        expect(code.toString()).toBe('<code class="language-javascript block">text</code>')
+        const codeBlock = new CodeBlock().appendText(Locale.bless('text'))
+        expect(codeBlock.toDomElement().outerHTML).toBe(
+            '<code class="block">text</code>'
+        )
     })
 
     test('has section', () => {
         const section = new Section().appendText(Locale.bless('text'))
-        expect(section.toString()).toBe('<section>text</section>')
+        expect(section.toDomElement().outerHTML).toBe(
+            '<section>text</section>'
+        )
     })
 
     test('has div', () => {
         const div = new Div().appendText(Locale.bless('text'))
-        expect(div.toString()).toBe('<div>text</div>')
+        expect(div.toDomElement().outerHTML).toBe(
+            '<div>text</div>'
+        )
     })
 
     test('has span', () => {
         const span = new Span().appendText(Locale.bless('text'))
-        expect(span.toString()).toBe('<span>text</span>')
+        expect(span.toDomElement().outerHTML).toBe(
+            '<span>text</span>'
+        )
     })
 
     test('has italic', () => {
         const italic = new Italic().appendText(Locale.bless('text'))
-        expect(italic.toString()).toBe('<i>text</i>')
+        expect(italic.toDomElement().outerHTML).toBe(
+            '<i>text</i>'
+        )
     })
 
     test('has bold', () => {
         const bold = new Bold().appendText(Locale.bless('text'))
-        expect(bold.toString()).toBe('<b>text</b>')
+        expect(bold.toDomElement().outerHTML).toBe(
+            '<b>text</b>'
+        )
     })
 })
