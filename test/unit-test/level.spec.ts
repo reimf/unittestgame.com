@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test'
-import { FixtureLevelStates } from '../fixtures/fixture-level-states.js'
+import { FixtureLevelStates } from '../fixture/fixture-level-states.js'
 
 test.describe('class Level', () => {
     const fixtureLevelStates = new FixtureLevelStates()

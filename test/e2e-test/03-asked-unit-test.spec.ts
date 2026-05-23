@@ -1,44 +1,48 @@
 import { test, expect, Page } from '@playwright/test'
 
-test.describe('incorrect add button test', () => {
+test.describe('asked unit test', () => {
     let page: Page
 
     test.beforeAll(async ({ browser }) => {
         const context = await browser.newContext()
-        await context.addInitScript({ path: './tests/e2e-tests/init-script.js' })
+        await context.addInitScript({ path: './test/e2e-test/init-script.js' })
         page = await context.newPage()
         await page.goto('/')
         await page.getByRole('button', { name: 'I want to play Level 1 - Battery Level' }).click()
         await page.getByLabel('Battery Level').fill('20')
         await page.getByLabel('Normal Mode').check()
         await page.getByRole('button', { name: 'I want to add this unit test' }).click()
-        await page.getByLabel('Battery Level').fill('19')
-        await page.getByLabel('Low Power Mode').check()
-        await page.getByRole('button', { name: 'I want to add this unit test' }).click()
-        await page.getByLabel('Battery Level').fill('21')
-        await page.getByLabel('Normal Mode').check()
-        await page.getByRole('button', { name: 'I want to add this unit test' }).click()
     })
 
     test('has unit test message', async () => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('powerMode(21) === "Normal Mode"')
+        await expect(messages).toContainText('powerMode(20) === "Normal Mode"')
     })
 
-    test('has not asked message', async () => {
+    test('has NOT not asked message', async () => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('Hmm, that\'s not quite right. Try again.')
+        await expect(messages).not.toContainText('That is NOT what I asked for!')
     })
 
-    test('has NOT added unit test in unit tests panel', async () => {
+    test('has added unit test message', async () => {
+        const messages = page.getByTestId('messages')
+        await expect(messages).toContainText('I\'ve added the unit test')
+    })
+
+    test('has added unit test in unit tests panel', async () => {
         const unitTestsPanel = page.getByTestId('unit-tests')
-        await expect(unitTestsPanel).not.toContainText('powerMode(21) === "Normal Mode"')
+        await expect(unitTestsPanel).toContainText('powerMode(20) === "Normal Mode"')
     })
 
-    test('has NOT updated the current function panel', async () => {
+    test('has updated the current function panel', async () => {
         const currentFunctionPanel = page.getByTestId('current-function')
         const codeLines = currentFunctionPanel.locator('code > div')
-        await expect(codeLines).toContainText(['function powerMode(batteryLevel) {', '  if (batteryLevel === 20) return "Normal Mode"', '  return "Low Power Mode"', '}'])
+        await expect(codeLines).toContainText(['function powerMode(batteryLevel) {', '  return "Normal Mode"', '}'])
+    })
+
+    test('has before menu message', async () => {
+        const messages = page.getByTestId('messages')
+        await expect(messages).toContainText('The Current Function now always returns Normal Mode')
     })
 
     test('has a battery level field', async () => {

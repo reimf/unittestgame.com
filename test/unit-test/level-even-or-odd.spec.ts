@@ -1,27 +1,27 @@
 import { test, expect } from '@playwright/test'
 import { Locale } from '../../src/locale.js'
-import { MockPicker } from '../mocks/mock-picker.js'
-import { MockStorage } from '../mocks/mock-storage.js'
-import { VotingAge } from '../../src/level-voting-age.js'
+import { MockPicker } from '../mock/mock-picker.js'
+import { MockStorage } from '../mock/mock-storage.js'
+import { EvenOrOdd } from '../../src/level-even-or-odd.js'
 
-test.describe('class VotingAge', () => {
+test.describe('class EvenOrOdd', () => {
     const locale = new Locale('en')
-    const level = new VotingAge(locale, 3, new MockStorage(), new MockPicker())
+    const level = new EvenOrOdd(locale, 2, new MockStorage(), new MockPicker())
 
     test('has the right amount of parameters', () => {
         expect(level.parameters).toHaveLength(1)
     })
 
     test('has the right amount of candidates', () => {
-        expect(level.candidates).toHaveLength(42)
+        expect(level.candidates).toHaveLength(21)
     })
 
     test('has the right amount of minimal unit tests', () => {
-        expect(level.minimalUnitTests).toHaveLength(4)
+        expect(level.minimalUnitTests).toHaveLength(2)
     })
 
     test('has the right amount of subsets minimal unit tests', () => {
-        expect(level.subsetsOfMinimalUnitTests).toHaveLength(16)
+        expect(level.subsetsOfMinimalUnitTests).toHaveLength(4)
     })
 
     test('has the right amount of perfect candidates', () => {

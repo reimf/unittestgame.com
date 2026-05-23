@@ -1,25 +1,37 @@
 import { test, expect, Page } from '@playwright/test'
 
-test.describe('incorrect submit button test', () => {
+test.describe('other unit test', () => {
     let page: Page
 
     test.beforeAll(async ({ browser }) => {
         const context = await browser.newContext()
-        await context.addInitScript({ path: './tests/e2e-tests/init-script.js' })
+        await context.addInitScript({ path: './test/e2e-test/init-script.js' })
         page = await context.newPage()
         await page.goto('/')
         await page.getByRole('button', { name: 'I want to play Level 1 - Battery Level' }).click()
-        await page.getByRole('button', { name: 'I want to submit the unit tests' }).click()
+        await page.getByLabel('Battery Level').fill('80')
+        await page.getByLabel('Normal Mode').check()
+        await page.getByRole('button', { name: 'I want to add this unit test' }).click()
     })
 
-    test('has NOT checked unit tests message', async () => {
+    test('has unit test message', async () => {
         const messages = page.getByTestId('messages')
-        await expect(messages).not.toContainText('I checked the unit tests.')
+        await expect(messages).toContainText('powerMode(80) === "Normal Mode"')
+    })
+
+    test('has NOT checked unit test message', async () => {
+        const messages = page.getByTestId('messages')
+        await expect(messages).not.toContainText('I checked the unit test')
     })
 
     test('has not asked message', async () => {
         const messages = page.getByTestId('messages')
         await expect(messages).toContainText('Hmm, that\'s not quite right. Try again.')
+    })
+
+    test('has NO unit tests panel', async () => {
+        const unitTestsPanel = page.getByTestId('unit-tests')
+        await expect(unitTestsPanel).not.toBeVisible()
     })
 
     test('has NOT updated the current function panel', async () => {

@@ -2,7 +2,7 @@ import { test, expect, Page } from '@playwright/test'
 import { Config } from '../../src/config.js'
 import { BooleanVariable, RadioVariable } from '../../src/variable.js'
 import { BatteryLevel } from '../../src/level-battery-level.js'
-import { MockStorage } from '../mocks/mock-storage.js'
+import { MockStorage } from '../mock/mock-storage.js'
 import { RandomPicker } from '../../src/random-picker.js'
 import { Locale } from '../../src/locale.js'
 
@@ -11,7 +11,7 @@ test.describe('whole game', () => {
 
     test.beforeAll(async ({ browser }) => {
         const context = await browser.newContext()
-        await context.addInitScript({ path: './tests/e2e-tests/init-script.js' })
+        await context.addInitScript({ path: './test/e2e-test/init-script.js' })
         page = await context.newPage()
         await page.goto('/')
     })

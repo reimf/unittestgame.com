@@ -1,27 +1,27 @@
 import { test, expect } from '@playwright/test'
 import { Locale } from '../../src/locale.js'
-import { MockPicker } from '../mocks/mock-picker.js'
-import { MockStorage } from '../mocks/mock-storage.js'
-import { FizzBuzz } from '../../src/level-fizz-buzz.js'
+import { MockPicker } from '../mock/mock-picker.js'
+import { MockStorage } from '../mock/mock-storage.js'
+import { SpeedDisplay } from '../../src/level-speed-display.js'
 
-test.describe('class FizzBuzz', () => {
+test.describe('class SpeedDisplay', () => {
     const locale = new Locale('en')
-    const level = new FizzBuzz(locale, 5, new MockStorage(), new MockPicker())
+    const level = new SpeedDisplay(locale, 7, new MockStorage(), new MockPicker())
 
     test('has the right amount of parameters', () => {
         expect(level.parameters).toHaveLength(1)
     })
 
     test('has the right amount of candidates', () => {
-        expect(level.candidates).toHaveLength(135)
+        expect(level.candidates).toHaveLength(400)
     })
 
     test('has the right amount of minimal unit tests', () => {
-        expect(level.minimalUnitTests).toHaveLength(4)
+        expect(level.minimalUnitTests).toHaveLength(6)
     })
 
     test('has the right amount of subsets minimal unit tests', () => {
-        expect(level.subsetsOfMinimalUnitTests).toHaveLength(16)
+        expect(level.subsetsOfMinimalUnitTests).toHaveLength(64)
     })
 
     test('has the right amount of perfect candidates', () => {

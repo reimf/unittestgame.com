@@ -1,8 +1,8 @@
 import { Locale } from '../../src/locale.js'
 import { UnitTest } from '../../src/unit-test.js'
 import { LeapYear } from '../../src/level-leap-year.js'
-import { MockPicker } from '../mocks/mock-picker.js'
-import { MockStorage } from '../mocks/mock-storage.js'
+import { MockPicker } from '../mock/mock-picker.js'
+import { MockStorage } from '../mock/mock-storage.js'
 import fixtureData from './fixture-level-states.json' with { type: 'json' }
 
 type FixtureLevelState = {

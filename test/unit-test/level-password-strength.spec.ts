@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test'
 import { Locale } from '../../src/locale.js'
-import { MockPicker } from '../mocks/mock-picker.js'
-import { MockStorage } from '../mocks/mock-storage.js'
+import { MockPicker } from '../mock/mock-picker.js'
+import { MockStorage } from '../mock/mock-storage.js'
 import { PasswordStrength } from '../../src/level-password-strength.js'
 
 test.describe('class PasswordStrength', () => {

@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 import { Completed } from '../../src/completed.js'
-import { MockStorage } from '../mocks/mock-storage.js'
+import { MockStorage } from '../mock/mock-storage.js'
 
 test.describe('class Completed', () => {
     test('gets 0 by default', () => {

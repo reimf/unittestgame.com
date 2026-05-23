@@ -1,19 +1,19 @@
 import { test, expect } from '@playwright/test'
 import { Locale } from '../../src/locale.js'
-import { MockPicker } from '../mocks/mock-picker.js'
-import { MockStorage } from '../mocks/mock-storage.js'
-import { LeapYear } from '../../src/level-leap-year.js'
+import { MockPicker } from '../mock/mock-picker.js'
+import { MockStorage } from '../mock/mock-storage.js'
+import { BatteryLevel } from '../../src/level-battery-level.js'
 
-test.describe('class LeapYear', () => {
+test.describe('class BatteryLevel', () => {
     const locale = new Locale('en')
-    const level = new LeapYear(locale, 9, new MockStorage(), new MockPicker())
+    const level = new BatteryLevel(locale, 1, new MockStorage(), new MockPicker())
 
     test('has the right amount of parameters', () => {
         expect(level.parameters).toHaveLength(1)
     })
 
     test('has the right amount of candidates', () => {
-        expect(level.candidates).toHaveLength(54)
+        expect(level.candidates).toHaveLength(39)
     })
 
     test('has the right amount of minimal unit tests', () => {
@@ -25,7 +25,7 @@ test.describe('class LeapYear', () => {
     })
 
     test('has the right amount of perfect candidates', () => {
-        expect(level.perfectCandidates).toHaveLength(1)
+        expect(level.perfectCandidates).toHaveLength(2)
     })
 
     test('perfect candidates pass all hints', () => {

@@ -1,26 +1,33 @@
 import { test, expect, Page } from '@playwright/test'
 
-test.describe('submit insufficient unit tests', () => {
+test.describe('incorrect unit test', () => {
     let page: Page
 
     test.beforeAll(async ({ browser }) => {
         const context = await browser.newContext()
         await context.addInitScript(_ => localStorage.setItem('level-battery-level-finished', '1'))
-        await context.addInitScript({ path: './tests/e2e-tests/init-script.js' })
+        await context.addInitScript({ path: './test/e2e-test/init-script.js' })
         page = await context.newPage()
         await page.goto('/')
         await page.getByRole('button', { name: 'I want to play Level 2 - Voting Age' }).click()
-        await page.getByRole('button', { name: 'I want to submit the unit tests' }).click()
+        await page.getByLabel('Age').fill('17')
+        await page.getByLabel('true').check()
+        await page.getByRole('button', { name: 'I want to add this unit test' }).click()
     })
 
-    test('has not according message', async () => {
+    test('has unit test message', async () => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('The following unit test doesn\'t match the Specification, but the Current Function passes it.')
+        await expect(messages).toContainText('isAllowedToVote(17) === true')
     })
 
-    test('has unit test in not according message', async () => {
+    test('has incorrect unit test message', async () => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText(/isAllowedToVote\(\d+\) === undefined/)
+        await expect(messages).toContainText('I didn\'t add the unit test')
+    })
+
+    test('has NO unit tests panel', async () => {
+        const unitTestsPanel = page.getByTestId('unit-tests')
+        await expect(unitTestsPanel).not.toBeVisible()
     })
 
     test('has age field', async () => {

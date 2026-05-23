@@ -1,31 +1,31 @@
 import { test, expect } from '@playwright/test'
 import { Locale } from '../../src/locale.js'
-import { MockPicker } from '../mocks/mock-picker.js'
-import { MockStorage } from '../mocks/mock-storage.js'
-import { SpeedDisplay } from '../../src/level-speed-display.js'
+import { MockPicker } from '../mock/mock-picker.js'
+import { MockStorage } from '../mock/mock-storage.js'
+import { VotingAge } from '../../src/level-voting-age.js'
 
-test.describe('class SpeedDisplay', () => {
+test.describe('class VotingAge', () => {
     const locale = new Locale('en')
-    const level = new SpeedDisplay(locale, 7, new MockStorage(), new MockPicker())
+    const level = new VotingAge(locale, 3, new MockStorage(), new MockPicker())
 
     test('has the right amount of parameters', () => {
         expect(level.parameters).toHaveLength(1)
     })
 
     test('has the right amount of candidates', () => {
-        expect(level.candidates).toHaveLength(400)
+        expect(level.candidates).toHaveLength(42)
     })
 
     test('has the right amount of minimal unit tests', () => {
-        expect(level.minimalUnitTests).toHaveLength(6)
+        expect(level.minimalUnitTests).toHaveLength(4)
     })
 
     test('has the right amount of subsets minimal unit tests', () => {
-        expect(level.subsetsOfMinimalUnitTests).toHaveLength(64)
+        expect(level.subsetsOfMinimalUnitTests).toHaveLength(16)
     })
 
     test('has the right amount of perfect candidates', () => {
-        expect(level.perfectCandidates).toHaveLength(1)
+        expect(level.perfectCandidates).toHaveLength(2)
     })
 
     test('perfect candidates pass all hints', () => {

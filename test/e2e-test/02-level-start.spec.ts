@@ -5,7 +5,7 @@ test.describe('level start', () => {
 
     test.beforeAll(async ({ browser }) => {
         const context = await browser.newContext()
-        await context.addInitScript({ path: './tests/e2e-tests/init-script.js' })
+        await context.addInitScript({ path: './test/e2e-test/init-script.js' })
         page = await context.newPage()
         await page.goto('/')
         await page.getByRole('button', { name: 'I want to play Level 1 - Battery Level' }).click()
