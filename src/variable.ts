@@ -41,7 +41,13 @@ export class RadioVariable extends Variable {
 
     public toHtml(): Html {
         const radioButtons = this.texts.map(text => {
-            const input = new Input().setType('radio').setName(this.name).setValue(text).setChecked(text === this.value).setDisabled(this.disabled).setRequired()
+            const input = new Input()
+              .setType('radio')
+              .setName(this.name)
+              .setValue(text)
+              .setChecked(text === this.value)
+              .setDisabled(this.disabled)
+              .setRequired()
             return new Label().appendChild(input).appendText(text)
         })
         const paragraph = new Paragraph().appendChild(new Span().appendText(this.label)).appendChildren(radioButtons)
@@ -64,7 +70,12 @@ export class BooleanVariable extends Variable {
 
     public toHtml(): Html {
         const radioButtons = [Locale.bless('true'), Locale.bless('false')].map(text => {
-            const input = new Input().setType('radio').setName(this.name).setValue(text).setChecked(text === this.value).setDisabled(this.disabled).setRequired()
+            const input = new Input()
+              .setType('radio')
+              .setName(this.name)
+              .setValue(text)
+              .setChecked(text === this.value)
+              .setDisabled(this.disabled).setRequired()
             return new Label().appendChild(input).appendText(text)
         })
         const paragraph = new Paragraph().appendChild(new Span().appendText(this.label)).appendChildren(radioButtons)
@@ -86,7 +97,16 @@ export class TextVariable extends Variable {
     }
 
     public toHtml(): Html {
-        const input = new Input().setType('text').setName(this.name).setAutocomplete(false).setValue(this.value).addClass(this.value ? 'preset' : 'empty').setDisabled(this.disabled).setRequired().setPattern(/.{1,10}/).setTitle('a text with at most 10 characters')
+        const input = new Input()
+          .setType('text')
+          .setName(this.name)
+          .setAutocomplete(false)
+          .setValue(this.value)
+          .addClass(this.value ? 'preset' : 'empty')
+          .setDisabled(this.disabled)
+          .setRequired()
+          .setPattern(/.{1,10}/)
+          .setTitle('a text with at most 10 characters')
         const label = new Label().appendChild(new Span().appendText(this.label)).appendChild(input)
         return new Paragraph().appendChild(label)
     }
@@ -107,7 +127,16 @@ export class IntegerVariable extends Variable {
 
     public toHtml(): Html {
         const displayValue = this.value ? Number(this.value).toFixed() : ''
-        const input = new Input().setType('text').setName(this.name).setAutocomplete(false).setValue(displayValue).addClass(displayValue ? 'preset' : 'empty').setDisabled(this.disabled).setRequired().setPattern(/[0-9]{1,4}/).setTitle('an integer number with at most 4 digits')
+        const input = new Input()
+          .setType('text')
+          .setName(this.name)
+          .setAutocomplete(false)
+          .setValue(displayValue)
+          .addClass(displayValue ? 'preset' : 'empty')
+          .setDisabled(this.disabled)
+          .setRequired()
+          .setPattern(/[0-9]{1,4}/)
+          .setTitle('an integer number with at most 4 digits')
         const label = new Label().appendChild(new Span().appendText(this.label)).appendChild(input)
         return new Paragraph().appendChild(label)
     }
@@ -128,7 +157,16 @@ export class FloatVariable extends Variable {
 
     public toHtml(): Html {
         const displayValue = this.value ? Number(this.value).toFixed(1) : ''
-        const input = new Input().setType('text').setName(this.name).setAutocomplete(false).setValue(displayValue).addClass(displayValue ? 'preset' : 'empty').setDisabled(this.disabled).setRequired().setPattern(/[0-9]{1,4}(\.[0-9])?/).setTitle('a floating-point number with at most 4 digits, an optional decimal point and an optional decimal')
+        const input = new Input()
+          .setType('text')
+          .setName(this.name)
+          .setAutocomplete(false)
+          .setValue(displayValue)
+          .addClass(displayValue ? 'preset' : 'empty')
+          .setDisabled(this.disabled)
+          .setRequired()
+          .setPattern(/[0-9]{1,4}(\.[0-9])?/)
+          .setTitle('a floating-point number with at most 4 digits, an optional decimal point and an optional decimal')
         const label = new Label().appendChild(new Span().appendText(this.label)).appendChild(input)
         return new Paragraph().appendChild(label)
     }
