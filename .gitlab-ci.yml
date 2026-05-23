@@ -13,7 +13,7 @@ typescript:
     - npx tsc --build --force --verbose
   artifacts:
     paths:
-      - "**/*.js"
+      - "src/**/*.js"
   only:
     - main
 
@@ -32,7 +32,6 @@ playwright:
 pages:
   stage: deploy
   script:
-    - rm *.config.js
     - mkdir public
     - cp *.{css,html,ico,js,png} public
     - mkdir public/src
