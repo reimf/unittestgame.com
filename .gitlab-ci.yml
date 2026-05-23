@@ -19,9 +19,9 @@ typescript:
 
 playwright:
   stage: test
+  image: mcr.microsoft.com/playwright:v1.60.0-noble
   script:
     - npm ci
-    - npx playwright install --with-deps
     - npx playwright test --quiet
   artifacts:
     paths:
