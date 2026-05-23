@@ -98,11 +98,11 @@ export class Highlighter {
         const [previousLength, currentLength] = [previousTokens.length, currentTokens.length]
         const commonLengths: number[][] = Array(previousLength + 1).fill(0).map(() => Array(currentLength + 1).fill(0))
         // Build LCS length table
-        for (let current = 0; current < previousLength; current++)
-            for (let previous = 0; previous < currentLength; previous++)
-                commonLengths[current + 1]![previous + 1] = previousTokens[current]!.equals(currentTokens[previous]!)
-                    ? commonLengths[current]![previous]! + 1
-                    : Math.max(commonLengths[current]![previous + 1]!, commonLengths[current + 1]![previous]!)
+        for (let previous = 0; previous < previousLength; previous++)
+            for (let current = 0; current < currentLength; current++)
+                commonLengths[previous + 1]![current + 1] = previousTokens[previous]!.equals(currentTokens[current]!)
+                    ? commonLengths[previous]![current]! + 1
+                    : Math.max(commonLengths[previous]![current + 1]!, commonLengths[previous + 1]![current]!)
         // Backtrack to find LCS
         const commonTokens: Token[] = []
         let [previous, current] = [previousLength, currentLength]
