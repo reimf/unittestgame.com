@@ -1,5 +1,10 @@
 {
   "type": "module",
+  "scripts": {
+    "build": "tsc --build --force",
+    "test": "npm run build && npx playwright test",
+    "testui": "npx playwright test --ui"
+  },
   "dependencies": {
     "playwright": "1.60.0",
     "typescript": "^6.0.3"
