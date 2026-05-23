@@ -1,11 +1,6 @@
 import { Div, Span, Del, Ins } from './html.js'
 import { Locale } from './locale.js'
 
-type TokenType = {
-    name: string
-    regexp: RegExp
-}
-
 class Token {
     public readonly type: string
     public readonly text: string
@@ -22,31 +17,31 @@ class Token {
 
 class Tokenizer {
     private readonly text: string
-    private readonly tokenTypes: readonly TokenType[] = [
-        { name: 'whitespace', regexp: /^ +/ },
-        { name: 'number', regexp: /^\d+(\.\d+)?/ },
-        { name: 'keyword', regexp: /^(function|if|else|return|let|new)\b/ },
-        { name: 'literal', regexp: /^(true|false|undefined)\b/ },
-        { name: 'class', regexp: /^[A-Z][a-zA-Z]*/ },
-        { name: 'function', regexp: /^[a-zA-Z]+(?=\()/ },
-        { name: 'variable', regexp: /^[a-zA-Z]+/ },
-        { name: 'regexp', regexp: /^\/\S.*?\// },
-        { name: 'string', regexp: /^".*?"/ },
-        { name: 'operator', regexp: /^(!=*|=+|%=?|\+=?|-=?|\*=?|\/=?|<=?|>=?|&+|\|+)/ },
-        { name: 'punctuation', regexp: /^[(){},]/ },
-        { name: 'dot', regexp: /^\./},
-        { name: 'error', regexp: /^.+/ },
-    ]
+    private readonly tokenTypes: ReadonlyMap<string, RegExp> = new Map([
+        ['whitespace', /^ +/],
+        ['number', /^\d+(\.\d+)?/],
+        ['keyword', /^(function|if|else|return|let|new)\b/],
+        ['literal', /^(true|false|undefined)\b/],
+        ['class', /^[A-Z][a-zA-Z]*/],
+        ['function', /^[a-zA-Z]+(?=\()/],
+        ['variable', /^[a-zA-Z]+/],
+        ['regexp', /^\/\S.*?\//],
+        ['string', /^".*?"/],
+        ['operator', /^(!=*|=+|%=?|\+=?|-=?|\*=?|\/=?|<=?|>=?|&+|\|+)/],
+        ['punctuation', /^[(){},]/],
+        ['dot', /^\./],
+        ['error', /^.+/],
+    ])
 
     public constructor(text: string) {
         this.text = text
     }
 
     public* tokens(index: number = 0): Generator<Token> {
-        for (const tokenType of this.tokenTypes) {
-            const match = this.text.slice(index).match(tokenType.regexp)
+        for (const [name, regexp] of this.tokenTypes) {
+            const match = this.text.slice(index).match(regexp)
             if (match) {
-                yield new Token(tokenType.name, match[0])
+                yield new Token(name, match[0])
                 yield* this.tokens(index + match[0].length)
                 return
             }
