@@ -3,6 +3,8 @@ import { Config } from '../../src/config.js'
 import { BooleanVariable, RadioVariable } from '../../src/variable.js'
 import { BatteryLevel } from '../../src/level-battery-level.js'
 import { MockStorage } from '../mocks/mock-storage.js'
+import { RandomPicker } from '../../src/random-picker.js'
+import { Locale } from '../../src/locale.js'
 
 test.describe('whole game', () => {
     let page: Page
@@ -17,7 +19,7 @@ test.describe('whole game', () => {
     test('plays whole game', async () => {
         test.slow()
 
-        const config = new Config('en')
+        const config = new Config(new Locale('en'), new RandomPicker())
         const levels = config.allLevels(new MockStorage())
 
         for (const level of levels) {

@@ -1,6 +1,6 @@
 import { Level } from './level-base.js'
 import { Locale } from './locale.js'
-import { RandomPicker } from './random-picker.js'
+import { Picker } from './picker.js'
 import { BatteryLevel } from './level-battery-level.js'
 import { EvenOrOdd } from './level-even-or-odd.js'
 import { FizzBuzz } from './level-fizz-buzz.js'
@@ -13,14 +13,16 @@ import { TriangleType } from './level-triangle-type.js'
 import { VotingAge } from './level-voting-age.js'
 
 export class Config {
-    public readonly locale: Locale
+    private readonly locale: Locale
+    private readonly picker: Picker
 
-    public constructor(lng: string) {
-        this.locale = new Locale(lng)
+    public constructor(locale: Locale, picker: Picker) {
+        this.locale = locale
+        this.picker = picker
     }
 
     public allLevels(storage: Storage): Level[] {
         const levelClasses = [BatteryLevel, VotingAge, EvenOrOdd, Review, FizzBuzz, LeapYear, TriangleType, SpeedDisplay, FloatFormat, PasswordStrength]
-        return levelClasses.map((levelClass, index) => new levelClass(this.locale, index + 1, storage, new RandomPicker()))
+        return levelClasses.map((levelClass, index) => new levelClass(this.locale, index + 1, storage, this.picker))
     }
 }
