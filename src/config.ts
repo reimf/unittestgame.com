@@ -1,5 +1,6 @@
 import { Level } from './level-base.js'
 import { Locale } from './locale.js'
+import { RandomPicker } from './random-picker.js'
 import { BatteryLevel } from './level-battery-level.js'
 import { EvenOrOdd } from './level-even-or-odd.js'
 import { FizzBuzz } from './level-fizz-buzz.js'
@@ -20,6 +21,6 @@ export class Config {
 
     public allLevels(storage: Storage): Level[] {
         const levelClasses = [BatteryLevel, VotingAge, EvenOrOdd, Review, FizzBuzz, LeapYear, TriangleType, SpeedDisplay, FloatFormat, PasswordStrength]
-        return levelClasses.map((levelClass, index) => new levelClass(this.locale, index + 1, storage))
+        return levelClasses.map((levelClass, index) => new levelClass(this.locale, index + 1, storage, new RandomPicker()))
     }
 }

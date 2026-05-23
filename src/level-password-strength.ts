@@ -1,6 +1,5 @@
 import { Level } from './level-base.js'
 import { Locale, LocalizedText } from './locale.js'
-import { Random } from './random.js'
 import { Variable, BooleanVariable, TextVariable } from './variable.js'
 
 export class PasswordStrength extends Level {
@@ -120,25 +119,25 @@ export class PasswordStrength extends Level {
         const specialChars = [...this.generateSpecialCharacters()]
 
         for (let i = 0; i < 100; i++) {
-            const ds = Random.elementFrom(digits)
-            const us = Random.elementFrom(uppercase)
-            const ls = Random.elementFrom(lowercase)
-            const scs = Random.elementFrom(specialChars)
+            const ds = this.picker.elementFrom(digits)
+            const us = this.picker.elementFrom(uppercase)
+            const ls = this.picker.elementFrom(lowercase)
+            const scs = this.picker.elementFrom(specialChars)
 
             const chars = [...ds, ...us, ...ls, ...scs]
             this.shuffleArray(chars)
 
             yield [chars.join('')]
 
-            const pos = Random.integerUnder(chars.length)
-            chars[pos] = Random.integerUnder(10).toString()
+            const pos = this.picker.integerUnder(chars.length)
+            chars[pos] = this.picker.integerUnder(10).toString()
             yield [chars.join('')]
         }
     }
 
     private shuffleArray(array: string[]): void {
         for (let i = array.length - 1; i > 0; i--) {
-            const j = Random.integerUnder(i + 1)
+            const j = this.picker.integerUnder(i + 1)
             const swap = array[i]!
             array[i] = array[j]!
             array[j] = swap

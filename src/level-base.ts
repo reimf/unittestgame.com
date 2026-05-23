@@ -3,7 +3,7 @@ import { Completed } from './completed.js'
 import { ComputerMessage, HumanMessage, Message, Panel } from './frame.js'
 import { Button, CodeBlock, Div, Form, OrderedList, Submit } from './html.js'
 import { Locale, LocalizedText } from './locale.js'
-import { Random } from './random.js'
+import { Picker } from './picker.js'
 import { TestResult } from './test-result.js'
 import { UnitTest } from './unit-test.js'
 import { Variable } from './variable.js'
@@ -11,6 +11,7 @@ import { Variable } from './variable.js'
 export abstract class Level {
     protected readonly locale: Locale
     public readonly levelNumber: number
+    protected readonly picker: Picker
 
     // the following attributes should all be private, but some are public because they are used in tests
     private readonly isLevelFinished: Completed
@@ -31,7 +32,8 @@ export abstract class Level {
     private lastUnitTest: UnitTest|undefined = undefined
     private numberOfSubmissions: number = 0
 
-    public constructor(locale: Locale, levelNumber: number, storage: Storage) {
+    public constructor(locale: Locale, levelNumber: number, storage: Storage, picker: Picker) {
+        this.picker = picker
         this.locale = locale
         this.levelNumber = levelNumber
         this.isLevelFinished = new Completed(`level-${this.identifier()}-finished`, storage)
@@ -41,7 +43,7 @@ export abstract class Level {
         this.minimalUnitTests = [...this.generateMinimalUnitTests()]
         this.subsetsOfMinimalUnitTests = [...this.generateAllSubsetsOrderedBySize(this.minimalUnitTests)]
         this.perfectCandidates = this.findPerfectCandidates()
-        this.perfectCandidate = this.getRandomElementFrom(this.perfectCandidates)
+        this.perfectCandidate = this.picker.elementFrom(this.perfectCandidates)
         this.hints = [...this.generateHints()]
         this.currentCandidate = this.findSimplestPassingCandidate(this.candidates, this.perfectCandidates, this.humanUnitTests)
         this.failingTestResult = this.findFailingTestResult(this.currentCandidate, this.hints, this.minimalUnitTests)
@@ -55,10 +57,6 @@ export abstract class Level {
     protected abstract getCandidateElements(): string[][]
     protected abstract minimalUnitTestGenerator(): Generator<any[]>
     protected abstract hintGenerator(): Generator<any[]>
-
-    protected getRandomElementFrom<T>(elements: readonly T[]): T {
-        return Random.elementFrom(elements)
-    }
 
     private* generateCandidates(listOfListOfLines: string[][], lines: string[]): Generator<Candidate> {
         if (listOfListOfLines.length > 0) {
@@ -121,14 +119,14 @@ export abstract class Level {
                 return simplestCandidatesSoFar
             return [...simplestCandidatesSoFar, candidate]
         }, [])
-        return this.getRandomElementFrom(simplestCandidates)
+        return this.picker.elementFrom(simplestCandidates)
     }
 
     public findSimplestPassingCandidate(candidates: readonly Candidate[], perfectCandidates: readonly Candidate[], unitTests: readonly UnitTest[]): Candidate {
         const passingCandidates = candidates.filter(candidate => candidate.passes(unitTests))
         const passingImperfectCandidates = passingCandidates.filter(candidate => !perfectCandidates.includes(candidate))
         if (passingImperfectCandidates.length === 0)
-            return this.getRandomElementFrom(perfectCandidates)
+            return this.picker.elementFrom(perfectCandidates)
         return this.findSimplestCandidate(passingImperfectCandidates)
     }
 
@@ -136,7 +134,7 @@ export abstract class Level {
         for (const unitTests of [hints, minimalUnitTestsList]) {
             const failingUnitTests = candidate.failingTestResults(unitTests)
             if (failingUnitTests.length > 0)
-                return this.getRandomElementFrom(failingUnitTests)
+                return this.picker.elementFrom(failingUnitTests)
         }
         return undefined
     }

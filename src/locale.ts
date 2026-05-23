@@ -18,12 +18,12 @@ export class Locale {
         this.lng = lng as keyof LocalisableText
     }
 
-    private pick(localisableText: LocalisableText): LocalizedText {
+    private localize(localisableText: LocalisableText): LocalizedText {
         return Locale.bless(localisableText[this.lng])
     }
 
     public welcome(): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: 'Hi! I\'m an AI bot that writes code. ' +
                 'Your job is to guide me using unit tests.',
             nl: 'Hallo! Ik ben een AI bot die code schrijft. ' +
@@ -32,21 +32,21 @@ export class Locale {
     }
 
     public unitTestGameTitle(): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: 'UnitTestGame',
             nl: 'UnitTestGame',
         })
     }
 
     public slogan(): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: 'Learn Test-Driven Development by writing unit tests that guide an AI bot.',
             nl: 'Leer Test-Driven Development door unit testen te schrijven die een AI bot bijsturen.',
         })
     }
 
     public links(): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: '[Read more about TDD on Wikipedia](https://en.wikipedia.org/wiki/Test-driven_development)\n' +
                 '[Overschakelen op Nederlands](?lng=nl)\n' +
                 '[Contact](mailto:contact@unittestgame.com)',
@@ -57,35 +57,35 @@ export class Locale {
     }
 
     public invitation(): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: 'Which level do you want to play?',
             nl: 'Welk level wil je spelen?',
         })
     }
 
     public level(levelNumber: number, levelName: string): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: `Level ${levelNumber} - ${levelName}`,
             nl: `Level ${levelNumber} - ${levelName}`,
         })
     }
 
     public nextLevelButton(levelDescription: string): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: `I want to play ${levelDescription}`,
             nl: `Ik wil ${levelDescription} spelen`,
         })
     }
 
     public allLevels(): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: 'I\'ve completed all the levels',
             nl: 'Ik heb alle levels voltooid',
         })
     }
 
     public closeTab(): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: 'Well done! You\'ve completed all the levels. ' +
                 'You can now apply TDD to your own projects.',
             nl: 'Goed gedaan! Je hebt alle levels voltooid. ' +
@@ -94,28 +94,28 @@ export class Locale {
     }
 
     public unitTestsTitle(): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: 'Unit Tests (latest highlighted)',
             nl: 'Unit Testen (laatste gemarkeerd)',
         })
     }
 
     public addUnitTestButton(): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: 'I want to add this unit test',
             nl: 'Ik wil deze unit test toevoegen',
         })
     }
 
     public submitUnitTestsButton(): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: 'I want to submit the unit tests',
             nl: 'Ik wil de unit testen inleveren',
         })
     }
 
     public unitTestNotAdded(): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: 'I didn\'t add the unit test, ' +
                 'because it doesn\'t match the *Specification*.',
             nl: 'Ik heb de unit test niet toegevoegd, ' +
@@ -124,7 +124,7 @@ export class Locale {
     }
 
     public tooManyUnitTests(numberOfUnnecessaryUnitTests: number, numberOfRedundantUnitTests: number): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: `You've tested the *Current Function* thoroughly, ` +
                  `but you wrote ${numberOfUnnecessaryUnitTests} more ${numberOfUnnecessaryUnitTests === 1 ? 'unit test' : 'unit tests'} than necessary. ` +
                 `${numberOfRedundantUnitTests === 1 ? 'The following' : 'At least one of the following'} can be left out.`,
@@ -135,7 +135,7 @@ export class Locale {
     }
 
     public readSpecification(): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: 'First, read the *Specification*. ' +
                 'Then write a unit test that the *Current Function* fails.',
             nl: 'Lees eerst de *Specificatie*. ' +
@@ -145,7 +145,7 @@ export class Locale {
 
 
     public improveCurrentFunction(): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: 'After adding a unit test ' +
                 'I\'ll improve the *Current Function* so all *Unit Tests* pass again.',
             nl: 'Nadat je een unit test hebt toegevoegd ' +
@@ -154,35 +154,35 @@ export class Locale {
     }
 
     public submitUnitTests(): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: 'Submit the *Unit Tests* when you think the *Current Function* matches the *Specification*.',
             nl: 'Lever de *Unit Testen* in als je denkt dat de *Huidige Functie* voldoet aan de *Specificatie*.',
         })
     }
 
     public specificationTitle(description: string): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: `Specification (${description})`,
             nl: `Specificatie (${description})`,
         })
     }
 
     public currentFunctionTitle(): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: 'Current Function',
             nl: 'Huidige Functie',
         })
     }
 
     public differenceTitle(): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: 'Difference',
             nl: 'Verschil',
         })
     }
 
     public currentFunctionNotImproved(): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: 'I\'ve added the unit test, ' +
                 'but the *Current Function* already passes it, ' +
                 'so I didn\'t improve the *Current Function*. ' +
@@ -195,14 +195,14 @@ export class Locale {
     }
 
     public hint(): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: 'Write a unit test that the *Current Function* fails.',
             nl: 'Schrijf een unit test waarvoor de *Huidige Functie* faalt.',
         })
     }
 
     public currentFunctionImproved(numberOfUnitTests: number): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: `I've added the unit test to the *Unit Tests* and improved the *Current Function* ` +
                 `so the new unit test now passes${numberOfUnitTests === 1 ? '' : ' as well'}.`,
             nl: `Ik heb de unit test toegevoegd aan de *Unit Testen* en de *Huidige Functie* verbeterd ` +
@@ -211,7 +211,7 @@ export class Locale {
     }
 
     public invalidUnitTest(): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: 'The following unit test doesn\'t match the *Specification*, ' +
                 'but the *Current Function* passes it.',
             nl: 'De volgende unit test voldoet niet aan de *Specificatie*, ' +
@@ -220,7 +220,7 @@ export class Locale {
     }
 
     public moreUnitTests(numberOfUnitTestsStillNeeded: number): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: `The *Current Function* doesn't match the *Specification* yet. ` +
                 `You need at least ${numberOfUnitTestsStillNeeded} more ${numberOfUnitTestsStillNeeded === 1 ? 'unit test' : 'unit tests'}, ` +
                 `so write a unit test that matches the *Specification* and that the *Current Function* fails.`,
@@ -231,21 +231,21 @@ export class Locale {
     }
 
     public currentFunctionCorrect(): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: 'Well done! The *Current Function* matches the *Specification*.',
             nl: 'Goed gedaan! De *Huidige Functie* voldoet aan de *Specificatie*.',
         })
     }
 
     public levelOverviewTitle(): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: 'Level Overview',
             nl: 'Level Overzicht',
         })
     }
 
     public batteryLevelSpecification(): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: 'A smartphone normally operates in `Normal Mode`, ' +
                 'but when the battery level is less than `20`, ' +
                 'it operates in `Low Power Mode`.',
@@ -256,7 +256,7 @@ export class Locale {
     }
 
     public wrongAction(): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: 'Hmm, that\'s not quite right. ' +
                 'Try again.',
             nl: 'Hmm, dat klopt niet helemaal. ' +
@@ -265,7 +265,7 @@ export class Locale {
     }
 
     public addBatteryLevel20(): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: 'The *Specification* contains the number `20`. ' +
                 'That is a good starting point. ' +
                 'When the battery level is `20`, the function must return `Normal Mode`.',
@@ -276,7 +276,7 @@ export class Locale {
     }
 
     public addBatteryLevel19(): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: 'The *Current Function* now always returns `Normal Mode`, ' +
                 'but the *Specification* says battery level `19` must return `Low Power Mode`. ' +
                 'Add a unit test for that.',
@@ -287,7 +287,7 @@ export class Locale {
     }
 
     public submitUnitTestsFirst(): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: 'The *Current Function* can now return either `Normal Mode` or `Low Power Mode`. ' +
                 'Submit the unit tests to check if the *Current Function* matches the *Specification*.',
             nl: 'De *Huidige Functie* kan nu `Normal Mode` of `Low Power Mode` teruggeven. ' +
@@ -296,7 +296,7 @@ export class Locale {
     }
 
     public addBatteryLevel21(): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: 'The *Current Function* now returns `Normal Mode` only for battery level `20`. ' +
                 'The *Specification* says `21` must also return `Normal Mode`. ' +
                 'Add a unit test for that.',
@@ -307,14 +307,14 @@ export class Locale {
     }
 
     public submitUnitTestsSecond(): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: 'Submit the unit tests again to check if the *Current Function* matches the *Specification*.',
             nl: 'Lever de unit testen opnieuw in om te controleren of de *Huidige Functie* voldoet aan de *Specificatie*.',
         })
     }
 
     public addBatteryLevel18(): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: 'The *Current Function* now returns `Low Power Mode` only for battery level `19`. ' +
                 'The *Specification* says `18` must also return `Low Power Mode`. ' +
                 'Add a unit test for that.',
@@ -325,21 +325,21 @@ export class Locale {
     }
 
     public submitUnitTestsThird(): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: 'Submit the unit tests again to check if the *Current Function* finally matches the *Specification*.',
             nl: 'Lever de unit testen opnieuw in om te controleren of de *Huidige Functie* eindelijk voldoet aan de *Specificatie*.',
         })
     }
 
     public evenOddSpecification(): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: 'Return `true` if the number is even and `false` otherwise.',
             nl: 'Geef `true` terug als het getal even is en anders `false`.',
         })
     }
 
     public fizzBuzzSpecification(): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: 'Return `Fizz` if the number is divisible by 3, ' +
                 '`Buzz` if divisible by 5, ' +
                 '`FizzBuzz` if divisible by both 3 and 5, ' +
@@ -352,7 +352,7 @@ export class Locale {
     }
 
     public floatFormatSpecification(): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: 'Return `true` if the text represents a float and `false` otherwise. ' +
                 'A float may start with a plus or a minus sign. ' +
                 'This is followed by one or more digits. ' +
@@ -365,7 +365,7 @@ export class Locale {
     }
 
     public leapYearSpecification(): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: 'Return `true` if the year is a leap year and `false` otherwise. ' +
                 'A year is a leap year if it is divisible by 4. ' +
                 'The exception is that years divisible by 100 are not leap years, unless they are also divisible by 400.',
@@ -376,7 +376,7 @@ export class Locale {
     }
 
     public passwordStrengthSpecification(): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: 'Return `true` if the password is strong and `false` otherwise. ' +
                 'A password is strong if it contains at least 5 characters, an uppercase letter, a lowercase letter, and a special character (`#` or `@`).',
             nl: 'Geef `true` terug als het wachtwoord sterk is en anders `false`. ' +
@@ -396,7 +396,7 @@ export class Locale {
             '| X START  DANGER X |\n' +
             '+-------------------+'
         )
-        return this.pick({
+        return this.localize({
             en: 'Return the formatted speed in kilometers per hour. ' +
                 'Use one decimal place if it fits on the display (e.g. 13 → `13.0`). ' +
                 'Otherwise, round to an integer (e.g. 87.6 → `88`). ' +
@@ -415,7 +415,7 @@ export class Locale {
     }
 
     public triangleTypeSpecification(): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: 'Return the type of the triangle: `equilateral`, `isosceles`, or `scalene`. ' +
                 'A triangle is `equilateral` if all three sides have the same length. ' +
                 'A triangle is `isosceles` if exactly two sides have the same length. ' +
@@ -428,14 +428,14 @@ export class Locale {
     }
 
     public votingAgeSpecification(): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: 'Return `true` if the age is `18` or over, and `false` otherwise.',
             nl: 'Geef `true` terug als de leeftijd `18` jaar of hoger is, en anders `false`.',
         })
     }
 
     public reviewSpecification(): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: 'Return `Good` if the price is less than `20` and the quality is at least `7`. ' +
                 'Return `Bad` if the price is `20` or more and the quality is less than `7`. ' +
                 'Return `Ok` in all other cases.',
@@ -446,7 +446,7 @@ export class Locale {
     }
 
     public or(): LocalizedText {
-        return this.pick({
+        return this.localize({
             en: 'or',
             nl: 'of',
         })

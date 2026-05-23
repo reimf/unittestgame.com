@@ -1,6 +1,5 @@
 import { Level } from './level-base.js'
 import { Locale, LocalizedText } from './locale.js'
-import { Random } from './random.js'
 import { Variable, BooleanVariable, TextVariable } from './variable.js'
 
 export class FloatFormat extends Level {
@@ -85,15 +84,15 @@ export class FloatFormat extends Level {
 
     protected* hintGenerator(): Generator<any[]> {
         for (let i = 0; i < 100; i++) {
-            const integerPart = Random.integerUnder(1000).toString()
-            const precision = Random.integerUnder(4)
-            const fractionalPart = Random.integerUnder(10 ** precision).toString().padStart(precision, '0')
-            const sign = Random.elementFrom(['-', '+', ''])
+            const integerPart = this.picker.integerUnder(1000).toString()
+            const precision = this.picker.integerUnder(4)
+            const fractionalPart = this.picker.integerUnder(10 ** precision).toString().padStart(precision, '0')
+            const sign = this.picker.elementFrom(['-', '+', ''])
             const correctFormat = sign + integerPart + '.' + fractionalPart
             yield [correctFormat]
 
-            const pos = Random.integerUnder(correctFormat.length)
-            const substitution = Random.elementFrom(['0', '+', '-', '.'])
+            const pos = this.picker.integerUnder(correctFormat.length)
+            const substitution = this.picker.elementFrom(['0', '+', '-', '.'])
             const probablyIncorrectFormat = correctFormat.substring(0, pos) + substitution + correctFormat.substring(pos + 1)
             yield [probablyIncorrectFormat]
         }

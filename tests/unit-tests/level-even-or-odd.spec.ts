@@ -1,11 +1,12 @@
 import { test, expect } from '@playwright/test'
 import { Locale } from '../../src/locale.js'
+import { MockPicker } from '../mocks/mock-picker.js'
 import { MockStorage } from '../mocks/mock-storage.js'
 import { EvenOrOdd } from '../../src/level-even-or-odd.js'
 
 test.describe('class EvenOrOdd', () => {
     const locale = new Locale('en')
-    const level = new EvenOrOdd(locale, 2, new MockStorage())
+    const level = new EvenOrOdd(locale, 2, new MockStorage(), new MockPicker())
 
     test('has the right amount of parameters', () => {
         expect(level.parameters).toHaveLength(1)
