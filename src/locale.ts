@@ -3,6 +3,7 @@ type LocalisableText = {
     nl: string
     de: string
     fr: string
+    es: string
 }
 
 declare const __brand: unique symbol
@@ -16,7 +17,7 @@ export class Locale {
     }
 
     public constructor(language: string) {
-        const lang = ['en', 'nl', 'de', 'fr'].includes(language) ? language : 'en'
+        const lang = ['en', 'nl', 'de', 'fr', 'es'].includes(language) ? language : 'en'
         this.lang = lang as keyof LocalisableText
     }
 
@@ -32,8 +33,10 @@ export class Locale {
                 'Jouw taak is om mij bij te sturen met unit testen.',
             de: 'Hallo! Ich bin ein KI-Bot, der Code schreibt. ' +
                 'Deine Aufgabe ist es, mich mit Unit-Tests zu steuern.',
-            fr: 'Bonjour ! Je suis un bot IA qui écrit du code. ' +
+            fr: 'Bonjour! Je suis un bot IA qui écrit du code. ' +
                 'Ton rôle est de me guider avec des tests unitaires.',
+            es: '¡Hola! Soy un bot de IA que escribe código. ' +
+                'Tu trabajo es guiarme con tests unitarios.',
         })
     }
 
@@ -43,6 +46,7 @@ export class Locale {
             nl: 'UnitTestGame',
             de: 'UnitTestGame',
             fr: 'UnitTestGame',
+            es: 'UnitTestGame',
         })
     }
 
@@ -51,32 +55,48 @@ export class Locale {
             en: 'Learn Test-Driven Development by writing unit tests that guide an AI bot.',
             nl: 'Leer Test-Driven Development door unit testen te schrijven die een AI bot bijsturen.',
             de: 'Lerne Test-Driven Development, indem du Unit-Tests schreibst, die einen KI-Bot steuern.',
-            fr: 'Apprends le développement piloté par les tests en écrivant des tests unitaires qui guident un bot IA.',
+            fr: 'Apprends le Test-Driven Development en écrivant des tests unitaires qui guident un bot IA.',
+            es: 'Aprende el desarrollo guiado por tests escribiendo tests unitarios que guían a un bot de IA.',
         })
     }
 
     public links(): LocalizedText {
         return this.localize({
             en: '[Read more about TDD on Wikipedia](https://en.wikipedia.org/wiki/Test-driven_development)\n' +
-                '[Contact](mailto:contact@unittestgame.com)\n' +
-                '[Overschakelen op Nederlands](?language=nl)\n' +
-                '[Auf Deutsch wechseln](?language=de)\n' +
-                '[Passer en français](?language=fr)\n',
+                '[Contact](mailto:contact@unittestgame.com)\n',
             nl: '[Lees meer over TDD op Wikipedia](https://nl.wikipedia.org/wiki/Test-driven_development)\n' +
-                '[Contact](mailto:contact@unittestgame.com)\n' +
-                '[Switch to English](?language=en)\n' +
-                '[Auf Deutsch wechseln](?language=de)\n' +
-                '[Passer en français](?language=fr)\n',
+                '[Contact](mailto:contact@unittestgame.com)\n',
             de: '[Mehr über TDD auf Wikipedia lesen](https://de.wikipedia.org/wiki/Testgetriebene_Entwicklung)\n' +
-                '[Kontakt](mailto:contact@unittestgame.com)\n' +
-                '[Switch to English](?language=en)\n' +
-                '[Overschakelen op Nederlands](?language=nl)\n' +
-                '[Passer en français](?language=fr)\n',
+                '[Kontakt](mailto:contact@unittestgame.com)\n',
             fr: '[En savoir plus sur TDD sur Wikipédia](https://fr.wikipedia.org/wiki/Test_driven_development)\n' +
-                '[Contact](mailto:contact@unittestgame.com)\n' +
-                '[Switch to English](?language=en)\n' +
+                '[Contact](mailto:contact@unittestgame.com)\n',
+            es: '[Más información sobre TDD en Wikipedia](https://es.wikipedia.org/wiki/Desarrollo_guiado_por_pruebas)\n' +
+                '[Contacto](mailto:contact@unittestgame.com)\n',
+        })
+    }
+
+    public switchLanguage(): LocalizedText {
+        return this.localize({
+            en: '[Overschakelen op Nederlands](?language=nl)\n' +
+                '[Auf Deutsch wechseln](?language=de)\n' +
+                '[Passer en Français](?language=fr)\n' +
+                '[Cambiar al Español](?language=es)\n',
+            nl: '[Switch to English](?language=en)\n' +
+                '[Auf Deutsch wechseln](?language=de)\n' +
+                '[Passer en Français](?language=fr)\n' +
+                '[Cambiar al Español](?language=es)\n',
+            de: '[Switch to English](?language=en)\n' +
                 '[Overschakelen op Nederlands](?language=nl)\n' +
-                '[Auf Deutsch wechseln](?language=de)\n',
+                '[Passer en Français](?language=fr)\n' +
+                '[Cambiar al Español](?language=es)\n',
+            fr: '[Switch to English](?language=en)\n' +
+                '[Overschakelen op Nederlands](?language=nl)\n' +
+                '[Auf Deutsch wechseln](?language=de)\n' +
+                '[Cambiar al Español](?language=es)\n',
+            es: '[Switch to English](?language=en)\n' +
+                '[Overschakelen op Nederlands](?language=nl)\n' +
+                '[Auf Deutsch wechseln](?language=de)\n' +
+                '[Passer en Français](?language=fr)\n',
         })
     }
 
@@ -86,6 +106,7 @@ export class Locale {
             nl: 'Welk level wil je spelen?',
             de: 'Welches Level möchtest du spielen?',
             fr: 'Quel niveau veux-tu jouer ?',
+            es: '¿Qué nivel quieres jugar?',
         })
     }
 
@@ -95,6 +116,7 @@ export class Locale {
             nl: `Level ${levelNumber} - ${levelName}`,
             de: `Level ${levelNumber} - ${levelName}`,
             fr: `Niveau ${levelNumber} - ${levelName}`,
+            es: `Nivel ${levelNumber} - ${levelName}`,
         })
     }
 
@@ -104,6 +126,7 @@ export class Locale {
             nl: `Ik wil ${levelDescription} spelen`,
             de: `Ich möchte ${levelDescription} spielen`,
             fr: `Je veux jouer ${levelDescription}`,
+            es: `Quiero jugar ${levelDescription}`,
         })
     }
 
@@ -113,6 +136,7 @@ export class Locale {
             nl: 'Ik heb alle levels voltooid',
             de: 'Ich habe alle Levels abgeschlossen',
             fr: 'J\'ai terminé tous les niveaux',
+            es: 'He completado todos los niveles',
         })
     }
 
@@ -124,8 +148,10 @@ export class Locale {
                 'Je kunt TDD nu toepassen op je eigen projecten.',
             de: 'Gut gemacht! Du hast alle Levels abgeschlossen. ' +
                 'Du kannst TDD jetzt auf deine eigenen Projekte anwenden.',
-            fr: 'Bravo ! Tu as terminé tous les niveaux. ' +
+            fr: 'Bravo! Tu as terminé tous les niveaux. ' +
                 'Tu peux maintenant appliquer le TDD à tes propres projets.',
+            es: '¡Bien hecho! Has completado todos los niveles. ' +
+                'Ahora puedes aplicar TDD a tus propios proyectos.',
         })
     }
 
@@ -135,6 +161,7 @@ export class Locale {
             nl: 'Unit Testen (laatste gemarkeerd)',
             de: 'Unit-Tests (neuester hervorgehoben)',
             fr: 'Tests Unitaires (dernier mis en évidence)',
+            es: 'Tests Unitarios (último resaltado)',
         })
     }
 
@@ -144,6 +171,7 @@ export class Locale {
             nl: 'Ik wil deze unit test toevoegen',
             de: 'Ich möchte diesen Unit-Test hinzufügen',
             fr: 'Je veux ajouter ce test unitaire',
+            es: 'Quiero añadir este test unitario',
         })
     }
 
@@ -153,6 +181,7 @@ export class Locale {
             nl: 'Ik wil de unit testen inleveren',
             de: 'Ich möchte die Unit-Tests einreichen',
             fr: 'Je veux soumettre les tests unitaires',
+            es: 'Quiero enviar los tests unitarios',
         })
     }
 
@@ -166,6 +195,8 @@ export class Locale {
                 'weil er nicht der *Spezifikation* entspricht.',
             fr: 'Je n\'ai pas ajouté le test unitaire, ' +
                 'car il ne correspond pas à la *Spécification*.',
+            es: 'No he añadido el test unitario, ' +
+                'porque no coincide con la *Especificación*.',
         })
     }
 
@@ -183,6 +214,9 @@ export class Locale {
             fr: `Tu as testé la *Fonction actuelle* de manière approfondie, ` +
                  `mais tu as écrit ${numberOfUnnecessaryUnitTests} ${numberOfUnnecessaryUnitTests === 1 ? 'test unitaire' : 'tests unitaires'} de plus que nécessaire. ` +
                 `${numberOfRedundantUnitTests === 1 ? 'Le suivant' : 'Au moins un des suivants'} peut être omis.`,
+            es: `Has probado la *Función actual* exhaustivamente, ` +
+                 `pero has escrito ${numberOfUnnecessaryUnitTests} ${numberOfUnnecessaryUnitTests === 1 ? 'test unitario' : 'tests unitarios'} más de lo necesario. ` +
+                `${numberOfRedundantUnitTests === 1 ? 'El siguiente' : 'Al menos uno de los siguientes'} puede omitirse.`,
         })
     }
 
@@ -196,6 +230,8 @@ export class Locale {
                 'Schreibe dann einen Unit-Test, den die *Aktuelle Funktion* nicht besteht.',
             fr: 'Lis d\'abord la *Spécification*. ' +
                 'Écris ensuite un test unitaire que la *Fonction actuelle* ne réussit pas.',
+            es: 'Primero, lee la *Especificación*. ' +
+                'Luego escribe un test unitario que la *Función actual* no supere.',
         })
     }
 
@@ -210,6 +246,8 @@ export class Locale {
                 'verbessere ich die *Aktuelle Funktion*, damit alle *Unit-Tests* wieder bestehen.',
             fr: 'Après avoir ajouté un test unitaire, ' +
                 'j\'améliorerai la *Fonction actuelle* pour que tous les *Test Unitaires* réussissent à nouveau.',
+            es: 'Después de añadir un test unitario, ' +
+                'mejoraré la *Función actual* para que todos los *Tests Unitarios* vuelvan a pasar.',
         })
     }
 
@@ -219,6 +257,7 @@ export class Locale {
             nl: 'Lever de *Unit Testen* in als je denkt dat de *Huidige Functie* voldoet aan de *Specificatie*.',
             de: 'Reiche die *Unit-Tests* ein, wenn du denkst, dass die *Aktuelle Funktion* der *Spezifikation* entspricht.',
             fr: 'Soumets les *Test Unitaires* quand tu penses que la *Fonction actuelle* correspond à la *Spécification*.',
+            es: 'Envía los *Tests Unitarios* cuando creas que la *Función actual* coincide con la *Especificación*.',
         })
     }
 
@@ -228,6 +267,7 @@ export class Locale {
             nl: `Specificatie (${description})`,
             de: `Spezifikation (${description})`,
             fr: `Spécification (${description})`,
+            es: `Especificación (${description})`,
         })
     }
 
@@ -237,6 +277,7 @@ export class Locale {
             nl: 'Huidige Functie',
             de: 'Aktuelle Funktion',
             fr: 'Fonction actuelle',
+            es: 'Función actual',
         })
     }
 
@@ -246,6 +287,7 @@ export class Locale {
             nl: 'Verschil',
             de: 'Unterschied',
             fr: 'Différence',
+            es: 'Diferencia',
         })
     }
 
@@ -267,6 +309,10 @@ export class Locale {
                 'mais la *Fonction actuelle* le réussit déjà, ' +
                 'donc je n\'ai pas amélioré la *Fonction actuelle*. ' +
                 'Écris un test unitaire que la *Fonction actuelle* ne réussit pas.',
+            es: 'He añadido el test unitario, ' +
+                'pero la *Función actual* ya lo supera, ' +
+                'así que no he mejorado la *Función actual*. ' +
+                'Escribe un test unitario que la *Función actual* no supere.',
         })
     }
 
@@ -276,6 +322,7 @@ export class Locale {
             nl: 'Schrijf een unit test waarvoor de *Huidige Functie* faalt.',
             de: 'Schreibe einen Unit-Test, den die *Aktuelle Funktion* nicht besteht.',
             fr: 'Écris un test unitaire que la *Fonction actuelle* ne réussit pas.',
+            es: 'Escribe un test unitario que la *Función actual* no supere.',
         })
     }
 
@@ -289,6 +336,8 @@ export class Locale {
                 `damit der neue Unit-Test jetzt${numberOfUnitTests === 1 ? '' : ' auch'} besteht.`,
             fr: `J'ai ajouté le test unitaire aux *Test Unitaires* et amélioré la *Fonction actuelle* ` +
                 `pour que le nouveau test unitaire réussisse maintenant${numberOfUnitTests === 1 ? '' : ' aussi'}.`,
+            es: `He añadido el test unitario a los *Tests Unitarios* y mejorado la *Función actual* ` +
+                `para que el nuevo test unitario ahora pase${numberOfUnitTests === 1 ? '' : ' también'}.`,
         })
     }
 
@@ -302,6 +351,8 @@ export class Locale {
                 'aber die *Aktuelle Funktion* besteht ihn.',
             fr: 'Le test unitaire suivant ne correspond pas à la *Spécification*, ' +
                 'mais la *Fonction actuelle* le réussit.',
+            es: 'El siguiente test unitario no coincide con la *Especificación*, ' +
+                'pero la *Función actual* lo supera.',
         })
     }
 
@@ -319,6 +370,9 @@ export class Locale {
             fr: `La *Fonction actuelle* ne correspond pas encore à la *Spécification*. ` +
                 `Tu as besoin d'au moins ${numberOfUnitTestsStillNeeded} ${numberOfUnitTestsStillNeeded === 1 ? 'test unitaire' : 'tests unitaires'} supplémentaire${numberOfUnitTestsStillNeeded === 1 ? '' : 's'}, ` +
                 `donc écris un test unitaire qui correspond à la *Spécification* et que la *Fonction actuelle* ne réussit pas.`,
+            es: `La *Función actual* todavía no coincide con la *Especificación*. ` +
+                `Necesitas al menos ${numberOfUnitTestsStillNeeded} ${numberOfUnitTestsStillNeeded === 1 ? 'test unitario' : 'tests unitarios'} más, ` +
+                `así que escribe un test unitario que coincida con la *Especificación* y que la *Función actual* no supere.`,
         })
     }
 
@@ -327,7 +381,8 @@ export class Locale {
             en: 'Well done! The *Current Function* matches the *Specification*.',
             nl: 'Goed gedaan! De *Huidige Functie* voldoet aan de *Specificatie*.',
             de: 'Gut gemacht! Die *Aktuelle Funktion* entspricht der *Spezifikation*.',
-            fr: 'Bravo ! La *Fonction actuelle* correspond à la *Spécification*.',
+            fr: 'Bravo! La *Fonction actuelle* correspond à la *Spécification*.',
+            es: '¡Bien hecho! La *Función actual* coincide con la *Especificación*.',
         })
     }
 
@@ -337,6 +392,7 @@ export class Locale {
             nl: 'Level Overzicht',
             de: 'Level-Übersicht',
             fr: 'Aperçu des niveaux',
+            es: 'Resumen de niveles',
         })
     }
 
@@ -354,6 +410,9 @@ export class Locale {
             fr: 'Un smartphone fonctionne normalement en `Normal Mode`, ' +
                 'mais lorsque le niveau de batterie est inférieur à `20`, ' +
                 'il fonctionne en `Low Power Mode`.',
+            es: 'Un smartphone normalmente funciona en `Normal Mode`, ' +
+                'pero cuando el nivel de batería es inferior a `20`, ' +
+                'funciona en `Low Power Mode`.',
         })
     }
 
@@ -367,6 +426,8 @@ export class Locale {
                 'Versuche es erneut.',
             fr: 'Hmm, ce n\'est pas tout à fait correct. ' +
                 'Réessaie.',
+            es: 'Hmm, eso no es del todo correcto. ' +
+                'Inténtalo de nuevo.',
         })
     }
 
@@ -384,6 +445,9 @@ export class Locale {
             fr: 'La *Spécification* contient le nombre `20`. ' +
                 'C\'est un bon point de départ. ' +
                 'Quand le niveau de batterie est `20`, la fonction doit retourner `Normal Mode`.',
+            es: 'La *Especificación* contiene el número `20`. ' +
+                'Ese es un buen punto de partida. ' +
+                'Cuando el nivel de batería es `20`, la función debe retornar `Normal Mode`.',
         })
     }
 
@@ -401,6 +465,9 @@ export class Locale {
             fr: 'La *Fonction actuelle* retourne maintenant toujours `Normal Mode`, ' +
                 'mais la *Spécification* dit que le niveau de batterie `19` doit retourner `Low Power Mode`. ' +
                 'Ajoute un test unitaire pour cela.',
+            es: 'La *Función actual* ahora siempre retorna `Normal Mode`, ' +
+                'pero la *Especificación* dice que el nivel de batería `19` debe retornar `Low Power Mode`. ' +
+                'Añade un test unitario para eso.',
         })
     }
 
@@ -414,6 +481,8 @@ export class Locale {
                 'Reiche die *Unit-Tests* ein, um zu prüfen, ob die *Aktuelle Funktion* der *Spezifikation* entspricht.',
             fr: 'La *Fonction actuelle* peut maintenant retourner soit `Normal Mode` soit `Low Power Mode`. ' +
                 'Soumets les *Test Unitaires* pour vérifier si la *Fonction actuelle* correspond à la *Spécification*.',
+            es: 'La *Función actual* ahora puede retornar `Normal Mode` o `Low Power Mode`. ' +
+                'Envía los *Tests Unitarios* para comprobar si la *Función actual* coincide con la *Especificación*.',
         })
     }
 
@@ -431,6 +500,9 @@ export class Locale {
             fr: 'La *Fonction actuelle* retourne maintenant `Normal Mode` uniquement pour le niveau de batterie `20`. ' +
                 'La *Spécification* dit que `21` doit aussi retourner `Normal Mode`. ' +
                 'Ajoute un test unitaire pour cela.',
+            es: 'La *Función actual* ahora retorna `Normal Mode` solo para el nivel de batería `20`. ' +
+                'La *Especificación* dice que `21` también debe retornar `Normal Mode`. ' +
+                'Añade un test unitario para eso.',
         })
     }
 
@@ -440,6 +512,7 @@ export class Locale {
             nl: 'Lever de *Unit Testen* opnieuw in om te controleren of de *Huidige Functie* voldoet aan de *Specificatie*.',
             de: 'Reiche die *Unit-Tests* erneut ein, um zu prüfen, ob die *Aktuelle Funktion* der *Spezifikation* entspricht.',
             fr: 'Soumets à nouveau les *Tests Unitaires* pour vérifier si la *Fonction actuelle* correspond à la *Spécification*.',
+            es: 'Envía de nuevo los *Tests Unitarios* para comprobar si la *Función actual* coincide con la *Especificación*.',
         })
     }
 
@@ -457,6 +530,9 @@ export class Locale {
             fr: 'La *Fonction actuelle* retourne maintenant `Low Power Mode` uniquement pour le niveau de batterie `19`. ' +
                 'La *Spécification* dit que `18` doit aussi retourner `Low Power Mode`. ' +
                 'Ajoute un test unitaire pour cela.',
+            es: 'La *Función actual* ahora retorna `Low Power Mode` solo para el nivel de batería `19`. ' +
+                'La *Especificación* dice que `18` también debe retornar `Low Power Mode`. ' +
+                'Añade un test unitario para eso.',
         })
     }
 
@@ -466,6 +542,7 @@ export class Locale {
             nl: 'Lever de *Unit Testen* opnieuw in om te controleren of de *Huidige Functie* eindelijk voldoet aan de *Specificatie*.',
             de: 'Reiche die *Unit-Tests* erneut ein, um zu prüfen, ob die *Aktuelle Funktion* endlich der *Spezifikation* entspricht.',
             fr: 'Soumets à nouveau les *Tests Unitaires* pour vérifier si la *Fonction actuelle* correspond enfin à la *Spécification*.',
+            es: 'Envía de nuevo los *Tests Unitarios* para comprobar si la *Función actual* coincide finalmente con la *Especificación*.',
         })
     }
 
@@ -475,6 +552,7 @@ export class Locale {
             nl: 'Geef `true` terug als het getal even is en anders `false`.',
             de: 'Gib `true` zurück, wenn die Zahl gerade ist, und sonst `false`.',
             fr: 'Retourne `true` si le nombre est pair et `false` sinon.',
+            es: 'Retorna `true` si el número es par y `false` en caso contrario.',
         })
     }
 
@@ -496,6 +574,10 @@ export class Locale {
                 '`Buzz` s\'il est divisible par 5, ' +
                 '`FizzBuzz` s\'il est divisible par 3 et par 5, ' +
                 'et `Other` pour tout autre nombre.',
+            es: 'Retorna `Fizz` si el número es divisible por 3, ' +
+                '`Buzz` si es divisible por 5, ' +
+                '`FizzBuzz` si es divisible por 3 y por 5, ' +
+                'y `Other` para cualquier otro número.',
         })
     }
 
@@ -517,6 +599,10 @@ export class Locale {
                 'Un nombre à virgule flottante peut commencer par un signe plus ou moins. ' +
                 'Cela est suivi d\'un ou plusieurs chiffres. ' +
                 'Si cela est suivi d\'un point, alors un ou plusieurs chiffres doivent suivre.',
+            es: 'Retorna `true` si el texto representa un número de punto flotante y `false` en caso contrario. ' +
+                'Un número de punto flotante puede comenzar con un signo más o menos. ' +
+                'A continuación hay uno o más dígitos. ' +
+                'Si a continuación hay un punto, entonces deben seguir uno o más dígitos.',
         })
     }
 
@@ -534,6 +620,9 @@ export class Locale {
             fr: 'Retourne `true` si l\'année est une année bissextile et `false` sinon. ' +
                 'Une année est une année bissextile si elle est divisible par 4. ' +
                 'L\'exception est que les années divisibles par 100 ne sont pas des années bissextiles, sauf si elles sont aussi divisibles par 400.',
+            es: 'Retorna `true` si el año es bisiesto y `false` en caso contrario. ' +
+                'Un año es bisiesto si es divisible por 4. ' +
+                'La excepción es que los años divisibles por 100 no son bisiestos, a menos que también sean divisibles por 400.',
         })
     }
 
@@ -547,6 +636,8 @@ export class Locale {
                 'Ein Passwort ist stark, wenn es mindestens 5 Zeichen, einen Großbuchstaben, einen Kleinbuchstaben und ein Sonderzeichen (`#` oder `@`) enthält.',
             fr: 'Retourne `true` si le mot de passe est fort et `false` sinon. ' +
                 'Un mot de passe est fort s\'il contient au moins 5 caractères, une lettre majuscule, une lettre minuscule et un caractère spécial (`#` ou `@`).',
+            es: 'Retorna `true` si la contraseña es fuerte y `false` en caso contrario. ' +
+                'Una contraseña es fuerte si contiene al menos 5 caracteres, una letra mayúscula, una letra minúscula y un carácter especial (`#` o `@`).',
         })
     }
 
@@ -591,6 +682,13 @@ export class Locale {
                 'Si la vitesse ne tient plus sur l\'écran, retourne `DANGER` (ex. 300 → `DANGER`).\n' +
                 'L\'écran ressemble à ceci, où chaque X est une LED :\n' +
                 display,
+            es: 'Retorna la velocidad formateada en kilómetros por hora. ' +
+                'Usa un decimal si cabe en la pantalla (ej. 13 → `13.0`). ' +
+                'De lo contrario, redondea a un entero (ej. 87.6 → `88`). ' +
+                'Si el coche no se mueve, retorna `START`. ' +
+                'Si la velocidad ya no cabe en la pantalla, retorna `DANGER` (ej. 300 → `DANGER`).\n' +
+                'La pantalla se ve así, donde cada X es una luz LED:\n' +
+                display,
         })
     }
 
@@ -612,6 +710,10 @@ export class Locale {
                 'Un triangle est équilatéral si les trois côtés ont la même longueur. ' +
                 'Un triangle est isocèle si exactement deux côtés ont la même longueur. ' +
                 'Un triangle est scalène si les trois côtés ont des longueurs différentes.',
+            es: 'Retorna el tipo de triángulo: `equilateral` (equilátero), `isosceles` (isósceles) o `scalene` (escaleno). ' +
+                'Un triángulo es equilátero si los tres lados tienen la misma longitud. ' +
+                'Un triángulo es isósceles si exactamente dos lados tienen la misma longitud. ' +
+                'Un triángulo es escaleno si los tres lados tienen longitudes diferentes.',
         })
     }
 
@@ -621,6 +723,7 @@ export class Locale {
             nl: 'Geef `true` terug als de leeftijd `18` jaar of hoger is, en anders `false`.',
             de: 'Gib `true` zurück, wenn das Alter `18` oder älter ist, und sonst `false`.',
             fr: 'Retourne `true` si l\'âge est `18` ou plus, et `false` sinon.',
+            es: 'Retorna `true` si la edad es `18` o más, y `false` en caso contrario.',
         })
     }
 
@@ -638,6 +741,9 @@ export class Locale {
             fr: 'Retourne `Good` si le prix est inférieur à `20` et la qualité est au moins `7`. ' +
                 'Retourne `Bad` si le prix est `20` ou plus et la qualité est inférieure à `7`. ' +
                 'Retourne `Ok` dans tous les autres cas.',
+            es: 'Retorna `Good` si el precio es inferior a `20` y la calidad es al menos `7`. ' +
+                'Retorna `Bad` si el precio es `20` o más y la calidad es inferior a `7`. ' +
+                'Retorna `Ok` en todos los demás casos.',
         })
     }
 
@@ -647,6 +753,7 @@ export class Locale {
             nl: 'of',
             de: 'oder',
             fr: 'ou',
+            es: 'o',
         })
     }
 }

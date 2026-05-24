@@ -38,7 +38,7 @@ export class Main {
     }
 
     private showAboutPanel(): void {
-        new Panel('unittestgame', this.locale.unitTestGameTitle(), [this.locale.slogan(), this.locale.links()]).show()
+        new Panel('unittestgame', this.locale.unitTestGameTitle(), [this.locale.slogan(), this.locale.links(), this.locale.switchLanguage()]).show()
     }
 
     private showInvitationMessage(): void {
