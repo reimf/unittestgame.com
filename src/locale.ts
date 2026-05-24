@@ -1,6 +1,7 @@
 type LocalisableText = {
     en: string
     nl: string
+    de: string
 }
 
 declare const __brand: unique symbol
@@ -14,7 +15,7 @@ export class Locale {
     }
 
     public constructor(language: string) {
-        const lang = ['en', 'nl'].includes(language) ? language : 'en'
+        const lang = ['en', 'nl', 'de'].includes(language) ? language : 'en'
         this.lang = lang as keyof LocalisableText
     }
 
@@ -26,8 +27,10 @@ export class Locale {
         return this.localize({
             en: 'Hi! I\'m an AI bot that writes code. ' +
                 'Your job is to guide me using unit tests.',
-            nl: 'Hallo! Ik ben een AI bot die code schrijft. ' +
+            nl: 'Hoi! Ik ben een AI bot die code schrijft. ' +
                 'Jouw taak is om mij bij te sturen met unit testen.',
+            de: 'Hallo! Ich bin ein KI-Bot, der Code schreibt. ' +
+                'Deine Aufgabe ist es, mich mit Unit-Tests zu steuern.',
         })
     }
 
@@ -35,6 +38,7 @@ export class Locale {
         return this.localize({
             en: 'UnitTestGame',
             nl: 'UnitTestGame',
+            de: 'UnitTestGame',
         })
     }
 
@@ -42,6 +46,7 @@ export class Locale {
         return this.localize({
             en: 'Learn Test-Driven Development by writing unit tests that guide an AI bot.',
             nl: 'Leer Test-Driven Development door unit testen te schrijven die een AI bot bijsturen.',
+            de: 'Lerne Test-Driven Development, indem du Unit-Tests schreibst, die einen KI-Bot steuern.',
         })
     }
 
@@ -49,10 +54,16 @@ export class Locale {
         return this.localize({
             en: '[Read more about TDD on Wikipedia](https://en.wikipedia.org/wiki/Test-driven_development)\n' +
                 '[Overschakelen op Nederlands](?language=nl)\n' +
+                '[Auf Deutsch wechseln](?language=de)\n' +
                 '[Contact](mailto:contact@unittestgame.com)',
             nl: '[Lees meer over TDD op Wikipedia](https://nl.wikipedia.org/wiki/Test-driven_development)\n' +
                 '[Switch to English](?language=en)\n' +
+                '[Auf Deutsch wechseln](?language=de)\n' +
                 '[Contact](mailto:contact@unittestgame.com)',
+            de: '[Mehr über TDD auf Wikipedia lesen](https://de.wikipedia.org/wiki/Testgetriebene_Entwicklung)\n' +
+                '[Switch to English](?language=en)\n' +
+                '[Overschakelen op Nederlands](?language=nl)\n' +
+                '[Kontakt](mailto:contact@unittestgame.com)',
         })
     }
 
@@ -60,6 +71,7 @@ export class Locale {
         return this.localize({
             en: 'Which level do you want to play?',
             nl: 'Welk level wil je spelen?',
+            de: 'Welches Level möchtest du spielen?',
         })
     }
 
@@ -67,6 +79,7 @@ export class Locale {
         return this.localize({
             en: `Level ${levelNumber} - ${levelName}`,
             nl: `Level ${levelNumber} - ${levelName}`,
+            de: `Level ${levelNumber} - ${levelName}`,
         })
     }
 
@@ -74,6 +87,7 @@ export class Locale {
         return this.localize({
             en: `I want to play ${levelDescription}`,
             nl: `Ik wil ${levelDescription} spelen`,
+            de: `Ich möchte ${levelDescription} spielen`,
         })
     }
 
@@ -81,6 +95,7 @@ export class Locale {
         return this.localize({
             en: 'I\'ve completed all the levels',
             nl: 'Ik heb alle levels voltooid',
+            de: 'Ich habe alle Levels abgeschlossen',
         })
     }
 
@@ -90,6 +105,8 @@ export class Locale {
                 'You can now apply TDD to your own projects.',
             nl: 'Goed gedaan! Je hebt alle levels voltooid. ' +
                 'Je kunt TDD nu toepassen op je eigen projecten.',
+            de: 'Gut gemacht! Du hast alle Levels abgeschlossen. ' +
+                'Du kannst TDD jetzt auf deine eigenen Projekte anwenden.',
         })
     }
 
@@ -97,6 +114,7 @@ export class Locale {
         return this.localize({
             en: 'Unit Tests (latest highlighted)',
             nl: 'Unit Testen (laatste gemarkeerd)',
+            de: 'Unit-Tests (neuester hervorgehoben)',
         })
     }
 
@@ -104,6 +122,7 @@ export class Locale {
         return this.localize({
             en: 'I want to add this unit test',
             nl: 'Ik wil deze unit test toevoegen',
+            de: 'Ich möchte diesen Unit-Test hinzufügen',
         })
     }
 
@@ -111,6 +130,7 @@ export class Locale {
         return this.localize({
             en: 'I want to submit the unit tests',
             nl: 'Ik wil de unit testen inleveren',
+            de: 'Ich möchte die Unit-Tests einreichen',
         })
     }
 
@@ -120,6 +140,8 @@ export class Locale {
                 'because it doesn\'t match the *Specification*.',
             nl: 'Ik heb de unit test niet toegevoegd, ' +
                 'omdat deze niet voldoet aan de *Specificatie*.',
+            de: 'Ich habe den Unit-Test nicht hinzugefügt, ' +
+                'weil er nicht der *Spezifikation* entspricht.',
         })
     }
 
@@ -131,6 +153,9 @@ export class Locale {
             nl: `Je hebt de *Huidige Functie* grondig getest, ` +
                  `maar je hebt ${numberOfUnnecessaryUnitTests} ${numberOfUnnecessaryUnitTests === 1 ? 'unit test' : 'unit testen'} meer dan nodig is. ` +
                 `${numberOfRedundantUnitTests === 1 ? 'De volgende' : 'Minstens één van de volgende'} kun je weglaten.`,
+            de: `Du hast die *Aktuelle Funktion* gründlich getestet, ` +
+                 `aber du hast ${numberOfUnnecessaryUnitTests} ${numberOfUnnecessaryUnitTests === 1 ? 'Unit-Test' : 'Unit-Tests'} mehr als nötig geschrieben. ` +
+                `${numberOfRedundantUnitTests === 1 ? 'Der folgende' : 'Mindestens einer der folgenden'} kann weggelassen werden.`,
         })
     }
 
@@ -140,6 +165,8 @@ export class Locale {
                 'Then write a unit test that the *Current Function* fails.',
             nl: 'Lees eerst de *Specificatie*. ' +
                 'Schrijf daarna een unit test waarvoor de *Huidige Functie* faalt.',
+            de: 'Lies zuerst die *Spezifikation*. ' +
+                'Schreibe dann einen Unit-Test, den die *Aktuelle Funktion* nicht besteht.',
         })
     }
 
@@ -150,6 +177,8 @@ export class Locale {
                 'I\'ll improve the *Current Function* so all *Unit Tests* pass again.',
             nl: 'Nadat je een unit test hebt toegevoegd ' +
                 'verbeter ik de *Huidige Functie* zodat alle *Unit Testen* weer slagen.',
+            de: 'Nachdem du einen Unit-Test hinzugefügt hast, ' +
+                'verbessere ich die *Aktuelle Funktion*, damit alle *Unit-Tests* wieder bestehen.',
         })
     }
 
@@ -157,6 +186,7 @@ export class Locale {
         return this.localize({
             en: 'Submit the *Unit Tests* when you think the *Current Function* matches the *Specification*.',
             nl: 'Lever de *Unit Testen* in als je denkt dat de *Huidige Functie* voldoet aan de *Specificatie*.',
+            de: 'Reiche die *Unit-Tests* ein, wenn du denkst, dass die *Aktuelle Funktion* der *Spezifikation* entspricht.',
         })
     }
 
@@ -164,6 +194,7 @@ export class Locale {
         return this.localize({
             en: `Specification (${description})`,
             nl: `Specificatie (${description})`,
+            de: `Spezifikation (${description})`,
         })
     }
 
@@ -171,6 +202,7 @@ export class Locale {
         return this.localize({
             en: 'Current Function',
             nl: 'Huidige Functie',
+            de: 'Aktuelle Funktion',
         })
     }
 
@@ -178,6 +210,7 @@ export class Locale {
         return this.localize({
             en: 'Difference',
             nl: 'Verschil',
+            de: 'Unterschied',
         })
     }
 
@@ -191,6 +224,10 @@ export class Locale {
                 'maar de *Huidige Functie* slaagt er al voor, ' +
                 'dus heb ik die niet verbeterd. ' +
                 'Schrijf een unit test waarvoor de *Huidige Functie* faalt.',
+            de: 'Ich habe den Unit-Test hinzugefügt, ' +
+                'aber die *Aktuelle Funktion* besteht ihn bereits, ' +
+                'also habe ich die *Aktuelle Funktion* nicht verbessert. ' +
+                'Schreibe einen Unit-Test, den die *Aktuelle Funktion* nicht besteht.',
         })
     }
 
@@ -198,6 +235,7 @@ export class Locale {
         return this.localize({
             en: 'Write a unit test that the *Current Function* fails.',
             nl: 'Schrijf een unit test waarvoor de *Huidige Functie* faalt.',
+            de: 'Schreibe einen Unit-Test, den die *Aktuelle Funktion* nicht besteht.',
         })
     }
 
@@ -207,6 +245,8 @@ export class Locale {
                 `so the new unit test now passes${numberOfUnitTests === 1 ? '' : ' as well'}.`,
             nl: `Ik heb de unit test toegevoegd aan de *Unit Testen* en de *Huidige Functie* verbeterd ` +
                 `zodat de nieuwe unit test nu${numberOfUnitTests === 1 ? '' : ' ook'} slaagt.`,
+            de: `Ich habe den Unit-Test zu den *Unit-Tests* hinzugefügt und die *Aktuelle Funktion* verbessert, ` +
+                `damit der neue Unit-Test jetzt${numberOfUnitTests === 1 ? '' : ' auch'} besteht.`,
         })
     }
 
@@ -216,6 +256,8 @@ export class Locale {
                 'but the *Current Function* passes it.',
             nl: 'De volgende unit test voldoet niet aan de *Specificatie*, ' +
                 'maar de *Huidige Functie* slaagt er wel voor.',
+            de: 'Der folgende Unit-Test entspricht nicht der *Spezifikation*, ' +
+                'aber die *Aktuelle Funktion* besteht ihn.',
         })
     }
 
@@ -227,6 +269,9 @@ export class Locale {
             nl: `De *Huidige Functie* voldoet nog niet aan de *Specificatie*. ` +
                 `Je hebt nog minstens ${numberOfUnitTestsStillNeeded} ${numberOfUnitTestsStillNeeded === 1 ? 'unit test' : 'unit testen'} nodig, ` +
                 `dus schrijf een unit test die voldoet aan de *Specificatie* en waarvoor de *Huidige Functie* faalt.`,
+            de: `Die *Aktuelle Funktion* entspricht noch nicht der *Spezifikation*. ` +
+                `Du brauchst noch mindestens ${numberOfUnitTestsStillNeeded} ${numberOfUnitTestsStillNeeded === 1 ? 'weiteren Unit-Test' : 'weitere Unit-Tests'}, ` +
+                `also schreibe einen Unit-Test, der der *Spezifikation* entspricht und den die *Aktuelle Funktion* nicht besteht.`,
         })
     }
 
@@ -234,13 +279,15 @@ export class Locale {
         return this.localize({
             en: 'Well done! The *Current Function* matches the *Specification*.',
             nl: 'Goed gedaan! De *Huidige Functie* voldoet aan de *Specificatie*.',
+            de: 'Gut gemacht! Die *Aktuelle Funktion* entspricht der *Spezifikation*.',
         })
     }
 
     public levelOverviewTitle(): LocalizedText {
         return this.localize({
             en: 'Level Overview',
-            nl: 'Level Overzicht',
+            nl: 'Level-Overzicht',
+            de: 'Level-Übersicht',
         })
     }
 
@@ -252,6 +299,9 @@ export class Locale {
             nl: 'Een smartphone werkt normaal in `Normal Mode`, ' +
                 'maar wanneer het batterijpercentage minder dan `20` is, ' +
                 'werkt een smartphone in `Low Power Mode`.',
+            de: 'Ein Smartphone funktioniert normalerweise im `Normal Mode`, ' +
+                'aber wenn der Akkustand unter `20` liegt, ' +
+                'funktioniert es im `Low Power Mode`.',
         })
     }
 
@@ -261,6 +311,8 @@ export class Locale {
                 'Try again.',
             nl: 'Hmm, dat klopt niet helemaal. ' +
                 'Probeer het opnieuw.',
+            de: 'Hmm, das ist nicht ganz richtig. ' +
+                'Versuche es erneut.',
         })
     }
 
@@ -272,6 +324,9 @@ export class Locale {
             nl: 'De *Specificatie* bevat het getal 20. ' +
                 'Dat is een goed startpunt. ' +
                 'Wanneer het batterijpercentage `20` is moet de functie `Normal Mode` teruggeven.',
+            de: 'Die *Spezifikation* enthält die Zahl `20`. ' +
+                'Das ist ein guter Ausgangspunkt. ' +
+                'Wenn der Akkustand `20` ist, muss die Funktion `Normal Mode` zurückgeben.',
         })
     }
 
@@ -283,6 +338,9 @@ export class Locale {
             nl: 'De *Huidige Functie* geeft nu altijd `Normal Mode` terug, ' +
                 'maar de *Specificatie* zegt dat batterijpercentage `19` `Low Power Mode` moet teruggeven. ' +
                 'Voeg daar een unit test voor toe.',
+            de: 'Die *Aktuelle Funktion* gibt jetzt immer `Normal Mode` zurück, ' +
+                'aber die *Spezifikation* sagt, dass Akkustand `19` `Low Power Mode` zurückgeben muss. ' +
+                'Füge dafür einen Unit-Test hinzu.',
         })
     }
 
@@ -292,6 +350,8 @@ export class Locale {
                 'Submit the unit tests to check if the *Current Function* matches the *Specification*.',
             nl: 'De *Huidige Functie* kan nu `Normal Mode` of `Low Power Mode` teruggeven. ' +
                 'Lever de unit testen in om te controleren of de *Huidige Functie* voldoet aan de *Specificatie*.',
+            de: 'Die *Aktuelle Funktion* kann jetzt entweder `Normal Mode` oder `Low Power Mode` zurückgeben. ' +
+                'Reiche die Unit-Tests ein, um zu prüfen, ob die *Aktuelle Funktion* der *Spezifikation* entspricht.',
         })
     }
 
@@ -303,6 +363,9 @@ export class Locale {
             nl: 'De *Huidige Functie* geeft nu alleen `Normal Mode` terug voor batterijpercentage `20`. ' +
                 'De *Specificatie* zegt dat `21` ook `Normal Mode` moet teruggeven. ' +
                 'Voeg daar een unit test voor toe.',
+            de: 'Die *Aktuelle Funktion* gibt jetzt `Normal Mode` nur für Akkustand `20` zurück. ' +
+                'Die *Spezifikation* sagt, dass `21` auch `Normal Mode` zurückgeben muss. ' +
+                'Füge dafür einen Unit-Test hinzu.',
         })
     }
 
@@ -310,6 +373,7 @@ export class Locale {
         return this.localize({
             en: 'Submit the unit tests again to check if the *Current Function* matches the *Specification*.',
             nl: 'Lever de unit testen opnieuw in om te controleren of de *Huidige Functie* voldoet aan de *Specificatie*.',
+            de: 'Reiche die Unit-Tests erneut ein, um zu prüfen, ob die *Aktuelle Funktion* der *Spezifikation* entspricht.',
         })
     }
 
@@ -321,6 +385,9 @@ export class Locale {
             nl: 'De *Huidige Functie* geeft nu alleen `Low Power Mode` terug voor batterijpercentage `19`. ' +
                 'De *Specificatie* zegt dat `18` ook `Low Power Mode` moet teruggeven. ' +
                 'Voeg daar een unit test voor toe.',
+            de: 'Die *Aktuelle Funktion* gibt jetzt `Low Power Mode` nur für Akkustand `19` zurück. ' +
+                'Die *Spezifikation* sagt, dass `18` auch `Low Power Mode` zurückgeben muss. ' +
+                'Füge dafür einen Unit-Test hinzu.',
         })
     }
 
@@ -328,6 +395,7 @@ export class Locale {
         return this.localize({
             en: 'Submit the unit tests again to check if the *Current Function* finally matches the *Specification*.',
             nl: 'Lever de unit testen opnieuw in om te controleren of de *Huidige Functie* eindelijk voldoet aan de *Specificatie*.',
+            de: 'Reiche die Unit-Tests erneut ein, um zu prüfen, ob die *Aktuelle Funktion* endlich der *Spezifikation* entspricht.',
         })
     }
 
@@ -335,6 +403,7 @@ export class Locale {
         return this.localize({
             en: 'Return `true` if the number is even and `false` otherwise.',
             nl: 'Geef `true` terug als het getal even is en anders `false`.',
+            de: 'Gib `true` zurück, wenn die Zahl gerade ist, und sonst `false`.',
         })
     }
 
@@ -348,6 +417,10 @@ export class Locale {
                 '`Buzz` als het deelbaar is door 5, ' +
                 '`FizzBuzz` als het deelbaar is door zowel 3 als 5, ' +
                 'en `Other` voor elk ander getal.',
+            de: 'Gib `Fizz` zurück, wenn die Zahl durch 3 teilbar ist, ' +
+                '`Buzz` wenn sie durch 5 teilbar ist, ' +
+                '`FizzBuzz` wenn sie durch 3 und 5 teilbar ist, ' +
+                'und `Other` für jede andere Zahl.',
         })
     }
 
@@ -361,6 +434,10 @@ export class Locale {
                 'Een gebroken getal kan beginnen met een plus- of minteken. ' +
                 'Hierna volgen één of meer cijfers. ' +
                 'Als dit wordt gevolgd door een punt, dan moeten nog één of meer cijfers volgen.',
+            de: 'Gib `true` zurück, wenn der Text eine Gleitkommazahl darstellt, und sonst `false`. ' +
+                'Eine Gleitkommazahl kann mit einem Plus- oder Minuszeichen beginnen. ' +
+                'Danach folgen eine oder mehrere Ziffern. ' +
+                'Wenn danach ein Punkt folgt, müssen noch eine oder mehrere Ziffern folgen.',
         })
     }
 
@@ -372,6 +449,9 @@ export class Locale {
             nl: 'Geef `true` terug als het jaar een schrikkeljaar is en anders `false`. ' +
                 'Een jaar is een schrikkeljaar als het deelbaar is door 4. ' +
                 'De uitzondering is dat jaren die deelbaar zijn door 100 geen schrikkeljaren zijn, tenzij ze ook deelbaar zijn door 400.',
+            de: 'Gib `true` zurück, wenn das Jahr ein Schaltjahr ist, und sonst `false`. ' +
+                'Ein Jahr ist ein Schaltjahr, wenn es durch 4 teilbar ist. ' +
+                'Die Ausnahme ist, dass Jahre, die durch 100 teilbar sind, keine Schaltjahre sind, es sei denn, sie sind auch durch 400 teilbar.',
         })
     }
 
@@ -381,6 +461,8 @@ export class Locale {
                 'A password is strong if it contains at least 5 characters, an uppercase letter, a lowercase letter, and a special character (`#` or `@`).',
             nl: 'Geef `true` terug als het wachtwoord sterk is en anders `false`. ' +
                 'Een wachtwoord is sterk als het tenminste 5 tekens bevat, een hoofdletter, een kleine letter en een speciaal teken (`#` of `@`).',
+            de: 'Gib `true` zurück, wenn das Passwort stark ist, und sonst `false`. ' +
+                'Ein Passwort ist stark, wenn es mindestens 5 Zeichen, einen Großbuchstaben, einen Kleinbuchstaben und ein Sonderzeichen (`#` oder `@`) enthält.',
         })
     }
 
@@ -411,6 +493,13 @@ export class Locale {
                 'Als de snelheid niet meer op het scherm past, geef `DANGER` terug (bijvoorbeeld 300 → `DANGER`).\n' +
                 'Het scherm ziet er zo uit, waarbij elke X een LED-lampje is:\n' +
                 display,
+            de: 'Gib die formatierte Geschwindigkeit in Kilometern pro Stunde zurück. ' +
+                'Verwende eine Dezimalstelle, wenn sie auf das Display passt (z.B. 13 → `13.0`). ' +
+                'Runde sonst auf eine ganze Zahl (z.B. 87.6 → `88`). ' +
+                'Wenn das Auto nicht fährt, gib `START` zurück. ' +
+                'Wenn die Geschwindigkeit nicht mehr auf das Display passt, gib `DANGER` zurück (z.B. 300 → `DANGER`).\n' +
+                'Das Display sieht so aus, wobei jedes X eine LED-Leuchte ist:\n' +
+                display,
         })
     }
 
@@ -424,6 +513,10 @@ export class Locale {
                 'Een driehoek is gelijkzijdig als alle drie de zijden even lang zijn. ' +
                 'Een driehoek is gelijkbenig als precies twee zijden even lang zijn. ' +
                 'Een driehoek is ongelijkzijdig als alle drie de zijden verschillende lengtes hebben.',
+            de: 'Gib den Typ des Dreiecks zurück: `equilateral` (gleichseitig), `isosceles` (gleichschenklig) oder `scalene` (ungleichseitig). ' +
+                'Ein Dreieck ist gleichseitig, wenn alle drei Seiten gleich lang sind. ' +
+                'Ein Dreieck ist gleichschenklig, wenn genau zwei Seiten gleich lang sind. ' +
+                'Ein Dreieck ist ungleichseitig, wenn alle drei Seiten unterschiedliche Längen haben.',
         })
     }
 
@@ -431,6 +524,7 @@ export class Locale {
         return this.localize({
             en: 'Return `true` if the age is `18` or over, and `false` otherwise.',
             nl: 'Geef `true` terug als de leeftijd `18` jaar of hoger is, en anders `false`.',
+            de: 'Gib `true` zurück, wenn das Alter `18` oder älter ist, und sonst `false`.',
         })
     }
 
@@ -442,6 +536,9 @@ export class Locale {
             nl: 'Geef `Good` terug als de prijs minder dan `20` is en de kwaliteit ten minste `7` is. ' +
                 'Geef `Bad` terug als de prijs `20` of meer is en de kwaliteit minder dan `7` is. ' +
                 'Geef `Ok` terug in alle andere gevallen.',
+            de: 'Gib `Good` zurück, wenn der Preis weniger als `20` ist und die Qualität mindestens `7` beträgt. ' +
+                'Gib `Bad` zurück, wenn der Preis `20` oder mehr ist und die Qualität weniger als `7` beträgt. ' +
+                'Gib `Ok` in allen anderen Fällen zurück.',
         })
     }
 
@@ -449,6 +546,7 @@ export class Locale {
         return this.localize({
             en: 'or',
             nl: 'of',
+            de: 'oder',
         })
     }
 }
