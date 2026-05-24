@@ -9,8 +9,8 @@ global.document = document
 test.describe('class Variable', () => {
     test('subclass RadioVariable', () => {
         const variable = new RadioVariable(Locale.bless('Type of triangle'), 'triangleType', [
-            Locale.bless('equilateral'), 
-            Locale.bless('isosceles'), 
+            Locale.bless('equilateral'),
+            Locale.bless('isosceles'),
             Locale.bless('scalene'),
         ])
         const html = variable.toHtml()

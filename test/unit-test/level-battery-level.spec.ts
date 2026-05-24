@@ -1,12 +1,12 @@
 import { test, expect } from '@playwright/test'
 import { Locale } from '../../src/locale.js'
-import { MockPicker } from '../mock/mock-picker.js'
-import { MockStorage } from '../mock/mock-storage.js'
+import { FixedPicker } from '../../src/fixed-picker.js'
+import { TemporaryStorage } from '../../src/temporary-storage.js'
 import { BatteryLevel } from '../../src/level-battery-level.js'
 
 test.describe('class BatteryLevel', () => {
     const locale = new Locale('en')
-    const level = new BatteryLevel(locale, 1, new MockStorage(), new MockPicker())
+    const level = new BatteryLevel(locale, 1, new TemporaryStorage(), new FixedPicker())
 
     test('has the right amount of parameters', () => {
         expect(level.parameters).toHaveLength(1)

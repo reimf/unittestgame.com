@@ -7,7 +7,7 @@ test.describe('example level', () => {
         const context = await browser.newContext()
         await context.addInitScript({ path: './test/e2e-test/init-script.js' })
         page = await context.newPage()
-        await page.goto('/')
+        await page.goto('/?picker=fixed')
         await page.getByRole('button', { name: 'I want to play Level 1 - Battery Level' }).click()
         await page.getByLabel('Battery Level').fill('20')
         await page.getByLabel('Normal Mode').check()

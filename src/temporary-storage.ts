@@ -1,4 +1,4 @@
-export class MockStorage {
+export class TemporaryStorage {
     private readonly storage = new Map<string, string>()
 
     get length(): number {
@@ -20,7 +20,8 @@ export class MockStorage {
     }
 
     key(index: number): string|null {
-        return Array.from(this.storage.keys())[index] ?? null
+        const keys = [...this.storage.keys()]
+        return keys[index] ?? null
     }
 
     clear(): this {

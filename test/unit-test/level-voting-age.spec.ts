@@ -1,12 +1,12 @@
 import { test, expect } from '@playwright/test'
 import { Locale } from '../../src/locale.js'
-import { MockPicker } from '../mock/mock-picker.js'
-import { MockStorage } from '../mock/mock-storage.js'
+import { FixedPicker } from '../../src/fixed-picker.js'
+import { TemporaryStorage } from '../../src/temporary-storage.js'
 import { VotingAge } from '../../src/level-voting-age.js'
 
 test.describe('class VotingAge', () => {
     const locale = new Locale('en')
-    const level = new VotingAge(locale, 3, new MockStorage(), new MockPicker())
+    const level = new VotingAge(locale, 3, new TemporaryStorage(), new FixedPicker())
 
     test('has the right amount of parameters', () => {
         expect(level.parameters).toHaveLength(1)

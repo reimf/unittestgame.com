@@ -3,13 +3,17 @@ import { Panel, Message, ComputerMessage, QuestionMessage } from './frame.js'
 import { Div, Span } from './html.js'
 import { Level } from './level-base.js'
 import { Locale } from './locale.js'
-import { RandomPicker } from './random-picker.js'
+import { Picker } from './picker.js'
 
 export class Main {
-    private readonly lng = (new URL(window.location.href)).searchParams.get('lng') || navigator.language.split('-')[0]!
-    private readonly locale = new Locale(this.lng)
-    private readonly game = new Game(this.locale, new RandomPicker())
-    private readonly levels = this.game.allLevels(localStorage)
+    private readonly locale: Locale
+    private readonly levels: ReturnType<Game['levels']>
+
+    constructor(locale: Locale, picker: Picker, storage: Storage) {
+        this.locale = locale
+        const game = new Game(locale, picker, storage)
+        this.levels = game.levels()
+    }
 
     public start(): void {
         this.showWelcomeMessage()

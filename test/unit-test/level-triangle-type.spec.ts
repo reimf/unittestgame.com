@@ -1,12 +1,12 @@
 import { test, expect } from '@playwright/test'
 import { Locale } from '../../src/locale.js'
-import { MockPicker } from '../mock/mock-picker.js'
-import { MockStorage } from '../mock/mock-storage.js'
+import { FixedPicker } from '../../src/fixed-picker.js'
+import { TemporaryStorage } from '../../src/temporary-storage.js'
 import { TriangleType } from '../../src/level-triangle-type.js'
 
 test.describe('class TriangleType', () => {
     const locale = new Locale('en')
-    const level = new TriangleType(locale, 6, new MockStorage(), new MockPicker())
+    const level = new TriangleType(locale, 6, new TemporaryStorage(), new FixedPicker())
 
     test('has the right amount of parameters', () => {
         expect(level.parameters).toHaveLength(3)

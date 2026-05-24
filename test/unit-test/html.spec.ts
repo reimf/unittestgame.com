@@ -64,7 +64,7 @@ test.describe('class Html', () => {
     })
 
     test('appends code in markdown', () => {
-        const header = new Header().appendMarkdown(Locale.bless('this is `code` and this is not')) 
+        const header = new Header().appendMarkdown(Locale.bless('this is `code` and this is not'))
         expect(header.getElement().outerHTML).toBe(
             '<header>this is <code>code</code> and this is not</header>'
         )

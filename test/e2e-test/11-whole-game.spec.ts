@@ -2,7 +2,7 @@ import { test, expect, Page } from '@playwright/test'
 import { Game } from '../../src/game.js'
 import { BooleanVariable, RadioVariable } from '../../src/variable.js'
 import { BatteryLevel } from '../../src/level-battery-level.js'
-import { MockStorage } from '../mock/mock-storage.js'
+import { TemporaryStorage } from '../../src/temporary-storage.js'
 import { RandomPicker } from '../../src/random-picker.js'
 import { Locale } from '../../src/locale.js'
 
@@ -19,8 +19,11 @@ test.describe('whole game', () => {
     test('plays whole game', async () => {
         test.slow()
 
-        const game = new Game(new Locale('en'), new RandomPicker())
-        const levels = game.allLevels(new MockStorage())
+        const locale = new Locale('en')
+        const picker = new RandomPicker()
+        const storage = new TemporaryStorage()
+        const game = new Game(locale, picker, storage)
+        const levels = game.levels()
 
         for (const level of levels) {
             await page.getByRole('button', { name: `I want to play ${level.description()}` }).click()
