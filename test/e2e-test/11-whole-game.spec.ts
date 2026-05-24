@@ -3,7 +3,7 @@ import { Game } from '../../src/game.js'
 import { BooleanVariable, RadioVariable } from '../../src/variable.js'
 import { BatteryLevel } from '../../src/level-battery-level.js'
 import { TemporaryStorage } from '../../src/temporary-storage.js'
-import { RandomPicker } from '../../src/random-picker.js'
+import { RandomPicker } from '../../src/picker.js'
 import { Locale } from '../../src/locale.js'
 
 test.describe('whole game', () => {

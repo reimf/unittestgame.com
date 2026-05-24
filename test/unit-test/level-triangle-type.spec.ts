@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 import { Locale } from '../../src/locale.js'
-import { FixedPicker } from '../../src/fixed-picker.js'
+import { FixedPicker } from '../../src/picker.js'
 import { TemporaryStorage } from '../../src/temporary-storage.js'
 import { TriangleType } from '../../src/level-triangle-type.js'
 

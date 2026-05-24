@@ -26,7 +26,7 @@ test.describe('welcome', () => {
 
     test('has link to site in Dutch', async () => {
         const link = page.getByRole('link', { name: 'Nederlands' })
-        expect(await link.getAttribute('href')).toBe('?lng=nl')
+        expect(await link.getAttribute('href')).toBe('?language=nl')
     })
 
     test('has more info on Test-Driven Development', async () => {

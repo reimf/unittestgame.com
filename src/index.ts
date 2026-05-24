@@ -1,6 +1,5 @@
 import { Main } from './main.js'
-import { FixedPicker } from './fixed-picker.js'
-import { RandomPicker } from './random-picker.js'
+import { FixedPicker, RandomPicker } from './picker.js'
 import { TemporaryStorage } from './temporary-storage.js'
 import { Locale } from './locale.js'
 
@@ -30,8 +29,8 @@ document.addEventListener('keydown', event => {
 
 document.addEventListener('DOMContentLoaded', () => {
     const parameters = new URL(window.location.href).searchParams
-    const lng = parameters.get('lng') || navigator.language.split('-')[0]!
-    const locale = new Locale(lng)
+    const language = parameters.get('language') || navigator.language.split('-')[0]!
+    const locale = new Locale(language)
     const picker = parameters.get('picker') === 'fixed' ? new FixedPicker() : new RandomPicker()
     const storage = parameters.get('storage') === 'temporary' ? new TemporaryStorage() : localStorage
     new Main(locale, picker, storage).start()

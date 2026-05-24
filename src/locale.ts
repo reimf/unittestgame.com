@@ -7,19 +7,19 @@ declare const __brand: unique symbol
 export type LocalizedText = string & { readonly [__brand]: void }
 
 export class Locale {
-    private readonly lng: keyof LocalisableText
+    private readonly lang: keyof LocalisableText
 
     public static bless(text: string): LocalizedText {
         return text as LocalizedText
     }
 
-    public constructor(lang: string) {
-        const lng = ['en', 'nl'].includes(lang) ? lang : 'en'
-        this.lng = lng as keyof LocalisableText
+    public constructor(language: string) {
+        const lang = ['en', 'nl'].includes(language) ? language : 'en'
+        this.lang = lang as keyof LocalisableText
     }
 
     private localize(localisableText: LocalisableText): LocalizedText {
-        return Locale.bless(localisableText[this.lng])
+        return Locale.bless(localisableText[this.lang])
     }
 
     public welcome(): LocalizedText {
@@ -48,10 +48,10 @@ export class Locale {
     public links(): LocalizedText {
         return this.localize({
             en: '[Read more about TDD on Wikipedia](https://en.wikipedia.org/wiki/Test-driven_development)\n' +
-                '[Overschakelen op Nederlands](?lng=nl)\n' +
+                '[Overschakelen op Nederlands](?language=nl)\n' +
                 '[Contact](mailto:contact@unittestgame.com)',
             nl: '[Lees meer over TDD op Wikipedia](https://nl.wikipedia.org/wiki/Test-driven_development)\n' +
-                '[Switch to English](?lng=en)\n' +
+                '[Switch to English](?language=en)\n' +
                 '[Contact](mailto:contact@unittestgame.com)',
         })
     }
