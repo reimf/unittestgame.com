@@ -13,7 +13,8 @@ typescript:
     - npx tsc --build --force --verbose
   artifacts:
     paths:
-      - "**/*.js"
+      - "src/**/*.js"
+      - "test/**/*.js"
   only:
     - main
 
@@ -33,10 +34,10 @@ pages:
   stage: deploy
   script:
     - mkdir public
-    - cp *.{css,html,ico,js,png} public
+    - cp *.{css,html,ico,png} public
     - mkdir public/src
     - cp src/*.js public/src
-    - gzip -k -6 public/*.{css,html,js} public/src/*.js
+    - gzip -k -6 public/*.{css,html} public/src/*.js
   artifacts:
     paths:
       - public
