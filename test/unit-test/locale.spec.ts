@@ -9,11 +9,11 @@ test.describe('class Locale', () => {
 
     test('has Dutch translations', () => {
         const locale = new Locale('nl')
-        expect(locale.welcome()).toBe('Hallo! Ik ben een AI bot die code schrijft. Jouw taak is om mij bij te sturen met unit testen.')
+        expect(locale.welcome()).toBe('Hoi! Ik ben een AI bot die code schrijft. Jouw taak is om mij bij te sturen met unit testen.')
     })
 
     test('has English as fallback language', () => {
-        const locale = new Locale('de')
+        const locale = new Locale('no')
         expect(locale.welcome()).toBe('Hi! I\'m an AI bot that writes code. Your job is to guide me using unit tests.')
     })
 })
