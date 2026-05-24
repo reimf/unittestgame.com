@@ -12,7 +12,7 @@ import { SpeedDisplay } from './level-speed-display.js'
 import { TriangleType } from './level-triangle-type.js'
 import { VotingAge } from './level-voting-age.js'
 
-export class Config {
+export class Game {
     private readonly locale: Locale
     private readonly picker: Picker
 

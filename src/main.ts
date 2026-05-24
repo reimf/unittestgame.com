@@ -1,4 +1,4 @@
-import { Config } from './config.js'
+import { Game } from './game.js'
 import { Panel, Message, ComputerMessage, QuestionMessage } from './frame.js'
 import { Div, Span } from './html.js'
 import { Level } from './level-base.js'
@@ -8,8 +8,8 @@ import { RandomPicker } from './random-picker.js'
 export class Main {
     private readonly lng = (new URL(window.location.href)).searchParams.get('lng') || navigator.language.split('-')[0]!
     private readonly locale = new Locale(this.lng)
-    private readonly config = new Config(this.locale, new RandomPicker())
-    private readonly levels = this.config.allLevels(localStorage)
+    private readonly game = new Game(this.locale, new RandomPicker())
+    private readonly levels = this.game.allLevels(localStorage)
 
     public start(): void {
         this.showWelcomeMessage()
