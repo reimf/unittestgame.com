@@ -204,6 +204,7 @@ select {
     padding: 0.1rem 0;
     text-decoration: underline;
     white-space: nowrap;
+    width: fit-content;
 }
 
 label {
