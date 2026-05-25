@@ -1,5 +1,5 @@
 const LANGUAGES = ['en', 'nl', 'de', 'fr', 'es', 'it'] as const
-type Language = typeof LANGUAGES[number]
+export type Language = typeof LANGUAGES[number]
 type LocalizableText = Record<Language, string>
 
 declare const __localized: unique symbol

@@ -2,7 +2,7 @@ import { Game } from './game.js'
 import { Panel, Message, ComputerMessage, QuestionMessage } from './frame.js'
 import { Div, Select, Option as Option, Span } from './html.js'
 import { Level } from './level-base.js'
-import { Locale } from './locale.js'
+import { Language, Locale, LocalizedText } from './locale.js'
 import { Picker } from './picker.js'
 
 export class Main {
@@ -37,18 +37,29 @@ export class Main {
         new ComputerMessage([this.locale.welcome()]).show()
     }
 
-    private showAboutPanel(): void {
-        const options = this.locale.languages().map(language => {
-            const isCurrentLanguage = language === this.locale.language
-            const optionText = isCurrentLanguage ? this.locale.switchLanguage() : this.locale.switchToLanguage(language)
-            return new Option(language, optionText).setSelected(isCurrentLanguage)
-        })
-        const select = new Select().appendChildren(options).onChange(language => {
+    private optionText(language: Language): LocalizedText {
+        if (language === this.locale.language)
+            return this.locale.switchLanguage()
+        return this.locale.switchToLanguage(language)
+    }
+
+    private languageOptions(): Option[] {
+        return this.locale.languages().map(language =>
+            new Option(language, this.optionText(language)).setSelected(language === this.locale.language)
+        )
+    }
+
+    private languageSelect(): Select {
+        return new Select().appendChildren(this.languageOptions()).onChange(language => {
             const url = new URL(window.location.href)
             url.searchParams.set('language', language)
             window.location.href = url.toString()
         })
-        new Panel('unittestgame', this.locale.unitTestGameTitle(), [this.locale.slogan(), this.locale.links(), select]).show()
+    }
+
+    private showAboutPanel(): void {
+        const content = [this.locale.slogan(), this.locale.links(), this.languageSelect()]
+        new Panel('unittestgame', this.locale.unitTestGameTitle(), content).show()
     }
 
     private showInvitationMessage(): void {
