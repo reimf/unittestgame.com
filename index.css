@@ -201,6 +201,20 @@ input {
     }
 }
 
+select {
+    appearance: none;
+    background: none;
+    border: none;
+    border-radius: 0.25rem;
+    color: inherit;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: inherit;
+    padding: 0.1rem 0;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
 label {
     border-radius: 0.5rem;
     height: 2rem;
@@ -238,7 +252,7 @@ pre {
     margin: 0;
 }
 
-a, button, input, label:has(input[type="radio"]:not(:disabled)) {
+a, button, input, label:has(input[type="radio"]:not(:disabled)), select {
     &:focus-within, &:focus, &:not(:disabled):hover, &:not(:disabled):has(:focus) {
         box-shadow: 0 0 0.3rem 0.3rem var(--focus-shadow);
         opacity: 1;

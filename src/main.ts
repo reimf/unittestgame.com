@@ -1,6 +1,6 @@
 import { Game } from './game.js'
 import { Panel, Message, ComputerMessage, QuestionMessage } from './frame.js'
-import { Div, Span } from './html.js'
+import { Div, Select, Option as Option, Span } from './html.js'
 import { Level } from './level-base.js'
 import { Locale } from './locale.js'
 import { Picker } from './picker.js'
@@ -38,7 +38,17 @@ export class Main {
     }
 
     private showAboutPanel(): void {
-        new Panel('unittestgame', this.locale.unitTestGameTitle(), [this.locale.slogan(), this.locale.links(), this.locale.switchLanguage()]).show()
+        const options = this.locale.languages().map(language => {
+            const isCurrentLanguage = language === this.locale.language
+            const optionText = isCurrentLanguage ? this.locale.switchLanguage() : this.locale.switchToLanguage(language)
+            return new Option(language, optionText).setSelected(isCurrentLanguage)
+        })
+        const select = new Select().appendChildren(options).onChange(language => {
+            const url = new URL(window.location.href)
+            url.searchParams.set('language', language)
+            window.location.href = url.toString()
+        })
+        new Panel('unittestgame', this.locale.unitTestGameTitle(), [this.locale.slogan(), this.locale.links(), select]).show()
     }
 
     private showInvitationMessage(): void {

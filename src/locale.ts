@@ -1,29 +1,23 @@
-type LocalizableText = {
-    en: string
-    nl: string
-    de: string
-    fr: string
-    es: string
-    it: string
-}
+const LANGUAGES = ['en', 'nl', 'de', 'fr', 'es', 'it'] as const
+type Language = typeof LANGUAGES[number]
+type LocalizableText = Record<Language, string>
 
 declare const __localized: unique symbol
 export type LocalizedText = string & { readonly [__localized]: void }
 
 export class Locale {
-    private readonly lang: keyof LocalizableText
+    public readonly language: keyof LocalizableText
 
     public static bless(text: string): LocalizedText {
         return text as LocalizedText
     }
 
     public constructor(language: string) {
-        const lang = ['en', 'nl', 'de', 'fr', 'es', 'it'].includes(language) ? language : 'en'
-        this.lang = lang as keyof LocalizableText
+        this.language = LANGUAGES.includes(language as Language) ? language as Language : 'en'
     }
 
     private localize(localizableText: LocalizableText): LocalizedText {
-        return Locale.bless(localizableText[this.lang])
+        return Locale.bless(localizableText[this.language])
     }
 
     public welcome(): LocalizedText {
@@ -82,39 +76,30 @@ export class Locale {
         })
     }
 
+    public languages(): readonly Language[] {
+        return LANGUAGES
+    }
+
     public switchLanguage(): LocalizedText {
         return this.localize({
-            en: '[Overschakelen op Nederlands](?language=nl)\n' +
-                '[Auf Deutsch wechseln](?language=de)\n' +
-                '[Passer en Français](?language=fr)\n' +
-                '[Cambiar al Español](?language=es)\n' +
-                '[Passa all\'Italiano](?language=it)\n',
-            nl: '[Switch to English](?language=en)\n' +
-                '[Auf Deutsch wechseln](?language=de)\n' +
-                '[Passer en Français](?language=fr)\n' +
-                '[Cambiar al Español](?language=es)\n' +
-                '[Passa all\'Italiano](?language=it)\n',
-            de: '[Switch to English](?language=en)\n' +
-                '[Overschakelen op Nederlands](?language=nl)\n' +
-                '[Passer en Français](?language=fr)\n' +
-                '[Cambiar al Español](?language=es)\n' +
-                '[Passa all\'Italiano](?language=it)\n',
-            fr: '[Switch to English](?language=en)\n' +
-                '[Overschakelen op Nederlands](?language=nl)\n' +
-                '[Auf Deutsch wechseln](?language=de)\n' +
-                '[Cambiar al Español](?language=es)\n' +
-                '[Passa all\'Italiano](?language=it)\n',
-            es: '[Switch to English](?language=en)\n' +
-                '[Overschakelen op Nederlands](?language=nl)\n' +
-                '[Auf Deutsch wechseln](?language=de)\n' +
-                '[Passer en Français](?language=fr)\n' +
-                '[Passa all\'Italiano](?language=it)\n',
-            it: '[Switch to English](?language=en)\n' +
-                '[Overschakelen op Nederlands](?language=nl)\n' +
-                '[Auf Deutsch wechseln](?language=de)\n' +
-                '[Passer en Français](?language=fr)\n' +
-                '[Cambiar al Español](?language=es)\n',
+            en: 'Switch language',
+            nl: 'Taal wijzigen',
+            de: 'Sprache wechseln',
+            fr: 'Changer de langue',
+            es: 'Cambiar idioma',
+            it: 'Cambia lingua',
         })
+    }
+
+    public switchToLanguage(language: typeof LANGUAGES[number]): LocalizedText {
+        return Locale.bless({
+            en: 'Switch to English',
+            nl: 'Overschakelen op Nederlands',
+            de: 'Auf Deutsch wechseln',
+            fr: 'Passer en Français',
+            es: 'Cambiar al Español',
+            it: 'Passa all\'Italiano',
+        }[language])
     }
 
     public invitation(): LocalizedText {
