@@ -1,4 +1,4 @@
-type LocalisableText = {
+type LocalizableText = {
     en: string
     nl: string
     de: string
@@ -7,11 +7,11 @@ type LocalisableText = {
     it: string
 }
 
-declare const __brand: unique symbol
-export type LocalizedText = string & { readonly [__brand]: void }
+declare const __localized: unique symbol
+export type LocalizedText = string & { readonly [__localized]: void }
 
 export class Locale {
-    private readonly lang: keyof LocalisableText
+    private readonly lang: keyof LocalizableText
 
     public static bless(text: string): LocalizedText {
         return text as LocalizedText
@@ -19,11 +19,11 @@ export class Locale {
 
     public constructor(language: string) {
         const lang = ['en', 'nl', 'de', 'fr', 'es', 'it'].includes(language) ? language : 'en'
-        this.lang = lang as keyof LocalisableText
+        this.lang = lang as keyof LocalizableText
     }
 
-    private localize(localisableText: LocalisableText): LocalizedText {
-        return Locale.bless(localisableText[this.lang])
+    private localize(localizableText: LocalizableText): LocalizedText {
+        return Locale.bless(localizableText[this.lang])
     }
 
     public welcome(): LocalizedText {
