@@ -8,23 +8,23 @@ test.describe('class EvenOrOdd', () => {
     const locale = new Locale('en')
     const level = new EvenOrOdd(locale, 2, new TemporaryStorage(), new FixedPicker())
 
-    test('has the right amount of parameters', () => {
+    test('has the correct amount of parameters', () => {
         expect(level.parameters).toHaveLength(1)
     })
 
-    test('has the right amount of candidates', () => {
+    test('has the correct amount of candidates', () => {
         expect(level.candidates).toHaveLength(21)
     })
 
-    test('has the right amount of minimal unit tests', () => {
+    test('has the correct amount of minimal unit tests', () => {
         expect(level.minimalUnitTests).toHaveLength(2)
     })
 
-    test('has the right amount of subsets minimal unit tests', () => {
+    test('has the correct amount of subsets minimal unit tests', () => {
         expect(level.subsetsOfMinimalUnitTests).toHaveLength(4)
     })
 
-    test('has the right amount of perfect candidates', () => {
+    test('has the correct amount of perfect candidates', () => {
         expect(level.perfectCandidates).toHaveLength(2)
     })
 
