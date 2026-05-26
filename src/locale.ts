@@ -165,12 +165,12 @@ export class Locale {
 
     public unitTestsTitle(): LocalizedText {
         return this.localize({
-            en: 'Unit Tests (latest highlighted)',
-            nl: 'Unit Testen (laatste gemarkeerd)',
-            de: 'Unit-Tests (neuester hervorgehoben)',
-            fr: 'Tests Unitaires (dernier mis en évidence)',
-            es: 'Tests Unitarios (último resaltado)',
-            it: 'Test Unitari (ultimo evidenziato)',
+            en: 'Unit Tests',
+            nl: 'Unit Testen',
+            de: 'Unit-Tests',
+            fr: 'Tests Unitaires',
+            es: 'Tests Unitarios',
+            it: 'Test Unitari',
         })
     }
 

@@ -1,6 +1,6 @@
 import { Game } from './game.js'
 import { Panel, Message, ComputerMessage, QuestionMessage } from './frame.js'
-import { Div, Select, Option as Option, Span } from './html.js'
+import { Div, Select, Option, Span } from './html.js'
 import { Level } from './level-base.js'
 import { Language, Locale, LocalizedText } from './locale.js'
 import { Picker } from './picker.js'
