@@ -4,10 +4,8 @@ test.describe('other unit test', () => {
     let page: Page
 
     test.beforeAll(async ({ browser }) => {
-        const context = await browser.newContext()
-        await context.addInitScript({ path: './test/e2e-test/init-script.js' })
-        page = await context.newPage()
-        await page.goto('/')
+        page = await browser.newPage()
+        await page.goto('/?speed=fast')
         await page.getByRole('button', { name: 'I want to play Level 1 - Battery Level' }).click()
         await page.getByLabel('Battery Level').fill('80')
         await page.getByLabel('Normal Mode').check()

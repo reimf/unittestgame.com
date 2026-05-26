@@ -4,11 +4,8 @@ test.describe('submit insufficient unit tests', () => {
     let page: Page
 
     test.beforeAll(async ({ browser }) => {
-        const context = await browser.newContext()
-        await context.addInitScript(_ => localStorage.setItem('level-battery-level-finished', '1'))
-        await context.addInitScript({ path: './test/e2e-test/init-script.js' })
-        page = await context.newPage()
-        await page.goto('/')
+        page = await browser.newPage()
+        await page.goto('/?speed=fast&setitem=level-battery-level-finished:1')
         await page.getByRole('button', { name: 'I want to play Level 2 - Voting Age' }).click()
         await page.getByRole('button', { name: 'I want to submit the unit tests' }).click()
     })

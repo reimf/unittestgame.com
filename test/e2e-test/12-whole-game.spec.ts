@@ -10,10 +10,8 @@ test.describe('whole game', () => {
     let page: Page
 
     test.beforeAll(async ({ browser }) => {
-        const context = await browser.newContext()
-        await context.addInitScript({ path: './test/e2e-test/init-script.js' })
-        page = await context.newPage()
-        await page.goto('/')
+        page = await browser.newPage()
+        await page.goto('/?speed=fast')
     })
 
     test('plays whole game', async () => {

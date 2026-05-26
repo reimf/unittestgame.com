@@ -2,6 +2,7 @@ import { Main } from './main.js'
 import { FixedPicker, RandomPicker } from './picker.js'
 import { TemporaryStorage } from './temporary-storage.js'
 import { Locale } from './locale.js'
+import { Completed } from './completed.js'
 
 window.onerror = (message, source, lineno, colno, error) => {
     alert(`${error?.name}: ${message}\n${source}:${lineno}:${colno}`)
@@ -33,5 +34,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const locale = new Locale(language)
     const picker = parameters.get('picker') === 'fixed' ? new FixedPicker() : new RandomPicker()
     const storage = parameters.get('storage') === 'temporary' ? new TemporaryStorage() : localStorage
+    if (parameters.get('speed') === 'fast')
+        window.setTimeout = ((callback: () => void): void => callback()) as typeof setTimeout
+    if (parameters.has('setitem')) {
+        const [key, value] = parameters.get('setitem')!.split(':') as [string, string]
+        new Completed(key, storage).set(Number(value))
+    }
     new Main(locale, picker, storage).start()
 })
