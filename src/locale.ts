@@ -29,11 +29,11 @@ export class Locale {
             de: 'Hallo! Ich bin ein KI-Bot, der Code schreibt. ' +
                 'Deine Aufgabe ist es, mich mit Unit-Tests zu steuern.',
             fr: 'Bonjour! Je suis un bot IA qui écrit du code. ' +
-                'Ton rôle est de me guider avec des tests unitaires.',
+                'Ton rôle est de me guider avec des unit tests.',
             es: '¡Hola! Soy un bot de IA que escribe código. ' +
-                'Tu trabajo es guiarme con tests unitarios.',
+                'Tu trabajo es guiarme con unit tests.',
             it: 'Ciao! Sono un bot IA che scrive codice. ' +
-                'Il tuo compito è guidarmi con i test unitari.',
+                'Il tuo compito è guidarmi con i unit tests.',
         })
     }
 
@@ -53,9 +53,9 @@ export class Locale {
             en: 'Learn Test-Driven Development by writing unit tests that guide an AI bot.',
             nl: 'Leer Test-Driven Development door unit testen te schrijven die een AI bot bijsturen.',
             de: 'Lerne Test-Driven Development, indem du Unit-Tests schreibst, die einen KI-Bot steuern.',
-            fr: 'Apprends le Test-Driven Development en écrivant des tests unitaires qui guident un bot IA.',
-            es: 'Aprende el desarrollo guiado por tests escribiendo tests unitarios que guían a un bot de IA.',
-            it: 'Impara il Test-Driven Development scrivendo test unitari che guidano un bot IA.',
+            fr: 'Apprends le Test-Driven Development en écrivant des unit tests qui guident un bot IA.',
+            es: 'Aprende el desarrollo guiado por tests escribiendo unit tests que guían a un bot de IA.',
+            it: 'Impara il Test-Driven Development scrivendo unit tests che guidano un bot IA.',
         })
     }
 
@@ -168,9 +168,9 @@ export class Locale {
             en: 'Unit Tests',
             nl: 'Unit Testen',
             de: 'Unit-Tests',
-            fr: 'Tests Unitaires',
-            es: 'Tests Unitarios',
-            it: 'Test Unitari',
+            fr: 'Unit Tests',
+            es: 'Unit Tests',
+            it: 'Unit Tests',
         })
     }
 
@@ -179,9 +179,9 @@ export class Locale {
             en: 'I want to add this unit test',
             nl: 'Ik wil deze unit test toevoegen',
             de: 'Ich möchte diesen Unit-Test hinzufügen',
-            fr: 'Je veux ajouter ce test unitaire',
-            es: 'Quiero añadir este test unitario',
-            it: 'Voglio aggiungere questo test unitario',
+            fr: 'Je veux ajouter ce unit test',
+            es: 'Quiero añadir este unit test',
+            it: 'Voglio aggiungere questo unit test',
         })
     }
 
@@ -190,9 +190,9 @@ export class Locale {
             en: 'I want to submit the unit tests',
             nl: 'Ik wil de unit testen inleveren',
             de: 'Ich möchte die Unit-Tests einreichen',
-            fr: 'Je veux soumettre les tests unitaires',
-            es: 'Quiero enviar los tests unitarios',
-            it: 'Voglio inviare i test unitari',
+            fr: 'Je veux soumettre les unit tests',
+            es: 'Quiero enviar los unit tests',
+            it: 'Voglio inviare i unit tests',
         })
     }
 
@@ -204,11 +204,11 @@ export class Locale {
                 'omdat deze niet voldoet aan de *Specificatie*.',
             de: 'Ich habe den Unit-Test nicht hinzugefügt, ' +
                 'weil er nicht der *Spezifikation* entspricht.',
-            fr: 'Je n\'ai pas ajouté le test unitaire, ' +
+            fr: 'Je n\'ai pas ajouté le unit test, ' +
                 'car il ne correspond pas à la *Spécification*.',
-            es: 'No he añadido el test unitario, ' +
+            es: 'No he añadido el unit test, ' +
                 'porque no coincide con la *Especificación*.',
-            it: 'Non ho aggiunto il test unitario, ' +
+            it: 'Non ho aggiunto il unit test, ' +
                 'perché non corrisponde alla *Specifica*.',
         })
     }
@@ -225,13 +225,13 @@ export class Locale {
                  `aber du hast ${numberOfUnnecessaryUnitTests} ${numberOfUnnecessaryUnitTests === 1 ? 'Unit-Test' : 'Unit-Tests'} mehr als nötig geschrieben. ` +
                 `${numberOfRedundantUnitTests === 1 ? 'Der folgende' : 'Mindestens einer der folgenden'} kann weggelassen werden.`,
             fr: `Tu as testé la *Fonction Actuelle* de manière approfondie, ` +
-                 `mais tu as écrit ${numberOfUnnecessaryUnitTests} ${numberOfUnnecessaryUnitTests === 1 ? 'test unitaire' : 'tests unitaires'} de plus que nécessaire. ` +
+                 `mais tu as écrit ${numberOfUnnecessaryUnitTests} ${numberOfUnnecessaryUnitTests === 1 ? 'unit test' : 'unit tests'} de plus que nécessaire. ` +
                 `${numberOfRedundantUnitTests === 1 ? 'Le suivant' : 'Au moins un des suivants'} peut être omis.`,
             es: `Has probado la *Función Actual* exhaustivamente, ` +
-                 `pero has escrito ${numberOfUnnecessaryUnitTests} ${numberOfUnnecessaryUnitTests === 1 ? 'test unitario' : 'tests unitarios'} más de lo necesario. ` +
+                 `pero has escrito ${numberOfUnnecessaryUnitTests} ${numberOfUnnecessaryUnitTests === 1 ? 'unit test' : 'unit tests'} más de lo necesario. ` +
                 `${numberOfRedundantUnitTests === 1 ? 'El siguiente' : 'Al menos uno de los siguientes'} puede omitirse.`,
             it: `Hai testato la *Funzione Attuale* in modo approfondito, ` +
-                 `ma hai scritto ${numberOfUnnecessaryUnitTests} ${numberOfUnnecessaryUnitTests === 1 ? 'test unitario' : 'test unitari'} in più del necessario. ` +
+                 `ma hai scritto ${numberOfUnnecessaryUnitTests} ${numberOfUnnecessaryUnitTests === 1 ? 'unit test' : 'unit tests'} in più del necessario. ` +
                 `${numberOfRedundantUnitTests === 1 ? 'Il seguente' : 'Almeno uno dei seguenti'} può essere omesso.`,
         })
     }
@@ -245,11 +245,11 @@ export class Locale {
             de: 'Lies zuerst die *Spezifikation*. ' +
                 'Schreibe dann einen Unit-Test, den die *Aktuelle Funktion* nicht besteht.',
             fr: 'Lis d\'abord la *Spécification*. ' +
-                'Écris ensuite un test unitaire que la *Fonction Actuelle* ne réussit pas.',
+                'Écris ensuite un unit test que la *Fonction Actuelle* ne réussit pas.',
             es: 'Primero, lee la *Especificación*. ' +
-                'Luego escribe un test unitario que la *Función Actual* no supere.',
+                'Luego escribe un unit test que la *Función Actual* no supere.',
             it: 'Prima, leggi la *Specifica*. ' +
-                'Poi scrivi un test unitario che la *Funzione Attuale* non supera.',
+                'Poi scrivi un unit test che la *Funzione Attuale* non supera.',
         })
     }
 
@@ -262,12 +262,12 @@ export class Locale {
                 'verbeter ik de *Huidige Functie* zodat alle *Unit Testen* weer slagen.',
             de: 'Nachdem du einen Unit-Test hinzugefügt hast, ' +
                 'verbessere ich die *Aktuelle Funktion*, damit alle *Unit-Tests* wieder bestehen.',
-            fr: 'Après avoir ajouté un test unitaire, ' +
-                'j\'améliorerai la *Fonction Actuelle* pour que tous les *Test Unitaires* réussissent à nouveau.',
-            es: 'Después de añadir un test unitario, ' +
-                'mejoraré la *Función Actual* para que todos los *Tests Unitarios* vuelvan a pasar.',
-            it: 'Dopo aver aggiunto un test unitario, ' +
-                'migliorerò la *Funzione Attuale* in modo che tutti i *Test Unitari* superino di nuovo.',
+            fr: 'Après avoir ajouté un unit test, ' +
+                'j\'améliorerai la *Fonction Actuelle* pour que tous les *Unit Tests* réussissent à nouveau.',
+            es: 'Después de añadir un unit test, ' +
+                'mejoraré la *Función Actual* para que todos los *Unit Tests* vuelvan a pasar.',
+            it: 'Dopo aver aggiunto un unit test, ' +
+                'migliorerò la *Funzione Attuale* in modo che tutti i *Unit Tests* superino di nuovo.',
         })
     }
 
@@ -276,9 +276,9 @@ export class Locale {
             en: 'Submit the *Unit Tests* when you think the *Current Function* matches the *Specification*.',
             nl: 'Lever de *Unit Testen* in als je denkt dat de *Huidige Functie* voldoet aan de *Specificatie*.',
             de: 'Reiche die *Unit-Tests* ein, wenn du denkst, dass die *Aktuelle Funktion* der *Spezifikation* entspricht.',
-            fr: 'Soumets les *Test Unitaires* quand tu penses que la *Fonction Actuelle* correspond à la *Spécification*.',
-            es: 'Envía los *Tests Unitarios* cuando creas que la *Función Actual* coincide con la *Especificación*.',
-            it: 'Invia i *Test Unitari* quando pensi che la *Funzione Attuale* corrisponda alla *Specifica*.',
+            fr: 'Soumets les *Unit Tests* quand tu penses que la *Fonction Actuelle* correspond à la *Spécification*.',
+            es: 'Envía los *Unit Tests* cuando creas que la *Función Actual* coincide con la *Especificación*.',
+            it: 'Invia i *Unit Tests* quando pensi che la *Funzione Attuale* corrisponda alla *Specifica*.',
         })
     }
 
@@ -329,18 +329,18 @@ export class Locale {
                 'aber die *Aktuelle Funktion* besteht ihn bereits, ' +
                 'also habe ich die *Aktuelle Funktion* nicht verbessert. ' +
                 'Schreibe einen Unit-Test, den die *Aktuelle Funktion* nicht besteht.',
-            fr: 'J\'ai ajouté le test unitaire, ' +
+            fr: 'J\'ai ajouté le unit test, ' +
                 'mais la *Fonction Actuelle* le réussit déjà, ' +
                 'donc je n\'ai pas amélioré la *Fonction Actuelle*. ' +
-                'Écris un test unitaire que la *Fonction Actuelle* ne réussit pas.',
-            es: 'He añadido el test unitario, ' +
+                'Écris un unit test que la *Fonction Actuelle* ne réussit pas.',
+            es: 'He añadido el unit test, ' +
                 'pero la *Función Actual* ya lo supera, ' +
                 'así que no he mejorado la *Función Actual*. ' +
-                'Escribe un test unitario que la *Función Actual* no supere.',
-            it: 'Ho aggiunto il test unitario, ' +
+                'Escribe un unit test que la *Función Actual* no supere.',
+            it: 'Ho aggiunto il unit test, ' +
                 'ma la *Funzione Attuale* lo supera già, ' +
                 'quindi non ho migliorato la *Funzione Attuale*. ' +
-                'Scrivi un test unitario che la *Funzione Attuale* non supera.',
+                'Scrivi un unit test che la *Funzione Attuale* non supera.',
         })
     }
 
@@ -349,9 +349,9 @@ export class Locale {
             en: 'Write a unit test that the *Current Function* fails.',
             nl: 'Schrijf een unit test waarvoor de *Huidige Functie* faalt.',
             de: 'Schreibe einen Unit-Test, den die *Aktuelle Funktion* nicht besteht.',
-            fr: 'Écris un test unitaire que la *Fonction Actuelle* ne réussit pas.',
-            es: 'Escribe un test unitario que la *Función Actual* no supere.',
-            it: 'Scrivi un test unitario che la *Funzione Attuale* non supera.',
+            fr: 'Écris un unit test que la *Fonction Actuelle* ne réussit pas.',
+            es: 'Escribe un unit test que la *Función Actual* no supere.',
+            it: 'Scrivi un unit test che la *Funzione Attuale* non supera.',
         })
     }
 
@@ -363,12 +363,12 @@ export class Locale {
                 `zodat de nieuwe unit test nu${numberOfUnitTests === 1 ? '' : ' ook'} slaagt.`,
             de: `Ich habe den Unit-Test zu den *Unit-Tests* hinzugefügt und die *Aktuelle Funktion* verbessert, ` +
                 `damit der neue Unit-Test jetzt${numberOfUnitTests === 1 ? '' : ' auch'} besteht.`,
-            fr: `J'ai ajouté le test unitaire aux *Test Unitaires* et amélioré la *Fonction Actuelle* ` +
-                `pour que le nouveau test unitaire réussisse maintenant${numberOfUnitTests === 1 ? '' : ' aussi'}.`,
-            es: `He añadido el test unitario a los *Tests Unitarios* y mejorado la *Función Actual* ` +
-                `para que el nuevo test unitario ahora pase${numberOfUnitTests === 1 ? '' : ' también'}.`,
-            it: `Ho aggiunto il test unitario ai *Test Unitari* e migliorato la *Funzione Attuale* ` +
-                `in modo che il nuovo test unitario ora superi${numberOfUnitTests === 1 ? '' : ' anche'}.`,
+            fr: `J'ai ajouté le unit test aux *Unit Tests* et amélioré la *Fonction Actuelle* ` +
+                `pour que le nouveau unit test réussisse maintenant${numberOfUnitTests === 1 ? '' : ' aussi'}.`,
+            es: `He añadido el unit test a los *Unit Tests* y mejorado la *Función Actual* ` +
+                `para que el nuevo unit test ahora pase${numberOfUnitTests === 1 ? '' : ' también'}.`,
+            it: `Ho aggiunto il unit test ai *Unit Tests* e migliorato la *Funzione Attuale* ` +
+                `in modo che il nuovo unit test ora superi${numberOfUnitTests === 1 ? '' : ' anche'}.`,
         })
     }
 
@@ -380,11 +380,11 @@ export class Locale {
                 'maar de *Huidige Functie* slaagt er wel voor.',
             de: 'Der folgende Unit-Test entspricht nicht der *Spezifikation*, ' +
                 'aber die *Aktuelle Funktion* besteht ihn.',
-            fr: 'Le test unitaire suivant ne correspond pas à la *Spécification*, ' +
+            fr: 'Le unit test suivant ne correspond pas à la *Spécification*, ' +
                 'mais la *Fonction Actuelle* le réussit.',
-            es: 'El siguiente test unitario no coincide con la *Especificación*, ' +
+            es: 'El siguiente unit test no coincide con la *Especificación*, ' +
                 'pero la *Función Actual* lo supera.',
-            it: 'Il seguente test unitario non corrisponde alla *Specifica*, ' +
+            it: 'Il seguente unit test non corrisponde alla *Specifica*, ' +
                 'ma la *Funzione Attuale* lo supera.',
         })
     }
@@ -401,14 +401,14 @@ export class Locale {
                 `Du brauchst noch mindestens ${numberOfUnitTestsStillNeeded} ${numberOfUnitTestsStillNeeded === 1 ? 'weiteren Unit-Test' : 'weitere Unit-Tests'}, ` +
                 `also schreibe einen Unit-Test, der der *Spezifikation* entspricht und den die *Aktuelle Funktion* nicht besteht.`,
             fr: `La *Fonction Actuelle* ne correspond pas encore à la *Spécification*. ` +
-                `Tu as besoin d'au moins ${numberOfUnitTestsStillNeeded} ${numberOfUnitTestsStillNeeded === 1 ? 'test unitaire' : 'tests unitaires'} supplémentaire${numberOfUnitTestsStillNeeded === 1 ? '' : 's'}, ` +
-                `donc écris un test unitaire qui correspond à la *Spécification* et que la *Fonction Actuelle* ne réussit pas.`,
+                `Tu as besoin d'au moins ${numberOfUnitTestsStillNeeded} ${numberOfUnitTestsStillNeeded === 1 ? 'unit test' : 'unit tests'} supplémentaire${numberOfUnitTestsStillNeeded === 1 ? '' : 's'}, ` +
+                `donc écris un unit test qui correspond à la *Spécification* et que la *Fonction Actuelle* ne réussit pas.`,
             es: `La *Función Actual* todavía no coincide con la *Especificación*. ` +
-                `Necesitas al menos ${numberOfUnitTestsStillNeeded} ${numberOfUnitTestsStillNeeded === 1 ? 'test unitario' : 'tests unitarios'} más, ` +
-                `así que escribe un test unitario que coincida con la *Especificación* y que la *Función Actual* no supere.`,
+                `Necesitas al menos ${numberOfUnitTestsStillNeeded} ${numberOfUnitTestsStillNeeded === 1 ? 'unit test' : 'unit tests'} más, ` +
+                `así que escribe un unit test que coincida con la *Especificación* y que la *Función Actual* no supere.`,
             it: `La *Funzione Attuale* non corrisponde ancora alla *Specifica*. ` +
-                `Hai bisogno di almeno ${numberOfUnitTestsStillNeeded} ${numberOfUnitTestsStillNeeded === 1 ? 'test unitario' : 'test unitari'} in più, ` +
-                `quindi scrivi un test unitario che corrisponda alla *Specifica* e che la *Funzione Attuale* non superi.`,
+                `Hai bisogno di almeno ${numberOfUnitTestsStillNeeded} ${numberOfUnitTestsStillNeeded === 1 ? 'unit test' : 'unit tests'} in più, ` +
+                `quindi scrivi un unit test che corrisponda alla *Specifica* e che la *Funzione Attuale* non superi.`,
         })
     }
 
@@ -510,13 +510,13 @@ export class Locale {
                 'Füge dafür einen Unit-Test hinzu.',
             fr: 'La *Fonction Actuelle* retourne maintenant toujours `Normal Mode`, ' +
                 'mais la *Spécification* dit que le niveau de batterie `19` doit retourner `Low Power Mode`. ' +
-                'Ajoute un test unitaire pour cela.',
+                'Ajoute un unit test pour cela.',
             es: 'La *Función Actual* ahora siempre retorna `Normal Mode`, ' +
                 'pero la *Especificación* dice que el nivel de batería `19` debe retornar `Low Power Mode`. ' +
-                'Añade un test unitario para eso.',
+                'Añade un unit test para eso.',
             it: 'La *Funzione Attuale* ora restituisce sempre `Normal Mode`, ' +
                 'ma la *Specifica* dice che il livello della batteria `19` deve restituire `Low Power Mode`. ' +
-                'Aggiungi un test unitario per questo.',
+                'Aggiungi un unit test per questo.',
         })
     }
 
@@ -529,11 +529,11 @@ export class Locale {
             de: 'Die *Aktuelle Funktion* kann jetzt entweder `Normal Mode` oder `Low Power Mode` zurückgeben. ' +
                 'Reiche die *Unit-Tests* ein, um zu prüfen, ob die *Aktuelle Funktion* der *Spezifikation* entspricht.',
             fr: 'La *Fonction Actuelle* peut maintenant retourner soit `Normal Mode` soit `Low Power Mode`. ' +
-                'Soumets les *Test Unitaires* pour vérifier si la *Fonction Actuelle* correspond à la *Spécification*.',
+                'Soumets les *Unit Tests* pour vérifier si la *Fonction Actuelle* correspond à la *Spécification*.',
             es: 'La *Función Actual* ahora puede retornar `Normal Mode` o `Low Power Mode`. ' +
-                'Envía los *Tests Unitarios* para comprobar si la *Función Actual* coincide con la *Especificación*.',
+                'Envía los *Unit Tests* para comprobar si la *Función Actual* coincide con la *Especificación*.',
             it: 'La *Funzione Attuale* ora può restituire `Normal Mode` o `Low Power Mode`. ' +
-                'Invia i *Test Unitari* per verificare se la *Funzione Attuale* corrisponde alla *Specifica*.',
+                'Invia i *Unit Tests* per verificare se la *Funzione Attuale* corrisponde alla *Specifica*.',
         })
     }
 
@@ -550,13 +550,13 @@ export class Locale {
                 'Füge dafür einen Unit-Test hinzu.',
             fr: 'La *Fonction Actuelle* retourne maintenant `Normal Mode` uniquement pour le niveau de batterie `20`. ' +
                 'La *Spécification* dit que `21` doit aussi retourner `Normal Mode`. ' +
-                'Ajoute un test unitaire pour cela.',
+                'Ajoute un unit test pour cela.',
             es: 'La *Función Actual* ahora retorna `Normal Mode` solo para el nivel de batería `20`. ' +
                 'La *Especificación* dice que `21` también debe retornar `Normal Mode`. ' +
-                'Añade un test unitario para eso.',
+                'Añade un unit test para eso.',
             it: 'La *Funzione Attuale* ora restituisce `Normal Mode` solo per il livello della batteria `20`. ' +
                 'La *Specifica* dice che `21` deve anche restituire `Normal Mode`. ' +
-                'Aggiungi un test unitario per questo.',
+                'Aggiungi un unit test per questo.',
         })
     }
 
@@ -565,9 +565,9 @@ export class Locale {
             en: 'Submit the *Unit Tests* again to check if the *Current Function* matches the *Specification*.',
             nl: 'Lever de *Unit Testen* opnieuw in om te controleren of de *Huidige Functie* voldoet aan de *Specificatie*.',
             de: 'Reiche die *Unit-Tests* erneut ein, um zu prüfen, ob die *Aktuelle Funktion* der *Spezifikation* entspricht.',
-            fr: 'Soumets à nouveau les *Tests Unitaires* pour vérifier si la *Fonction Actuelle* correspond à la *Spécification*.',
-            es: 'Envía de nuevo los *Tests Unitarios* para comprobar si la *Función Actual* coincide con la *Especificación*.',
-            it: 'Invia di nuovo i *Test Unitari* per verificare se la *Funzione Attuale* corrisponde alla *Specifica*.',
+            fr: 'Soumets à nouveau les *Unit Tests* pour vérifier si la *Fonction Actuelle* correspond à la *Spécification*.',
+            es: 'Envía de nuevo los *Unit Tests* para comprobar si la *Función Actual* coincide con la *Especificación*.',
+            it: 'Invia di nuovo i *Unit Tests* per verificare se la *Funzione Attuale* corrisponde alla *Specifica*.',
         })
     }
 
@@ -584,13 +584,13 @@ export class Locale {
                 'Füge dafür einen Unit-Test hinzu.',
             fr: 'La *Fonction Actuelle* retourne maintenant `Low Power Mode` uniquement pour le niveau de batterie `19`. ' +
                 'La *Spécification* dit que `18` doit aussi retourner `Low Power Mode`. ' +
-                'Ajoute un test unitaire pour cela.',
+                'Ajoute un unit test pour cela.',
             es: 'La *Función Actual* ahora retorna `Low Power Mode` solo para el nivel de batería `19`. ' +
                 'La *Especificación* dice que `18` también debe retornar `Low Power Mode`. ' +
-                'Añade un test unitario para eso.',
+                'Añade un unit test para eso.',
             it: 'La *Funzione Attuale* ora restituisce `Low Power Mode` solo per il livello della batteria `19`. ' +
                 'La *Specifica* dice che `18` deve anche restituire `Low Power Mode`. ' +
-                'Aggiungi un test unitario per questo.',
+                'Aggiungi un unit test per questo.',
         })
     }
 
@@ -599,9 +599,9 @@ export class Locale {
             en: 'Submit the *Unit Tests* again to check if the *Current Function* finally matches the *Specification*.',
             nl: 'Lever de *Unit Testen* opnieuw in om te controleren of de *Huidige Functie* eindelijk voldoet aan de *Specificatie*.',
             de: 'Reiche die *Unit-Tests* erneut ein, um zu prüfen, ob die *Aktuelle Funktion* endlich der *Spezifikation* entspricht.',
-            fr: 'Soumets à nouveau les *Tests Unitaires* pour vérifier si la *Fonction Actuelle* correspond enfin à la *Spécification*.',
-            es: 'Envía de nuevo los *Tests Unitarios* para comprobar si la *Función Actual* coincide finalmente con la *Especificación*.',
-            it: 'Invia di nuovo i *Test Unitari* per verificare se la *Funzione Attuale* corrisponde finalmente alla *Specifica*.',
+            fr: 'Soumets à nouveau les *Unit Tests* pour vérifier si la *Fonction Actuelle* correspond enfin à la *Spécification*.',
+            es: 'Envía de nuevo los *Unit Tests* para comprobar si la *Función Actual* coincide finalmente con la *Especificación*.',
+            it: 'Invia di nuovo i *Unit Tests* per verificare se la *Funzione Attuale* corrisponde finalmente alla *Specifica*.',
         })
     }
 
