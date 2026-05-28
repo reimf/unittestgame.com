@@ -4,4 +4,6 @@
 /playwright-report/
 /blob-report/
 /playwright/
+/results/
 *.js
+*.map

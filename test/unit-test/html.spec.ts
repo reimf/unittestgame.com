@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 import { JSDOM } from 'jsdom'
-import { Span, Div, Section, Code, CodeBlock, Label, Paragraph, Form, Header, Input, Bold, Italic, Anchor, Submit } from '../../src/html.js'
+import { Span, Div, Section, Code, CodeBlock, Label, Paragraph, Form, Header, Input, Italic, Anchor, Submit } from '../../src/html.js'
 import { Locale } from '../../src/locale.js'
 
 const { document } = new JSDOM('<!DOCTYPE html>').window
@@ -46,13 +46,6 @@ test.describe('class Html', () => {
                 '<span>abc</span>' +
                 '<span>def</span>' +
             '</header>'
-        )
-    })
-
-    test('appends bold in markdown', () => {
-        const header = new Header().appendMarkdown(Locale.bless('this is **bold** and this is not'))
-        expect(header.getElement().outerHTML).toBe(
-            '<header>this is <b>bold</b> and this is not</header>'
         )
     })
 
@@ -165,13 +158,6 @@ test.describe('class Html', () => {
         const italic = new Italic().appendText(Locale.bless('text'))
         expect(italic.getElement().outerHTML).toBe(
             '<i>text</i>'
-        )
-    })
-
-    test('has bold', () => {
-        const bold = new Bold().appendText(Locale.bless('text'))
-        expect(bold.getElement().outerHTML).toBe(
-            '<b>text</b>'
         )
     })
 })

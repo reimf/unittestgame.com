@@ -47,7 +47,6 @@ export abstract class Html extends Content {
 
     public appendMarkdown(markdown: LocalizedText): this {
         const patterns = [
-            /\*\*(?<bold>.+?)\*\*/,
             /\*(?<italic>.+?)\*/,
             /`(?<code>.+?)`/,
             /\[(?<linkText>.+?)\]\((?<linkUrl>.+?)\)/,
@@ -56,10 +55,8 @@ export abstract class Html extends Content {
         const pattern = new RegExp(patterns.map(regexp => regexp.source).join('|'), 'g')
 
         for (const { groups } of markdown.matchAll(pattern)) {
-            const { bold, italic, code, linkText, linkUrl, plain } = groups!
-            if (bold)
-                this.appendChild(new Bold().appendMarkdown(Locale.bless(bold)))
-            else if (italic)
+            const { italic, code, linkText, linkUrl, plain } = groups!
+            if (italic)
                 this.appendChild(new Italic().appendMarkdown(Locale.bless(italic)))
             else if (code)
                 this.appendChild(new Code().appendMarkdown(Locale.bless(code)))
@@ -134,18 +131,8 @@ export class Input extends Html {
         return this
     }
 
-    public setDisabled(disabled: boolean): this {
-        this.getInputElement().disabled = disabled
-        return this
-    }
-
     public setAutocomplete(autocomplete: boolean = true): this {
         this.getInputElement().autocomplete = autocomplete ? 'on' : 'off'
-        return this
-    }
-
-    public setChecked(checked: boolean = true): this {
-        this.getInputElement().checked = checked
         return this
     }
 
@@ -312,12 +299,6 @@ export class Ins extends Html {
 export class Italic extends Html {
     public constructor() {
         super('i')
-    }
-}
-
-export class Bold extends Html {
-    public constructor() {
-        super('b')
     }
 }
 

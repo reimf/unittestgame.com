@@ -14,7 +14,9 @@
     "noImplicitOverride": true,                          /* Ensure overriding members in derived classes are marked with an override modifier. */
     "noPropertyAccessFromIndexSignature": true,          /* Enforces using indexed accessors for keys declared using an indexed type. */
     "resolveJsonModule": true,                           /* Allow importing .json files. */
-    "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
+    "skipLibCheck": true,                                /* Skip type checking all .d.ts files. */
+    "sourceMap": true,
+    "types": ["node"]
   },
-  "exclude": ["playwright.config.ts", "fiveserver.config.ts"]
+  "exclude": ["fiveserver.config.ts"]
 }

@@ -1,4 +1,5 @@
 import { defineConfig, devices } from '@playwright/test'
+import { defineCoverageReporterConfig } from '@bgotink/playwright-coverage'
 
 export default defineConfig({
     testDir: 'test',
@@ -22,4 +23,29 @@ export default defineConfig({
         url: 'http://localhost:3000',
         reuseExistingServer: true,
     },
+
+    reporter: [
+        ['list'],
+        [
+            '@bgotink/playwright-coverage',
+            defineCoverageReporterConfig({
+                sourceRoot: 'src',
+                exclude: ['temporary-storage.ts'],
+                resultDir: '../results/e2e-coverage',
+                reports: [
+                    ['html'],
+                    [
+                        'lcovonly',
+                        { file: 'coverage.lcov' },
+                    ],
+                    [
+                        'text-summary',
+                        { file: null },
+                    ],
+                ],
+                /* Configure watermarks, see https://github.com/istanbuljs/nyc#high-and-low-watermarks */
+                // watermarks: {},
+            }),
+        ],
+    ],
 })

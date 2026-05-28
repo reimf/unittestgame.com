@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test'
+import { test, expect } from '../fixture/fixture-coverage'
 import { Game } from '../../src/game.js'
 import { BooleanVariable, RadioVariable } from '../../src/variable.js'
 import { BatteryLevel } from '../../src/level-battery-level.js'
@@ -7,15 +7,10 @@ import { RandomPicker } from '../../src/picker.js'
 import { Locale } from '../../src/locale.js'
 
 test.describe('whole game', () => {
-    let page: Page
-
-    test.beforeAll(async ({ browser }) => {
-        page = await browser.newPage()
-        await page.goto('/?speed=fast')
-    })
-
-    test('plays whole game', async () => {
+    test('plays whole game', async ({ page }) => {
         test.slow()
+
+        await page.goto('/?speed=fast')
 
         const locale = new Locale('en')
         const picker = new RandomPicker()
@@ -62,5 +57,8 @@ test.describe('whole game', () => {
 
         const button = page.getByRole('button', { name: 'I\'ve completed all the levels' })
         await expect(button).toBeVisible()
+        button.click()
+        const messages = page.getByTestId('messages')
+        await expect(messages).toContainText('You\'ve completed all the levels')
     })
 })

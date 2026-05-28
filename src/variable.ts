@@ -3,23 +3,11 @@ import { Locale, LocalizedText } from './locale.js'
 
 export abstract class Variable {
     public readonly label: LocalizedText
-    protected value: string = ''
     public readonly name: string
-    protected disabled: boolean = false
 
     protected constructor(label: LocalizedText, name: string) {
         this.label = label
         this.name = name
-    }
-
-    public setValue(value: string): this {
-        this.value = value
-        return this
-    }
-
-    public setDisabled(disabled: boolean): this {
-        this.disabled = disabled
-        return this
     }
 
     public abstract getInput(value: string): boolean|number|string
@@ -45,8 +33,6 @@ export class RadioVariable extends Variable {
               .setType('radio')
               .setName(this.name)
               .setValue(text)
-              .setChecked(text === this.value)
-              .setDisabled(this.disabled)
               .setRequired()
             return new Label().appendChild(input).appendText(text)
         })
@@ -74,8 +60,7 @@ export class BooleanVariable extends Variable {
               .setType('radio')
               .setName(this.name)
               .setValue(text)
-              .setChecked(text === this.value)
-              .setDisabled(this.disabled).setRequired()
+              .setRequired()
             return new Label().appendChild(input).appendText(text)
         })
         const paragraph = new Paragraph().appendChild(new Span().appendText(this.label)).appendChildren(radioButtons)
@@ -101,9 +86,6 @@ export class TextVariable extends Variable {
           .setType('text')
           .setName(this.name)
           .setAutocomplete(false)
-          .setValue(this.value)
-          .addClass(this.value ? 'preset' : 'empty')
-          .setDisabled(this.disabled)
           .setRequired()
           .setPattern(/.{1,10}/)
           .setTitle('a text with at most 10 characters')
@@ -126,14 +108,10 @@ export class IntegerVariable extends Variable {
     }
 
     public toHtml(): Html {
-        const displayValue = this.value ? Number(this.value).toFixed() : ''
         const input = new Input()
           .setType('text')
           .setName(this.name)
           .setAutocomplete(false)
-          .setValue(displayValue)
-          .addClass(displayValue ? 'preset' : 'empty')
-          .setDisabled(this.disabled)
           .setRequired()
           .setPattern(/[0-9]{1,4}/)
           .setTitle('an integer number with at most 4 digits')
@@ -156,14 +134,10 @@ export class FloatVariable extends Variable {
     }
 
     public toHtml(): Html {
-        const displayValue = this.value ? Number(this.value).toFixed(1) : ''
         const input = new Input()
           .setType('text')
           .setName(this.name)
           .setAutocomplete(false)
-          .setValue(displayValue)
-          .addClass(displayValue ? 'preset' : 'empty')
-          .setDisabled(this.disabled)
           .setRequired()
           .setPattern(/[0-9]{1,4}(\.[0-9])?/)
           .setTitle('a floating-point number with at most 4 digits, an optional decimal point and an optional decimal')

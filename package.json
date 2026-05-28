@@ -6,6 +6,7 @@
     "testui": "npx playwright test --ui"
   },
   "dependencies": {
+    "@bgotink/playwright-coverage": "^0.3.2",
     "playwright": "1.60.0",
     "typescript": "^6.0.3"
   },

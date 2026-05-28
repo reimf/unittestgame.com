@@ -149,10 +149,6 @@ export abstract class Level {
         return Infinity
     }
 
-    protected beforeMenuMessage(): string {
-        return ''
-    }
-
     protected isFormDataOk(_formData: FormData): boolean {
         return true
     }

@@ -69,13 +69,6 @@ button {
     width: 100%;
 }
 
-b { /* markdown: **bold** */
-    background-color: var(--emphasis-background);
-    color: var(--dark-text);
-    font-weight: normal;
-    padding: 0.15rem 0;
-}
-
 code {
     &:not(.block) {
         background-color: var(--code-background);
@@ -252,7 +245,7 @@ a, button, input, label:has(input[type="radio"]:not(:disabled)), select {
     background-color: var(--disabled-background) !important;
     color: var(--disabled-foreground) !important;
 
-    &:is(button), &:is(input[type="submit"]), &.empty {
+    &:is(button), &:is(input[type="submit"]) {
         opacity: 0.25;
     }
 }

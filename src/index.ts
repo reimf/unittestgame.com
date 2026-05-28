@@ -34,8 +34,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const locale = new Locale(language)
     const picker = parameters.get('picker') === 'fixed' ? new FixedPicker() : new RandomPicker()
     const storage = parameters.get('storage') === 'temporary' ? new TemporaryStorage() : localStorage
-    if (parameters.get('speed') === 'fast')
+    if (parameters.get('speed') === 'fast') {
         window.setTimeout = ((callback: () => void): void => callback()) as typeof setTimeout
+        const style = document.createElement('style')
+        style.textContent = '* { animation-duration: 0s !important; transition-duration: 0s !important; }'
+        document.head.appendChild(style)
+    }
     if (parameters.has('setitem')) {
         const [key, value] = parameters.get('setitem')!.split(':') as [string, string]
         new Completed(key, storage).set(Number(value))
