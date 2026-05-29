@@ -4,7 +4,7 @@ import { Variable, BooleanVariable, IntegerVariable } from './variable.js'
 
 export class EvenOrOdd extends Level {
     protected identifier(): string {
-        return 'even-odd'
+        return 'even-or-odd'
     }
 
     protected name(): string {

@@ -42,8 +42,8 @@ document.addEventListener('DOMContentLoaded', () => {
         style.textContent = '* { animation-duration: 0s !important; transition-duration: 0s !important; }'
         document.head.appendChild(style)
     }
-    if (parameters.has('setitem')) {
-        const [key, value] = parameters.get('setitem')!.split(':') as [string, string]
+    for (const setitem of parameters.getAll('setitem')) {
+        const [key, value] = setitem.split(':') as [string, string]
         new Completed(key, storage).set(Number(value))
     }
     new Main(locale, picker, storage).start()

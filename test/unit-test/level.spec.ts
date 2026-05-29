@@ -8,7 +8,8 @@ test.describe('class Level', () => {
     test.describe('method findSimplestPassingCandidate', () => {
         fixtureLevelStates.states.forEach(({ unitTests, simplestPassingCandidatesTestDrivenDevelopment }) => {
             test(`finds the simplest passing candidate for unit tests ${unitTests.map(unitTest => unitTest.argumentList)}`, () => {
-                const code = level.findSimplestPassingCandidate(level.candidates, level.perfectCandidates, unitTests).toString()
+                const candidate = level.findSimplestPassingCandidate(level.candidates, level.perfectCandidates, unitTests)
+                const code = candidate.nonEmptyLines.join('\n')
                 expect(simplestPassingCandidatesTestDrivenDevelopment).toContain(code)
             })
         })

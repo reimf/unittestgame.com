@@ -5,7 +5,7 @@ import { UnitTest } from './unit-test.js'
 
 export class Candidate {
     private readonly lines: string[]
-    private readonly nonEmptyLines: string[]
+    public readonly nonEmptyLines: string[]
     private readonly function: Function
     private readonly complexity: number
 
@@ -75,10 +75,6 @@ export class Candidate {
 
     public compareComplexity(candidate: Candidate): number {
         return Math.sign(this.complexity - candidate.complexity)
-    }
-
-    public toString(): string {
-        return this.nonEmptyLines.join('\n')
     }
 
     public toHtml(): CodeBlock {
