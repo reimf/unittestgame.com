@@ -7,6 +7,8 @@ import { RandomPicker } from '../../src/picker.js'
 import { Locale } from '../../src/locale.js'
 
 test.describe('whole game', () => {
+    test.describe.configure({ mode: 'serial' })
+
     test('plays whole game', async ({ page }) => {
         test.slow()
 

@@ -1,6 +1,9 @@
-import { test, expect, Page } from '@playwright/test'
+import { test, expect } from '../fixture/fixture-coverage'
+import type { Page } from '@playwright/test'
 
 test.describe('submit insufficient unit tests', () => {
+    test.describe.configure({ mode: 'serial' })
+
     let page: Page
 
     test.beforeAll(async ({ browser }) => {
@@ -8,6 +11,10 @@ test.describe('submit insufficient unit tests', () => {
         await page.goto('/?speed=fast&setitem=level-battery-level-finished:1')
         await page.getByRole('button', { name: 'I want to play Level 2 - Voting Age' }).click()
         await page.getByRole('button', { name: 'I want to submit the unit tests' }).click()
+    })
+
+    test.afterAll(async () => {
+        await page.close()
     })
 
     test('has not according message', async () => {
@@ -43,9 +50,5 @@ test.describe('submit insufficient unit tests', () => {
     test('has submit unit tests button', async () => {
         const button = page.getByRole('button', { name: 'I want to submit the unit tests' })
         await expect(button).toBeVisible()
-    })
-
-    test.afterAll(async () => {
-        await page.close()
     })
 })

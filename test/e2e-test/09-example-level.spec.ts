@@ -1,7 +1,13 @@
 import { test, expect } from '../fixture/fixture-coverage'
+import type { Page } from '@playwright/test'
 
 test.describe('example level', () => {
-    test.beforeEach(async ({ page }) => {
+    test.describe.configure({ mode: 'serial' })
+
+    let page: Page
+
+    test.beforeAll(async ({ browser }) => {
+        page = await browser.newPage()
         await page.goto('/?speed=fast&picker=fixed')
         await page.getByRole('button', { name: 'I want to play Level 1 - Battery Level' }).click()
         await page.getByLabel('Battery Level').fill('20')
@@ -21,13 +27,17 @@ test.describe('example level', () => {
         await page.getByRole('button', { name: 'I want to submit the unit tests' }).click()
     })
 
-    test('has updated the current function panel', async ({ page }) => {
+    test.afterAll(async () => {
+        await page.close()
+    })
+
+    test('has updated the current function panel', async () => {
         const currentFunctionPanel = page.getByTestId('current-function')
         const codeLines = currentFunctionPanel.locator('code > div')
         await expect(codeLines).toContainText(['function powerMode(batteryLevel) {', '    if (batteryLevel >= 20) return "Normal Mode"', '  return "Low Power Mode"', '}'])
     })
 
-    test('has all unit tests panel', async ({ page }) => {
+    test('has all unit tests panel', async () => {
         const unitTestsPanel = page.getByTestId('unit-tests')
         await expect(unitTestsPanel).toContainText('powerMode(20) === "Normal Mode"')
         await expect(unitTestsPanel).toContainText('powerMode(19) === "Low Power Mode"')
@@ -35,12 +45,12 @@ test.describe('example level', () => {
         await expect(unitTestsPanel).toContainText('powerMode(18) === "Low Power Mode"')
     })
 
-    test('has updatedlevel overview panel', async ({ page }) => {
+    test('has updatedlevel overview panel', async () => {
         const levelsPanel = page.getByTestId('level-overview')
         await expect(levelsPanel).toContainText('1🥇2▶️3🔒4🔒5🔒6🔒7🔒8🔒9🔒10🔒')
     })
 
-    test('has play next level message', async ({ page }) => {
+    test('has play next level message', async () => {
         const messages = page.getByTestId('messages')
         const button = messages.getByRole('button')
         await expect(button).toHaveText('I want to play Level 2 - Voting Age')
