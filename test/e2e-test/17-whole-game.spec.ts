@@ -7,12 +7,13 @@ import { RandomPicker } from '../../src/picker.js'
 import { Locale } from '../../src/locale.js'
 
 test.describe('whole game', () => {
-    test.describe.configure({ mode: 'serial' })
+    test.beforeEach(async ({ page }) => {
+        await page.goto('/?speed=fast')
+    })
+
 
     test('plays whole game', async ({ page }) => {
         test.slow()
-
-        await page.goto('/?speed=fast')
 
         const locale = new Locale('en')
         const picker = new RandomPicker()

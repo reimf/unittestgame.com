@@ -1,13 +1,7 @@
 import { test, expect } from '../fixture/fixture-coverage'
-import type { Page } from '@playwright/test'
 
 test.describe('correct submit button test', () => {
-    test.describe.configure({ mode: 'serial' })
-
-    let page: Page
-
-    test.beforeAll(async ({ browser }) => {
-        page = await browser.newPage()
+    test.beforeEach(async ({ page }) => {
         await page.goto('/?speed=fast')
         await page.getByRole('button', { name: 'I want to play Level 1 - Battery Level' }).click()
         await page.getByLabel('Battery Level').fill('20')
@@ -19,52 +13,48 @@ test.describe('correct submit button test', () => {
         await page.getByRole('button', { name: 'I want to submit the unit tests' }).click()
     })
 
-    test.afterAll(async () => {
-        await page.close()
-    })
-
-    test('has NOT not asked message', async () => {
+    test('has NOT not asked message', async ({ page }) => {
         const messages = page.getByTestId('messages')
         await expect(messages).not.toContainText('That is NOT what I asked for!')
     })
 
-    test('has NOT updated the current function panel', async () => {
+    test('has NOT updated the current function panel', async ({ page }) => {
         const currentFunctionPanel = page.getByTestId('current-function')
         const codeLines = currentFunctionPanel.locator('code > div')
         await expect(codeLines).toContainText(['function powerMode(batteryLevel) {', '    if (batteryLevel === 20) return "Normal Mode"', '  return "Low Power Mode"', '}'])
     })
 
-    test('has not according message', async () => {
+    test('has not according message', async ({ page }) => {
         const messages = page.getByTestId('messages')
         await expect(messages).toContainText('The following unit test doesn\'t match the Specification, but the Current Function passes it.')
     })
 
-    test('has failing unit test message', async () => {
+    test('has failing unit test message', async ({ page }) => {
         const messages = page.getByTestId('messages')
         await expect(messages).toContainText('powerMode(21) === "Low Power Mode"')
     })
 
-    test('has need message', async () => {
+    test('has need message', async ({ page }) => {
         const messages = page.getByTestId('messages')
         await expect(messages).toContainText('The Current Function doesn\'t match the Specification yet. You need at least 2 more unit tests, so write a unit test that matches the Specification and that the Current Function fails.')
     })
 
-    test('has a battery level field', async () => {
+    test('has a battery level field', async ({ page }) => {
         const batteryLevel = page.getByRole('textbox', { name: 'Battery level' })
         await expect(batteryLevel).toBeVisible()
     })
 
-    test('has a power mode field', async () => {
+    test('has a power mode field', async ({ page }) => {
         const powerMode = page.getByRole('radio', { name: 'Power Mode' })
         await expect(powerMode).toBeVisible()
     })
 
-    test('has add this unit test button', async () => {
+    test('has add this unit test button', async ({ page }) => {
         const button = page.getByRole('button', { name: 'I want to add this unit test' })
         await expect(button).toBeVisible()
     })
 
-    test('has submit unit tests button', async () => {
+    test('has submit unit tests button', async ({ page }) => {
         const button = page.getByRole('button', { name: 'I want to submit the unit tests' })
         await expect(button).toBeVisible()
     })
