@@ -1,8 +1,8 @@
 import { Game } from './game.js'
 import { Panel, Message, ComputerMessage, QuestionMessage } from './frame.js'
-import { Div, Select, Option, Span } from './html.js'
+import { Anchor, Details, Div, Span, Summary, UnorderedList } from './html.js'
 import { Level } from './level-base.js'
-import { Language, Locale, LocalizedText } from './locale.js'
+import { Language, Locale } from './locale.js'
 import { Picker } from './picker.js'
 
 export class Main {
@@ -37,28 +37,21 @@ export class Main {
         new ComputerMessage([this.locale.welcome()]).show()
     }
 
-    private optionText(language: Language): LocalizedText {
-        if (language === this.locale.language)
-            return this.locale.switchLanguage()
-        return this.locale.switchToLanguage(language)
+    private languageLink(language: Language): Anchor {
+        const url = new URL(window.location.href)
+        url.searchParams.set('language', language)
+        return new Anchor().setHref(url.toString()).appendText(this.locale.switchToLanguage(language))
     }
 
-    private languageOptions(): Option[] {
-        return this.locale.languages().map(language =>
-            new Option(language, this.optionText(language)).setSelected(language === this.locale.language)
-        )
-    }
-
-    private languageSelect(): Select {
-        return new Select().appendChildren(this.languageOptions()).onChange(language => {
-            const url = new URL(window.location.href)
-            url.searchParams.set('language', language)
-            window.location.href = url.toString()
-        })
+    private languageSwitcher(): Details {
+        const otherLanguages = this.locale.languages().filter(language => language !== this.locale.language)
+        return new Details()
+            .appendChild(new Summary().appendText(this.locale.switchLanguage()))
+            .appendChild(new UnorderedList(otherLanguages.map(language => this.languageLink(language))))
     }
 
     private showAboutPanel(): void {
-        const content = [this.locale.slogan(), this.locale.links(), this.languageSelect()]
+        const content = [this.locale.slogan(), this.locale.links(), this.languageSwitcher()]
         new Panel('unittestgame', this.locale.unitTestGameTitle(), content).show()
     }
 

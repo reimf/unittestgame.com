@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 import { JSDOM } from 'jsdom'
-import { Span, Div, Section, Code, CodeBlock, Label, Paragraph, Form, Header, Input, Italic, Anchor, Submit } from '../../src/html.js'
+import { Span, Div, Section, Code, CodeBlock, Label, Paragraph, Form, Header, Input, Italic, Anchor, Submit, Details, Summary, UnorderedList } from '../../src/html.js'
 import { Locale } from '../../src/locale.js'
 
 const { document } = new JSDOM('<!DOCTYPE html>').window
@@ -158,6 +158,30 @@ test.describe('class Html', () => {
         const italic = new Italic().appendText(Locale.bless('text'))
         expect(italic.getElement().outerHTML).toBe(
             '<i>text</i>'
+        )
+    })
+
+    test('has details', () => {
+        const details = new Details().appendChild(new Summary().appendText(Locale.bless('toggle')))
+        expect(details.getElement().outerHTML).toBe(
+            '<details><summary>toggle</summary></details>'
+        )
+    })
+
+    test('has summary', () => {
+        const summary = new Summary().appendText(Locale.bless('toggle'))
+        expect(summary.getElement().outerHTML).toBe(
+            '<summary>toggle</summary>'
+        )
+    })
+
+    test('has unordered list', () => {
+        const list = new UnorderedList([
+            new Span().appendText(Locale.bless('a')),
+            new Span().appendText(Locale.bless('b')),
+        ])
+        expect(list.getElement().outerHTML).toBe(
+            '<ul><li><span>a</span></li><li><span>b</span></li></ul>'
         )
     })
 })
