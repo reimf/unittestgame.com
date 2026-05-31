@@ -1,8 +1,8 @@
 :root {
     --dark-text: #333;
     --light-text: #fff;
-    --panel-heading-background: #808;
-    --input-background: #093;
+    --panel-heading-background: #606;
+    --input-background: #063;
     --human-message-background: #efe;
     --general-background: #eee;
     --computer-message-background: #fff;
@@ -10,9 +10,9 @@
     --button-shadow: #0006;
     --focus-shadow: #f60;
     --separator-shadow: #0003;
-    --inserted-background: #dfd;
-    --deleted-background: #fdd;
-    --new-background: #ddf;
+    --inserted-background: #efe;
+    --deleted-background: #fee;
+    --new-background: #eef;
     --old-background: #fff;
     --unlocked-background: #333;
     --unlocked-foreground: #fff;
@@ -20,7 +20,7 @@
     --locked-foreground: #333;
     --highlight-keyword: #c33;
     --highlight-class: #66c;
-    --highlight-function: #66c;
+    --highlight-function: #669;
     --highlight-variable: #060;
     --highlight-literal: #06c;
     --highlight-number: #06c;
@@ -53,6 +53,10 @@ body {
     color: var(--dark-text);
     font-family: monospace;
     line-height: 1.25rem;
+
+    > header {
+        line-height: 0;
+    }
 }
 
 button {
@@ -184,10 +188,6 @@ i { /* markdown: *italic* */
     font-style: normal;
     padding: 0.1rem 0.25rem;
     white-space: nowrap;
-}
-
-h1 {
-    display: none;
 }
 
 input {
