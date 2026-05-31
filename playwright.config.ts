@@ -34,17 +34,8 @@ export default defineConfig({
                 resultDir: '../results/e2e-coverage',
                 reports: [
                     ['html'],
-                    [
-                        'lcovonly',
-                        { file: 'coverage.lcov' },
-                    ],
-                    [
-                        'text-summary',
-                        { file: null },
-                    ],
+                    ['text-summary'],
                 ],
-                /* Configure watermarks, see https://github.com/istanbuljs/nyc#high-and-low-watermarks */
-                // watermarks: {},
             }),
         ],
     ],
