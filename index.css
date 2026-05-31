@@ -45,7 +45,6 @@
 
 a { /* markdown: [text](url) */
     border-radius: 0.25rem;
-    padding: 0.1rem 0;
     white-space: nowrap;
 }
 
@@ -151,6 +150,7 @@ details {
         border-radius: 0.25rem;
         cursor: pointer;
         display: inline-block;
+        line-height: 1.5rem;
         text-decoration: underline;
 
         &::-webkit-details-marker {
@@ -166,7 +166,7 @@ details {
         list-style-type: none;
 
         > li {
-            margin: 0.5rem 0 0 1rem;
+            margin-left: 1rem;
         }
     }
 }
@@ -378,6 +378,11 @@ a, button, input, label:has(input[type="radio"]) {
                 gap: 0.75rem;
                 margin: 0.75rem;
 
+                a {
+                    display: inline-block;
+                    line-height: 1.5rem;
+                }
+
                 ol {
                     list-style-type: none;
 
@@ -412,7 +417,6 @@ a, button, input, label:has(input[type="radio"]) {
                         &.locked {
                             background-color: var(--locked-background);
                             color: var(--locked-foreground);
-                            opacity: 0.3;
                         }
 
                         .number {
