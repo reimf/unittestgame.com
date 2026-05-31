@@ -1,6 +1,6 @@
 import { test, expect } from '../fixture/fixture-coverage'
 
-test.describe('incorrect submit button test', () => {
+test.describe('incorrect submit button', () => {
     test.beforeEach(async ({ page }) => {
         await page.goto('/?speed=fast')
         await page.getByRole('button', { name: 'I want to play Level 1 - Battery Level' }).click()

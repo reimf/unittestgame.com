@@ -2,7 +2,7 @@ import { test, expect } from '../fixture/fixture-coverage'
 
 test.describe('submit insufficient unit tests', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('/?speed=fast&setitem=level-battery-level-finished:1')
+        await page.goto('/?speed=fast&picker=fixed&setitem=level-battery-level-finished:1')
         await page.getByRole('button', { name: 'I want to play Level 2 - Voting Age' }).click()
         await page.getByRole('button', { name: 'I want to submit the unit tests' }).click()
     })
@@ -14,7 +14,7 @@ test.describe('submit insufficient unit tests', () => {
 
     test('has unit test in not according message', async ({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText(/isAllowedToVote\(\d+\) === undefined/)
+        await expect(messages).toContainText('isAllowedToVote(0) === undefined')
     })
 
     test('has age field', async ({ page }) => {

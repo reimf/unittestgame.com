@@ -58,7 +58,7 @@ test.describe('class Variable', () => {
             '<p>' +
                 '<label>' +
                     '<span>Output</span>' +
-                    '<input type="text" name="fizzBuzz" autocomplete="off" required="" pattern=".{1,10}" title="a text with at most 10 characters">' +
+                    '<input type="text" autocomplete="off" name="fizzBuzz" required="" pattern=".{1,10}" title="a text with at most 10 characters">' +
                 '</label>' +
             '</p>'
         )
@@ -71,7 +71,7 @@ test.describe('class Variable', () => {
             '<p>' +
                 '<label>' +
                     '<span>Number</span>' +
-                    '<input type="text" name="number" autocomplete="off" required="" pattern="[0-9]{1,4}" title="an integer number with at most 4 digits">' +
+                    '<input type="text" autocomplete="off" name="number" required="" pattern="[0-9]{1,4}" title="an integer number with at most 4 digits">' +
                 '</label>' +
             '</p>'
         )
@@ -84,7 +84,7 @@ test.describe('class Variable', () => {
             '<p>' +
                 '<label>' +
                     '<span>Number</span>' +
-                    '<input type="text" name="number" autocomplete="off" required="" pattern="[0-9]{1,4}(\\.[0-9])?" title="a floating-point number with at most 4 digits, an optional decimal point and an optional decimal">' +
+                    '<input type="text" autocomplete="off" name="number" required="" pattern="[0-9]{1,4}(\\.[0-9])?" title="a floating-point number with at most 4 digits, an optional decimal point and an optional decimal">' +
                 '</label>' +
             '</p>'
         )

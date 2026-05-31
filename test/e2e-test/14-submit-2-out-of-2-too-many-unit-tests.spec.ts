@@ -1,6 +1,6 @@
 import { test, expect } from '../fixture/fixture-coverage'
 
-test.describe('submit way too many unit tests', () => {
+test.describe('submit 2 out of 2 too many unit tests', () => {
     test.beforeEach(async ({ page }) => {
         await page.goto('/?speed=fast&setitem=level-battery-level-finished:1&setitem=level-voting-age-finished:1')
         await page.getByRole('button', { name: 'I want to play Level 3 - Even or Odd' }).click()

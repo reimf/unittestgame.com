@@ -140,13 +140,16 @@ export abstract class Level {
     }
 
     public findNumberOfUnitTestsStillNeeded(unitTests: readonly UnitTest[], subsetsOfMinimalUnitTests: readonly UnitTest[][], candidates: readonly Candidate[], numberOfPerfectCandidates: number): number {
-        for (const subsetOfMinimalUnitTests of subsetsOfMinimalUnitTests) {
+        const realSubsetsOfMinimalUnitTests = subsetsOfMinimalUnitTests.slice(0, -1)
+        for (const subsetOfMinimalUnitTests of realSubsetsOfMinimalUnitTests) {
+            console.log(subsetOfMinimalUnitTests.length)
             const extendedUnitTests = [...unitTests, ...subsetOfMinimalUnitTests]
             const passingCandidates = candidates.filter(candidate => candidate.passes(extendedUnitTests))
             if (passingCandidates.length === numberOfPerfectCandidates)
                 return subsetOfMinimalUnitTests.length
         }
-        return Infinity
+        const fullSetOfMinimalUnitTests = subsetsOfMinimalUnitTests[subsetsOfMinimalUnitTests.length - 1]!
+        return fullSetOfMinimalUnitTests.length
     }
 
     protected isFormDataOk(_formData: FormData): boolean {

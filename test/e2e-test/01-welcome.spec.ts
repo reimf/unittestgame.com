@@ -2,7 +2,7 @@ import { test, expect } from '../fixture/fixture-coverage'
 
 test.describe('welcome', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('/?speed=fast')
+        await page.goto('/?speed=fast&storage=temporary')
     })
 
     test('has title', async ({ page }) => {

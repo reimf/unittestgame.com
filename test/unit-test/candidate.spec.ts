@@ -79,11 +79,6 @@ test.describe('class Candidate', () => {
         expect(candidate.execute([2024])).toBe(2025)
     })
 
-    test('executes function with error', () => {
-        const candidate = new Candidate(['function nextYear(year) {', '  return year.round(1)', '}'])
-        expect(candidate.execute([2024])).toBe(undefined)
-    })
-
     test('to html', () => {
         const candidate = new Candidate(['function nextYear(year) {', '  return year', '}'])
         const html = candidate.toHtml()

@@ -109,7 +109,8 @@ class Text extends Content {
 export class Input extends Html {
     public constructor() {
         super('input')
-        this.getInputElement().addEventListener('focus', () => this.getInputElement().checked = true)
+        const input = this.getInputElement()
+        input.addEventListener('focus', () => this.getInputElement().checked = true)
     }
 
     private getInputElement(): HTMLInputElement {
@@ -118,6 +119,8 @@ export class Input extends Html {
 
     public setType(type: string): this {
         this.getInputElement().type = type
+        if (type === 'text')
+            this.getInputElement().autocomplete = 'off'
         return this
     }
 
@@ -128,11 +131,6 @@ export class Input extends Html {
 
     public setValue(value: string): this {
         this.getInputElement().value = value
-        return this
-    }
-
-    public setAutocomplete(autocomplete: boolean = true): this {
-        this.getInputElement().autocomplete = autocomplete ? 'on' : 'off'
         return this
     }
 

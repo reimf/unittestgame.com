@@ -50,19 +50,11 @@ export class Candidate {
             .replace(/function|return|\{|\}|if|true|false|let/g, ' _ ') // each keyword is 1 point
             .split(/\s+/) // each token is 1 point
             .filter(token => token)
-        const unknownTokens = tokens.filter(token => token !== '_')
-        if (unknownTokens.length > 0)
-            throw new Error(`Unknown tokens: ${unknownTokens.join(', ')}`)
         return tokens.length
     }
 
     public execute(argumentsList: readonly any[]): any {
-        try {
-            return this.function(...argumentsList)
-        }
-        catch (error) {
-            return undefined
-        }
+        return this.function(...argumentsList)
     }
 
     public failingTestResults(unitTests: readonly UnitTest[]): TestResult[] {

@@ -41,7 +41,7 @@ export class RadioVariable extends Variable {
     }
 
     public format(value: string): string {
-        return value === undefined ? 'undefined' : `"${value}"`
+        return `"${value}"`
     }
 }
 
@@ -68,7 +68,7 @@ export class BooleanVariable extends Variable {
     }
 
     public format(value: boolean): string {
-        return value === undefined ? 'undefined' : value.toString()
+        return `${value}`
     }
 }
 
@@ -85,7 +85,6 @@ export class TextVariable extends Variable {
         const input = new Input()
           .setType('text')
           .setName(this.name)
-          .setAutocomplete(false)
           .setRequired()
           .setPattern(/.{1,10}/)
           .setTitle('a text with at most 10 characters')
@@ -94,7 +93,7 @@ export class TextVariable extends Variable {
     }
 
     public format(value: string): string {
-        return value === undefined ? 'undefined' : `"${value}"`
+        return `"${value}"`
     }
 }
 
@@ -111,7 +110,6 @@ export class IntegerVariable extends Variable {
         const input = new Input()
           .setType('text')
           .setName(this.name)
-          .setAutocomplete(false)
           .setRequired()
           .setPattern(/[0-9]{1,4}/)
           .setTitle('an integer number with at most 4 digits')
@@ -120,7 +118,7 @@ export class IntegerVariable extends Variable {
     }
 
     public format(value: string): string {
-        return value === undefined ? 'undefined' : value
+        return `${value}`
     }
 }
 
@@ -137,7 +135,6 @@ export class FloatVariable extends Variable {
         const input = new Input()
           .setType('text')
           .setName(this.name)
-          .setAutocomplete(false)
           .setRequired()
           .setPattern(/[0-9]{1,4}(\.[0-9])?/)
           .setTitle('a floating-point number with at most 4 digits, an optional decimal point and an optional decimal')
@@ -146,6 +143,6 @@ export class FloatVariable extends Variable {
     }
 
     public format(value: string): string {
-        return value === undefined ? 'undefined' : value
+        return `${value}`
     }
 }
