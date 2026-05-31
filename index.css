@@ -17,7 +17,7 @@
     --unlocked-background: #333;
     --unlocked-foreground: #fff;
     --locked-background: #ddd;
-    --locked-foreground: #666;
+    --locked-foreground: #333;
     --highlight-keyword: #c33;
     --highlight-class: #66c;
     --highlight-function: #66c;
@@ -28,7 +28,7 @@
     --highlight-string: #036;
     --highlight-regexp: #036;
     --highlight-dot: #660;
-    --code-background: #093;
+    --code-background: #063;
     --code-foreground: #fff;
 }
 
