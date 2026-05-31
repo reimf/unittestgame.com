@@ -14,6 +14,7 @@ typescript:
   artifacts:
     paths:
       - "src/**/*.js"
+      - "src/**/*.js.map"
       - "test/**/*.js"
   only:
     - main
@@ -36,7 +37,7 @@ pages:
     - mkdir public
     - cp *.{css,html,ico,png,txt} public
     - mkdir public/src
-    - cp src/*.js public/src
+    - cp src/*.{js,js.map} public/src
     - gzip -k -6 public/*.{css,html} public/src/*.js
   artifacts:
     paths:
