@@ -164,7 +164,6 @@ export class Form extends Html {
         super('form')
         this.getFormElement().addEventListener('submit', event => {
             event.preventDefault()
-            this.getFormElement().querySelectorAll('input').forEach(input => input.disabled = false)
             const formData = new FormData(this.getFormElement())
             const submit = this.getFormElement().querySelector('input[type="submit"]') as HTMLInputElement
             this.replaceEnclosingMessageContent(this.getFormElement(), Locale.bless(submit.value))

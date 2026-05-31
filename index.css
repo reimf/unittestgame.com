@@ -10,8 +10,6 @@
     --button-shadow: #0006;
     --focus-shadow: #f60;
     --separator-shadow: #0003;
-    --disabled-background: #333;
-    --disabled-foreground: #fff;
     --inserted-background: #dfd;
     --deleted-background: #fdd;
     --new-background: #ddf;
@@ -168,7 +166,7 @@ details {
         list-style-type: none;
 
         > li {
-            margin: 0.5rem 1rem;
+            margin: 0.5rem 0 0 1rem;
         }
     }
 }
@@ -230,11 +228,6 @@ label {
         opacity: 0.25;
         padding-right: 0.75rem;
 
-        &:has(input:disabled) {
-            background-color: var(--disabled-background);
-            color: var(--disabled-foreground);
-        }
-
         &:has(input:checked) {
             opacity: 1;
         }
@@ -251,19 +244,10 @@ p {
 }
 
 
-a, button, input, label:has(input[type="radio"]:not(:disabled)) {
-    &:focus-within, &:focus, &:not(:disabled):hover, &:not(:disabled):has(:focus) {
+a, button, input, label:has(input[type="radio"]) {
+    &:focus-within, &:focus, &:hover, &:has(:focus) {
         box-shadow: 0 0 0.3rem 0.3rem var(--focus-shadow);
         opacity: 1;
-    }
-}
-
-:disabled {
-    background-color: var(--disabled-background) !important;
-    color: var(--disabled-foreground) !important;
-
-    &:is(button), &:is(input[type="submit"]) {
-        opacity: 0.25;
     }
 }
 
