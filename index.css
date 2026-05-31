@@ -186,6 +186,10 @@ i { /* markdown: *italic* */
     white-space: nowrap;
 }
 
+h1 {
+    display: none;
+}
+
 input {
     &[type="text"], &[type="number"] {
         background-color: var(--input-background);
