@@ -34,7 +34,7 @@ pages:
   stage: deploy
   script:
     - mkdir public
-    - cp *.{css,html,ico,png} public
+    - cp *.{css,html,ico,png,txt} public
     - mkdir public/src
     - cp src/*.js public/src
     - gzip -k -6 public/*.{css,html} public/src/*.js
