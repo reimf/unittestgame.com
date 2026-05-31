@@ -47,19 +47,16 @@ export abstract class Html extends Content {
 
     public appendMarkdown(markdown: LocalizedText): this {
         const patterns = [
-            /^# (?<h1>[^\n]+)/,
             /\*(?<italic>.+?)\*/,
             /`(?<code>.+?)`/,
             /\[(?<linkText>.+?)\]\((?<linkUrl>.+?)\)/,
             /(?<plain>[^*`[]+)/,
         ]
-        const pattern = new RegExp(patterns.map(regexp => regexp.source).join('|'), 'gm')
+        const pattern = new RegExp(patterns.map(regexp => regexp.source).join('|'), 'g')
 
         for (const { groups } of markdown.matchAll(pattern)) {
-            const { h1, italic, code, linkText, linkUrl, plain } = groups!
-            if (h1)
-                this.appendChild(new H1().appendMarkdown(Locale.bless(h1)))
-            else if (italic)
+            const { italic, code, linkText, linkUrl, plain } = groups!
+            if (italic)
                 this.appendChild(new Italic().appendMarkdown(Locale.bless(italic)))
             else if (code)
                 this.appendChild(new Code().appendMarkdown(Locale.bless(code)))
@@ -174,12 +171,6 @@ export class Form extends Html {
 
     private getFormElement(): HTMLFormElement {
         return this.getElement() as HTMLFormElement
-    }
-}
-
-export class H1 extends Html {
-    public constructor() {
-        super('h1')
     }
 }
 

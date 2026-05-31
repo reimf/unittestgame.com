@@ -39,12 +39,12 @@ export class Locale {
 
     public unitTestGameTitle(): LocalizedText {
         return this.localize({
-            en: '# UnitTestGame',
-            nl: '# UnitTestGame',
-            de: '# UnitTestGame',
-            fr: '# UnitTestGame',
-            es: '# UnitTestGame',
-            it: '# UnitTestGame',
+            en: 'UnitTestGame',
+            nl: 'UnitTestGame',
+            de: 'UnitTestGame',
+            fr: 'UnitTestGame',
+            es: 'UnitTestGame',
+            it: 'UnitTestGame',
         })
     }
 
