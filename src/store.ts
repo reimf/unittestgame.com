@@ -1,20 +1,32 @@
-export class Completed {
-    private readonly key: string
-    private readonly storage: Storage
+export abstract class Store {
+    public abstract get(key: string): number
+    public abstract set(key: string, value: number): void
+}
 
-    constructor(key: string, storage: Storage) {
-        this.key = key
-        this.storage = storage
-    }
-
-    public get(): number {
-        const value = this.storage.getItem(this.key)
+export class LocalStore extends Store {
+    public get(key: string): number {
+        const value = localStorage.getItem(key)
         if (!value)
             return 0
         return Number(value)
     }
 
-    public set(value: number): void {
-        this.storage.setItem(this.key, value.toString())
+    public set(key: string, value: number): void {
+        localStorage.setItem(key, value.toString())
+    }
+}
+
+export class MapStore extends Store {
+    private readonly mapStorage = new Map<string, string>()
+
+    public get(key: string): number {
+        const value = this.mapStorage.get(key)
+        if (!value)
+            return 0
+        return Number(value)
+    }
+
+    public set(key: string, value: number): void {
+        this.mapStorage.set(key, value.toString())
     }
 }

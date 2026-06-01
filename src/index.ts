@@ -1,9 +1,8 @@
-import { Completed } from './completed.js'
+import { LocalStore, MapStore } from './store.js'
 import { FixedPicker, RandomPicker } from './picker.js'
 import { Injector } from './injector.js'
 import { Main } from './main.js'
 import { LANGUAGES, Locale } from './locale.js'
-import { TemporaryStorage } from './temporary-storage.js'
 
 window.onerror = (message, source, lineno, colno, error) => {
     alert(`${error?.name}: ${message}\n${source}:${lineno}:${colno}`)
@@ -35,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const injector = new Injector(new URL(window.location.href).searchParams)
     const locale = new Locale(injector.getOption('language', [...LANGUAGES]))
     const picker = injector.getOption('picker', ['random', 'fixed']) === 'fixed' ? new FixedPicker() : new RandomPicker()
-    const storage = injector.getOption('storage', ['local', 'temporary']) === 'temporary' ? new TemporaryStorage() : localStorage
+    const store = injector.getOption('store', ['local', 'map']) === 'map' ? new MapStore() : new LocalStore()
     if (injector.getOption('speed', ['normal', 'fast']) === 'fast') {
         window.setTimeout = ((callback: () => void): void => callback()) as typeof setTimeout
         const style = document.createElement('style')
@@ -44,8 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     for (const setitem of injector.getAll('setitem')) {
         const [key, value] = setitem.split(':') as [string, string]
-        new Completed(key, storage).set(Number(value))
+        store.set(key, Number(value))
     }
     injector.checkEmpty()
-    new Main(locale, picker, storage).start()
+    new Main(locale, picker, store).start()
 })

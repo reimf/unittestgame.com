@@ -1,4 +1,5 @@
 import { Level } from './level-base.js'
+import { Store } from './store.js'
 import { BatteryLevel } from './level-battery-level.js'
 import { EvenOrOdd } from './level-even-or-odd.js'
 import { FizzBuzz } from './level-fizz-buzz.js'
@@ -15,12 +16,12 @@ import { Picker } from './picker.js'
 export class Game {
     private readonly locale: Locale
     private readonly picker: Picker
-    private readonly storage: Storage
+    private readonly store: Store
 
-    public constructor(locale: Locale, picker: Picker, storage: Storage) {
+    public constructor(locale: Locale, picker: Picker, store: Store) {
         this.locale = locale
         this.picker = picker
-        this.storage = storage
+        this.store = store
     }
 
     public levels(): Level[] {
@@ -36,6 +37,6 @@ export class Game {
             FloatFormat,
             PasswordStrength,
         ]
-        return levelClasses.map((levelClass, index) => new levelClass(this.locale, index + 1, this.storage, this.picker))
+        return levelClasses.map((levelClass, index) => new levelClass(this.locale, index + 1, this.store, this.picker))
     }
 }

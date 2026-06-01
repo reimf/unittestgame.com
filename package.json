@@ -1,7 +1,7 @@
 {
   "type": "module",
   "scripts": {
-    "build": "tsc --build --force",
+    "build": "tsc",
     "test": "npm run build && npx playwright test",
     "testui": "npx playwright test --ui"
   },

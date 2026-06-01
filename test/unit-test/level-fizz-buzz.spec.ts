@@ -1,12 +1,12 @@
 import { test, expect } from '@playwright/test'
 import { Locale } from '../../src/locale.js'
 import { FixedPicker } from '../../src/picker.js'
-import { TemporaryStorage } from '../../src/temporary-storage.js'
+import { MapStore } from '../../src/store.js'
 import { FizzBuzz } from '../../src/level-fizz-buzz.js'
 
 test.describe('class FizzBuzz', () => {
     const locale = new Locale('en')
-    const level = new FizzBuzz(locale, 5, new TemporaryStorage(), new FixedPicker())
+    const level = new FizzBuzz(locale, 5, new MapStore(), new FixedPicker())
 
     test('has the correct amount of parameters', () => {
         expect(level.parameters).toHaveLength(1)

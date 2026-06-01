@@ -1,12 +1,12 @@
 import { test, expect } from '@playwright/test'
 import { Locale } from '../../src/locale.js'
 import { FixedPicker } from '../../src/picker.js'
-import { TemporaryStorage } from '../../src/temporary-storage.js'
+import { MapStore } from '../../src/store.js'
 import { FloatFormat } from '../../src/level-float-format.js'
 
 test.describe('class FloatFormat', () => {
     const locale = new Locale('en')
-    const level = new FloatFormat(locale, 8, new TemporaryStorage(), new FixedPicker())
+    const level = new FloatFormat(locale, 8, new MapStore(), new FixedPicker())
 
     test('has the correct amount of parameters', () => {
         expect(level.parameters).toHaveLength(1)

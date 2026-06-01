@@ -1,12 +1,12 @@
 import { test, expect } from '@playwright/test'
 import { Locale } from '../../src/locale.js'
 import { FixedPicker } from '../../src/picker.js'
-import { TemporaryStorage } from '../../src/temporary-storage.js'
+import { MapStore } from '../../src/store.js'
 import { PasswordStrength } from '../../src/level-password-strength.js'
 
 test.describe('class PasswordStrength', () => {
     const locale = new Locale('en')
-    const level = new PasswordStrength(locale, 10, new TemporaryStorage(), new FixedPicker())
+    const level = new PasswordStrength(locale, 10, new MapStore(), new FixedPicker())
 
     test('has the correct amount of parameters', () => {
         expect(level.parameters).toHaveLength(1)

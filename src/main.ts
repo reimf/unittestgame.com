@@ -1,4 +1,5 @@
 import { Game } from './game.js'
+import { Store } from './store.js'
 import { Panel, Message, ComputerMessage, QuestionMessage } from './frame.js'
 import { Anchor, Details, Div, Span, Summary, UnorderedList } from './html.js'
 import { Level } from './level-base.js'
@@ -9,9 +10,9 @@ export class Main {
     private readonly locale: Locale
     private readonly levels: ReturnType<Game['levels']>
 
-    constructor(locale: Locale, picker: Picker, storage: Storage) {
+    constructor(locale: Locale, picker: Picker, store: Store) {
         this.locale = locale
-        const game = new Game(locale, picker, storage)
+        const game = new Game(locale, picker, store)
         this.levels = game.levels()
     }
 

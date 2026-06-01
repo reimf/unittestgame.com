@@ -1,5 +1,5 @@
 import { Candidate } from './candidate.js'
-import { Completed } from './completed.js'
+import { Store } from './store.js'
 import { ComputerMessage, HumanMessage, Message, Panel } from './frame.js'
 import { Button, CodeBlock, Div, Form, OrderedList, Submit } from './html.js'
 import { Locale, LocalizedText } from './locale.js'
@@ -13,8 +13,8 @@ export abstract class Level {
     public readonly levelNumber: number
     protected readonly picker: Picker
 
+    private readonly store: Store
     // the following attributes should all be private, but some are public because they are used in tests
-    private readonly isLevelFinished: Completed
     public readonly parameters: Variable[]
     public readonly unit: Variable
     public readonly candidates: Candidate[]
@@ -32,11 +32,11 @@ export abstract class Level {
     private lastUnitTest: UnitTest|undefined = undefined
     private numberOfSubmissions: number = 0
 
-    public constructor(locale: Locale, levelNumber: number, storage: Storage, picker: Picker) {
+    public constructor(locale: Locale, levelNumber: number, store: Store, picker: Picker) {
         this.picker = picker
         this.locale = locale
         this.levelNumber = levelNumber
-        this.isLevelFinished = new Completed(`level-${this.identifier()}-finished`, storage)
+        this.store = store
         this.parameters = this.getParameters()
         this.unit = this.getUnit()
         this.candidates = [...this.generateCandidates(this.getCandidateElements(), [])]
@@ -165,7 +165,7 @@ export abstract class Level {
     }
 
     public isFinished(): number {
-        return this.isLevelFinished.get()
+        return this.store.get(`level-${this.identifier()}-finished`)
     }
 
     public play(callback: () => void): void {
@@ -253,7 +253,7 @@ export abstract class Level {
     }
 
     private end(): void {
-        this.isLevelFinished.set(this.numberOfSubmissions)
+        this.store.set(`level-${this.identifier()}-finished`, this.numberOfSubmissions)
         this.showPanels()
         this.showEndMessage()
         this.callback!()

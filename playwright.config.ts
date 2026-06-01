@@ -30,7 +30,6 @@ export default defineConfig({
             '@bgotink/playwright-coverage',
             defineCoverageReporterConfig({
                 sourceRoot: 'src',
-                exclude: ['temporary-storage.ts'],
                 resultDir: '../results/e2e-coverage',
                 reports: [
                     ['html'],

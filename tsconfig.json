@@ -18,5 +18,5 @@
     "sourceMap": true,
     "types": ["node"]
   },
-  "exclude": ["fiveserver.config.ts"]
+  "exclude": ["playwright.config.ts", "fiveserver.config.ts"]
 }

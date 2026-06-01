@@ -1,7 +1,6 @@
 import { ComputerMessage } from './frame.js'
 import { Level } from './level-base.js'
 import { Locale, LocalizedText } from './locale.js'
-import { Picker } from './picker.js'
 import { Variable, IntegerVariable, RadioVariable } from './variable.js'
 
 type FormStringsType = {
@@ -12,10 +11,6 @@ type FormStringsType = {
 
 
 export class BatteryLevel extends Level {
-    public constructor(locale: Locale, levelNumber: number, storage: Storage, picker: Picker) {
-        super(locale, levelNumber, storage, picker)
-    }
-
     protected identifier(): string {
         return 'battery-level'
     }

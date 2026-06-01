@@ -2,7 +2,7 @@ import { test, expect } from '../fixture/fixture-coverage'
 import { Game } from '../../src/game.js'
 import { BooleanVariable, RadioVariable } from '../../src/variable.js'
 import { BatteryLevel } from '../../src/level-battery-level.js'
-import { TemporaryStorage } from '../../src/temporary-storage.js'
+import { MapStore } from '../../src/store.js'
 import { RandomPicker } from '../../src/picker.js'
 import { Locale } from '../../src/locale.js'
 
@@ -16,8 +16,8 @@ test.describe('whole game', () => {
 
         const locale = new Locale('en')
         const picker = new RandomPicker()
-        const storage = new TemporaryStorage()
-        const game = new Game(locale, picker, storage)
+        const store = new MapStore()
+        const game = new Game(locale, picker, store)
         const levels = game.levels()
 
         for (const level of levels) {
