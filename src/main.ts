@@ -2,7 +2,7 @@ import { Game } from './game.js'
 import { Panel, Message, ComputerMessage, QuestionMessage } from './frame.js'
 import { Anchor, Details, Div, Span, Summary, UnorderedList } from './html.js'
 import { Level } from './level-base.js'
-import { Language, Locale } from './locale.js'
+import { Language, LANGUAGES, Locale } from './locale.js'
 import { Picker } from './picker.js'
 
 export class Main {
@@ -44,7 +44,7 @@ export class Main {
     }
 
     private languageSwitcher(): Details {
-        const otherLanguages = this.locale.languages().filter(language => language !== this.locale.language)
+        const otherLanguages = LANGUAGES.filter(language => language !== this.locale.language)
         return new Details()
             .appendChild(new Summary().appendText(this.locale.switchLanguage()))
             .appendChild(new UnorderedList(otherLanguages.map(language => this.languageLink(language))))

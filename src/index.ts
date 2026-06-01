@@ -2,7 +2,7 @@ import { Completed } from './completed.js'
 import { FixedPicker, RandomPicker } from './picker.js'
 import { Injector } from './injector.js'
 import { Main } from './main.js'
-import { Locale } from './locale.js'
+import { LANGUAGES, Locale } from './locale.js'
 import { TemporaryStorage } from './temporary-storage.js'
 
 window.onerror = (message, source, lineno, colno, error) => {
@@ -33,11 +33,11 @@ document.addEventListener('keydown', event => {
 
 document.addEventListener('DOMContentLoaded', () => {
     const injector = new Injector(new URL(window.location.href).searchParams)
-    const language = injector.get('language') || navigator.language.split('-')[0]!
+    const language = injector.getOption('language', [...LANGUAGES])
     const locale = new Locale(language)
-    const picker = injector.get('picker') === 'fixed' ? new FixedPicker() : new RandomPicker()
-    const storage = injector.get('storage') === 'temporary' ? new TemporaryStorage() : localStorage
-    if (injector.get('speed') === 'fast') {
+    const picker = injector.getOption('picker', ['fixed', 'random']) === 'fixed' ? new FixedPicker() : new RandomPicker()
+    const storage = injector.getOption('storage', ['temporary', 'local']) === 'temporary' ? new TemporaryStorage() : localStorage
+    if (injector.getOption('speed', ['fast', 'normal']) === 'fast') {
         window.setTimeout = ((callback: () => void): void => callback()) as typeof setTimeout
         const style = document.createElement('style')
         style.textContent = '* { animation-duration: 0s !important; transition-duration: 0s !important; }'
@@ -47,8 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const [key, value] = setitem.split(':') as [string, string]
         new Completed(key, storage).set(Number(value))
     }
-    const remainingKeys = [...injector.keys()]
-    if (remainingKeys.length > 0)
-        throw new Error(`Unknown parameters: ${remainingKeys.join(', ')}`)
+    injector.checkEmpty()
     new Main(locale, picker, storage).start()
 })

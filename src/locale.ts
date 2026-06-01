@@ -1,4 +1,4 @@
-const LANGUAGES = ['en', 'nl', 'de', 'fr', 'es', 'it'] as const
+export const LANGUAGES = ['en', 'nl', 'de', 'fr', 'es', 'it'] as const
 export type Language = typeof LANGUAGES[number]
 type LocalizableText = Record<Language, string>
 
@@ -13,7 +13,7 @@ export class Locale {
     }
 
     public constructor(language: string) {
-        this.language = LANGUAGES.includes(language as Language) ? language as Language : 'en'
+        this.language = language as Language
     }
 
     private localize(localizableText: LocalizableText): LocalizedText {
@@ -74,10 +74,6 @@ export class Locale {
             it: '[Leggi di più sul TDD su Wikipedia](https://it.wikipedia.org/wiki/Test_driven_development)\n' +
                 '[Contatto](mailto:contact@unittestgame.com)\n',
         })
-    }
-
-    public languages(): readonly Language[] {
-        return LANGUAGES
     }
 
     public switchLanguage(): LocalizedText {
