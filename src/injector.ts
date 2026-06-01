@@ -7,7 +7,7 @@ export class Injector {
 
     public getOption(key: string, options: string[]): string {
         if (!this.parameters.has(key))
-            return options[options.length - 1]!
+            return options[0]!
         const result = this.parameters.get(key)!
         this.parameters.delete(key)
         if (options.includes(result))

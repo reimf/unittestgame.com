@@ -5,7 +5,7 @@ test.describe('unknown parameters', () => {
 
         page.on('dialog', async (dialog) => {
             expect(dialog.type()).toContain('alert')
-            expect(dialog.message()).toContain('Parameter language=no, but no is not one of it, es, fr, de, nl, en')
+            expect(dialog.message()).toContain('Parameter language=no, but no is not one of en, nl, de, fr, es, it')
             dialog.accept()
         })
 

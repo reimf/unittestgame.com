@@ -33,11 +33,10 @@ document.addEventListener('keydown', event => {
 
 document.addEventListener('DOMContentLoaded', () => {
     const injector = new Injector(new URL(window.location.href).searchParams)
-    const language = injector.getOption('language', [...LANGUAGES])
-    const locale = new Locale(language)
-    const picker = injector.getOption('picker', ['fixed', 'random']) === 'fixed' ? new FixedPicker() : new RandomPicker()
-    const storage = injector.getOption('storage', ['temporary', 'local']) === 'temporary' ? new TemporaryStorage() : localStorage
-    if (injector.getOption('speed', ['fast', 'normal']) === 'fast') {
+    const locale = new Locale(injector.getOption('language', [...LANGUAGES]))
+    const picker = injector.getOption('picker', ['random', 'fixed']) === 'fixed' ? new FixedPicker() : new RandomPicker()
+    const storage = injector.getOption('storage', ['local', 'temporary']) === 'temporary' ? new TemporaryStorage() : localStorage
+    if (injector.getOption('speed', ['normal', 'fast']) === 'fast') {
         window.setTimeout = ((callback: () => void): void => callback()) as typeof setTimeout
         const style = document.createElement('style')
         style.textContent = '* { animation-duration: 0s !important; transition-duration: 0s !important; }'

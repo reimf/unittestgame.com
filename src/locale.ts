@@ -1,4 +1,4 @@
-export const LANGUAGES = ['it', 'es', 'fr', 'de', 'nl', 'en'] as const
+export const LANGUAGES = ['en', 'nl', 'de', 'fr', 'es', 'it'] as const
 export type Language = typeof LANGUAGES[number]
 type LocalizableText = Record<Language, string>
 
