@@ -11,7 +11,6 @@ test.describe('whole game', () => {
         await page.goto('/?speed=fast')
     })
 
-
     test('plays whole game', async ({ page }) => {
         test.slow()
 

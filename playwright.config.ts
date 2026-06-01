@@ -19,7 +19,7 @@ export default defineConfig({
     ],
 
     webServer: {
-        command: 'npx http-server -p 3000',
+        command: `"${process.execPath}" node_modules/http-server/bin/http-server -p 3000`,
         url: 'http://localhost:3000',
         reuseExistingServer: true,
     },
