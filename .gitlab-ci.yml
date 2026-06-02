@@ -26,6 +26,7 @@ playwright:
   script:
     - npm ci
     - npx playwright test --quiet
+  coverage: '/Branches *: (\d+(\.\d+)?)\%/'
   artifacts:
     paths:
       - playwright-report/
