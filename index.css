@@ -55,7 +55,8 @@ body {
     line-height: 1.25rem;
 
     > header {
-        line-height: 0;
+        height: 0;
+        overflow: hidden;
     }
 }
 
