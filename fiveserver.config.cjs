@@ -4,9 +4,9 @@ module.exports = {
     port: 5520,
     open: 'index.html',
     ignore: [
-        '**/node_modules/**', 
-        '**/test/**', 
-        '**/playwright-report/**', 
+        '**/node_modules/**',
+        '**/test/**',
+        '**/playwright-report/**',
         '**/test-result/**'
     ]
 }

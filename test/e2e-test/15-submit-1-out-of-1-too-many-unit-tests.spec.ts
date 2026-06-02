@@ -10,7 +10,7 @@ test.describe('submit 1 out of 1 too many unit tests', () => {
         await page.getByLabel('Number').fill('25')
         await page.getByLabel('false').check()
         await page.getByRole('button', { name: 'I want to add this unit test' }).click()
-        await page.getByLabel('Number').fill('4')
+        await page.getByLabel('Number').fill('2')
         await page.getByLabel('true').check()
         await page.getByRole('button', { name: 'I want to add this unit test' }).click()
         await page.getByRole('button', { name: 'I want to submit the unit tests' }).click()
@@ -23,11 +23,11 @@ test.describe('submit 1 out of 1 too many unit tests', () => {
 
     test('has tested thoroughly message', async ({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('You\'ve tested the Current Function thoroughly, but you wrote 1 more unit test than necessary')
+        await expect(messages).toContainText('You\'ve tested the Current Function thoroughly, but you wrote 1 more unit test than necessary. The following can be left out.')
     })
 
     test('has 1 unit test in the message', async ({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('isEven(4) === true')
+        await expect(messages).toContainText('isEven(2) === true')
     })
 })
