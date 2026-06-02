@@ -16,6 +16,7 @@ typescript:
       - "src/**/*.js"
       - "src/**/*.js.map"
       - "test/**/*.js"
+      - "test/**/*.js.map"
   only:
     - main
 
@@ -28,6 +29,7 @@ playwright:
   artifacts:
     paths:
       - playwright-report/
+      - playwright-coverage/
   only:
     - main
 
