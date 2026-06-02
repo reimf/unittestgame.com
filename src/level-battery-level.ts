@@ -132,6 +132,4 @@ export class BatteryLevel extends Level {
     protected override newNumberOfSubmissions(_oldNumberOfSubmissions: number): number {
         return 1
     }
-
-
 }

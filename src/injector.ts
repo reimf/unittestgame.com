@@ -8,17 +8,17 @@ export class Injector {
     public getOption(key: string, options: string[]): string {
         if (!this.parameters.has(key))
             return options[0]!
-        const result = this.parameters.get(key)!
+        const value = this.parameters.get(key)!
         this.parameters.delete(key)
-        if (options.includes(result))
-            return result
-        throw new Error(`Parameter ${key}=${result}, but ${result} is not one of ${options.join(', ')}`)
+        if (options.includes(value))
+            return value
+        throw new Error(`Parameter ${key}=${value}, but ${value} is not one of ${options.join(', ')}`)
     }
 
     public getAll(key: string): string[] {
-        const result = this.parameters.getAll(key)
+        const values = this.parameters.getAll(key)
         this.parameters.delete(key)
-        return result
+        return values
     }
 
     public checkEmpty(): void {

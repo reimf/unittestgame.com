@@ -1,4 +1,4 @@
-export const LANGUAGES = ['en', 'nl', 'de', 'fr', 'es', 'it'] as const
+const LANGUAGES = ['en', 'nl', 'de', 'fr', 'es', 'it'] as const
 export type Language = typeof LANGUAGES[number]
 type LocalizableText = Record<Language, string>
 
@@ -7,6 +7,8 @@ export type LocalizedText = string & { readonly [__localized]: void }
 
 export class Locale {
     public readonly language: keyof LocalizableText
+
+    public static readonly languages = [...LANGUAGES]
 
     public static bless(text: string): LocalizedText {
         return text as LocalizedText

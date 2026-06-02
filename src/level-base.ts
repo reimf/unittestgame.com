@@ -1,6 +1,6 @@
 import { Candidate } from './candidate.js'
 import { Store } from './store.js'
-import { ComputerMessage, HumanMessage, Message, Panel } from './frame.js'
+import { ComputerMessage, HumanMessage, Panel } from './frame.js'
 import { Button, CodeBlock, Div, Form, OrderedList, Submit } from './html.js'
 import { Locale, LocalizedText } from './locale.js'
 import { Picker } from './picker.js'
@@ -202,7 +202,7 @@ export abstract class Level {
         const argumentList = this.parameters.map(parameter => parameter.getInput(formData.get(parameter.name)! as string))
         const expected = this.unit.getInput(formData.get(this.unit.name)! as string)
         const unitTest = new UnitTest(this.parameters, argumentList, this.unit, expected)
-        Message.addToLast([new CodeBlock().appendChild(unitTest.toHtml().addClass('new'))])
+        ComputerMessage.addToLast([new CodeBlock().appendChild(unitTest.toHtml().addClass('new'))])
         if (!this.isFormDataOk(formData))
             return
         if (!new TestResult(this.perfectCandidate, unitTest).passes)

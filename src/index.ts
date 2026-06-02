@@ -2,7 +2,7 @@ import { LocalStore, MapStore } from './store.js'
 import { FixedPicker, RandomPicker } from './picker.js'
 import { Injector } from './injector.js'
 import { Main } from './main.js'
-import { LANGUAGES, Locale } from './locale.js'
+import { Locale } from './locale.js'
 
 window.onerror = (message, source, lineno, colno, error) => {
     alert(`${error?.name}: ${message}\n${source}:${lineno}:${colno}`)
@@ -32,7 +32,7 @@ document.addEventListener('keydown', event => {
 
 document.addEventListener('DOMContentLoaded', () => {
     const injector = new Injector(new URL(window.location.href).searchParams)
-    const locale = new Locale(injector.getOption('language', [...LANGUAGES]))
+    const locale = new Locale(injector.getOption('language', Locale.languages))
     const picker = injector.getOption('picker', ['random', 'fixed']) === 'fixed' ? new FixedPicker() : new RandomPicker()
     const store = injector.getOption('store', ['local', 'map']) === 'map' ? new MapStore() : new LocalStore()
     if (injector.getOption('speed', ['normal', 'fast']) === 'fast') {
