@@ -1,6 +1,6 @@
 /.vscode/
 /node_modules/
-/playwright-coverage
+/playwright-coverage/
 /test-results/
 */**/*.js
 *.map
