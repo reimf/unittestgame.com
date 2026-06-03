@@ -23,10 +23,12 @@ typescript:
 playwright:
   stage: test
   image: mcr.microsoft.com/playwright:v1.60.0-noble
+  variables:
+    NO_COLOR: "1"
   script:
     - npm ci
     - npx playwright test --quiet
-  coverage: '/Branches *: (\d+(\.\d+)?)\%/'
+  coverage: '/Branches\s*:\s*[\d.]+\%/'
   artifacts:
     paths:
       - playwright-report/
