@@ -41,8 +41,8 @@ test.describe('class Injector', () => {
             expect(injector.getAll('tag')).toEqual(['a', 'b', 'c'])
         })
 
-        test('deletes the key', () => {
-            const injector = new Injector(new URLSearchParams('tag=a'))
+        test('deletes the keys', () => {
+            const injector = new Injector(new URLSearchParams('tag=a&tag=b&tag=c'))
             injector.getAll('tag')
             expect(() => injector.checkEmpty()).not.toThrow()
         })
