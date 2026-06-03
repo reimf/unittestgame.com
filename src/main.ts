@@ -41,7 +41,7 @@ export class Main {
     private languageLink(language: Language): Anchor {
         const url = new URL(window.location.href)
         url.searchParams.set('language', language)
-        return new Anchor().setHref(url.toString()).appendText(this.locale.switchToLanguage(language))
+        return new Anchor(url.toString()).appendText(this.locale.switchToLanguage(language))
     }
 
     private languageSwitcher(): Details {

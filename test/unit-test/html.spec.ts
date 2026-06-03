@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 import { JSDOM } from 'jsdom'
-import { Span, Div, Section, Code, CodeBlock, Label, Paragraph, Form, Header, Input, Italic, Anchor, Submit, Details, Summary, UnorderedList } from '../../src/html.js'
+import { Span, Div, Section, Code, CodeBlock, Label, Paragraph, Form, Header, Input, Italic, Anchor, Submit, Details, Summary, UnorderedList, Img } from '../../src/html.js'
 import { Locale } from '../../src/locale.js'
 
 const { document } = new JSDOM('<!DOCTYPE html>').window
@@ -70,6 +70,13 @@ test.describe('class Html', () => {
         )
     })
 
+    test('appends img in markdown', () => {
+        const header = new Header().appendMarkdown(Locale.bless('this is a ![example](https://example.com/image.png)'))
+        expect(header.getElement().outerHTML).toBe(
+            '<header>this is a <img src="https://example.com/image.png" alt="example"></header>'
+        )
+    })
+
     test('has input', () => {
         const input = new Input().setType('text').setName('postcode').setValue('value').setRequired().setPattern(/[0-9]{4}[A-Z]{2}/).setTitle('ongeldige postcode')
         expect(input.getElement().outerHTML).toBe(
@@ -106,7 +113,7 @@ test.describe('class Html', () => {
     })
 
     test('has anchor', () => {
-        const anchor = new Anchor().setHref('https://example.com').appendText(Locale.bless('website'))
+        const anchor = new Anchor('https://example.com').appendText(Locale.bless('website'))
         expect(anchor.getElement().outerHTML).toBe(
             '<a href="https://example.com">website</a>'
         )
@@ -172,6 +179,13 @@ test.describe('class Html', () => {
         const summary = new Summary().appendText(Locale.bless('toggle'))
         expect(summary.getElement().outerHTML).toBe(
             '<summary>toggle</summary>'
+        )
+    })
+
+    test('has img', () => {
+        const img = new Img('https://example.com/image.png', 'example')
+        expect(img.getElement().outerHTML).toBe(
+            '<img src="https://example.com/image.png" alt="example">'
         )
     })
 

@@ -384,6 +384,12 @@ a, button, input:not([type="radio"]), label:has(input[type="radio"]) {
                 gap: 0.75rem;
                 margin: 0.75rem;
 
+                img {
+                    float: right;
+                    margin: 0 0 0.75rem 0.75rem;
+                    width: 3rem;
+                }
+
                 a {
                     display: inline-block;
                     line-height: 1.5rem;

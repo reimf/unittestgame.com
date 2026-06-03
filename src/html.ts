@@ -49,19 +49,22 @@ export abstract class Html extends Content {
         const patterns = [
             /\*(?<italic>.+?)\*/,
             /`(?<code>.+?)`/,
-            /\[(?<linkText>.+?)\]\((?<linkUrl>.+?)\)/,
+            /!\[(?<alt>.+?)\]\((?<src>.+?)\)/,
+            /\[(?<text>.+?)\]\((?<href>.+?)\)/,
             /(?<plain>[^*`[]+)/,
         ]
         const pattern = new RegExp(patterns.map(regexp => regexp.source).join('|'), 'g')
 
         for (const { groups } of markdown.matchAll(pattern)) {
-            const { italic, code, linkText, linkUrl, plain } = groups!
+            const { italic, code, text, href, plain, alt, src } = groups!
             if (italic)
                 this.appendChild(new Italic().appendMarkdown(Locale.bless(italic)))
             else if (code)
                 this.appendChild(new Code().appendMarkdown(Locale.bless(code)))
-            else if (linkText && linkUrl)
-                this.appendChild(new Anchor().setHref(linkUrl).appendMarkdown(Locale.bless(linkText)))
+            else if (text && href)
+                this.appendChild(new Anchor(href).appendMarkdown(Locale.bless(text)))
+            else if (alt && src)
+                this.appendChild(new Img(src, alt))
             else if (plain)
                 this.appendText(Locale.bless(plain))
         }
@@ -287,16 +290,26 @@ export class Italic extends Html {
 }
 
 export class Anchor extends Html {
-    public constructor() {
+    public constructor(href: string) {
         super('a')
+        const a = this.getAnchorElement()
+        a.href = href
     }
 
     private getAnchorElement(): HTMLAnchorElement {
         return this.getElement() as HTMLAnchorElement
     }
+}
 
-    public setHref(href: string): this {
-        this.getAnchorElement().href = href
-        return this
+export class Img extends Html {
+    public constructor(src: string, alt: string) {
+        super('img')
+        const img = this.getImgElement()
+        img.src = src
+        img.alt = alt
+    }
+
+    private getImgElement(): HTMLImageElement {
+        return this.getElement() as HTMLImageElement
     }
 }

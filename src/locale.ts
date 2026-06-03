@@ -52,12 +52,12 @@ export class Locale {
 
     public slogan(): LocalizedText {
         return this.localize({
-            en: 'Learn Test-Driven Development by writing unit tests that guide an AI bot.',
-            nl: 'Leer Test-Driven Development door unit testen te schrijven die een AI bot bijsturen.',
-            de: 'Lerne Test-Driven Development, indem du Unit-Tests schreibst, die einen KI-Bot steuern.',
-            fr: 'Apprends le Test-Driven Development en écrivant des unit tests qui guident un bot IA.',
-            es: 'Aprende el desarrollo guiado por tests escribiendo unit tests que guían a un bot de IA.',
-            it: 'Impara il Test-Driven Development scrivendo unit tests che guidano un bot IA.',
+            en: '![Logo of UnitTestGame](apple-touch-icon.png)Learn Test-Driven Development by writing unit tests that guide an AI bot.',
+            nl: '![Logo van UnitTestGame](apple-touch-icon.png)Leer Test-Driven Development door unit testen te schrijven die een AI bot bijsturen.',
+            de: '![Logo von UnitTestGame](apple-touch-icon.png)Lerne Test-Driven Development, indem du Unit-Tests schreibst, die einen KI-Bot steuern.',
+            fr: '![Logo de UnitTestGame](apple-touch-icon.png)Apprends le Test-Driven Development en écrivant des unit tests qui guident un bot IA.',
+            es: '![Logo de UnitTestGame](apple-touch-icon.png)Aprende el desarrollo guiado por tests escribiendo unit tests que guían a un bot de IA.',
+            it: '![Logo di UnitTestGame](apple-touch-icon.png)Impara il Test-Driven Development scrivendo unit tests che guidano un bot IA.',
         })
     }
 
