@@ -51,7 +51,7 @@ export abstract class Html extends Content {
             /`(?<code>.+?)`/,
             /!\[(?<alt>.+?)\]\((?<src>.+?)\)/,
             /\[(?<text>.+?)\]\((?<href>.+?)\)/,
-            /(?<plain>[^*`[]+)/,
+            /(?<plain>[^*`![]+|!)/,
         ]
         const pattern = new RegExp(patterns.map(regexp => regexp.source).join('|'), 'g')
 
@@ -61,10 +61,10 @@ export abstract class Html extends Content {
                 this.appendChild(new Italic().appendMarkdown(Locale.bless(italic)))
             else if (code)
                 this.appendChild(new Code().appendMarkdown(Locale.bless(code)))
-            else if (text && href)
-                this.appendChild(new Anchor(href).appendMarkdown(Locale.bless(text)))
             else if (alt && src)
                 this.appendChild(new Img(src, alt))
+            else if (text && href)
+                this.appendChild(new Anchor(href).appendMarkdown(Locale.bless(text)))
             else if (plain)
                 this.appendText(Locale.bless(plain))
         }
