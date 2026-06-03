@@ -202,7 +202,8 @@ input {
     }
 
     &[type="radio"] {
-        margin: 0 0.5rem 0 0.75rem;
+        margin: 0 0.5rem 0.1rem 0.75rem;
+        vertical-align: text-bottom;
     }
 
     &[type="submit"] {
@@ -249,7 +250,7 @@ p {
 }
 
 
-a, button, input, label:has(input[type="radio"]) {
+a, button, input:not([type="radio"]), label:has(input[type="radio"]) {
     &:focus-within, &:focus, &:hover, &:has(:focus) {
         box-shadow: 0 0 0.3rem 0.3rem var(--focus-shadow);
         opacity: 1;
