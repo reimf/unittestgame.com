@@ -51,7 +51,7 @@ export abstract class Html extends Content {
             /`(?<code>.+?)`/,
             /!\[(?<alt>.+?)\]\((?<src>.+?)\)/,
             /\[(?<text>.+?)\]\((?<href>.+?)\)/,
-            /(?<plain>[^*`![]+|!)/,
+            /(?<plain>[^*`![]+|[*`![])/
         ]
         const pattern = new RegExp(patterns.map(regexp => regexp.source).join('|'), 'g')
 
