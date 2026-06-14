@@ -4,7 +4,7 @@
   stroke="#FF0000"
   stroke-linecap="round"
   stroke-linejoin="round"
-  fill="transparent">
+  fill="none">
     <path d="
     M 15 10 l 1 1 v 4 l -1 1 h -8 l -1 -1 v -4 l 1 -1 z
     M 6 11 h -2 l -1 1 v 2 l 1 1 h 2
