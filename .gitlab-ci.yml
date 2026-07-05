@@ -9,7 +9,7 @@ stages:
 typescript:
   stage: compile
   script:
-    - npm ci
+    - npm clean-install
     - npx tsc --build --force --verbose
   artifacts:
     paths:
@@ -26,7 +26,7 @@ playwright:
   variables:
     NO_COLOR: "1"
   script:
-    - npm ci
+    - npm clean-install
     - npx playwright test --quiet
   coverage: '/Branches\s*:\s*[\d.]+\%/'
   artifacts:
