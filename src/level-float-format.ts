@@ -84,7 +84,7 @@ export class FloatFormat extends Level {
 
     protected* hintGenerator(): Generator<any[]> {
         for (let i = 0; i < 10; i++) {
-            const integerPart = this.picker.integerUnder(1000).toString()
+            const integerPart = this.picker.integerUnder(100).toString()
             const precision = this.picker.integerUnder(4)
             const fractionalPart = this.picker.integerUnder(10 ** precision).toString().padStart(precision, '0')
             const sign = this.picker.elementFrom(['-', '+', ''])

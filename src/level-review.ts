@@ -68,7 +68,7 @@ export class Review extends Level {
     }
 
     protected* hintGenerator(): Generator<any[]> {
-        for (let price = 10; price <= 30; price += 2)
+        for (let price = 10; price <= 30; price += 3)
             for (let quality = 4; quality <= 10; quality += 1)
                 yield [price, quality]
     }
