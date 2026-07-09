@@ -59,7 +59,7 @@ export class FizzBuzz extends Level {
     }
 
     protected* hintGenerator(): Generator<any[]> {
-        for (let num = 0; num < 100; num += 1)
+        for (let num = 0; num < 50; num += 1)
             yield [num]
     }
 }

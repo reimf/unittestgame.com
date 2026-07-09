@@ -118,7 +118,7 @@ export class PasswordStrength extends Level {
         const lowercase = [...this.generateLowercase()]
         const specialChars = [...this.generateSpecialCharacters()]
 
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 10; i++) {
             const ds = this.picker.elementFrom(digits)
             const us = this.picker.elementFrom(uppercase)
             const ls = this.picker.elementFrom(lowercase)
