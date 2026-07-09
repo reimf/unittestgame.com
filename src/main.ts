@@ -5,14 +5,15 @@ import { Anchor, Details, Div, Span, Summary, UnorderedList } from './html.js'
 import { Level } from './level-base.js'
 import { Language, Locale } from './locale.js'
 import { Picker } from './picker.js'
+import { ProgrammingLanguage } from './programming-language.js'
 
 export class Main {
     private readonly locale: Locale
     private readonly levels: ReturnType<Game['levels']>
 
-    constructor(locale: Locale, picker: Picker, store: Store) {
+    constructor(locale: Locale, programmingLanguage: ProgrammingLanguage, picker: Picker, store: Store) {
         this.locale = locale
-        const game = new Game(locale, picker, store)
+        const game = new Game(locale, programmingLanguage, picker, store)
         this.levels = game.levels()
     }
 

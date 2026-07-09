@@ -1,5 +1,5 @@
 import { Div } from './html.js'
-import { Highlighter } from './highlighter.js'
+import { ProgrammingLanguage } from './programming-language.js'
 import { Variable } from './variable.js'
 
 export class UnitTest {
@@ -15,13 +15,16 @@ export class UnitTest {
         this.expected = expected
     }
 
-    public toHtmlWithResult(result: any): Div {
+    public toTextWithResult(result: any): string {
         const argumentsText = this.argumentList.map((value, index) => this.parameters[index]!.format(value)).join(', ')
-        const text = `${this.unit.name}(${argumentsText}) === ${this.unit.format(result)}`
-        return new Highlighter(text).highlight()
+        return `${this.unit.name}(${argumentsText}) === ${this.unit.format(result)}`
     }
 
-    public toHtml(): Div {
-        return this.toHtmlWithResult(this.expected)
+    public toHtmlWithResult(result: any, programmingLanguage: ProgrammingLanguage): Div {
+        return programmingLanguage.highlight(this.toTextWithResult(result))[0]!
+    }
+
+    public toHtml(programmingLanguage: ProgrammingLanguage): Div {
+        return this.toHtmlWithResult(this.expected, programmingLanguage)
     }
 }

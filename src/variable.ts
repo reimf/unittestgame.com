@@ -40,8 +40,8 @@ export class RadioVariable extends Variable {
         return paragraph
     }
 
-    public format(value: string): string {
-        return `"${value}"`
+    public format(value: string|undefined): string {
+        return value === undefined ? `${value}` : `"${value}"`
     }
 }
 
@@ -92,8 +92,8 @@ export class TextVariable extends Variable {
         return new Paragraph().appendChild(label)
     }
 
-    public format(value: string): string {
-        return `"${value}"`
+    public format(value: string|undefined): string {
+        return value === undefined ? `${value}` : `"${value}"`
     }
 }
 

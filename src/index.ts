@@ -1,5 +1,6 @@
 import { LocalStore, MapStore } from './store.js'
 import { FixedPicker, RandomPicker } from './picker.js'
+import { JavaScript, Python } from './programming-language.js'
 import { Injector } from './injector.js'
 import { Main } from './main.js'
 import { Locale } from './locale.js'
@@ -33,6 +34,7 @@ document.addEventListener('keydown', event => {
 document.addEventListener('DOMContentLoaded', () => {
     const injector = new Injector(new URL(window.location.href).searchParams)
     const locale = new Locale(injector.getOption('language', Locale.languages))
+    const programmingLanguage = injector.getOption('programmingLanguage', ['javascript', 'python']) === 'python' ? new Python() : new JavaScript()
     const picker = injector.getOption('picker', ['random', 'fixed']) === 'fixed' ? new FixedPicker() : new RandomPicker()
     const store = injector.getOption('store', ['local', 'map']) === 'map' ? new MapStore() : new LocalStore()
     if (injector.getOption('speed', ['normal', 'fast']) === 'fast') {
@@ -46,5 +48,5 @@ document.addEventListener('DOMContentLoaded', () => {
         store.set(key, Number(value))
     }
     injector.checkEmpty()
-    new Main(locale, picker, store).start()
+    new Main(locale, programmingLanguage, picker, store).start()
 })

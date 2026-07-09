@@ -3,16 +3,19 @@ import { JSDOM } from 'jsdom'
 import { UnitTest } from '../../src/unit-test.js'
 import { IntegerVariable } from '../../src/variable.js'
 import { Locale } from '../../src/locale.js'
+import { JavaScript } from '../../src/programming-language.js'
 
 const { document } = new JSDOM('<!DOCTYPE html>').window
 global.document = document
 
 test.describe('class UnitTest', () => {
+    const programmingLanguage = new JavaScript()
+
     test('converts to a string', () => {
         const parameters = [new IntegerVariable(Locale.bless('A'), 'a'), new IntegerVariable(Locale.bless('B'), 'b')]
         const unit = new IntegerVariable(Locale.bless('Divide'), 'divide')
         const unitTest = new UnitTest(parameters, [6, 3], unit, 2)
-        const html = unitTest.toHtml()
+        const html = unitTest.toHtml(programmingLanguage)
         expect(html.getElement().outerHTML).toBe(
             '<div>' +
                 '<span class="function">divide</span>' +
@@ -34,7 +37,7 @@ test.describe('class UnitTest', () => {
         const parameters = [new IntegerVariable(Locale.bless('A'), 'a'), new IntegerVariable(Locale.bless('B'), 'b')]
         const unit = new IntegerVariable(Locale.bless('Divide'), 'divide')
         const unitTest = new UnitTest(parameters, [6, 3], unit, 2)
-        const htmlWithResult = unitTest.toHtmlWithResult(5)
+        const htmlWithResult = unitTest.toHtmlWithResult(5, programmingLanguage)
         expect(htmlWithResult.getElement().outerHTML).toBe(
             '<div>' +
                 '<span class="function">divide</span>' +

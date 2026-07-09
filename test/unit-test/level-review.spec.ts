@@ -3,10 +3,16 @@ import { Locale } from '../../src/locale.js'
 import { FixedPicker } from '../../src/picker.js'
 import { MapStore } from '../../src/store.js'
 import { Review } from '../../src/level-review.js'
+import { JavaScript } from '../../src/programming-language.js'
 
 test.describe('class Review', () => {
     const locale = new Locale('en')
-    const level = new Review(locale, 1, new MapStore(), new FixedPicker())
+    const programmingLanguage = new JavaScript()
+    const level = new Review(locale, programmingLanguage, new FixedPicker(), new MapStore(), 1)
+
+    test('has the correct description', () => {
+        expect(level.description()).toBe('Level 1 - Review')
+    })
 
     test('has the correct amount of parameters', () => {
         expect(level.parameters).toHaveLength(2)

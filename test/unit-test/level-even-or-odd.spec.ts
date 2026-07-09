@@ -3,10 +3,16 @@ import { Locale } from '../../src/locale.js'
 import { FixedPicker } from '../../src/picker.js'
 import { MapStore } from '../../src/store.js'
 import { EvenOrOdd } from '../../src/level-even-or-odd.js'
+import { JavaScript } from '../../src/programming-language.js'
 
 test.describe('class EvenOrOdd', () => {
     const locale = new Locale('en')
-    const level = new EvenOrOdd(locale, 2, new MapStore(), new FixedPicker())
+    const programmingLanguage = new JavaScript()
+    const level = new EvenOrOdd(locale, programmingLanguage, new FixedPicker(), new MapStore(), 2)
+
+    test('has the correct description', () => {
+        expect(level.description()).toBe('Level 2 - Even or Odd')
+    })
 
     test('has the correct amount of parameters', () => {
         expect(level.parameters).toHaveLength(1)

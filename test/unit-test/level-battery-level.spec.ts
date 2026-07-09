@@ -3,10 +3,16 @@ import { Locale } from '../../src/locale.js'
 import { FixedPicker } from '../../src/picker.js'
 import { MapStore } from '../../src/store.js'
 import { BatteryLevel } from '../../src/level-battery-level.js'
+import { JavaScript } from '../../src/programming-language.js'
 
 test.describe('class BatteryLevel', () => {
     const locale = new Locale('en')
-    const level = new BatteryLevel(locale, 1, new MapStore(), new FixedPicker())
+    const programmingLanguage = new JavaScript()
+    const level = new BatteryLevel(locale, programmingLanguage, new FixedPicker(), new MapStore(), 1)
+
+    test('has the correct description', () => {
+        expect(level.description()).toBe('Level 1 - Battery Level')
+    })
 
     test('has the correct amount of parameters', () => {
         expect(level.parameters).toHaveLength(1)

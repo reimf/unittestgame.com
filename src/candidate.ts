@@ -1,6 +1,6 @@
 import { CodeBlock } from './html.js'
 import { TestResult } from './test-result.js'
-import { Highlighter } from './highlighter.js'
+import { ProgrammingLanguage } from './programming-language.js'
 import { UnitTest } from './unit-test.js'
 
 export class Candidate {
@@ -69,15 +69,13 @@ export class Candidate {
         return Math.sign(this.complexity - candidate.complexity)
     }
 
-    public toHtml(): CodeBlock {
-        const divs = this.nonEmptyLines.map(line => new Highlighter(line).highlight())
+    public toHtml(programmingLanguage: ProgrammingLanguage): CodeBlock {
+        const divs = programmingLanguage.highlight(this.nonEmptyLines.join('\n'))
         return new CodeBlock().appendChildren(divs)
     }
 
-    public toHtmlWithPrevious(previousCandidate: Candidate): CodeBlock {
-        const pairs = this.lines.map((line, index) => [line, previousCandidate.lines[index]!]) as [string, string][]
-        const nonEmptyPairs = pairs.filter(([currentLine, previousLine]) => currentLine || previousLine)
-        const divs = nonEmptyPairs.map(([currentLine, previousLine]) => new Highlighter(currentLine, previousLine).highlight())
+    public toHtmlWithPrevious(previousCandidate: Candidate, programmingLanguage: ProgrammingLanguage): CodeBlock {
+        const divs = programmingLanguage.highlight(this.lines.join('\n'), previousCandidate.lines.join('\n'))
         return new CodeBlock().appendChildren(divs)
     }
 }

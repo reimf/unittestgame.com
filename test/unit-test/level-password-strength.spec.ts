@@ -3,10 +3,16 @@ import { Locale } from '../../src/locale.js'
 import { FixedPicker } from '../../src/picker.js'
 import { MapStore } from '../../src/store.js'
 import { PasswordStrength } from '../../src/level-password-strength.js'
+import { JavaScript } from '../../src/programming-language.js'
 
 test.describe('class PasswordStrength', () => {
     const locale = new Locale('en')
-    const level = new PasswordStrength(locale, 10, new MapStore(), new FixedPicker())
+    const programmingLanguage = new JavaScript()
+    const level = new PasswordStrength(locale, programmingLanguage, new FixedPicker(), new MapStore(), 10)
+
+    test('has the correct description', () => {
+        expect(level.description()).toBe('Level 10 - Password Strength')
+    })
 
     test('has the correct amount of parameters', () => {
         expect(level.parameters).toHaveLength(1)

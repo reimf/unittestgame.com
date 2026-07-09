@@ -6,11 +6,11 @@ test.describe('class Level', () => {
     const level = fixtureLevelStates.level
 
     test.describe('method findSimplestPassingCandidate', () => {
-        fixtureLevelStates.states.forEach(({ unitTests, simplestPassingCandidatesTestDrivenDevelopment }) => {
+        fixtureLevelStates.states.forEach(({ unitTests, simplestPassingCandidates }) => {
             test(`finds the simplest passing candidate for unit tests ${unitTests.map(unitTest => unitTest.argumentList)}`, () => {
                 const candidate = level.findSimplestPassingCandidate(level.candidates, level.perfectCandidates, unitTests)
                 const code = candidate.nonEmptyLines.join('\n')
-                expect(simplestPassingCandidatesTestDrivenDevelopment).toContain(code)
+                expect(simplestPassingCandidates).toContain(code)
             })
         })
     })

@@ -3,18 +3,20 @@ import { UnitTest } from '../../src/unit-test.js'
 import { LeapYear } from '../../src/level-leap-year.js'
 import { FixedPicker } from '../../src/picker.js'
 import { MapStore } from '../../src/store.js'
+import { JavaScript } from '../../src/programming-language.js'
 import fixtureData from './fixture-level-states.json' with { type: 'json' }
 
 type FixtureLevelState = {
     years: number[],
     unitTests: UnitTest[],
-    simplestPassingCandidatesTestDrivenDevelopment: string[],
+    simplestPassingCandidates: string[],
     numberOfUnitTestsStillNeeded: number,
 }
 
 export class FixtureLevelStates {
     private readonly locale = new Locale('en')
-    public readonly level = new LeapYear(this.locale, 1, new MapStore(), new FixedPicker())
+    private readonly programmingLanguage = new JavaScript()
+    public readonly level = new LeapYear(this.locale, this.programmingLanguage, new FixedPicker(), new MapStore(), 1)
     public readonly states: FixtureLevelState[]
 
     public constructor() {

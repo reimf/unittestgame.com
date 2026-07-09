@@ -3,10 +3,16 @@ import { Locale } from '../../src/locale.js'
 import { FixedPicker } from '../../src/picker.js'
 import { MapStore } from '../../src/store.js'
 import { TriangleType } from '../../src/level-triangle-type.js'
+import { JavaScript } from '../../src/programming-language.js'
 
 test.describe('class TriangleType', () => {
     const locale = new Locale('en')
-    const level = new TriangleType(locale, 6, new MapStore(), new FixedPicker())
+    const programmingLanguage = new JavaScript()
+    const level = new TriangleType(locale, programmingLanguage, new FixedPicker(), new MapStore(), 6)
+
+    test('has the correct description', () => {
+        expect(level.description()).toBe('Level 6 - Triangle Type')
+    })
 
     test('has the correct amount of parameters', () => {
         expect(level.parameters).toHaveLength(3)

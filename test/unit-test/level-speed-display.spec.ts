@@ -3,10 +3,16 @@ import { Locale } from '../../src/locale.js'
 import { FixedPicker } from '../../src/picker.js'
 import { MapStore } from '../../src/store.js'
 import { SpeedDisplay } from '../../src/level-speed-display.js'
+import { JavaScript } from '../../src/programming-language.js'
 
 test.describe('class SpeedDisplay', () => {
     const locale = new Locale('en')
-    const level = new SpeedDisplay(locale, 7, new MapStore(), new FixedPicker())
+    const programmingLanguage = new JavaScript()
+    const level = new SpeedDisplay(locale, programmingLanguage, new FixedPicker(), new MapStore(), 7)
+
+    test('has the correct description', () => {
+        expect(level.description()).toBe('Level 7 - Speed Display')
+    })
 
     test('has the correct amount of parameters', () => {
         expect(level.parameters).toHaveLength(1)

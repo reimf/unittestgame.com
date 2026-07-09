@@ -5,6 +5,7 @@ import { Candidate } from '../../src/candidate.js'
 import { UnitTest } from '../../src/unit-test.js'
 import { IntegerVariable, BooleanVariable } from '../../src/variable.js'
 import { Locale } from '../../src/locale.js'
+import { JavaScript } from '../../src/programming-language.js'
 
 const { document } = new JSDOM('<!DOCTYPE html>').window
 global.document = document
@@ -34,7 +35,7 @@ test.describe('class TestResult', () => {
         const unit = new BooleanVariable(Locale.bless('Is next number'), 'isNextNumber')
         const unitTest = new UnitTest(parameters, [6, 7], unit, true)
         const testResult = new TestResult(candidate, unitTest)
-        const html = testResult.toHtml()
+        const html = testResult.toHtml(new JavaScript())
         expect(html.getElement().outerHTML).toBe(
             '<div>' +
                 '<span class="function">isNextNumber</span>' +

@@ -3,10 +3,16 @@ import { Locale } from '../../src/locale.js'
 import { FixedPicker } from '../../src/picker.js'
 import { MapStore } from '../../src/store.js'
 import { VotingAge } from '../../src/level-voting-age.js'
+import { JavaScript } from '../../src/programming-language.js'
 
 test.describe('class VotingAge', () => {
     const locale = new Locale('en')
-    const level = new VotingAge(locale, 3, new MapStore(), new FixedPicker())
+    const programmingLanguage = new JavaScript()
+    const level = new VotingAge(locale, programmingLanguage, new FixedPicker(), new MapStore(), 3)
+
+    test('has the correct description', () => {
+        expect(level.description()).toBe('Level 3 - Voting Age')
+    })
 
     test('has the correct amount of parameters', () => {
         expect(level.parameters).toHaveLength(1)

@@ -12,14 +12,17 @@ import { TriangleType } from './level-triangle-type.js'
 import { VotingAge } from './level-voting-age.js'
 import { Locale } from './locale.js'
 import { Picker } from './picker.js'
+import { ProgrammingLanguage } from './programming-language.js'
 
 export class Game {
     private readonly locale: Locale
+    private readonly programmingLanguage: ProgrammingLanguage
     private readonly picker: Picker
     private readonly store: Store
 
-    public constructor(locale: Locale, picker: Picker, store: Store) {
+    public constructor(locale: Locale, programmingLanguage: ProgrammingLanguage, picker: Picker, store: Store) {
         this.locale = locale
+        this.programmingLanguage = programmingLanguage
         this.picker = picker
         this.store = store
     }
@@ -37,6 +40,6 @@ export class Game {
             FloatFormat,
             PasswordStrength,
         ]
-        return levelClasses.map((levelClass, index) => new levelClass(this.locale, index + 1, this.store, this.picker))
+        return levelClasses.map((levelClass, index) => new levelClass(this.locale, this.programmingLanguage, this.picker, this.store, index + 1))
     }
 }

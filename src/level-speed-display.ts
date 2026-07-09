@@ -66,9 +66,9 @@ export class SpeedDisplay extends Level {
     }
 
     protected* hintGenerator(): Generator<any[]> {
-        for (let speed = 0; speed <= 1; speed += 0.1)
+        for (let speed = 0; speed < 1; speed += 0.2)
             yield [speed]
-        for (let speed = 0; speed <= 27; speed += 0.3)
+        for (let speed = 1; speed <= 27; speed += 1.3)
             yield [speed]
         for (let speed = 30; speed <= 220; speed += 10)
             yield [speed]

@@ -5,6 +5,7 @@ import { BatteryLevel } from '../../src/level-battery-level.js'
 import { MapStore } from '../../src/store.js'
 import { RandomPicker } from '../../src/picker.js'
 import { Locale } from '../../src/locale.js'
+import { JavaScript } from '../../src/programming-language'
 
 test.describe('whole game', () => {
     test.beforeEach(async ({ page }) => {
@@ -15,9 +16,10 @@ test.describe('whole game', () => {
         test.slow()
 
         const locale = new Locale('en')
+        const programmingLanguage = new JavaScript()
         const picker = new RandomPicker()
         const store = new MapStore()
-        const game = new Game(locale, picker, store)
+        const game = new Game(locale, programmingLanguage, picker, store)
         const levels = game.levels()
 
         for (const level of levels) {

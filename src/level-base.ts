@@ -7,9 +7,11 @@ import { Picker } from './picker.js'
 import { TestResult } from './test-result.js'
 import { UnitTest } from './unit-test.js'
 import { Variable } from './variable.js'
+import { ProgrammingLanguage } from './programming-language.js'
 
 export abstract class Level {
     protected readonly locale: Locale
+    protected readonly programmingLanguage: ProgrammingLanguage
     public readonly levelNumber: number
     protected readonly picker: Picker
 
@@ -32,11 +34,12 @@ export abstract class Level {
     private lastUnitTest: UnitTest|undefined = undefined
     private numberOfSubmissions: number = 0
 
-    public constructor(locale: Locale, levelNumber: number, store: Store, picker: Picker) {
-        this.picker = picker
+    public constructor(locale: Locale, programmingLanguage: ProgrammingLanguage, picker: Picker, store: Store, levelNumber: number) {
         this.locale = locale
-        this.levelNumber = levelNumber
+        this.programmingLanguage = programmingLanguage
+        this.picker = picker
         this.store = store
+        this.levelNumber = levelNumber
         this.parameters = this.getParameters()
         this.unit = this.getUnit()
         this.candidates = [...this.generateCandidates(this.getCandidateElements(), [])]
@@ -142,7 +145,6 @@ export abstract class Level {
     public findNumberOfUnitTestsStillNeeded(unitTests: readonly UnitTest[], subsetsOfMinimalUnitTests: readonly UnitTest[][], candidates: readonly Candidate[], numberOfPerfectCandidates: number): number {
         const realSubsetsOfMinimalUnitTests = subsetsOfMinimalUnitTests.slice(0, -1)
         for (const subsetOfMinimalUnitTests of realSubsetsOfMinimalUnitTests) {
-            console.log(subsetOfMinimalUnitTests.length)
             const extendedUnitTests = [...unitTests, ...subsetOfMinimalUnitTests]
             const passingCandidates = candidates.filter(candidate => candidate.passes(extendedUnitTests))
             if (passingCandidates.length === numberOfPerfectCandidates)
@@ -202,7 +204,7 @@ export abstract class Level {
         const argumentList = this.parameters.map(parameter => parameter.getInput(formData.get(parameter.name)! as string))
         const expected = this.unit.getInput(formData.get(this.unit.name)! as string)
         const unitTest = new UnitTest(this.parameters, argumentList, this.unit, expected)
-        ComputerMessage.addToLast([new CodeBlock().appendChild(unitTest.toHtml().addClass('new'))])
+        ComputerMessage.addToLast([new CodeBlock().appendChild(unitTest.toHtml(this.programmingLanguage).addClass('new'))])
         if (!this.isFormDataOk(formData))
             return
         if (!new TestResult(this.perfectCandidate, unitTest).passes)
@@ -292,7 +294,7 @@ export abstract class Level {
 
     private showInvalidUnitTestMessage(): void {
         const numberOfUnitTestsStillNeeded = this.findNumberOfUnitTestsStillNeeded(this.humanUnitTests, this.subsetsOfMinimalUnitTests, this.candidates, this.perfectCandidates.length)
-        new ComputerMessage([this.locale.invalidUnitTest(), new CodeBlock().appendChild(this.failingTestResult!.toHtml().addClass('new'))]).show()
+        new ComputerMessage([this.locale.invalidUnitTest(), new CodeBlock().appendChild(this.failingTestResult!.toHtml(this.programmingLanguage).addClass('new'))]).show()
         new ComputerMessage([this.locale.moreUnitTests(numberOfUnitTestsStillNeeded)]).show()
     }
 
@@ -308,7 +310,7 @@ export abstract class Level {
         const numberOfUnneccessaryUnitTests = this.humanUnitTests.length - this.minimalUnitTests.length
         if (numberOfUnneccessaryUnitTests > 0) {
             const redundantUnitTests = this.findRedundantUnitTests()
-            const codeBlocks = redundantUnitTests.map(unitTest => new CodeBlock().appendChild(unitTest.toHtml()))
+            const codeBlocks = redundantUnitTests.map(unitTest => new CodeBlock().appendChild(unitTest.toHtml(this.programmingLanguage)))
             new ComputerMessage([this.locale.tooManyUnitTests(numberOfUnneccessaryUnitTests, redundantUnitTests.length), new OrderedList(codeBlocks)]).show()
         }
     }
@@ -318,13 +320,13 @@ export abstract class Level {
     }
 
     private showCurrentFunctionPanel(): void {
-        new Panel('current-function', this.locale.currentFunctionTitle(), [this.currentCandidate.toHtml()]).show()
+        new Panel('current-function', this.locale.currentFunctionTitle(), [this.currentCandidate.toHtml(this.programmingLanguage)]).show()
     }
 
     private showDifferencePanel(): void {
         if (!this.previousCandidate)
             return
-        const difference = this.currentCandidate.toHtmlWithPrevious(this.previousCandidate)
+        const difference = this.currentCandidate.toHtmlWithPrevious(this.previousCandidate, this.programmingLanguage)
         new Panel('difference-current-function', this.locale.differenceTitle(), [difference]).show()
     }
 
@@ -333,7 +335,7 @@ export abstract class Level {
             return
         const codeBlocks = this.humanUnitTests.map(unitTest => {
             const className = unitTest === this.lastUnitTest ? 'new' : 'old'
-            return new CodeBlock().appendChild(unitTest.toHtml().addClass(className))
+            return new CodeBlock().appendChild(unitTest.toHtml(this.programmingLanguage).addClass(className))
         })
         const orderedList = new OrderedList(codeBlocks)
         new Panel('unit-tests', this.locale.unitTestsTitle(), [orderedList]).show()

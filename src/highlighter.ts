@@ -1,11 +1,14 @@
-import { Div, Span, Del, Ins } from './html.js'
+import { Del, Div, Ins, Span } from './html.js'
 import { Locale } from './locale.js'
 
-class Token {
-    public readonly type: string
+type TokenType = 'whitespace' | 'number' | 'keyword' | 'literal' | 'class' | 'function' | 'variable' | 'regexp' | 'string' | 'operator' | 'punctuation' | 'dot' | 'error'
+export type TokenTypes = ReadonlyMap<TokenType, RegExp>
+
+export class Token {
+    public readonly type: TokenType
     public readonly text: string
 
-    public constructor(type: string, text: string) {
+    public constructor(type: TokenType, text: string) {
         this.type = type
         this.text = text
     }
@@ -15,34 +18,23 @@ class Token {
     }
 }
 
-class Tokenizer {
-    private readonly text: string
-    private readonly tokenTypes: ReadonlyMap<string, RegExp> = new Map([
-        ['whitespace', /^ +/],
-        ['number', /^\d+(\.\d+)?/],
-        ['keyword', /^(function|if|else|return|let|new)\b/],
-        ['literal', /^(true|false|undefined)\b/],
-        ['class', /^[A-Z][a-zA-Z]*/],
-        ['function', /^[a-zA-Z]+(?=\()/],
-        ['variable', /^[a-zA-Z]+/],
-        ['regexp', /^\/\S.*?\//],
-        ['string', /^".*?"/],
-        ['operator', /^(!=*|=+|%=?|\+=?|-=?|\*=?|\/=?|<=?|>=?|&+|\|+)/],
-        ['punctuation', /^[(){},]/],
-        ['dot', /^\./],
-        ['error', /^.+/],
-    ])
+export class Tokenizer {
+    private readonly tokenTypes: TokenTypes
 
-    public constructor(text: string) {
-        this.text = text
+    public constructor(tokenTypes: TokenTypes) {
+        this.tokenTypes = tokenTypes
     }
 
-    public* tokens(index: number = 0): Generator<Token> {
+    public tokens(code: string): Token[] {
+        return Array.from(this.tokenGenerator(code))
+    }
+
+    private* tokenGenerator(code: string): Generator<Token> {
         for (const [name, regexp] of this.tokenTypes) {
-            const match = this.text.slice(index).match(regexp)
+            const match = code.match(regexp)
             if (match) {
                 yield new Token(name, match[0])
-                yield* this.tokens(index + match[0].length)
+                yield* this.tokenGenerator(code.slice(match[0].length))
                 return
             }
         }
@@ -50,44 +42,29 @@ class Tokenizer {
 }
 
 export class Highlighter {
-    private readonly currentLine: string
-    private readonly previousLine: string|undefined
-
-    public constructor(currentLine: string, previousLine?: string) {
-        this.currentLine = currentLine
-        this.previousLine = previousLine
-    }
-
-    public highlight(): Div {
-        if (this.previousLine === undefined)
-            return this.highlightLine(this.currentLine)
-        return this.highlightDiff(this.currentLine, this.previousLine)
-    }
-
-    private highlightLine(currentLine: string): Div {
-        const tokens = Array.from(new Tokenizer(currentLine).tokens())
+    public highlightTokens(tokens: readonly Token[]): Div {
         const spans = tokens.map(token => new Span().addClass(token.type).appendText(Locale.bless(token.text)))
         return new Div().appendChildren(spans)
     }
 
-    private highlightDiff(currentLine: string, previousLine: string): Div {
-        const previousTokens = Array.from(new Tokenizer(previousLine).tokens())
-        const currentTokens = Array.from(new Tokenizer(currentLine).tokens())
-        const commonTokens = this.longestCommonSubsequence(currentTokens, previousTokens)
+    public highlightDiff(currentTokens: readonly Token[], previousTokens: readonly Token[]): Div {
+        const previousTokensToConsume = [...previousTokens]
+        const currentTokensToConsume = [...currentTokens]
+        const commonTokens = this.longestCommonSubsequence(currentTokensToConsume, previousTokensToConsume)
         const div = new Div()
-        while (previousTokens.length > 0 || currentTokens.length > 0) {
-            if (commonTokens.length > 0 && previousTokens.length > 0 && currentTokens.length > 0 && previousTokens[0]!.equals(commonTokens[0]!) && currentTokens[0]!.equals(commonTokens[0]!)) {
+        while (previousTokensToConsume.length > 0 || currentTokensToConsume.length > 0) {
+            if (commonTokens.length > 0 && previousTokensToConsume.length > 0 && currentTokensToConsume.length > 0 && previousTokensToConsume[0]!.equals(commonTokens[0]!) && currentTokensToConsume[0]!.equals(commonTokens[0]!)) {
                 const token = commonTokens.shift()!
                 div.appendChild(new Span().addClass(token.type).appendText(Locale.bless(token.text)))
-                previousTokens.shift()
-                currentTokens.shift()
+                previousTokensToConsume.shift()
+                currentTokensToConsume.shift()
             }
-            else if (previousTokens.length > 0 && !(commonTokens.length > 0 && previousTokens[0]!.equals(commonTokens[0]!))) {
-                const token = previousTokens.shift()!
+            else if (previousTokensToConsume.length > 0 && !(commonTokens.length > 0 && previousTokensToConsume[0]!.equals(commonTokens[0]!))) {
+                const token = previousTokensToConsume.shift()!
                 div.appendChild(new Del().addClass(token.type).appendText(Locale.bless(token.text)))
             }
-            else if (currentTokens.length > 0 && !(commonTokens.length > 0 && currentTokens[0]!.equals(commonTokens[0]!))) {
-                const token = currentTokens.shift()!
+            else if (currentTokensToConsume.length > 0 && !(commonTokens.length > 0 && currentTokensToConsume[0]!.equals(commonTokens[0]!))) {
+                const token = currentTokensToConsume.shift()!
                 div.appendChild(new Ins().addClass(token.type).appendText(Locale.bless(token.text)))
             }
         }

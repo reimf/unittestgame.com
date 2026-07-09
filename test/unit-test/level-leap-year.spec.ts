@@ -3,10 +3,16 @@ import { Locale } from '../../src/locale.js'
 import { FixedPicker } from '../../src/picker.js'
 import { MapStore } from '../../src/store.js'
 import { LeapYear } from '../../src/level-leap-year.js'
+import { JavaScript } from '../../src/programming-language.js'
 
 test.describe('class LeapYear', () => {
     const locale = new Locale('en')
-    const level = new LeapYear(locale, 9, new MapStore(), new FixedPicker())
+    const programmingLanguage = new JavaScript()
+    const level = new LeapYear(locale, programmingLanguage, new FixedPicker(), new MapStore(), 9)
+
+    test('has the correct description', () => {
+        expect(level.description()).toBe('Level 9 - Leap Year')
+    })
 
     test('has the correct amount of parameters', () => {
         expect(level.parameters).toHaveLength(1)

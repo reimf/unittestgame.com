@@ -3,10 +3,16 @@ import { Locale } from '../../src/locale.js'
 import { FixedPicker } from '../../src/picker.js'
 import { MapStore } from '../../src/store.js'
 import { FloatFormat } from '../../src/level-float-format.js'
+import { JavaScript } from '../../src/programming-language.js'
 
 test.describe('class FloatFormat', () => {
     const locale = new Locale('en')
-    const level = new FloatFormat(locale, 8, new MapStore(), new FixedPicker())
+    const programmingLanguage = new JavaScript()
+    const level = new FloatFormat(locale, programmingLanguage, new FixedPicker(), new MapStore(), 8)
+
+    test('has the correct description', () => {
+        expect(level.description()).toBe('Level 8 - Float Format')
+    })
 
     test('has the correct amount of parameters', () => {
         expect(level.parameters).toHaveLength(1)
