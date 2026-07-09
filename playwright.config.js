@@ -30,6 +30,7 @@ export default defineConfig({
                 reports: [
                     ['html'],
                     ['text-summary'],
+                    ['json-summary'],
                 ],
             }),
         ],
