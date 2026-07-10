@@ -2,7 +2,7 @@ import { Level } from './level-base.js'
 import { Locale, LocalizedText } from './locale.js'
 import { Variable, BooleanVariable, TextVariable } from './variable.js'
 
-export class PasswordStrength extends Level {
+export class PasswordStrength extends Level<[string], boolean> {
     protected identifier(): string {
         return 'password-strength'
     }
@@ -56,7 +56,7 @@ export class PasswordStrength extends Level {
         ]
     }
 
-    protected* minimalUnitTestGenerator(): Generator<any[]> {
+    protected* minimalUnitTestGenerator(): Generator<[[string], boolean]> {
         yield [['A3a6#'], true]
         yield [['@251Bz'], true]
         yield [['1#36D0'], false]
@@ -112,7 +112,7 @@ export class PasswordStrength extends Level {
         }
     }
 
-    protected* hintGenerator(): Generator<string[]> {
+    protected* hintGenerator(): Generator<[string]> {
         const digits = [...this.generateDigits()]
         const uppercase = [...this.generateUppercase()]
         const lowercase = [...this.generateLowercase()]

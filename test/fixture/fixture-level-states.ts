@@ -8,7 +8,7 @@ import fixtureData from './fixture-level-states.json' with { type: 'json' }
 
 type FixtureLevelState = {
     years: number[],
-    unitTests: UnitTest[],
+    unitTests: UnitTest<[number], boolean>[],
     simplestPassingCandidates: string[],
     numberOfUnitTestsStillNeeded: number,
 }
@@ -26,8 +26,8 @@ export class FixtureLevelStates {
     private enrich(states: FixtureLevelState[]): FixtureLevelState[] {
         const perfectCandidate = this.level.perfectCandidates[0]!
         const years = states.flatMap(state => state.years)
-        const yearUnitTestPairs: [number, UnitTest][] = [...new Set(years)].map(year =>
-            [year, new UnitTest(this.level.parameters, [year], this.level.unit, perfectCandidate.execute([year]))]
+        const yearUnitTestPairs: [number, UnitTest<[number], boolean>][] = [...new Set(years)].map(year =>
+            [year, new UnitTest<[number], boolean>(this.level.parameters, [year], this.level.unit, perfectCandidate.execute([year])!)]
         )
         const unitTestMap = new Map(yearUnitTestPairs)
         for (const state of states)

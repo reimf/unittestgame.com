@@ -2,7 +2,7 @@ import { Level } from './level-base.js'
 import { Locale, LocalizedText } from './locale.js'
 import { Variable, TextVariable, FloatVariable } from './variable.js'
 
-export class SpeedDisplay extends Level {
+export class SpeedDisplay extends Level<[number], string> {
     protected identifier(): string {
         return 'speed-display'
     }
@@ -56,7 +56,7 @@ export class SpeedDisplay extends Level {
         ]
     }
 
-    protected* minimalUnitTestGenerator(): Generator<any[]> {
+    protected* minimalUnitTestGenerator(): Generator<[[number], string]> {
         yield [[0.0], 'START']
         yield [[0.1], '0.1']
         yield [[19.9], '19.9']
@@ -65,7 +65,7 @@ export class SpeedDisplay extends Level {
         yield [[199.5], 'DANGER']
     }
 
-    protected* hintGenerator(): Generator<any[]> {
+    protected* hintGenerator(): Generator<[number]> {
         for (let speed = 0; speed < 1; speed += 0.3)
             yield [speed]
         for (let speed = 1; speed <= 27; speed += 4.35)

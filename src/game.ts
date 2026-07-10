@@ -1,4 +1,4 @@
-import { Level } from './level-base.js'
+import { AnyLevel } from './level-base.js'
 import { Store } from './store.js'
 import { BatteryLevel } from './level-battery-level.js'
 import { EvenOrOdd } from './level-even-or-odd.js'
@@ -27,7 +27,7 @@ export class Game {
         this.store = store
     }
 
-    public levels(): Level[] {
+    public levels(): AnyLevel[] {
         const levelClasses = [
             BatteryLevel,
             VotingAge,

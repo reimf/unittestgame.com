@@ -2,7 +2,7 @@ import { Level } from './level-base.js'
 import { Locale, LocalizedText } from './locale.js'
 import { Variable, BooleanVariable, IntegerVariable } from './variable.js'
 
-export class EvenOrOdd extends Level {
+export class EvenOrOdd extends Level<[number], boolean> {
     protected identifier(): string {
         return 'even-or-odd'
     }
@@ -42,12 +42,12 @@ export class EvenOrOdd extends Level {
         ]
     }
 
-    protected* minimalUnitTestGenerator(): Generator<any[]> {
+    protected* minimalUnitTestGenerator(): Generator<[[number], boolean]> {
         yield [[25], false]
         yield [[26], true]
     }
 
-    protected* hintGenerator(): Generator<any[]> {
+    protected* hintGenerator(): Generator<[number]> {
         for (let num = 0; num <= 40; num += 1)
             yield [num]
     }

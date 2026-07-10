@@ -2,7 +2,7 @@ import { Level } from './level-base.js'
 import { Locale, LocalizedText } from './locale.js'
 import { Variable, BooleanVariable, IntegerVariable } from './variable.js'
 
-export class LeapYear extends Level {
+export class LeapYear extends Level<[number], boolean> {
     protected identifier(): string {
         return 'leap-year'
     }
@@ -49,14 +49,14 @@ export class LeapYear extends Level {
         ]
     }
 
-    protected* minimalUnitTestGenerator(): Generator<any[]> {
+    protected* minimalUnitTestGenerator(): Generator<[[number], boolean]> {
         yield [[2002], false]
         yield [[2004], true]
         yield [[1800], false]
         yield [[1600], true]
     }
 
-    protected* hintGenerator(): Generator<any[]> {
+    protected* hintGenerator(): Generator<[number]> {
         for (let year = 2001; year <= 2030; year += 1)
             yield [year]
         for (let year = 1000; year <= 3000; year += 100)

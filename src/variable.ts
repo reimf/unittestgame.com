@@ -1,6 +1,8 @@
 import { Html, Input, Label, Paragraph, Span } from './html.js'
 import { Locale, LocalizedText } from './locale.js'
 
+export type Value = boolean|number|string
+
 export abstract class Variable {
     public readonly label: LocalizedText
     public readonly name: string
@@ -10,9 +12,9 @@ export abstract class Variable {
         this.name = name
     }
 
-    public abstract getInput(value: string): boolean|number|string
+    public abstract getInput(value: string): Value
     public abstract toHtml(): Html
-    public abstract format(value: boolean|number|string|undefined): string
+    public abstract format(value: Value|undefined): string
 }
 
 export class RadioVariable extends Variable {

@@ -2,7 +2,7 @@ import { Game } from './game.js'
 import { Store } from './store.js'
 import { Panel, Message, ComputerMessage, QuestionMessage } from './frame.js'
 import { Anchor, Details, Div, Span, Summary, UnorderedList } from './html.js'
-import { Level } from './level-base.js'
+import { AnyLevel } from './level-base.js'
 import { Language, Locale } from './locale.js'
 import { Picker } from './picker.js'
 import { PROGRAMMING_LANGUAGE_ID_TO_NAME, ProgrammingLanguage, ProgrammingLanguageId } from './programming-language.js'
@@ -31,7 +31,7 @@ export class Main {
         this.showNextLevel()
     }
 
-    private play(level: Level): void {
+    private play(level: AnyLevel): void {
         Message.hideAllButLast()
         Panel.removeAll()
         level.play(() => this.continue())

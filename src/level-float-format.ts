@@ -2,7 +2,7 @@ import { Level } from './level-base.js'
 import { Locale, LocalizedText } from './locale.js'
 import { Variable, BooleanVariable, TextVariable } from './variable.js'
 
-export class FloatFormat extends Level {
+export class FloatFormat extends Level<[string], boolean> {
     protected identifier(): string {
         return 'float-format'
     }
@@ -72,7 +72,7 @@ export class FloatFormat extends Level {
         ]
     }
 
-    protected* minimalUnitTestGenerator(): Generator<any[]> {
+    protected* minimalUnitTestGenerator(): Generator<[[string], boolean]> {
         yield [['+12'], true]
         yield [['-12.34'], true]
         yield [['12.34'], true]
@@ -82,7 +82,7 @@ export class FloatFormat extends Level {
         yield [['12.3.4'], false]
     }
 
-    protected* hintGenerator(): Generator<any[]> {
+    protected* hintGenerator(): Generator<[string]> {
         for (let i = 0; i < 10; i++) {
             const integerPart = this.picker.integerUnder(100).toString()
             const precision = this.picker.integerUnder(4)

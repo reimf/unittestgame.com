@@ -6,10 +6,12 @@ import { Locale, LocalizedText } from './locale.js'
 import { Picker } from './picker.js'
 import { TestResult } from './test-result.js'
 import { UnitTest } from './unit-test.js'
-import { Variable } from './variable.js'
+import { Value, Variable } from './variable.js'
 import { ProgrammingLanguage } from './programming-language.js'
 
-export abstract class Level {
+export type AnyLevel = Level<readonly Value[], Value>
+
+export abstract class Level<Parameters extends readonly Value[], Result extends Value> {
     protected readonly locale: Locale
     protected readonly programmingLanguage: ProgrammingLanguage
     public readonly levelNumber: number
@@ -19,19 +21,19 @@ export abstract class Level {
     // the following attributes should all be private, but some are public because they are used in tests
     public readonly parameters: Variable[]
     public readonly unit: Variable
-    public readonly candidates: Candidate[]
-    public readonly minimalUnitTests: UnitTest[]
-    public readonly subsetsOfMinimalUnitTests: UnitTest[][]
-    public readonly perfectCandidates: Candidate[]
-    private readonly perfectCandidate: Candidate
-    private readonly humanUnitTests: UnitTest[] = []
-    public readonly hints: UnitTest[]
+    public readonly candidates: Candidate<Parameters, Result>[]
+    public readonly minimalUnitTests: UnitTest<Parameters, Result>[]
+    public readonly subsetsOfMinimalUnitTests: UnitTest<Parameters, Result>[][]
+    public readonly perfectCandidates: Candidate<Parameters, Result>[]
+    private readonly perfectCandidate: Candidate<Parameters, Result>
+    private readonly humanUnitTests: UnitTest<Parameters, Result>[] = []
+    public readonly hints: UnitTest<Parameters, Result>[]
 
     private callback?: () => void
-    private currentCandidate: Candidate = new Candidate([])
-    private previousCandidate: Candidate|undefined = undefined
-    private failingTestResult: TestResult|undefined = undefined
-    private lastUnitTest: UnitTest|undefined = undefined
+    private currentCandidate: Candidate<Parameters, Result>
+    private previousCandidate: Candidate<Parameters, Result>|undefined = undefined
+    private failingTestResult: TestResult<Parameters, Result>|undefined = undefined
+    private lastUnitTest: UnitTest<Parameters, Result>|undefined = undefined
     private numberOfSubmissions: number = 0
 
     public constructor(locale: Locale, programmingLanguage: ProgrammingLanguage, picker: Picker, store: Store, levelNumber: number) {
@@ -58,10 +60,10 @@ export abstract class Level {
     protected abstract getParameters(): Variable[]
     protected abstract getUnit(): Variable
     protected abstract getCandidateElements(): string[][]
-    protected abstract minimalUnitTestGenerator(): Generator<any[]>
-    protected abstract hintGenerator(): Generator<any[]>
+    protected abstract minimalUnitTestGenerator(): Generator<[Parameters, Result]>
+    protected abstract hintGenerator(): Generator<Parameters>
 
-    private* generateCandidates(listOfListOfLines: string[][], lines: string[]): Generator<Candidate> {
+    private* generateCandidates(listOfListOfLines: string[][], lines: string[]): Generator<Candidate<Parameters, Result>> {
         if (listOfListOfLines.length > 0) {
             const [firstListOfLines, ...remainingListOfListOfLines] = listOfListOfLines
             if (firstListOfLines)
@@ -72,23 +74,23 @@ export abstract class Level {
             yield this.createCandidate(lines)
     }
 
-    private createCandidate(lines: readonly string[]): Candidate {
+    private createCandidate(lines: readonly string[]): Candidate<Parameters, Result> {
         const parameterList = this.parameters.map(parameter => parameter.name).join(', ')
         const indentedLines = [
             `function ${this.unit.name}(${parameterList}) {`,
                 ...lines.map(line => line ? '  ' + line : ''),
             '}',
         ]
-        return new Candidate(indentedLines)
+        return new Candidate<Parameters, Result>(indentedLines)
     }
 
-    private* generateMinimalUnitTests(): Generator<UnitTest> {
+    private* generateMinimalUnitTests(): Generator<UnitTest<Parameters, Result>> {
         for (const [argumentList, expected] of this.minimalUnitTestGenerator()) {
             yield new UnitTest(this.parameters, argumentList, this.unit, expected)
         }
     }
 
-    private* generateSubsetsOfGivenSize(unitTests: UnitTest[], size: number, current: UnitTest[]): Generator<UnitTest[]> {
+    private* generateSubsetsOfGivenSize(unitTests: UnitTest<Parameters, Result>[], size: number, current: UnitTest<Parameters, Result>[]): Generator<UnitTest<Parameters, Result>[]> {
         if (current.length === size)
             yield current
         else
@@ -96,23 +98,23 @@ export abstract class Level {
                 yield* this.generateSubsetsOfGivenSize(unitTests.slice(index + 1), size, [...current, unitTests[index]!])
     }
 
-    private* generateAllSubsetsOrderedBySize(unitTests: UnitTest[]): Generator<UnitTest[]> {
+    private* generateAllSubsetsOrderedBySize(unitTests: UnitTest<Parameters, Result>[]): Generator<UnitTest<Parameters, Result>[]> {
         for (let size = 0; size <= unitTests.length; size++)
             yield* this.generateSubsetsOfGivenSize(unitTests, size, [])
     }
 
-    private* generateHints(): Generator<UnitTest> {
+    private* generateHints(): Generator<UnitTest<Parameters, Result>> {
         const perfectCandidate = this.perfectCandidates[0]!
         for (const argumentList of this.hintGenerator())
-            yield new UnitTest(this.parameters, argumentList, this.unit, perfectCandidate.execute(argumentList))
+            yield new UnitTest(this.parameters, argumentList, this.unit, perfectCandidate.execute(argumentList)!)
     }
 
-    private findPerfectCandidates(): Candidate[] {
+    private findPerfectCandidates(): Candidate<Parameters, Result>[] {
         return this.candidates.filter(candidate => candidate.passes(this.minimalUnitTests))
     }
 
-    private findSimplestCandidate(candidates: readonly Candidate[]): Candidate {
-        const simplestCandidates = candidates.reduce((simplestCandidatesSoFar: Candidate[], candidate) => {
+    private findSimplestCandidate(candidates: readonly Candidate<Parameters, Result>[]): Candidate<Parameters, Result> {
+        const simplestCandidates = candidates.reduce((simplestCandidatesSoFar: Candidate<Parameters, Result>[], candidate) => {
             if (simplestCandidatesSoFar.length === 0)
                 return [candidate]
             const sign = candidate.compareComplexity(simplestCandidatesSoFar[0]!)
@@ -125,7 +127,7 @@ export abstract class Level {
         return this.picker.elementFrom(simplestCandidates)
     }
 
-    public findSimplestPassingCandidate(candidates: readonly Candidate[], perfectCandidates: readonly Candidate[], unitTests: readonly UnitTest[]): Candidate {
+    public findSimplestPassingCandidate(candidates: readonly Candidate<Parameters, Result>[], perfectCandidates: readonly Candidate<Parameters, Result>[], unitTests: readonly UnitTest<Parameters, Result>[]): Candidate<Parameters, Result> {
         const passingCandidates = candidates.filter(candidate => candidate.passes(unitTests))
         const passingImperfectCandidates = passingCandidates.filter(candidate => !perfectCandidates.includes(candidate))
         if (passingImperfectCandidates.length === 0)
@@ -133,7 +135,7 @@ export abstract class Level {
         return this.findSimplestCandidate(passingImperfectCandidates)
     }
 
-    private findFailingTestResult(candidate: Candidate, hints: readonly UnitTest[], minimalUnitTestsList: readonly UnitTest[]): TestResult|undefined {
+    private findFailingTestResult(candidate: Candidate<Parameters, Result>, hints: readonly UnitTest<Parameters, Result>[], minimalUnitTestsList: readonly UnitTest<Parameters, Result>[]): TestResult<Parameters, Result>|undefined {
         for (const unitTests of [hints, minimalUnitTestsList]) {
             const failingUnitTests = candidate.failingTestResults(unitTests)
             if (failingUnitTests.length > 0)
@@ -142,7 +144,7 @@ export abstract class Level {
         return undefined
     }
 
-    public findNumberOfUnitTestsStillNeeded(unitTests: readonly UnitTest[], subsetsOfMinimalUnitTests: readonly UnitTest[][], candidates: readonly Candidate[], numberOfPerfectCandidates: number): number {
+    public findNumberOfUnitTestsStillNeeded(unitTests: readonly UnitTest<Parameters, Result>[], subsetsOfMinimalUnitTests: readonly UnitTest<Parameters, Result>[][], candidates: readonly Candidate<Parameters, Result>[], numberOfPerfectCandidates: number): number {
         const realSubsetsOfMinimalUnitTests = subsetsOfMinimalUnitTests.slice(0, -1)
         for (const subsetOfMinimalUnitTests of realSubsetsOfMinimalUnitTests) {
             const extendedUnitTests = [...unitTests, ...subsetOfMinimalUnitTests]
@@ -158,7 +160,7 @@ export abstract class Level {
         return true
     }
 
-    public emoji(nextLevel: Level|undefined): string {
+    public emoji(nextLevel: AnyLevel|undefined): string {
         return this === nextLevel ? '▶️' : ['🔒', '🥇', '🥈', '🥉'].at(this.isFinished()) || '💩'
     }
 
@@ -201,8 +203,9 @@ export abstract class Level {
     }
 
     private addUnitTest(formData: FormData): void {
-        const argumentList = this.parameters.map(parameter => parameter.getInput(formData.get(parameter.name)! as string))
-        const expected = this.unit.getInput(formData.get(this.unit.name)! as string)
+        // the casts are safe because each Variable validates and converts its own form input
+        const argumentList = this.parameters.map(parameter => parameter.getInput(formData.get(parameter.name)! as string)) as unknown as Parameters
+        const expected = this.unit.getInput(formData.get(this.unit.name)! as string) as Result
         const unitTest = new UnitTest(this.parameters, argumentList, this.unit, expected)
         ComputerMessage.addToLast([new CodeBlock().appendChild(unitTest.toHtml(this.programmingLanguage).addClass('new'))])
         if (!this.isFormDataOk(formData))
@@ -220,19 +223,19 @@ export abstract class Level {
         this.showIncorrectUnitTestMessage()
     }
 
-    private handleUselessUnitTest(unitTest: UnitTest): void {
+    private handleUselessUnitTest(unitTest: UnitTest<Parameters, Result>): void {
         this.acceptUnitTest(unitTest)
         this.showUselessUnitTestMessage()
     }
 
-    private handleUsefulUnitTest(unitTest: UnitTest): void {
+    private handleUsefulUnitTest(unitTest: UnitTest<Parameters, Result>): void {
         this.acceptUnitTest(unitTest)
         this.showUsefulUnitTestMessage()
         this.currentCandidate = this.findSimplestPassingCandidate(this.candidates, this.perfectCandidates, this.humanUnitTests)
         this.failingTestResult = this.findFailingTestResult(this.currentCandidate, this.hints, this.minimalUnitTests)
     }
 
-    private acceptUnitTest(unitTest: UnitTest): void {
+    private acceptUnitTest(unitTest: UnitTest<Parameters, Result>): void {
         this.lastUnitTest = unitTest
         this.humanUnitTests.push(unitTest)
         this.previousCandidate = this.currentCandidate

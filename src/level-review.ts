@@ -2,7 +2,7 @@ import { Level } from './level-base.js'
 import { Locale, LocalizedText } from './locale.js'
 import { Variable, IntegerVariable, RadioVariable } from './variable.js'
 
-export class Review extends Level {
+export class Review extends Level<[number, number], string> {
     protected identifier(): string {
         return 'review'
     }
@@ -60,14 +60,14 @@ export class Review extends Level {
         ]
     }
 
-    protected* minimalUnitTestGenerator(): Generator<any[]> {
+    protected* minimalUnitTestGenerator(): Generator<[[number, number], string]> {
         yield [[19, 7], 'Good']
         yield [[20, 6], 'Bad']
         yield [[20, 7], 'Ok']
         yield [[19, 6], 'Ok']
     }
 
-    protected* hintGenerator(): Generator<any[]> {
+    protected* hintGenerator(): Generator<[number, number]> {
         for (let price = 10; price <= 30; price += 3)
             for (let quality = 4; quality <= 10; quality += 1)
                 yield [price, quality]

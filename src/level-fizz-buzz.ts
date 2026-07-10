@@ -2,7 +2,7 @@ import { Level } from './level-base.js'
 import { Locale, LocalizedText } from './locale.js'
 import { Variable, RadioVariable, IntegerVariable } from './variable.js'
 
-export class FizzBuzz extends Level {
+export class FizzBuzz extends Level<[number], string> {
     protected identifier(): string {
         return 'fizz-buzz'
     }
@@ -51,14 +51,14 @@ export class FizzBuzz extends Level {
         ]
     }
 
-    protected* minimalUnitTestGenerator(): Generator<any[]> {
+    protected* minimalUnitTestGenerator(): Generator<[[number], string]> {
         yield [[6], 'Fizz']
         yield [[25], 'Buzz']
         yield [[30], 'FizzBuzz']
         yield [[1], 'Other']
     }
 
-    protected* hintGenerator(): Generator<any[]> {
+    protected* hintGenerator(): Generator<[number]> {
         for (let num = 0; num < 50; num += 1)
             yield [num]
     }

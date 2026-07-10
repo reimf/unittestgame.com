@@ -2,7 +2,7 @@ import { Level } from './level-base.js'
 import { Locale, LocalizedText } from './locale.js'
 import { Variable, BooleanVariable, IntegerVariable } from './variable.js'
 
-export class VotingAge extends Level {
+export class VotingAge extends Level<[number], boolean> {
     protected identifier(): string {
         return 'voting-age'
     }
@@ -51,14 +51,14 @@ export class VotingAge extends Level {
         ]
     }
 
-    protected* minimalUnitTestGenerator(): Generator<any[]> {
+    protected* minimalUnitTestGenerator(): Generator<[[number], boolean]> {
         yield [[16], false]
         yield [[17], false]
         yield [[18], true]
         yield [[19], true]
     }
 
-    protected* hintGenerator(): Generator<any[]> {
+    protected* hintGenerator(): Generator<[number]> {
         for (let age = 0; age <= 40; age += 1)
             yield [age]
     }

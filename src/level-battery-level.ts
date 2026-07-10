@@ -10,7 +10,7 @@ type FormStringsType = {
 }
 
 
-export class BatteryLevel extends Level {
+export class BatteryLevel extends Level<[number], string> {
     protected identifier(): string {
         return 'battery-level'
     }
@@ -58,14 +58,14 @@ export class BatteryLevel extends Level {
         ]
     }
 
-    protected* minimalUnitTestGenerator(): Generator<any[]> {
+    protected* minimalUnitTestGenerator(): Generator<[[number], string]> {
         yield [[18], 'Low Power Mode']
         yield [[19], 'Low Power Mode']
         yield [[20], 'Normal Mode']
         yield [[21], 'Normal Mode']
     }
 
-    protected* hintGenerator(): Generator<any[]> {
+    protected* hintGenerator(): Generator<[number]> {
         for (let batteryLevel = 18; batteryLevel <= 21; batteryLevel += 1)
             yield [batteryLevel]
     }

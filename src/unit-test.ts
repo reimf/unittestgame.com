@@ -1,26 +1,26 @@
 import { Div } from './html.js'
 import { ProgrammingLanguage } from './programming-language.js'
-import { Variable } from './variable.js'
+import { Value, Variable } from './variable.js'
 
-export class UnitTest {
+export class UnitTest<Parameters extends readonly Value[] = readonly Value[], Result extends Value = Value> {
     private readonly parameters: readonly Variable[]
-    public readonly argumentList: readonly any[]
+    public readonly argumentList: Parameters
     private readonly unit: Variable
-    public readonly expected: any
+    public readonly expected: Result
 
-    public constructor(parameters: readonly Variable[], argumentList: readonly any[], unit: Variable, expected: any) {
+    public constructor(parameters: readonly Variable[], argumentList: Parameters, unit: Variable, expected: Result) {
         this.parameters = parameters
         this.argumentList = argumentList
         this.unit = unit
         this.expected = expected
     }
 
-    public toTextWithResult(result: any): string {
+    public toTextWithResult(result: Result|undefined): string {
         const argumentsText = this.argumentList.map((value, index) => this.parameters[index]!.format(value)).join(', ')
         return `${this.unit.name}(${argumentsText}) === ${this.unit.format(result)}`
     }
 
-    public toHtmlWithResult(result: any, programmingLanguage: ProgrammingLanguage): Div {
+    public toHtmlWithResult(result: Result|undefined, programmingLanguage: ProgrammingLanguage): Div {
         return programmingLanguage.highlight(this.toTextWithResult(result))[0]!
     }
 

@@ -2,8 +2,9 @@ import { CodeBlock } from './html.js'
 import { TestResult } from './test-result.js'
 import { ProgrammingLanguage } from './programming-language.js'
 import { UnitTest } from './unit-test.js'
+import { Value } from './variable.js'
 
-export class Candidate {
+export class Candidate<Parameters extends readonly Value[] = readonly Value[], Result extends Value = Value> {
     private readonly lines: string[]
     public readonly nonEmptyLines: string[]
     private readonly function: Function
@@ -53,19 +54,19 @@ export class Candidate {
         return tokens.length
     }
 
-    public execute(argumentsList: readonly any[]): any {
+    public execute(argumentsList: Parameters): Result|undefined {
         return this.function(...argumentsList)
     }
 
-    public failingTestResults(unitTests: readonly UnitTest[]): TestResult[] {
+    public failingTestResults(unitTests: readonly UnitTest<Parameters, Result>[]): TestResult<Parameters, Result>[] {
         return unitTests.map(unitTest => new TestResult(this, unitTest)).filter(testResult => !testResult.passes)
     }
 
-    public passes(unitTests: readonly UnitTest[]): boolean {
+    public passes(unitTests: readonly UnitTest<Parameters, Result>[]): boolean {
         return this.failingTestResults(unitTests).length === 0
     }
 
-    public compareComplexity(candidate: Candidate): number {
+    public compareComplexity(candidate: Candidate<Parameters, Result>): number {
         return Math.sign(this.complexity - candidate.complexity)
     }
 
@@ -74,7 +75,7 @@ export class Candidate {
         return new CodeBlock().appendChildren(divs)
     }
 
-    public toHtmlWithPrevious(previousCandidate: Candidate, programmingLanguage: ProgrammingLanguage): CodeBlock {
+    public toHtmlWithPrevious(previousCandidate: Candidate<Parameters, Result>, programmingLanguage: ProgrammingLanguage): CodeBlock {
         const divs = programmingLanguage.highlight(this.lines.join('\n'), previousCandidate.lines.join('\n'))
         return new CodeBlock().appendChildren(divs)
     }

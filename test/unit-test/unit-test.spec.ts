@@ -36,7 +36,7 @@ test.describe('class UnitTest', () => {
     test('converts to a string with another result', () => {
         const parameters = [new IntegerVariable(Locale.bless('A'), 'a'), new IntegerVariable(Locale.bless('B'), 'b')]
         const unit = new IntegerVariable(Locale.bless('Divide'), 'divide')
-        const unitTest = new UnitTest(parameters, [6, 3], unit, 2)
+        const unitTest = new UnitTest<[number, number], number>(parameters, [6, 3], unit, 2)
         const htmlWithResult = unitTest.toHtmlWithResult(5, programmingLanguage)
         expect(htmlWithResult.getElement().outerHTML).toBe(
             '<div>' +
