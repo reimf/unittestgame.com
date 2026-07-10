@@ -5,7 +5,7 @@ export class Injector {
         this.parameters = parameters
     }
 
-    public getOption(key: string, options: string[]): string {
+    public getOption(key: string, options: readonly string[]): string {
         if (!this.parameters.has(key))
             return options[0]!
         const value = this.parameters.get(key)!

@@ -8,7 +8,7 @@ export type LocalizedText = string & { readonly [__localized]: void }
 export class Locale {
     public readonly language: keyof LocalizableText
 
-    public static readonly languages = [...LANGUAGES]
+    public static readonly languages = [...LANGUAGES] as const
 
     public static bless(text: string): LocalizedText {
         return text as LocalizedText
@@ -78,14 +78,14 @@ export class Locale {
         })
     }
 
-    public switchLanguage(): LocalizedText {
+    public changeLanguage(): LocalizedText {
         return this.localize({
-            en: 'Switch language',
-            nl: 'Taal wijzigen',
-            de: 'Sprache wechseln',
-            fr: 'Changer de langue',
-            es: 'Cambiar idioma',
-            it: 'Cambia lingua',
+            en: 'Language: English',
+            nl: 'Taal: Nederlands',
+            de: 'Sprache: Deutsch',
+            fr: 'Langue: Français',
+            es: 'Idioma: Español',
+            it: 'Lingua: Italiano',
         })
     }
 
@@ -98,6 +98,28 @@ export class Locale {
             es: 'Cambiar al Español',
             it: 'Passa all\'Italiano',
         }[language])
+    }
+
+    public changeProgrammingLanguage(name: string): LocalizedText {
+        return this.localize({
+            en: `Programming Language: ${name}`,
+            nl: `Programmeertaal: ${name}`,
+            de: `Programmiersprache: ${name}`,
+            fr: `Langage de programmation: ${name}`,
+            es: `Idioma de programación: ${name}`,
+            it: `Linguaggio di programmazione: ${name}`,
+        })
+    }
+
+    public switchToProgrammingLanguage(name: string): LocalizedText {
+        return this.localize({
+            en: `Switch to ${name}`,
+            nl: `Overschakelen op ${name}`,
+            de: `Auf ${name} wechseln`,
+            fr: `Passer en ${name}`,
+            es: `Cambiar al ${name}`,
+            it: `Passa a ${name}`,
+        })
     }
 
     public invitation(): LocalizedText {

@@ -5,14 +5,16 @@ import { Anchor, Details, Div, Span, Summary, UnorderedList } from './html.js'
 import { Level } from './level-base.js'
 import { Language, Locale } from './locale.js'
 import { Picker } from './picker.js'
-import { ProgrammingLanguage } from './programming-language.js'
+import { PROGRAMMING_LANGUAGE_ID_TO_NAME, ProgrammingLanguage, ProgrammingLanguageId } from './programming-language.js'
 
 export class Main {
     private readonly locale: Locale
+    private readonly programmingLanguage: ProgrammingLanguage
     private readonly levels: ReturnType<Game['levels']>
 
     constructor(locale: Locale, programmingLanguage: ProgrammingLanguage, picker: Picker, store: Store) {
         this.locale = locale
+        this.programmingLanguage = programmingLanguage
         const game = new Game(locale, programmingLanguage, picker, store)
         this.levels = game.levels()
     }
@@ -47,13 +49,26 @@ export class Main {
 
     private languageSwitcher(): Details {
         const otherLanguages = Locale.languages.filter(language => language !== this.locale.language)
-        return new Details()
-            .appendChild(new Summary().appendText(this.locale.switchLanguage()))
+        return new Details().setId('language-switcher')
+            .appendChild(new Summary().appendText(this.locale.changeLanguage()))
             .appendChild(new UnorderedList(otherLanguages.map(language => this.languageLink(language))))
     }
 
+    private programmingLanguageSwitcher(): Details {
+        const otherProgrammingLanguageIds = ProgrammingLanguage.programmingLanguageIds.filter(programmingLanguageId => programmingLanguageId !== this.programmingLanguage.id)
+        return new Details().setId('programming-language-switcher')
+            .appendChild(new Summary().appendText(this.locale.changeProgrammingLanguage(PROGRAMMING_LANGUAGE_ID_TO_NAME.get(this.programmingLanguage.id)!)))
+            .appendChild(new UnorderedList(otherProgrammingLanguageIds.map(programmingLanguageId => this.programmingLanguageLink(programmingLanguageId))))
+    }
+
+    private programmingLanguageLink(programmingLanguageId: ProgrammingLanguageId): Anchor {
+        const url = new URL(window.location.href)
+        url.searchParams.set('programmingLanguage', programmingLanguageId)
+        return new Anchor(url.toString()).appendText(this.locale.switchToProgrammingLanguage(PROGRAMMING_LANGUAGE_ID_TO_NAME.get(programmingLanguageId)!))
+    }
+
     private showAboutPanel(): void {
-        const content = [this.locale.slogan(), this.locale.links(), this.languageSwitcher()]
+        const content = [this.locale.slogan(), this.locale.links(), this.languageSwitcher(), this.programmingLanguageSwitcher()]
         new Panel('unittestgame', this.locale.unitTestGameTitle(), content).show()
     }
 

@@ -1,12 +1,21 @@
 import { Div } from "./html"
 import { Highlighter, Tokenizer, type TokenTypes } from './highlighter.js'
 
+const PROGRAMMING_LANGUAGE_IDS = ['javascript', 'python'] as const
+export type ProgrammingLanguageId = typeof PROGRAMMING_LANGUAGE_IDS[number]
+export const PROGRAMMING_LANGUAGE_ID_TO_NAME: Map<ProgrammingLanguageId, string> = new Map([
+    ['javascript', 'JavaScript'],
+    ['python', 'Python'],
+])
+
 export abstract class ProgrammingLanguage {
-    public readonly name: string
+    public readonly id: ProgrammingLanguageId
     public readonly tokenTypes: TokenTypes
 
-    constructor(name: string) {
-        this.name = name
+    public static readonly programmingLanguageIds = [...PROGRAMMING_LANGUAGE_IDS] as const
+    
+    constructor(id: ProgrammingLanguageId) {
+        this.id = id
         this.tokenTypes = this.getTokenTypes()
     }
 
@@ -35,7 +44,7 @@ export abstract class ProgrammingLanguage {
 
 export class JavaScript extends ProgrammingLanguage {
     public constructor() {
-        super("JavaScript")
+        super("javascript")
     }
 
     public override transpile(javascriptCode: string): string {
@@ -63,7 +72,7 @@ export class JavaScript extends ProgrammingLanguage {
 
 export class Python extends ProgrammingLanguage {
     public constructor() {
-        super("Python")
+        super("python")
     }
 
     public override transpile(javascriptCode: string): string {
