@@ -77,7 +77,7 @@ export class Main {
     }
 
     private showLevelOverviewPanel(): void {
-        const nextLevel = this.levels.find(level => !level.isFinished())!
+        const nextLevel = this.levels.find(level => !level.isFinished())
         const cells = this.levels.map(level => {
             const emoji = level.emoji(nextLevel)
             const state = level === nextLevel || level.isFinished() ? 'unlocked' : 'locked'

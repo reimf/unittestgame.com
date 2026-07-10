@@ -158,7 +158,7 @@ export abstract class Level {
         return true
     }
 
-    public emoji(nextLevel: Level): string {
+    public emoji(nextLevel: Level|undefined): string {
         return this === nextLevel ? '▶️' : ['🔒', '🥇', '🥈', '🥉'].at(this.isFinished()) || '💩'
     }
 
