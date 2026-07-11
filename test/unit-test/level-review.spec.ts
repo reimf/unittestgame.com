@@ -3,7 +3,7 @@ import { Locale } from '../../src/locale.js'
 import { FixedPicker } from '../../src/picker.js'
 import { MapStore } from '../../src/store.js'
 import { Review } from '../../src/level-review.js'
-import { JavaScript } from '../../src/programming-language.js'
+import { JavaScript } from '../../src/programming-language-javascript.js'
 
 test.describe('class Review', () => {
     const locale = new Locale('en')

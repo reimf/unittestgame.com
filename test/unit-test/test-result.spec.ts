@@ -5,7 +5,7 @@ import { Candidate } from '../../src/candidate.js'
 import { UnitTest } from '../../src/unit-test.js'
 import { IntegerVariable, BooleanVariable } from '../../src/variable.js'
 import { Locale } from '../../src/locale.js'
-import { JavaScript } from '../../src/programming-language.js'
+import { JavaScript } from '../../src/programming-language-javascript.js'
 
 const { document } = new JSDOM('<!DOCTYPE html>').window
 global.document = document

@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test'
 import { JSDOM } from 'jsdom'
 import { Candidate } from '../../src/candidate.js'
-import { JavaScript } from '../../src/programming-language.js'
+import { JavaScript } from '../../src/programming-language-javascript.js'
 
 const { document } = new JSDOM('<!DOCTYPE html>').window
 global.document = document
@@ -10,8 +10,8 @@ test.describe('class Candidate', () => {
     const programmingLanguage = new JavaScript()
 
     test('compares complexity of simple and complex function', () => {
-        const simpleCandidate = new Candidate(['function nextYear(year) {', '', '  return year + 1', '}'])
-        const complexCandidate = new Candidate(['function nextYear(year) {', '  if (year < 0) return 0', '  return year + 1', '}'])
+        const simpleCandidate = new Candidate(['function nextYear(year) {', '', '  return year % 1', '}'])
+        const complexCandidate = new Candidate(['function nextYear(year) {', '  if (year < 0) return 0', '  return year % 1', '}'])
         expect(simpleCandidate.compareComplexity(complexCandidate)).toBe(-1)
         expect(complexCandidate.compareComplexity(simpleCandidate)).toBe(+1)
     })
@@ -78,8 +78,8 @@ test.describe('class Candidate', () => {
     })
 
     test('executes function', () => {
-        const candidate = new Candidate(['function nextYear(year) {', '  return year + 1', '}'])
-        expect(candidate.execute([2024])).toBe(2025)
+        const candidate = new Candidate(['function nextYear(year) {', '  return year * 2', '}'])
+        expect(candidate.execute([2024])).toBe(4048)
     })
 
     test('to html', () => {
@@ -111,7 +111,7 @@ test.describe('class Candidate', () => {
     })
 
     test('to html with previous', () => {
-        const candidate = new Candidate(['function nextYear(year) {', '', '', '  if (year < 0) return 0', '  return year + 1', '}'])
+        const candidate = new Candidate(['function nextYear(year) {', '', '', '  if (year < 0) return 0', '  return year % 1', '}'])
         const previousCandidate = new Candidate(['function nextYear(year) {', '', '  if (year === 0) return 0', '', '  return undefined', '}'])
         const htmlWithPrevious = candidate.toHtmlWithPrevious(previousCandidate, programmingLanguage)
         expect(htmlWithPrevious.getElement().outerHTML).toBe(
@@ -165,7 +165,7 @@ test.describe('class Candidate', () => {
                     '<del class="literal">undefined</del>' +
                     '<ins class="variable">year</ins>' +
                     '<ins class="whitespace"> </ins>' +
-                    '<ins class="operator">+</ins>' +
+                    '<ins class="operator">%</ins>' +
                     '<ins class="whitespace"> </ins>' +
                     '<ins class="number">1</ins>' +
                 '</div>' +

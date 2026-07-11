@@ -1,7 +1,8 @@
 import { test, expect } from '@playwright/test'
 import { JSDOM } from 'jsdom'
 import { Div } from '../../src/html.js'
-import { JavaScript, Python } from '../../src/programming-language.js'
+import { JavaScript } from '../../src/programming-language-javascript.js'
+import { Python } from '../../src/programming-language-python.js'
 
 const { document } = new JSDOM('<!DOCTYPE html>').window
 global.document = document
@@ -13,7 +14,7 @@ test.describe('class ProgrammingLanguage', () => {
 
     test('highlight with 1 argument', () => {
         const javascript = 'function isFloatFormat(text) {' +
-            '  let regex = new RegExp("/#@/").test(text + "abc")' +
+            '  let regex = new RegExp("/#@/").test(text)' +
             '  if (!/[#@]/.test(text)) regex += speed.toFixed(1)' +
             '  if (a < Math.abs(20.0) && a >= c && b !== c) return true' +
             '  if (num % 2 === 0) return false' +
@@ -47,10 +48,6 @@ test.describe('class ProgrammingLanguage', () => {
                 '<span class="function">test</span>' +
                 '<span class="punctuation">(</span>' +
                 '<span class="variable">text</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="operator">+</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="string">"abc"</span>' +
                 '<span class="punctuation">)</span>' +
                 '<span class="whitespace">  </span>' +
                 '<span class="keyword">if</span>' +

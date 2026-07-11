@@ -3,7 +3,7 @@ import { Locale } from '../../src/locale.js'
 import { FixedPicker } from '../../src/picker.js'
 import { MapStore } from '../../src/store.js'
 import { PasswordStrength } from '../../src/level-password-strength.js'
-import { JavaScript } from '../../src/programming-language.js'
+import { JavaScript } from '../../src/programming-language-javascript.js'
 
 test.describe('class PasswordStrength', () => {
     const locale = new Locale('en')

@@ -5,7 +5,7 @@ import { BatteryLevel } from '../../src/level-battery-level.js'
 import { MapStore } from '../../src/store.js'
 import { RandomPicker } from '../../src/picker.js'
 import { Locale } from '../../src/locale.js'
-import { JavaScript } from '../../src/programming-language'
+import { JavaScript } from '../../src/programming-language-javascript'
 
 test.describe('whole game', () => {
     test.beforeEach(async ({ page }) => {

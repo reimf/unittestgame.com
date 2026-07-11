@@ -3,7 +3,7 @@ import { Locale } from '../../src/locale.js'
 import { FixedPicker } from '../../src/picker.js'
 import { MapStore } from '../../src/store.js'
 import { VotingAge } from '../../src/level-voting-age.js'
-import { JavaScript } from '../../src/programming-language.js'
+import { JavaScript } from '../../src/programming-language-javascript.js'
 
 test.describe('class VotingAge', () => {
     const locale = new Locale('en')

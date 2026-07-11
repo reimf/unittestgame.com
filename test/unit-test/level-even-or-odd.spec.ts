@@ -3,7 +3,7 @@ import { Locale } from '../../src/locale.js'
 import { FixedPicker } from '../../src/picker.js'
 import { MapStore } from '../../src/store.js'
 import { EvenOrOdd } from '../../src/level-even-or-odd.js'
-import { JavaScript } from '../../src/programming-language.js'
+import { JavaScript } from '../../src/programming-language-javascript.js'
 
 test.describe('class EvenOrOdd', () => {
     const locale = new Locale('en')

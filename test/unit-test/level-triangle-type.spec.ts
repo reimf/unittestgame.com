@@ -3,7 +3,7 @@ import { Locale } from '../../src/locale.js'
 import { FixedPicker } from '../../src/picker.js'
 import { MapStore } from '../../src/store.js'
 import { TriangleType } from '../../src/level-triangle-type.js'
-import { JavaScript } from '../../src/programming-language.js'
+import { JavaScript } from '../../src/programming-language-javascript.js'
 
 test.describe('class TriangleType', () => {
     const locale = new Locale('en')

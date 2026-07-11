@@ -1,8 +1,8 @@
 import { CodeBlock } from './html.js'
 import { TestResult } from './test-result.js'
-import { ProgrammingLanguage } from './programming-language.js'
+import { ProgrammingLanguage } from './programming-language-base.js'
 import { UnitTest } from './unit-test.js'
-import { Value } from './variable.js'
+import { Value, Variable } from './variable.js'
 
 export class Candidate<Parameters extends readonly Value[] = readonly Value[], Result extends Value = Value> {
     private readonly lines: string[]
@@ -70,13 +70,13 @@ export class Candidate<Parameters extends readonly Value[] = readonly Value[], R
         return Math.sign(this.complexity - candidate.complexity)
     }
 
-    public toHtml(programmingLanguage: ProgrammingLanguage): CodeBlock {
-        const divs = programmingLanguage.highlight(this.nonEmptyLines.join('\n'))
+    public toHtml(programmingLanguage: ProgrammingLanguage, parameters?: readonly Variable[], unit?: Variable): CodeBlock {
+        const divs = programmingLanguage.highlight(this.nonEmptyLines.join('\n'), undefined, parameters, unit)
         return new CodeBlock().appendChildren(divs)
     }
 
-    public toHtmlWithPrevious(previousCandidate: Candidate<Parameters, Result>, programmingLanguage: ProgrammingLanguage): CodeBlock {
-        const divs = programmingLanguage.highlight(this.lines.join('\n'), previousCandidate.lines.join('\n'))
+    public toHtmlWithPrevious(previousCandidate: Candidate<Parameters, Result>, programmingLanguage: ProgrammingLanguage, parameters?: readonly Variable[], unit?: Variable): CodeBlock {
+        const divs = programmingLanguage.highlight(this.lines.join('\n'), previousCandidate.lines.join('\n'), parameters, unit)
         return new CodeBlock().appendChildren(divs)
     }
 }

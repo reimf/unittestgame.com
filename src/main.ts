@@ -5,7 +5,8 @@ import { Anchor, Details, Div, Span, Summary, UnorderedList } from './html.js'
 import { AnyLevel } from './level-base.js'
 import { Language, Locale } from './locale.js'
 import { Picker } from './picker.js'
-import { PROGRAMMING_LANGUAGE_ID_TO_NAME, ProgrammingLanguage, ProgrammingLanguageId } from './programming-language.js'
+import { ProgrammingLanguage } from './programming-language-base.js'
+import { programmingLanguages } from './programming-languages.js'
 
 export class Main {
     private readonly locale: Locale
@@ -55,16 +56,16 @@ export class Main {
     }
 
     private programmingLanguageSwitcher(): Details {
-        const otherProgrammingLanguageIds = ProgrammingLanguage.programmingLanguageIds.filter(programmingLanguageId => programmingLanguageId !== this.programmingLanguage.id)
+        const otherProgrammingLanguages = programmingLanguages.filter(programmingLanguage => programmingLanguage.id !== this.programmingLanguage.id)
         return new Details().setId('programming-language-switcher')
-            .appendChild(new Summary().appendText(this.locale.changeProgrammingLanguage(PROGRAMMING_LANGUAGE_ID_TO_NAME.get(this.programmingLanguage.id)!)))
-            .appendChild(new UnorderedList(otherProgrammingLanguageIds.map(programmingLanguageId => this.programmingLanguageLink(programmingLanguageId))))
+            .appendChild(new Summary().appendText(this.locale.changeProgrammingLanguage(this.programmingLanguage.name)))
+            .appendChild(new UnorderedList(otherProgrammingLanguages.map(programmingLanguage => this.programmingLanguageLink(programmingLanguage))))
     }
 
-    private programmingLanguageLink(programmingLanguageId: ProgrammingLanguageId): Anchor {
+    private programmingLanguageLink(programmingLanguage: ProgrammingLanguage): Anchor {
         const url = new URL(window.location.href)
-        url.searchParams.set('programmingLanguage', programmingLanguageId)
-        return new Anchor(url.toString()).appendText(this.locale.switchToProgrammingLanguage(PROGRAMMING_LANGUAGE_ID_TO_NAME.get(programmingLanguageId)!))
+        url.searchParams.set('programmingLanguage', programmingLanguage.id)
+        return new Anchor(url.toString()).appendText(this.locale.switchToProgrammingLanguage(programmingLanguage.name))
     }
 
     private showAboutPanel(): void {

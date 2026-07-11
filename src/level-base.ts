@@ -7,7 +7,7 @@ import { Picker } from './picker.js'
 import { TestResult } from './test-result.js'
 import { UnitTest } from './unit-test.js'
 import { Value, Variable } from './variable.js'
-import { ProgrammingLanguage } from './programming-language.js'
+import { ProgrammingLanguage } from './programming-language-base.js'
 
 export type AnyLevel = Level<readonly Value[], Value>
 
@@ -323,13 +323,13 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
     }
 
     private showCurrentFunctionPanel(): void {
-        new Panel('current-function', this.locale.currentFunctionTitle(), [this.currentCandidate.toHtml(this.programmingLanguage)]).show()
+        new Panel('current-function', this.locale.currentFunctionTitle(), [this.currentCandidate.toHtml(this.programmingLanguage, this.parameters, this.unit)]).show()
     }
 
     private showDifferencePanel(): void {
         if (!this.previousCandidate)
             return
-        const difference = this.currentCandidate.toHtmlWithPrevious(this.previousCandidate, this.programmingLanguage)
+        const difference = this.currentCandidate.toHtmlWithPrevious(this.previousCandidate, this.programmingLanguage, this.parameters, this.unit)
         new Panel('difference-current-function', this.locale.differenceTitle(), [difference]).show()
     }
 

@@ -3,14 +3,14 @@ import { spawnSync } from 'child_process'
 import { Game } from '../../src/game.js'
 import { Locale } from '../../src/locale.js'
 import { FixedPicker } from '../../src/picker.js'
-import { Python } from '../../src/programming-language.js'
+import { Python } from '../../src/programming-language-python.js'
 import { MapStore } from '../../src/store.js'
 
 const python = new Python()
 const levels = new Game(new Locale('en'), python, new FixedPicker(), new MapStore()).levels()
 const pythonAvailable = spawnSync('python3', ['--version']).error === undefined
 
-test.describe('Python transpile', () => {
+test.describe('transpile to Python', () => {
     for (const level of levels) {
         test(`every transpiled ${level.description()} candidate behaves like its JavaScript original`, () => {
             test.skip(!pythonAvailable, 'python3 is not installed')

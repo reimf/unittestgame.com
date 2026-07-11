@@ -1,6 +1,6 @@
 import { Candidate } from './candidate.js'
 import { Div } from './html.js'
-import { ProgrammingLanguage } from './programming-language.js'
+import { ProgrammingLanguage } from './programming-language-base.js'
 import { UnitTest } from './unit-test.js'
 import { Value } from './variable.js'
 

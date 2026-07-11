@@ -3,7 +3,7 @@ import { UnitTest } from '../../src/unit-test.js'
 import { LeapYear } from '../../src/level-leap-year.js'
 import { FixedPicker } from '../../src/picker.js'
 import { MapStore } from '../../src/store.js'
-import { JavaScript } from '../../src/programming-language.js'
+import { JavaScript } from '../../src/programming-language-javascript.js'
 import fixtureData from './fixture-level-states.json' with { type: 'json' }
 
 type FixtureLevelState = {

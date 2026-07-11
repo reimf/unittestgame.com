@@ -1,5 +1,5 @@
 import { Div } from './html.js'
-import { ProgrammingLanguage } from './programming-language.js'
+import { ProgrammingLanguage } from './programming-language-base.js'
 import { Value, Variable } from './variable.js'
 
 export class UnitTest<Parameters extends readonly Value[] = readonly Value[], Result extends Value = Value> {
@@ -21,7 +21,7 @@ export class UnitTest<Parameters extends readonly Value[] = readonly Value[], Re
     }
 
     public toHtmlWithResult(result: Result|undefined, programmingLanguage: ProgrammingLanguage): Div {
-        return programmingLanguage.highlight(this.toTextWithResult(result))[0]!
+        return programmingLanguage.highlight(this.toTextWithResult(result), undefined, this.parameters, this.unit)[0]!
     }
 
     public toHtml(programmingLanguage: ProgrammingLanguage): Div {

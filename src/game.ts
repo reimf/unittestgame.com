@@ -12,7 +12,7 @@ import { TriangleType } from './level-triangle-type.js'
 import { VotingAge } from './level-voting-age.js'
 import { Locale } from './locale.js'
 import { Picker } from './picker.js'
-import { ProgrammingLanguage } from './programming-language.js'
+import { ProgrammingLanguage } from './programming-language-base.js'
 
 export class Game {
     private readonly locale: Locale
