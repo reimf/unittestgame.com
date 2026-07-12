@@ -15,12 +15,12 @@ export class UnitTest<Parameters extends readonly Value[] = readonly Value[], Re
         this.expected = expected
     }
 
-    public toTextWithResult(result: Result|undefined): string {
+    public toTextWithResult(result: Result): string {
         const argumentsText = this.argumentList.map((value, index) => this.parameters[index]!.format(value)).join(', ')
         return `${this.unit.name}(${argumentsText}) === ${this.unit.format(result)}`
     }
 
-    public toHtmlWithResult(result: Result|undefined, programmingLanguage: ProgrammingLanguage): Div {
+    public toHtmlWithResult(result: Result, programmingLanguage: ProgrammingLanguage): Div {
         return programmingLanguage.highlight(this.toTextWithResult(result), undefined, this.parameters, this.unit)[0]!
     }
 

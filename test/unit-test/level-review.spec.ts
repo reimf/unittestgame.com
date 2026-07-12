@@ -19,7 +19,7 @@ test.describe('class Review', () => {
     })
 
     test('has the correct amount of candidates', () => {
-        expect(level.candidates).toHaveLength(400)
+        expect(level.candidates).toHaveLength(300)
     })
 
     test('has the correct amount of minimal unit tests', () => {

@@ -44,7 +44,6 @@ export class LeapYear extends Level<[number], boolean> {
             [
                 'return true',
                 'return false',
-                'return undefined',
             ],
         ]
     }

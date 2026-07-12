@@ -51,7 +51,6 @@ export class PasswordStrength extends Level<[string], boolean> {
             [
                 'return true',
                 'return false',
-                'return undefined',
             ],
         ]
     }

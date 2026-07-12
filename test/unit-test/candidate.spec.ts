@@ -64,13 +64,6 @@ test.describe('class Candidate', () => {
         expect(variableCandidate.compareComplexity(constantCandidate)).toBe(+1)
     })
 
-    test('compares complexity of undefined', () => {
-        const undefinedCandidate = new Candidate(['function nextYear(year) {', '  return undefined', '}'])
-        const variableCandidate = new Candidate(['function nextYear(year) {', '  return true', '}'])
-        expect(undefinedCandidate.compareComplexity(variableCandidate)).toBe(-1)
-        expect(variableCandidate.compareComplexity(undefinedCandidate)).toBe(+1)
-    })
-
     test('compares complexity of empty code', () => {
         const emptyCandidate = new Candidate([''])
         const noCandidate = new Candidate([])
@@ -162,7 +155,7 @@ test.describe('class Candidate', () => {
                     '<span class="whitespace">  </span>' +
                     '<span class="keyword">return</span>' +
                     '<span class="whitespace"> </span>' +
-                    '<del class="literal">undefined</del>' +
+                    '<del class="variable">undefined</del>' +
                     '<ins class="variable">year</ins>' +
                     '<ins class="whitespace"> </ins>' +
                     '<ins class="operator">%</ins>' +

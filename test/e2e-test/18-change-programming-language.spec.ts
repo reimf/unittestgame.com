@@ -2,7 +2,7 @@ import { test, expect } from '../fixture/fixture-coverage'
 
 test.describe('change programming language', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('/?speed=fast')
+        await page.goto('/?speed=fast&picker=fixed')
         await page.getByTestId('programming-language-switcher').locator('summary').click()
         await page.getByRole('link', { name: 'Switch to Python' }).click()
         await page.waitForLoadState()
@@ -23,6 +23,6 @@ test.describe('change programming language', () => {
         await page.getByRole('button', { name: 'I want to play Level 1 - Battery Level' }).click()
         const currentFunctionPanel = page.getByTestId('current-function')
         const codeLines = currentFunctionPanel.locator('code')
-        await expect(codeLines).toContainText('def powerMode(batteryLevel):    return None')
+        await expect(codeLines).toContainText('def powerMode(batteryLevel):    return ""')
     })
 })

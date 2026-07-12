@@ -2,7 +2,7 @@ import { test, expect } from '../fixture/fixture-coverage'
 
 test.describe('level start', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('/?speed=fast')
+        await page.goto('/?speed=fast&picker=fixed')
         await page.getByRole('button', { name: 'I want to play Level 1 - Battery Level' }).click()
     })
 
@@ -14,7 +14,7 @@ test.describe('level start', () => {
     test('has specification panel', async ({ page }) => {
         const specificationPanel = page.getByTestId('specification')
         await expect(specificationPanel).toContainText('Specification (Level 1 - Battery Level)')
-        await expect(specificationPanel).toContainText('A smartphone normally operates in Normal Mode, but when the battery level is less than 20, it operates in Low Power Mode.')
+        await expect(specificationPanel).toContainText('A smartphone normally operates in NORMAL MODE, but when the battery level is less than 20, it operates in LOW POWER MODE.')
     })
 
     test('has NO unit tests panel', async ({ page }) => {
@@ -25,7 +25,7 @@ test.describe('level start', () => {
     test('has the simplest candidate in the current function panel', async ({ page }) => {
         const currentFunctionPanel = page.getByTestId('current-function')
         const codeLines = currentFunctionPanel.locator('code')
-        await expect(codeLines).toContainText('function powerMode(batteryLevel) {  return undefined}')
+        await expect(codeLines).toContainText('function powerMode(batteryLevel) {  return ""}')
     })
 
     test('has NO the function panel', async ({ page }) => {

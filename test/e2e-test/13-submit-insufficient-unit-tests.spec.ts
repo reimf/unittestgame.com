@@ -14,7 +14,7 @@ test.describe('submit insufficient unit tests', () => {
 
     test('has unit test in not according message', async ({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('isAllowedToVote(0) === undefined')
+        await expect(messages).toContainText('isAllowedToVote(18) === false')
     })
 
     test('has age field', async ({ page }) => {

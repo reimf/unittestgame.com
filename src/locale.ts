@@ -456,24 +456,24 @@ export class Locale {
 
     public batteryLevelSpecification(): LocalizedText {
         return this.localize({
-            en: 'A smartphone normally operates in `Normal Mode`, ' +
+            en: 'A smartphone normally operates in `NORMAL MODE`, ' +
                 'but when the battery level is less than `20`, ' +
-                'it operates in `Low Power Mode`.',
-            nl: 'Een smartphone werkt normaal in `Normal Mode`, ' +
+                'it operates in `LOW POWER MODE`.',
+            nl: 'Een smartphone werkt normaal in `NORMAL MODE`, ' +
                 'maar wanneer het batterijpercentage minder dan `20` is, ' +
-                'werkt een smartphone in `Low Power Mode`.',
-            de: 'Ein Smartphone funktioniert normalerweise im `Normal Mode`, ' +
+                'werkt een smartphone in `LOW POWER MODE`.',
+            de: 'Ein Smartphone funktioniert normalerweise im `NORMAL MODE`, ' +
                 'aber wenn der Akkustand unter `20` liegt, ' +
-                'funktioniert es im `Low Power Mode`.',
-            fr: 'Un smartphone fonctionne normalement en `Normal Mode`, ' +
+                'funktioniert es im `LOW POWER MODE`.',
+            fr: 'Un smartphone fonctionne normalement en `NORMAL MODE`, ' +
                 'mais lorsque le niveau de batterie est inférieur à `20`, ' +
-                'il fonctionne en `Low Power Mode`.',
-            es: 'Un smartphone normalmente funciona en `Normal Mode`, ' +
+                'il fonctionne en `LOW POWER MODE`.',
+            es: 'Un smartphone normalmente funciona en `NORMAL MODE`, ' +
                 'pero cuando el nivel de batería es inferior a `20`, ' +
-                'funciona en `Low Power Mode`.',
-            it: 'Uno smartphone normalmente funziona in `Normal Mode`, ' +
+                'funciona en `LOW POWER MODE`.',
+            it: 'Uno smartphone normalmente funziona in `NORMAL MODE`, ' +
                 'ma quando il livello della batteria è inferiore a `20`, ' +
-                'funziona in `Low Power Mode`.',
+                'funziona in `LOW POWER MODE`.',
         })
     }
 
@@ -498,84 +498,84 @@ export class Locale {
         return this.localize({
             en: 'The *Specification* contains the number `20`. ' +
                 'That is a good starting point. ' +
-                'When the battery level is `20`, the function must return `Normal Mode`.',
+                'When the battery level is `20`, the function must return `NORMAL MODE`.',
             nl: 'De *Specificatie* bevat het getal 20. ' +
                 'Dat is een goed startpunt. ' +
-                'Wanneer het batterijpercentage `20` is moet de functie `Normal Mode` teruggeven.',
+                'Wanneer het batterijpercentage `20` is moet de functie `NORMAL MODE` teruggeven.',
             de: 'Die *Spezifikation* enthält die Zahl `20`. ' +
                 'Das ist ein guter Ausgangspunkt. ' +
-                'Wenn der Akkustand `20` ist, muss die Funktion `Normal Mode` zurückgeben.',
+                'Wenn der Akkustand `20` ist, muss die Funktion `NORMAL MODE` zurückgeben.',
             fr: 'La *Spécification* contient le nombre `20`. ' +
                 'C\'est un bon point de départ. ' +
-                'Quand le niveau de batterie est `20`, la fonction doit retourner `Normal Mode`.',
+                'Quand le niveau de batterie est `20`, la fonction doit retourner `NORMAL MODE`.',
             es: 'La *Especificación* contiene el número `20`. ' +
                 'Ese es un buen punto de partida. ' +
-                'Cuando el nivel de batería es `20`, la función debe retornar `Normal Mode`.',
+                'Cuando el nivel de batería es `20`, la función debe retornar `NORMAL MODE`.',
             it: 'La *Specifica* contiene il numero `20`. ' +
                 'Questo è un buon punto di partenza. ' +
-                'Quando il livello della batteria è `20`, la funzione deve restituire `Normal Mode`.',
+                'Quando il livello della batteria è `20`, la funzione deve restituire `NORMAL MODE`.',
         })
     }
 
     public addBatteryLevel19(): LocalizedText {
         return this.localize({
-            en: 'The *Current Function* now always returns `Normal Mode`, ' +
-                'but the *Specification* says battery level `19` must return `Low Power Mode`. ' +
+            en: 'The *Current Function* now always returns `NORMAL MODE`, ' +
+                'but the *Specification* says battery level `19` must return `LOW POWER MODE`. ' +
                 'Add a unit test for that.',
-            nl: 'De *Huidige Functie* geeft nu altijd `Normal Mode` terug, ' +
-                'maar de *Specificatie* zegt dat batterijpercentage `19` `Low Power Mode` moet teruggeven. ' +
+            nl: 'De *Huidige Functie* geeft nu altijd `NORMAL MODE` terug, ' +
+                'maar de *Specificatie* zegt dat batterijpercentage `19` `LOW POWER MODE` moet teruggeven. ' +
                 'Voeg daar een unit test voor toe.',
-            de: 'Die *Aktuelle Funktion* gibt jetzt immer `Normal Mode` zurück, ' +
-                'aber die *Spezifikation* sagt, dass Akkustand `19` `Low Power Mode` zurückgeben muss. ' +
+            de: 'Die *Aktuelle Funktion* gibt jetzt immer `NORMAL MODE` zurück, ' +
+                'aber die *Spezifikation* sagt, dass Akkustand `19` `LOW POWER MODE` zurückgeben muss. ' +
                 'Füge dafür einen Unit-Test hinzu.',
-            fr: 'La *Fonction Actuelle* retourne maintenant toujours `Normal Mode`, ' +
-                'mais la *Spécification* dit que le niveau de batterie `19` doit retourner `Low Power Mode`. ' +
+            fr: 'La *Fonction Actuelle* retourne maintenant toujours `NORMAL MODE`, ' +
+                'mais la *Spécification* dit que le niveau de batterie `19` doit retourner `LOW POWER MODE`. ' +
                 'Ajoute un unit test pour cela.',
-            es: 'La *Función Actual* ahora siempre retorna `Normal Mode`, ' +
-                'pero la *Especificación* dice que el nivel de batería `19` debe retornar `Low Power Mode`. ' +
+            es: 'La *Función Actual* ahora siempre retorna `NORMAL MODE`, ' +
+                'pero la *Especificación* dice que el nivel de batería `19` debe retornar `LOW POWER MODE`. ' +
                 'Añade un unit test para eso.',
-            it: 'La *Funzione Attuale* ora restituisce sempre `Normal Mode`, ' +
-                'ma la *Specifica* dice che il livello della batteria `19` deve restituire `Low Power Mode`. ' +
+            it: 'La *Funzione Attuale* ora restituisce sempre `NORMAL MODE`, ' +
+                'ma la *Specifica* dice che il livello della batteria `19` deve restituire `LOW POWER MODE`. ' +
                 'Aggiungi un unit test per questo.',
         })
     }
 
     public submitUnitTestsFirst(): LocalizedText {
         return this.localize({
-            en: 'The *Current Function* can now return either `Normal Mode` or `Low Power Mode`. ' +
+            en: 'The *Current Function* can now return either `NORMAL MODE` or `LOW POWER MODE`. ' +
                 'Submit the *Unit Tests* to check if the *Current Function* matches the *Specification*.',
-            nl: 'De *Huidige Functie* kan nu `Normal Mode` of `Low Power Mode` teruggeven. ' +
+            nl: 'De *Huidige Functie* kan nu `NORMAL MODE` of `LOW POWER MODE` teruggeven. ' +
                 'Lever de *Unit Testen* in om te controleren of de *Huidige Functie* voldoet aan de *Specificatie*.',
-            de: 'Die *Aktuelle Funktion* kann jetzt entweder `Normal Mode` oder `Low Power Mode` zurückgeben. ' +
+            de: 'Die *Aktuelle Funktion* kann jetzt entweder `NORMAL MODE` oder `LOW POWER MODE` zurückgeben. ' +
                 'Reiche die *Unit-Tests* ein, um zu prüfen, ob die *Aktuelle Funktion* der *Spezifikation* entspricht.',
-            fr: 'La *Fonction Actuelle* peut maintenant retourner soit `Normal Mode` soit `Low Power Mode`. ' +
+            fr: 'La *Fonction Actuelle* peut maintenant retourner soit `NORMAL MODE` soit `LOW POWER MODE`. ' +
                 'Soumets les *Unit Tests* pour vérifier si la *Fonction Actuelle* correspond à la *Spécification*.',
-            es: 'La *Función Actual* ahora puede retornar `Normal Mode` o `Low Power Mode`. ' +
+            es: 'La *Función Actual* ahora puede retornar `NORMAL MODE` o `LOW POWER MODE`. ' +
                 'Envía los *Unit Tests* para comprobar si la *Función Actual* coincide con la *Especificación*.',
-            it: 'La *Funzione Attuale* ora può restituire `Normal Mode` o `Low Power Mode`. ' +
+            it: 'La *Funzione Attuale* ora può restituire `NORMAL MODE` o `LOW POWER MODE`. ' +
                 'Invia i *Unit Tests* per verificare se la *Funzione Attuale* corrisponde alla *Specifica*.',
         })
     }
 
     public addBatteryLevel21(): LocalizedText {
         return this.localize({
-            en: 'The *Current Function* now returns `Normal Mode` only for battery level `20`. ' +
-                'The *Specification* says `21` must also return `Normal Mode`. ' +
+            en: 'The *Current Function* now returns `NORMAL MODE` only for battery level `20`. ' +
+                'The *Specification* says `21` must also return `NORMAL MODE`. ' +
                 'Add a unit test for that.',
-            nl: 'De *Huidige Functie* geeft nu alleen `Normal Mode` terug voor batterijpercentage `20`. ' +
-                'De *Specificatie* zegt dat `21` ook `Normal Mode` moet teruggeven. ' +
+            nl: 'De *Huidige Functie* geeft nu alleen `NORMAL MODE` terug voor batterijpercentage `20`. ' +
+                'De *Specificatie* zegt dat `21` ook `NORMAL MODE` moet teruggeven. ' +
                 'Voeg daar een unit test voor toe.',
-            de: 'Die *Aktuelle Funktion* gibt jetzt `Normal Mode` nur für Akkustand `20` zurück. ' +
-                'Die *Spezifikation* sagt, dass `21` auch `Normal Mode` zurückgeben muss. ' +
+            de: 'Die *Aktuelle Funktion* gibt jetzt `NORMAL MODE` nur für Akkustand `20` zurück. ' +
+                'Die *Spezifikation* sagt, dass `21` auch `NORMAL MODE` zurückgeben muss. ' +
                 'Füge dafür einen Unit-Test hinzu.',
-            fr: 'La *Fonction Actuelle* retourne maintenant `Normal Mode` uniquement pour le niveau de batterie `20`. ' +
-                'La *Spécification* dit que `21` doit aussi retourner `Normal Mode`. ' +
+            fr: 'La *Fonction Actuelle* retourne maintenant `NORMAL MODE` uniquement pour le niveau de batterie `20`. ' +
+                'La *Spécification* dit que `21` doit aussi retourner `NORMAL MODE`. ' +
                 'Ajoute un unit test pour cela.',
-            es: 'La *Función Actual* ahora retorna `Normal Mode` solo para el nivel de batería `20`. ' +
-                'La *Especificación* dice que `21` también debe retornar `Normal Mode`. ' +
+            es: 'La *Función Actual* ahora retorna `NORMAL MODE` solo para el nivel de batería `20`. ' +
+                'La *Especificación* dice que `21` también debe retornar `NORMAL MODE`. ' +
                 'Añade un unit test para eso.',
-            it: 'La *Funzione Attuale* ora restituisce `Normal Mode` solo per il livello della batteria `20`. ' +
-                'La *Specifica* dice che `21` deve anche restituire `Normal Mode`. ' +
+            it: 'La *Funzione Attuale* ora restituisce `NORMAL MODE` solo per il livello della batteria `20`. ' +
+                'La *Specifica* dice che `21` deve anche restituire `NORMAL MODE`. ' +
                 'Aggiungi un unit test per questo.',
         })
     }
@@ -593,23 +593,23 @@ export class Locale {
 
     public addBatteryLevel18(): LocalizedText {
         return this.localize({
-            en: 'The *Current Function* now returns `Low Power Mode` only for battery level `19`. ' +
-                'The *Specification* says `18` must also return `Low Power Mode`. ' +
+            en: 'The *Current Function* now returns `LOW POWER MODE` only for battery level `19`. ' +
+                'The *Specification* says `18` must also return `LOW POWER MODE`. ' +
                 'Add a unit test for that.',
-            nl: 'De *Huidige Functie* geeft nu alleen `Low Power Mode` terug voor batterijpercentage `19`. ' +
-                'De *Specificatie* zegt dat `18` ook `Low Power Mode` moet teruggeven. ' +
+            nl: 'De *Huidige Functie* geeft nu alleen `LOW POWER MODE` terug voor batterijpercentage `19`. ' +
+                'De *Specificatie* zegt dat `18` ook `LOW POWER MODE` moet teruggeven. ' +
                 'Voeg daar een unit test voor toe.',
-            de: 'Die *Aktuelle Funktion* gibt jetzt `Low Power Mode` nur für Akkustand `19` zurück. ' +
-                'Die *Spezifikation* sagt, dass `18` auch `Low Power Mode` zurückgeben muss. ' +
+            de: 'Die *Aktuelle Funktion* gibt jetzt `LOW POWER MODE` nur für Akkustand `19` zurück. ' +
+                'Die *Spezifikation* sagt, dass `18` auch `LOW POWER MODE` zurückgeben muss. ' +
                 'Füge dafür einen Unit-Test hinzu.',
-            fr: 'La *Fonction Actuelle* retourne maintenant `Low Power Mode` uniquement pour le niveau de batterie `19`. ' +
-                'La *Spécification* dit que `18` doit aussi retourner `Low Power Mode`. ' +
+            fr: 'La *Fonction Actuelle* retourne maintenant `LOW POWER MODE` uniquement pour le niveau de batterie `19`. ' +
+                'La *Spécification* dit que `18` doit aussi retourner `LOW POWER MODE`. ' +
                 'Ajoute un unit test pour cela.',
-            es: 'La *Función Actual* ahora retorna `Low Power Mode` solo para el nivel de batería `19`. ' +
-                'La *Especificación* dice que `18` también debe retornar `Low Power Mode`. ' +
+            es: 'La *Función Actual* ahora retorna `LOW POWER MODE` solo para el nivel de batería `19`. ' +
+                'La *Especificación* dice que `18` también debe retornar `LOW POWER MODE`. ' +
                 'Añade un unit test para eso.',
-            it: 'La *Funzione Attuale* ora restituisce `Low Power Mode` solo per il livello della batteria `19`. ' +
-                'La *Specifica* dice che `18` deve anche restituire `Low Power Mode`. ' +
+            it: 'La *Funzione Attuale* ora restituisce `LOW POWER MODE` solo per il livello della batteria `19`. ' +
+                'La *Specifica* dice che `18` deve anche restituire `LOW POWER MODE`. ' +
                 'Aggiungi un unit test per questo.',
         })
     }
@@ -638,30 +638,30 @@ export class Locale {
 
     public fizzBuzzSpecification(): LocalizedText {
         return this.localize({
-            en: 'Return `Fizz` if the number is divisible by 3, ' +
-                '`Buzz` if divisible by 5, ' +
-                '`FizzBuzz` if divisible by both 3 and 5, ' +
-                'and `Other` for any other number.',
-            nl: 'Geef `Fizz` terug als het getal deelbaar is door 3, ' +
-                '`Buzz` als het deelbaar is door 5, ' +
-                '`FizzBuzz` als het deelbaar is door zowel 3 als 5, ' +
-                'en `Other` voor elk ander getal.',
-            de: 'Gib `Fizz` zurück, wenn die Zahl durch 3 teilbar ist, ' +
-                '`Buzz` wenn sie durch 5 teilbar ist, ' +
-                '`FizzBuzz` wenn sie durch 3 und 5 teilbar ist, ' +
-                'und `Other` für jede andere Zahl.',
-            fr: 'Retourne `Fizz` si le nombre est divisible par 3, ' +
-                '`Buzz` s\'il est divisible par 5, ' +
-                '`FizzBuzz` s\'il est divisible par 3 et par 5, ' +
-                'et `Other` pour tout autre nombre.',
-            es: 'Retorna `Fizz` si el número es divisible por 3, ' +
-                '`Buzz` si es divisible por 5, ' +
-                '`FizzBuzz` si es divisible por 3 y por 5, ' +
-                'y `Other` para cualquier otro número.',
-            it: 'Restituisci `Fizz` se il numero è divisibile per 3, ' +
-                '`Buzz` se è divisibile per 5, ' +
-                '`FizzBuzz` se è divisibile per 3 e per 5, ' +
-                'e `Other` per qualsiasi altro numero.',
+            en: 'Return `FIZZ` if the number is divisible by 3, ' +
+                '`BUZZ` if divisible by 5, ' +
+                '`FIZZBUZZ` if divisible by both 3 and 5, ' +
+                'and the number itself for any other number.',
+            nl: 'Geef `FIZZ` terug als het getal deelbaar is door 3, ' +
+                '`BUZZ` als het deelbaar is door 5, ' +
+                '`FIZZBUZZ` als het deelbaar is door zowel 3 als 5, ' +
+                'en het getal zelf voor elk ander getal.',
+            de: 'Gib `FIZZ` zurück, wenn die Zahl durch 3 teilbar ist, ' +
+                '`BUZZ` wenn sie durch 5 teilbar ist, ' +
+                '`FIZZBUZZ` wenn sie durch 3 und 5 teilbar ist, ' +
+                'und das getal itself für jede andere Zahl.',
+            fr: 'Retourne `FIZZ` si le nombre est divisible par 3, ' +
+                '`BUZZ` s\'il est divisible par 5, ' +
+                '`FIZZBUZZ` s\'il est divisible par 3 et par 5, ' +
+                'et le nombre lui-même pour tout autre nombre.',
+            es: 'Retorna `FIZZ` si el número es divisible por 3, ' +
+                '`BUZZ` si es divisible por 5, ' +
+                '`FIZZBUZZ` si es divisible por 3 y por 5, ' +
+                'y el número mismo para cualquier otro número.',
+            it: 'Restituisci `FIZZ` se il numero è divisibile per 3, ' +
+                '`BUZZ` se è divisibile per 5, ' +
+                '`FIZZBUZZ` se è divisibile per 3 e per 5, ' +
+                'e il numero stesso per qualsiasi altro numero.',
         })
     }
 
@@ -747,46 +747,52 @@ export class Locale {
             '+-------------------+'
         )
         return this.localize({
-            en: 'Return the formatted speed in kilometers per hour. ' +
-                'Use one decimal place if it fits on the display (e.g. 13 → `13.0`). ' +
-                'Otherwise, round to an integer (e.g. 87.6 → `88`). ' +
+            en: 'The speed sensor reports the speed in tenths of kilometers per hour (e.g. 131 means 13.1 km/h). ' +
+                'Return the speed as shown on the display. ' +
+                'Use one decimal place if it fits on the display (e.g. 131 → `13.1`). ' +
+                'Otherwise, show whole kilometers only, dropping the decimal (e.g. 876 → `87`). ' +
                 'If the car isn\'t moving, return `START`. ' +
-                'If the speed no longer fits on the display, return `DANGER` (e.g. 300 → `DANGER`).\n' +
+                'If the speed no longer fits on the display, return `DANGER` (e.g. 3000 → `DANGER`).\n' +
                 'The display looks like this, where every X is a LED light:\n' +
                 display,
-            nl: 'Geef de geformatteerde snelheid in kilometer per uur. ' +
-                'Gebruik één decimaal als het op het scherm past (bijvoorbeeld 13 → `13.0`). ' +
-                'Rond anders af op een geheel getal (bijvoorbeeld 87.6 → `88`). ' +
+            nl: 'De snelheidssensor geeft de snelheid in tienden van kilometers per uur (bijvoorbeeld 131 betekent 13.1 km/u). ' +
+                'Geef de snelheid terug zoals die op het scherm wordt getoond. ' +
+                'Gebruik één decimaal als het op het scherm past (bijvoorbeeld 131 → `13.1`). ' +
+                'Toon anders alleen hele kilometers, zonder de decimaal (bijvoorbeeld 876 → `87`). ' +
                 'Als de auto niet beweegt, geef `START` terug. ' +
-                'Als de snelheid niet meer op het scherm past, geef `DANGER` terug (bijvoorbeeld 300 → `DANGER`).\n' +
+                'Als de snelheid niet meer op het scherm past, geef `DANGER` terug (bijvoorbeeld 3000 → `DANGER`).\n' +
                 'Het scherm ziet er zo uit, waarbij elke X een LED-lampje is:\n' +
                 display,
-            de: 'Gib die formatierte Geschwindigkeit in Kilometern pro Stunde zurück. ' +
-                'Verwende eine Dezimalstelle, wenn sie auf das Display passt (z.B. 13 → `13.0`). ' +
-                'Runde sonst auf eine ganze Zahl (z.B. 87.6 → `88`). ' +
+            de: 'Der Geschwindigkeitssensor meldet die Geschwindigkeit in Zehnteln von Kilometern pro Stunde (z.B. 131 bedeutet 13.1 km/h). ' +
+                'Gib die Geschwindigkeit zurück, wie sie auf dem Display angezeigt wird. ' +
+                'Verwende eine Dezimalstelle, wenn sie auf das Display passt (z.B. 131 → `13.1`). ' +
+                'Zeige sonst nur ganze Kilometer, ohne die Dezimalstelle (z.B. 876 → `87`). ' +
                 'Wenn das Auto nicht fährt, gib `START` zurück. ' +
-                'Wenn die Geschwindigkeit nicht mehr auf das Display passt, gib `DANGER` zurück (z.B. 300 → `DANGER`).\n' +
+                'Wenn die Geschwindigkeit nicht mehr auf das Display passt, gib `DANGER` zurück (z.B. 3000 → `DANGER`).\n' +
                 'Das Display sieht so aus, wobei jedes X eine LED-Leuchte ist:\n' +
                 display,
-            fr: 'Retourne la vitesse formatée en kilomètres par heure. ' +
-                'Utilise une décimale si elle tient sur l\'écran (ex. 13 → `13.0`). ' +
-                'Sinon, arrondit à un entier (ex. 87.6 → `88`). ' +
+            fr: 'Le capteur de vitesse indique la vitesse en dixièmes de kilomètres par heure (ex. 131 signifie 13.1 km/h). ' +
+                'Retourne la vitesse telle qu\'affichée sur l\'écran. ' +
+                'Utilise une décimale si elle tient sur l\'écran (ex. 131 → `13.1`). ' +
+                'Sinon, affiche uniquement les kilomètres entiers, sans la décimale (ex. 876 → `87`). ' +
                 'Si la voiture ne bouge pas, retourne `START`. ' +
-                'Si la vitesse ne tient plus sur l\'écran, retourne `DANGER` (ex. 300 → `DANGER`).\n' +
+                'Si la vitesse ne tient plus sur l\'écran, retourne `DANGER` (ex. 3000 → `DANGER`).\n' +
                 'L\'écran ressemble à ceci, où chaque X est une LED :\n' +
                 display,
-            es: 'Retorna la velocidad formateada en kilómetros por hora. ' +
-                'Usa un decimal si cabe en la pantalla (ej. 13 → `13.0`). ' +
-                'De lo contrario, redondea a un entero (ej. 87.6 → `88`). ' +
+            es: 'El sensor de velocidad indica la velocidad en décimas de kilómetros por hora (ej. 131 significa 13.1 km/h). ' +
+                'Retorna la velocidad tal como se muestra en la pantalla. ' +
+                'Usa un decimal si cabe en la pantalla (ej. 131 → `13.1`). ' +
+                'De lo contrario, muestra solo kilómetros enteros, sin el decimal (ej. 876 → `87`). ' +
                 'Si el coche no se mueve, retorna `START`. ' +
-                'Si la velocidad ya no cabe en la pantalla, retorna `DANGER` (ej. 300 → `DANGER`).\n' +
+                'Si la velocidad ya no cabe en la pantalla, retorna `DANGER` (ej. 3000 → `DANGER`).\n' +
                 'La pantalla se ve así, donde cada X es una luz LED:\n' +
                 display,
-            it: 'Restituisci la velocità formattata in chilometri all\'ora. ' +
-                'Usa un decimale se entra nel display (es. 13 → `13.0`). ' +
-                'Altrimenti, arrotonda a un intero (es. 87.6 → `88`). ' +
+            it: 'Il sensore di velocità indica la velocità in decimi di chilometri all\'ora (es. 131 significa 13.1 km/h). ' +
+                'Restituisci la velocità come mostrata sul display. ' +
+                'Usa un decimale se entra nel display (es. 131 → `13.1`). ' +
+                'Altrimenti, mostra solo i chilometri interi, senza il decimale (es. 876 → `87`). ' +
                 'Se la macchina non si muove, restituisci `START`. ' +
-                'Se la velocità non entra più nel display, restituisci `DANGER` (es. 300 → `DANGER`).\n' +
+                'Se la velocità non entra più nel display, restituisci `DANGER` (es. 3000 → `DANGER`).\n' +
                 'Il display è così, dove ogni X è una luce LED:\n' +
                 display,
         })
@@ -794,27 +800,27 @@ export class Locale {
 
     public triangleTypeSpecification(): LocalizedText {
         return this.localize({
-            en: 'Return the type of the triangle: `equilateral`, `isosceles`, or `scalene`. ' +
-                'A triangle is `equilateral` if all three sides have the same length. ' +
-                'A triangle is `isosceles` if exactly two sides have the same length. ' +
-                'A triangle is `scalene` if all three sides have different lengths.',
-            nl: 'Geef het type van de driehoek terug: `equilateral` (gelijkzijdig), `isosceles` (gelijkbenig) of `scalene` (ongelijkzijdig). ' +
+            en: 'Return the type of the triangle: `EQUILATERAL`, `ISOSCELES`, or `SCALENE`. ' +
+                'A triangle is `EQUILATERAL` if all three sides have the same length. ' +
+                'A triangle is `ISOSCELES` if exactly two sides have the same length. ' +
+                'A triangle is `SCALENE` if all three sides have different lengths.',
+            nl: 'Geef het type van de driehoek terug: `EQUILATERAL` (gelijkzijdig), `ISOSCELES` (gelijkbenig) of `SCALENE` (ongelijkzijdig). ' +
                 'Een driehoek is gelijkzijdig als alle drie de zijden even lang zijn. ' +
                 'Een driehoek is gelijkbenig als precies twee zijden even lang zijn. ' +
                 'Een driehoek is ongelijkzijdig als alle drie de zijden verschillende lengtes hebben.',
-            de: 'Gib den Typ des Dreiecks zurück: `equilateral` (gleichseitig), `isosceles` (gleichschenklig) oder `scalene` (ungleichseitig). ' +
+            de: 'Gib den Typ des Dreiecks zurück: `EQUILATERAL` (gleichseitig), `ISOSCELES` (gleichschenklig) oder `SCALENE` (ungleichseitig). ' +
                 'Ein Dreieck ist gleichseitig, wenn alle drei Seiten gleich lang sind. ' +
                 'Ein Dreieck ist gleichschenklig, wenn genau zwei Seiten gleich lang sind. ' +
                 'Ein Dreieck ist ungleichseitig, wenn alle drei Seiten unterschiedliche Längen haben.',
-            fr: 'Retourne le type du triangle : `equilateral` (équilatéral), `isosceles` (isocèle) ou `scalene` (scalène). ' +
+            fr: 'Retourne le type du triangle : `EQUILATERAL` (équilatéral), `ISOSCELES` (isocèle) ou `SCALENE` (scalène). ' +
                 'Un triangle est équilatéral si les trois côtés ont la même longueur. ' +
                 'Un triangle est isocèle si exactement deux côtés ont la même longueur. ' +
                 'Un triangle est scalène si les trois côtés ont des longueurs différentes.',
-            es: 'Retorna el tipo de triángulo: `equilateral` (equilátero), `isosceles` (isósceles) o `scalene` (escaleno). ' +
+            es: 'Retorna el tipo de triángulo: `EQUILATERAL` (equilátero), `ISOSCELES` (isósceles) o `SCALENE` (escaleno). ' +
                 'Un triángulo es equilátero si los tres lados tienen la misma longitud. ' +
                 'Un triángulo es isósceles si exactamente dos lados tienen la misma longitud. ' +
                 'Un triángulo es escaleno si los tres lados tienen longitudes diferentes.',
-            it: 'Restituisci il tipo di triangolo: `equilateral` (equilatero), `isosceles` (isoscele) o `scalene` (scaleno). ' +
+            it: 'Restituisci il tipo di triangolo: `EQUILATERAL` (equilatero), `ISOSCELES` (isoscele) o `SCALENE` (scaleno). ' +
                 'Un triangolo è equilatero se tutti e tre i lati hanno la stessa lunghezza. ' +
                 'Un triangolo è isoscele se esattamente due lati hanno la stessa lunghezza. ' +
                 'Un triangolo è scaleno se tutti e tre i lati hanno lunghezze diverse.',
@@ -834,24 +840,24 @@ export class Locale {
 
     public reviewSpecification(): LocalizedText {
         return this.localize({
-            en: 'Return `Good` if the price is less than `20` and the quality is at least `7`. ' +
-                'Return `Bad` if the price is `20` or more and the quality is less than `7`. ' +
-                'Return `Ok` in all other cases.',
-            nl: 'Geef `Good` terug als de prijs minder dan `20` is en de kwaliteit ten minste `7` is. ' +
-                'Geef `Bad` terug als de prijs `20` of meer is en de kwaliteit minder dan `7` is. ' +
-                'Geef `Ok` terug in alle andere gevallen.',
-            de: 'Gib `Good` zurück, wenn der Preis weniger als `20` ist und die Qualität mindestens `7` beträgt. ' +
-                'Gib `Bad` zurück, wenn der Preis `20` oder mehr ist und die Qualität weniger als `7` beträgt. ' +
-                'Gib `Ok` in allen anderen Fällen zurück.',
-            fr: 'Retourne `Good` si le prix est inférieur à `20` et la qualité est au moins `7`. ' +
-                'Retourne `Bad` si le prix est `20` ou plus et la qualité est inférieure à `7`. ' +
-                'Retourne `Ok` dans tous les autres cas.',
-            es: 'Retorna `Good` si el precio es inferior a `20` y la calidad es al menos `7`. ' +
-                'Retorna `Bad` si el precio es `20` o más y la calidad es inferior a `7`. ' +
-                'Retorna `Ok` en todos los demás casos.',
-            it: 'Restituisci `Good` se il prezzo è inferiore a `20` e la qualità è almeno `7`. ' +
-                'Restituisci `Bad` se il prezzo è `20` o più e la qualità è inferiore a `7`. ' +
-                'Restituisci `Ok` in tutti gli altri casi.',
+            en: 'Return `GOOD` if the price is less than `20` and the quality is at least `7`. ' +
+                'Return `BAD` if the price is `20` or more and the quality is less than `7`. ' +
+                'Return `OK` in all other cases.',
+            nl: 'Geef `GOOD` terug als de prijs minder dan `20` is en de kwaliteit ten minste `7` is. ' +
+                'Geef `BAD` terug als de prijs `20` of meer is en de kwaliteit minder dan `7` is. ' +
+                'Geef `OK` terug in alle andere gevallen.',
+            de: 'Gib `GOOD` zurück, wenn der Preis weniger als `20` ist und die Qualität mindestens `7` beträgt. ' +
+                'Gib `BAD` zurück, wenn der Preis `20` oder mehr ist und die Qualität weniger als `7` beträgt. ' +
+                'Gib `OK` in allen anderen Fällen zurück.',
+            fr: 'Retourne `GOOD` si le prix est inférieur à `20` et la qualité est au moins `7`. ' +
+                'Retourne `BAD` si le prix est `20` ou plus et la qualité est inférieure à `7`. ' +
+                'Retourne `OK` dans tous les autres cas.',
+            es: 'Retorna `GOOD` si el precio es inferior a `20` y la calidad es al menos `7`. ' +
+                'Retorna `BAD` si el precio es `20` o más y la calidad es inferior a `7`. ' +
+                'Retorna `OK` en todos los demás casos.',
+            it: 'Restituisci `GOOD` se il prezzo è inferiore a `20` e la qualità è almeno `7`. ' +
+                'Restituisci `BAD` se il prezzo è `20` o più e la qualità è inferiore a `7`. ' +
+                'Restituisci `OK` in tutti gli altri casi.',
         })
     }
 

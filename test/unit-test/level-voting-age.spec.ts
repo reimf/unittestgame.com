@@ -19,7 +19,7 @@ test.describe('class VotingAge', () => {
     })
 
     test('has the correct amount of candidates', () => {
-        expect(level.candidates).toHaveLength(42)
+        expect(level.candidates).toHaveLength(28)
     })
 
     test('has the correct amount of minimal unit tests', () => {

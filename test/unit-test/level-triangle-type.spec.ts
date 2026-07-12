@@ -19,7 +19,7 @@ test.describe('class TriangleType', () => {
     })
 
     test('has the correct amount of candidates', () => {
-        expect(level.candidates).toHaveLength(216)
+        expect(level.candidates).toHaveLength(162)
     })
 
     test('has the correct amount of minimal unit tests', () => {

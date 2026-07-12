@@ -30,39 +30,39 @@ export class BatteryLevel extends Level<[number], string> {
     }
 
     protected getUnit(): Variable {
-        return new RadioVariable(Locale.bless('Power Mode'), 'powerMode', [Locale.bless('Normal Mode'), Locale.bless('Low Power Mode')])
+        return new RadioVariable(Locale.bless('Power Mode'), 'powerMode', [Locale.bless('NORMAL MODE'), Locale.bless('LOW POWER MODE')])
     }
 
     protected getCandidateElements(): string[][] {
         return [
             [
-                'if (batteryLevel >= 18) return "Normal Mode"',
-                'if (batteryLevel >= 19) return "Normal Mode"',
-                'if (batteryLevel >= 20) return "Normal Mode"',
-                'if (batteryLevel >= 21) return "Normal Mode"',
-                'if (batteryLevel >= 22) return "Normal Mode"',
-                'if (batteryLevel <= 19) return "Low Power Mode"',
-                'if (batteryLevel <= 20) return "Low Power Mode"',
-                'if (batteryLevel <= 21) return "Low Power Mode"',
-                'if (batteryLevel <= 22) return "Low Power Mode"',
-                'if (batteryLevel <= 23) return "Low Power Mode"',
-                'if (batteryLevel === 20) return "Normal Mode"',
-                'if (batteryLevel === 19) return "Low Power Mode"',
+                'if (batteryLevel >= 18) return "NORMAL MODE"',
+                'if (batteryLevel >= 19) return "NORMAL MODE"',
+                'if (batteryLevel >= 20) return "NORMAL MODE"',
+                'if (batteryLevel >= 21) return "NORMAL MODE"',
+                'if (batteryLevel >= 22) return "NORMAL MODE"',
+                'if (batteryLevel <= 19) return "LOW POWER MODE"',
+                'if (batteryLevel <= 20) return "LOW POWER MODE"',
+                'if (batteryLevel <= 21) return "LOW POWER MODE"',
+                'if (batteryLevel <= 22) return "LOW POWER MODE"',
+                'if (batteryLevel <= 23) return "LOW POWER MODE"',
+                'if (batteryLevel === 20) return "NORMAL MODE"',
+                'if (batteryLevel === 19) return "LOW POWER MODE"',
                 '',
             ],
             [
-                'return "Normal Mode"',
-                'return "Low Power Mode"',
-                'return undefined',
+                'return "NORMAL MODE"',
+                'return "LOW POWER MODE"',
+                'return ""',
             ],
         ]
     }
 
     protected* minimalUnitTestGenerator(): Generator<[[number], string]> {
-        yield [[18], 'Low Power Mode']
-        yield [[19], 'Low Power Mode']
-        yield [[20], 'Normal Mode']
-        yield [[21], 'Normal Mode']
+        yield [[18], 'LOW POWER MODE']
+        yield [[19], 'LOW POWER MODE']
+        yield [[20], 'NORMAL MODE']
+        yield [[21], 'NORMAL MODE']
     }
 
     protected* hintGenerator(): Generator<[number]> {
@@ -74,12 +74,12 @@ export class BatteryLevel extends Level<[number], string> {
         {
             message: this.locale.addBatteryLevel20(),
             batteryLevel: '20',
-            powerMode: 'Normal Mode'
+            powerMode: 'NORMAL MODE'
         },
         {
             message: this.locale.addBatteryLevel19(),
             batteryLevel: '19',
-            powerMode: 'Low Power Mode'
+            powerMode: 'LOW POWER MODE'
         },
         {
             message: this.locale.submitUnitTestsFirst(),
@@ -89,7 +89,7 @@ export class BatteryLevel extends Level<[number], string> {
         {
             message: this.locale.addBatteryLevel21(),
             batteryLevel: '21',
-            powerMode: 'Normal Mode'
+            powerMode: 'NORMAL MODE'
         },
         {
             message: this.locale.submitUnitTestsSecond(),
@@ -99,7 +99,7 @@ export class BatteryLevel extends Level<[number], string> {
         {
             message: this.locale.addBatteryLevel18(),
             batteryLevel: '18',
-            powerMode: 'Low Power Mode'
+            powerMode: 'LOW POWER MODE'
         },
         {
             message: this.locale.submitUnitTestsThird(),

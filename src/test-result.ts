@@ -6,7 +6,7 @@ import { Value } from './variable.js'
 
 export class TestResult<Parameters extends readonly Value[] = readonly Value[], Result extends Value = Value> {
     public readonly unitTest: UnitTest<Parameters, Result>
-    private readonly result: Result|undefined
+    private readonly result: Result
     public readonly passes: boolean
 
     public constructor(candidate: Candidate<Parameters, Result>, unitTest: UnitTest<Parameters, Result>) {

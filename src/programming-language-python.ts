@@ -14,12 +14,11 @@ export class Python extends ProgrammingLanguage {
             .replace(/\bRegExp\((.+?)\)\.test\((.+?)\)/g, 're.search($1, $2) is not None')
             .replace(/\/([^\/]*)\/\.test\((.+?)\)/g, "re.search('$1', $2)")
             .replace(/(\w+)\.length\b/g, 'len($1)')
-            .replace(/(\w+)\.toFixed\((\d+)\)/g, "format($1, '.$2f')")
-            .replace(/(\w+)\.toFixed\(\)/g, "format($1, '.0f')")
+            .replace(/\bMath\.floor\((\w+) \/ (\d+)\) \+ "\." \+ (\w+) % (\d+)/g, 'str($1 // $2) + "." + str($3 % $4)')
+            .replace(/"" \+ Math\.floor\((\w+) \/ (\d+)\)/g, 'str($1 // $2)')
             .replace(/(\w+)\.toString\(\)/g, 'str($1)')
             .replace(/\btrue\b/g, 'True')
             .replace(/\bfalse\b/g, 'False')
-            .replace(/\bundefined\b/g, 'None')
             .replace(/===/g, '==')
             .replace(/!==/g, '!=')
             .replace(/&&/g, 'and')
@@ -41,7 +40,7 @@ export class Python extends ProgrammingLanguage {
             ['variable', /^[a-zA-Z_][a-zA-Z0-9_]*/],
             ['regexp', /^\/\S.*?\//],
             ['string', /^("[^"]*"|'[^']*')/],
-            ['operator', /^(!=|%|\+|<=|<|==|=|>=|>)/],
+            ['operator', /^(!=|%|\+|\/\/|<=|<|==|=|>=|>)/],
             ['punctuation', /^[(){}[\]:,]/],
             ['dot', /^\./],
             ['error', /^.+/],

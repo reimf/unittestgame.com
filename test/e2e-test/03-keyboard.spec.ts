@@ -12,13 +12,13 @@ test.describe('keyboard', () => {
 
     test('has normal mode focused after arrow down', async ({ page }) => {
         await page.keyboard.press('ArrowDown')
-        await expect(page.getByLabel('Normal Mode')).toBeFocused()
+        await expect(page.getByLabel('NORMAL MODE')).toBeFocused()
     })
 
     test('has low power focused after arrow down and arrow right', async ({ page }) => {
         await page.keyboard.press('ArrowDown')
         await page.keyboard.press('ArrowRight')
-        await expect(page.getByLabel('Low Power Mode')).toBeFocused()
+        await expect(page.getByLabel('LOW POWER MODE')).toBeFocused()
     })
 
     test('has add unit test button focused after 2 arrow down', async ({ page }) => {

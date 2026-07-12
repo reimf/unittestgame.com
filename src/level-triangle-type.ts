@@ -24,45 +24,44 @@ export class TriangleType extends Level<[number, number, number], string> {
     }
 
     protected getUnit(): Variable {
-        return new RadioVariable(Locale.bless('Type of triangle'), 'triangleType', [Locale.bless('equilateral'), Locale.bless('isosceles'), Locale.bless('scalene')])
+        return new RadioVariable(Locale.bless('Type of triangle'), 'triangleType', [Locale.bless('EQUILATERAL'), Locale.bless('ISOSCELES'), Locale.bless('SCALENE')])
     }
 
     protected getCandidateElements(): string[][] {
         return [
             [
-                'if (a === b && b === c) return "equilateral"',
-                'if (a === b || b === c || a === c) return "equilateral"',
-                'if (a === b) return "equilateral"',
-                'if (b === c) return "equilateral"',
-                'if (a === c) return "equilateral"',
+                'if (a === b && b === c) return "EQUILATERAL"',
+                'if (a === b || b === c || a === c) return "EQUILATERAL"',
+                'if (a === b) return "EQUILATERAL"',
+                'if (b === c) return "EQUILATERAL"',
+                'if (a === c) return "EQUILATERAL"',
                 '',
             ],
             [
-                'if (a === b || b === c || a === c) return "isosceles"',
-                'if (a === b || b === c) return "isosceles"',
-                'if (a === b || a === c) return "isosceles"',
-                'if (b === c || a === c) return "isosceles"',
-                'if (a === b) return "isosceles"',
-                'if (a === c) return "isosceles"',
-                'if (b === c) return "isosceles"',
-                'if (a !== b && a !== c && b !== c) return "scalene"',
+                'if (a === b || b === c || a === c) return "ISOSCELES"',
+                'if (a === b || b === c) return "ISOSCELES"',
+                'if (a === b || a === c) return "ISOSCELES"',
+                'if (b === c || a === c) return "ISOSCELES"',
+                'if (a === b) return "ISOSCELES"',
+                'if (a === c) return "ISOSCELES"',
+                'if (b === c) return "ISOSCELES"',
+                'if (a !== b && a !== c && b !== c) return "SCALENE"',
                 '',
             ],
             [
-                'return "equilateral"',
-                'return "isosceles"',
-                'return "scalene"',
-                'return undefined',
+                'return "EQUILATERAL"',
+                'return "ISOSCELES"',
+                'return "SCALENE"',
             ],
         ]
     }
 
     protected* minimalUnitTestGenerator(): Generator<[[number, number, number], string]> {
-        yield [[5, 5, 5], 'equilateral']
-        yield [[3, 5, 5], 'isosceles']
-        yield [[5, 3, 5], 'isosceles']
-        yield [[5, 5, 3], 'isosceles']
-        yield [[3, 4, 5], 'scalene']
+        yield [[5, 5, 5], 'EQUILATERAL']
+        yield [[3, 5, 5], 'ISOSCELES']
+        yield [[5, 3, 5], 'ISOSCELES']
+        yield [[5, 5, 3], 'ISOSCELES']
+        yield [[3, 4, 5], 'SCALENE']
     }
 
     protected* hintGenerator(): Generator<[number, number, number]> {

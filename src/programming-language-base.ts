@@ -21,7 +21,6 @@ export abstract class ProgrammingLanguage {
         const currentLines = this.transpile(currentCode, parameters, unit).split('\n')
         if (previousCode === undefined)
             return currentLines
-                .filter(line => line)
                 .map(line => highlighter.highlightTokens(tokenizer.tokens(line)))
         const previousLines = this.transpile(previousCode, parameters, unit).split('\n')
         const length = Math.max(currentLines.length, previousLines.length)

@@ -30,6 +30,7 @@ export class Candidate<Parameters extends readonly Value[] = readonly Value[], R
         const variables = this.getRegEx(code, /\blet\s+(\w+)\b/g)
         const tokens = code
             .replace(/\n/g, ' ') // simplify white space
+            .replace(/false|""/g, ' ') // false and the empty string are free
             .replace(/"[^"]*?"/g, ' _ _ ') // each string is 1 extra point
             .replace(/\(([^(]*?)\)/g, ' _ $1 ') // each function definition/call is 1 extra point
             .replace(/\(([^(]*?)\)/g, ' _ $1 ') // handle nested function calls
@@ -41,20 +42,19 @@ export class Candidate<Parameters extends readonly Value[] = readonly Value[], R
             .replace(/(?<=\d)\.(?=\d)/g, ' _ ') // each float is 1 point extra
             .replace(/\d/g, ' _ ') // each digit is 1 point
             .replace(/\/[^/]*\//g, ' _ _ ') // regex is 1 point extra
-            .replace(/undefined/g, ' ') // undefined is free
             .replace(/(\+|\*|\/|%|<|>|!|\&\&|\|\|)/g, ' _ ') // each operator is 1 point
             .replace(/=+/g, ' _ ') // each comparison operator is 1 point
             .replace(functions, ' _ _ ') // each function is 1 point extra
             .replace(parameters, ' _ _ ') // each parameter is 1 point extra
             .replace(variables, ' _ _ ') // each variable is 1 point extra
             .replace(/\bnew [A-Z][a-zA-Z]*/g, ' _ _ ') // each created object is 1 point extra
-            .replace(/function|return|\{|\}|if|true|false|let/g, ' _ ') // each keyword is 1 point
+            .replace(/function|return|\{|\}|if|true|let/g, ' _ ') // each keyword is 1 point
             .split(/\s+/) // each token is 1 point
             .filter(token => token)
         return tokens.length
     }
 
-    public execute(argumentsList: Parameters): Result|undefined {
+    public execute(argumentsList: Parameters): Result {
         return this.function(...argumentsList)
     }
 

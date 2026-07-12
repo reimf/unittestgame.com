@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 import { JSDOM } from 'jsdom'
-import { RadioVariable, BooleanVariable, TextVariable, IntegerVariable, FloatVariable } from '../../src/variable.js'
+import { RadioVariable, BooleanVariable, TextVariable, IntegerVariable } from '../../src/variable.js'
 import { Locale } from '../../src/locale.js'
 
 const { document } = new JSDOM('<!DOCTYPE html>').window
@@ -9,25 +9,25 @@ global.document = document
 test.describe('class Variable', () => {
     test('subclass RadioVariable', () => {
         const variable = new RadioVariable(Locale.bless('Type of triangle'), 'triangleType', [
-            Locale.bless('equilateral'),
-            Locale.bless('isosceles'),
-            Locale.bless('scalene'),
+            Locale.bless('EQUILATERAL'),
+            Locale.bless('ISOSCELES'),
+            Locale.bless('SCALENE'),
         ])
         const html = variable.toHtml()
         expect(html.getElement().outerHTML).toBe(
             '<p>' +
                 '<span>Type of triangle</span>' +
                 '<label>' +
-                    '<input type="radio" name="triangleType" value="equilateral" required="">' +
-                    'equilateral' +
+                    '<input type="radio" name="triangleType" value="EQUILATERAL" required="">' +
+                    'EQUILATERAL' +
                 '</label>' +
                 '<label>' +
-                    '<input type="radio" name="triangleType" value="isosceles" required="">' +
-                    'isosceles' +
+                    '<input type="radio" name="triangleType" value="ISOSCELES" required="">' +
+                    'ISOSCELES' +
                 '</label>' +
                 '<label>' +
-                    '<input type="radio" name="triangleType" value="scalene" required="">' +
-                    'scalene' +
+                    '<input type="radio" name="triangleType" value="SCALENE" required="">' +
+                    'SCALENE' +
                 '</label>' +
             '</p>'
         )
@@ -77,16 +77,4 @@ test.describe('class Variable', () => {
         )
     })
 
-    test('subclass FloatVariable', () => {
-        const variable = new FloatVariable(Locale.bless('Number'), 'number')
-        const html = variable.toHtml()
-        expect(html.getElement().outerHTML).toBe(
-            '<p>' +
-                '<label>' +
-                    '<span>Number</span>' +
-                    '<input type="text" autocomplete="off" name="number" required="" pattern="[0-9]{1,4}(\\.[0-9])?" title="a floating-point number with at most 4 digits, an optional decimal point and an optional decimal">' +
-                '</label>' +
-            '</p>'
-        )
-    })
 })

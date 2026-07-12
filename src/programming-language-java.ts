@@ -2,9 +2,9 @@ import { ProgrammingLanguage } from './programming-language-base.js'
 import type { TokenTypes } from './highlighter.js'
 import { Variable, BooleanVariable, IntegerVariable } from './variable.js'
 
-export class Csharp extends ProgrammingLanguage {
-    public override readonly id = 'csharp' as const
-    public override readonly name = 'C#'
+export class Java extends ProgrammingLanguage {
+    public override readonly id = 'java' as const
+    public override readonly name = 'Java'
 
     public override transpile(javascriptCode: string, parameters: readonly Variable[], unit: Variable): string {
         return javascriptCode
@@ -16,28 +16,29 @@ export class Csharp extends ProgrammingLanguage {
                 return `static ${this.dataType(unit)} ${name}(${typedParameters}) {`
             })
             .replace(/\blet +/g, 'var ')
-            .replace(/\bnew RegExp\((.+?)\)\.test\((.+?)\)/g, 'Regex.IsMatch($2, $1)')
-            .replace(/\/([^\/]*)\/\.test\((.+?)\)/g, 'Regex.IsMatch($2, "$1")')
-            .replace(/(\w+)\.length\b/g, '$1.Length')
+            .replace(/\bnew RegExp\((.+?)\)\.test\((.+?)\)/g, 'Pattern.compile($1).matcher($2).find()')
+            .replace(/\/([^\/]*)\/\.test\((.+?)\)/g, 'Pattern.compile("$1").matcher($2).find()')
+            .replace(/(\w+)\.length\b/g, '$1.length()')
             .replace(/\bMath\.floor\((\w+) \/ (\d+)\)/g, '$1 / $2')
-            .replace(/(\w+)\.toString\(\)/g, '$1.ToString()')
+            .replace(/(\w+)\.toString\(\)/g, 'String.valueOf($1)')
+            .replace(/^(.*) === ("[^"]*")$/gm, '$2.equals($1)')
             .replace(/===/g, '==')
             .replace(/!==/g, '!=')
             .replace(/^( +.+)$/gm, '$1;')
-            .replace(/^(?=[\s\S]*Regex\.IsMatch\()/, 'using System.Text.RegularExpressions;\n')
+            .replace(/^(?=[\s\S]*Pattern\.compile\()/, 'import java.util.regex.Pattern;\n')
     }
 
     private dataType(variable: Variable): string {
-        if (variable instanceof BooleanVariable) return 'bool'
+        if (variable instanceof BooleanVariable) return 'boolean'
         if (variable instanceof IntegerVariable) return 'int'
-        return 'string'
+        return 'String'
     }
 
     public override getTokenTypes(): TokenTypes {
         return new Map([
             ['whitespace', /^ +/],
             ['number', /^\d+(\.\d+)?/],
-            ['keyword', /^(using|static|var|int|bool|string|if|return)\b/],
+            ['keyword', /^(import|static|var|int|boolean|String|if|return)\b/],
             ['literal', /^(true|false)\b/],
             ['function', /^[a-zA-Z][a-zA-Z0-9]*(?=\()/],
             ['class', /^[A-Z][a-zA-Z]*/],

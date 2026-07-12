@@ -5,13 +5,13 @@ test.describe('asked unit test', () => {
         await page.goto('/?speed=fast')
         await page.getByRole('button', { name: 'I want to play Level 1 - Battery Level' }).click()
         await page.getByLabel('Battery Level').fill('20')
-        await page.getByLabel('Normal Mode').check()
+        await page.getByLabel('NORMAL MODE').check()
         await page.getByRole('button', { name: 'I want to add this unit test' }).click()
     })
 
     test('has unit test message', async ({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('powerMode(20) === "Normal Mode"')
+        await expect(messages).toContainText('powerMode(20) === "NORMAL MODE"')
     })
 
     test('has NOT not asked message', async ({ page }) => {
@@ -26,18 +26,18 @@ test.describe('asked unit test', () => {
 
     test('has added unit test in unit tests panel', async ({ page }) => {
         const unitTestsPanel = page.getByTestId('unit-tests')
-        await expect(unitTestsPanel).toContainText('powerMode(20) === "Normal Mode"')
+        await expect(unitTestsPanel).toContainText('powerMode(20) === "NORMAL MODE"')
     })
 
     test('has updated the current function panel', async ({ page }) => {
         const currentFunctionPanel = page.getByTestId('current-function')
         const codeLines = currentFunctionPanel.locator('code > div')
-        await expect(codeLines).toContainText(['function powerMode(batteryLevel) {', '  return "Normal Mode"', '}'])
+        await expect(codeLines).toContainText(['function powerMode(batteryLevel) {', '  return "NORMAL MODE"', '}'])
     })
 
     test('has before menu message', async ({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('The Current Function now always returns Normal Mode')
+        await expect(messages).toContainText('The Current Function now always returns NORMAL MODE')
     })
 
     test('has a battery level field', async ({ page }) => {

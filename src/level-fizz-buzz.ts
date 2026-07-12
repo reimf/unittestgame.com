@@ -1,6 +1,6 @@
 import { Level } from './level-base.js'
 import { Locale, LocalizedText } from './locale.js'
-import { Variable, RadioVariable, IntegerVariable } from './variable.js'
+import { Variable, IntegerVariable, TextVariable } from './variable.js'
 
 export class FizzBuzz extends Level<[number], string> {
     protected identifier(): string {
@@ -8,7 +8,7 @@ export class FizzBuzz extends Level<[number], string> {
     }
 
     protected name(): string {
-        return 'FizzBuzz'
+        return 'FIZZBUZZ'
     }
     protected specification(): LocalizedText {
         return this.locale.fizzBuzzSpecification()
@@ -21,41 +21,40 @@ export class FizzBuzz extends Level<[number], string> {
     }
 
     protected getUnit(): Variable {
-        return new RadioVariable(Locale.bless('Output'), 'fizzBuzz', [Locale.bless('Fizz'), Locale.bless('Buzz'), Locale.bless('FizzBuzz'), Locale.bless('Other')])
+        return new TextVariable(Locale.bless('Output'), 'fizzBuzz')
     }
 
     protected getCandidateElements(): string[][] {
         return [
             [
-                'if (num === 15) return "FizzBuzz"',
-                'if (num % 15 === 0) return "FizzBuzz"',
+                'if (num === 15) return "FIZZBUZZ"',
+                'if (num % 15 === 0) return "FIZZBUZZ"',
                 '',
             ],
             [
-                'if (num === 3) return "Fizz"',
-                'if (num % 3 === 0) return "Fizz"',
+                'if (num === 3) return "FIZZ"',
+                'if (num % 3 === 0) return "FIZZ"',
                 ''
             ],
             [
-                'if (num === 5) return "Buzz"',
-                'if (num % 5 === 0) return "Buzz"',
+                'if (num === 5) return "BUZZ"',
+                'if (num % 5 === 0) return "BUZZ"',
                 ''
             ],
             [
-                'return "Fizz"',
-                'return "Buzz"',
-                'return "FizzBuzz"',
-                'return "Other"',
-                'return undefined',
+                'return "FIZZ"',
+                'return "BUZZ"',
+                'return "FIZZBUZZ"',
+                'return num.toString()',
             ],
         ]
     }
 
     protected* minimalUnitTestGenerator(): Generator<[[number], string]> {
-        yield [[6], 'Fizz']
-        yield [[25], 'Buzz']
-        yield [[30], 'FizzBuzz']
-        yield [[1], 'Other']
+        yield [[6], 'FIZZ']
+        yield [[25], 'BUZZ']
+        yield [[30], 'FIZZBUZZ']
+        yield [[1], '1']
     }
 
     protected* hintGenerator(): Generator<[number]> {

@@ -5,10 +5,10 @@ test.describe('correct submit button', () => {
         await page.goto('/?speed=fast')
         await page.getByRole('button', { name: 'I want to play Level 1 - Battery Level' }).click()
         await page.getByLabel('Battery Level').fill('20')
-        await page.getByLabel('Normal Mode').check()
+        await page.getByLabel('NORMAL MODE').check()
         await page.getByRole('button', { name: 'I want to add this unit test' }).click()
         await page.getByLabel('Battery Level').fill('19')
-        await page.getByLabel('Low Power Mode').check()
+        await page.getByLabel('LOW POWER MODE').check()
         await page.getByRole('button', { name: 'I want to add this unit test' }).click()
         await page.getByRole('button', { name: 'I want to submit the unit tests' }).click()
     })
@@ -21,7 +21,7 @@ test.describe('correct submit button', () => {
     test('has NOT updated the current function panel', async ({ page }) => {
         const currentFunctionPanel = page.getByTestId('current-function')
         const codeLines = currentFunctionPanel.locator('code > div')
-        await expect(codeLines).toContainText(['function powerMode(batteryLevel) {', '    if (batteryLevel === 20) return "Normal Mode"', '  return "Low Power Mode"', '}'])
+        await expect(codeLines).toContainText(['function powerMode(batteryLevel) {', '    if (batteryLevel === 20) return "NORMAL MODE"', '  return "LOW POWER MODE"', '}'])
     })
 
     test('has not according message', async ({ page }) => {
@@ -31,7 +31,7 @@ test.describe('correct submit button', () => {
 
     test('has failing unit test message', async ({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('powerMode(21) === "Low Power Mode"')
+        await expect(messages).toContainText('powerMode(21) === "LOW POWER MODE"')
     })
 
     test('has need message', async ({ page }) => {

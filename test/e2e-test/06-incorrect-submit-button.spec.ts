@@ -2,7 +2,7 @@ import { test, expect } from '../fixture/fixture-coverage'
 
 test.describe('incorrect submit button', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('/?speed=fast')
+        await page.goto('/?speed=fast&picker=fixed')
         await page.getByRole('button', { name: 'I want to play Level 1 - Battery Level' }).click()
         await page.getByRole('button', { name: 'I want to submit the unit tests' }).click()
     })
@@ -20,7 +20,7 @@ test.describe('incorrect submit button', () => {
     test('has NOT updated the current function panel', async ({ page }) => {
         const currentFunctionPanel = page.getByTestId('current-function')
         const codeLines = currentFunctionPanel.locator('code > div')
-        await expect(codeLines).toContainText(['function powerMode(batteryLevel) {', '  return undefined', '}'])
+        await expect(codeLines).toContainText(['function powerMode(batteryLevel) {', '  return ""', '}'])
     })
 
     test('has TWO before menu messages', async ({ page }) => {

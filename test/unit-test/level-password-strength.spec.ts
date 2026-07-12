@@ -19,7 +19,7 @@ test.describe('class PasswordStrength', () => {
     })
 
     test('has the correct amount of candidates', () => {
-        expect(level.candidates).toHaveLength(240)
+        expect(level.candidates).toHaveLength(160)
     })
 
     test('has the correct amount of minimal unit tests', () => {

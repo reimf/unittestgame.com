@@ -19,7 +19,7 @@ test.describe('class LeapYear', () => {
     })
 
     test('has the correct amount of candidates', () => {
-        expect(level.candidates).toHaveLength(54)
+        expect(level.candidates).toHaveLength(36)
     })
 
     test('has the correct amount of minimal unit tests', () => {

@@ -19,7 +19,7 @@ test.describe('class EvenOrOdd', () => {
     })
 
     test('has the correct amount of candidates', () => {
-        expect(level.candidates).toHaveLength(15)
+        expect(level.candidates).toHaveLength(10)
     })
 
     test('has the correct amount of minimal unit tests', () => {

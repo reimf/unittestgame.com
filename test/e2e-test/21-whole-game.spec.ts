@@ -27,18 +27,18 @@ test.describe('whole game', () => {
 
             if (level instanceof BatteryLevel) {
                 await page.getByLabel('Battery Level').fill('20')
-                await page.getByLabel('Normal Mode').check()
+                await page.getByLabel('NORMAL MODE').check()
                 await page.getByRole('button', { name: 'I want to add this unit test' }).click()
                 await page.getByLabel('Battery Level').fill('19')
-                await page.getByLabel('Low Power Mode').check()
+                await page.getByLabel('LOW POWER MODE').check()
                 await page.getByRole('button', { name: 'I want to add this unit test' }).click()
                 await page.getByRole('button', { name: 'I want to submit the unit tests' }).click()
                 await page.getByLabel('Battery Level').fill('21')
-                await page.getByLabel('Normal Mode').check()
+                await page.getByLabel('NORMAL MODE').check()
                 await page.getByRole('button', { name: 'I want to add this unit test' }).click()
                 await page.getByRole('button', { name: 'I want to submit the unit tests' }).click()
                 await page.getByLabel('Battery Level').fill('18')
-                await page.getByLabel('Low Power Mode').check()
+                await page.getByLabel('LOW POWER MODE').check()
                 await page.getByRole('button', { name: 'I want to add this unit test' }).click()
                 await page.getByRole('button', { name: 'I want to submit the unit tests' }).click()
             }

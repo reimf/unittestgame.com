@@ -11,7 +11,7 @@ test.describe('class FizzBuzz', () => {
     const level = new FizzBuzz(locale, programmingLanguage, new FixedPicker(), new MapStore(), 5)
 
     test('has the correct description', () => {
-        expect(level.description()).toBe('Level 5 - FizzBuzz')
+        expect(level.description()).toBe('Level 5 - FIZZBUZZ')
     })
 
     test('has the correct amount of parameters', () => {
@@ -19,7 +19,7 @@ test.describe('class FizzBuzz', () => {
     })
 
     test('has the correct amount of candidates', () => {
-        expect(level.candidates).toHaveLength(135)
+        expect(level.candidates).toHaveLength(108)
     })
 
     test('has the correct amount of minimal unit tests', () => {

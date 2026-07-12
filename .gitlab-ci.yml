@@ -27,7 +27,7 @@ playwright:
     NO_COLOR: "1"
   script:
     - npm clean-install
-    - npx playwright test --quiet --grep-invert "programming-language-(csharp|python)"
+    - npx playwright test --quiet e2e-test unit-test
     - node -e 'const {branches} = require("./playwright-coverage/coverage-summary.json").total; if (branches.pct < 100) { console.error("Branch coverage is " + branches.pct + "%, it must be 100%"); process.exit(1); } console.log("Branch coverage is 100%");'
   coverage: '/Branches\s*:\s*[\d.]+\%/'
   artifacts:

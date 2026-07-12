@@ -28,7 +28,7 @@ test.describe('transpile to C#', () => {
                     return `if (!(${assertion})) { System.Console.Error.WriteLine(${JSON.stringify(assertion)}); System.Environment.Exit(1); }`
                 })
                 const csharpProgram = [
-                    csharpCode.replace(/^(using System\.Text\.RegularExpressions;\n)?/, '$1System.Globalization.CultureInfo.DefaultThreadCurrentCulture = System.Globalization.CultureInfo.InvariantCulture;\n'),
+                    csharpCode,
                     ...csharpAsserts,
                 ].join('\n')
                 const hash = createHash('sha256').update(csharpProgram).digest('hex').slice(0, 16)

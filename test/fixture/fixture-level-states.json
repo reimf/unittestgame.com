@@ -2,7 +2,8 @@
     {
         "years": [],
         "simplestPassingCandidates": [
-            "function isLeapYear(year) {\n  return undefined\n}"
+            "function isLeapYear(year) {\n  return true\n}",
+            "function isLeapYear(year) {\n  return false\n}"
         ],
         "numberOfUnitTestsStillNeeded": 4
     },

@@ -2,16 +2,16 @@ import { test, expect } from '../fixture/fixture-coverage'
 
 test.describe('other unit test', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('/?speed=fast')
+        await page.goto('/?speed=fast&picker=fixed')
         await page.getByRole('button', { name: 'I want to play Level 1 - Battery Level' }).click()
         await page.getByLabel('Battery Level').fill('80')
-        await page.getByLabel('Normal Mode').check()
+        await page.getByLabel('NORMAL MODE').check()
         await page.getByRole('button', { name: 'I want to add this unit test' }).click()
     })
 
     test('has unit test message', async ({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('powerMode(80) === "Normal Mode"')
+        await expect(messages).toContainText('powerMode(80) === "NORMAL MODE"')
     })
 
     test('has NOT checked unit test message', async ({ page }) => {
@@ -32,7 +32,7 @@ test.describe('other unit test', () => {
     test('has NOT updated the current function panel', async ({ page }) => {
         const currentFunctionPanel = page.getByTestId('current-function')
         const codeLines = currentFunctionPanel.locator('code > div')
-        await expect(codeLines).toContainText(['function powerMode(batteryLevel) {', '  return undefined', '}'])
+        await expect(codeLines).toContainText(['function powerMode(batteryLevel) {', '  return ""', '}'])
     })
 
     test('has TWO before menu messages', async ({ page }) => {

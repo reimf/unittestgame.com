@@ -1,6 +1,6 @@
 import { Level } from './level-base.js'
 import { Locale, LocalizedText } from './locale.js'
-import { Variable, TextVariable, FloatVariable } from './variable.js'
+import { Variable, TextVariable, IntegerVariable } from './variable.js'
 
 export class SpeedDisplay extends Level<[number], string> {
     protected identifier(): string {
@@ -17,7 +17,7 @@ export class SpeedDisplay extends Level<[number], string> {
 
     protected getParameters(): Variable[] {
         return [
-            new FloatVariable(Locale.bless('Speed'), 'speed')
+            new IntegerVariable(Locale.bless('Speed'), 'speed')
         ]
     }
 
@@ -28,49 +28,49 @@ export class SpeedDisplay extends Level<[number], string> {
     protected getCandidateElements(): string[][] {
         return [
             [
-                'if (speed === 0.0) return "START"',
-                'if (speed < 0.5) return "START"',
-                'if (speed < 1.0) return "START"',
+                'if (speed === 0) return "START"',
+                'if (speed < 5) return "START"',
+                'if (speed < 10) return "START"',
                 '',
             ],
             [
-                'if (speed < 19.9) return speed.toFixed(1)',
-                'if (speed < 20.0) return speed.toFixed(1)',
-                'if (speed <= 20.0) return speed.toFixed(1)',
-                'if (speed < 30.0) return speed.toFixed(1)',
+                'if (speed < 199) return Math.floor(speed / 10) + "." + speed % 10',
+                'if (speed < 200) return Math.floor(speed / 10) + "." + speed % 10',
+                'if (speed <= 200) return Math.floor(speed / 10) + "." + speed % 10',
+                'if (speed < 300) return Math.floor(speed / 10) + "." + speed % 10',
                 '',
             ],
             [
-                'if (speed >= 200.0) return "DANGER"',
-                'if (speed >= 199.5) return "DANGER"',
-                'if (speed > 199.5) return "DANGER"',
-                'if (speed > 199.0) return "DANGER"',
+                'if (speed >= 2000) return "DANGER"',
+                'if (speed >= 1995) return "DANGER"',
+                'if (speed > 1995) return "DANGER"',
+                'if (speed > 1990) return "DANGER"',
                 '',
             ],
             [
-                'return speed.toFixed()',
-                'return speed.toFixed(1)',
-                'return speed.toString()',
-                'return undefined',
+                'return "" + Math.floor(speed / 10)',
+                'return Math.floor(speed / 10) + "." + speed % 10',
+                'return "START"',
+                'return "DANGER"',
             ],
         ]
     }
 
     protected* minimalUnitTestGenerator(): Generator<[[number], string]> {
-        yield [[0.0], 'START']
-        yield [[0.1], '0.1']
-        yield [[19.9], '19.9']
-        yield [[20.0], '20']
-        yield [[199.4], '199']
-        yield [[199.5], 'DANGER']
+        yield [[0], 'START']
+        yield [[1], '0.1']
+        yield [[199], '19.9']
+        yield [[200], '20']
+        yield [[1999], '199']
+        yield [[2000], 'DANGER']
     }
 
     protected* hintGenerator(): Generator<[number]> {
-        for (let speed = 0; speed < 1; speed += 0.3)
+        for (let speed = 0; speed < 10; speed += 3)
             yield [speed]
-        for (let speed = 1; speed <= 27; speed += 4.35)
+        for (let speed = 10; speed <= 270; speed += 40)
             yield [speed]
-        for (let speed = 30; speed <= 220; speed += 30)
+        for (let speed = 300; speed <= 2400; speed += 300)
             yield [speed]
     }
 }

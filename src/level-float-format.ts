@@ -67,7 +67,6 @@ export class FloatFormat extends Level<[string], boolean> {
                 'return new RegExp(regex).test(text)',
                 'return true',
                 'return false',
-                'return undefined',
             ],
         ]
     }

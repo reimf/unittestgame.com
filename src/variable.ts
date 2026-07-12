@@ -14,7 +14,7 @@ export abstract class Variable {
 
     public abstract getInput(value: string): Value
     public abstract toHtml(): Html
-    public abstract format(value: Value|undefined): string
+    public abstract format(value: Value): string
 }
 
 export class RadioVariable extends Variable {
@@ -42,8 +42,8 @@ export class RadioVariable extends Variable {
         return paragraph
     }
 
-    public format(value: string|undefined): string {
-        return value === undefined ? `${value}` : `"${value}"`
+    public format(value: string): string {
+        return `"${value}"`
     }
 }
 
@@ -94,8 +94,8 @@ export class TextVariable extends Variable {
         return new Paragraph().appendChild(label)
     }
 
-    public format(value: string|undefined): string {
-        return value === undefined ? `${value}` : `"${value}"`
+    public format(value: string): string {
+        return `"${value}"`
     }
 }
 
@@ -124,27 +124,3 @@ export class IntegerVariable extends Variable {
     }
 }
 
-export class FloatVariable extends Variable {
-    public constructor(label: LocalizedText, name: string) {
-        super(label, name)
-    }
-
-    public getInput(value: string): number {
-        return Number(value)
-    }
-
-    public toHtml(): Html {
-        const input = new Input()
-          .setType('text')
-          .setName(this.name)
-          .setRequired()
-          .setPattern(/[0-9]{1,4}(\.[0-9])?/)
-          .setTitle('a floating-point number with at most 4 digits, an optional decimal point and an optional decimal')
-        const label = new Label().appendChild(new Span().appendText(this.label)).appendChild(input)
-        return new Paragraph().appendChild(label)
-    }
-
-    public format(value: string): string {
-        return `${value}`
-    }
-}

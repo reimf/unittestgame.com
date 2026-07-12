@@ -46,7 +46,6 @@ export class VotingAge extends Level<[number], boolean> {
             [
                 'return true',
                 'return false',
-                'return undefined',
             ],
         ]
     }

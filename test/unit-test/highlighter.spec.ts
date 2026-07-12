@@ -18,7 +18,7 @@ test.describe('class ProgrammingLanguage', () => {
             '  if (!/[#@]/.test(text)) regex += speed.toFixed(1)' +
             '  if (a < Math.abs(20.0) && a >= c && b !== c) return true' +
             '  if (num % 2 === 0) return false' +
-            '  return undefined' +
+            '  return regex' +
             '}'
         const highlighted = programmingLanguage.highlight(javascript)
         expect(html(highlighted)).toEqual([
@@ -128,7 +128,7 @@ test.describe('class ProgrammingLanguage', () => {
                 '<span class="whitespace">  </span>' +
                 '<span class="keyword">return</span>' +
                 '<span class="whitespace"> </span>' +
-                '<span class="literal">undefined</span>' +
+                '<span class="variable">regex</span>' +
                 '<span class="punctuation">}</span>' +
             '</div>',
         ])
@@ -190,7 +190,7 @@ test.describe('class Python', () => {
     })
 
     test('transpiles && and !== across multiple lines', () => {
-        const highlighted = python.highlight('if (price < 19 && quality >= 6) return "Good"\nif (a !== b) return "scalene"')
+        const highlighted = python.highlight('if (price < 19 && quality >= 6) return "GOOD"\nif (a !== b) return "SCALENE"')
         expect(html(highlighted)).toEqual([
             '<div>' +
                 '<span class="keyword">if</span>' +
@@ -212,7 +212,7 @@ test.describe('class Python', () => {
                 '<span class="whitespace"> </span>' +
                 '<span class="keyword">return</span>' +
                 '<span class="whitespace"> </span>' +
-                '<span class="string">"Good"</span>' +
+                '<span class="string">"GOOD"</span>' +
             '</div>',
             '<div>' +
                 '<span class="keyword">if</span>' +
@@ -226,13 +226,13 @@ test.describe('class Python', () => {
                 '<span class="whitespace"> </span>' +
                 '<span class="keyword">return</span>' +
                 '<span class="whitespace"> </span>' +
-                '<span class="string">"scalene"</span>' +
+                '<span class="string">"SCALENE"</span>' +
             '</div>',
         ])
     })
 
     test('transpiles ||', () => {
-        const highlighted = python.highlight('if (a === b || b === c) return "equilateral"')
+        const highlighted = python.highlight('if (a === b || b === c) return "EQUILATERAL"')
         expect(html(highlighted)).toEqual([
             '<div>' +
                 '<span class="keyword">if</span>' +
@@ -254,7 +254,7 @@ test.describe('class Python', () => {
                 '<span class="whitespace"> </span>' +
                 '<span class="keyword">return</span>' +
                 '<span class="whitespace"> </span>' +
-                '<span class="string">"equilateral"</span>' +
+                '<span class="string">"EQUILATERAL"</span>' +
             '</div>',
         ])
     })
@@ -277,51 +277,8 @@ test.describe('class Python', () => {
         ])
     })
 
-    test('transpiles toFixed(n) to format(x, \'.nf\')', () => {
-        const highlighted = python.highlight('if (speed < 19.9) return speed.toFixed(1)')
-        expect(html(highlighted)).toEqual([
-            '<div>' +
-                '<span class="keyword">if</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="variable">speed</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="operator">&lt;</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="number">19.9</span>' +
-                '<span class="punctuation">:</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="keyword">return</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="function">format</span>' +
-                '<span class="punctuation">(</span>' +
-                '<span class="variable">speed</span>' +
-                '<span class="punctuation">,</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="string">\'.1f\'</span>' +
-                '<span class="punctuation">)</span>' +
-            '</div>',
-        ])
-    })
-
-    test('transpiles toFixed() to format(x, \'.0f\')', () => {
-        const highlighted = python.highlight('return speed.toFixed()')
-        expect(html(highlighted)).toEqual([
-            '<div>' +
-                '<span class="keyword">return</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="function">format</span>' +
-                '<span class="punctuation">(</span>' +
-                '<span class="variable">speed</span>' +
-                '<span class="punctuation">,</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="string">\'.0f\'</span>' +
-                '<span class="punctuation">)</span>' +
-            '</div>',
-        ])
-    })
-
-    test('transpiles toString() to str(x)', () => {
-        const highlighted = python.highlight('return speed.toString()')
+    test('transpiles Math.floor division and modulo to str() with // and %', () => {
+        const highlighted = python.highlight('return Math.floor(speed / 10) + "." + speed % 10')
         expect(html(highlighted)).toEqual([
             '<div>' +
                 '<span class="keyword">return</span>' +
@@ -329,6 +286,39 @@ test.describe('class Python', () => {
                 '<span class="function">str</span>' +
                 '<span class="punctuation">(</span>' +
                 '<span class="variable">speed</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="operator">//</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="number">10</span>' +
+                '<span class="punctuation">)</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="operator">+</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="string">"."</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="operator">+</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="function">str</span>' +
+                '<span class="punctuation">(</span>' +
+                '<span class="variable">speed</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="operator">%</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="number">10</span>' +
+                '<span class="punctuation">)</span>' +
+            '</div>',
+        ])
+    })
+
+    test('transpiles toString() to str(x)', () => {
+        const highlighted = python.highlight('return num.toString()')
+        expect(html(highlighted)).toEqual([
+            '<div>' +
+                '<span class="keyword">return</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="function">str</span>' +
+                '<span class="punctuation">(</span>' +
+                '<span class="variable">num</span>' +
                 '<span class="punctuation">)</span>' +
             '</div>',
         ])
@@ -415,17 +405,6 @@ test.describe('class Python', () => {
                 '<span class="keyword">return</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="literal">False</span>' +
-            '</div>',
-        ])
-    })
-
-    test('transpiles undefined', () => {
-        const highlighted = python.highlight('return undefined')
-        expect(html(highlighted)).toEqual([
-            '<div>' +
-                '<span class="keyword">return</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="literal">None</span>' +
             '</div>',
         ])
     })
