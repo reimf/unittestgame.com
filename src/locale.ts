@@ -78,47 +78,47 @@ export class Locale {
         })
     }
 
-    public changeLanguage(): LocalizedText {
+    public settingsTitle(): LocalizedText {
         return this.localize({
-            en: 'Language: English',
-            nl: 'Taal: Nederlands',
-            de: 'Sprache: Deutsch',
-            fr: 'Langue: Français',
-            es: 'Idioma: Español',
-            it: 'Lingua: Italiano',
+            en: 'Settings',
+            nl: 'Instellingen',
+            de: 'Einstellungen',
+            fr: 'Paramètres',
+            es: 'Configuración',
+            it: 'Impostazioni',
         })
     }
 
-    public switchToLanguage(language: typeof LANGUAGES[number]): LocalizedText {
+    public changeLanguage(): LocalizedText {
+        return this.localize({
+            en: 'Language',
+            nl: 'Taal',
+            de: 'Sprache',
+            fr: 'Langue',
+            es: 'Idioma',
+            it: 'Lingua',
+        })
+    }
+
+    public static languageName(language: Language): LocalizedText {
         return Locale.bless({
-            en: 'Switch to English',
-            nl: 'Overschakelen op Nederlands',
-            de: 'Auf Deutsch wechseln',
-            fr: 'Passer en Français',
-            es: 'Cambiar al Español',
-            it: 'Passa all\'Italiano',
+            en: 'English',
+            nl: 'Nederlands',
+            de: 'Deutsch',
+            fr: 'Français',
+            es: 'Español',
+            it: 'Italiano',
         }[language])
     }
 
-    public changeProgrammingLanguage(name: string): LocalizedText {
+    public changeProgrammingLanguage(): LocalizedText {
         return this.localize({
-            en: `Programming Language: ${name}`,
-            nl: `Programmeertaal: ${name}`,
-            de: `Programmiersprache: ${name}`,
-            fr: `Langage de programmation: ${name}`,
-            es: `Idioma de programación: ${name}`,
-            it: `Linguaggio di programmazione: ${name}`,
-        })
-    }
-
-    public switchToProgrammingLanguage(name: string): LocalizedText {
-        return this.localize({
-            en: `Switch to ${name}`,
-            nl: `Overschakelen op ${name}`,
-            de: `Auf ${name} wechseln`,
-            fr: `Passer en ${name}`,
-            es: `Cambiar al ${name}`,
-            it: `Passa a ${name}`,
+            en: 'Programming Language',
+            nl: 'Programmeertaal',
+            de: 'Programmiersprache',
+            fr: 'Langage de programmation',
+            es: 'Idioma de programación',
+            it: 'Linguaggio di programmazione',
         })
     }
 

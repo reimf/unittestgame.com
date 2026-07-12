@@ -19,9 +19,14 @@ test.describe('welcome', () => {
         await expect(unittestgamePanel).toContainText('UnitTestGame')
     })
 
-    test('has link to site in Dutch', async ({ page }) => {
-        const link = page.locator('a', { hasText: 'Overschakelen op Nederlands' })
-        await expect(link).toHaveAttribute('href', /language=nl/)
+    test('has settings panel', async ({ page }) => {
+        const settingsPanel = page.getByTestId('settings')
+        await expect(settingsPanel).toContainText('Settings')
+    })
+
+    test('has language selector with Dutch as an option', async ({ page }) => {
+        const option = page.getByTestId('language-switcher').locator('option[value="nl"]')
+        await expect(option).toHaveText('Nederlands')
     })
 
     test('has more info on Test-Driven Development', async ({ page }) => {

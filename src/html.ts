@@ -207,17 +207,29 @@ export class Label extends Html {
     }
 }
 
+export class Select extends Html {
+    public constructor(callback: (value: string) => void) {
+        super('select')
+        this.getSelectElement().addEventListener('change', () => callback(this.getSelectElement().value))
+    }
+
+    private getSelectElement(): HTMLSelectElement {
+        return this.getElement() as HTMLSelectElement
+    }
+
+    public appendOption(value: string, text: LocalizedText, selected: boolean): this {
+        const option = document.createElement('option')
+        option.value = value
+        option.defaultSelected = selected
+        option.append(new Text(text).getNode())
+        this.getSelectElement().append(option)
+        return this
+    }
+}
 
 export class OrderedList extends Html {
     public constructor(elements: Html[]) {
         super('ol')
-        this.appendChildren(elements.map(element => new ListItem().appendChild(element)))
-    }
-}
-
-export class UnorderedList extends Html {
-    public constructor(elements: Html[]) {
-        super('ul')
         this.appendChildren(elements.map(element => new ListItem().appendChild(element)))
     }
 }
@@ -256,18 +268,6 @@ export class Div extends Html {
 export class Span extends Html {
     public constructor() {
         super('span')
-    }
-}
-
-export class Details extends Html {
-    public constructor() {
-        super('details')
-    }
-}
-
-export class Summary extends Html {
-    public constructor() {
-        super('summary')
     }
 }
 

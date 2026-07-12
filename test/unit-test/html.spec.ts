@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 import { JSDOM } from 'jsdom'
-import { Span, Div, Section, Code, CodeBlock, Label, Paragraph, Form, Header, Input, Italic, Anchor, Submit, Details, Summary, UnorderedList, Img } from '../../src/html.js'
+import { Span, Div, Section, Code, CodeBlock, Label, Paragraph, Form, Header, Input, Italic, Anchor, Submit, Select, Img } from '../../src/html.js'
 import { Locale } from '../../src/locale.js'
 
 const { document } = new JSDOM('<!DOCTYPE html>').window
@@ -168,17 +168,12 @@ test.describe('class Html', () => {
         )
     })
 
-    test('has details', () => {
-        const details = new Details().appendChild(new Summary().appendText(Locale.bless('toggle')))
-        expect(details.getElement().outerHTML).toBe(
-            '<details><summary>toggle</summary></details>'
-        )
-    })
-
-    test('has summary', () => {
-        const summary = new Summary().appendText(Locale.bless('toggle'))
-        expect(summary.getElement().outerHTML).toBe(
-            '<summary>toggle</summary>'
+    test('has select', () => {
+        const select = new Select(() => {})
+            .appendOption('a', Locale.bless('Option A'), false)
+            .appendOption('b', Locale.bless('Option B'), true)
+        expect(select.getElement().outerHTML).toBe(
+            '<select><option value="a">Option A</option><option value="b" selected="">Option B</option></select>'
         )
     })
 
@@ -186,16 +181,6 @@ test.describe('class Html', () => {
         const img = new Img('https://example.com/image.png', 'example')
         expect(img.getElement().outerHTML).toBe(
             '<img src="https://example.com/image.png" alt="example">'
-        )
-    })
-
-    test('has unordered list', () => {
-        const list = new UnorderedList([
-            new Span().appendText(Locale.bless('a')),
-            new Span().appendText(Locale.bless('b')),
-        ])
-        expect(list.getElement().outerHTML).toBe(
-            '<ul><li><span>a</span></li><li><span>b</span></li></ul>'
         )
     })
 })

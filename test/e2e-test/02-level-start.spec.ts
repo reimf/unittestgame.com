@@ -11,6 +11,11 @@ test.describe('level start', () => {
         await expect(unittestgamePanel).not.toBeVisible()
     })
 
+    test('has NO settings panel', async ({ page }) => {
+        const settingsPanel = page.getByTestId('settings')
+        await expect(settingsPanel).not.toBeVisible()
+    })
+
     test('has specification panel', async ({ page }) => {
         const specificationPanel = page.getByTestId('specification')
         await expect(specificationPanel).toContainText('Specification (Level 1 - Battery Level)')

@@ -148,32 +148,15 @@ code {
     }
 }
 
-details {
-    width: fit-content;
-
-    summary {
-        border-radius: 0.25rem;
-        cursor: pointer;
-        display: inline-block;
-        line-height: 1.5rem;
-        text-decoration: underline;
-
-        &::-webkit-details-marker {
-            display: none;
-        }
-
-        &:hover {
-            box-shadow: 0 0 0.3rem 0.3rem var(--focus-shadow);
-        }
-    }
-
-    ul {
-        list-style-type: none;
-
-        > li {
-            margin-left: 1rem;
-        }
-    }
+select {
+    appearance: none;
+    background-color: var(--input-background);
+    border-radius: 0.5rem;
+    color: var(--light-text);
+    cursor: pointer;
+    height: 2rem;
+    padding: 0 1.5rem 0 0.5rem;
+    width: 100%;
 }
 
 form {
@@ -225,6 +208,24 @@ label {
     border-radius: 0.5rem;
     height: 2rem;
 
+    &:has(select) {
+        display: contents;
+
+        span {
+            position: relative;
+
+            &::after {
+                color: var(--light-text);
+                content: '▾';
+                pointer-events: none;
+                position: absolute;
+                right: 0.5rem;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+        }
+    }
+
     &:has(input[type="radio"]) {
         background-color: var(--input-background);
         color: var(--light-text);
@@ -254,6 +255,12 @@ a, button, input:not([type="radio"]), label:has(input[type="radio"]) {
     &:focus-within, &:focus, &:hover, &:has(:focus) {
         box-shadow: 0 0 0.3rem 0.3rem var(--focus-shadow);
         opacity: 1;
+    }
+}
+
+select {
+    &:hover {
+        box-shadow: 0 0 0.3rem 0.3rem var(--focus-shadow);
     }
 }
 
@@ -407,6 +414,14 @@ a, button, input:not([type="radio"]), label:has(input[type="radio"]) {
 
                 p {
                     margin: 0;
+                }
+
+                .switchers {
+                    align-items: center;
+                    display: grid;
+                    gap: 0.5rem;
+                    grid-template-columns: max-content max-content;
+                    width: fit-content;
                 }
 
                 .level-board {

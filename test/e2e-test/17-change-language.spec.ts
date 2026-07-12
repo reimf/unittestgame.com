@@ -3,8 +3,7 @@ import { test, expect } from '../fixture/fixture-coverage'
 test.describe('change language', () => {
     test.beforeEach(async ({ page }) => {
         await page.goto('/?speed=fast')
-        await page.getByTestId('language-switcher').locator('summary').click()
-        await page.getByRole('link', { name: 'Overschakelen op Nederlands' }).click()
+        await page.getByTestId('language-switcher').selectOption('nl')
         await page.waitForLoadState()
     })
 
@@ -14,14 +13,13 @@ test.describe('change language', () => {
     })
 
     test('has language selector with Dutch as selected option', async ({ page }) => {
-        const summary = page.getByTestId('language-switcher').locator('summary')
-        await expect(summary).toHaveText('Taal: Nederlands')
+        const select = page.getByTestId('language-switcher')
+        await expect(select).toHaveValue('nl')
     })
 
     test('has language selector with English as an alternative option', async ({ page }) => {
-        await page.getByTestId('language-switcher').locator('summary').click()
-        const link = page.getByRole('link', { name: 'Switch to English' })
-        await expect(link).toHaveAttribute('href', /language=en/)
+        const option = page.getByTestId('language-switcher').locator('option[value="en"]')
+        await expect(option).toHaveText('English')
     })
 
     test('has play button in Dutch', async ({ page }) => {

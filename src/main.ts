@@ -1,9 +1,9 @@
 import { Game } from './game.js'
 import { Store } from './store.js'
 import { Panel, Message, ComputerMessage, QuestionMessage } from './frame.js'
-import { Anchor, Details, Div, Span, Summary, UnorderedList } from './html.js'
+import { Div, Label, Select, Span } from './html.js'
 import { AnyLevel } from './level-base.js'
-import { Language, Locale } from './locale.js'
+import { Locale } from './locale.js'
 import { Picker } from './picker.js'
 import { ProgrammingLanguage } from './programming-language-base.js'
 import { programmingLanguages } from './programming-languages.js'
@@ -23,6 +23,7 @@ export class Main {
     public start(): void {
         this.showWelcomeMessage()
         this.showAboutPanel()
+        this.showSettingsPanel()
         this.continue()
     }
 
@@ -42,35 +43,37 @@ export class Main {
         new ComputerMessage([this.locale.welcome()]).show()
     }
 
-    private languageLink(language: Language): Anchor {
+    private switchTo(name: string, value: string): void {
         const url = new URL(window.location.href)
-        url.searchParams.set('language', language)
-        return new Anchor(url.toString()).appendText(this.locale.switchToLanguage(language))
+        url.searchParams.set(name, value)
+        window.location.href = url.toString()
     }
 
-    private languageSwitcher(): Details {
-        const otherLanguages = Locale.languages.filter(language => language !== this.locale.language)
-        return new Details().setId('language-switcher')
-            .appendChild(new Summary().appendText(this.locale.changeLanguage()))
-            .appendChild(new UnorderedList(otherLanguages.map(language => this.languageLink(language))))
+    private languageSwitcher(): Label {
+        const select = new Select(language => this.switchTo('language', language)).setId('language-switcher')
+        for (const language of Locale.languages)
+            select.appendOption(language, Locale.languageName(language), language === this.locale.language)
+        return new Label().appendText(this.locale.changeLanguage()).appendChild(new Span().appendChild(select))
     }
 
-    private programmingLanguageSwitcher(): Details {
-        const otherProgrammingLanguages = programmingLanguages.filter(programmingLanguage => programmingLanguage.id !== this.programmingLanguage.id)
-        return new Details().setId('programming-language-switcher')
-            .appendChild(new Summary().appendText(this.locale.changeProgrammingLanguage(this.programmingLanguage.name)))
-            .appendChild(new UnorderedList(otherProgrammingLanguages.map(programmingLanguage => this.programmingLanguageLink(programmingLanguage))))
+    private programmingLanguageSwitcher(): Label {
+        const select = new Select(id => this.switchTo('programmingLanguage', id)).setId('programming-language-switcher')
+        for (const programmingLanguage of programmingLanguages)
+            select.appendOption(programmingLanguage.id, Locale.bless(programmingLanguage.name), programmingLanguage.id === this.programmingLanguage.id)
+        return new Label().appendText(this.locale.changeProgrammingLanguage()).appendChild(new Span().appendChild(select))
     }
 
-    private programmingLanguageLink(programmingLanguage: ProgrammingLanguage): Anchor {
-        const url = new URL(window.location.href)
-        url.searchParams.set('programmingLanguage', programmingLanguage.id)
-        return new Anchor(url.toString()).appendText(this.locale.switchToProgrammingLanguage(programmingLanguage.name))
+    private switchers(): Div {
+        return new Div().addClass('switchers').appendChildren([this.languageSwitcher(), this.programmingLanguageSwitcher()])
     }
 
     private showAboutPanel(): void {
-        const content = [this.locale.slogan(), this.locale.links(), this.languageSwitcher(), this.programmingLanguageSwitcher()]
+        const content = [this.locale.slogan(), this.locale.links()]
         new Panel('unittestgame', this.locale.unitTestGameTitle(), content).show()
+    }
+
+    private showSettingsPanel(): void {
+        new Panel('settings', this.locale.settingsTitle(), [this.switchers()]).show()
     }
 
     private showInvitationMessage(): void {
