@@ -24,7 +24,7 @@ test.describe('example level', () => {
     test('has updated the current function panel', async ({ page }) => {
         const currentFunctionPanel = page.getByTestId('current-function')
         const codeLines = currentFunctionPanel.locator('code > div')
-        await expect(codeLines).toContainText(['function powerMode(batteryLevel) {', '    if (batteryLevel >= 20) return "NORMAL MODE"', '  return "LOW POWER MODE"', '}'])
+        await expect(codeLines).toContainText(['function powerMode(batteryLevel) {', '    if (batteryLevel >= 20) return "NORMAL MODE"', '    return "LOW POWER MODE"', '}'])
     })
 
     test('has all unit tests panel', async ({ page }) => {

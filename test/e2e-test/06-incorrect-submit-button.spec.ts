@@ -20,7 +20,7 @@ test.describe('incorrect submit button', () => {
     test('has NOT updated the current function panel', async ({ page }) => {
         const currentFunctionPanel = page.getByTestId('current-function')
         const codeLines = currentFunctionPanel.locator('code > div')
-        await expect(codeLines).toContainText(['function powerMode(batteryLevel) {', '  return ""', '}'])
+        await expect(codeLines).toContainText(['function powerMode(batteryLevel) {', '    return ""', '}'])
     })
 
     test('has TWO before menu messages', async ({ page }) => {

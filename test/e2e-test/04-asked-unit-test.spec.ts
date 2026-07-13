@@ -32,7 +32,7 @@ test.describe('asked unit test', () => {
     test('has updated the current function panel', async ({ page }) => {
         const currentFunctionPanel = page.getByTestId('current-function')
         const codeLines = currentFunctionPanel.locator('code > div')
-        await expect(codeLines).toContainText(['function powerMode(batteryLevel) {', '  return "NORMAL MODE"', '}'])
+        await expect(codeLines).toContainText(['function powerMode(batteryLevel) {', '    return "NORMAL MODE"', '}'])
     })
 
     test('has before menu message', async ({ page }) => {

@@ -7,7 +7,6 @@ export class Python extends ProgrammingLanguage {
 
     public override transpile(javascriptCode: string): string {
         return javascriptCode
-            .replace(/  /g, '    ')
             .replace(/\bfunction (.*) +\{/g, 'def $1:')
             .replace(/\blet +/g, '')
             .replace(/\bnew +/g, '')

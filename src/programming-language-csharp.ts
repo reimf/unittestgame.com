@@ -8,12 +8,11 @@ export class Csharp extends ProgrammingLanguage {
 
     public override transpile(javascriptCode: string, parameters: readonly Variable[], unit: Variable): string {
         return javascriptCode
-            .replace(/  /g, '    ')
             .replace(/\bfunction (\w+)\((.*?)\) *\{/g, (_match: string, name: string, parameterList: string) => {
                 const typedParameters = parameterList.split(', ').filter(parameterName => parameterName)
                     .map((parameterName, index) => `${this.dataType(parameters[index]!)} ${parameterName}`)
                     .join(', ')
-                return `static ${this.dataType(unit)} ${name}(${typedParameters}) {`
+                return `static ${this.dataType(unit)} ${name}(${typedParameters})\n{`
             })
             .replace(/\blet +/g, 'var ')
             .replace(/\bnew RegExp\((.+?)\)\.test\((.+?)\)/g, 'Regex.IsMatch($2, $1)')

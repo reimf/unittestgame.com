@@ -12,7 +12,6 @@ export class Php extends ProgrammingLanguage {
             ...[...javascriptCode.matchAll(/\blet (\w+)/g)].map(match => match[1]!),
         ]
         return javascriptCode
-            .replace(/  /g, '    ')
             .replace(new RegExp(`\\b(${variableNames.join('|')})\\b`, 'g'), '$$$1')
             .replace(/\bfunction (\w+)\((.*?)\) *\{/g, (_match: string, name: string, parameterList: string) => {
                 const typedParameters = parameterList.split(', ').filter(parameterName => parameterName)

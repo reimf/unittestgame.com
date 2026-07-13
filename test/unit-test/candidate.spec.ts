@@ -10,56 +10,56 @@ test.describe('class Candidate', () => {
     const programmingLanguage = new JavaScript()
 
     test('compares complexity of simple and complex function', () => {
-        const simpleCandidate = new Candidate(['function nextYear(year) {', '', '  return year % 1', '}'])
-        const complexCandidate = new Candidate(['function nextYear(year) {', '  if (year < 0) return 0', '  return year % 1', '}'])
+        const simpleCandidate = new Candidate(['function nextYear(year) {', '', '    return year % 1', '}'])
+        const complexCandidate = new Candidate(['function nextYear(year) {', '    if (year < 0) return 0', '    return year % 1', '}'])
         expect(simpleCandidate.compareComplexity(complexCandidate)).toBe(-1)
         expect(complexCandidate.compareComplexity(simpleCandidate)).toBe(+1)
     })
 
     test('compares complexity of function call', () => {
-        const withoutFunctionCallCandidate = new Candidate(['function nextYear(year) {', '  return nextYear', '}'])
-        const withFunctionCallCandidate = new Candidate(['function nextYear(year) {', '  return nextYear()', '}'])
+        const withoutFunctionCallCandidate = new Candidate(['function nextYear(year) {', '    return nextYear', '}'])
+        const withFunctionCallCandidate = new Candidate(['function nextYear(year) {', '    return nextYear()', '}'])
         expect(withoutFunctionCallCandidate.compareComplexity(withFunctionCallCandidate)).toBe(-1)
         expect(withFunctionCallCandidate.compareComplexity(withoutFunctionCallCandidate)).toBe(+1)
     })
 
     test('compares complexity of string', () => {
-        const withoutStringCandidate = new Candidate(['function nextYear(year) {', '  return undefined', '}'])
-        const withStringCandidate = new Candidate(['function nextYear(year) {', '  return "undefined"', '}'])
+        const withoutStringCandidate = new Candidate(['function nextYear(year) {', '    return undefined', '}'])
+        const withStringCandidate = new Candidate(['function nextYear(year) {', '    return "undefined"', '}'])
         expect(withoutStringCandidate.compareComplexity(withStringCandidate)).toBe(-1)
         expect(withStringCandidate.compareComplexity(withoutStringCandidate)).toBe(+1)
     })
 
     test('compares complexity of class mention', () => {
-        const withoutClassCandidate = new Candidate(['function nextYear(year) {', '  return nextYear(year)', '}'])
-        const withClassCandidate = new Candidate(['function nextYear(year) {', '  return Math.round(year)', '}'])
+        const withoutClassCandidate = new Candidate(['function nextYear(year) {', '    return nextYear(year)', '}'])
+        const withClassCandidate = new Candidate(['function nextYear(year) {', '    return Math.round(year)', '}'])
         expect(withoutClassCandidate.compareComplexity(withClassCandidate)).toBe(-1)
         expect(withClassCandidate.compareComplexity(withoutClassCandidate)).toBe(+1)
     })
 
     test('compares complexity of integer with zeros at the end', () => {
-        const simpleIntegerCandidate = new Candidate(['function nextYear(year) {', '  return 1000', '}'])
-        const complexIntegerCandidate = new Candidate(['function nextYear(year) {', '  return 1', '}'])
+        const simpleIntegerCandidate = new Candidate(['function nextYear(year) {', '    return 1000', '}'])
+        const complexIntegerCandidate = new Candidate(['function nextYear(year) {', '    return 1', '}'])
         expect(simpleIntegerCandidate.compareComplexity(complexIntegerCandidate)).toBe(0)
     })
 
     test('compares complexity of integer length', () => {
-        const shortIntegerCandidate = new Candidate(['function nextYear(year) {', '  return 12', '}'])
-        const longIntegerCandidate = new Candidate(['function nextYear(year) {', '  return 102', '}'])
+        const shortIntegerCandidate = new Candidate(['function nextYear(year) {', '    return 12', '}'])
+        const longIntegerCandidate = new Candidate(['function nextYear(year) {', '    return 102', '}'])
         expect(shortIntegerCandidate.compareComplexity(longIntegerCandidate)).toBe(-1)
         expect(longIntegerCandidate.compareComplexity(shortIntegerCandidate)).toBe(+1)
     })
 
     test('compares complexity of floating point number', () => {
-        const integerCandidate = new Candidate(['function nextYear(year) {', '  return 10056', '}'])
-        const floatingPointCandidate = new Candidate(['function nextYear(year) {', '  return 100.56', '}'])
+        const integerCandidate = new Candidate(['function nextYear(year) {', '    return 10056', '}'])
+        const floatingPointCandidate = new Candidate(['function nextYear(year) {', '    return 100.56', '}'])
         expect(integerCandidate.compareComplexity(floatingPointCandidate)).toBe(-1)
         expect(floatingPointCandidate.compareComplexity(integerCandidate)).toBe(+1)
     })
 
     test('compares complexity of variables', () => {
-        const constantCandidate = new Candidate(['function nextYear(year) {', '  return 2', '}'])
-        const variableCandidate = new Candidate(['function nextYear(year) {', '  return year', '}'])
+        const constantCandidate = new Candidate(['function nextYear(year) {', '    return 2', '}'])
+        const variableCandidate = new Candidate(['function nextYear(year) {', '    return year', '}'])
         expect(constantCandidate.compareComplexity(variableCandidate)).toBe(-1)
         expect(variableCandidate.compareComplexity(constantCandidate)).toBe(+1)
     })
@@ -71,12 +71,12 @@ test.describe('class Candidate', () => {
     })
 
     test('executes function', () => {
-        const candidate = new Candidate(['function nextYear(year) {', '  return year * 2', '}'])
+        const candidate = new Candidate(['function nextYear(year) {', '    return year * 2', '}'])
         expect(candidate.execute([2024])).toBe(4048)
     })
 
     test('to html', () => {
-        const candidate = new Candidate(['function nextYear(year) {', '  return year', '}'])
+        const candidate = new Candidate(['function nextYear(year) {', '    return year', '}'])
         const html = candidate.toHtml(programmingLanguage)
         expect(html.getElement().outerHTML).toBe(
             '<code class="block">' +
@@ -91,7 +91,7 @@ test.describe('class Candidate', () => {
                     '<span class="punctuation">{</span>' +
                 '</div>' +
                 '<div>' +
-                    '<span class="whitespace">  </span>' +
+                    '<span class="whitespace">    </span>' +
                     '<span class="keyword">return</span>' +
                     '<span class="whitespace"> </span>' +
                     '<span class="variable">year</span>' +
@@ -104,8 +104,8 @@ test.describe('class Candidate', () => {
     })
 
     test('to html with previous', () => {
-        const candidate = new Candidate(['function nextYear(year) {', '', '', '  if (year < 0) return 0', '  return year % 1', '}'])
-        const previousCandidate = new Candidate(['function nextYear(year) {', '', '  if (year === 0) return 0', '', '  return undefined', '}'])
+        const candidate = new Candidate(['function nextYear(year) {', '', '', '    if (year < 0) return 0', '    return year % 1', '}'])
+        const previousCandidate = new Candidate(['function nextYear(year) {', '', '    if (year === 0) return 0', '', '    return undefined', '}'])
         const htmlWithPrevious = candidate.toHtmlWithPrevious(previousCandidate, programmingLanguage)
         expect(htmlWithPrevious.getElement().outerHTML).toBe(
             '<code class="block">' +
@@ -120,7 +120,7 @@ test.describe('class Candidate', () => {
                     '<span class="punctuation">{</span>' +
                 '</div>' +
                 '<div>' +
-                    '<del class="whitespace">  </del>' +
+                    '<del class="whitespace">    </del>' +
                     '<del class="keyword">if</del>' +
                     '<del class="whitespace"> </del>' +
                     '<del class="punctuation">(</del>' +
@@ -136,7 +136,7 @@ test.describe('class Candidate', () => {
                     '<del class="number">0</del>' +
                 '</div>' +
                 '<div>' +
-                    '<ins class="whitespace">  </ins>' +
+                    '<ins class="whitespace">    </ins>' +
                     '<ins class="keyword">if</ins>' +
                     '<ins class="whitespace"> </ins>' +
                     '<ins class="punctuation">(</ins>' +
@@ -152,7 +152,7 @@ test.describe('class Candidate', () => {
                     '<ins class="number">0</ins>' +
                 '</div>' +
                 '<div>' +
-                    '<span class="whitespace">  </span>' +
+                    '<span class="whitespace">    </span>' +
                     '<span class="keyword">return</span>' +
                     '<span class="whitespace"> </span>' +
                     '<del class="variable">undefined</del>' +

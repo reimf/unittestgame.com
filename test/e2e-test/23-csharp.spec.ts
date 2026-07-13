@@ -6,7 +6,7 @@ test.describe('csharp programming language', () => {
         await page.getByRole('button', { name: 'I want to play Level 1 - Battery Level' }).click()
         const currentFunctionPanel = page.getByTestId('current-function')
         const codeLines = currentFunctionPanel.locator('code')
-        await expect(codeLines).toContainText('static string powerMode(int batteryLevel) {    return "";}')
+        await expect(codeLines).toContainText('static string powerMode(int batteryLevel){    return "";}')
     })
 
     test('has a plain bool return type in the current function panel', async ({ page }) => {
@@ -17,7 +17,7 @@ test.describe('csharp programming language', () => {
         await page.getByRole('button', { name: 'I want to add this unit test' }).click()
         const currentFunctionPanel = page.getByTestId('current-function')
         const codeLines = currentFunctionPanel.locator('code')
-        await expect(codeLines).toContainText('static bool isAllowedToVote(int age) {    return true;}')
+        await expect(codeLines).toContainText('static bool isAllowedToVote(int age){    return true;}')
     })
 
     test('has an int parameter type in the current function panel of Speed Display', async ({ page }) => {
@@ -25,6 +25,6 @@ test.describe('csharp programming language', () => {
         await page.getByRole('button', { name: 'I want to play Level 8 - Speed Display' }).click()
         const currentFunctionPanel = page.getByTestId('current-function')
         const codeLines = currentFunctionPanel.locator('code')
-        await expect(codeLines).toContainText('static string display(int speed) {')
+        await expect(codeLines).toContainText('static string display(int speed){')
     })
 })

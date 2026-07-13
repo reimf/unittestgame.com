@@ -14,11 +14,11 @@ test.describe('class ProgrammingLanguage', () => {
 
     test('highlight with 1 argument', () => {
         const javascript = 'function isFloatFormat(text) {' +
-            '  let regex = new RegExp("/#@/").test(text)' +
-            '  if (!/[#@]/.test(text)) regex += speed.toFixed(1)' +
-            '  if (a < Math.abs(20.0) && a >= c && b !== c) return true' +
-            '  if (num % 2 === 0) return false' +
-            '  return regex' +
+            '    let regex = new RegExp("/#@/").test(text)' +
+            '    if (!/[#@]/.test(text)) regex += speed.toFixed(1)' +
+            '    if (a < Math.abs(20.0) && a >= c && b !== c) return true' +
+            '    if (num % 2 === 0) return false' +
+            '    return regex' +
             '}'
         const highlighted = programmingLanguage.highlight(javascript)
         expect(html(highlighted)).toEqual([
@@ -31,7 +31,7 @@ test.describe('class ProgrammingLanguage', () => {
                 '<span class="punctuation">)</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="punctuation">{</span>' +
-                '<span class="whitespace">  </span>' +
+                '<span class="whitespace">    </span>' +
                 '<span class="keyword">let</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="variable">regex</span>' +
@@ -49,7 +49,7 @@ test.describe('class ProgrammingLanguage', () => {
                 '<span class="punctuation">(</span>' +
                 '<span class="variable">text</span>' +
                 '<span class="punctuation">)</span>' +
-                '<span class="whitespace">  </span>' +
+                '<span class="whitespace">    </span>' +
                 '<span class="keyword">if</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="punctuation">(</span>' +
@@ -72,7 +72,7 @@ test.describe('class ProgrammingLanguage', () => {
                 '<span class="punctuation">(</span>' +
                 '<span class="number">1</span>' +
                 '<span class="punctuation">)</span>' +
-                '<span class="whitespace">  </span>' +
+                '<span class="whitespace">    </span>' +
                 '<span class="keyword">if</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="punctuation">(</span>' +
@@ -107,7 +107,7 @@ test.describe('class ProgrammingLanguage', () => {
                 '<span class="keyword">return</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="literal">true</span>' +
-                '<span class="whitespace">  </span>' +
+                '<span class="whitespace">    </span>' +
                 '<span class="keyword">if</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="punctuation">(</span>' +
@@ -125,7 +125,7 @@ test.describe('class ProgrammingLanguage', () => {
                 '<span class="keyword">return</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="literal">false</span>' +
-                '<span class="whitespace">  </span>' +
+                '<span class="whitespace">    </span>' +
                 '<span class="keyword">return</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="variable">regex</span>' +
@@ -423,7 +423,7 @@ test.describe('class Python', () => {
     })
 
     test('transpiles function into def and handles the closing curly bracket', () => {
-        const highlighted = python.highlight('function isEven(num) {\n  if (num % 2 === 0) return true\n  return false\n}')
+        const highlighted = python.highlight('function isEven(num) {\n    if (num % 2 === 0) return true\n    return false\n}')
         expect(html(highlighted)).toEqual([
             '<div>' +
                 '<span class="keyword">def</span>' +

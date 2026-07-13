@@ -78,7 +78,7 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
         const parameterList = this.parameters.map(parameter => parameter.name).join(', ')
         const indentedLines = [
             `function ${this.unit.name}(${parameterList}) {`,
-                ...lines.map(line => line ? '  ' + line : ''),
+                ...lines.map(line => line ? '    ' + line : ''),
             '}',
         ]
         return new Candidate<Parameters, Result>(indentedLines)

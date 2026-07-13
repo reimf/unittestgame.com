@@ -8,7 +8,6 @@ export class Java extends ProgrammingLanguage {
 
     public override transpile(javascriptCode: string, parameters: readonly Variable[], unit: Variable): string {
         return javascriptCode
-            .replace(/  /g, '    ')
             .replace(/\bfunction (\w+)\((.*?)\) *\{/g, (_match: string, name: string, parameterList: string) => {
                 const typedParameters = parameterList.split(', ').filter(parameterName => parameterName)
                     .map((parameterName, index) => `${this.dataType(parameters[index]!)} ${parameterName}`)
