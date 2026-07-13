@@ -25,7 +25,7 @@ test.describe('transpile to Java', () => {
                 const javaCode = java.transpile(candidate.nonEmptyLines.join('\n'), level.parameters, level.unit)
                 const javaAsserts = unitTests.map(unitTest => {
                     const assertion = java.transpile(unitTest.toTextWithResult(candidate.execute(unitTest.argumentList)), level.parameters, level.unit)
-                    return `if (!(${assertion})) { System.err.println(${JSON.stringify(assertion)}); System.exit(1); }`
+                    return `assert ${assertion};`
                 })
                 const javaProgram = [
                     javaCode.replace(/^((?:import [\w.]+;\n)*)/, '$1class Candidate {\n'),
@@ -37,7 +37,7 @@ test.describe('transpile to Java', () => {
                 const hash = createHash('sha256').update(javaProgram).digest('hex').slice(0, 16)
                 const file = join(temporaryFolder, `candidate-${hash}.java`)
                 writeFileSync(file, javaProgram)
-                const result = spawnSync('java', [file], { encoding: 'utf8' })
+                const result = spawnSync('java', ['-ea', file], { encoding: 'utf8' })
                 expect(result.status, javaProgram + '\n' + result.stderr).toBe(0)
             }
         })

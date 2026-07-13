@@ -25,17 +25,13 @@ test.describe('transpile to PHP', () => {
                 const phpCode = php.transpile(candidate.nonEmptyLines.join('\n'), level.parameters, level.unit)
                 const phpAsserts = unitTests.map(unitTest => {
                     const assertion = php.transpile(unitTest.toTextWithResult(candidate.execute(unitTest.argumentList)), level.parameters, level.unit)
-                    return `if (!(${assertion})) { fwrite(STDERR, ${JSON.stringify(assertion)}); exit(1); }`
+                    return `assert(${assertion});`
                 })
-                const phpProgram = [
-                    '<?php',
-                    phpCode,
-                    ...phpAsserts,
-                ].join('\n')
+                const phpProgram = ['<?php', phpCode, ...phpAsserts, '?>'].join('\n')
                 const hash = createHash('sha256').update(phpProgram).digest('hex').slice(0, 16)
                 const file = join(temporaryFolder, `candidate-${hash}.php`)
                 writeFileSync(file, phpProgram)
-                const result = spawnSync('php', [file], { encoding: 'utf8' })
+                const result = spawnSync('php', ['-d', 'zend.assertions=1', '-d', 'assert.exception=1', '-d', 'display_errors=stderr', file], { encoding: 'utf8' })
                 expect(result.status, phpProgram + '\n' + result.stderr).toBe(0)
             }
         })

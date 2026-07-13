@@ -25,12 +25,9 @@ test.describe('transpile to C#', () => {
                 const csharpCode = csharp.transpile(candidate.nonEmptyLines.join('\n'), level.parameters, level.unit)   
                 const csharpAsserts = unitTests.map(unitTest => {
                     const assertion = csharp.transpile(unitTest.toTextWithResult(candidate.execute(unitTest.argumentList)), level.parameters, level.unit)
-                    return `if (!(${assertion})) { System.Console.Error.WriteLine(${JSON.stringify(assertion)}); System.Environment.Exit(1); }`
+                    return `System.Diagnostics.Debug.Assert(${assertion});`
                 })
-                const csharpProgram = [
-                    csharpCode,
-                    ...csharpAsserts,
-                ].join('\n')
+                const csharpProgram = [csharpCode, ...csharpAsserts].join('\n')
                 const hash = createHash('sha256').update(csharpProgram).digest('hex').slice(0, 16)
                 const file = join(temporaryFolder, `candidate-${hash}.cs`)
                 writeFileSync(file, csharpProgram)
