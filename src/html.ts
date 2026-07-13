@@ -216,14 +216,19 @@ export class Select extends Html {
     private getSelectElement(): HTMLSelectElement {
         return this.getElement() as HTMLSelectElement
     }
+}
 
-    public appendOption(value: string, text: LocalizedText, selected: boolean): this {
-        const option = document.createElement('option')
+export class Option extends Html {
+    public constructor(value: string, text: LocalizedText, selected: boolean) {
+        super('option')
+        const option = this.getOptionElement()
         option.value = value
         option.defaultSelected = selected
-        option.append(new Text(text).getNode())
-        this.getSelectElement().append(option)
-        return this
+        this.appendText(text)
+    }
+
+    private getOptionElement(): HTMLOptionElement {
+        return this.getElement() as HTMLOptionElement
     }
 }
 

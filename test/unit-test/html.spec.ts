@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 import { JSDOM } from 'jsdom'
-import { Span, Div, Section, Code, CodeBlock, Label, Paragraph, Form, Header, Input, Italic, Anchor, Submit, Select, Img } from '../../src/html.js'
+import { Span, Div, Section, Code, CodeBlock, Label, Paragraph, Form, Header, Input, Italic, Anchor, Submit, Select, Option, Img } from '../../src/html.js'
 import { Locale } from '../../src/locale.js'
 
 const { document } = new JSDOM('<!DOCTYPE html>').window
@@ -170,8 +170,10 @@ test.describe('class Html', () => {
 
     test('has select', () => {
         const select = new Select(() => {})
-            .appendOption('a', Locale.bless('Option A'), false)
-            .appendOption('b', Locale.bless('Option B'), true)
+            .appendChildren([
+                new Option('a', Locale.bless('Option A'), false),
+                new Option('b', Locale.bless('Option B'), true),
+            ])
         expect(select.getElement().outerHTML).toBe(
             '<select><option value="a">Option A</option><option value="b" selected="">Option B</option></select>'
         )

@@ -1,7 +1,7 @@
 import { Game } from './game.js'
 import { Store } from './store.js'
 import { Panel, Message, ComputerMessage, QuestionMessage } from './frame.js'
-import { Div, Label, Select, Span } from './html.js'
+import { Div, Label, Option, Select, Span } from './html.js'
 import { AnyLevel } from './level-base.js'
 import { Locale } from './locale.js'
 import { Picker } from './picker.js'
@@ -43,23 +43,23 @@ export class Main {
         new ComputerMessage([this.locale.welcome()]).show()
     }
 
-    private switchTo(name: string, value: string): void {
+    private switchTo(parameterName: string, parameterValue: string): void {
         const url = new URL(window.location.href)
-        url.searchParams.set(name, value)
+        url.searchParams.set(parameterName, parameterValue)
         window.location.href = url.toString()
     }
 
     private languageSwitcher(): Label {
         const select = new Select(language => this.switchTo('language', language)).setId('language-switcher')
-        for (const language of Locale.languages)
-            select.appendOption(language, Locale.languageName(language), language === this.locale.language)
+        const options = Locale.languages.map(language => new Option(language, Locale.languageName(language), language === this.locale.language))
+        select.appendChildren(options)
         return new Label().appendText(this.locale.changeLanguage()).appendChild(new Span().appendChild(select))
     }
 
     private programmingLanguageSwitcher(): Label {
         const select = new Select(id => this.switchTo('programmingLanguage', id)).setId('programming-language-switcher')
-        for (const programmingLanguage of programmingLanguages)
-            select.appendOption(programmingLanguage.id, Locale.bless(programmingLanguage.name), programmingLanguage.id === this.programmingLanguage.id)
+        const options = programmingLanguages.map(programmingLanguage => new Option(programmingLanguage.id, Locale.bless(programmingLanguage.name), programmingLanguage.id === this.programmingLanguage.id))
+        select.appendChildren(options)
         return new Label().appendText(this.locale.changeProgrammingLanguage()).appendChild(new Span().appendChild(select))
     }
 
