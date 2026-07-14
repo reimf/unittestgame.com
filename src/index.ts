@@ -34,7 +34,7 @@ document.addEventListener('keydown', event => {
 document.addEventListener('DOMContentLoaded', () => {
     const injector = new Injector(new URL(window.location.href).searchParams)
     const locale = new Locale(injector.getOption('language', Locale.languages))
-    const programmingLanguageId = injector.getOption('programmingLanguage', programmingLanguages.map(programmingLanguage => programmingLanguage.id))
+    const programmingLanguageId = injector.getOption('programming_language', programmingLanguages.map(programmingLanguage => programmingLanguage.id))
     const programmingLanguage = programmingLanguages.find(programmingLanguage => programmingLanguage.id === programmingLanguageId)!
     const picker = injector.getOption('picker', ['random', 'fixed']) === 'fixed' ? new FixedPicker() : new RandomPicker()
     const store = injector.getOption('store', ['local', 'map']) === 'map' ? new MapStore() : new LocalStore()

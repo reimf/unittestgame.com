@@ -2,7 +2,7 @@ import { test, expect } from '../fixture/fixture-coverage'
 
 test.describe('python programming language', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('/?speed=fast&picker=fixed&programmingLanguage=python')
+        await page.goto('/?speed=fast&picker=fixed&programming_language=python')
         await page.getByRole('button', { name: 'I want to play Level 1 - Battery Level' }).click()
     })
 

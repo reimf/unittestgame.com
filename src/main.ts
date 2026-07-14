@@ -57,7 +57,7 @@ export class Main {
     }
 
     private programmingLanguageSwitcher(): Label {
-        const select = new Select(id => this.switchTo('programmingLanguage', id)).setId('programming-language-switcher')
+        const select = new Select(id => this.switchTo('programming_language', id)).setId('programming-language-switcher')
         const options = programmingLanguages.map(programmingLanguage => new Option(programmingLanguage.id, Locale.bless(programmingLanguage.name), programmingLanguage.id === this.programmingLanguage.id))
         select.appendChildren(options)
         return new Label().appendText(this.locale.changeProgrammingLanguage()).appendChild(new Span().appendChild(select))
