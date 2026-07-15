@@ -1,13 +1,13 @@
 import { test, expect } from '@playwright/test'
 import { spawnSync } from 'child_process'
 import { Game } from '../../src/game.js'
-import { Locale } from '../../src/locale.js'
+import { English } from '../../src/conversation-language-en.js'
 import { FixedPicker } from '../../src/picker.js'
 import { Python } from '../../src/programming-language-python.js'
 import { MapStore } from '../../src/store.js'
 
 const python = new Python()
-const levels = new Game(new Locale('en'), python, new FixedPicker(), new MapStore()).levels()
+const levels = new Game(new English(), python, new FixedPicker(), new MapStore()).levels()
 const pythonAvailable = spawnSync('python3', ['--version']).error === undefined
 
 test.describe('transpile to Python', () => {

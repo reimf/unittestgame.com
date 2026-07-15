@@ -1,5 +1,5 @@
 import { Del, Div, Ins, Span } from './html.js'
-import { Locale } from './locale.js'
+import { ConversationLanguage } from './conversation-language-base.js'
 
 type TokenType = 'whitespace' | 'number' | 'keyword' | 'literal' | 'class' | 'function' | 'variable' | 'regexp' | 'string' | 'operator' | 'punctuation' | 'dot' | 'error'
 export type TokenTypes = ReadonlyMap<TokenType, RegExp>
@@ -43,7 +43,7 @@ export class Tokenizer {
 
 export class Highlighter {
     public highlightTokens(tokens: readonly Token[]): Div {
-        const spans = tokens.map(token => new Span().addClass(token.type).appendText(Locale.bless(token.text)))
+        const spans = tokens.map(token => new Span().addClass(token.type).appendText(ConversationLanguage.bless(token.text)))
         return new Div().appendChildren(spans)
     }
 
@@ -55,17 +55,17 @@ export class Highlighter {
         while (previousTokensToConsume.length > 0 || currentTokensToConsume.length > 0) {
             if (commonTokens.length > 0 && previousTokensToConsume.length > 0 && currentTokensToConsume.length > 0 && previousTokensToConsume[0]!.equals(commonTokens[0]!) && currentTokensToConsume[0]!.equals(commonTokens[0]!)) {
                 const token = commonTokens.shift()!
-                div.appendChild(new Span().addClass(token.type).appendText(Locale.bless(token.text)))
+                div.appendChild(new Span().addClass(token.type).appendText(ConversationLanguage.bless(token.text)))
                 previousTokensToConsume.shift()
                 currentTokensToConsume.shift()
             }
             else if (previousTokensToConsume.length > 0 && !(commonTokens.length > 0 && previousTokensToConsume[0]!.equals(commonTokens[0]!))) {
                 const token = previousTokensToConsume.shift()!
-                div.appendChild(new Del().addClass(token.type).appendText(Locale.bless(token.text)))
+                div.appendChild(new Del().addClass(token.type).appendText(ConversationLanguage.bless(token.text)))
             }
             else if (currentTokensToConsume.length > 0 && !(commonTokens.length > 0 && currentTokensToConsume[0]!.equals(commonTokens[0]!))) {
                 const token = currentTokensToConsume.shift()!
-                div.appendChild(new Ins().addClass(token.type).appendText(Locale.bless(token.text)))
+                div.appendChild(new Ins().addClass(token.type).appendText(ConversationLanguage.bless(token.text)))
             }
         }
         return div

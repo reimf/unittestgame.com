@@ -1,10 +1,10 @@
 import { ComputerMessage } from './frame.js'
 import { Level } from './level-base.js'
-import { Locale, LocalizedText } from './locale.js'
+import { ConversationLanguage, ConversationText } from './conversation-language-base.js'
 import { Variable, IntegerVariable, RadioVariable } from './variable.js'
 
 type FormStringsType = {
-    message: LocalizedText
+    message: ConversationText
     batteryLevel: string|null
     powerMode: string|null
 }
@@ -19,18 +19,18 @@ export class BatteryLevel extends Level<[number], string> {
         return 'Battery Level'
     }
 
-    protected specification(): LocalizedText {
-        return this.locale.batteryLevelSpecification()
+    protected specification(): ConversationText {
+        return this.conversationLanguage.batteryLevelSpecification()
     }
 
     protected getParameters(): Variable[] {
         return [
-            new IntegerVariable(Locale.bless('Battery Level'), 'batteryLevel'),
+            new IntegerVariable(ConversationLanguage.bless('Battery Level'), 'batteryLevel'),
         ]
     }
 
     protected getUnit(): Variable {
-        return new RadioVariable(Locale.bless('Power Mode'), 'powerMode', [Locale.bless('NORMAL MODE'), Locale.bless('LOW POWER MODE')])
+        return new RadioVariable(ConversationLanguage.bless('Power Mode'), 'powerMode', [ConversationLanguage.bless('NORMAL MODE'), ConversationLanguage.bless('LOW POWER MODE')])
     }
 
     protected getCandidateElements(): string[][] {
@@ -72,37 +72,37 @@ export class BatteryLevel extends Level<[number], string> {
 
     private exampleForms: FormStringsType[] = [
         {
-            message: this.locale.addBatteryLevel20(),
+            message: this.conversationLanguage.addBatteryLevel20(),
             batteryLevel: '20',
             powerMode: 'NORMAL MODE'
         },
         {
-            message: this.locale.addBatteryLevel19(),
+            message: this.conversationLanguage.addBatteryLevel19(),
             batteryLevel: '19',
             powerMode: 'LOW POWER MODE'
         },
         {
-            message: this.locale.submitUnitTestsFirst(),
+            message: this.conversationLanguage.submitUnitTestsFirst(),
             batteryLevel: null,
             powerMode: null
         },
         {
-            message: this.locale.addBatteryLevel21(),
+            message: this.conversationLanguage.addBatteryLevel21(),
             batteryLevel: '21',
             powerMode: 'NORMAL MODE'
         },
         {
-            message: this.locale.submitUnitTestsSecond(),
+            message: this.conversationLanguage.submitUnitTestsSecond(),
             batteryLevel: null,
             powerMode: null
         },
         {
-            message: this.locale.addBatteryLevel18(),
+            message: this.conversationLanguage.addBatteryLevel18(),
             batteryLevel: '18',
             powerMode: 'LOW POWER MODE'
         },
         {
-            message: this.locale.submitUnitTestsThird(),
+            message: this.conversationLanguage.submitUnitTestsThird(),
             batteryLevel: null,
             powerMode: null
         }
@@ -113,7 +113,7 @@ export class BatteryLevel extends Level<[number], string> {
     }
 
     private showWarning() {
-        new ComputerMessage([this.locale.wrongAction()]).show()
+        new ComputerMessage([this.conversationLanguage.wrongAction()]).show()
     }
 
     protected override isFormDataOk(formData: FormData): boolean {

@@ -1,5 +1,5 @@
 import { Level } from './level-base.js'
-import { Locale, LocalizedText } from './locale.js'
+import { ConversationLanguage, ConversationText } from './conversation-language-base.js'
 import { Variable, IntegerVariable, RadioVariable } from './variable.js'
 
 export class Review extends Level<[number, number], string> {
@@ -10,19 +10,19 @@ export class Review extends Level<[number, number], string> {
     protected name(): string {
         return 'Review'
     }
-    protected specification(): LocalizedText {
-        return this.locale.reviewSpecification()
+    protected specification(): ConversationText {
+        return this.conversationLanguage.reviewSpecification()
     }
 
     protected getParameters(): Variable[] {
         return [
-            new IntegerVariable(Locale.bless('Price'), 'price'),
-            new IntegerVariable(Locale.bless('Quality'), 'quality'),
+            new IntegerVariable(ConversationLanguage.bless('Price'), 'price'),
+            new IntegerVariable(ConversationLanguage.bless('Quality'), 'quality'),
         ]
     }
 
     protected getUnit(): Variable {
-        return new RadioVariable(Locale.bless('Output'), 'review', [Locale.bless('GOOD'), Locale.bless('BAD'), Locale.bless('OK')])
+        return new RadioVariable(ConversationLanguage.bless('Output'), 'review', [ConversationLanguage.bless('GOOD'), ConversationLanguage.bless('BAD'), ConversationLanguage.bless('OK')])
     }
 
     protected getCandidateElements(): string[][] {

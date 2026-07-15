@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test'
 import { JSDOM } from 'jsdom'
 import { UnitTest } from '../../src/unit-test.js'
 import { IntegerVariable } from '../../src/variable.js'
-import { Locale } from '../../src/locale.js'
+import { ConversationLanguage } from '../../src/conversation-language-base.js'
 import { JavaScript } from '../../src/programming-language-javascript.js'
 
 const { document } = new JSDOM('<!DOCTYPE html>').window
@@ -12,8 +12,8 @@ test.describe('class UnitTest', () => {
     const programmingLanguage = new JavaScript()
 
     test('converts to a string', () => {
-        const parameters = [new IntegerVariable(Locale.bless('A'), 'a'), new IntegerVariable(Locale.bless('B'), 'b')]
-        const unit = new IntegerVariable(Locale.bless('Divide'), 'divide')
+        const parameters = [new IntegerVariable(ConversationLanguage.bless('A'), 'a'), new IntegerVariable(ConversationLanguage.bless('B'), 'b')]
+        const unit = new IntegerVariable(ConversationLanguage.bless('Divide'), 'divide')
         const unitTest = new UnitTest(parameters, [6, 3], unit, 2)
         const html = unitTest.toHtml(programmingLanguage)
         expect(html.getElement().outerHTML).toBe(
@@ -34,8 +34,8 @@ test.describe('class UnitTest', () => {
     })
 
     test('converts to a string with another result', () => {
-        const parameters = [new IntegerVariable(Locale.bless('A'), 'a'), new IntegerVariable(Locale.bless('B'), 'b')]
-        const unit = new IntegerVariable(Locale.bless('Divide'), 'divide')
+        const parameters = [new IntegerVariable(ConversationLanguage.bless('A'), 'a'), new IntegerVariable(ConversationLanguage.bless('B'), 'b')]
+        const unit = new IntegerVariable(ConversationLanguage.bless('Divide'), 'divide')
         const unitTest = new UnitTest<[number, number], number>(parameters, [6, 3], unit, 2)
         const htmlWithResult = unitTest.toHtmlWithResult(5, programmingLanguage)
         expect(htmlWithResult.getElement().outerHTML).toBe(

@@ -3,7 +3,7 @@ import { FixedPicker, RandomPicker } from './picker.js'
 import { programmingLanguages } from './programming-languages.js'
 import { Injector } from './injector.js'
 import { Main } from './main.js'
-import { Locale } from './locale.js'
+import { conversationLanguages } from './conversation-languages.js'
 
 window.onerror = (message, source, lineno, colno, error) => {
     alert(`${error?.name}: ${message}\n${source}:${lineno}:${colno}`)
@@ -33,7 +33,8 @@ document.addEventListener('keydown', event => {
 
 document.addEventListener('DOMContentLoaded', () => {
     const injector = new Injector(new URL(window.location.href).searchParams)
-    const locale = new Locale(injector.getOption('language', Locale.languages))
+    const conversationLanguageId = injector.getOption('language', conversationLanguages.map(conversationLanguage => conversationLanguage.id))
+    const conversationLanguage = conversationLanguages.find(conversationLanguage => conversationLanguage.id === conversationLanguageId)!
     const programmingLanguageId = injector.getOption('programming_language', programmingLanguages.map(programmingLanguage => programmingLanguage.id))
     const programmingLanguage = programmingLanguages.find(programmingLanguage => programmingLanguage.id === programmingLanguageId)!
     const picker = injector.getOption('picker', ['random', 'fixed']) === 'fixed' ? new FixedPicker() : new RandomPicker()
@@ -49,5 +50,5 @@ document.addEventListener('DOMContentLoaded', () => {
         store.set(key, Number(value))
     }
     injector.checkEmpty()
-    new Main(locale, programmingLanguage, picker, store).start()
+    new Main(conversationLanguage, programmingLanguage, picker, store).start()
 })

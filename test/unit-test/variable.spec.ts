@@ -1,17 +1,17 @@
 import { test, expect } from '@playwright/test'
 import { JSDOM } from 'jsdom'
 import { RadioVariable, BooleanVariable, TextVariable, IntegerVariable } from '../../src/variable.js'
-import { Locale } from '../../src/locale.js'
+import { ConversationLanguage } from '../../src/conversation-language-base.js'
 
 const { document } = new JSDOM('<!DOCTYPE html>').window
 global.document = document
 
 test.describe('class Variable', () => {
     test('subclass RadioVariable', () => {
-        const variable = new RadioVariable(Locale.bless('Type of triangle'), 'triangleType', [
-            Locale.bless('EQUILATERAL'),
-            Locale.bless('ISOSCELES'),
-            Locale.bless('SCALENE'),
+        const variable = new RadioVariable(ConversationLanguage.bless('Type of triangle'), 'triangleType', [
+            ConversationLanguage.bless('EQUILATERAL'),
+            ConversationLanguage.bless('ISOSCELES'),
+            ConversationLanguage.bless('SCALENE'),
         ])
         const html = variable.toHtml()
         expect(html.getElement().outerHTML).toBe(
@@ -34,7 +34,7 @@ test.describe('class Variable', () => {
     })
 
     test('subclass BooleanVariable', () => {
-        const variable = new BooleanVariable(Locale.bless('Is even'), 'isEven')
+        const variable = new BooleanVariable(ConversationLanguage.bless('Is even'), 'isEven')
         const html = variable.toHtml()
         expect(html.getElement().outerHTML).toBe(
             '<p>' +
@@ -52,7 +52,7 @@ test.describe('class Variable', () => {
     })
 
     test('subclass TextVariable', () => {
-        const variable = new TextVariable(Locale.bless('Output'), 'fizzBuzz')
+        const variable = new TextVariable(ConversationLanguage.bless('Output'), 'fizzBuzz')
         const html = variable.toHtml()
         expect(html.getElement().outerHTML).toBe(
             '<p>' +
@@ -65,7 +65,7 @@ test.describe('class Variable', () => {
     })
 
     test('subclass IntegerVariable', () => {
-        const variable = new IntegerVariable(Locale.bless('Number'), 'number')
+        const variable = new IntegerVariable(ConversationLanguage.bless('Number'), 'number')
         const html = variable.toHtml()
         expect(html.getElement().outerHTML).toBe(
             '<p>' +

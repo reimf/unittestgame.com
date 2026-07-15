@@ -1,5 +1,5 @@
 import { Level } from './level-base.js'
-import { Locale, LocalizedText } from './locale.js'
+import { ConversationLanguage, ConversationText } from './conversation-language-base.js'
 import { Variable, BooleanVariable, TextVariable } from './variable.js'
 
 export class PasswordStrength extends Level<[string], boolean> {
@@ -11,18 +11,18 @@ export class PasswordStrength extends Level<[string], boolean> {
         return 'Password Strength'
     }
 
-    protected specification(): LocalizedText {
-        return this.locale.passwordStrengthSpecification()
+    protected specification(): ConversationText {
+        return this.conversationLanguage.passwordStrengthSpecification()
     }
 
     protected getParameters(): Variable[] {
         return [
-            new TextVariable(Locale.bless('Password'), 'password')
+            new TextVariable(ConversationLanguage.bless('Password'), 'password')
         ]
     }
 
     protected getUnit(): Variable {
-        return new BooleanVariable(Locale.bless('Is strong password'), 'isStrongPassword')
+        return new BooleanVariable(ConversationLanguage.bless('Is strong password'), 'isStrongPassword')
     }
 
     protected getCandidateElements(): string[][] {

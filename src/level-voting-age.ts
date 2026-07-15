@@ -1,5 +1,5 @@
 import { Level } from './level-base.js'
-import { Locale, LocalizedText } from './locale.js'
+import { ConversationLanguage, ConversationText } from './conversation-language-base.js'
 import { Variable, BooleanVariable, IntegerVariable } from './variable.js'
 
 export class VotingAge extends Level<[number], boolean> {
@@ -11,18 +11,18 @@ export class VotingAge extends Level<[number], boolean> {
         return 'Voting Age'
     }
 
-    protected specification(): LocalizedText {
-        return this.locale.votingAgeSpecification()
+    protected specification(): ConversationText {
+        return this.conversationLanguage.votingAgeSpecification()
     }
 
     protected getParameters(): Variable[] {
         return [
-            new IntegerVariable(Locale.bless('Age'), 'age'),
+            new IntegerVariable(ConversationLanguage.bless('Age'), 'age'),
         ]
     }
 
     protected getUnit(): Variable {
-        return new BooleanVariable(Locale.bless('Is allowed to vote'), 'isAllowedToVote')
+        return new BooleanVariable(ConversationLanguage.bless('Is allowed to vote'), 'isAllowedToVote')
     }
 
     protected getCandidateElements(): string[][] {

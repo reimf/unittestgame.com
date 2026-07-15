@@ -1,5 +1,5 @@
 import { Level } from './level-base.js'
-import { Locale, LocalizedText } from './locale.js'
+import { ConversationLanguage, ConversationText } from './conversation-language-base.js'
 import { Variable, TextVariable, IntegerVariable } from './variable.js'
 
 export class SpeedDisplay extends Level<[number], string> {
@@ -11,18 +11,18 @@ export class SpeedDisplay extends Level<[number], string> {
         return 'Speed Display'
     }
 
-    protected specification(): LocalizedText {
-        return this.locale.speedDisplaySpecification()
+    protected specification(): ConversationText {
+        return this.conversationLanguage.speedDisplaySpecification()
     }
 
     protected getParameters(): Variable[] {
         return [
-            new IntegerVariable(Locale.bless('Speed'), 'speed')
+            new IntegerVariable(ConversationLanguage.bless('Speed'), 'speed')
         ]
     }
 
     protected getUnit(): Variable {
-        return new TextVariable(Locale.bless('Display'), 'display')
+        return new TextVariable(ConversationLanguage.bless('Display'), 'display')
     }
 
     protected getCandidateElements(): string[][] {

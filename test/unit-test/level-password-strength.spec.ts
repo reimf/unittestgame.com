@@ -1,14 +1,14 @@
 import { test, expect } from '@playwright/test'
-import { Locale } from '../../src/locale.js'
+import { English } from '../../src/conversation-language-en.js'
 import { FixedPicker } from '../../src/picker.js'
 import { MapStore } from '../../src/store.js'
 import { PasswordStrength } from '../../src/level-password-strength.js'
 import { JavaScript } from '../../src/programming-language-javascript.js'
 
 test.describe('class PasswordStrength', () => {
-    const locale = new Locale('en')
+    const conversationLanguage = new English()
     const programmingLanguage = new JavaScript()
-    const level = new PasswordStrength(locale, programmingLanguage, new FixedPicker(), new MapStore(), 10)
+    const level = new PasswordStrength(conversationLanguage, programmingLanguage, new FixedPicker(), new MapStore(), 10)
 
     test('has the correct description', () => {
         expect(level.description()).toBe('Level 10 - Password Strength')

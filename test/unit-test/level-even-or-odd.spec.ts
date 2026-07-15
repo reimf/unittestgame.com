@@ -1,14 +1,14 @@
 import { test, expect } from '@playwright/test'
-import { Locale } from '../../src/locale.js'
+import { English } from '../../src/conversation-language-en.js'
 import { FixedPicker } from '../../src/picker.js'
 import { MapStore } from '../../src/store.js'
 import { EvenOrOdd } from '../../src/level-even-or-odd.js'
 import { JavaScript } from '../../src/programming-language-javascript.js'
 
 test.describe('class EvenOrOdd', () => {
-    const locale = new Locale('en')
+    const conversationLanguage = new English()
     const programmingLanguage = new JavaScript()
-    const level = new EvenOrOdd(locale, programmingLanguage, new FixedPicker(), new MapStore(), 2)
+    const level = new EvenOrOdd(conversationLanguage, programmingLanguage, new FixedPicker(), new MapStore(), 2)
 
     test('has the correct description', () => {
         expect(level.description()).toBe('Level 2 - Even or Odd')

@@ -1,4 +1,4 @@
-import { Locale } from '../../src/locale.js'
+import { English } from '../../src/conversation-language-en.js'
 import { UnitTest } from '../../src/unit-test.js'
 import { LeapYear } from '../../src/level-leap-year.js'
 import { FixedPicker } from '../../src/picker.js'
@@ -14,9 +14,9 @@ type FixtureLevelState = {
 }
 
 export class FixtureLevelStates {
-    private readonly locale = new Locale('en')
+    private readonly conversationLanguage = new English()
     private readonly programmingLanguage = new JavaScript()
-    public readonly level = new LeapYear(this.locale, this.programmingLanguage, new FixedPicker(), new MapStore(), 1)
+    public readonly level = new LeapYear(this.conversationLanguage, this.programmingLanguage, new FixedPicker(), new MapStore(), 1)
     public readonly states: FixtureLevelState[]
 
     public constructor() {

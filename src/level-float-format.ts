@@ -1,5 +1,5 @@
 import { Level } from './level-base.js'
-import { Locale, LocalizedText } from './locale.js'
+import { ConversationLanguage, ConversationText } from './conversation-language-base.js'
 import { Variable, BooleanVariable, TextVariable } from './variable.js'
 
 export class FloatFormat extends Level<[string], boolean> {
@@ -11,18 +11,18 @@ export class FloatFormat extends Level<[string], boolean> {
         return 'Float Format'
     }
 
-    protected specification(): LocalizedText {
-        return this.locale.floatFormatSpecification()
+    protected specification(): ConversationText {
+        return this.conversationLanguage.floatFormatSpecification()
     }
 
     protected getParameters(): Variable[] {
         return [
-            new TextVariable(Locale.bless('Text'), 'text')
+            new TextVariable(ConversationLanguage.bless('Text'), 'text')
         ]
     }
 
     protected getUnit(): Variable {
-        return new BooleanVariable(Locale.bless('Represents a float'), 'isFloatFormat')
+        return new BooleanVariable(ConversationLanguage.bless('Represents a float'), 'isFloatFormat')
     }
 
     protected getCandidateElements(): string[][] {

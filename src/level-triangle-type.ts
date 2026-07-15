@@ -1,5 +1,5 @@
 import { Level } from './level-base.js'
-import { Locale, LocalizedText } from './locale.js'
+import { ConversationLanguage, ConversationText } from './conversation-language-base.js'
 import { Variable, RadioVariable, IntegerVariable } from './variable.js'
 
 export class TriangleType extends Level<[number, number, number], string> {
@@ -11,20 +11,20 @@ export class TriangleType extends Level<[number, number, number], string> {
         return 'Triangle Type'
     }
 
-    protected specification(): LocalizedText {
-        return this.locale.triangleTypeSpecification()
+    protected specification(): ConversationText {
+        return this.conversationLanguage.triangleTypeSpecification()
     }
 
     protected getParameters(): Variable[] {
         return [
-            new IntegerVariable(Locale.bless('Side A'), 'a'),
-            new IntegerVariable(Locale.bless('Side B'), 'b'),
-            new IntegerVariable(Locale.bless('Side C'), 'c'),
+            new IntegerVariable(ConversationLanguage.bless('Side A'), 'a'),
+            new IntegerVariable(ConversationLanguage.bless('Side B'), 'b'),
+            new IntegerVariable(ConversationLanguage.bless('Side C'), 'c'),
         ]
     }
 
     protected getUnit(): Variable {
-        return new RadioVariable(Locale.bless('Type of triangle'), 'triangleType', [Locale.bless('EQUILATERAL'), Locale.bless('ISOSCELES'), Locale.bless('SCALENE')])
+        return new RadioVariable(ConversationLanguage.bless('Type of triangle'), 'triangleType', [ConversationLanguage.bless('EQUILATERAL'), ConversationLanguage.bless('ISOSCELES'), ConversationLanguage.bless('SCALENE')])
     }
 
     protected getCandidateElements(): string[][] {

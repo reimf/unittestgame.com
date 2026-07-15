@@ -1,8 +1,8 @@
 import { Button, Div, Html, Header, Paragraph, Section } from './html.js'
-import type { LocalizedText } from './locale.js'
+import type { ConversationText } from './conversation-language-base.js'
 
 abstract class Frame extends Section {
-    protected constructor(elements: readonly (Html|LocalizedText)[]) {
+    protected constructor(elements: readonly (Html|ConversationText)[]) {
         super()
         const children = elements.map(element => element instanceof Html ? element : new Paragraph().appendMarkdown(element))
         this.appendChild(new Div().appendChildren(children))
@@ -20,7 +20,7 @@ abstract class Frame extends Section {
 }
 
 export class Panel extends Frame {
-    public constructor(id: string, title: LocalizedText, elements: readonly (Html|LocalizedText)[]) {
+    public constructor(id: string, title: ConversationText, elements: readonly (Html|ConversationText)[]) {
         super(elements)
         this.setId(id).prependChild(new Header().appendText(title))
     }
@@ -43,7 +43,7 @@ export class Panel extends Frame {
 }
 
 export abstract class Message extends Frame {
-    protected constructor(elements: readonly (Html|LocalizedText)[]) {
+    protected constructor(elements: readonly (Html|ConversationText)[]) {
         super(elements)
     }
 
@@ -79,21 +79,21 @@ export abstract class Message extends Frame {
 }
 
 export class ComputerMessage extends Message {
-    public constructor(elements: readonly (Html|LocalizedText)[]) {
+    public constructor(elements: readonly (Html|ConversationText)[]) {
         super(elements)
         this.addClass('computer')
     }
 }
 
 export class HumanMessage extends Message {
-    public constructor(children: readonly (Html|LocalizedText)[]) {
+    public constructor(children: readonly (Html|ConversationText)[]) {
         super(children)
         this.addClass('human')
     }
 }
 
 export class QuestionMessage extends HumanMessage {
-    public constructor(text: LocalizedText, callback: () => void) {
+    public constructor(text: ConversationText, callback: () => void) {
         super([
             new Button(text, callback)
         ])

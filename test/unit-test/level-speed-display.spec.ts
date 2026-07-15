@@ -1,14 +1,14 @@
 import { test, expect } from '@playwright/test'
-import { Locale } from '../../src/locale.js'
+import { English } from '../../src/conversation-language-en.js'
 import { FixedPicker } from '../../src/picker.js'
 import { MapStore } from '../../src/store.js'
 import { SpeedDisplay } from '../../src/level-speed-display.js'
 import { JavaScript } from '../../src/programming-language-javascript.js'
 
 test.describe('class SpeedDisplay', () => {
-    const locale = new Locale('en')
+    const conversationLanguage = new English()
     const programmingLanguage = new JavaScript()
-    const level = new SpeedDisplay(locale, programmingLanguage, new FixedPicker(), new MapStore(), 7)
+    const level = new SpeedDisplay(conversationLanguage, programmingLanguage, new FixedPicker(), new MapStore(), 7)
 
     test('has the correct description', () => {
         expect(level.description()).toBe('Level 7 - Speed Display')

@@ -1,5 +1,5 @@
 import { Level } from './level-base.js'
-import { Locale, LocalizedText } from './locale.js'
+import { ConversationLanguage, ConversationText } from './conversation-language-base.js'
 import { Variable, IntegerVariable, TextVariable } from './variable.js'
 
 export class FizzBuzz extends Level<[number], string> {
@@ -10,18 +10,18 @@ export class FizzBuzz extends Level<[number], string> {
     protected name(): string {
         return 'FIZZBUZZ'
     }
-    protected specification(): LocalizedText {
-        return this.locale.fizzBuzzSpecification()
+    protected specification(): ConversationText {
+        return this.conversationLanguage.fizzBuzzSpecification()
     }
 
     protected getParameters(): Variable[] {
         return [
-            new IntegerVariable(Locale.bless('Number'), 'num'),
+            new IntegerVariable(ConversationLanguage.bless('Number'), 'num'),
         ]
     }
 
     protected getUnit(): Variable {
-        return new TextVariable(Locale.bless('Output'), 'fizzBuzz')
+        return new TextVariable(ConversationLanguage.bless('Output'), 'fizzBuzz')
     }
 
     protected getCandidateElements(): string[][] {

@@ -1,5 +1,5 @@
 import { Level } from './level-base.js'
-import { Locale, LocalizedText } from './locale.js'
+import { ConversationLanguage, ConversationText } from './conversation-language-base.js'
 import { Variable, BooleanVariable, IntegerVariable } from './variable.js'
 
 export class EvenOrOdd extends Level<[number], boolean> {
@@ -11,18 +11,18 @@ export class EvenOrOdd extends Level<[number], boolean> {
         return 'Even or Odd'
     }
 
-    protected specification(): LocalizedText {
-        return this.locale.evenOddSpecification()
+    protected specification(): ConversationText {
+        return this.conversationLanguage.evenOddSpecification()
     }
 
     protected getParameters(): Variable[] {
         return [
-            new IntegerVariable(Locale.bless('Number'), 'num'),
+            new IntegerVariable(ConversationLanguage.bless('Number'), 'num'),
         ]
     }
 
     protected getUnit(): Variable {
-        return new BooleanVariable(Locale.bless('Is even'), 'isEven')
+        return new BooleanVariable(ConversationLanguage.bless('Is even'), 'isEven')
     }
 
     protected getCandidateElements(): string[][] {

@@ -3,20 +3,21 @@ import { Store } from './store.js'
 import { Panel, Message, ComputerMessage, QuestionMessage } from './frame.js'
 import { Div, Label, Option, Select, Span } from './html.js'
 import { AnyLevel } from './level-base.js'
-import { Locale } from './locale.js'
+import { ConversationLanguage } from './conversation-language-base.js'
+import { conversationLanguages } from './conversation-languages.js'
 import { Picker } from './picker.js'
 import { ProgrammingLanguage } from './programming-language-base.js'
 import { programmingLanguages } from './programming-languages.js'
 
 export class Main {
-    private readonly locale: Locale
+    private readonly conversationLanguage: ConversationLanguage
     private readonly programmingLanguage: ProgrammingLanguage
     private readonly levels: ReturnType<Game['levels']>
 
-    constructor(locale: Locale, programmingLanguage: ProgrammingLanguage, picker: Picker, store: Store) {
-        this.locale = locale
+    constructor(conversationLanguage: ConversationLanguage, programmingLanguage: ProgrammingLanguage, picker: Picker, store: Store) {
+        this.conversationLanguage = conversationLanguage
         this.programmingLanguage = programmingLanguage
-        const game = new Game(locale, programmingLanguage, picker, store)
+        const game = new Game(conversationLanguage, programmingLanguage, picker, store)
         this.levels = game.levels()
     }
 
@@ -40,7 +41,7 @@ export class Main {
     }
 
     private showWelcomeMessage(): void {
-        new ComputerMessage([this.locale.welcome()]).show()
+        new ComputerMessage([this.conversationLanguage.welcome()]).show()
     }
 
     private switchTo(parameterName: string, parameterValue: string): void {
@@ -50,17 +51,17 @@ export class Main {
     }
 
     private languageSwitcher(): Label {
-        const select = new Select(language => this.switchTo('language', language)).setId('language-switcher')
-        const options = Locale.languages.map(language => new Option(language, Locale.languageName(language), language === this.locale.language))
+        const select = new Select(id => this.switchTo('language', id)).setId('language-switcher')
+        const options = conversationLanguages.map(conversationLanguage => new Option(conversationLanguage.id, ConversationLanguage.bless(conversationLanguage.name), conversationLanguage.id === this.conversationLanguage.id))
         select.appendChildren(options)
-        return new Label().appendText(this.locale.changeLanguage()).appendChild(new Span().appendChild(select))
+        return new Label().appendText(this.conversationLanguage.changeLanguage()).appendChild(new Span().appendChild(select))
     }
 
     private programmingLanguageSwitcher(): Label {
         const select = new Select(id => this.switchTo('programming_language', id)).setId('programming-language-switcher')
-        const options = programmingLanguages.map(programmingLanguage => new Option(programmingLanguage.id, Locale.bless(programmingLanguage.name), programmingLanguage.id === this.programmingLanguage.id))
+        const options = programmingLanguages.map(programmingLanguage => new Option(programmingLanguage.id, ConversationLanguage.bless(programmingLanguage.name), programmingLanguage.id === this.programmingLanguage.id))
         select.appendChildren(options)
-        return new Label().appendText(this.locale.changeProgrammingLanguage()).appendChild(new Span().appendChild(select))
+        return new Label().appendText(this.conversationLanguage.changeProgrammingLanguage()).appendChild(new Span().appendChild(select))
     }
 
     private switchers(): Div {
@@ -68,16 +69,16 @@ export class Main {
     }
 
     private showAboutPanel(): void {
-        const content = [this.locale.slogan(), this.locale.links()]
-        new Panel('unittestgame', this.locale.unitTestGameTitle(), content).show()
+        const content = [this.conversationLanguage.slogan(), this.conversationLanguage.links()]
+        new Panel('unittestgame', this.conversationLanguage.unitTestGameTitle(), content).show()
     }
 
     private showSettingsPanel(): void {
-        new Panel('settings', this.locale.settingsTitle(), [this.switchers()]).show()
+        new Panel('settings', this.conversationLanguage.settingsTitle(), [this.switchers()]).show()
     }
 
     private showInvitationMessage(): void {
-        new ComputerMessage([this.locale.invitation()]).show()
+        new ComputerMessage([this.conversationLanguage.invitation()]).show()
     }
 
     private showLevelOverviewPanel(): void {
@@ -86,23 +87,23 @@ export class Main {
             const emoji = level.emoji(nextLevel)
             const state = level === nextLevel || level.isFinished() ? 'unlocked' : 'locked'
             return new Span().addClass('cell').addClass(state).appendChildren([
-                new Span().addClass('number').appendText(Locale.bless(`${level.levelNumber}`)),
-                new Span().addClass('emoji').appendText(Locale.bless(emoji))
+                new Span().addClass('number').appendText(ConversationLanguage.bless(`${level.levelNumber}`)),
+                new Span().addClass('emoji').appendText(ConversationLanguage.bless(emoji))
             ])
         })
         const div = new Div().addClass('level-board').appendChildren(cells)
-        new Panel('level-overview', this.locale.levelOverviewTitle(), [div]).show()
+        new Panel('level-overview', this.conversationLanguage.levelOverviewTitle(), [div]).show()
     }
 
     private showNextLevel(): void {
         const nextLevel = this.levels.find(level => !level.isFinished())
         if (nextLevel)
-            new QuestionMessage(this.locale.nextLevelButton(nextLevel.description()), () => this.play(nextLevel)).show()
+            new QuestionMessage(this.conversationLanguage.nextLevelButton(nextLevel.description()), () => this.play(nextLevel)).show()
         else
-            new QuestionMessage(this.locale.allLevels(), () => this.quit()).show()
+            new QuestionMessage(this.conversationLanguage.allLevels(), () => this.quit()).show()
     }
 
     private quit(): void {
-        new ComputerMessage([this.locale.closeTab()]).show()
+        new ComputerMessage([this.conversationLanguage.closeTab()]).show()
     }
 }

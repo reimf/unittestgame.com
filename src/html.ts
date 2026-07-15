@@ -1,4 +1,4 @@
-import { Locale, LocalizedText } from './locale.js'
+import { ConversationLanguage, ConversationText } from './conversation-language-base.js'
 
 abstract class Content {
     private static timeOfLastDelayedCall: number = 0
@@ -45,7 +45,7 @@ export abstract class Html extends Content {
         return this
     }
 
-    public appendMarkdown(markdown: LocalizedText): this {
+    public appendMarkdown(markdown: ConversationText): this {
         const patterns = [
             /\*(?<italic>.+?)\*/,
             /`(?<code>.+?)`/,
@@ -58,20 +58,20 @@ export abstract class Html extends Content {
         for (const { groups } of markdown.matchAll(pattern)) {
             const { italic, code, text, href, plain, alt, src } = groups!
             if (italic)
-                this.appendChild(new Italic().appendMarkdown(Locale.bless(italic)))
+                this.appendChild(new Italic().appendMarkdown(ConversationLanguage.bless(italic)))
             else if (code)
-                this.appendChild(new Code().appendMarkdown(Locale.bless(code)))
+                this.appendChild(new Code().appendMarkdown(ConversationLanguage.bless(code)))
             else if (alt && src)
                 this.appendChild(new Img(src, alt))
             else if (text && href)
-                this.appendChild(new Anchor(href).appendMarkdown(Locale.bless(text)))
+                this.appendChild(new Anchor(href).appendMarkdown(ConversationLanguage.bless(text)))
             else if (plain)
-                this.appendText(Locale.bless(plain))
+                this.appendText(ConversationLanguage.bless(plain))
         }
         return this
     }
 
-    public appendText(text: LocalizedText): this {
+    public appendText(text: ConversationText): this {
         this.getElement().append(new Text(text).getNode())
         return this
     }
@@ -91,7 +91,7 @@ export abstract class Html extends Content {
         return this
     }
 
-    protected replaceEnclosingMessageContent(element: HTMLElement, text: LocalizedText): void {
+    protected replaceEnclosingMessageContent(element: HTMLElement, text: ConversationText): void {
         const section = element.closest('section')!
         section.classList.remove('reveal')
         const textNode = document.createTextNode(text + '.')
@@ -103,7 +103,7 @@ export abstract class Html extends Content {
 }
 
 class Text extends Content {
-    public constructor(text: LocalizedText) {
+    public constructor(text: ConversationText) {
         const textNode = document.createTextNode(text)
         super(textNode)
     }
@@ -154,7 +154,7 @@ export class Input extends Html {
 }
 
 export class Submit extends Input {
-    public constructor(text: LocalizedText) {
+    public constructor(text: ConversationText) {
         super()
         this.setType('submit').setValue(text)
     }
@@ -167,7 +167,7 @@ export class Form extends Html {
             event.preventDefault()
             const formData = new FormData(this.getFormElement())
             const submit = this.getFormElement().querySelector('input[type="submit"]') as HTMLInputElement
-            this.replaceEnclosingMessageContent(this.getFormElement(), Locale.bless(submit.value))
+            this.replaceEnclosingMessageContent(this.getFormElement(), ConversationLanguage.bless(submit.value))
             callback(formData)
         })
     }
@@ -190,12 +190,12 @@ export class Paragraph extends Html {
 }
 
 export class Button extends Html {
-    public constructor(text: LocalizedText, callback: () => void) {
+    public constructor(text: ConversationText, callback: () => void) {
         super('button')
         this.appendText(text)
         this.getElement().addEventListener('click', event => {
             event.preventDefault()
-            this.replaceEnclosingMessageContent(this.getElement(), Locale.bless(this.getElement().textContent))
+            this.replaceEnclosingMessageContent(this.getElement(), ConversationLanguage.bless(this.getElement().textContent))
             callback()
         })
     }
@@ -219,7 +219,7 @@ export class Select extends Html {
 }
 
 export class Option extends Html {
-    public constructor(value: string, text: LocalizedText, selected: boolean) {
+    public constructor(value: string, text: ConversationText, selected: boolean) {
         super('option')
         const option = this.getOptionElement()
         option.value = value

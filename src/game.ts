@@ -10,18 +10,18 @@ import { Review } from './level-review.js'
 import { SpeedDisplay } from './level-speed-display.js'
 import { TriangleType } from './level-triangle-type.js'
 import { VotingAge } from './level-voting-age.js'
-import { Locale } from './locale.js'
+import { ConversationLanguage } from './conversation-language-base.js'
 import { Picker } from './picker.js'
 import { ProgrammingLanguage } from './programming-language-base.js'
 
 export class Game {
-    private readonly locale: Locale
+    private readonly conversationLanguage: ConversationLanguage
     private readonly programmingLanguage: ProgrammingLanguage
     private readonly picker: Picker
     private readonly store: Store
 
-    public constructor(locale: Locale, programmingLanguage: ProgrammingLanguage, picker: Picker, store: Store) {
-        this.locale = locale
+    public constructor(conversationLanguage: ConversationLanguage, programmingLanguage: ProgrammingLanguage, picker: Picker, store: Store) {
+        this.conversationLanguage = conversationLanguage
         this.programmingLanguage = programmingLanguage
         this.picker = picker
         this.store = store
@@ -40,6 +40,6 @@ export class Game {
             FloatFormat,
             PasswordStrength,
         ]
-        return levelClasses.map((levelClass, index) => new levelClass(this.locale, this.programmingLanguage, this.picker, this.store, index + 1))
+        return levelClasses.map((levelClass, index) => new levelClass(this.conversationLanguage, this.programmingLanguage, this.picker, this.store, index + 1))
     }
 }

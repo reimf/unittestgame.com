@@ -1,14 +1,14 @@
 import { test, expect } from '@playwright/test'
 import { JSDOM } from 'jsdom'
 import { Panel, ComputerMessage, HumanMessage, QuestionMessage } from '../../src/frame.js'
-import { Locale } from '../../src/locale.js'
+import { ConversationLanguage } from '../../src/conversation-language-base.js'
 
 const { document } = new JSDOM('<!DOCTYPE html>').window
 global.document = document
 
 test.describe('class Frame', () => {
     test('subclass Panel', () => {
-        const panel = new Panel('current-level', Locale.bless('Current Level'), [Locale.bless('Level 1')])
+        const panel = new Panel('current-level', ConversationLanguage.bless('Current Level'), [ConversationLanguage.bless('Level 1')])
         expect(panel.getElement().outerHTML).toBe(
             '<section id="current-level">' +
                 '<header>Current Level</header>' +
@@ -20,7 +20,7 @@ test.describe('class Frame', () => {
     })
 
     test('subclass ComputerMessage', () => {
-        const computerMessage = new ComputerMessage([Locale.bless('Hello'), Locale.bless('World')])
+        const computerMessage = new ComputerMessage([ConversationLanguage.bless('Hello'), ConversationLanguage.bless('World')])
         expect(computerMessage.getElement().outerHTML).toBe(
             '<section class="computer">' +
                 '<div>' +
@@ -32,7 +32,7 @@ test.describe('class Frame', () => {
     })
 
     test('subclass HumanMessage', () => {
-        const humanMessage = new HumanMessage([Locale.bless('Hello'), Locale.bless('World')])
+        const humanMessage = new HumanMessage([ConversationLanguage.bless('Hello'), ConversationLanguage.bless('World')])
         expect(humanMessage.getElement().outerHTML).toBe(
             '<section class="human">' +
                 '<div>' +
@@ -44,7 +44,7 @@ test.describe('class Frame', () => {
     })
 
     test('subclass QuestionMessage', () => {
-        const questionMessage = new QuestionMessage(Locale.bless('Hello'), () => {})
+        const questionMessage = new QuestionMessage(ConversationLanguage.bless('Hello'), () => {})
         expect(questionMessage.getElement().outerHTML).toBe(
             '<section class="human">' +
                 '<div>' +

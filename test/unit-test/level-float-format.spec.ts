@@ -1,14 +1,14 @@
 import { test, expect } from '@playwright/test'
-import { Locale } from '../../src/locale.js'
+import { English } from '../../src/conversation-language-en.js'
 import { FixedPicker } from '../../src/picker.js'
 import { MapStore } from '../../src/store.js'
 import { FloatFormat } from '../../src/level-float-format.js'
 import { JavaScript } from '../../src/programming-language-javascript.js'
 
 test.describe('class FloatFormat', () => {
-    const locale = new Locale('en')
+    const conversationLanguage = new English()
     const programmingLanguage = new JavaScript()
-    const level = new FloatFormat(locale, programmingLanguage, new FixedPicker(), new MapStore(), 8)
+    const level = new FloatFormat(conversationLanguage, programmingLanguage, new FixedPicker(), new MapStore(), 8)
 
     test('has the correct description', () => {
         expect(level.description()).toBe('Level 8 - Float Format')

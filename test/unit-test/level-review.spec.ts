@@ -1,14 +1,14 @@
 import { test, expect } from '@playwright/test'
-import { Locale } from '../../src/locale.js'
+import { English } from '../../src/conversation-language-en.js'
 import { FixedPicker } from '../../src/picker.js'
 import { MapStore } from '../../src/store.js'
 import { Review } from '../../src/level-review.js'
 import { JavaScript } from '../../src/programming-language-javascript.js'
 
 test.describe('class Review', () => {
-    const locale = new Locale('en')
+    const conversationLanguage = new English()
     const programmingLanguage = new JavaScript()
-    const level = new Review(locale, programmingLanguage, new FixedPicker(), new MapStore(), 1)
+    const level = new Review(conversationLanguage, programmingLanguage, new FixedPicker(), new MapStore(), 1)
 
     test('has the correct description', () => {
         expect(level.description()).toBe('Level 1 - Review')

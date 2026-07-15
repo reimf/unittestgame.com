@@ -1,14 +1,14 @@
 import { test, expect } from '@playwright/test'
-import { Locale } from '../../src/locale.js'
+import { English } from '../../src/conversation-language-en.js'
 import { FixedPicker } from '../../src/picker.js'
 import { MapStore } from '../../src/store.js'
 import { BatteryLevel } from '../../src/level-battery-level.js'
 import { JavaScript } from '../../src/programming-language-javascript.js'
 
 test.describe('class BatteryLevel', () => {
-    const locale = new Locale('en')
+    const conversationLanguage = new English()
     const programmingLanguage = new JavaScript()
-    const level = new BatteryLevel(locale, programmingLanguage, new FixedPicker(), new MapStore(), 1)
+    const level = new BatteryLevel(conversationLanguage, programmingLanguage, new FixedPicker(), new MapStore(), 1)
 
     test('has the correct description', () => {
         expect(level.description()).toBe('Level 1 - Battery Level')

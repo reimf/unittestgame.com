@@ -2,7 +2,7 @@ import { Candidate } from './candidate.js'
 import { Store } from './store.js'
 import { ComputerMessage, HumanMessage, Panel } from './frame.js'
 import { Button, CodeBlock, Div, Form, OrderedList, Submit } from './html.js'
-import { Locale, LocalizedText } from './locale.js'
+import { ConversationLanguage, ConversationText } from './conversation-language-base.js'
 import { Picker } from './picker.js'
 import { TestResult } from './test-result.js'
 import { UnitTest } from './unit-test.js'
@@ -12,7 +12,7 @@ import { ProgrammingLanguage } from './programming-language-base.js'
 export type AnyLevel = Level<readonly Value[], Value>
 
 export abstract class Level<Parameters extends readonly Value[], Result extends Value> {
-    protected readonly locale: Locale
+    protected readonly conversationLanguage: ConversationLanguage
     protected readonly programmingLanguage: ProgrammingLanguage
     public readonly levelNumber: number
     protected readonly picker: Picker
@@ -36,8 +36,8 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
     private lastUnitTest: UnitTest<Parameters, Result>|undefined = undefined
     private numberOfSubmissions: number = 0
 
-    public constructor(locale: Locale, programmingLanguage: ProgrammingLanguage, picker: Picker, store: Store, levelNumber: number) {
-        this.locale = locale
+    public constructor(conversationLanguage: ConversationLanguage, programmingLanguage: ProgrammingLanguage, picker: Picker, store: Store, levelNumber: number) {
+        this.conversationLanguage = conversationLanguage
         this.programmingLanguage = programmingLanguage
         this.picker = picker
         this.store = store
@@ -56,7 +56,7 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
 
     protected abstract identifier(): string
     protected abstract name(): string
-    protected abstract specification(): LocalizedText
+    protected abstract specification(): ConversationText
     protected abstract getParameters(): Variable[]
     protected abstract getUnit(): Variable
     protected abstract getCandidateElements(): string[][]
@@ -165,7 +165,7 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
     }
 
     public description(): string {
-        return this.locale.level(this.levelNumber, this.name())
+        return this.conversationLanguage.level(this.levelNumber, this.name())
     }
 
     public isFinished(): number {
@@ -194,11 +194,11 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
 
     protected showMenuMessage(): void {
         this.showBeforeMenuMessage()
-        const addButton = new Submit(this.locale.addUnitTestButton())
-        const submitButton = new Button(this.locale.submitUnitTestsButton(), () => this.submitUnitTests())
+        const addButton = new Submit(this.conversationLanguage.addUnitTestButton())
+        const submitButton = new Button(this.conversationLanguage.submitUnitTestsButton(), () => this.submitUnitTests())
         const variables = [...this.parameters, this.unit].map(variable => variable.toHtml())
         const form = new Form(formData => this.addUnitTest(formData)).appendChildren([...variables, addButton])
-        const divider = new Div().appendText(this.locale.or()).addClass('or')
+        const divider = new Div().appendText(this.conversationLanguage.or()).addClass('or')
         new HumanMessage([form, divider, submitButton]).show()
     }
 
@@ -273,9 +273,9 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
     }
 
     private showStepMessages(): void {
-        new ComputerMessage([this.locale.readSpecification()]).show()
-        new ComputerMessage([this.locale.improveCurrentFunction()]).show()
-        new ComputerMessage([this.locale.submitUnitTests()]).show()
+        new ComputerMessage([this.conversationLanguage.readSpecification()]).show()
+        new ComputerMessage([this.conversationLanguage.improveCurrentFunction()]).show()
+        new ComputerMessage([this.conversationLanguage.submitUnitTests()]).show()
     }
 
     protected showBeforeMenuMessage(): void {
@@ -283,22 +283,22 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
     }
 
     private showIncorrectUnitTestMessage(): void {
-        new ComputerMessage([this.locale.unitTestNotAdded()]).show()
+        new ComputerMessage([this.conversationLanguage.unitTestNotAdded()]).show()
     }
 
     private showUselessUnitTestMessage(): void {
-        new ComputerMessage([this.locale.currentFunctionNotImproved()]).show()
-        new ComputerMessage([this.locale.hint()]).show()
+        new ComputerMessage([this.conversationLanguage.currentFunctionNotImproved()]).show()
+        new ComputerMessage([this.conversationLanguage.hint()]).show()
     }
 
     private showUsefulUnitTestMessage(): void {
-        new ComputerMessage([this.locale.currentFunctionImproved(this.humanUnitTests.length)]).show()
+        new ComputerMessage([this.conversationLanguage.currentFunctionImproved(this.humanUnitTests.length)]).show()
     }
 
     private showInvalidUnitTestMessage(): void {
         const numberOfUnitTestsStillNeeded = this.findNumberOfUnitTestsStillNeeded(this.humanUnitTests, this.subsetsOfMinimalUnitTests, this.candidates, this.perfectCandidates.length)
-        new ComputerMessage([this.locale.invalidUnitTest(), new CodeBlock().appendChild(this.failingTestResult!.toHtml(this.programmingLanguage).addClass('new'))]).show()
-        new ComputerMessage([this.locale.moreUnitTests(numberOfUnitTestsStillNeeded)]).show()
+        new ComputerMessage([this.conversationLanguage.invalidUnitTest(), new CodeBlock().appendChild(this.failingTestResult!.toHtml(this.programmingLanguage).addClass('new'))]).show()
+        new ComputerMessage([this.conversationLanguage.moreUnitTests(numberOfUnitTestsStillNeeded)]).show()
     }
 
     private findRedundantUnitTests(): UnitTest[] {
@@ -309,28 +309,28 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
     }
 
     private showEndMessage(): void {
-        new ComputerMessage([this.locale.currentFunctionCorrect()]).show()
+        new ComputerMessage([this.conversationLanguage.currentFunctionCorrect()]).show()
         const numberOfUnneccessaryUnitTests = this.humanUnitTests.length - this.minimalUnitTests.length
         if (numberOfUnneccessaryUnitTests > 0) {
             const redundantUnitTests = this.findRedundantUnitTests()
             const codeBlocks = redundantUnitTests.map(unitTest => new CodeBlock().appendChild(unitTest.toHtml(this.programmingLanguage)))
-            new ComputerMessage([this.locale.tooManyUnitTests(numberOfUnneccessaryUnitTests, redundantUnitTests.length), new OrderedList(codeBlocks)]).show()
+            new ComputerMessage([this.conversationLanguage.tooManyUnitTests(numberOfUnneccessaryUnitTests, redundantUnitTests.length), new OrderedList(codeBlocks)]).show()
         }
     }
 
     private showSpecificationPanel(): void {
-        new Panel('specification', this.locale.specificationTitle(this.description()), [this.specification()]).show()
+        new Panel('specification', this.conversationLanguage.specificationTitle(this.description()), [this.specification()]).show()
     }
 
     private showCurrentFunctionPanel(): void {
-        new Panel('current-function', this.locale.currentFunctionTitle(), [this.currentCandidate.toHtml(this.programmingLanguage, this.parameters, this.unit)]).show()
+        new Panel('current-function', this.conversationLanguage.currentFunctionTitle(), [this.currentCandidate.toHtml(this.programmingLanguage, this.parameters, this.unit)]).show()
     }
 
     private showDifferencePanel(): void {
         if (!this.previousCandidate)
             return
         const difference = this.currentCandidate.toHtmlWithPrevious(this.previousCandidate, this.programmingLanguage, this.parameters, this.unit)
-        new Panel('difference-current-function', this.locale.differenceTitle(), [difference]).show()
+        new Panel('difference-current-function', this.conversationLanguage.differenceTitle(), [difference]).show()
     }
 
     private showUnitTestsPanel(): void {
@@ -341,6 +341,6 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
             return new CodeBlock().appendChild(unitTest.toHtml(this.programmingLanguage).addClass(className))
         })
         const orderedList = new OrderedList(codeBlocks)
-        new Panel('unit-tests', this.locale.unitTestsTitle(), [orderedList]).show()
+        new Panel('unit-tests', this.conversationLanguage.unitTestsTitle(), [orderedList]).show()
     }
 }

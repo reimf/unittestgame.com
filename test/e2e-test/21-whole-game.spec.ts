@@ -4,7 +4,7 @@ import { BooleanVariable, RadioVariable } from '../../src/variable.js'
 import { BatteryLevel } from '../../src/level-battery-level.js'
 import { MapStore } from '../../src/store.js'
 import { RandomPicker } from '../../src/picker.js'
-import { Locale } from '../../src/locale.js'
+import { English } from '../../src/conversation-language-en.js'
 import { JavaScript } from '../../src/programming-language-javascript'
 
 test.describe('whole game', () => {
@@ -15,11 +15,11 @@ test.describe('whole game', () => {
     test('plays whole game', async ({ page }) => {
         test.slow()
 
-        const locale = new Locale('en')
+        const conversationLanguage = new English()
         const programmingLanguage = new JavaScript()
         const picker = new RandomPicker()
         const store = new MapStore()
-        const game = new Game(locale, programmingLanguage, picker, store)
+        const game = new Game(conversationLanguage, programmingLanguage, picker, store)
         const levels = game.levels()
 
         for (const level of levels) {

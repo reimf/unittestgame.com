@@ -1,14 +1,14 @@
 import { test, expect } from '@playwright/test'
-import { Locale } from '../../src/locale.js'
+import { English } from '../../src/conversation-language-en.js'
 import { FixedPicker } from '../../src/picker.js'
 import { MapStore } from '../../src/store.js'
 import { TriangleType } from '../../src/level-triangle-type.js'
 import { JavaScript } from '../../src/programming-language-javascript.js'
 
 test.describe('class TriangleType', () => {
-    const locale = new Locale('en')
+    const conversationLanguage = new English()
     const programmingLanguage = new JavaScript()
-    const level = new TriangleType(locale, programmingLanguage, new FixedPicker(), new MapStore(), 6)
+    const level = new TriangleType(conversationLanguage, programmingLanguage, new FixedPicker(), new MapStore(), 6)
 
     test('has the correct description', () => {
         expect(level.description()).toBe('Level 6 - Triangle Type')
