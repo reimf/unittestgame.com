@@ -28,7 +28,7 @@
     --highlight-string: #036;
     --highlight-regexp: #036;
     --highlight-dot: #660;
-    --code-background: #063;
+    --code-background: #333;
     --code-foreground: #fff;
 }
 
@@ -44,8 +44,13 @@
 }
 
 a { /* markdown: [text](url) */
+    background-color: var(--input-background);
     border-radius: 0.25rem;
-    white-space: nowrap;
+    color: var(--light-text);
+    display: inline-block;
+    line-height: 1.5rem;
+    padding: 0 0.5rem;
+    text-decoration: none;
 }
 
 body {
@@ -206,7 +211,7 @@ input {
 
 label {
     border-radius: 0.5rem;
-    height: 2rem;
+    min-height: 2rem;
 
     &:has(select) {
         display: contents;
@@ -397,11 +402,6 @@ select {
                     width: 3rem;
                 }
 
-                a {
-                    display: inline-block;
-                    line-height: 1.5rem;
-                }
-
                 ol {
                     list-style-type: none;
 
@@ -417,11 +417,25 @@ select {
                 }
 
                 .switchers {
-                    align-items: center;
-                    display: grid;
-                    gap: 0.5rem;
-                    grid-template-columns: max-content max-content;
-                    width: fit-content;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.75rem;
+
+                    label {
+                        align-items: center;
+                        display: flex;
+                        flex-wrap: wrap;
+                        gap: 0.5rem;
+                        width: fit-content;
+
+                        > span {
+                            display: block;
+                            
+                            &:first-child {
+                                width: 10rem;
+                            }
+                        }
+                    }
                 }
 
                 .level-board {
