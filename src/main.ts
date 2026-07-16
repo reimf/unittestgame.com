@@ -54,14 +54,20 @@ export class Main {
         const select = new Select(id => this.switchTo('language', id)).setId('language-switcher')
         const options = conversationLanguages.map(conversationLanguage => new Option(conversationLanguage.id, ConversationLanguage.bless(conversationLanguage.name), conversationLanguage.id === this.conversationLanguage.id))
         select.appendChildren(options)
-        return new Label().appendText(this.conversationLanguage.changeLanguage()).appendChild(new Span().appendChild(select))
+        return new Label().appendChildren([
+            new Span().appendText(this.conversationLanguage.changeLanguage()),
+            new Span().appendChild(select)
+        ])
     }
 
     private programmingLanguageSwitcher(): Label {
         const select = new Select(id => this.switchTo('programming_language', id)).setId('programming-language-switcher')
         const options = programmingLanguages.map(programmingLanguage => new Option(programmingLanguage.id, ConversationLanguage.bless(programmingLanguage.name), programmingLanguage.id === this.programmingLanguage.id))
         select.appendChildren(options)
-        return new Label().appendText(this.conversationLanguage.changeProgrammingLanguage()).appendChild(new Span().appendChild(select))
+        return new Label().appendChildren([
+            new Span().appendText(this.conversationLanguage.changeProgrammingLanguage()),
+            new Span().appendChild(select)
+        ])
     }
 
     private switchers(): Div {
@@ -69,7 +75,7 @@ export class Main {
     }
 
     private showAboutPanel(): void {
-        const content = [this.conversationLanguage.slogan(), this.conversationLanguage.links()]
+        const content = [this.conversationLanguage.slogan(), this.conversationLanguage.readMoreAboutTDD(), this.conversationLanguage.contact()]
         new Panel('unittestgame', this.conversationLanguage.unitTestGameTitle(), content).show()
     }
 

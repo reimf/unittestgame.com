@@ -12,7 +12,8 @@ export abstract class ConversationLanguage {
     public abstract welcome(): ConversationText
     public abstract unitTestGameTitle(): ConversationText
     public abstract slogan(): ConversationText
-    public abstract links(): ConversationText
+    public abstract readMoreAboutTDD(): ConversationText
+    public abstract contact(): ConversationText
     public abstract settingsTitle(): ConversationText
     public abstract changeLanguage(): ConversationText
     public abstract changeProgrammingLanguage(): ConversationText

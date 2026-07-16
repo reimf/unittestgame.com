@@ -17,9 +17,12 @@ export class Spanish extends ConversationLanguage {
         return ConversationLanguage.bless('![Logo de UnitTestGame](apple-touch-icon.png)Aprende el desarrollo guiado por tests escribiendo unit tests que guían a un bot de IA.')
     }
 
-    public override links(): ConversationText {
-        return ConversationLanguage.bless('[Más información sobre TDD en Wikipedia](https://es.wikipedia.org/wiki/Desarrollo_guiado_por_pruebas)\n' +
-            '[Contacto](mailto:contact@unittestgame.com)\n')
+    public override readMoreAboutTDD(): ConversationText {
+        return ConversationLanguage.bless('[Más información sobre TDD en Wikipedia](https://es.wikipedia.org/wiki/Desarrollo_guiado_por_pruebas)')
+    }
+
+    public override contact(): ConversationText {
+        return ConversationLanguage.bless('[Contacto](mailto:contact@unittestgame.com)')
     }
 
     public override settingsTitle(): ConversationText {
