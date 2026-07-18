@@ -16,8 +16,8 @@
     --old-background: #fff;
     --unlocked-background: #333;
     --unlocked-foreground: #fff;
-    --locked-background: #ddd;
-    --locked-foreground: #333;
+    --locked-background: #eee;
+    --locked-foreground: #666;
     --highlight-keyword: #c33;
     --highlight-class: #66c;
     --highlight-function: #669;
@@ -45,11 +45,11 @@
 
 a { /* markdown: [text](url) */
     background-color: var(--input-background);
-    border-radius: 0.25rem;
+    border-radius: 0.5rem;
     color: var(--light-text);
     display: inline-block;
-    line-height: 1.5rem;
-    padding: 0 0.5rem;
+    line-height: 2rem;
+    padding: 0 1rem;
     text-decoration: none;
 }
 
@@ -160,7 +160,7 @@ select {
     color: var(--light-text);
     cursor: pointer;
     height: 2rem;
-    padding: 0 1.5rem 0 0.5rem;
+    padding: 0 2rem 0 1rem;
     width: 100%;
 }
 
@@ -440,15 +440,15 @@ select {
 
                 .level-board {
                     display: flex;
+                    flex-direction: column;
                     flex-wrap: wrap;
                     gap: 0.5rem;
 
-                    .cell {
+                    li {
                         border-radius: 0.5rem;
-                        display: inline-block;
                         padding: 0.5rem;
-                        text-align: center;
                         white-space: nowrap;
+                        width: 18rem;
 
                         &.unlocked {
                             background-color: var(--unlocked-background);
@@ -460,14 +460,9 @@ select {
                             color: var(--locked-foreground);
                         }
 
-                        .number {
-                            display: inline-block;
-                            text-align: center;
-                            width: 1rem;
-                        }
-
-                        .emoji {
+                        span:first-child {
                             font-size: 1.75rem;
+                            margin-right: 0.5rem;
                             vertical-align: middle;
                         }
                     }

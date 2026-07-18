@@ -1,7 +1,7 @@
 import { Game } from './game.js'
 import { Store } from './store.js'
 import { Panel, Message, ComputerMessage, QuestionMessage } from './frame.js'
-import { Div, Label, Option, Select, Span } from './html.js'
+import { Div, Label, ListItem, Option, OrderedList, Select, Span } from './html.js'
 import { AnyLevel } from './level-base.js'
 import { ConversationLanguage } from './conversation-language-base.js'
 import { conversationLanguages } from './conversation-languages.js'
@@ -89,15 +89,15 @@ export class Main {
 
     private showLevelOverviewPanel(): void {
         const nextLevel = this.levels.find(level => !level.isFinished())
-        const cells = this.levels.map(level => {
+        const items = this.levels.map(level => {
             const emoji = level.emoji(nextLevel)
             const state = level === nextLevel || level.isFinished() ? 'unlocked' : 'locked'
-            return new Span().addClass('cell').addClass(state).appendChildren([
-                new Span().addClass('number').appendText(ConversationLanguage.bless(`${level.levelNumber}`)),
-                new Span().addClass('emoji').appendText(ConversationLanguage.bless(emoji))
+            return new ListItem().addClass(state).appendChildren([
+                new Span().appendText(ConversationLanguage.bless(emoji)),
+                new Span().appendText(ConversationLanguage.bless(level.description()))
             ])
         })
-        const div = new Div().addClass('level-board').appendChildren(cells)
+        const div = new OrderedList().addClass('level-board').appendChildren(items)
         new Panel('level-overview', this.conversationLanguage.levelOverviewTitle(), [div]).show()
     }
 

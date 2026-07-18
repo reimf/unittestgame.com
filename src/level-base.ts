@@ -1,7 +1,7 @@
 import { Candidate } from './candidate.js'
 import { Store } from './store.js'
 import { ComputerMessage, HumanMessage, Panel } from './frame.js'
-import { Button, CodeBlock, Div, Form, OrderedList, Submit } from './html.js'
+import { Button, CodeBlock, Div, Form, ListItem, OrderedList, Submit } from './html.js'
 import { ConversationLanguage, ConversationText } from './conversation-language-base.js'
 import { Picker } from './picker.js'
 import { TestResult } from './test-result.js'
@@ -313,8 +313,9 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
         const numberOfUnneccessaryUnitTests = this.humanUnitTests.length - this.minimalUnitTests.length
         if (numberOfUnneccessaryUnitTests > 0) {
             const redundantUnitTests = this.findRedundantUnitTests()
-            const codeBlocks = redundantUnitTests.map(unitTest => new CodeBlock().appendChild(unitTest.toHtml(this.programmingLanguage)))
-            new ComputerMessage([this.conversationLanguage.tooManyUnitTests(numberOfUnneccessaryUnitTests, redundantUnitTests.length), new OrderedList(codeBlocks)]).show()
+            const listItems = redundantUnitTests.map(unitTest => new ListItem().appendChild(new CodeBlock().appendChild(unitTest.toHtml(this.programmingLanguage))))
+            const orderedList = new OrderedList().appendChildren(listItems)
+            new ComputerMessage([this.conversationLanguage.tooManyUnitTests(numberOfUnneccessaryUnitTests, redundantUnitTests.length), orderedList]).show()
         }
     }
 
@@ -336,11 +337,11 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
     private showUnitTestsPanel(): void {
         if (this.humanUnitTests.length === 0)
             return
-        const codeBlocks = this.humanUnitTests.map(unitTest => {
+        const listItems = this.humanUnitTests.map(unitTest => {
             const className = unitTest === this.lastUnitTest ? 'new' : 'old'
-            return new CodeBlock().appendChild(unitTest.toHtml(this.programmingLanguage).addClass(className))
+            return new ListItem().appendChild(new CodeBlock().appendChild(unitTest.toHtml(this.programmingLanguage).addClass(className)))
         })
-        const orderedList = new OrderedList(codeBlocks)
+        const orderedList = new OrderedList().appendChildren(listItems)
         new Panel('unit-tests', this.conversationLanguage.unitTestsTitle(), [orderedList]).show()
     }
 }

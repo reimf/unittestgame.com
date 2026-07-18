@@ -233,13 +233,12 @@ export class Option extends Html {
 }
 
 export class OrderedList extends Html {
-    public constructor(elements: Html[]) {
+    public constructor() {
         super('ol')
-        this.appendChildren(elements.map(element => new ListItem().appendChild(element)))
     }
 }
 
-class ListItem extends Html {
+export class ListItem extends Html {
     public constructor() {
         super('li')
     }
