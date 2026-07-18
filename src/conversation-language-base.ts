@@ -9,7 +9,7 @@ export abstract class ConversationLanguage {
         return text as ConversationText
     }
 
-    public abstract welcome(): ConversationText
+    public abstract welcome(conversationLanguageName: string, programmingLanguageName: string): ConversationText
     public abstract unitTestGameTitle(): ConversationText
     public abstract slogan(): ConversationText
     public abstract readMoreAboutTDD(): ConversationText

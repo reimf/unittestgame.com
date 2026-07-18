@@ -4,8 +4,8 @@ export class English extends ConversationLanguage {
     public override readonly id = 'en' as const
     public override readonly name = 'English'
 
-    public override welcome(): ConversationText {
-        return ConversationLanguage.bless('Hi! I\'m an AI bot that writes code. ' +
+    public override welcome(conversationLanguageName: string, programmingLanguageName: string): ConversationText {
+        return ConversationLanguage.bless(`Hi! I'm an ${conversationLanguageName} speaking AI bot that writes ${programmingLanguageName} code. ` +
             'Your job is to guide me using unit tests.')
     }
 

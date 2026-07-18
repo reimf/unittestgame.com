@@ -9,7 +9,7 @@ test.describe('conversation languages', () => {
         const texts = await page.evaluate(async () => {
             const { conversationLanguages } = await import('../../src/conversation-languages.js')
             return conversationLanguages.map(conversationLanguage => [
-                conversationLanguage.welcome(),
+                conversationLanguage.welcome(conversationLanguage.name, 'JavaScript'),
                 conversationLanguage.unitTestGameTitle(),
                 conversationLanguage.slogan(),
                 conversationLanguage.readMoreAboutTDD(),

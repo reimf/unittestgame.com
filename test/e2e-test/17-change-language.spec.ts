@@ -9,7 +9,7 @@ test.describe('change language', () => {
 
     test('has welcome message in Dutch', async ({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('Hoi! Ik ben een AI bot die code schrijft. Jouw taak is om mij bij te sturen met unit testen.')
+        await expect(messages).toContainText('Hoi! Ik ben een Nederlands sprekende AI bot die JavaScript code schrijft. Jouw taak is om mij bij te sturen met unit testen.')
     })
 
     test('has language selector with Dutch as selected option', async ({ page }) => {
