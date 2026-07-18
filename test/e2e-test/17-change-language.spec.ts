@@ -23,7 +23,7 @@ test.describe('change language', () => {
     })
 
     test('has play button in Dutch', async ({ page }) => {
-        const button = page.getByRole('button', { name: 'Ik wil Level 1 - Battery Level spelen' })
+        const button = page.getByRole('button', { name: 'Ik wil Level 0 - Battery Level spelen' })
         await expect(button).toBeVisible()
     })
 })

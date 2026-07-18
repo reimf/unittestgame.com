@@ -3,7 +3,7 @@ import { test, expect } from '../fixture/fixture-coverage'
 test.describe('level start', () => {
     test.beforeEach(async ({ page }) => {
         await page.goto('/?speed=fast&picker=fixed')
-        await page.getByRole('button', { name: 'I want to play Level 1 - Battery Level' }).click()
+        await page.getByRole('button', { name: 'I want to play Level 0 - Battery Level' }).click()
     })
 
     test('has NO unittestgame panel', async ({ page }) => {
@@ -18,7 +18,7 @@ test.describe('level start', () => {
 
     test('has specification panel', async ({ page }) => {
         const specificationPanel = page.getByTestId('specification')
-        await expect(specificationPanel).toContainText('Specification (Level 1 - Battery Level)')
+        await expect(specificationPanel).toContainText('Specification (Level 0 - Battery Level)')
         await expect(specificationPanel).toContainText('A smartphone normally operates in NORMAL MODE, but when the battery level is less than 20, it operates in LOW POWER MODE.')
     })
 

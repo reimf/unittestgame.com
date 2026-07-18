@@ -18,7 +18,7 @@ test.describe('change programming language', () => {
     })
 
     test('has the simplest candidate rendered in Python format in the current function panel', async ({ page }) => {
-        await page.getByRole('button', { name: 'I want to play Level 1 - Battery Level' }).click()
+        await page.getByRole('button', { name: 'I want to play Level 0 - Battery Level' }).click()
         const currentFunctionPanel = page.getByTestId('current-function')
         const codeLines = currentFunctionPanel.locator('code')
         await expect(codeLines).toContainText('def powerMode(batteryLevel):    return ""')

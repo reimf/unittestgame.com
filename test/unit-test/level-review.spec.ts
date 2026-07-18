@@ -8,10 +8,10 @@ import { JavaScript } from '../../src/programming-language-javascript.js'
 test.describe('class Review', () => {
     const conversationLanguage = new English()
     const programmingLanguage = new JavaScript()
-    const level = new Review(conversationLanguage, programmingLanguage, new FixedPicker(), new MapStore(), 1)
+    const level = new Review(conversationLanguage, programmingLanguage, new FixedPicker(), new MapStore(), 3)
 
     test('has the correct description', () => {
-        expect(level.description()).toBe('Level 1 - Review')
+        expect(level.description()).toBe('Level 3 - Review')
     })
 
     test('has the correct amount of parameters', () => {

@@ -8,10 +8,10 @@ import { JavaScript } from '../../src/programming-language-javascript.js'
 test.describe('class BatteryLevel', () => {
     const conversationLanguage = new English()
     const programmingLanguage = new JavaScript()
-    const level = new BatteryLevel(conversationLanguage, programmingLanguage, new FixedPicker(), new MapStore(), 1)
+    const level = new BatteryLevel(conversationLanguage, programmingLanguage, new FixedPicker(), new MapStore(), 0)
 
     test('has the correct description', () => {
-        expect(level.description()).toBe('Level 1 - Battery Level')
+        expect(level.description()).toBe('Level 0 - Battery Level')
     })
 
     test('has the correct amount of parameters', () => {

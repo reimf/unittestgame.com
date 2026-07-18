@@ -5,15 +5,15 @@ test.describe('level emojis', () => {
         await page.goto('/?speed=fast&setitem=level-battery-level-finished:1&setitem=level-voting-age-finished:2&setitem=level-even-or-odd-finished:3&setitem=level-review-finished:4')
         const levelsPanel = page.getByTestId('level-overview')
         await expect(levelsPanel).toContainText(
-            '🥇Level 1 - Battery Level' +
-            '🥈Level 2 - Voting Age' +
-            '🥉Level 3 - Even or Odd' +
-            '💩Level 4 - Review' +
-            '▶️Level 5 - FizzBuzz' +
-            '🔒Level 6 - Leap Year' +
-            '🔒Level 7 - Triangle Type' +
-            '🔒Level 8 - Speed Display' +
-            '🔒Level 9 - Float Format' +
-            '🔒Level 10 - Password Strength')
+            '🥇Level 0 - Battery Level' +
+            '🥈Level 1 - Voting Age' +
+            '🥉Level 2 - Even or Odd' +
+            '💩Level 3 - Review' +
+            '▶️Level 4 - FizzBuzz' +
+            '🔒Level 5 - Leap Year' +
+            '🔒Level 6 - Triangle Type' +
+            '🔒Level 7 - Speed Display' +
+            '🔒Level 8 - Float Format' +
+            '🔒Level 9 - Password Strength')
     })
 })

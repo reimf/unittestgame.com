@@ -40,6 +40,6 @@ export class Game {
             FloatFormat,
             PasswordStrength,
         ]
-        return levelClasses.map((levelClass, index) => new levelClass(this.conversationLanguage, this.programmingLanguage, this.picker, this.store, index + 1))
+        return levelClasses.map((levelClass, index) => new levelClass(this.conversationLanguage, this.programmingLanguage, this.picker, this.store, index))
     }
 }

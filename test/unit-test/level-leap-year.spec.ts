@@ -8,10 +8,10 @@ import { JavaScript } from '../../src/programming-language-javascript.js'
 test.describe('class LeapYear', () => {
     const conversationLanguage = new English()
     const programmingLanguage = new JavaScript()
-    const level = new LeapYear(conversationLanguage, programmingLanguage, new FixedPicker(), new MapStore(), 9)
+    const level = new LeapYear(conversationLanguage, programmingLanguage, new FixedPicker(), new MapStore(), 5)
 
     test('has the correct description', () => {
-        expect(level.description()).toBe('Level 9 - Leap Year')
+        expect(level.description()).toBe('Level 5 - Leap Year')
     })
 
     test('has the correct amount of parameters', () => {

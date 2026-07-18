@@ -3,7 +3,7 @@ import { test, expect } from '../fixture/fixture-coverage'
 test.describe('example level', () => {
     test.beforeEach(async ({ page }) => {
         await page.goto('/?speed=fast&picker=fixed&store=map')
-        await page.getByRole('button', { name: 'I want to play Level 1 - Battery Level' }).click()
+        await page.getByRole('button', { name: 'I want to play Level 0 - Battery Level' }).click()
         await page.getByLabel('Battery Level').fill('20')
         await page.getByLabel('NORMAL MODE').check()
         await page.getByRole('button', { name: 'I want to add this unit test' }).click()
@@ -38,21 +38,21 @@ test.describe('example level', () => {
     test('has updatedlevel overview panel', async ({ page }) => {
         const levelsPanel = page.getByTestId('level-overview')
         await expect(levelsPanel).toContainText(
-            '🥇Level 1 - Battery Level' +
-            '▶️Level 2 - Voting Age' +
-            '🔒Level 3 - Even or Odd' +
-            '🔒Level 4 - Review' +
-            '🔒Level 5 - FizzBuzz' +
-            '🔒Level 6 - Leap Year' +
-            '🔒Level 7 - Triangle Type' +
-            '🔒Level 8 - Speed Display' +
-            '🔒Level 9 - Float Format' +
-            '🔒Level 10 - Password Strength')
+            '🥇Level 0 - Battery Level' +
+            '▶️Level 1 - Voting Age' +
+            '🔒Level 2 - Even or Odd' +
+            '🔒Level 3 - Review' +
+            '🔒Level 4 - FizzBuzz' +
+            '🔒Level 5 - Leap Year' +
+            '🔒Level 6 - Triangle Type' +
+            '🔒Level 7 - Speed Display' +
+            '🔒Level 8 - Float Format' +
+            '🔒Level 9 - Password Strength')
     })
 
     test('has play next level message', async ({ page }) => {
         const messages = page.getByTestId('messages')
         const button = messages.getByRole('button')
-        await expect(button).toHaveText('I want to play Level 2 - Voting Age')
+        await expect(button).toHaveText('I want to play Level 1 - Voting Age')
     })
 })
