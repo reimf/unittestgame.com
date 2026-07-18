@@ -42,7 +42,7 @@ test.describe('example level', () => {
             '▶️Level 2 - Voting Age' +
             '🔒Level 3 - Even or Odd' +
             '🔒Level 4 - Review' +
-            '🔒Level 5 - FIZZBUZZ' +
+            '🔒Level 5 - FizzBuzz' +
             '🔒Level 6 - Leap Year' +
             '🔒Level 7 - Triangle Type' +
             '🔒Level 8 - Speed Display' +

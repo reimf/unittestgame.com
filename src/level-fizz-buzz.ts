@@ -8,7 +8,7 @@ export class FizzBuzz extends Level<[number], string> {
     }
 
     protected name(): string {
-        return 'FIZZBUZZ'
+        return 'FizzBuzz'
     }
     protected specification(): ConversationText {
         return this.conversationLanguage.fizzBuzzSpecification()
