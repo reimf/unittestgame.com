@@ -1,9 +1,13 @@
+import { fileURLToPath } from 'url'
 import { defineConfig, devices } from '@playwright/test'
 import { defineCoverageReporterConfig } from '@bgotink/playwright-coverage'
+
+const rootDir = fileURLToPath(new URL('.', import.meta.url))
 
 export default defineConfig({
     testDir: 'test',
     testMatch: '**/*.spec.ts',
+    testIgnore: '**/transpile-test/**',
     use: {
         baseURL: 'http://localhost:3000',
         testIdAttribute: 'id',
@@ -25,8 +29,8 @@ export default defineConfig({
         [
             '@bgotink/playwright-coverage',
             defineCoverageReporterConfig({
-                sourceRoot: 'src',
-                resultDir: '../playwright-coverage',
+                sourceRoot: `${rootDir}src`,
+                resultDir: `${rootDir}playwright-coverage`,
                 reports: [
                     ['html'],
                     ['text-summary'],
