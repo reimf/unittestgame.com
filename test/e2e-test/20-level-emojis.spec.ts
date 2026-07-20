@@ -5,7 +5,7 @@ test.describe('level emojis', () => {
         await page.goto('/?speed=fast&setitem=level-battery-level-finished:1&setitem=level-voting-age-finished:2&setitem=level-wind-scale-finished:3&setitem=level-review-finished:4')
         const levelsPanel = page.getByTestId('level-overview')
         await expect(levelsPanel).toContainText(
-            '🥇Level 0 - Battery Level' +
+            '👍Level 0 - Battery Level' +
             '🥈Level 1 - Voting Age' +
             '🥉Level 2 - Wind Scale' +
             '💩Level 3 - Review' +

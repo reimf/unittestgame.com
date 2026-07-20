@@ -161,7 +161,11 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
     }
 
     public emoji(nextLevel: AnyLevel|undefined): string {
-        return this === nextLevel ? '▶️' : ['🔒', '🥇', '🥈', '🥉'].at(this.isFinished()) || '💩'
+        return this === nextLevel ? '▶️' : this.finishedEmoji()
+    }
+
+    protected finishedEmoji(): string {
+        return ['🔒', '🥇', '🥈', '🥉'].at(this.isFinished()) ?? '💩'
     }
 
     public description(): string {
@@ -244,17 +248,13 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
     private submitUnitTests(): void {
         if (!this.isFormDataOk(new FormData()))
             return
-        this.numberOfSubmissions = this.newNumberOfSubmissions(this.numberOfSubmissions)
+        this.numberOfSubmissions += 1
         if (this.failingTestResult) {
             this.showInvalidUnitTestMessage()
             this.menu()
         }
         else
             this.end()
-    }
-
-    protected newNumberOfSubmissions(oldNumberOfSubmissions: number): number {
-        return oldNumberOfSubmissions + 1
     }
 
     private end(): void {

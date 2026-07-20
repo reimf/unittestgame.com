@@ -129,7 +129,7 @@ export class BatteryLevel extends Level<[number], string> {
         return false
     }
 
-    protected override newNumberOfSubmissions(_oldNumberOfSubmissions: number): number {
-        return 1
+    protected override finishedEmoji(): string {
+        return '👍'
     }
 }
