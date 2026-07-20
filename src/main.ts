@@ -41,7 +41,7 @@ export class Main {
     }
 
     private showWelcomeMessage(): void {
-        new ComputerMessage([this.conversationLanguage.welcome(this.conversationLanguage.name, this.programmingLanguage.name)]).show()
+        new ComputerMessage([this.conversationLanguage.welcome()]).show()
     }
 
     private switchTo(parameterName: string, parameterValue: string): void {

@@ -10,32 +10,32 @@ import { conversationLanguages } from '../../src/conversation-languages.js'
 test.describe('conversation languages', () => {
     test('has English translations', () => {
         const conversationLanguage = new English()
-        expect(conversationLanguage.welcome('English', 'JavaScript')).toBe('Hi! I\'m an English speaking AI bot that writes JavaScript code. Your job is to guide me using unit tests.')
+        expect(conversationLanguage.welcome()).toBe('Hi! I\'m an AI bot that writes code. Your job is to guide me using unit tests.')
     })
 
     test('has Dutch translations', () => {
         const conversationLanguage = new Dutch()
-        expect(conversationLanguage.welcome('Nederlands', 'JavaScript')).toBe('Hoi! Ik ben een Nederlands sprekende AI bot die JavaScript code schrijft. Jouw taak is om mij bij te sturen met unit testen.')
+        expect(conversationLanguage.welcome()).toBe('Hoi! Ik ben een AI bot die code schrijft. Jouw taak is om mij bij te sturen met unit testen.')
     })
 
     test('has German translations', () => {
         const conversationLanguage = new German()
-        expect(conversationLanguage.welcome('Deutsch', 'JavaScript')).toBe('Hallo! Ich bin ein Deutsch sprechender KI-Bot, der JavaScript-Code schreibt. Deine Aufgabe ist es, mich mit Unit-Tests zu steuern.')
+        expect(conversationLanguage.welcome()).toBe('Hallo! Ich bin ein KI-Bot, der Code schreibt. Deine Aufgabe ist es, mich mit Unit-Tests zu steuern.')
     })
 
     test('has French translations', () => {
         const conversationLanguage = new French()
-        expect(conversationLanguage.welcome('Français', 'JavaScript')).toBe('Bonjour! Je suis un bot IA qui parle Français et écrit du code JavaScript. Ton rôle est de me guider avec des unit tests.')
+        expect(conversationLanguage.welcome()).toBe('Bonjour! Je suis un bot IA qui écrit du code. Ton rôle est de me guider avec des unit tests.')
     })
 
     test('has Spanish translations', () => {
         const conversationLanguage = new Spanish()
-        expect(conversationLanguage.welcome('Español', 'JavaScript')).toBe('¡Hola! Soy un bot de IA que habla Español y escribe código JavaScript. Tu trabajo es guiarme con unit tests.')
+        expect(conversationLanguage.welcome()).toBe('¡Hola! Soy un bot de IA que escribe código. Tu trabajo es guiarme con unit tests.')
     })
 
     test('has Italian translations', () => {
         const conversationLanguage = new Italian()
-        expect(conversationLanguage.welcome('Italiano', 'JavaScript')).toBe('Ciao! Sono un bot IA che parla Italiano e scrive codice JavaScript. Il tuo compito è guidarmi con i unit tests.')
+        expect(conversationLanguage.welcome()).toBe('Ciao! Sono un bot IA che scrive codice. Il tuo compito è guidarmi con i unit tests.')
     })
 
     test('has unique ids', () => {
