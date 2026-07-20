@@ -33,7 +33,7 @@ document.addEventListener('keydown', event => {
 
 document.addEventListener('DOMContentLoaded', () => {
     const injector = new Injector(new URL(window.location.href).searchParams)
-    const conversationLanguageId = injector.getOption('language', conversationLanguages.map(conversationLanguage => conversationLanguage.id))
+    const conversationLanguageId = injector.getOption('conversation_language', conversationLanguages.map(conversationLanguage => conversationLanguage.id))
     const conversationLanguage = conversationLanguages.find(conversationLanguage => conversationLanguage.id === conversationLanguageId)!
     const programmingLanguageId = injector.getOption('programming_language', programmingLanguages.map(programmingLanguage => programmingLanguage.id))
     const programmingLanguage = programmingLanguages.find(programmingLanguage => programmingLanguage.id === programmingLanguageId)!

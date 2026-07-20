@@ -51,7 +51,7 @@ export class Main {
     }
 
     private languageSwitcher(): Label {
-        const select = new Select(id => this.switchTo('language', id)).setId('language-switcher')
+        const select = new Select(id => this.switchTo('conversation_language', id)).setId('language-switcher')
         const options = conversationLanguages.map(conversationLanguage => new Option(conversationLanguage.id, ConversationLanguage.bless(conversationLanguage.name), conversationLanguage.id === this.conversationLanguage.id))
         select.appendChildren(options)
         return new Label().appendChildren([

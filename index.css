@@ -432,7 +432,7 @@ select {
                             display: block;
                             
                             &:first-child {
-                                width: 10rem;
+                                width: 12rem;
                             }
                         }
                     }

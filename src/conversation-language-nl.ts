@@ -30,7 +30,7 @@ export class Dutch extends ConversationLanguage {
     }
 
     public override changeLanguage(): ConversationText {
-        return ConversationLanguage.bless('Taal')
+        return ConversationLanguage.bless('Gesprekstaal')
     }
 
     public override changeProgrammingLanguage(): ConversationText {

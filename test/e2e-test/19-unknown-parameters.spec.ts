@@ -5,11 +5,11 @@ test.describe('unknown parameters', () => {
 
         page.on('dialog', async (dialog) => {
             expect(dialog.type()).toContain('alert')
-            expect(dialog.message()).toContain('Parameter language=no, but no is not one of en, nl, de, fr, es, it')
+            expect(dialog.message()).toContain('Parameter conversation_language=no, but no is not one of en, nl, de, fr, es, it')
             dialog.accept()
         })
 
-        await page.goto('/?speed=fast&language=no')
+        await page.goto('/?speed=fast&conversation_language=no')
     })
 
     test('has error in English', async ({ page }) => {

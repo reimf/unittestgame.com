@@ -30,7 +30,7 @@ export class Italian extends ConversationLanguage {
     }
 
     public override changeLanguage(): ConversationText {
-        return ConversationLanguage.bless('Lingua')
+        return ConversationLanguage.bless('Lingua di conversazione')
     }
 
     public override changeProgrammingLanguage(): ConversationText {

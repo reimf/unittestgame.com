@@ -30,7 +30,7 @@ export class German extends ConversationLanguage {
     }
 
     public override changeLanguage(): ConversationText {
-        return ConversationLanguage.bless('Sprache')
+        return ConversationLanguage.bless('Gesprächssprache')
     }
 
     public override changeProgrammingLanguage(): ConversationText {
