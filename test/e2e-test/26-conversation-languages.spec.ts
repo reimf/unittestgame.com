@@ -52,7 +52,7 @@ test.describe('conversation languages', () => {
                 conversationLanguage.submitUnitTestsSecond(),
                 conversationLanguage.addBatteryLevel18(),
                 conversationLanguage.submitUnitTestsThird(),
-                conversationLanguage.evenOddSpecification(),
+                conversationLanguage.windScaleSpecification(),
                 conversationLanguage.fizzBuzzSpecification(),
                 conversationLanguage.floatFormatSpecification(),
                 conversationLanguage.leapYearSpecification(),

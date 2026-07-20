@@ -21,7 +21,7 @@ test.describe('php programming language', () => {
     })
 
     test('has an int parameter type in the current function panel of Speed Display', async ({ page }) => {
-        await page.goto('/?speed=fast&programming_language=php&setitem=level-battery-level-finished:1&setitem=level-voting-age-finished:1&setitem=level-even-or-odd-finished:1&setitem=level-review-finished:1&setitem=level-fizz-buzz-finished:1&setitem=level-leap-year-finished:1&setitem=level-triangle-type-finished:1')
+        await page.goto('/?speed=fast&programming_language=php&setitem=level-battery-level-finished:1&setitem=level-voting-age-finished:1&setitem=level-wind-scale-finished:1&setitem=level-review-finished:1&setitem=level-fizz-buzz-finished:1&setitem=level-leap-year-finished:1&setitem=level-triangle-type-finished:1')
         await page.getByRole('button', { name: 'I want to play Level 7 - Speed Display' }).click()
         const currentFunctionPanel = page.getByTestId('current-function')
         const codeLines = currentFunctionPanel.locator('code')

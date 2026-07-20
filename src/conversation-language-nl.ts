@@ -190,8 +190,11 @@ export class Dutch extends ConversationLanguage {
         return ConversationLanguage.bless('Lever de *Unit Testen* opnieuw in om te controleren of de *Huidige Functie* eindelijk voldoet aan de *Specificatie*.')
     }
 
-    public override evenOddSpecification(): ConversationText {
-        return ConversationLanguage.bless('Geef `true` terug als het getal even is en anders `false`.')
+    public override windScaleSpecification(): ConversationText {
+        return ConversationLanguage.bless('Geef `CALM` terug als de windsnelheid minder dan `20` is. ' +
+            'Geef `BREEZE` terug als de windsnelheid minder dan `50` is. ' +
+            'Geef `GALE` terug als de windsnelheid minder dan `90` is. ' +
+            'Geef `STORM` terug in alle andere gevallen.')
     }
 
     public override fizzBuzzSpecification(): ConversationText {

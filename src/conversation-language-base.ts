@@ -49,7 +49,7 @@ export abstract class ConversationLanguage {
     public abstract submitUnitTestsSecond(): ConversationText
     public abstract addBatteryLevel18(): ConversationText
     public abstract submitUnitTestsThird(): ConversationText
-    public abstract evenOddSpecification(): ConversationText
+    public abstract windScaleSpecification(): ConversationText
     public abstract fizzBuzzSpecification(): ConversationText
     public abstract floatFormatSpecification(): ConversationText
     public abstract leapYearSpecification(): ConversationText

@@ -2,16 +2,16 @@ import { test, expect } from '@playwright/test'
 import { English } from '../../src/conversation-language-en.js'
 import { FixedPicker } from '../../src/picker.js'
 import { MapStore } from '../../src/store.js'
-import { EvenOrOdd } from '../../src/level-even-or-odd.js'
+import { WindScale } from '../../src/level-wind-scale.js'
 import { JavaScript } from '../../src/programming-language-javascript.js'
 
-test.describe('class EvenOrOdd', () => {
+test.describe('class WindScale', () => {
     const conversationLanguage = new English()
     const programmingLanguage = new JavaScript()
-    const level = new EvenOrOdd(conversationLanguage, programmingLanguage, new FixedPicker(), new MapStore(), 2)
+    const level = new WindScale(conversationLanguage, programmingLanguage, new FixedPicker(), new MapStore(), 2)
 
     test('has the correct description', () => {
-        expect(level.description()).toBe('Level 2 - Even or Odd')
+        expect(level.description()).toBe('Level 2 - Wind Scale')
     })
 
     test('has the correct amount of parameters', () => {
@@ -19,19 +19,19 @@ test.describe('class EvenOrOdd', () => {
     })
 
     test('has the correct amount of candidates', () => {
-        expect(level.candidates).toHaveLength(10)
+        expect(level.candidates).toHaveLength(500)
     })
 
     test('has the correct amount of minimal unit tests', () => {
-        expect(level.minimalUnitTests).toHaveLength(2)
+        expect(level.minimalUnitTests).toHaveLength(6)
     })
 
     test('has the correct amount of subsets minimal unit tests', () => {
-        expect(level.subsetsOfMinimalUnitTests).toHaveLength(4)
+        expect(level.subsetsOfMinimalUnitTests).toHaveLength(64)
     })
 
     test('has the correct amount of perfect candidates', () => {
-        expect(level.perfectCandidates).toHaveLength(2)
+        expect(level.perfectCandidates).toHaveLength(8)
     })
 
     test('perfect candidates pass all hints', () => {

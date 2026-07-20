@@ -190,8 +190,11 @@ export class English extends ConversationLanguage {
         return ConversationLanguage.bless('Submit the *Unit Tests* again to check if the *Current Function* finally matches the *Specification*.')
     }
 
-    public override evenOddSpecification(): ConversationText {
-        return ConversationLanguage.bless('Return `true` if the number is even and `false` otherwise.')
+    public override windScaleSpecification(): ConversationText {
+        return ConversationLanguage.bless('Return `CALM` if the wind speed is less than `20`. ' +
+            'Return `BREEZE` if the wind speed is less than `50`. ' +
+            'Return `GALE` if the wind speed is less than `90`. ' +
+            'Return `STORM` in all other cases.')
     }
 
     public override fizzBuzzSpecification(): ConversationText {

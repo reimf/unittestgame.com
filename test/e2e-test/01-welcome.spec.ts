@@ -44,7 +44,7 @@ test.describe('welcome', () => {
         await expect(levelsPanel).toContainText(
             '▶️Level 0 - Battery Level' +
             '🔒Level 1 - Voting Age' +
-            '🔒Level 2 - Even or Odd' +
+            '🔒Level 2 - Wind Scale' +
             '🔒Level 3 - Review' +
             '🔒Level 4 - FizzBuzz' +
             '🔒Level 5 - Leap Year' +

@@ -448,7 +448,6 @@ select {
                         border-radius: 0.5rem;
                         padding: 0.5rem;
                         white-space: nowrap;
-                        width: 18rem;
 
                         &.unlocked {
                             background-color: var(--unlocked-background);
