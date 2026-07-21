@@ -9,6 +9,6 @@ test.describe('python programming language', () => {
     test('has the simplest candidate rendered in Python format in the current function panel', async ({ page }) => {
         const currentFunctionPanel = page.getByTestId('current-function')
         const codeLines = currentFunctionPanel.locator('code')
-        await expect(codeLines).toContainText('def powerMode(batteryLevel):    return ""')
+        await expect(codeLines).toContainText('def powerMode(batteryLevel: int) -> str:    return ""')
     })
 })

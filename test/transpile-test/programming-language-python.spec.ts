@@ -20,7 +20,7 @@ test.describe('transpile to Python', () => {
                 const javascriptCode = candidate.nonEmptyLines.join('\n')
                 const javascriptAsserts = unitTests.map(unitTest => 'assert ' + unitTest.toTextWithResult(candidate.execute(unitTest.argumentList)))
                 const javascriptProgram = [javascriptCode, ...javascriptAsserts, ''].join('\n')
-                const pythonProgram = python.transpile(javascriptProgram)
+                const pythonProgram = python.transpile(javascriptProgram, level.parameters, level.unit)
                 const result = spawnSync('python3', ['-c', pythonProgram], { encoding: 'utf8' })
                 expect(result.status, pythonProgram + '\n' + result.stderr).toBe(0)
             }
