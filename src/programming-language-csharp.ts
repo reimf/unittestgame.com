@@ -11,7 +11,7 @@ export class Csharp extends ProgrammingLanguage {
             .replace(/\bnumber\b/g, 'int')
             .replace(/\bboolean\b/g, 'bool')
             .replace(/(\w+): (\w+)/g, '$2 $1')
-            .replace(/\/([^\/]*)\/\.test\((.+?)\)/g, 'Regex.IsMatch($2, "$1")')
+            .replace(/\/([^\/]*)\/\.test\((.+?)\)/g, (_match, pattern: string, argument: string) => `Regex.IsMatch(${argument}, "${pattern.replace(/\\/g, '\\\\')}")`)
             .replace(/(\w+)\.length\b/g, '$1.Length')
             .replace(/\bMath\.floor\((\w+) \/ (\d+)\)/g, '$1 / $2')
             .replace(/(\w+)\.toString\(\)/g, '$1.ToString()')

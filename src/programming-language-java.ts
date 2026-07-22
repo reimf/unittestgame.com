@@ -12,7 +12,7 @@ export class Java extends ProgrammingLanguage {
             .replace(/\bboolean\b/g, 'boolean')
             .replace(/\bstring\b/g, 'String')
             .replace(/(\w+): (\w+)/g, '$2 $1')
-            .replace(/\/([^\/]*)\/\.test\((.+?)\)/g, 'Pattern.compile("$1").matcher($2).find()')
+            .replace(/\/([^\/]*)\/\.test\((.+?)\)/g, (_match, pattern: string, argument: string) => `Pattern.compile("${pattern.replace(/\\/g, '\\\\')}").matcher(${argument}).find()`)
             .replace(/(\w+)\.length\b/g, '$1.length()')
             .replace(/\bMath\.floor\((\w+) \/ (\d+)\)/g, '$1 / $2')
             .replace(/(\w+)\.toString\(\)/g, 'String.valueOf($1)')

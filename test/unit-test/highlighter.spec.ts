@@ -344,6 +344,12 @@ test.describe('class Python', () => {
                 '<span class="whitespace"> </span>' +
                 '<span class="variable">b</span>' +
                 '<span class="punctuation">)</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="keyword">is</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="keyword">not</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="literal">None</span>' +
                 '<span class="punctuation">:</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="keyword">return</span>' +
@@ -362,6 +368,12 @@ test.describe('class Python', () => {
                 '<span class="whitespace"> </span>' +
                 '<span class="variable">text</span>' +
                 '<span class="punctuation">)</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="keyword">is</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="keyword">not</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="literal">None</span>' +
             '</div>',
         ])
     })
@@ -388,6 +400,12 @@ test.describe('class Python', () => {
                 '<span class="whitespace"> </span>' +
                 '<span class="variable">password</span>' +
                 '<span class="punctuation">)</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="keyword">is</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="keyword">not</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="literal">None</span>' +
                 '<span class="punctuation">:</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="keyword">return</span>' +
@@ -465,6 +483,12 @@ test.describe('class Python', () => {
                 '<ins class="whitespace"> </ins>' +
                 '<ins class="variable">text</ins>' +
                 '<ins class="punctuation">)</ins>' +
+                '<ins class="whitespace"> </ins>' +
+                '<ins class="keyword">is</ins>' +
+                '<ins class="whitespace"> </ins>' +
+                '<ins class="keyword">not</ins>' +
+                '<ins class="whitespace"> </ins>' +
+                '<ins class="literal">None</ins>' +
             '</div>',
         ])
     })
@@ -489,6 +513,12 @@ test.describe('class Python', () => {
                 '<del class="whitespace"> </del>' +
                 '<del class="variable">text</del>' +
                 '<del class="punctuation">)</del>' +
+                '<del class="whitespace"> </del>' +
+                '<del class="keyword">is</del>' +
+                '<del class="whitespace"> </del>' +
+                '<del class="keyword">not</del>' +
+                '<del class="whitespace"> </del>' +
+                '<del class="literal">None</del>' +
                 '<ins class="literal">True</ins>' +
             '</div>',
         ])

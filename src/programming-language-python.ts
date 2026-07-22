@@ -11,7 +11,7 @@ export class Python extends ProgrammingLanguage {
             .replace(/\bnumber\b/g, 'int')
             .replace(/\bboolean\b/g, 'bool')
             .replace(/\bstring\b/g, 'str')
-            .replace(/\/([^\/]*)\/\.test\((.+?)\)/g, "re.search('$1', $2)")
+            .replace(/\/([^\/]*)\/\.test\((.+?)\)/g, (_match, pattern: string, argument: string) => `re.search('${pattern.replace(/\\/g, '\\\\')}', ${argument}) is not None`)
             .replace(/(\w+)\.length\b/g, 'len($1)')
             .replace(/\bMath\.floor\((\w+) \/ (\d+)\) \+ "\." \+ (\w+) % (\d+)/g, 'str($1 // $2) + "." + str($3 % $4)')
             .replace(/"" \+ Math\.floor\((\w+) \/ (\d+)\)/g, 'str($1 // $2)')
