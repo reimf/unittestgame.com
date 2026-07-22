@@ -7,13 +7,11 @@ export class Java extends ProgrammingLanguage {
 
     public override transpile(javascriptCode: string): string {
         return javascriptCode
-            .replace(/\blet (\w+): (\w+)\b/g, '$2 $1')
             .replace(/\bfunction (\w+)\((.*?)\): (\w+) \{/g, 'static $3 $1($2) {')
             .replace(/\bnumber\b/g, 'int')
             .replace(/\bboolean\b/g, 'boolean')
             .replace(/\bstring\b/g, 'String')
             .replace(/(\w+): (\w+)/g, '$2 $1')
-            .replace(/\bnew RegExp\((.+?)\)\.test\((.+?)\)/g, 'Pattern.compile($1).matcher($2).find()')
             .replace(/\/([^\/]*)\/\.test\((.+?)\)/g, 'Pattern.compile("$1").matcher($2).find()')
             .replace(/(\w+)\.length\b/g, '$1.length()')
             .replace(/\bMath\.floor\((\w+) \/ (\d+)\)/g, '$1 / $2')

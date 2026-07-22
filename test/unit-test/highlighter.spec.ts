@@ -324,8 +324,8 @@ test.describe('class Python', () => {
         ])
     })
 
-    test('transpiles new RegExp(...).test(...) to re.search(...) and inserts only 1 import re line', () => {
-        const highlighted = python.highlight('if (new RegExp(a).test(b)) return true\nreturn new RegExp(regex).test(text)')
+    test('transpiles regexp literals to re.search(...) and inserts only 1 import re line', () => {
+        const highlighted = python.highlight('if (/a/.test(b)) return true\nreturn /regex/.test(text)')
         expect(html(highlighted)).toEqual([
             '<div>' +
                 '<span class="variable">import</span>' +
@@ -339,17 +339,11 @@ test.describe('class Python', () => {
                 '<span class="dot">.</span>' +
                 '<span class="function">search</span>' +
                 '<span class="punctuation">(</span>' +
-                '<span class="variable">a</span>' +
+                '<span class="string">\'a\'</span>' +
                 '<span class="punctuation">,</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="variable">b</span>' +
                 '<span class="punctuation">)</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="keyword">is</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="keyword">not</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="literal">None</span>' +
                 '<span class="punctuation">:</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="keyword">return</span>' +
@@ -363,17 +357,11 @@ test.describe('class Python', () => {
                 '<span class="dot">.</span>' +
                 '<span class="function">search</span>' +
                 '<span class="punctuation">(</span>' +
-                '<span class="variable">regex</span>' +
+                '<span class="string">\'regex\'</span>' +
                 '<span class="punctuation">,</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="variable">text</span>' +
                 '<span class="punctuation">)</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="keyword">is</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="keyword">not</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="literal">None</span>' +
             '</div>',
         ])
     })
@@ -405,19 +393,6 @@ test.describe('class Python', () => {
                 '<span class="keyword">return</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="literal">False</span>' +
-            '</div>',
-        ])
-    })
-
-    test('transpiles let', () => {
-        const highlighted = python.highlight('let regex = "^"')
-        expect(html(highlighted)).toEqual([
-            '<div>' +
-                '<span class="variable">regex</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="operator">=</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="string">"^"</span>' +
             '</div>',
         ])
     })
@@ -470,7 +445,7 @@ test.describe('class Python', () => {
     })
 
     test('highlights a diff when current and previous transpile to a different number of lines', () => {
-        const highlighted = python.highlight('return new RegExp(regex).test(text)', 'return true')
+        const highlighted = python.highlight('return /regex/.test(text)', 'return true')
         expect(html(highlighted)).toEqual([
             '<div>' +
                 '<ins class="variable">import</ins>' +
@@ -485,23 +460,17 @@ test.describe('class Python', () => {
                 '<ins class="dot">.</ins>' +
                 '<ins class="function">search</ins>' +
                 '<ins class="punctuation">(</ins>' +
-                '<ins class="variable">regex</ins>' +
+                '<ins class="string">\'regex\'</ins>' +
                 '<ins class="punctuation">,</ins>' +
                 '<ins class="whitespace"> </ins>' +
                 '<ins class="variable">text</ins>' +
                 '<ins class="punctuation">)</ins>' +
-                '<ins class="whitespace"> </ins>' +
-                '<ins class="keyword">is</ins>' +
-                '<ins class="whitespace"> </ins>' +
-                '<ins class="keyword">not</ins>' +
-                '<ins class="whitespace"> </ins>' +
-                '<ins class="literal">None</ins>' +
             '</div>',
         ])
     })
 
     test('highlights a diff when current transpiles to fewer lines than previous', () => {
-        const highlighted = python.highlight('return true', 'return new RegExp(regex).test(text)')
+        const highlighted = python.highlight('return true', 'return /regex/.test(text)')
         expect(html(highlighted)).toEqual([
             '<div>' +
                 '<del class="variable">import</del>' +
@@ -515,17 +484,11 @@ test.describe('class Python', () => {
                 '<del class="dot">.</del>' +
                 '<del class="function">search</del>' +
                 '<del class="punctuation">(</del>' +
-                '<del class="variable">regex</del>' +
+                '<del class="string">\'regex\'</del>' +
                 '<del class="punctuation">,</del>' +
                 '<del class="whitespace"> </del>' +
                 '<del class="variable">text</del>' +
                 '<del class="punctuation">)</del>' +
-                '<del class="whitespace"> </del>' +
-                '<del class="keyword">is</del>' +
-                '<del class="whitespace"> </del>' +
-                '<del class="keyword">not</del>' +
-                '<del class="whitespace"> </del>' +
-                '<del class="literal">None</del>' +
                 '<ins class="literal">True</ins>' +
             '</div>',
         ])
