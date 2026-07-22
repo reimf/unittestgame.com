@@ -22,9 +22,9 @@ test.describe('transpile to Java', () => {
             test.setTimeout(1_200_000)
             const unitTests = [...level.minimalUnitTests, ...level.hints]
             for (const candidate of level.candidates) {
-                const javaCode = java.transpile(candidate.nonEmptyLines.join('\n'), level.parameters, level.unit)
+                const javaCode = java.transpile(candidate.nonEmptyLines.join('\n'))
                 const javaAsserts = unitTests.map(unitTest => {
-                    const assertion = java.transpile(unitTest.toTextWithResult(candidate.execute(unitTest.argumentList)), level.parameters, level.unit)
+                    const assertion = java.transpile(unitTest.toTextWithResult(candidate.execute(unitTest.argumentList)))
                     return `assert ${assertion};`
                 })
                 const javaProgram = [

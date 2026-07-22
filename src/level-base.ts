@@ -75,9 +75,9 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
     }
 
     private createCandidate(lines: readonly string[]): Candidate<Parameters, Result> {
-        const parameterList = this.parameters.map(parameter => parameter.name).join(', ')
+        const parameterList = this.parameters.map(parameter => `${parameter.name}: ${parameter.typeScriptType()}`).join(', ')
         const indentedLines = [
-            `function ${this.unit.name}(${parameterList}) {`,
+            `function ${this.unit.name}(${parameterList}): ${this.unit.typeScriptType()} {`,
                 ...lines.map(line => line ? '    ' + line : ''),
             '}',
         ]
@@ -324,13 +324,13 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
     }
 
     private showCurrentFunctionPanel(): void {
-        new Panel('current-function', this.conversationLanguage.currentFunctionTitle(), [this.currentCandidate.toHtml(this.programmingLanguage, this.parameters, this.unit)]).show()
+        new Panel('current-function', this.conversationLanguage.currentFunctionTitle(), [this.currentCandidate.toHtml(this.programmingLanguage)]).show()
     }
 
     private showDifferencePanel(): void {
         if (!this.previousCandidate)
             return
-        const difference = this.currentCandidate.toHtmlWithPrevious(this.previousCandidate, this.programmingLanguage, this.parameters, this.unit)
+        const difference = this.currentCandidate.toHtmlWithPrevious(this.previousCandidate, this.programmingLanguage)
         new Panel('difference-current-function', this.conversationLanguage.differenceTitle(), [difference]).show()
     }
 

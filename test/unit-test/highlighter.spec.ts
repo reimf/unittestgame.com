@@ -3,8 +3,6 @@ import { JSDOM } from 'jsdom'
 import { Div } from '../../src/html.js'
 import { JavaScript } from '../../src/programming-language-javascript.js'
 import { Python } from '../../src/programming-language-python.js'
-import { IntegerVariable, BooleanVariable } from '../../src/variable.js'
-import { ConversationLanguage } from '../../src/conversation-language-base.js'
 
 const { document } = new JSDOM('<!DOCTYPE html>').window
 global.document = document
@@ -425,9 +423,7 @@ test.describe('class Python', () => {
     })
 
     test('transpiles function into def and handles the closing curly bracket', () => {
-        const parameters = [new IntegerVariable(ConversationLanguage.bless('Num'), 'num')]
-        const unit = new BooleanVariable(ConversationLanguage.bless('Is even'), 'isEven')
-        const highlighted = python.highlight('function isEven(num) {\n    if (num % 2 === 0) return true\n    return false\n}', undefined, parameters, unit)
+        const highlighted = python.highlight('function isEven(num: number): boolean {\n    if (num % 2 === 0) return true\n    return false\n}')
         expect(html(highlighted)).toEqual([
             '<div>' +
                 '<span class="keyword">def</span>' +

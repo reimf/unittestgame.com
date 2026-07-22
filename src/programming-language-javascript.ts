@@ -5,8 +5,9 @@ export class JavaScript extends ProgrammingLanguage {
     public override readonly id = 'javascript' as const
     public override readonly name = 'JavaScript'
 
-    public override transpile(javascriptCode: string): string {
-        return javascriptCode
+    public override transpile(typescriptCode: string): string {
+        return typescriptCode
+            .replace(/: \w+/g, '')
     }
 
     public override getTokenTypes(): TokenTypes {

@@ -15,6 +15,7 @@ export abstract class Variable {
     public abstract getInput(value: string): Value
     public abstract toHtml(): Html
     public abstract format(value: Value): string
+    public abstract typeScriptType(): string
 }
 
 export class RadioVariable extends Variable {
@@ -45,6 +46,10 @@ export class RadioVariable extends Variable {
     public format(value: string): string {
         return `"${value}"`
     }
+
+    public typeScriptType(): string {
+        return 'string'
+    }
 }
 
 export class BooleanVariable extends Variable {
@@ -72,6 +77,10 @@ export class BooleanVariable extends Variable {
     public format(value: boolean): string {
         return `${value}`
     }
+
+    public typeScriptType(): string {
+        return 'boolean'
+    }
 }
 
 export class TextVariable extends Variable {
@@ -97,6 +106,10 @@ export class TextVariable extends Variable {
     public format(value: string): string {
         return `"${value}"`
     }
+
+    public typeScriptType(): string {
+        return 'string'
+    }
 }
 
 export class IntegerVariable extends Variable {
@@ -121,6 +134,10 @@ export class IntegerVariable extends Variable {
 
     public format(value: string): string {
         return `${value}`
+    }
+
+    public typeScriptType(): string {
+        return 'number'
     }
 }
 

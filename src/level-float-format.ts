@@ -28,7 +28,7 @@ export class FloatFormat extends Level<[string], boolean> {
     protected getCandidateElements(): string[][] {
         return [
             [
-                'let regex = "^"',
+                'let regex: string = "^"',
             ],
             [
                 'regex += "[+-]?"',

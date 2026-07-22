@@ -1,8 +1,11 @@
 import { CodeBlock } from './html.js'
 import { TestResult } from './test-result.js'
 import { ProgrammingLanguage } from './programming-language-base.js'
+import { JavaScript } from './programming-language-javascript.js'
 import { UnitTest } from './unit-test.js'
-import { Value, Variable } from './variable.js'
+import { Value } from './variable.js'
+
+const javaScript = new JavaScript()
 
 export class Candidate<Parameters extends readonly Value[] = readonly Value[], Result extends Value = Value> {
     private readonly lines: string[]
@@ -14,13 +17,13 @@ export class Candidate<Parameters extends readonly Value[] = readonly Value[], R
         this.lines = lines.map(line => line.replace(/\\\\/g, '\\'))
         this.nonEmptyLines = lines.filter(line => line)
         const code = lines.join('\n')
-        this.function = new Function('return ' + code)()
+        this.function = new Function('return ' + javaScript.transpile(code))()
         this.complexity = this.getComplexity(code)
     }
 
     private getRegEx(code: string, regex: RegExp): RegExp {
         const matches = code.matchAll(regex)
-        const names = [...matches].flatMap(match => match[1]!.split(/,\s*/))
+        const names = [...matches].flatMap(match => match[1]!.split(/,\s*/).map(name => name.replace(/: *\w+$/, '')))
         return new RegExp(`\\b(${names.join('|')})\\b`, 'g')
     }
 
@@ -32,6 +35,7 @@ export class Candidate<Parameters extends readonly Value[] = readonly Value[], R
             .replace(/\n/g, ' ') // simplify white space
             .replace(/false|""/g, ' ') // false and the empty string are free
             .replace(/"[^"]*?"/g, ' _ _ ') // each string is 1 extra point
+            .replace(/: *(number|boolean|string)/g, ' _ ') // each type annotation is 1 point
             .replace(/\(([^(]*?)\)/g, ' _ $1 ') // each function definition/call is 1 extra point
             .replace(/\(([^(]*?)\)/g, ' _ $1 ') // handle nested function calls
             .replace(/,/g, ' ') // each parameter and argument is 1 point
@@ -70,13 +74,13 @@ export class Candidate<Parameters extends readonly Value[] = readonly Value[], R
         return Math.sign(this.complexity - candidate.complexity)
     }
 
-    public toHtml(programmingLanguage: ProgrammingLanguage, parameters?: readonly Variable[], unit?: Variable): CodeBlock {
-        const divs = programmingLanguage.highlight(this.nonEmptyLines.join('\n'), undefined, parameters, unit)
+    public toHtml(programmingLanguage: ProgrammingLanguage): CodeBlock {
+        const divs = programmingLanguage.highlight(this.nonEmptyLines.join('\n'))
         return new CodeBlock().appendChildren(divs)
     }
 
-    public toHtmlWithPrevious(previousCandidate: Candidate<Parameters, Result>, programmingLanguage: ProgrammingLanguage, parameters?: readonly Variable[], unit?: Variable): CodeBlock {
-        const divs = programmingLanguage.highlight(this.lines.join('\n'), previousCandidate.lines.join('\n'), parameters, unit)
+    public toHtmlWithPrevious(previousCandidate: Candidate<Parameters, Result>, programmingLanguage: ProgrammingLanguage): CodeBlock {
+        const divs = programmingLanguage.highlight(this.lines.join('\n'), previousCandidate.lines.join('\n'))
         return new CodeBlock().appendChildren(divs)
     }
 }

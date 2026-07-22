@@ -22,9 +22,9 @@ test.describe('transpile to PHP', () => {
             test.setTimeout(120_000)
             const unitTests = [...level.minimalUnitTests, ...level.hints]
             for (const candidate of level.candidates) {
-                const phpCode = php.transpile(candidate.nonEmptyLines.join('\n'), level.parameters, level.unit)
+                const phpCode = php.transpile(candidate.nonEmptyLines.join('\n'))
                 const phpAsserts = unitTests.map(unitTest => {
-                    const assertion = php.transpile(unitTest.toTextWithResult(candidate.execute(unitTest.argumentList)), level.parameters, level.unit)
+                    const assertion = php.transpile(unitTest.toTextWithResult(candidate.execute(unitTest.argumentList)))
                     return `assert(${assertion});`
                 })
                 const phpProgram = ['<?php', phpCode, ...phpAsserts, '?>'].join('\n')

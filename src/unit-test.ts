@@ -21,7 +21,7 @@ export class UnitTest<Parameters extends readonly Value[] = readonly Value[], Re
     }
 
     public toHtmlWithResult(result: Result, programmingLanguage: ProgrammingLanguage): Div {
-        return programmingLanguage.highlight(this.toTextWithResult(result), undefined, this.parameters, this.unit)[0]!
+        return programmingLanguage.highlight(this.toTextWithResult(result))[0]!
     }
 
     public toHtml(programmingLanguage: ProgrammingLanguage): Div {

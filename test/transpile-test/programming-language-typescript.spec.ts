@@ -23,9 +23,9 @@ test.describe('transpile to TypeScript', () => {
             test.setTimeout(1_200_000)
             const unitTests = [...level.minimalUnitTests, ...level.hints]
             for (const candidate of level.candidates) {
-                const typescriptCode = typescript.transpile(candidate.nonEmptyLines.join('\n'), level.parameters, level.unit)
+                const typescriptCode = typescript.transpile(candidate.nonEmptyLines.join('\n'))
                 const typescriptAsserts = unitTests.map(unitTest => {
-                    const assertion = typescript.transpile(unitTest.toTextWithResult(candidate.execute(unitTest.argumentList)), level.parameters, level.unit)
+                    const assertion = typescript.transpile(unitTest.toTextWithResult(candidate.execute(unitTest.argumentList)))
                     return `if (!(${assertion})) throw new Error(${JSON.stringify(assertion)})`
                 })
                 const typescriptProgram = [typescriptCode, ...typescriptAsserts, ''].join('\n')

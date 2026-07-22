@@ -22,9 +22,9 @@ test.describe('transpile to C#', () => {
             test.setTimeout(1_200_000)
             const unitTests = [...level.minimalUnitTests, ...level.hints]
             for (const candidate of level.candidates) {
-                const csharpCode = csharp.transpile(candidate.nonEmptyLines.join('\n'), level.parameters, level.unit)   
+                const csharpCode = csharp.transpile(candidate.nonEmptyLines.join('\n'))
                 const csharpAsserts = unitTests.map(unitTest => {
-                    const assertion = csharp.transpile(unitTest.toTextWithResult(candidate.execute(unitTest.argumentList)), level.parameters, level.unit)
+                    const assertion = csharp.transpile(unitTest.toTextWithResult(candidate.execute(unitTest.argumentList)))
                     return `System.Diagnostics.Debug.Assert(${assertion});`
                 })
                 const csharpProgram = [csharpCode, ...csharpAsserts].join('\n')

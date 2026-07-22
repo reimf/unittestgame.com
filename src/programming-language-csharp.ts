@@ -1,20 +1,17 @@
 import { ProgrammingLanguage } from './programming-language-base.js'
 import type { TokenTypes } from './highlighter.js'
-import { Variable, BooleanVariable, IntegerVariable } from './variable.js'
 
 export class Csharp extends ProgrammingLanguage {
     public override readonly id = 'csharp' as const
     public override readonly name = 'C#'
 
-    public override transpile(javascriptCode: string, parameters: readonly Variable[], unit: Variable): string {
+    public override transpile(javascriptCode: string): string {
         return javascriptCode
-            .replace(/\bfunction (\w+)\((.*?)\) *\{/g, (_match: string, name: string, parameterList: string) => {
-                const typedParameters = parameterList.split(', ').filter(parameterName => parameterName)
-                    .map((parameterName, index) => `${this.dataType(parameters[index]!)} ${parameterName}`)
-                    .join(', ')
-                return `static ${this.dataType(unit)} ${name}(${typedParameters})\n{`
-            })
-            .replace(/\blet +/g, 'var ')
+            .replace(/\blet (\w+): (\w+)\b/g, '$2 $1')
+            .replace(/\bfunction (\w+)\((.*?)\): (\w+) \{/g, 'static $3 $1($2)\n{')
+            .replace(/\bnumber\b/g, 'int')
+            .replace(/\bboolean\b/g, 'bool')
+            .replace(/(\w+): (\w+)/g, '$2 $1')
             .replace(/\bnew RegExp\((.+?)\)\.test\((.+?)\)/g, 'Regex.IsMatch($2, $1)')
             .replace(/\/([^\/]*)\/\.test\((.+?)\)/g, 'Regex.IsMatch($2, "$1")')
             .replace(/(\w+)\.length\b/g, '$1.Length')
@@ -24,12 +21,6 @@ export class Csharp extends ProgrammingLanguage {
             .replace(/!==/g, '!=')
             .replace(/^( +.+)$/gm, '$1;')
             .replace(/^(?=[\s\S]*Regex\.IsMatch\()/, 'using System.Text.RegularExpressions;\n')
-    }
-
-    private dataType(variable: Variable): string {
-        if (variable instanceof BooleanVariable) return 'bool'
-        if (variable instanceof IntegerVariable) return 'int'
-        return 'string'
     }
 
     public override getTokenTypes(): TokenTypes {
