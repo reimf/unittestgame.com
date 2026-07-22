@@ -19,7 +19,7 @@ test.describe('class FloatFormat', () => {
     })
 
     test('has the correct amount of candidates', () => {
-        expect(level.candidates).toHaveLength(756)
+        expect(level.candidates).toHaveLength(254)
     })
 
     test('has the correct amount of minimal unit tests', () => {

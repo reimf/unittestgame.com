@@ -26,45 +26,19 @@ export class FloatFormat extends Level<[string], boolean> {
     }
 
     protected getCandidateElements(): string[][] {
-        return [
-            [
-                'let regex: string = "^"',
-            ],
-            [
-                'regex += "[+-]?"',
-                'regex += "[+-]*"',
-                'regex += "[+-]+"',
-                'regex += "[+-]"',
-                'regex += "[-]?"',
-                'regex += "[-]"',
-                'regex += "[+]?"',
-                'regex += "[+]"',
-                '',
-            ],
-            [
-                'regex += "[0-9]"',
-                'regex += "[0-9]*"',
-                'regex += "[0-9]+"',
-                '',
-            ],
-            [
-                'regex += "\\\\.[0-9]+"',
-                'regex += "(\\\\.[0-9]+)?"',
-                'regex += "(\\\\.[0-9]+)*"',
-                'regex += "\\\\.[0-9]*"',
-                'regex += "(\\\\.[0-9]*)?"',
-                'regex += "(\\\\.[0-9]*)*"',
-                '',
-            ],
-            [
-                'regex += "$"',
-            ],
-            [
-                'return new RegExp(regex).test(text)',
-                'return true',
-                'return false',
-            ],
-        ]
+        const signs = ['[+-]?', '[+-]*', '[+-]+', '[+-]', '[-]?', '[-]', '[+]?', '[+]', '']
+        const digits = ['[0-9]', '[0-9]*', '[0-9]+', '']
+        const fractions = ['\\.[0-9]+', '(\\.[0-9]+)?', '(\\.[0-9]+)*', '\\.[0-9]*', '(\\.[0-9]*)?', '(\\.[0-9]*)*', '']
+
+        const lines: string[] = []
+        for (const sign of signs)
+            for (const digit of digits)
+                for (const fraction of fractions)
+                    lines.push(`return /^${sign}${digit}${fraction}$/.test(text)`)
+        lines.push('return true')
+        lines.push('return false')
+
+        return [lines]
     }
 
     protected* minimalUnitTestGenerator(): Generator<[[string], boolean]> {
