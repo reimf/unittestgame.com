@@ -14,24 +14,27 @@ export class FloatFormat extends Level<[string], boolean> {
         return this.conversationLanguage.floatFormatSpecification()
     }
 
-    protected getCandidateElements(): string[][] {
+    private* returnRegexDotTests(): Generator<string> {
         const signs = ['[+-]?', '[+-]*', '[+-]+', '[+-]', '[-]?', '[-]', '[+]?', '[+]', '']
         const digits = ['[0-9]', '[0-9]*', '[0-9]+', '']
         const fractions = ['\\.[0-9]+', '(\\.[0-9]+)?', '(\\.[0-9]+)*', '\\.[0-9]*', '(\\.[0-9]*)?', '(\\.[0-9]*)*', '']
 
-        const lines: string[] = []
         for (const sign of signs)
             for (const digit of digits)
                 for (const fraction of fractions)
-                    lines.push(`    return /^${sign}${digit}${fraction}$/.test(text)`)
-        lines.push('    return true')
-        lines.push('    return false')
+                    yield `    return /^${sign}${digit}${fraction}$/.test(text)`
+    }
 
+    protected getCandidateElements(): string[][] {
         return [
             [
                 'function isFloatFormat(text: string): boolean {'
             ],
-            lines,
+            [
+                ...this.returnRegexDotTests(),
+                '    return true',
+                '    return false',
+            ],
             [
                 '}'
             ],
