@@ -71,17 +71,7 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
                     yield* this.generateCandidates(remainingListOfListOfLines, [...lines, line])
         }
         else
-            yield this.createCandidate(lines)
-    }
-
-    private createCandidate(lines: readonly string[]): Candidate<Parameters, Result> {
-        const parameterList = this.parameters.map(parameter => `${parameter.name}: ${parameter.typeScriptType()}`).join(', ')
-        const indentedLines = [
-            `function ${this.unit.name}(${parameterList}): ${this.unit.typeScriptType()} {`,
-                ...lines.map(line => line ? '    ' + line : ''),
-            '}',
-        ]
-        return new Candidate<Parameters, Result>(indentedLines)
+            yield new Candidate<Parameters, Result>(lines)
     }
 
     private* generateMinimalUnitTests(): Generator<UnitTest<Parameters, Result>> {

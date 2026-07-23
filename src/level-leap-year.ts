@@ -28,22 +28,28 @@ export class LeapYear extends Level<[number], boolean> {
     protected getCandidateElements(): string[][] {
         return [
             [
-                'if (year % 400 === 0) return true',
-                'if (year % 200 === 0) return true',
+                'function isLeapYear(year: number): boolean {'
+            ],
+            [
+                '    if (year % 400 === 0) return true',
+                '    if (year % 200 === 0) return true',
                 '',
             ],
             [
-                'if (year % 100 === 0) return false',
+                '    if (year % 100 === 0) return false',
                 '',
             ],
             [
-                'if (year % 4 !== 0) return true',
-                'if (year % 4 === 0) return true',
+                '    if (year % 4 !== 0) return true',
+                '    if (year % 4 === 0) return true',
                 '',
             ],
             [
-                'return true',
-                'return false',
+                '    return true',
+                '    return false',
+            ],
+            [
+                '}'
             ],
         ]
     }

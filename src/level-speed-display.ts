@@ -28,30 +28,36 @@ export class SpeedDisplay extends Level<[number], string> {
     protected getCandidateElements(): string[][] {
         return [
             [
-                'if (speed === 0) return "START"',
-                'if (speed < 5) return "START"',
-                'if (speed < 10) return "START"',
+                'function display(speed: number): string {'
+            ],
+            [
+                '    if (speed === 0) return "START"',
+                '    if (speed < 5) return "START"',
+                '    if (speed < 10) return "START"',
                 '',
             ],
             [
-                'if (speed < 199) return Math.floor(speed / 10) + "." + speed % 10',
-                'if (speed < 200) return Math.floor(speed / 10) + "." + speed % 10',
-                'if (speed <= 200) return Math.floor(speed / 10) + "." + speed % 10',
-                'if (speed < 300) return Math.floor(speed / 10) + "." + speed % 10',
+                '    if (speed < 199) return Math.floor(speed / 10) + "." + speed % 10',
+                '    if (speed < 200) return Math.floor(speed / 10) + "." + speed % 10',
+                '    if (speed <= 200) return Math.floor(speed / 10) + "." + speed % 10',
+                '    if (speed < 300) return Math.floor(speed / 10) + "." + speed % 10',
                 '',
             ],
             [
-                'if (speed >= 2000) return "DANGER"',
-                'if (speed >= 1995) return "DANGER"',
-                'if (speed > 1995) return "DANGER"',
-                'if (speed > 1990) return "DANGER"',
+                '    if (speed >= 2000) return "DANGER"',
+                '    if (speed >= 1995) return "DANGER"',
+                '    if (speed > 1995) return "DANGER"',
+                '    if (speed > 1990) return "DANGER"',
                 '',
             ],
             [
-                'return "" + Math.floor(speed / 10)',
-                'return Math.floor(speed / 10) + "." + speed % 10',
-                'return "START"',
-                'return "DANGER"',
+                '    return "" + Math.floor(speed / 10)',
+                '    return Math.floor(speed / 10) + "." + speed % 10',
+                '    return "START"',
+                '    return "DANGER"',
+            ],
+            [
+                '}'
             ],
         ]
     }

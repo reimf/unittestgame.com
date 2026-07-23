@@ -28,24 +28,30 @@ export class VotingAge extends Level<[number], boolean> {
     protected getCandidateElements(): string[][] {
         return [
             [
-                'if (age >= 16) return true',
-                'if (age >= 17) return true',
-                'if (age >= 18) return true',
-                'if (age >= 19) return true',
-                'if (age >= 20) return true',
-                'if (age <= 16) return false',
-                'if (age < 17) return false',
-                'if (age < 18) return false',
-                'if (age < 19) return false',
-                'if (age < 20) return false',
-                'if (age < 21) return false',
-                'if (age === 18) return true',
-                'if (age === 17) return false',
+                'function isAllowedToVote(age: number): boolean {'
+            ],
+            [
+                '    if (age >= 16) return true',
+                '    if (age >= 17) return true',
+                '    if (age >= 18) return true',
+                '    if (age >= 19) return true',
+                '    if (age >= 20) return true',
+                '    if (age <= 16) return false',
+                '    if (age < 17) return false',
+                '    if (age < 18) return false',
+                '    if (age < 19) return false',
+                '    if (age < 20) return false',
+                '    if (age < 21) return false',
+                '    if (age === 18) return true',
+                '    if (age === 17) return false',
                 '',
             ],
             [
-                'return true',
-                'return false',
+                '    return true',
+                '    return false',
+            ],
+            [
+                '}'
             ],
         ]
     }

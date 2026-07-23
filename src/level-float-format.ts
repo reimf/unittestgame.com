@@ -34,11 +34,19 @@ export class FloatFormat extends Level<[string], boolean> {
         for (const sign of signs)
             for (const digit of digits)
                 for (const fraction of fractions)
-                    lines.push(`return /^${sign}${digit}${fraction}$/.test(text)`)
-        lines.push('return true')
-        lines.push('return false')
+                    lines.push(`    return /^${sign}${digit}${fraction}$/.test(text)`)
+        lines.push('    return true')
+        lines.push('    return false')
 
-        return [lines]
+        return [
+            [
+                'function isFloatFormat(text: string): boolean {'
+            ],
+            lines,
+            [
+                '}'
+            ],
+        ]
     }
 
     protected* minimalUnitTestGenerator(): Generator<[[string], boolean]> {

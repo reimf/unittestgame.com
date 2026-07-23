@@ -36,24 +36,30 @@ export class BatteryLevel extends Level<[number], string> {
     protected getCandidateElements(): string[][] {
         return [
             [
-                'if (batteryLevel >= 18) return "NORMAL MODE"',
-                'if (batteryLevel >= 19) return "NORMAL MODE"',
-                'if (batteryLevel >= 20) return "NORMAL MODE"',
-                'if (batteryLevel >= 21) return "NORMAL MODE"',
-                'if (batteryLevel >= 22) return "NORMAL MODE"',
-                'if (batteryLevel <= 19) return "LOW POWER MODE"',
-                'if (batteryLevel <= 20) return "LOW POWER MODE"',
-                'if (batteryLevel <= 21) return "LOW POWER MODE"',
-                'if (batteryLevel <= 22) return "LOW POWER MODE"',
-                'if (batteryLevel <= 23) return "LOW POWER MODE"',
-                'if (batteryLevel === 20) return "NORMAL MODE"',
-                'if (batteryLevel === 19) return "LOW POWER MODE"',
+                'function powerMode(batteryLevel: number): string {'
+            ],
+            [
+                '    if (batteryLevel >= 18) return "NORMAL MODE"',
+                '    if (batteryLevel >= 19) return "NORMAL MODE"',
+                '    if (batteryLevel >= 20) return "NORMAL MODE"',
+                '    if (batteryLevel >= 21) return "NORMAL MODE"',
+                '    if (batteryLevel >= 22) return "NORMAL MODE"',
+                '    if (batteryLevel <= 19) return "LOW POWER MODE"',
+                '    if (batteryLevel <= 20) return "LOW POWER MODE"',
+                '    if (batteryLevel <= 21) return "LOW POWER MODE"',
+                '    if (batteryLevel <= 22) return "LOW POWER MODE"',
+                '    if (batteryLevel <= 23) return "LOW POWER MODE"',
+                '    if (batteryLevel === 20) return "NORMAL MODE"',
+                '    if (batteryLevel === 19) return "LOW POWER MODE"',
                 '',
             ],
             [
-                'return "NORMAL MODE"',
-                'return "LOW POWER MODE"',
-                'return ""',
+                '    return "NORMAL MODE"',
+                '    return "LOW POWER MODE"',
+                '    return ""',
+            ],
+            [
+                '}'
             ],
         ]
     }

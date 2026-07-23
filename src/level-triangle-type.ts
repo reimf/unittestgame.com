@@ -30,28 +30,34 @@ export class TriangleType extends Level<[number, number, number], string> {
     protected getCandidateElements(): string[][] {
         return [
             [
-                'if (a === b && b === c) return "EQUILATERAL"',
-                'if (a === b || b === c || a === c) return "EQUILATERAL"',
-                'if (a === b) return "EQUILATERAL"',
-                'if (b === c) return "EQUILATERAL"',
-                'if (a === c) return "EQUILATERAL"',
+                'function triangleType(a: number, b: number, c: number): string {'
+            ],
+            [
+                '    if (a === b && b === c) return "EQUILATERAL"',
+                '    if (a === b || b === c || a === c) return "EQUILATERAL"',
+                '    if (a === b) return "EQUILATERAL"',
+                '    if (b === c) return "EQUILATERAL"',
+                '    if (a === c) return "EQUILATERAL"',
                 '',
             ],
             [
-                'if (a === b || b === c || a === c) return "ISOSCELES"',
-                'if (a === b || b === c) return "ISOSCELES"',
-                'if (a === b || a === c) return "ISOSCELES"',
-                'if (b === c || a === c) return "ISOSCELES"',
-                'if (a === b) return "ISOSCELES"',
-                'if (a === c) return "ISOSCELES"',
-                'if (b === c) return "ISOSCELES"',
-                'if (a !== b && a !== c && b !== c) return "SCALENE"',
+                '    if (a === b || b === c || a === c) return "ISOSCELES"',
+                '    if (a === b || b === c) return "ISOSCELES"',
+                '    if (a === b || a === c) return "ISOSCELES"',
+                '    if (b === c || a === c) return "ISOSCELES"',
+                '    if (a === b) return "ISOSCELES"',
+                '    if (a === c) return "ISOSCELES"',
+                '    if (b === c) return "ISOSCELES"',
+                '    if (a !== b && a !== c && b !== c) return "SCALENE"',
                 '',
             ],
             [
-                'return "EQUILATERAL"',
-                'return "ISOSCELES"',
-                'return "SCALENE"',
+                '    return "EQUILATERAL"',
+                '    return "ISOSCELES"',
+                '    return "SCALENE"',
+            ],
+            [
+                '}'
             ],
         ]
     }

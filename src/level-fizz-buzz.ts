@@ -27,25 +27,31 @@ export class FizzBuzz extends Level<[number], string> {
     protected getCandidateElements(): string[][] {
         return [
             [
-                'if (num === 15) return "FIZZBUZZ"',
-                'if (num % 15 === 0) return "FIZZBUZZ"',
+                'function fizzBuzz(num: number): string {'
+            ],
+            [
+                '    if (num === 15) return "FIZZBUZZ"',
+                '    if (num % 15 === 0) return "FIZZBUZZ"',
                 '',
             ],
             [
-                'if (num === 3) return "FIZZ"',
-                'if (num % 3 === 0) return "FIZZ"',
+                '    if (num === 3) return "FIZZ"',
+                '    if (num % 3 === 0) return "FIZZ"',
                 ''
             ],
             [
-                'if (num === 5) return "BUZZ"',
-                'if (num % 5 === 0) return "BUZZ"',
+                '    if (num === 5) return "BUZZ"',
+                '    if (num % 5 === 0) return "BUZZ"',
                 ''
             ],
             [
-                'return "FIZZ"',
-                'return "BUZZ"',
-                'return "FIZZBUZZ"',
-                'return num.toString()',
+                '    return "FIZZ"',
+                '    return "BUZZ"',
+                '    return "FIZZBUZZ"',
+                '    return num.toString()',
+            ],
+            [
+                '}'
             ],
         ]
     }
