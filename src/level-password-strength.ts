@@ -1,6 +1,5 @@
 import { Level } from './level-base.js'
-import { ConversationLanguage, ConversationText } from './conversation-language-base.js'
-import { Variable, BooleanVariable } from './variable.js'
+import { ConversationText } from './conversation-language-base.js'
 
 export class PasswordStrength extends Level<[string], boolean> {
     protected identifier(): string {
@@ -13,10 +12,6 @@ export class PasswordStrength extends Level<[string], boolean> {
 
     protected specification(): ConversationText {
         return this.conversationLanguage.passwordStrengthSpecification()
-    }
-
-    protected getUnit(): Variable {
-        return new BooleanVariable(ConversationLanguage.bless('Is strong password'), 'isStrongPassword')
     }
 
     protected getCandidateElements(): string[][] {

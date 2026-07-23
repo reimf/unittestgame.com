@@ -1,6 +1,5 @@
 import { Level } from './level-base.js'
-import { ConversationLanguage, ConversationText } from './conversation-language-base.js'
-import { Variable, RadioVariable } from './variable.js'
+import { ConversationText } from './conversation-language-base.js'
 
 export class Review extends Level<[number, number], string> {
     protected identifier(): string {
@@ -12,10 +11,6 @@ export class Review extends Level<[number, number], string> {
     }
     protected specification(): ConversationText {
         return this.conversationLanguage.reviewSpecification()
-    }
-
-    protected getUnit(): Variable {
-        return new RadioVariable(ConversationLanguage.bless('Output'), 'review', [ConversationLanguage.bless('GOOD'), ConversationLanguage.bless('BAD'), ConversationLanguage.bless('OK')])
     }
 
     protected getCandidateElements(): string[][] {

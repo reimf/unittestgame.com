@@ -1,6 +1,5 @@
 import { Level } from './level-base.js'
-import { ConversationLanguage, ConversationText } from './conversation-language-base.js'
-import { Variable, TextVariable } from './variable.js'
+import { ConversationText } from './conversation-language-base.js'
 
 export class SpeedDisplay extends Level<[number], string> {
     protected identifier(): string {
@@ -13,10 +12,6 @@ export class SpeedDisplay extends Level<[number], string> {
 
     protected specification(): ConversationText {
         return this.conversationLanguage.speedDisplaySpecification()
-    }
-
-    protected getUnit(): Variable {
-        return new TextVariable(ConversationLanguage.bless('Display'), 'display')
     }
 
     protected getCandidateElements(): string[][] {

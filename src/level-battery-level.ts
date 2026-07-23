@@ -1,7 +1,6 @@
 import { ComputerMessage } from './frame.js'
 import { Level } from './level-base.js'
-import { ConversationLanguage, ConversationText } from './conversation-language-base.js'
-import { Variable, RadioVariable } from './variable.js'
+import { ConversationText } from './conversation-language-base.js'
 
 type FormStringsType = {
     message: ConversationText
@@ -21,10 +20,6 @@ export class BatteryLevel extends Level<[number], string> {
 
     protected specification(): ConversationText {
         return this.conversationLanguage.batteryLevelSpecification()
-    }
-
-    protected getUnit(): Variable {
-        return new RadioVariable(ConversationLanguage.bless('Power Mode'), 'powerMode', [ConversationLanguage.bless('NORMAL MODE'), ConversationLanguage.bless('LOW POWER MODE')])
     }
 
     protected getCandidateElements(): string[][] {

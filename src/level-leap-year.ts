@@ -1,6 +1,5 @@
 import { Level } from './level-base.js'
-import { ConversationLanguage, ConversationText } from './conversation-language-base.js'
-import { Variable, BooleanVariable } from './variable.js'
+import { ConversationText } from './conversation-language-base.js'
 
 export class LeapYear extends Level<[number], boolean> {
     protected identifier(): string {
@@ -13,10 +12,6 @@ export class LeapYear extends Level<[number], boolean> {
 
     protected specification(): ConversationText {
         return this.conversationLanguage.leapYearSpecification()
-    }
-
-    protected getUnit(): Variable {
-        return new BooleanVariable(ConversationLanguage.bless('Is a leap year'), 'isLeapYear')
     }
 
     protected getCandidateElements(): string[][] {

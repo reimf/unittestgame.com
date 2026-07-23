@@ -261,4 +261,12 @@ export class Italian extends ConversationLanguage {
     public override or(): ConversationText {
         return ConversationLanguage.bless('o')
     }
+
+    public override parameterLabel(parameterName: string): ConversationText {
+        return ConversationLanguage.bless(`Valore del parametro ${parameterName}`)
+    }
+
+    public override returnValueLabel(functionCall: string): ConversationText {
+        return ConversationLanguage.bless(`Risultato di ${functionCall}`)
+    }
 }

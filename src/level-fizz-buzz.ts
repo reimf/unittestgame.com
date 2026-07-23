@@ -1,6 +1,5 @@
 import { Level } from './level-base.js'
-import { ConversationLanguage, ConversationText } from './conversation-language-base.js'
-import { Variable, TextVariable } from './variable.js'
+import { ConversationText } from './conversation-language-base.js'
 
 export class FizzBuzz extends Level<[number], string> {
     protected identifier(): string {
@@ -12,10 +11,6 @@ export class FizzBuzz extends Level<[number], string> {
     }
     protected specification(): ConversationText {
         return this.conversationLanguage.fizzBuzzSpecification()
-    }
-
-    protected getUnit(): Variable {
-        return new TextVariable(ConversationLanguage.bless('Output'), 'fizzBuzz')
     }
 
     protected getCandidateElements(): string[][] {

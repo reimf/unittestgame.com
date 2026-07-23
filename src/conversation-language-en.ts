@@ -261,4 +261,12 @@ export class English extends ConversationLanguage {
     public override or(): ConversationText {
         return ConversationLanguage.bless('or')
     }
+
+    public override parameterLabel(parameterName: string): ConversationText {
+        return ConversationLanguage.bless(`Value of parameter ${parameterName}`)
+    }
+
+    public override returnValueLabel(functionCall: string): ConversationText {
+        return ConversationLanguage.bless(`Result of ${functionCall}`)
+    }
 }

@@ -261,4 +261,12 @@ export class Dutch extends ConversationLanguage {
     public override or(): ConversationText {
         return ConversationLanguage.bless('of')
     }
+
+    public override parameterLabel(parameterName: string): ConversationText {
+        return ConversationLanguage.bless(`Waarde van parameter ${parameterName}`)
+    }
+
+    public override returnValueLabel(functionCall: string): ConversationText {
+        return ConversationLanguage.bless(`Resultaat van ${functionCall}`)
+    }
 }

@@ -261,4 +261,12 @@ export class Spanish extends ConversationLanguage {
     public override or(): ConversationText {
         return ConversationLanguage.bless('o')
     }
+
+    public override parameterLabel(parameterName: string): ConversationText {
+        return ConversationLanguage.bless(`Valor del parámetro ${parameterName}`)
+    }
+
+    public override returnValueLabel(functionCall: string): ConversationText {
+        return ConversationLanguage.bless(`Resultado de ${functionCall}`)
+    }
 }

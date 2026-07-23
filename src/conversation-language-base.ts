@@ -59,4 +59,6 @@ export abstract class ConversationLanguage {
     public abstract votingAgeSpecification(): ConversationText
     public abstract reviewSpecification(): ConversationText
     public abstract or(): ConversationText
+    public abstract parameterLabel(parameterName: string): ConversationText
+    public abstract returnValueLabel(functionCall: string): ConversationText
 }

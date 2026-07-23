@@ -1,6 +1,5 @@
 import { Level } from './level-base.js'
-import { ConversationLanguage, ConversationText } from './conversation-language-base.js'
-import { Variable, RadioVariable } from './variable.js'
+import { ConversationText } from './conversation-language-base.js'
 
 export class TriangleType extends Level<[number, number, number], string> {
     protected identifier(): string {
@@ -13,10 +12,6 @@ export class TriangleType extends Level<[number, number, number], string> {
 
     protected specification(): ConversationText {
         return this.conversationLanguage.triangleTypeSpecification()
-    }
-
-    protected getUnit(): Variable {
-        return new RadioVariable(ConversationLanguage.bless('Type of triangle'), 'triangleType', [ConversationLanguage.bless('EQUILATERAL'), ConversationLanguage.bless('ISOSCELES'), ConversationLanguage.bless('SCALENE')])
     }
 
     protected getCandidateElements(): string[][] {

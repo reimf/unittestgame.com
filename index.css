@@ -167,6 +167,7 @@ select {
 form {
     span {
         display: block;
+        margin-bottom: 0.25rem;
     }
 }
 

@@ -1,6 +1,5 @@
 import { Level } from './level-base.js'
-import { ConversationLanguage, ConversationText } from './conversation-language-base.js'
-import { Variable, RadioVariable } from './variable.js'
+import { ConversationText } from './conversation-language-base.js'
 
 export class WindScale extends Level<[number], string> {
     protected identifier(): string {
@@ -13,10 +12,6 @@ export class WindScale extends Level<[number], string> {
 
     protected specification(): ConversationText {
         return this.conversationLanguage.windScaleSpecification()
-    }
-
-    protected getUnit(): Variable {
-        return new RadioVariable(ConversationLanguage.bless('Wind Category'), 'windCategory', [ConversationLanguage.bless('CALM'), ConversationLanguage.bless('BREEZE'), ConversationLanguage.bless('GALE'), ConversationLanguage.bless('STORM')])
     }
 
     protected getCandidateElements(): string[][] {

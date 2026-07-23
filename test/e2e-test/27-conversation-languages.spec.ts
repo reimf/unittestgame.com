@@ -62,6 +62,8 @@ test.describe('conversation languages', () => {
                 conversationLanguage.votingAgeSpecification(),
                 conversationLanguage.reviewSpecification(),
                 conversationLanguage.or(),
+                conversationLanguage.parameterLabel('year'),
+                conversationLanguage.returnValueLabel('isLeapYear(year)'),
             ])
         })
         for (const text of texts)

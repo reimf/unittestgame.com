@@ -1,6 +1,5 @@
 import { Level } from './level-base.js'
-import { ConversationLanguage, ConversationText } from './conversation-language-base.js'
-import { Variable, BooleanVariable } from './variable.js'
+import { ConversationText } from './conversation-language-base.js'
 
 export class VotingAge extends Level<[number], boolean> {
     protected identifier(): string {
@@ -13,10 +12,6 @@ export class VotingAge extends Level<[number], boolean> {
 
     protected specification(): ConversationText {
         return this.conversationLanguage.votingAgeSpecification()
-    }
-
-    protected getUnit(): Variable {
-        return new BooleanVariable(ConversationLanguage.bless('Is allowed to vote'), 'isAllowedToVote')
     }
 
     protected getCandidateElements(): string[][] {

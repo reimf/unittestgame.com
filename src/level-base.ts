@@ -6,7 +6,7 @@ import { ConversationLanguage, ConversationText } from './conversation-language-
 import { Picker } from './picker.js'
 import { TestResult } from './test-result.js'
 import { UnitTest } from './unit-test.js'
-import { IntegerVariable, TextVariable, Value, Variable } from './variable.js'
+import { BooleanVariable, IntegerVariable, RadioVariable, TextVariable, Value, Variable } from './variable.js'
 import { ProgrammingLanguage } from './programming-language-base.js'
 
 export type AnyLevel = Level<readonly Value[], Value>
@@ -44,7 +44,7 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
         this.levelNumber = levelNumber
         const candidateElements = this.getCandidateElements()
         this.parameters = this.getParameters(candidateElements)
-        this.unit = this.getUnit()
+        this.unit = this.getUnit(candidateElements)
         this.candidates = [...this.generateCandidates(candidateElements, [])]
         this.minimalUnitTests = [...this.generateMinimalUnitTests()]
         this.subsetsOfMinimalUnitTests = [...this.generateAllSubsetsOrderedBySize(this.minimalUnitTests)]
@@ -58,7 +58,6 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
     protected abstract identifier(): string
     protected abstract name(): string
     protected abstract specification(): ConversationText
-    protected abstract getUnit(): Variable
     protected abstract getCandidateElements(): string[][]
     protected abstract minimalUnitTestGenerator(): Generator<[Parameters, Result]>
     protected abstract hintGenerator(): Generator<Parameters>
@@ -68,11 +67,31 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
         const parameterList = functionDefinition.match(/\((.*)\)/)![1]!
         return parameterList.split(', ').map(parameter => {
             const [name, type] = parameter.split(': ')
-            const label = ConversationLanguage.bless(name!)
+            const label = this.conversationLanguage.parameterLabel(name!)
             if (type === 'number')
                 return new IntegerVariable(label, name!)
             return new TextVariable(label, name!)
         })
+    }
+
+    private getUnit(candidateElements: readonly string[][]): Variable {
+        const functionDefinition = candidateElements[0]![0]!
+        const name = functionDefinition.match(/^function (\w+)/)![1]!
+        const returnType = functionDefinition.match(/\):\s*(\w+)/)![1]!
+        const parameterList = functionDefinition.match(/\((.*)\)/)![1]!
+        const parameterNames = parameterList.split(', ').map(parameter => parameter.split(': ')[0])
+        const label = this.conversationLanguage.returnValueLabel(`${name}(${parameterNames.join(', ')})`)
+        if (returnType === 'boolean')
+            return new BooleanVariable(label, name)
+        const returnValues = candidateElements.flat()
+            .map(line => line.match(/return (.+)$/)?.[1])
+            .filter((value): value is string => value !== undefined)
+        if (returnValues.some(value => !/^"[^"]*"$/.test(value)))
+            return new TextVariable(label, name)
+        const texts = [...new Set(returnValues)]
+            .filter(value => value !== '""')
+            .map(value => ConversationLanguage.bless(value.slice(1, -1)))
+        return new RadioVariable(label, name, texts)
     }
 
     private* generateCandidates(listOfListOfLines: string[][], lines: string[]): Generator<Candidate<Parameters, Result>> {
