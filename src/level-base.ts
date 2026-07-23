@@ -85,7 +85,7 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
             return new BooleanVariable(label, name)
         const returnValues = candidateElements.flat()
             .map(line => line.match(/return (.+)$/)?.[1])
-            .filter((value): value is string => value !== undefined)
+            .filter((value): value is string => value !== undefined && value !== '"UNKNOWN"')
         if (returnValues.some(value => !/^"[^"]*"$/.test(value)))
             return new TextVariable(label, name)
         const texts = [...new Set(returnValues)]

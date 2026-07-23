@@ -45,7 +45,7 @@ export class BatteryLevel extends Level<[number], string> {
             [
                 '    return "NORMAL MODE"',
                 '    return "LOW POWER MODE"',
-                '    return ""',
+                '    return "UNKNOWN"',
             ],
             [
                 '}'

@@ -38,6 +38,7 @@ export class FizzBuzz extends Level<[number], string> {
                 '    return "BUZZ"',
                 '    return "FIZZBUZZ"',
                 '    return num.toString()',
+                '    return "UNKNOWN"',
             ],
             [
                 '}'

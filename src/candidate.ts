@@ -33,7 +33,7 @@ export class Candidate<Parameters extends readonly Value[] = readonly Value[], R
         const variables = this.getRegEx(code, /\blet\s+(\w+)\b/g)
         const tokens = code
             .replace(/\n/g, ' ') // simplify white space
-            .replace(/false|""/g, ' ') // false and the empty string are free
+            .replace(/false|"UNKNOWN"/g, ' ') // false and the unknown string are free
             .replace(/"[^"]*?"/g, ' _ _ ') // each string is 1 extra point
             .replace(/: *(number|boolean|string)/g, ' _ ') // each type annotation is 1 point
             .replace(/\(([^(]*?)\)/g, ' _ $1 ') // each function definition/call is 1 extra point

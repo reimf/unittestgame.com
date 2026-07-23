@@ -46,6 +46,7 @@ export class Review extends Level<[number, number], string> {
                 '    return "GOOD"',
                 '    return "BAD"',
                 '    return "OK"',
+                '    return "UNKNOWN"',
             ],
             [
                 '}'

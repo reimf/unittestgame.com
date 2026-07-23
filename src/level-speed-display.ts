@@ -44,6 +44,7 @@ export class SpeedDisplay extends Level<[number], string> {
                 '    return Math.floor(speed / 10) + "." + speed % 10',
                 '    return "START"',
                 '    return "DANGER"',
+                '    return "UNKNOWN"',
             ],
             [
                 '}'
