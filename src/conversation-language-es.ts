@@ -110,8 +110,7 @@ export class Spanish extends ConversationLanguage {
     public override currentFunctionNotImproved(): ConversationText {
         return ConversationLanguage.bless('He añadido el unit test, ' +
             'pero la *Función Actual* ya lo supera, ' +
-            'así que no he mejorado la *Función Actual*. ' +
-            'Escribe un unit test que la *Función Actual* no supere.')
+            'así que no he mejorado la *Función Actual*.')
     }
 
     public override hint(): ConversationText {

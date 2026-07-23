@@ -110,8 +110,7 @@ export class German extends ConversationLanguage {
     public override currentFunctionNotImproved(): ConversationText {
         return ConversationLanguage.bless('Ich habe den Unit-Test hinzugefügt, ' +
             'aber die *Aktuelle Funktion* besteht ihn bereits, ' +
-            'also habe ich die *Aktuelle Funktion* nicht verbessert. ' +
-            'Schreibe einen Unit-Test, den die *Aktuelle Funktion* nicht besteht.')
+            'also habe ich die *Aktuelle Funktion* nicht verbessert.')
     }
 
     public override hint(): ConversationText {

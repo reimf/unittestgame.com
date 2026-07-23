@@ -91,6 +91,11 @@ export abstract class Html extends Content {
         return this
     }
 
+    public replaceChildren(children: readonly Content[]): this {
+        this.getElement().replaceChildren(...(children.map(child => child.getNode())))
+        return this
+    }
+
     protected replaceEnclosingMessageContent(element: HTMLElement, text: ConversationText): void {
         const section = element.closest('section')!
         section.classList.remove('reveal')
@@ -170,6 +175,14 @@ export class Form extends Html {
             this.replaceEnclosingMessageContent(this.getFormElement(), ConversationLanguage.bless(submit.value))
             callback(formData)
         })
+    }
+
+    public onChange(callback: (formData: FormData) => void): this {
+        // radio inputs are checked on focus (see Input's constructor), which does not bubble as a 'change' event, so 'focusin' is needed too
+        const handler = () => callback(new FormData(this.getFormElement()))
+        this.getFormElement().addEventListener('change', handler)
+        this.getFormElement().addEventListener('focusin', handler)
+        return this
     }
 
     private getFormElement(): HTMLFormElement {

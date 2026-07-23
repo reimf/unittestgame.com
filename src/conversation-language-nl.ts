@@ -110,8 +110,7 @@ export class Dutch extends ConversationLanguage {
     public override currentFunctionNotImproved(): ConversationText {
         return ConversationLanguage.bless('Ik heb de unit test toegevoegd, ' +
             'maar de *Huidige Functie* slaagt er al voor, ' +
-            'dus heb ik die niet verbeterd. ' +
-            'Schrijf een unit test waarvoor de *Huidige Functie* faalt.')
+            'dus heb ik die niet verbeterd.')
     }
 
     public override hint(): ConversationText {

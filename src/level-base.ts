@@ -222,16 +222,33 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
         const addButton = new Submit(this.conversationLanguage.addUnitTestButton())
         const submitButton = new Button(this.conversationLanguage.submitUnitTestsButton(), () => this.submitUnitTests())
         const variables = [...this.parameters, this.unit].map(variable => variable.toHtml())
-        const form = new Form(formData => this.addUnitTest(formData)).appendChildren([...variables, addButton])
+        const formUnitTest = new Div().setId('form-unit-test').addClass('new')
+        const formCodeBlock = new CodeBlock().appendChild(formUnitTest)
+        const form = new Form(formData => this.addUnitTest(formData)).appendChildren([...variables, addButton, formCodeBlock])
+        form.onChange(formData => this.showFormUnitTest(formUnitTest, formData))
         const divider = new Div().appendText(this.conversationLanguage.or()).addClass('or')
         new HumanMessage([form, divider, submitButton]).show()
     }
 
-    private addUnitTest(formData: FormData): void {
+    private buildUnitTest(formData: FormData): UnitTest<Parameters, Result> {
         // the casts are safe because each Variable validates and converts its own form input
         const argumentList = this.parameters.map(parameter => parameter.getInput(formData.get(parameter.name)! as string)) as unknown as Parameters
         const expected = this.unit.getInput(formData.get(this.unit.name)! as string) as Result
-        const unitTest = new UnitTest(this.parameters, argumentList, this.unit, expected)
+        return new UnitTest(this.parameters, argumentList, this.unit, expected)
+    }
+
+    private showFormUnitTest(formUnitTest: Div, formData: FormData): void {
+        const hasEveryValue = [...this.parameters, this.unit].every(variable => formData.get(variable.name))
+        if (!hasEveryValue) {
+            formUnitTest.replaceChildren([])
+            return
+        }
+        const unitTest = this.buildUnitTest(formData)
+        formUnitTest.replaceChildren([new CodeBlock().appendChild(unitTest.toHtml(this.programmingLanguage))])
+    }
+
+    private addUnitTest(formData: FormData): void {
+        const unitTest = this.buildUnitTest(formData)
         ComputerMessage.addToLast([new CodeBlock().appendChild(unitTest.toHtml(this.programmingLanguage).addClass('new'))])
         if (!this.isFormDataOk(formData))
             return

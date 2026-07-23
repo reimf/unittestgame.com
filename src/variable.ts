@@ -1,4 +1,4 @@
-import { Html, Input, Label, Paragraph, Span } from './html.js'
+import { Div, Html, Input, Label, Paragraph } from './html.js'
 import { ConversationLanguage, ConversationText } from './conversation-language-base.js'
 
 export type Value = boolean|number|string
@@ -38,7 +38,7 @@ export class RadioVariable extends Variable {
               .setRequired()
             return new Label().appendChild(input).appendText(text)
         })
-        const paragraph = new Paragraph().appendChild(new Span().appendText(this.label)).appendChildren(radioButtons)
+        const paragraph = new Paragraph().appendChild(new Div().appendText(this.label)).appendChildren(radioButtons)
         return paragraph
     }
 
@@ -65,7 +65,7 @@ export class BooleanVariable extends Variable {
               .setRequired()
             return new Label().appendChild(input).appendText(text)
         })
-        const paragraph = new Paragraph().appendChild(new Span().appendText(this.label)).appendChildren(radioButtons)
+        const paragraph = new Paragraph().appendChild(new Div().appendText(this.label)).appendChildren(radioButtons)
         return paragraph
     }
 
@@ -90,7 +90,7 @@ export class TextVariable extends Variable {
           .setRequired()
           .setPattern(/.{1,10}/)
           .setTitle('a text with at most 10 characters')
-        const label = new Label().appendChild(new Span().appendText(this.label)).appendChild(input)
+        const label = new Label().appendChild(new Div().appendText(this.label)).appendChild(input)
         return new Paragraph().appendChild(label)
     }
 
@@ -115,7 +115,7 @@ export class IntegerVariable extends Variable {
           .setRequired()
           .setPattern(/[0-9]{1,4}/)
           .setTitle('an integer number with at most 4 digits')
-        const label = new Label().appendChild(new Span().appendText(this.label)).appendChild(input)
+        const label = new Label().appendChild(new Div().appendText(this.label)).appendChild(input)
         return new Paragraph().appendChild(label)
     }
 

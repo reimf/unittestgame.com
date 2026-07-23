@@ -164,13 +164,6 @@ select {
     width: 100%;
 }
 
-form {
-    span {
-        display: block;
-        margin-bottom: 0.25rem;
-    }
-}
-
 i { /* markdown: *italic* */
     background-color: var(--panel-heading-background);
     border-radius: 0.25rem 0.25rem 0 0;
@@ -248,6 +241,11 @@ label {
         &:hover {
             cursor: pointer;
         }
+    }
+
+    span {
+        display: block;
+        margin-bottom: 0.25rem;
     }
 }
 

@@ -16,7 +16,7 @@ test.describe('class Variable', () => {
         const html = variable.toHtml()
         expect(html.getElement().outerHTML).toBe(
             '<p>' +
-                '<span>Type of triangle</span>' +
+                '<div>Type of triangle</div>' +
                 '<label>' +
                     '<input type="radio" name="triangleType" value="EQUILATERAL" required="">' +
                     'EQUILATERAL' +
@@ -38,7 +38,7 @@ test.describe('class Variable', () => {
         const html = variable.toHtml()
         expect(html.getElement().outerHTML).toBe(
             '<p>' +
-                '<span>Is even</span>' +
+                '<div>Is even</div>' +
                 '<label>' +
                     '<input type="radio" name="isEven" value="true" required="">' +
                     'true' +
@@ -57,7 +57,7 @@ test.describe('class Variable', () => {
         expect(html.getElement().outerHTML).toBe(
             '<p>' +
                 '<label>' +
-                    '<span>Output</span>' +
+                    '<div>Output</div>' +
                     '<input type="text" autocomplete="off" name="fizzBuzz" required="" pattern=".{1,10}" title="a text with at most 10 characters">' +
                 '</label>' +
             '</p>'
@@ -70,7 +70,7 @@ test.describe('class Variable', () => {
         expect(html.getElement().outerHTML).toBe(
             '<p>' +
                 '<label>' +
-                    '<span>Number</span>' +
+                    '<div>Number</div>' +
                     '<input type="text" autocomplete="off" name="number" required="" pattern="[0-9]{1,4}" title="an integer number with at most 4 digits">' +
                 '</label>' +
             '</p>'
