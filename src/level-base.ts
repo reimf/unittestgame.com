@@ -6,7 +6,7 @@ import { ConversationLanguage, ConversationText } from './conversation-language-
 import { Picker } from './picker.js'
 import { TestResult } from './test-result.js'
 import { UnitTest } from './unit-test.js'
-import { Value, Variable } from './variable.js'
+import { IntegerVariable, TextVariable, Value, Variable } from './variable.js'
 import { ProgrammingLanguage } from './programming-language-base.js'
 
 export type AnyLevel = Level<readonly Value[], Value>
@@ -42,9 +42,10 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
         this.picker = picker
         this.store = store
         this.levelNumber = levelNumber
-        this.parameters = this.getParameters()
+        const candidateElements = this.getCandidateElements()
+        this.parameters = this.getParameters(candidateElements)
         this.unit = this.getUnit()
-        this.candidates = [...this.generateCandidates(this.getCandidateElements(), [])]
+        this.candidates = [...this.generateCandidates(candidateElements, [])]
         this.minimalUnitTests = [...this.generateMinimalUnitTests()]
         this.subsetsOfMinimalUnitTests = [...this.generateAllSubsetsOrderedBySize(this.minimalUnitTests)]
         this.perfectCandidates = this.findPerfectCandidates()
@@ -57,11 +58,22 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
     protected abstract identifier(): string
     protected abstract name(): string
     protected abstract specification(): ConversationText
-    protected abstract getParameters(): Variable[]
     protected abstract getUnit(): Variable
     protected abstract getCandidateElements(): string[][]
     protected abstract minimalUnitTestGenerator(): Generator<[Parameters, Result]>
     protected abstract hintGenerator(): Generator<Parameters>
+
+    private getParameters(candidateElements: readonly string[][]): Variable[] {
+        const functionDefinition = candidateElements[0]![0]!
+        const parameterList = functionDefinition.match(/\((.*)\)/)![1]!
+        return parameterList.split(', ').map(parameter => {
+            const [name, type] = parameter.split(': ')
+            const label = ConversationLanguage.bless(name!)
+            if (type === 'number')
+                return new IntegerVariable(label, name!)
+            return new TextVariable(label, name!)
+        })
+    }
 
     private* generateCandidates(listOfListOfLines: string[][], lines: string[]): Generator<Candidate<Parameters, Result>> {
         if (listOfListOfLines.length > 0) {

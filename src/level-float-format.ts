@@ -1,6 +1,6 @@
 import { Level } from './level-base.js'
 import { ConversationLanguage, ConversationText } from './conversation-language-base.js'
-import { Variable, BooleanVariable, TextVariable } from './variable.js'
+import { Variable, BooleanVariable } from './variable.js'
 
 export class FloatFormat extends Level<[string], boolean> {
     protected identifier(): string {
@@ -13,12 +13,6 @@ export class FloatFormat extends Level<[string], boolean> {
 
     protected specification(): ConversationText {
         return this.conversationLanguage.floatFormatSpecification()
-    }
-
-    protected getParameters(): Variable[] {
-        return [
-            new TextVariable(ConversationLanguage.bless('Text'), 'text')
-        ]
     }
 
     protected getUnit(): Variable {

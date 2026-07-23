@@ -7,7 +7,7 @@ test.describe('keyboard', () => {
     })
 
     test('has battery level focused', async ({ page }) => {
-        await expect(page.getByLabel('Battery Level')).toBeFocused()
+        await expect(page.getByLabel('batteryLevel')).toBeFocused()
     })
 
     test('has normal mode focused after arrow down', async ({ page }) => {

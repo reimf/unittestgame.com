@@ -26,18 +26,18 @@ test.describe('whole game', () => {
             await page.getByRole('button', { name: `I want to play ${level.description()}` }).click()
 
             if (level instanceof BatteryLevel) {
-                await page.getByLabel('Battery Level').fill('20')
+                await page.getByLabel('batteryLevel').fill('20')
                 await page.getByLabel('NORMAL MODE').check()
                 await page.getByRole('button', { name: 'I want to add this unit test' }).click()
-                await page.getByLabel('Battery Level').fill('19')
+                await page.getByLabel('batteryLevel').fill('19')
                 await page.getByLabel('LOW POWER MODE').check()
                 await page.getByRole('button', { name: 'I want to add this unit test' }).click()
                 await page.getByRole('button', { name: 'I want to submit the unit tests' }).click()
-                await page.getByLabel('Battery Level').fill('21')
+                await page.getByLabel('batteryLevel').fill('21')
                 await page.getByLabel('NORMAL MODE').check()
                 await page.getByRole('button', { name: 'I want to add this unit test' }).click()
                 await page.getByRole('button', { name: 'I want to submit the unit tests' }).click()
-                await page.getByLabel('Battery Level').fill('18')
+                await page.getByLabel('batteryLevel').fill('18')
                 await page.getByLabel('LOW POWER MODE').check()
                 await page.getByRole('button', { name: 'I want to add this unit test' }).click()
                 await page.getByRole('button', { name: 'I want to submit the unit tests' }).click()
@@ -51,7 +51,7 @@ test.describe('whole game', () => {
                         if (variable instanceof RadioVariable || variable instanceof BooleanVariable)
                             await page.getByLabel(value.toString(), { exact: true }).check()
                         else
-                            await page.getByLabel(variable.label).fill(value.toString())
+                            await page.getByLabel(variable.label, { exact: true }).fill(value.toString())
                     }
                     await page.getByRole('button', { name: 'I want to add this unit test' }).click()
                 }

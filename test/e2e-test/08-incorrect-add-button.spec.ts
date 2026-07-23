@@ -4,13 +4,13 @@ test.describe('incorrect add button', () => {
     test.beforeEach(async ({ page }) => {
         await page.goto('/?speed=fast')
         await page.getByRole('button', { name: 'I want to play Level 0 - Battery Level' }).click()
-        await page.getByLabel('Battery Level').fill('20')
+        await page.getByLabel('batteryLevel').fill('20')
         await page.getByLabel('NORMAL MODE').check()
         await page.getByRole('button', { name: 'I want to add this unit test' }).click()
-        await page.getByLabel('Battery Level').fill('19')
+        await page.getByLabel('batteryLevel').fill('19')
         await page.getByLabel('LOW POWER MODE').check()
         await page.getByRole('button', { name: 'I want to add this unit test' }).click()
-        await page.getByLabel('Battery Level').fill('21')
+        await page.getByLabel('batteryLevel').fill('21')
         await page.getByLabel('NORMAL MODE').check()
         await page.getByRole('button', { name: 'I want to add this unit test' }).click()
     })
@@ -37,7 +37,7 @@ test.describe('incorrect add button', () => {
     })
 
     test('has a battery level field', async ({ page }) => {
-        const batteryLevel = page.getByRole('textbox', { name: 'Battery level' })
+        const batteryLevel = page.getByRole('textbox', { name: 'batteryLevel' })
         await expect(batteryLevel).toBeVisible()
     })
 

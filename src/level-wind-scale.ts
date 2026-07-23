@@ -1,6 +1,6 @@
 import { Level } from './level-base.js'
 import { ConversationLanguage, ConversationText } from './conversation-language-base.js'
-import { Variable, RadioVariable, IntegerVariable } from './variable.js'
+import { Variable, RadioVariable } from './variable.js'
 
 export class WindScale extends Level<[number], string> {
     protected identifier(): string {
@@ -13,12 +13,6 @@ export class WindScale extends Level<[number], string> {
 
     protected specification(): ConversationText {
         return this.conversationLanguage.windScaleSpecification()
-    }
-
-    protected getParameters(): Variable[] {
-        return [
-            new IntegerVariable(ConversationLanguage.bless('Wind Speed'), 'speed'),
-        ]
     }
 
     protected getUnit(): Variable {

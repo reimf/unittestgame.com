@@ -1,6 +1,6 @@
 import { Level } from './level-base.js'
 import { ConversationLanguage, ConversationText } from './conversation-language-base.js'
-import { Variable, RadioVariable, IntegerVariable } from './variable.js'
+import { Variable, RadioVariable } from './variable.js'
 
 export class TriangleType extends Level<[number, number, number], string> {
     protected identifier(): string {
@@ -13,14 +13,6 @@ export class TriangleType extends Level<[number, number, number], string> {
 
     protected specification(): ConversationText {
         return this.conversationLanguage.triangleTypeSpecification()
-    }
-
-    protected getParameters(): Variable[] {
-        return [
-            new IntegerVariable(ConversationLanguage.bless('Side A'), 'a'),
-            new IntegerVariable(ConversationLanguage.bless('Side B'), 'b'),
-            new IntegerVariable(ConversationLanguage.bless('Side C'), 'c'),
-        ]
     }
 
     protected getUnit(): Variable {
