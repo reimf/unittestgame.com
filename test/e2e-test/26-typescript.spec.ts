@@ -6,7 +6,7 @@ test.describe('typescript programming language', () => {
         await page.getByRole('button', { name: 'I want to play Level 0 - Battery Level' }).click()
         const currentFunctionPanel = page.getByTestId('current-function')
         const codeLines = currentFunctionPanel.locator('code')
-        await expect(codeLines).toContainText('function powerMode(batteryLevel: number): string {    return ""}')
+        await expect(codeLines).toContainText('function powerMode(batteryLevel: number): string {    return "UNKNOWN"}')
     })
 
     test('has a plain boolean return type in the current function panel', async ({ page }) => {

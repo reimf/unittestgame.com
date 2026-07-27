@@ -30,7 +30,7 @@ test.describe('level start', () => {
     test('has the simplest candidate in the current function panel', async ({ page }) => {
         const currentFunctionPanel = page.getByTestId('current-function')
         const codeLines = currentFunctionPanel.locator('code')
-        await expect(codeLines).toContainText('function powerMode(batteryLevel) {  return ""}')
+        await expect(codeLines).toContainText('function powerMode(batteryLevel) {  return "UNKNOWN"}')
     })
 
     test('has NO the function panel', async ({ page }) => {
@@ -54,7 +54,7 @@ test.describe('level start', () => {
     })
 
     test('has a battery level field', async ({ page }) => {
-        const batteryLevel = page.getByRole('textbox', { name: 'batteryLevel' })
+        const batteryLevel = page.getByRole('spinbutton', { name: 'batteryLevel' })
         await expect(batteryLevel).toBeVisible()
     })
 

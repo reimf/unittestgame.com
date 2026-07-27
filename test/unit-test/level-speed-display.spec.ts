@@ -19,7 +19,7 @@ test.describe('class SpeedDisplay', () => {
     })
 
     test('has the correct amount of candidates', () => {
-        expect(level.candidates).toHaveLength(400)
+        expect(level.candidates).toHaveLength(500)
     })
 
     test('has the correct amount of minimal unit tests', () => {

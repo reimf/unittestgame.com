@@ -41,7 +41,7 @@ test.describe('asked unit test', () => {
     })
 
     test('has a battery level field', async ({ page }) => {
-        const batteryLevel = page.getByRole('textbox', { name: 'batteryLevel' })
+        const batteryLevel = page.getByRole('spinbutton', { name: 'batteryLevel' })
         await expect(batteryLevel).toBeVisible()
     })
 

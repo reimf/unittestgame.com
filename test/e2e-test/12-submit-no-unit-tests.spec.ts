@@ -9,7 +9,7 @@ test.describe('submit no unit tests with radio variable unit', () => {
 
     test('has unit test with undefined result in not according message', async ({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('review(10, 4) === "GOOD"')
+        await expect(messages).toContainText('review(10, 4) === "UNKNOWN"')
     })
 })
 
@@ -22,6 +22,6 @@ test.describe('submit no unit tests with text variable unit', () => {
 
     test('has unit test with undefined result in not according message', async ({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('display(3) === "START"')
+        await expect(messages).toContainText('display(0) === "UNKNOWN"')
     })
 })

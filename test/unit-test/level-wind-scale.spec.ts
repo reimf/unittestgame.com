@@ -19,7 +19,7 @@ test.describe('class WindScale', () => {
     })
 
     test('has the correct amount of candidates', () => {
-        expect(level.candidates).toHaveLength(500)
+        expect(level.candidates).toHaveLength(625)
     })
 
     test('has the correct amount of minimal unit tests', () => {

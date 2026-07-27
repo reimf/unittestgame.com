@@ -6,7 +6,7 @@ test.describe('java programming language', () => {
         await page.getByRole('button', { name: 'I want to play Level 0 - Battery Level' }).click()
         const currentFunctionPanel = page.getByTestId('current-function')
         const codeLines = currentFunctionPanel.locator('code')
-        await expect(codeLines).toContainText('static String powerMode(int batteryLevel) {    return "";}')
+        await expect(codeLines).toContainText('static String powerMode(int batteryLevel) {    return "UNKNOWN";}')
     })
 
     test('has a primitive boolean return type in the current function panel', async ({ page }) => {

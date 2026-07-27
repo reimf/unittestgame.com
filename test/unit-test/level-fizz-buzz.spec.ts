@@ -19,7 +19,7 @@ test.describe('class FizzBuzz', () => {
     })
 
     test('has the correct amount of candidates', () => {
-        expect(level.candidates).toHaveLength(108)
+        expect(level.candidates).toHaveLength(135)
     })
 
     test('has the correct amount of minimal unit tests', () => {

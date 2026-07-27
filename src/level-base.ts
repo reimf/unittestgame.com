@@ -76,22 +76,22 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
 
     private getUnit(candidateElements: readonly string[][]): Variable {
         const functionDefinition = candidateElements[0]![0]!
-        const name = functionDefinition.match(/^function (\w+)/)![1]!
+        const functionName = functionDefinition.match(/^function (\w+)/)![1]!
         const returnType = functionDefinition.match(/\):\s*(\w+)/)![1]!
         const parameterList = functionDefinition.match(/\((.*)\)/)![1]!
         const parameterNames = parameterList.split(', ').map(parameter => parameter.split(': ')[0])
-        const label = this.conversationLanguage.returnValueLabel(`${name}(${parameterNames.join(', ')})`)
+        const label = this.conversationLanguage.returnValueLabel(`${functionName}(${parameterNames.join(', ')})`)
         if (returnType === 'boolean')
-            return new BooleanVariable(label, name)
+            return new BooleanVariable(label, functionName)
         const returnValues = candidateElements.flat()
             .map(line => line.match(/return (.+)$/)?.[1])
             .filter((value): value is string => value !== undefined && value !== '"UNKNOWN"')
         if (returnValues.some(value => !/^"[^"]*"$/.test(value)))
-            return new TextVariable(label, name)
+            return new TextVariable(label, functionName)
         const texts = [...new Set(returnValues)]
             .filter(value => value !== '""')
             .map(value => ConversationLanguage.bless(value.slice(1, -1)))
-        return new RadioVariable(label, name, texts)
+        return new RadioVariable(label, functionName, texts)
     }
 
     private* generateCandidates(listOfListOfLines: string[][], lines: string[]): Generator<Candidate<Parameters, Result>> {

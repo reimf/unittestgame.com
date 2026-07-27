@@ -18,7 +18,7 @@ test.describe('submit insufficient unit tests', () => {
     })
 
     test('has age field', async ({ page }) => {
-        const age = page.getByRole('textbox', { name: 'Age' })
+        const age = page.getByRole('spinbutton', { name: 'Age' })
         await expect(age).toBeVisible()
     })
 

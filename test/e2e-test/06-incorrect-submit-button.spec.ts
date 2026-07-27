@@ -20,7 +20,7 @@ test.describe('incorrect submit button', () => {
     test('has NOT updated the current function panel', async ({ page }) => {
         const currentFunctionPanel = page.getByTestId('current-function')
         const codeLines = currentFunctionPanel.locator('code > div')
-        await expect(codeLines).toContainText(['function powerMode(batteryLevel) {', '    return ""', '}'])
+        await expect(codeLines).toContainText(['function powerMode(batteryLevel) {', '    return "UNKNOWN"', '}'])
     })
 
     test('has TWO before menu messages', async ({ page }) => {
@@ -30,7 +30,7 @@ test.describe('incorrect submit button', () => {
     })
 
     test('has a battery level field', async ({ page }) => {
-        const batteryLevel = page.getByRole('textbox', { name: 'batteryLevel' })
+        const batteryLevel = page.getByRole('spinbutton', { name: 'batteryLevel' })
         await expect(batteryLevel).toBeVisible()
     })
 
