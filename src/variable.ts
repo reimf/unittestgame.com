@@ -110,7 +110,7 @@ export class IntegerVariable extends Variable {
 
     public toHtml(): Html {
         const input = new Input()
-          .setType('text')
+          .setType('number')
           .setName(this.name)
           .setRequired()
           .setPattern(/[0-9]{1,4}/)

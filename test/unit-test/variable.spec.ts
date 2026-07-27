@@ -71,7 +71,7 @@ test.describe('class Variable', () => {
             '<p>' +
                 '<label>' +
                     '<div>Number</div>' +
-                    '<input type="text" autocomplete="off" name="number" required="" pattern="[0-9]{1,4}" title="an integer number with at most 4 digits">' +
+                    '<input type="number" name="number" required="" pattern="[0-9]{1,4}" title="an integer number with at most 4 digits">' +
                 '</label>' +
             '</p>'
         )
