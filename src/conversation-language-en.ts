@@ -203,22 +203,10 @@ export class English extends ConversationLanguage {
             'and the number itself for any other number.')
     }
 
-    public override floatFormatSpecification(): ConversationText {
-        return ConversationLanguage.bless('Return `true` if the text represents a float and `false` otherwise. ' +
-            'A float may start with a plus or a minus sign. ' +
-            'This is followed by one or more digits. ' +
-            'If that is followed by a dot, then one or more digits must follow.')
-    }
-
     public override leapYearSpecification(): ConversationText {
         return ConversationLanguage.bless('Return `true` if the year is a leap year and `false` otherwise. ' +
             'A year is a leap year if it is divisible by 4. ' +
             'The exception is that years divisible by 100 are not leap years, unless they are also divisible by 400.')
-    }
-
-    public override passwordStrengthSpecification(): ConversationText {
-        return ConversationLanguage.bless('Return `true` if the password is strong and `false` otherwise. ' +
-            'A password is strong if it contains at least 5 characters, an uppercase letter, a lowercase letter, and a special character (`#` or `@`).')
     }
 
     public override speedDisplaySpecification(): ConversationText {
@@ -255,6 +243,18 @@ export class English extends ConversationLanguage {
         return ConversationLanguage.bless('Return `GOOD` if the price is less than `20` and the quality is at least `7`. ' +
             'Return `BAD` if the price is `20` or more and the quality is less than `7`. ' +
             'Return `OK` in all other cases.')
+    }
+
+    public override discountSpecification(): ConversationText {
+        return ConversationLanguage.bless('Return `20` if the total is at least `200` and the customer has a member card. ' +
+            'Return `10` if the total is at least `100`, or if the customer has a member card. ' +
+            'Return `0` in all other cases.')
+    }
+
+    public override parkingFeeSpecification(): ConversationText {
+        return ConversationLanguage.bless('Return `FREE` if the number of minutes parked is less than `30`, or if it is a weekend and the customer has shopped. ' +
+            'Return `$10` if it is a weekend. ' +
+            'Otherwise, return the price for every full `30` minutes parked, at `$2` per block, or at `$1` per block if the customer has shopped.')
     }
 
     public override or(): ConversationText {

@@ -324,97 +324,6 @@ test.describe('class Python', () => {
         ])
     })
 
-    test('transpiles regexp literals to re.search(...) and inserts only 1 import re line', () => {
-        const highlighted = python.highlight('if (/a/.test(b)) return true\nreturn /regex/.test(text)')
-        expect(html(highlighted)).toEqual([
-            '<div>' +
-                '<span class="variable">import</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="variable">re</span>' +
-            '</div>',
-            '<div>' +
-                '<span class="keyword">if</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="variable">re</span>' +
-                '<span class="dot">.</span>' +
-                '<span class="function">search</span>' +
-                '<span class="punctuation">(</span>' +
-                '<span class="string">\'a\'</span>' +
-                '<span class="punctuation">,</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="variable">b</span>' +
-                '<span class="punctuation">)</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="keyword">is</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="keyword">not</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="literal">None</span>' +
-                '<span class="punctuation">:</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="keyword">return</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="literal">True</span>' +
-            '</div>',
-            '<div>' +
-                '<span class="keyword">return</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="variable">re</span>' +
-                '<span class="dot">.</span>' +
-                '<span class="function">search</span>' +
-                '<span class="punctuation">(</span>' +
-                '<span class="string">\'regex\'</span>' +
-                '<span class="punctuation">,</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="variable">text</span>' +
-                '<span class="punctuation">)</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="keyword">is</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="keyword">not</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="literal">None</span>' +
-            '</div>',
-        ])
-    })
-
-    test('transpiles ! and a regexp literal to re.search', () => {
-        const highlighted = python.highlight('if (!/[#@]/.test(password)) return false')
-        expect(html(highlighted)).toEqual([
-            '<div>' +
-                '<span class="variable">import</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="variable">re</span>' +
-            '</div>',
-            '<div>' +
-                '<span class="keyword">if</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="keyword">not</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="variable">re</span>' +
-                '<span class="dot">.</span>' +
-                '<span class="function">search</span>' +
-                '<span class="punctuation">(</span>' +
-                '<span class="string">\'[#@]\'</span>' +
-                '<span class="punctuation">,</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="variable">password</span>' +
-                '<span class="punctuation">)</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="keyword">is</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="keyword">not</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="literal">None</span>' +
-                '<span class="punctuation">:</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="keyword">return</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="literal">False</span>' +
-            '</div>',
-        ])
-    })
-
     test('transpiles function into def and handles the closing curly bracket', () => {
         const highlighted = python.highlight('function isEven(num: number): boolean {\n    if (num % 2 === 0) return true\n    return false\n}')
         expect(html(highlighted)).toEqual([
@@ -463,62 +372,34 @@ test.describe('class Python', () => {
     })
 
     test('highlights a diff when current and previous transpile to a different number of lines', () => {
-        const highlighted = python.highlight('return /regex/.test(text)', 'return true')
+        const highlighted = python.highlight('return true\nreturn false', 'return true')
         expect(html(highlighted)).toEqual([
             '<div>' +
-                '<ins class="variable">import</ins>' +
+                '<ins class="keyword">return</ins>' +
                 '<ins class="whitespace"> </ins>' +
-                '<ins class="variable">re</ins>' +
+                '<ins class="literal">True</ins>' +
             '</div>',
             '<div>' +
                 '<span class="keyword">return</span>' +
                 '<span class="whitespace"> </span>' +
                 '<del class="literal">True</del>' +
-                '<ins class="variable">re</ins>' +
-                '<ins class="dot">.</ins>' +
-                '<ins class="function">search</ins>' +
-                '<ins class="punctuation">(</ins>' +
-                '<ins class="string">\'regex\'</ins>' +
-                '<ins class="punctuation">,</ins>' +
-                '<ins class="whitespace"> </ins>' +
-                '<ins class="variable">text</ins>' +
-                '<ins class="punctuation">)</ins>' +
-                '<ins class="whitespace"> </ins>' +
-                '<ins class="keyword">is</ins>' +
-                '<ins class="whitespace"> </ins>' +
-                '<ins class="keyword">not</ins>' +
-                '<ins class="whitespace"> </ins>' +
-                '<ins class="literal">None</ins>' +
+                '<ins class="literal">False</ins>' +
             '</div>',
         ])
     })
 
     test('highlights a diff when current transpiles to fewer lines than previous', () => {
-        const highlighted = python.highlight('return true', 'return /regex/.test(text)')
+        const highlighted = python.highlight('return true', 'return true\nreturn false')
         expect(html(highlighted)).toEqual([
             '<div>' +
-                '<del class="variable">import</del>' +
+                '<del class="keyword">return</del>' +
                 '<del class="whitespace"> </del>' +
-                '<del class="variable">re</del>' +
+                '<del class="literal">True</del>' +
             '</div>',
             '<div>' +
                 '<span class="keyword">return</span>' +
                 '<span class="whitespace"> </span>' +
-                '<del class="variable">re</del>' +
-                '<del class="dot">.</del>' +
-                '<del class="function">search</del>' +
-                '<del class="punctuation">(</del>' +
-                '<del class="string">\'regex\'</del>' +
-                '<del class="punctuation">,</del>' +
-                '<del class="whitespace"> </del>' +
-                '<del class="variable">text</del>' +
-                '<del class="punctuation">)</del>' +
-                '<del class="whitespace"> </del>' +
-                '<del class="keyword">is</del>' +
-                '<del class="whitespace"> </del>' +
-                '<del class="keyword">not</del>' +
-                '<del class="whitespace"> </del>' +
-                '<del class="literal">None</del>' +
+                '<del class="literal">False</del>' +
                 '<ins class="literal">True</ins>' +
             '</div>',
         ])

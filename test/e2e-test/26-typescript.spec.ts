@@ -21,8 +21,8 @@ test.describe('typescript programming language', () => {
     })
 
     test('has a number parameter type in the current function panel of Speed Display', async ({ page }) => {
-        await page.goto('/?speed=fast&programming_language=typescript&setitem=level-battery-level-finished:1&setitem=level-voting-age-finished:1&setitem=level-wind-scale-finished:1&setitem=level-review-finished:1&setitem=level-fizz-buzz-finished:1&setitem=level-leap-year-finished:1&setitem=level-triangle-type-finished:1')
-        await page.getByRole('button', { name: 'I want to play Level 7 - Speed Display' }).click()
+        await page.goto('/?speed=fast&programming_language=typescript&setitem=level-battery-level-finished:1&setitem=level-voting-age-finished:1&setitem=level-wind-scale-finished:1&setitem=level-review-finished:1&setitem=level-discount-finished:1&setitem=level-fizz-buzz-finished:1&setitem=level-leap-year-finished:1&setitem=level-triangle-type-finished:1')
+        await page.getByRole('button', { name: 'I want to play Level 8 - Speed Display' }).click()
         const currentFunctionPanel = page.getByTestId('current-function')
         const codeLines = currentFunctionPanel.locator('code')
         await expect(codeLines).toContainText('function display(speed: number): string {')

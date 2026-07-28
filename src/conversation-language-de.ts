@@ -203,22 +203,10 @@ export class German extends ConversationLanguage {
             'und die Zahl selbst für jede andere Zahl.')
     }
 
-    public override floatFormatSpecification(): ConversationText {
-        return ConversationLanguage.bless('Gib `true` zurück, wenn der Text eine Gleitkommazahl darstellt, und sonst `false`. ' +
-            'Eine Gleitkommazahl kann mit einem Plus- oder Minuszeichen beginnen. ' +
-            'Danach folgen eine oder mehrere Ziffern. ' +
-            'Wenn danach ein Punkt folgt, müssen noch eine oder mehrere Ziffern folgen.')
-    }
-
     public override leapYearSpecification(): ConversationText {
         return ConversationLanguage.bless('Gib `true` zurück, wenn das Jahr ein Schaltjahr ist, und sonst `false`. ' +
             'Ein Jahr ist ein Schaltjahr, wenn es durch 4 teilbar ist. ' +
             'Die Ausnahme ist, dass Jahre, die durch 100 teilbar sind, keine Schaltjahre sind, es sei denn, sie sind auch durch 400 teilbar.')
-    }
-
-    public override passwordStrengthSpecification(): ConversationText {
-        return ConversationLanguage.bless('Gib `true` zurück, wenn das Passwort stark ist, und sonst `false`. ' +
-            'Ein Passwort ist stark, wenn es mindestens 5 Zeichen, einen Großbuchstaben, einen Kleinbuchstaben und ein Sonderzeichen (`#` oder `@`) enthält.')
     }
 
     public override speedDisplaySpecification(): ConversationText {
@@ -255,6 +243,18 @@ export class German extends ConversationLanguage {
         return ConversationLanguage.bless('Gib `GOOD` zurück, wenn der Preis weniger als `20` ist und die Qualität mindestens `7` beträgt. ' +
             'Gib `BAD` zurück, wenn der Preis `20` oder mehr ist und die Qualität weniger als `7` beträgt. ' +
             'Gib `OK` in allen anderen Fällen zurück.')
+    }
+
+    public override discountSpecification(): ConversationText {
+        return ConversationLanguage.bless('Gib `20` zurück, wenn der Gesamtbetrag mindestens `200` beträgt und der Kunde eine Mitgliedskarte hat. ' +
+            'Gib `10` zurück, wenn der Gesamtbetrag mindestens `100` beträgt, oder wenn der Kunde eine Mitgliedskarte hat. ' +
+            'Gib `0` in allen anderen Fällen zurück.')
+    }
+
+    public override parkingFeeSpecification(): ConversationText {
+        return ConversationLanguage.bless('Gib `FREE` zurück, wenn die Anzahl der geparkten Minuten weniger als `30` beträgt, oder wenn es Wochenende ist und der Kunde eingekauft hat. ' +
+            'Gib `$10` zurück, wenn es Wochenende ist. ' +
+            'Gib andernfalls den Preis für jeden vollen `30`-Minuten-Block zurück, zu `$2` pro Block, oder zu `$1` pro Block, wenn der Kunde eingekauft hat.')
     }
 
     public override or(): ConversationText {

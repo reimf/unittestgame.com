@@ -20,7 +20,7 @@ export class TypeScript extends ProgrammingLanguage {
             ['variable', /^[a-zA-Z]+/],
             ['regexp', /^\/\S.*?\//],
             ['string', /^".*?"/],
-            ['operator', /^(!==|!|%|&&|\+=|<=|<|===|=|>=|>|\|\||\/)/],
+            ['operator', /^(!==|!|%|&&|\+=|\+|-|\*|<=|<|===|=|>=|>|\|\||\/)/],
             ['punctuation', /^[(){}:,]/],
             ['dot', /^\./],
             ['error', /^.+/],

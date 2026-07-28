@@ -203,22 +203,10 @@ export class Dutch extends ConversationLanguage {
             'en het getal zelf voor elk ander getal.')
     }
 
-    public override floatFormatSpecification(): ConversationText {
-        return ConversationLanguage.bless('Geef `true` terug als de tekst een gebroken getal voorstelt en `false` als dat niet zo is. ' +
-            'Een gebroken getal kan beginnen met een plus- of minteken. ' +
-            'Hierna volgen één of meer cijfers. ' +
-            'Als dit wordt gevolgd door een punt, dan moeten nog één of meer cijfers volgen.')
-    }
-
     public override leapYearSpecification(): ConversationText {
         return ConversationLanguage.bless('Geef `true` terug als het jaar een schrikkeljaar is en anders `false`. ' +
             'Een jaar is een schrikkeljaar als het deelbaar is door 4. ' +
             'De uitzondering is dat jaren die deelbaar zijn door 100 geen schrikkeljaren zijn, tenzij ze ook deelbaar zijn door 400.')
-    }
-
-    public override passwordStrengthSpecification(): ConversationText {
-        return ConversationLanguage.bless('Geef `true` terug als het wachtwoord sterk is en anders `false`. ' +
-            'Een wachtwoord is sterk als het tenminste 5 tekens bevat, een hoofdletter, een kleine letter en een speciaal teken (`#` of `@`).')
     }
 
     public override speedDisplaySpecification(): ConversationText {
@@ -255,6 +243,18 @@ export class Dutch extends ConversationLanguage {
         return ConversationLanguage.bless('Geef `GOOD` terug als de prijs minder dan `20` is en de kwaliteit ten minste `7` is. ' +
             'Geef `BAD` terug als de prijs `20` of meer is en de kwaliteit minder dan `7` is. ' +
             'Geef `OK` terug in alle andere gevallen.')
+    }
+
+    public override discountSpecification(): ConversationText {
+        return ConversationLanguage.bless('Geef `20` terug als het totaalbedrag ten minste `200` is en de klant een lidmaatschapskaart heeft. ' +
+            'Geef `10` terug als het totaalbedrag ten minste `100` is, of als de klant een lidmaatschapskaart heeft. ' +
+            'Geef `0` terug in alle andere gevallen.')
+    }
+
+    public override parkingFeeSpecification(): ConversationText {
+        return ConversationLanguage.bless('Geef `FREE` terug als het aantal geparkeerde minuten minder dan `30` is, of als het weekend is en de klant heeft gewinkeld. ' +
+            'Geef `$10` terug als het weekend is. ' +
+            'Geef anders de prijs terug voor elk volledig `30`-minutenblok, tegen `$2` per blok, of tegen `$1` per blok als de klant heeft gewinkeld.')
     }
 
     public override or(): ConversationText {

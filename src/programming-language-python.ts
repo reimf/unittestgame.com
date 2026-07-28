@@ -11,10 +11,11 @@ export class Python extends ProgrammingLanguage {
             .replace(/\bnumber\b/g, 'int')
             .replace(/\bboolean\b/g, 'bool')
             .replace(/\bstring\b/g, 'str')
-            .replace(/\/([^\/]*)\/\.test\((.+?)\)/g, (_match, pattern: string, argument: string) => `re.search('${pattern.replace(/\\/g, '\\\\')}', ${argument}) is not None`)
             .replace(/(\w+)\.length\b/g, 'len($1)')
             .replace(/\bMath\.floor\((\w+) \/ (\d+)\) \+ "\." \+ (\w+) % (\d+)/g, 'str($1 // $2) + "." + str($3 % $4)')
             .replace(/"" \+ Math\.floor\((\w+) \/ (\d+)\)/g, 'str($1 // $2)')
+            .replace(/"\$" \+ Math\.floor\((\w+) \/ (\d+)\) \* (\d+)/g, '"$" + str($1 // $2 * $3)')
+            .replace(/"\$" \+ Math\.floor\((\w+) \/ (\d+)\)/g, '"$" + str($1 // $2)')
             .replace(/(\w+)\.toString\(\)/g, 'str($1)')
             .replace(/\btrue\b/g, 'True')
             .replace(/\bfalse\b/g, 'False')
@@ -25,7 +26,6 @@ export class Python extends ProgrammingLanguage {
             .replace(/!(?!=)/g, 'not ')
             .replace(/\bif +\((.+?)\) +return/g, 'if $1: return')
             .replace(/\n *\}/g, '')
-            .replace(/^(?=[\s\S]*re\.search\()/, 'import re\n')
     }
 
     public override getTokenTypes(): TokenTypes {
@@ -39,7 +39,7 @@ export class Python extends ProgrammingLanguage {
             ['variable', /^[a-zA-Z_][a-zA-Z0-9_]*/],
             ['regexp', /^\/\S.*?\//],
             ['string', /^("[^"]*"|'[^']*')/],
-            ['operator', /^(!=|%|\+|\/\/|<=|<|==|=|>=|>|->)/],
+            ['operator', /^(!=|%|\+|\/\/|\/|<=|<|==|=|>=|>|->|-|\*)/],
             ['punctuation', /^[(){}[\]:,]/],
             ['dot', /^\./],
             ['error', /^.+/],

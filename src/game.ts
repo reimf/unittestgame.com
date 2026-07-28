@@ -1,18 +1,18 @@
+import { ConversationLanguage } from './conversation-language-base.js'
 import { AnyLevel } from './level-base.js'
-import { Store } from './store.js'
 import { BatteryLevel } from './level-battery-level.js'
+import { Discount } from './level-discount.js'
 import { FizzBuzz } from './level-fizz-buzz.js'
-import { FloatFormat } from './level-float-format.js'
 import { LeapYear } from './level-leap-year.js'
-import { PasswordStrength } from './level-password-strength.js'
+import { ParkingFee } from './level-parking-fee.js'
 import { Review } from './level-review.js'
 import { SpeedDisplay } from './level-speed-display.js'
 import { TriangleType } from './level-triangle-type.js'
 import { VotingAge } from './level-voting-age.js'
 import { WindScale } from './level-wind-scale.js'
-import { ConversationLanguage } from './conversation-language-base.js'
 import { Picker } from './picker.js'
 import { ProgrammingLanguage } from './programming-language-base.js'
+import { Store } from './store.js'
 
 export class Game {
     private readonly conversationLanguage: ConversationLanguage
@@ -33,12 +33,12 @@ export class Game {
             VotingAge,
             WindScale,
             Review,
+            Discount,
             FizzBuzz,
             LeapYear,
             TriangleType,
             SpeedDisplay,
-            FloatFormat,
-            PasswordStrength,
+            ParkingFee,
         ]
         return levelClasses.map((levelClass, index) => new levelClass(this.conversationLanguage, this.programmingLanguage, this.picker, this.store, index))
     }

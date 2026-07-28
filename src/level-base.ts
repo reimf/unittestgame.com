@@ -68,9 +68,9 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
         return parameterList.split(', ').map(parameter => {
             const [name, type] = parameter.split(': ')
             const label = this.conversationLanguage.parameterLabel(name!)
-            if (type === 'number')
-                return new IntegerVariable(label, name!)
-            return new TextVariable(label, name!)
+            if (type === 'boolean')
+                return new BooleanVariable(label, name!)
+            return new IntegerVariable(label, name!)
         })
     }
 
@@ -83,6 +83,8 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
         const label = this.conversationLanguage.returnValueLabel(`${functionName}(${parameterNames.join(', ')})`)
         if (returnType === 'boolean')
             return new BooleanVariable(label, functionName)
+        if (returnType === 'number')
+            return new IntegerVariable(label, functionName)
         const returnValues = candidateElements.flat()
             .map(line => line.match(/return (.+)$/)?.[1])
             .filter((value): value is string => value !== undefined && value !== '"UNKNOWN"')

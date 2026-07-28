@@ -203,22 +203,10 @@ export class French extends ConversationLanguage {
             'et le nombre lui-même pour tout autre nombre.')
     }
 
-    public override floatFormatSpecification(): ConversationText {
-        return ConversationLanguage.bless('Retourne `true` si le texte représente un nombre à virgule flottante et `false` sinon. ' +
-            'Un nombre à virgule flottante peut commencer par un signe plus ou moins. ' +
-            'Cela est suivi d\'un ou plusieurs chiffres. ' +
-            'Si cela est suivi d\'un point, alors un ou plusieurs chiffres doivent suivre.')
-    }
-
     public override leapYearSpecification(): ConversationText {
         return ConversationLanguage.bless('Retourne `true` si l\'année est une année bissextile et `false` sinon. ' +
             'Une année est une année bissextile si elle est divisible par 4. ' +
             'L\'exception est que les années divisibles par 100 ne sont pas des années bissextiles, sauf si elles sont aussi divisibles par 400.')
-    }
-
-    public override passwordStrengthSpecification(): ConversationText {
-        return ConversationLanguage.bless('Retourne `true` si le mot de passe est fort et `false` sinon. ' +
-            'Un mot de passe est fort s\'il contient au moins 5 caractères, une lettre majuscule, une lettre minuscule et un caractère spécial (`#` ou `@`).')
     }
 
     public override speedDisplaySpecification(): ConversationText {
@@ -255,6 +243,18 @@ export class French extends ConversationLanguage {
         return ConversationLanguage.bless('Retourne `GOOD` si le prix est inférieur à `20` et la qualité est au moins `7`. ' +
             'Retourne `BAD` si le prix est `20` ou plus et la qualité est inférieure à `7`. ' +
             'Retourne `OK` dans tous les autres cas.')
+    }
+
+    public override discountSpecification(): ConversationText {
+        return ConversationLanguage.bless('Retourne `20` si le total est au moins `200` et que le client a une carte de membre. ' +
+            'Retourne `10` si le total est au moins `100`, ou si le client a une carte de membre. ' +
+            'Retourne `0` dans tous les autres cas.')
+    }
+
+    public override parkingFeeSpecification(): ConversationText {
+        return ConversationLanguage.bless('Retourne `FREE` si le nombre de minutes de stationnement est inférieur à `30`, ou si c\'est le week-end et que le client a fait des achats. ' +
+            'Retourne `$10` si c\'est le week-end. ' +
+            'Sinon, retourne le prix pour chaque bloc complet de `30` minutes, à `$2` par bloc, ou à `$1` par bloc si le client a fait des achats.')
     }
 
     public override or(): ConversationText {

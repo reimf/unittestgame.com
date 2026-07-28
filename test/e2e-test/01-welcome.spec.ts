@@ -46,12 +46,12 @@ test.describe('welcome', () => {
             '🔒Level 1 - Voting Age' +
             '🔒Level 2 - Wind Scale' +
             '🔒Level 3 - Review' +
-            '🔒Level 4 - FizzBuzz' +
-            '🔒Level 5 - Leap Year' +
-            '🔒Level 6 - Triangle Type' +
-            '🔒Level 7 - Speed Display' +
-            '🔒Level 8 - Float Format' +
-            '🔒Level 9 - Password Strength')
+            '🔒Level 4 - Discount' +
+            '🔒Level 5 - FizzBuzz' +
+            '🔒Level 6 - Leap Year' +
+            '🔒Level 7 - Triangle Type' +
+            '🔒Level 8 - Speed Display' +
+            '🔒Level 9 - Parking Fee')
     })
 
     test('has see example message', async ({ page }) => {

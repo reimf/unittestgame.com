@@ -12,7 +12,6 @@ export class Java extends ProgrammingLanguage {
             .replace(/\bboolean\b/g, 'boolean')
             .replace(/\bstring\b/g, 'String')
             .replace(/(\w+): (\w+)/g, '$2 $1')
-            .replace(/\/([^\/]*)\/\.test\((.+?)\)/g, (_match, pattern: string, argument: string) => `Pattern.compile("${pattern.replace(/\\/g, '\\\\')}").matcher(${argument}).find()`)
             .replace(/(\w+)\.length\b/g, '$1.length()')
             .replace(/\bMath\.floor\((\w+) \/ (\d+)\)/g, '$1 / $2')
             .replace(/(\w+)\.toString\(\)/g, 'String.valueOf($1)')
@@ -20,7 +19,6 @@ export class Java extends ProgrammingLanguage {
             .replace(/===/g, '==')
             .replace(/!==/g, '!=')
             .replace(/^( +.+)$/gm, '$1;')
-            .replace(/^(?=[\s\S]*Pattern\.compile\()/, 'import java.util.regex.Pattern;\n')
     }
 
     public override getTokenTypes(): TokenTypes {
@@ -33,7 +31,7 @@ export class Java extends ProgrammingLanguage {
             ['class', /^[A-Z][a-zA-Z]*/],
             ['variable', /^[a-zA-Z][a-zA-Z0-9]*/],
             ['string', /^".*?"/],
-            ['operator', /^(!=|!|%|&&|\+=|<=|<|==|=|>=|>|\|\||\/)/],
+            ['operator', /^(!=|!|%|&&|\+=|\+|-|\*|<=|<|==|=|>=|>|\|\||\/)/],
             ['punctuation', /^[(){};,]/],
             ['dot', /^\./],
             ['error', /^.+/],

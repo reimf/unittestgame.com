@@ -11,14 +11,12 @@ export class Csharp extends ProgrammingLanguage {
             .replace(/\bnumber\b/g, 'int')
             .replace(/\bboolean\b/g, 'bool')
             .replace(/(\w+): (\w+)/g, '$2 $1')
-            .replace(/\/([^\/]*)\/\.test\((.+?)\)/g, (_match, pattern: string, argument: string) => `Regex.IsMatch(${argument}, "${pattern.replace(/\\/g, '\\\\')}")`)
             .replace(/(\w+)\.length\b/g, '$1.Length')
             .replace(/\bMath\.floor\((\w+) \/ (\d+)\)/g, '$1 / $2')
             .replace(/(\w+)\.toString\(\)/g, '$1.ToString()')
             .replace(/===/g, '==')
             .replace(/!==/g, '!=')
             .replace(/^( +.+)$/gm, '$1;')
-            .replace(/^(?=[\s\S]*Regex\.IsMatch\()/, 'using System.Text.RegularExpressions;\n')
     }
 
     public override getTokenTypes(): TokenTypes {
@@ -31,7 +29,7 @@ export class Csharp extends ProgrammingLanguage {
             ['class', /^[A-Z][a-zA-Z]*/],
             ['variable', /^[a-zA-Z][a-zA-Z0-9]*/],
             ['string', /^".*?"/],
-            ['operator', /^(!=|!|%|&&|\+=|<=|<|==|=|>=|>|\|\||\/)/],
+            ['operator', /^(!=|!|%|&&|\+=|\+|-|\*|<=|<|==|=|>=|>|\|\||\/)/],
             ['punctuation', /^[(){};,]/],
             ['dot', /^\./],
             ['error', /^.+/],

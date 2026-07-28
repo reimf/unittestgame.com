@@ -17,7 +17,6 @@ export class Php extends ProgrammingLanguage {
             .replace(/\bboolean\b/g, 'bool')
             .replace(/\bstring\b/g, 'string')
             .replace(/(\$?\w+): (\w+)/g, '$2 $1')
-            .replace(/\/([^\/]*)\/\.test\((.+?)\)/g, 'preg_match("/$1/", $2)')
             .replace(/(\$\w+)\.length\b/g, 'strlen($1)')
             .replace(/\bMath\.floor\((\$\w+) \/ (\d+)\)/g, 'intdiv($1, $2)')
             .replace(/(\$\w+)\.toString\(\)/g, 'strval($1)')
@@ -35,7 +34,7 @@ export class Php extends ProgrammingLanguage {
             ['function', /^[a-zA-Z_][a-zA-Z0-9_]*(?=\()/],
             ['variable', /^\$?[a-zA-Z_][a-zA-Z0-9_]*/],
             ['string', /^".*?"/],
-            ['operator', /^(!==|!|%|&&|\.=|\.|<=|<|===|=|>=|>|\|\||\/)/],
+            ['operator', /^(!==|!|%|&&|\.=|\.|-|\*|<=|<|===|=|>=|>|\|\||\/)/],
             ['punctuation', /^[(){};:,]/],
             ['error', /^.+/],
         ] as const)

@@ -15,8 +15,8 @@ test.describe('submit no unit tests with radio variable unit', () => {
 
 test.describe('submit no unit tests with text variable unit', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('/?speed=fast&picker=fixed&setitem=level-battery-level-finished:1&setitem=level-voting-age-finished:1&setitem=level-wind-scale-finished:1&setitem=level-review-finished:1&setitem=level-fizz-buzz-finished:1&setitem=level-leap-year-finished:1&setitem=level-triangle-type-finished:1')
-        await page.getByRole('button', { name: 'I want to play Level 7 - Speed Display' }).click()
+        await page.goto('/?speed=fast&picker=fixed&setitem=level-battery-level-finished:1&setitem=level-voting-age-finished:1&setitem=level-wind-scale-finished:1&setitem=level-review-finished:1&setitem=level-discount-finished:1&setitem=level-fizz-buzz-finished:1&setitem=level-leap-year-finished:1&setitem=level-triangle-type-finished:1')
+        await page.getByRole('button', { name: 'I want to play Level 8 - Speed Display' }).click()
         await page.getByRole('button', { name: 'I want to submit the unit tests' }).click()
     })
 

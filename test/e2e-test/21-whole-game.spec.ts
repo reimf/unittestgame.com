@@ -48,8 +48,10 @@ test.describe('whole game', () => {
                     const values = [...unitTest.argumentList, unitTest.expected]
                     for (let i = 0; i < variables.length; i++) {
                         const [variable, value] = [variables[i]!, values[i]!]
-                        if (variable instanceof RadioVariable || variable instanceof BooleanVariable)
+                        if (variable instanceof RadioVariable)
                             await page.getByLabel(value.toString(), { exact: true }).check()
+                        else if (variable instanceof BooleanVariable)
+                            await page.locator(`input[name="${variable.name}"][value="${value}"]`).check()
                         else
                             await page.getByLabel(variable.label, { exact: true }).fill(value.toString())
                     }

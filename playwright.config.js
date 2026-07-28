@@ -7,7 +7,7 @@ const rootDir = fileURLToPath(new URL('.', import.meta.url))
 export default defineConfig({
     testDir: 'test',
     testMatch: '**/*.spec.ts',
-    testIgnore: '**/transpile-test/**',
+    testIgnore: ['**/transpile-test/**', '**/tokenize-test/**'],
     use: {
         baseURL: 'http://localhost:3000',
         testIdAttribute: 'id',
