@@ -35,7 +35,6 @@ export class TriangleType extends Level<[number, number, number], string> {
                 '    if (a === b) return "ISOSCELES"',
                 '    if (a === c) return "ISOSCELES"',
                 '    if (b === c) return "ISOSCELES"',
-                '    if (a !== b && a !== c && b !== c) return "SCALENE"',
                 '',
             ],
             [

@@ -20,24 +20,21 @@ export class WindScale extends Level<[number], string> {
                 'function windCategory(speed: number): string {'
             ],
             [
-                '    if (speed < 20) return "CALM"',
                 '    if (speed <= 20) return "CALM"',
-                '    if (speed < 19) return "CALM"',
                 '    if (speed <= 19) return "CALM"',
+                '    if (speed <= 18) return "CALM"',
                 '',
             ],
             [
-                '    if (speed < 50) return "BREEZE"',
                 '    if (speed <= 50) return "BREEZE"',
-                '    if (speed < 49) return "BREEZE"',
                 '    if (speed <= 49) return "BREEZE"',
+                '    if (speed <= 48) return "BREEZE"',
                 '',
             ],
             [
-                '    if (speed < 90) return "GALE"',
                 '    if (speed <= 90) return "GALE"',
-                '    if (speed < 89) return "GALE"',
                 '    if (speed <= 89) return "GALE"',
+                '    if (speed <= 88) return "GALE"',
                 '',
             ],
             [

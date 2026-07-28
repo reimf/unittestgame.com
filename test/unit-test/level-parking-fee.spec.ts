@@ -19,7 +19,7 @@ test.describe('class ParkingFee', () => {
     })
 
     test('has the correct amount of candidates', () => {
-        expect(level.candidates).toHaveLength(612)
+        expect(level.candidates).toHaveLength(324)
     })
 
     test('has the correct amount of minimal unit tests', () => {
@@ -31,7 +31,7 @@ test.describe('class ParkingFee', () => {
     })
 
     test('has the correct amount of perfect candidates', () => {
-        expect(level.perfectCandidates).toHaveLength(2)
+        expect(level.perfectCandidates).toHaveLength(1)
     })
 
     test('perfect candidates pass all hints', () => {
