@@ -55,7 +55,10 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
         this.failingTestResult = this.findFailingTestResult(this.currentCandidate, this.hints, this.minimalUnitTests)
     }
 
-    protected abstract identifier(): string
+    protected identifier(): string {
+        return this.name().replace(/(?<=[a-z])(?=[A-Z])/g, '-').replace(/\s+/g, '-').toLowerCase()
+    }
+
     protected abstract name(): string
     protected abstract specification(): ConversationText
     protected abstract getCandidateElements(): string[][]

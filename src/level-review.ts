@@ -2,13 +2,10 @@ import { Level } from './level-base.js'
 import { ConversationText } from './conversation-language-base.js'
 
 export class Review extends Level<[number, number], string> {
-    protected identifier(): string {
-        return 'review'
-    }
-
     protected name(): string {
         return 'Review'
     }
+
     protected specification(): ConversationText {
         return this.conversationLanguage.reviewSpecification()
     }

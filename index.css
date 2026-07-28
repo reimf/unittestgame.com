@@ -175,7 +175,7 @@ i { /* markdown: *italic* */
 
 input {
     margin-top: 0.5rem;
-    
+
     &[type="text"], &[type="number"] {
         background-color: var(--input-background);
         border-radius: 0.5rem;
@@ -427,7 +427,7 @@ select {
 
                         > span {
                             display: block;
-                            
+
                             &:first-child {
                                 width: 12rem;
                             }

@@ -2,13 +2,10 @@ import { Level } from './level-base.js'
 import { ConversationText } from './conversation-language-base.js'
 
 export class FizzBuzz extends Level<[number], string> {
-    protected identifier(): string {
-        return 'fizz-buzz'
-    }
-
     protected name(): string {
         return 'FizzBuzz'
     }
+
     protected specification(): ConversationText {
         return this.conversationLanguage.fizzBuzzSpecification()
     }

@@ -116,7 +116,7 @@ Then open the URL:
 ## CI
 
 `.gitlab-ci.yml` mirrors this setup in GitLab CI:
-it runs `npm clean-install` + `tsc --build` in a `compile` stage, 
+it runs `npm clean-install` + `tsc --build` in a `compile` stage,
 then `npm clean-install` + `npx playwright test` in a `test` stage
 using the official `mcr.microsoft.com/playwright` image
 (which already has browsers preinstalled).

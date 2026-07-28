@@ -2,10 +2,6 @@ import { Level } from './level-base.js'
 import { ConversationText } from './conversation-language-base.js'
 
 export class SpeedDisplay extends Level<[number], string> {
-    protected identifier(): string {
-        return 'speed-display'
-    }
-
     protected name(): string {
         return 'Speed Display'
     }

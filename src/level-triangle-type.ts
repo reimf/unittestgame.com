@@ -2,10 +2,6 @@ import { Level } from './level-base.js'
 import { ConversationText } from './conversation-language-base.js'
 
 export class TriangleType extends Level<[number, number, number], string> {
-    protected identifier(): string {
-        return 'triangle-type'
-    }
-
     protected name(): string {
         return 'Triangle Type'
     }

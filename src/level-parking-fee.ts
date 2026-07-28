@@ -2,10 +2,6 @@ import { Level } from './level-base.js'
 import { ConversationText } from './conversation-language-base.js'
 
 export class ParkingFee extends Level<[number, boolean, boolean], string> {
-    protected identifier(): string {
-        return 'parking-fee'
-    }
-
     protected name(): string {
         return 'Parking Fee'
     }

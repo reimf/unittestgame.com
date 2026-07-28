@@ -2,10 +2,6 @@ import { Level } from './level-base.js'
 import { ConversationText } from './conversation-language-base.js'
 
 export class VotingAge extends Level<[number], boolean> {
-    protected identifier(): string {
-        return 'voting-age'
-    }
-
     protected name(): string {
         return 'Voting Age'
     }

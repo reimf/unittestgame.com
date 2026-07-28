@@ -2,10 +2,6 @@ import { Level } from './level-base.js'
 import { ConversationText } from './conversation-language-base.js'
 
 export class WindScale extends Level<[number], string> {
-    protected identifier(): string {
-        return 'wind-scale'
-    }
-
     protected name(): string {
         return 'Wind Scale'
     }
