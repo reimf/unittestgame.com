@@ -1,4 +1,4 @@
-import { Game } from './game.js'
+import { Levels } from './levels.js'
 import { Store } from './store.js'
 import { Panel, Message, ComputerMessage, QuestionMessage } from './frame.js'
 import { Div, Label, ListItem, Option, OrderedList, Select, Span } from './html.js'
@@ -12,13 +12,13 @@ import { programmingLanguages } from './programming-languages.js'
 export class Main {
     private readonly conversationLanguage: ConversationLanguage
     private readonly programmingLanguage: ProgrammingLanguage
-    private readonly levels: ReturnType<Game['levels']>
+    private readonly levels: ReturnType<Levels['all']>
 
     constructor(conversationLanguage: ConversationLanguage, programmingLanguage: ProgrammingLanguage, picker: Picker, store: Store) {
         this.conversationLanguage = conversationLanguage
         this.programmingLanguage = programmingLanguage
-        const game = new Game(conversationLanguage, programmingLanguage, picker, store)
-        this.levels = game.levels()
+        const levels = new Levels(conversationLanguage, programmingLanguage, picker, store)
+        this.levels = levels.all()
     }
 
     public start(): void {
@@ -75,7 +75,7 @@ export class Main {
     }
 
     private showAboutPanel(): void {
-        const content = [this.conversationLanguage.slogan(), this.conversationLanguage.readMoreAboutTDD(), this.conversationLanguage.contact()]
+        const content = [this.conversationLanguage.slogan(), this.conversationLanguage.home()]
         new Panel('unittestgame', this.conversationLanguage.unitTestGameTitle(), content).show()
     }
 

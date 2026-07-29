@@ -2,7 +2,7 @@ import { test, expect } from '../fixture/fixture-coverage'
 
 test.describe('example level', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('/?speed=fast&picker=fixed&store=map')
+        await page.goto('/game.html?speed=fast&picker=fixed&store=map')
         await page.getByRole('button', { name: 'I want to play Level 0 - Battery Level' }).click()
         await page.getByLabel('batteryLevel').fill('20')
         await page.getByLabel('NORMAL MODE').check()

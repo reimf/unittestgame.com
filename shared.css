@@ -1,0 +1,220 @@
+:root {
+    --dark-text: #333;
+    --light-text: #fff;
+    --panel-heading-background: #606;
+    --input-background: #063;
+    --human-message-background: #efe;
+    --general-background: #eee;
+    --computer-message-background: #fff;
+    --panel-body-background: #fff;
+    --button-shadow: #0006;
+    --focus-shadow: #f60;
+    --separator-shadow: #0003;
+    --inserted-background: #efe;
+    --deleted-background: #fee;
+    --new-background: #eef;
+    --old-background: #fff;
+    --unlocked-background: #333;
+    --unlocked-foreground: #fff;
+    --locked-background: #eee;
+    --locked-foreground: #666;
+    --highlight-keyword: #c33;
+    --highlight-class: #66c;
+    --highlight-function: #669;
+    --highlight-variable: #060;
+    --highlight-literal: #06c;
+    --highlight-number: #06c;
+    --highlight-operator: #06c;
+    --highlight-string: #036;
+    --highlight-dot: #660;
+    --code-background: #333;
+    --code-foreground: #fff;
+}
+
+* {
+    border: none;
+    box-sizing: border-box;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    margin: 0;
+    outline: none !important;
+    padding: 0;
+}
+
+code {
+    &:not(.block) {
+        background-color: var(--code-background);
+        border-radius: 0.25rem;
+        color: var(--code-foreground);
+        padding: 0.1rem 0.25rem;
+        white-space: pre;
+    }
+
+    &.block {
+        display: block;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: pre;
+
+        div {
+            &.old {
+                background-color: var(--old-background);
+            }
+
+            &.new {
+                background-color: var(--new-background);
+            }
+
+            ins {
+                background-color: var(--inserted-background);
+                text-decoration: none;
+            }
+
+            del {
+                background-color: var(--deleted-background);
+                text-decoration: none;
+            }
+
+            .keyword {
+                color: var(--highlight-keyword);
+            }
+
+            .class {
+                color: var(--highlight-class);
+            }
+
+            .function {
+                color: var(--highlight-function);
+            }
+
+            .variable {
+                color: var(--highlight-variable);
+            }
+
+            .literal {
+                color: var(--highlight-literal);
+            }
+
+            .number {
+                color: var(--highlight-number);
+            }
+
+            .operator {
+                color: var(--highlight-operator);
+            }
+
+            .string {
+                color: var(--highlight-string);
+            }
+
+            .dot {
+                color: var(--highlight-dot);
+            }
+        }
+    }
+}
+
+ol, ul {
+    list-style-type: none;
+}
+
+p {
+    white-space: pre-wrap;
+}
+
+#messages {
+    box-shadow: 0.25rem 0 0.5rem var(--separator-shadow);
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    padding-bottom: 2rem;
+    scrollbar-width: none;
+
+    section {
+        position: relative;
+        opacity: 0;
+
+        &:before {
+            content: '';
+            background-size: contain;
+            display: block;
+            height: 1.5rem;
+            width: 1.5rem;
+            position: absolute;
+            bottom: 0;
+        }
+
+        &.human {
+            margin-left: 20%;
+
+            &:before {
+                background-image: url('avatar-human.png');
+                right: 0.5rem;
+            }
+
+            &.reveal {
+                animation: revealHuman 0.25s linear forwards;
+            }
+
+            > div {
+                background-color: var(--human-message-background);
+                border-bottom-right-radius: 0;
+                color: var(--dark-text);
+                margin-right: 2.5rem;
+            }
+        }
+
+        &.computer {
+            margin-right: 20%;
+
+            &:before {
+                background-image: url('avatar-computer.png');
+                left: 0.5rem;
+            }
+
+            &.reveal {
+                animation: revealComputer 0.25s linear forwards;
+            }
+
+            > div {
+                background-color: var(--computer-message-background);
+                border-bottom-left-radius: 0;
+                color: var(--dark-text);
+                margin-left: 2.5rem;
+            }
+        }
+
+        &.hidden {
+            display: none;
+        }
+
+        > div {
+            border-radius: 1.25rem;
+            color: var(--dark-text);
+            display: flow-root;
+            margin: 0.75rem;
+            overflow: hidden;
+            padding: 0 0.75rem;
+
+            code {
+                margin: 0.75rem 0;
+            }
+
+            ol {
+                margin: 0.75rem 0;
+
+                > li {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: pre;
+
+                    code {
+                        margin: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+

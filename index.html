@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="description" content="Learn to write effective unit tests with an interactive game where you collaborate with a maliciously compliant AI bot to improve your skills in Test-Driven Development.">
-    <meta name="theme-color" content="#ECE5DD">
+    <meta name="theme-color" content="#0b0620">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://unittestgame.com">
@@ -13,17 +13,256 @@
     <meta name="twitter:card" content="summary">
     <link rel="canonical" href="https://unittestgame.com">
     <link rel="icon" type="image/ico" href="favicon.ico">
+    <link rel="stylesheet" href="shared.css">
     <link rel="stylesheet" href="index.css">
-    <script src="src/index.js" type="module"></script>
-    <title>UnitTestGame.com</title>
+    <title>UnitTestGame.com: Outsmart the AI bot that cheats on purpose</title>
   </head>
   <body>
+    <nav>
+      <a class="brand" href="index.html">
+        <img src="apple-touch-icon.png" alt="">
+        <span>UnitTestGame</span>
+      </a>
+      <div class="nav-links">
+        <a href="#how">How it works</a>
+        <a href="#levels">Levels</a>
+        <a href="#why">Why it works</a>
+        <a class="btn btn-primary" href="game.html">Play now</a>
+      </div>
+    </nav>
     <header>
-      <h1>UnitTestGame</h1>
+      <div class="hero-copy">
+        <h1>It passes every unit test you wrote and that's <span class="gradient-text">exactly</span> the problem.</h1>
+        <p>UnitTestGame pairs you with a maliciously compliant bot that writes the laziest code that satisfies your unit tests, and nothing more. Your job: write unit tests until the program is right.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="game.html">Play free in your browser →</a>
+          <a class="btn btn-secondary" href="#how">See how it works</a>
+        </div>
+      </div>
+      <div id="messages">
+        <section class="human" id="message-1">
+          <div>
+            <p>I want to add this unit test.</p>
+            <code class="block"><div class="new"><span class="function">powerMode</span>(<span class="number">20</span>) <span class="operator">===</span> <span class="string">"NORMAL MODE"</span></div></code>
+          </div>
+        </section>
+        <section class="computer" id="message-2">
+          <div>
+            <code class="block"><div><span class="keyword">function</span> <span class="function">powerMode</span>(<span class="variable">batteryLevel</span>) {</div><div class="code-wrap"><div>    <span class="keyword">return</span> <span class="string">"NORMAL MODE"</span></div><div class="circle generalization-false"></div></div><div>}</div></code>
+            <span class="handwritten generalization-false">passes your unit test,<br>no generalization yet</span>
+          </div>
+        </section>
+        <section class="human" id="message-3">
+          <div>
+            <p>I want to add this unit test.</p>
+            <code class="block"><div class="new"><span class="function">powerMode</span>(<span class="number">19</span>) <span class="operator">===</span> <span class="string">"LOW POWER MODE"</span></div></code>
+          </div>
+        </section>
+        <section class="computer" id="message-4">
+          <div>
+            <code class="block"><div><span class="keyword">function</span> <span class="function">powerMode</span>(<span class="variable">batteryLevel</span>) {</div><div class="code-wrap"><div>    <span class="keyword">if</span> (<span class="variable">batteryLevel</span> <span class="operator">&gt;=</span> <span class="number">20</span>) <span class="keyword">return</span> <span class="string">"NORMAL MODE"</span></div><div>    <span class="keyword">return</span> <span class="string">"LOW POWER MODE"</span></div><div class="circle generalization-true"></div></div><div>}</div></code>
+            <span class="handwritten generalization-true">passes both unit tests,<br>with generalization!</span>
+          </div>
+        </section>
+      </div>
     </header>
-    <main id="screen">
-      <article id="messages"></article>
-      <aside id="panels"></aside>
-    </main>
+    <section id="how">
+      <div class="section-head">
+        <h2>Learning Test-Driven Development by feel</h2>
+        <p>No lectures. No quizzes. Just a bot exploiting every hole in your unit tests.</p>
+      </div>
+      <ol class="steps">
+        <li>
+          <h3><span>1</span> Read the spec</h3>
+          <p>See what the function is supposed to do, in plain input → output terms.</p>
+        </li>
+        <li>
+          <h3><span>2</span> Watch it cheat</h3>
+          <p>The AI bot ships the laziest code that satisfies exactly what you tested.</p>
+        </li>
+        <li>
+          <h3><span>3</span> Catch the gap</h3>
+          <p>Spot the edge case it dodged, and add a unit test that exposes it.</p>
+        </li>
+        <li>
+          <h3><span>4</span> Tighten until solid</h3>
+          <p>Repeat until there's no shortcut left. Level completed!</p>
+        </li>
+      </ol>
+    </section>
+    <section id="why">
+      <div class="section-head">
+        <h2>Built for people who ship real code</h2>
+        <p>It plays like a game. It sticks like a habit. It changes your way of testing.</p>
+      </div>
+      <ul class="features">
+        <li>
+          <h3><span>🕵️</span> A worthy opponent</h3>
+          <p>The AI bot is maliciously compliant. Every rewrite is a lesson about your blind spot.</p>
+        </li>
+        <li>
+          <h3><span>📈</span> Escalating difficulty</h3>
+          <p>Start with battery levels. End up untangling speed displays and parking fees.</p>
+        </li>
+        <li>
+          <h3><span>🔓</span> Real progression</h3>
+          <p>A level board tracks what you've unlocked, so you always know what's next.</p>
+        </li>
+        <li>
+          <h3><span>🌍</span> Six conversation languages</h3>
+          <p>Converse in English, Dutch, German, French, Spanish, or Italian.</p>
+        </li>
+        <li>
+          <h3><span>💻</span> Six programming languages</h3>
+          <p>Let the AI bot write programs in JavaScript, TypeScript, Python, Java, C#, or PHP.</p>
+        </li>
+        <li>
+          <h3><span>🧩</span> No setup at all</h3>
+          <p>Runs entirely in the browser. No account, no install, no dependencies to fight with.</p>
+        </li>
+      </ul>
+    </section>
+    <section id="levels">
+      <div class="section-head">
+        <h2>Ten levels, ten ways to get outsmarted</h2>
+        <p>Each one looks simple. Until the AI bot finds another input you forgot to test.</p>
+      </div>
+      <ol class="levels">
+        <li>
+          <div class="card-head">
+            <span class="tag">Warm-up</span>
+            <span class="difficulty" aria-label="Difficulty 1 of 3">★☆☆</span>
+          </div>
+          <h3>Battery Level</h3>
+          <p>A single cutoff, and plenty of ways to miss it.</p>
+        </li>
+        <li>
+          <div class="card-head">
+            <span class="tag">Boundaries</span>
+            <span class="difficulty" aria-label="Difficulty 1 of 3">★☆☆</span>
+          </div>
+          <h3>Voting Age</h3>
+          <p>One threshold. Zero room for an off-by-one.</p>
+        </li>
+        <li>
+          <div class="card-head">
+            <span class="tag">Lookup</span>
+            <span class="difficulty" aria-label="Difficulty 2 of 3">★★☆</span>
+          </div>
+          <h3>Wind Scale</h3>
+          <p>Beaufort scale thresholds, bucket by bucket.</p>
+        </li>
+        <li>
+          <div class="card-head">
+            <span class="tag">Checkpoint</span>
+            <span class="difficulty" aria-label="Difficulty 2 of 3">★★☆</span>
+          </div>
+          <h3>Review</h3>
+          <p>Everything you've learned so far, all at once.</p>
+        </li>
+        <li>
+          <div class="card-head">
+            <span class="tag">Money</span>
+            <span class="difficulty" aria-label="Difficulty 2 of 3">★★☆</span>
+          </div>
+          <h3>Discount</h3>
+          <p>Shopping hides more edge cases than you'd think.</p>
+        </li>
+        <li>
+          <div class="card-head">
+            <span class="tag">Classic</span>
+            <span class="difficulty" aria-label="Difficulty 2 of 3">★★☆</span>
+          </div>
+          <h3>FizzBuzz</h3>
+          <p>The classic, with a bot that works against you.</p>
+        </li>
+        <li>
+          <div class="card-head">
+            <span class="tag">Dates</span>
+            <span class="difficulty" aria-label="Difficulty 2 of 3">★★☆</span>
+          </div>
+          <h3>Leap Year</h3>
+          <p>Simple math, but hard to get right.</p>
+        </li>
+        <li>
+          <div class="card-head">
+            <span class="tag">Logic</span>
+            <span class="difficulty" aria-label="Difficulty 3 of 3">★★★</span>
+          </div>
+          <h3>Triangle Type</h3>
+          <p>Classify a triangle by side length, carefully.</p>
+        </li>
+        <li>
+          <div class="card-head">
+            <span class="tag">Units</span>
+            <span class="difficulty" aria-label="Difficulty 3 of 3">★★★</span>
+          </div>
+          <h3>Speed Display</h3>
+          <p>Unit conversion under pressure.</p>
+        </li>
+        <li>
+          <div class="card-head">
+            <span class="tag">Finale</span>
+            <span class="difficulty" aria-label="Difficulty 3 of 3">★★★</span>
+          </div>
+          <h3>Parking Fee</h3>
+          <p>Pricing logic that loves to round wrong.</p>
+        </li>
+      </ol>
+    </section>
+    <section>
+      <div class="section-head">
+        <h2>Frequently Asked Questions</h2>
+      </div>
+      <ul class="faq">
+        <li>
+          <h4>Is it really free?</h4>
+          <p>Yes. No ads, no tracking, no paywall. Just a free game.</p>
+        </li>
+        <li>
+          <h4>What programming languages are supported?</h4>
+          <p>JavaScript, TypeScript, Python, Java, C#, and PHP.</p>
+        </li>
+        <li>
+          <h4>What conversation languages are supported?</h4>
+          <p>English, Dutch, German, French, Spanish, and Italian.</p>
+        </li>
+        <li>
+          <h4>Do I need to install anything?</h4>
+          <p>Nope. It runs entirely in your browser.</p>
+        </li>
+        <li>
+          <h4>Do I need an account?</h4>
+          <p>Nope. You can only play anonymously.</p>
+        </li>
+        <li>
+          <h4>What information is stored?</h4>
+          <p>Your progress is saved locally in your browser. No information leaves your browser.</p>
+        </li>
+        <li>
+          <h4>Is it open source?</h4>
+          <p>Yes. The source code is available on GitHub.</p>
+        </li>
+        <li>
+          <h4>Who made this?</h4>
+          <p>This game is created by a CS teacher who loves programming and testing.</p>
+        </li>
+      </ul>
+    </section>
+    <section>
+      <div class="cta-band">
+        <h2>The AI bot is waiting for you. Don't get fooled.</h2>
+        <p>Click the button, follow the instructions, and see what it tries to get away with.</p>
+        <a class="btn btn-primary" href="game.html">Play UnitTestGame free →</a>
+      </div>
+    </section>
+    <footer>
+      <span>© 2026 UnitTestGame</span>
+      <div class="foot-links">
+        <a href="https://en.wikipedia.org/wiki/Test-driven_development">TDD on Wikipedia</a>
+        <a href="https://github.com/reimf/unittestgame.com">GitHub</a>
+        <a href="mailto:contact@unittestgame.com">Contact</a>
+      </div>
+    </footer>
   </body>
 </html>

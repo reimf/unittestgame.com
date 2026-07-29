@@ -4,14 +4,14 @@ import { createHash } from 'crypto'
 import { mkdtempSync, writeFileSync } from 'fs'
 import { tmpdir } from 'os'
 import { join } from 'path'
-import { Game } from '../../src/game.js'
+import { Levels } from '../../src/levels.js'
 import { English } from '../../src/conversation-language-en.js'
 import { FixedPicker } from '../../src/picker.js'
 import { Php } from '../../src/programming-language-php.js'
 import { MapStore } from '../../src/store.js'
 
 const php = new Php()
-const levels = new Game(new English(), php, new FixedPicker(), new MapStore()).levels()
+const levels = new Levels(new English(), php, new FixedPicker(), new MapStore()).all()
 const phpAvailable = spawnSync('php', ['--version']).error === undefined
 const temporaryFolder = phpAvailable ? mkdtempSync(join(tmpdir(), 'unittestgame-php-')) : ''
 

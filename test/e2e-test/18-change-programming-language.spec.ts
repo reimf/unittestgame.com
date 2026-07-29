@@ -2,7 +2,7 @@ import { test, expect } from '../fixture/fixture-coverage'
 
 test.describe('change programming language', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('/?speed=fast&picker=fixed')
+        await page.goto('/game.html?speed=fast&picker=fixed')
         await page.getByTestId('programming-language-switcher').selectOption('python')
         await page.waitForLoadState()
     })

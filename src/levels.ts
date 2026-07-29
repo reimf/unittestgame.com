@@ -14,7 +14,7 @@ import { Picker } from './picker.js'
 import { ProgrammingLanguage } from './programming-language-base.js'
 import { Store } from './store.js'
 
-export class Game {
+export class Levels {
     private readonly conversationLanguage: ConversationLanguage
     private readonly programmingLanguage: ProgrammingLanguage
     private readonly picker: Picker
@@ -27,7 +27,7 @@ export class Game {
         this.store = store
     }
 
-    public levels(): AnyLevel[] {
+    public all(): AnyLevel[] {
         const levelClasses = [
             BatteryLevel,
             VotingAge,

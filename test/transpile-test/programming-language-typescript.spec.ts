@@ -4,14 +4,14 @@ import { createHash } from 'crypto'
 import { existsSync, mkdtempSync, writeFileSync } from 'fs'
 import { tmpdir } from 'os'
 import { join } from 'path'
-import { Game } from '../../src/game.js'
+import { Levels } from '../../src/levels.js'
 import { English } from '../../src/conversation-language-en.js'
 import { FixedPicker } from '../../src/picker.js'
 import { TypeScript } from '../../src/programming-language-typescript.js'
 import { MapStore } from '../../src/store.js'
 
 const typescript = new TypeScript()
-const levels = new Game(new English(), typescript, new FixedPicker(), new MapStore()).levels()
+const levels = new Levels(new English(), typescript, new FixedPicker(), new MapStore()).all()
 const tsc = join(process.cwd(), 'node_modules', '.bin', 'tsc')
 const tscAvailable = existsSync(tsc)
 const temporaryFolder = tscAvailable ? mkdtempSync(join(tmpdir(), 'unittestgame-typescript-')) : ''

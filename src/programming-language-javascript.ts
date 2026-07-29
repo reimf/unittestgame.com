@@ -19,7 +19,6 @@ export class JavaScript extends ProgrammingLanguage {
             ['class', /^[A-Z][a-zA-Z]*/],
             ['function', /^[a-zA-Z]+(?=\()/],
             ['variable', /^[a-zA-Z]+/],
-            ['regexp', /^\/\S.*?\//],
             ['string', /^".*?"/],
             ['operator', /^(!==|!|%|&&|\+=|\+|-|\*|<=|<|===|=|>=|>|\|\||\/)/],
             ['punctuation', /^[(){},]/],

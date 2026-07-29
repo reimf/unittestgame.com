@@ -1,5 +1,5 @@
 import { test, expect } from '../fixture/fixture-coverage'
-import { Game } from '../../src/game.js'
+import { Levels } from '../../src/levels.js'
 import { BooleanVariable, RadioVariable } from '../../src/variable.js'
 import { BatteryLevel } from '../../src/level-battery-level.js'
 import { MapStore } from '../../src/store.js'
@@ -9,7 +9,7 @@ import { JavaScript } from '../../src/programming-language-javascript'
 
 test.describe('whole game', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('/?speed=fast')
+        await page.goto('/game.html?speed=fast')
     })
 
     test('plays whole game', async ({ page }) => {
@@ -19,10 +19,10 @@ test.describe('whole game', () => {
         const programmingLanguage = new JavaScript()
         const picker = new RandomPicker()
         const store = new MapStore()
-        const game = new Game(conversationLanguage, programmingLanguage, picker, store)
-        const levels = game.levels()
+        const levels = new Levels(conversationLanguage, programmingLanguage, picker, store)
+        const allLevels = levels.all()
 
-        for (const level of levels) {
+        for (const level of allLevels) {
             await page.getByRole('button', { name: `I want to play ${level.description()}` }).click()
 
             if (level instanceof BatteryLevel) {

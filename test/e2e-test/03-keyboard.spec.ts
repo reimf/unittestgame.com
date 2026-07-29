@@ -2,7 +2,7 @@ import { test, expect } from '../fixture/fixture-coverage'
 
 test.describe('keyboard', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('/?speed=fast')
+        await page.goto('/game.html?speed=fast')
         await page.getByRole('button', { name: 'I want to play Level 0 - Battery Level' }).click()
     })
 

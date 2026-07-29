@@ -37,7 +37,6 @@ export class Python extends ProgrammingLanguage {
             ['class', /^[A-Z][a-zA-Z]*/],
             ['function', /^[a-zA-Z_][a-zA-Z0-9_]*(?=\()/],
             ['variable', /^[a-zA-Z_][a-zA-Z0-9_]*/],
-            ['regexp', /^\/\S.*?\//],
             ['string', /^("[^"]*"|'[^']*')/],
             ['operator', /^(!=|%|\+|\/\/|\/|<=|<|==|=|>=|>|->|-|\*)/],
             ['punctuation', /^[(){}[\]:,]/],

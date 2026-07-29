@@ -14,8 +14,7 @@ test.describe('class ProgrammingLanguage', () => {
 
     test('highlight with 1 argument', () => {
         const javascript = 'function isFloatFormat(text) {' +
-            '    let regex = new RegExp("/#@/").test(text)' +
-            '    if (!/[#@]/.test(text)) regex += speed.toFixed(1)' +
+            '    if (!regex.test(text)) regex += speed.toFixed(1)' +
             '    if (a < Math.abs(20.0) && a >= c && b !== c) return true' +
             '    if (num % 2 === 0) return false' +
             '    return regex' +
@@ -32,29 +31,11 @@ test.describe('class ProgrammingLanguage', () => {
                 '<span class="whitespace"> </span>' +
                 '<span class="punctuation">{</span>' +
                 '<span class="whitespace">    </span>' +
-                '<span class="keyword">let</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="variable">regex</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="operator">=</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="keyword">new</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="class">RegExp</span>' +
-                '<span class="punctuation">(</span>' +
-                '<span class="string">"/#@/"</span>' +
-                '<span class="punctuation">)</span>' +
-                '<span class="dot">.</span>' +
-                '<span class="function">test</span>' +
-                '<span class="punctuation">(</span>' +
-                '<span class="variable">text</span>' +
-                '<span class="punctuation">)</span>' +
-                '<span class="whitespace">    </span>' +
                 '<span class="keyword">if</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="punctuation">(</span>' +
                 '<span class="operator">!</span>' +
-                '<span class="regexp">/[#@]/</span>' +
+                '<span class="variable">regex</span>' +
                 '<span class="dot">.</span>' +
                 '<span class="function">test</span>' +
                 '<span class="punctuation">(</span>' +

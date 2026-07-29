@@ -2,7 +2,7 @@ import { test, expect } from '../fixture/fixture-coverage'
 
 test.describe('welcome', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('/?speed=fast&store=map')
+        await page.goto('/game.html?speed=fast&store=map')
     })
 
     test('has title', async ({ page }) => {
@@ -29,14 +29,9 @@ test.describe('welcome', () => {
         await expect(option).toHaveText('Nederlands')
     })
 
-    test('has more info on Test-Driven Development', async ({ page }) => {
-        const link = page.getByRole('link', { name: 'Read more about TDD' })
-        expect(await link.getAttribute('href')).toBe('https://en.wikipedia.org/wiki/Test-driven_development')
-    })
-
-    test('has link to contact mail address', async ({ page }) => {
-        const link = page.getByRole('link', { name: 'contact' })
-        expect(await link.getAttribute('href')).toBe('mailto:contact@unittestgame.com')
+    test('has link to home page', async ({ page }) => {
+        const link = page.getByRole('link', { name: 'Home' })
+        expect(await link.getAttribute('href')).toBe('index.html')
     })
 
     test('has level overview panel', async ({ page }) => {

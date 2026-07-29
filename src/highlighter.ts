@@ -1,7 +1,7 @@
 import { Del, Div, Ins, Span } from './html.js'
 import { ConversationLanguage } from './conversation-language-base.js'
 
-type TokenType = 'whitespace' | 'number' | 'keyword' | 'literal' | 'class' | 'function' | 'variable' | 'regexp' | 'string' | 'operator' | 'punctuation' | 'dot' | 'error'
+type TokenType = 'whitespace' | 'number' | 'keyword' | 'literal' | 'class' | 'function' | 'variable' | 'string' | 'operator' | 'punctuation' | 'dot' | 'error'
 export type TokenTypes = ReadonlyMap<TokenType, RegExp>
 
 export class Token {

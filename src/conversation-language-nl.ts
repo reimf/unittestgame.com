@@ -17,12 +17,8 @@ export class Dutch extends ConversationLanguage {
         return ConversationLanguage.bless('![Logo van UnitTestGame](apple-touch-icon.png)Leer Test-Driven Development door unit testen te schrijven die een AI bot bijsturen.')
     }
 
-    public override readMoreAboutTDD(): ConversationText {
-        return ConversationLanguage.bless('[Lees meer over TDD op Wikipedia](https://nl.wikipedia.org/wiki/Test-driven_development)')
-    }
-
-    public override contact(): ConversationText {
-        return ConversationLanguage.bless('[Contact](mailto:contact@unittestgame.com)')
+    public override home(): ConversationText {
+        return ConversationLanguage.bless('[Startpagina](index.html)')
     }
 
     public override settingsTitle(): ConversationText {

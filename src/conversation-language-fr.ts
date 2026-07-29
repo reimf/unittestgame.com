@@ -17,12 +17,8 @@ export class French extends ConversationLanguage {
         return ConversationLanguage.bless('![Logo de UnitTestGame](apple-touch-icon.png)Apprends le Test-Driven Development en écrivant des unit tests qui guident un bot IA.')
     }
 
-    public override readMoreAboutTDD(): ConversationText {
-        return ConversationLanguage.bless('[En savoir plus sur TDD sur Wikipédia](https://fr.wikipedia.org/wiki/Test_driven_development)')
-    }
-
-    public override contact(): ConversationText {
-        return ConversationLanguage.bless('[Contact](mailto:contact@unittestgame.com)')
+    public override home(): ConversationText {
+        return ConversationLanguage.bless('[Accueil](index.html)')
     }
 
     public override settingsTitle(): ConversationText {

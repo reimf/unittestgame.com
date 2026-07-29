@@ -4,14 +4,14 @@ import { createHash } from 'crypto'
 import { mkdtempSync, writeFileSync } from 'fs'
 import { tmpdir } from 'os'
 import { join } from 'path'
-import { Game } from '../../src/game.js'
+import { Levels } from '../../src/levels.js'
 import { English } from '../../src/conversation-language-en.js'
 import { FixedPicker } from '../../src/picker.js'
 import { Java } from '../../src/programming-language-java.js'
 import { MapStore } from '../../src/store.js'
 
 const java = new Java()
-const levels = new Game(new English(), java, new FixedPicker(), new MapStore()).levels()
+const levels = new Levels(new English(), java, new FixedPicker(), new MapStore()).all()
 const javaAvailable = spawnSync('java', ['--version']).error === undefined
 const temporaryFolder = javaAvailable ? mkdtempSync(join(tmpdir(), 'unittestgame-java-')) : ''
 

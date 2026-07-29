@@ -4,14 +4,14 @@ import { createHash } from 'crypto'
 import { mkdtempSync, writeFileSync } from 'fs'
 import { tmpdir } from 'os'
 import { join } from 'path'
-import { Game } from '../../src/game.js'
+import { Levels } from '../../src/levels.js'
 import { English } from '../../src/conversation-language-en.js'
 import { FixedPicker } from '../../src/picker.js'
 import { Csharp } from '../../src/programming-language-csharp.js'
 import { MapStore } from '../../src/store.js'
 
 const csharp = new Csharp()
-const levels = new Game(new English(), csharp, new FixedPicker(), new MapStore()).levels()
+const levels = new Levels(new English(), csharp, new FixedPicker(), new MapStore()).all()
 const dotnetAvailable = spawnSync('dotnet', ['--version']).error === undefined
 const temporaryFolder = dotnetAvailable ? mkdtempSync(join(tmpdir(), 'unittestgame-csharp-')) : ''
 

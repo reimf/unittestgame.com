@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 import { JSDOM } from 'jsdom'
-import { Game } from '../../src/game.js'
+import { Levels } from '../../src/levels.js'
 import { English } from '../../src/conversation-language-en.js'
 import { FixedPicker } from '../../src/picker.js'
 import { MapStore } from '../../src/store.js'
@@ -21,7 +21,7 @@ test.describe('tokenizer', () => {
     for (const programmingLanguage of programmingLanguages) {
         test(`has no error tokens for any code line rendered in ${programmingLanguage.name}`, () => {
             test.setTimeout(120_000)
-            const levels = new Game(new English(), programmingLanguage, new FixedPicker(), new MapStore()).levels()
+            const levels = new Levels(new English(), programmingLanguage, new FixedPicker(), new MapStore()).all()
             const renderedHtml: string[] = []
             for (const level of levels) {
                 for (const candidate of level.candidates)
