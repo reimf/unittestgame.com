@@ -19,7 +19,7 @@ test.describe('class ParkingFee', () => {
     })
 
     test('has the correct amount of candidates', () => {
-        expect(level.candidates).toHaveLength(324)
+        expect(level.candidates).toHaveLength(432)
     })
 
     test('has the correct amount of minimal unit tests', () => {

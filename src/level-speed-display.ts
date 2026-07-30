@@ -22,10 +22,10 @@ export class SpeedDisplay extends Level<[number], string> {
                 '',
             ],
             [
-                '    if (speed < 199) return Math.floor(speed / 10) + "." + speed % 10',
-                '    if (speed < 200) return Math.floor(speed / 10) + "." + speed % 10',
-                '    if (speed <= 200) return Math.floor(speed / 10) + "." + speed % 10',
-                '    if (speed < 300) return Math.floor(speed / 10) + "." + speed % 10',
+                '    if (speed < 199) return Math.floor(speed / 10).toString() + "." + (speed % 10).toString()',
+                '    if (speed < 200) return Math.floor(speed / 10).toString() + "." + (speed % 10).toString()',
+                '    if (speed <= 200) return Math.floor(speed / 10).toString() + "." + (speed % 10).toString()',
+                '    if (speed < 300) return Math.floor(speed / 10).toString() + "." + (speed % 10).toString()',
                 '',
             ],
             [
@@ -36,8 +36,8 @@ export class SpeedDisplay extends Level<[number], string> {
                 '',
             ],
             [
-                '    return "" + Math.floor(speed / 10)',
-                '    return Math.floor(speed / 10) + "." + speed % 10',
+                '    return Math.floor(speed / 10).toString()',
+                '    return Math.floor(speed / 10).toString() + "." + (speed % 10).toString()',
                 '    return "START"',
                 '    return "DANGER"',
                 '    return "UNKNOWN"',

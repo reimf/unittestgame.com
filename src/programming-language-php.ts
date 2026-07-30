@@ -12,14 +12,13 @@ export class Php extends ProgrammingLanguage {
             ? javascriptCode.replace(new RegExp(`\\b(${parameterNames.join('|')})\\b`, 'g'), '$$$1')
             : javascriptCode
         return prefixedCode
-            .replace(/\bfunction (\w+)\((.*?)\): (\w+) \{/g, 'function $1($2): $3 {')
             .replace(/\bnumber\b/g, 'int')
             .replace(/\bboolean\b/g, 'bool')
-            .replace(/\bstring\b/g, 'string')
+            .replace(/\bfunction (\w+)\((.*?)\): (\w+) \{/g, 'function $1($2): $3 {')
             .replace(/(\$?\w+): (\w+)/g, '$2 $1')
             .replace(/(\$\w+)\.length\b/g, 'strlen($1)')
             .replace(/\bMath\.floor\((\$\w+) \/ (\d+)\)/g, 'intdiv($1, $2)')
-            .replace(/(\$\w+)\.toString\(\)/g, 'strval($1)')
+            .replace(/(\w+\([^()]*\))\.toString\(\)|\(((?:[^()]|\([^()]*\))*)\)\.toString\(\)|(\$\w+)\.toString\(\)/g, 'strval($1$2$3)')
             .replace(/ \+= /g, ' .= ')
             .replace(/ \+ /g, ' . ')
             .replace(/^( +.+)$/gm, '$1;')

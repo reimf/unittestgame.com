@@ -7,13 +7,13 @@ export class Csharp extends ProgrammingLanguage {
 
     public override transpile(javascriptCode: string): string {
         return javascriptCode
-            .replace(/\bfunction (\w+)\((.*?)\): (\w+) \{/g, 'static $3 $1($2)\n{')
             .replace(/\bnumber\b/g, 'int')
             .replace(/\bboolean\b/g, 'bool')
+            .replace(/\bfunction (\w+)\((.*?)\): (\w+) \{/g, 'static $3 $1($2)\n{')
             .replace(/(\w+): (\w+)/g, '$2 $1')
             .replace(/(\w+)\.length\b/g, '$1.Length')
-            .replace(/\bMath\.floor\((\w+) \/ (\d+)\)/g, '$1 / $2')
-            .replace(/(\w+)\.toString\(\)/g, '$1.ToString()')
+            .replace(/\bMath\.floor\((\w+) \/ (\d+)\)/g, '($1 / $2)')
+            .replace(/\.toString\(\)/g, '.ToString()')
             .replace(/===/g, '==')
             .replace(/!==/g, '!=')
             .replace(/^( +.+)$/gm, '$1;')

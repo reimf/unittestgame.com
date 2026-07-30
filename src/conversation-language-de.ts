@@ -250,7 +250,7 @@ export class German extends ConversationLanguage {
     public override parkingFeeSpecification(): ConversationText {
         return ConversationLanguage.bless('Gib `FREE` zurück, wenn die Anzahl der geparkten Minuten weniger als `30` beträgt, oder wenn es Wochenende ist und der Kunde eingekauft hat. ' +
             'Gib `$10` zurück, wenn es Wochenende ist. ' +
-            'Gib andernfalls den Preis für jeden vollen `30`-Minuten-Block zurück, zu `$2` pro Block, oder zu `$1` pro Block, wenn der Kunde eingekauft hat.')
+            'Gib andernfalls $1 für jeden vollen 15-Minuten-Block zurück, oder $1 für jeden vollen 30-Minuten-Block, wenn der Kunde eingekauft hat.')
     }
 
     public override or(): ConversationText {

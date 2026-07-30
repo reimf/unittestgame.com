@@ -3,6 +3,7 @@ import { JSDOM } from 'jsdom'
 import { Div } from '../../src/html.js'
 import { JavaScript } from '../../src/programming-language-javascript.js'
 import { Python } from '../../src/programming-language-python.js'
+import { Ruby } from '../../src/programming-language-ruby.js'
 
 const { document } = new JSDOM('<!DOCTYPE html>').window
 global.document = document
@@ -259,7 +260,7 @@ test.describe('class Python', () => {
     })
 
     test('transpiles Math.floor division and modulo to str() with // and %', () => {
-        const highlighted = python.highlight('return Math.floor(speed / 10) + "." + speed % 10')
+        const highlighted = python.highlight('return Math.floor(speed / 10).toString() + "." + (speed % 10).toString()')
         expect(html(highlighted)).toEqual([
             '<div>' +
                 '<span class="keyword">return</span>' +
@@ -382,6 +383,240 @@ test.describe('class Python', () => {
                 '<span class="whitespace"> </span>' +
                 '<del class="literal">False</del>' +
                 '<ins class="literal">True</ins>' +
+            '</div>',
+        ])
+    })
+})
+
+test.describe('class Ruby', () => {
+    const ruby = new Ruby()
+
+    test('transpiles === and !== to == and != across multiple lines', () => {
+        const highlighted = ruby.highlight('if (age === 17) return false\nreturn true')
+        expect(html(highlighted)).toEqual([
+            '<div>' +
+                '<span class="keyword">return</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="literal">false</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="keyword">if</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="variable">age</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="operator">==</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="number">17</span>' +
+            '</div>',
+            '<div>' +
+                '<span class="keyword">return</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="literal">true</span>' +
+            '</div>',
+        ])
+    })
+
+    test('transpiles && and !== across multiple lines', () => {
+        const highlighted = ruby.highlight('if (price < 19 && quality >= 6) return "GOOD"\nif (a !== b) return "SCALENE"')
+        expect(html(highlighted)).toEqual([
+            '<div>' +
+                '<span class="keyword">return</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="string">"GOOD"</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="keyword">if</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="variable">price</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="operator">&lt;</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="number">19</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="operator">&amp;&amp;</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="variable">quality</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="operator">&gt;=</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="number">6</span>' +
+            '</div>',
+            '<div>' +
+                '<span class="keyword">return</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="string">"SCALENE"</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="keyword">if</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="variable">a</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="operator">!=</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="variable">b</span>' +
+            '</div>',
+        ])
+    })
+
+    test('transpiles ||', () => {
+        const highlighted = ruby.highlight('if (a === b || b === c) return "EQUILATERAL"')
+        expect(html(highlighted)).toEqual([
+            '<div>' +
+                '<span class="keyword">return</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="string">"EQUILATERAL"</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="keyword">if</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="variable">a</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="operator">==</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="variable">b</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="operator">||</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="variable">b</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="operator">==</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="variable">c</span>' +
+            '</div>',
+        ])
+    })
+
+    test('keeps !', () => {
+        const highlighted = ruby.highlight('if (!ok) return false')
+        expect(html(highlighted)).toEqual([
+            '<div>' +
+                '<span class="keyword">return</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="literal">false</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="keyword">if</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="operator">!</span>' +
+                '<span class="variable">ok</span>' +
+            '</div>',
+        ])
+    })
+
+    test('transpiles Math.floor division and modulo to (x).to_s', () => {
+        const highlighted = ruby.highlight('return Math.floor(speed / 10).toString() + "." + (speed % 10).toString()')
+        expect(html(highlighted)).toEqual([
+            '<div>' +
+                '<span class="keyword">return</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="punctuation">(</span>' +
+                '<span class="variable">speed</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="operator">/</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="number">10</span>' +
+                '<span class="punctuation">)</span>' +
+                '<span class="dot">.</span>' +
+                '<span class="variable">to_s</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="operator">+</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="string">"."</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="operator">+</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="punctuation">(</span>' +
+                '<span class="variable">speed</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="operator">%</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="number">10</span>' +
+                '<span class="punctuation">)</span>' +
+                '<span class="dot">.</span>' +
+                '<span class="variable">to_s</span>' +
+            '</div>',
+        ])
+    })
+
+    test('transpiles toString() to to_s', () => {
+        const highlighted = ruby.highlight('return num.toString()')
+        expect(html(highlighted)).toEqual([
+            '<div>' +
+                '<span class="keyword">return</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="variable">num</span>' +
+                '<span class="dot">.</span>' +
+                '<span class="variable">to_s</span>' +
+            '</div>',
+        ])
+    })
+
+    test('transpiles function into def and handles the closing curly bracket', () => {
+        const highlighted = ruby.highlight('function isEven(num: number): boolean {\n    if (num % 2 === 0) return true\n    return false\n}')
+        expect(html(highlighted)).toEqual([
+            '<div>' +
+                '<span class="keyword">def</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="function">isEven</span>' +
+                '<span class="punctuation">(</span>' +
+                '<span class="variable">num</span>' +
+                '<span class="punctuation">)</span>' +
+            '</div>',
+            '<div>' +
+                '<span class="whitespace">    </span>' +
+                '<span class="keyword">return</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="literal">true</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="keyword">if</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="variable">num</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="operator">%</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="number">2</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="operator">==</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="number">0</span>' +
+            '</div>',
+            '<div>' +
+                '<span class="whitespace">    </span>' +
+                '<span class="keyword">return</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="literal">false</span>' +
+            '</div>',
+            '<div>' +
+                '<span class="keyword">end</span>' +
+            '</div>',
+        ])
+    })
+
+    test('highlights a diff when current and previous transpile to a different number of lines', () => {
+        const highlighted = ruby.highlight('return true\nreturn false', 'return true')
+        expect(html(highlighted)).toEqual([
+            '<div>' +
+                '<ins class="keyword">return</ins>' +
+                '<ins class="whitespace"> </ins>' +
+                '<ins class="literal">true</ins>' +
+            '</div>',
+            '<div>' +
+                '<span class="keyword">return</span>' +
+                '<span class="whitespace"> </span>' +
+                '<del class="literal">true</del>' +
+                '<ins class="literal">false</ins>' +
+            '</div>',
+        ])
+    })
+
+    test('highlights a diff when current transpiles to fewer lines than previous', () => {
+        const highlighted = ruby.highlight('return true', 'return true\nreturn false')
+        expect(html(highlighted)).toEqual([
+            '<div>' +
+                '<del class="keyword">return</del>' +
+                '<del class="whitespace"> </del>' +
+                '<del class="literal">true</del>' +
+            '</div>',
+            '<div>' +
+                '<span class="keyword">return</span>' +
+                '<span class="whitespace"> </span>' +
+                '<del class="literal">false</del>' +
+                '<ins class="literal">true</ins>' +
             '</div>',
         ])
     })

@@ -7,16 +7,13 @@ export class Python extends ProgrammingLanguage {
 
     public override transpile(javascriptCode: string): string {
         return javascriptCode
-            .replace(/\bfunction (\w+)\((.*?)\): (\w+) \{/g, 'def $1($2) -> $3:')
             .replace(/\bnumber\b/g, 'int')
             .replace(/\bboolean\b/g, 'bool')
             .replace(/\bstring\b/g, 'str')
+            .replace(/\bfunction (\w+)\((.*?)\): (\w+) \{/g, 'def $1($2) -> $3:')
             .replace(/(\w+)\.length\b/g, 'len($1)')
-            .replace(/\bMath\.floor\((\w+) \/ (\d+)\) \+ "\." \+ (\w+) % (\d+)/g, 'str($1 // $2) + "." + str($3 % $4)')
-            .replace(/"" \+ Math\.floor\((\w+) \/ (\d+)\)/g, 'str($1 // $2)')
-            .replace(/"\$" \+ Math\.floor\((\w+) \/ (\d+)\) \* (\d+)/g, '"$" + str($1 // $2 * $3)')
-            .replace(/"\$" \+ Math\.floor\((\w+) \/ (\d+)\)/g, '"$" + str($1 // $2)')
-            .replace(/(\w+)\.toString\(\)/g, 'str($1)')
+            .replace(/\bMath\.floor\((\w+) \/ (\d+)\)/g, '($1 // $2)')
+            .replace(/\(((?:[^()]|\([^()]*\))*)\)\.toString\(\)|(\w+)\.toString\(\)/g, 'str($1$2)')
             .replace(/\btrue\b/g, 'True')
             .replace(/\bfalse\b/g, 'False')
             .replace(/===/g, '==')
@@ -25,7 +22,7 @@ export class Python extends ProgrammingLanguage {
             .replace(/\|\|/g, 'or')
             .replace(/!(?!=)/g, 'not ')
             .replace(/\bif +\((.+?)\) +return/g, 'if $1: return')
-            .replace(/\n *\}/g, '')
+            .replace(/\n\}/g, '')
     }
 
     public override getTokenTypes(): TokenTypes {

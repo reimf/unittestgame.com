@@ -7,14 +7,14 @@ export class Java extends ProgrammingLanguage {
 
     public override transpile(javascriptCode: string): string {
         return javascriptCode
-            .replace(/\bfunction (\w+)\((.*?)\): (\w+) \{/g, 'static $3 $1($2) {')
             .replace(/\bnumber\b/g, 'int')
             .replace(/\bboolean\b/g, 'boolean')
             .replace(/\bstring\b/g, 'String')
+            .replace(/\bfunction (\w+)\((.*?)\): (\w+) \{/g, 'static $3 $1($2) {')
             .replace(/(\w+): (\w+)/g, '$2 $1')
             .replace(/(\w+)\.length\b/g, '$1.length()')
-            .replace(/\bMath\.floor\((\w+) \/ (\d+)\)/g, '$1 / $2')
-            .replace(/(\w+)\.toString\(\)/g, 'String.valueOf($1)')
+            .replace(/\bMath\.floor\((\w+) \/ (\d+)\)/g, '($1 / $2)')
+            .replace(/\(((?:[^()]|\([^()]*\))*)\)\.toString\(\)|(\w+)\.toString\(\)/g, 'String.valueOf($1$2)')
             .replace(/^(.*) === ("[^"]*")$/gm, '$2.equals($1)')
             .replace(/===/g, '==')
             .replace(/!==/g, '!=')

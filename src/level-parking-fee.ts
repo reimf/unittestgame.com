@@ -28,19 +28,20 @@ export class ParkingFee extends Level<[number, boolean, boolean], string> {
             ],
             [
                 '    if (isWeekend) return "$10"',
-                '    if (isWeekend) return "$8"',
+                '    if (isWeekend || hasShopped) return "$10"',
+                '    if (isWeekend && hasShopped) return "$10"',
                 '',
             ],
             [
-                '    if (hasShopped) return "$" + Math.floor(minutesParked / 30)',
-                '    if (hasShopped) return "$" + Math.floor(minutesParked / 30) * 2',
+                '    if (hasShopped) return "$" + Math.floor(minutesParked / 30).toString()',
+                '    if (hasShopped) return "$" + Math.floor(minutesParked / 15).toString()',
                 '',
             ],
             [
-                '    return "$" + Math.floor(minutesParked / 30) * 2',
                 '    return "FREE"',
                 '    return "$10"',
-                '    return "$0"',
+                '    return "$" + Math.floor(minutesParked / 30).toString()',
+                '    return "$" + Math.floor(minutesParked / 15).toString()',
             ],
             [
                 '}'
