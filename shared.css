@@ -55,9 +55,10 @@ code {
         display: block;
         overflow-x: auto;
         overflow-y: hidden;
-        white-space: pre;
 
         div {
+            white-space: pre;
+
             &.old {
                 background-color: var(--old-background);
             }
@@ -117,10 +118,6 @@ code {
 
 ol, ul {
     list-style-type: none;
-}
-
-p {
-    white-space: pre-wrap;
 }
 
 #messages {

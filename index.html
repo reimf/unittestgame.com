@@ -19,15 +19,15 @@
   </head>
   <body>
     <nav>
-      <a class="brand" href="index.html">
-        <img src="apple-touch-icon.png" alt="">
+      <div class="brand">
+        <img src="apple-touch-icon.png" alt="Logo of UnitTestGame">
         <span>UnitTestGame</span>
-      </a>
+      </div>
       <div class="nav-links">
-        <a href="#how">How it works</a>
+        <a href="#how-it-works">How it works</a>
         <a href="#levels">Levels</a>
-        <a href="#why">Why it works</a>
-        <a class="btn btn-primary" href="game.html">Play now</a>
+        <a href="#why-it-works">Why it works</a>
+        <a class="btn btn-primary" href="game">Play now</a>
       </div>
     </nav>
     <header>
@@ -35,186 +35,247 @@
         <h1>It passes every unit test you wrote and that's <span class="gradient-text">exactly</span> the problem.</h1>
         <p>UnitTestGame pairs you with a maliciously compliant bot that writes the laziest code that satisfies your unit tests, and nothing more. Your job: write unit tests until the program is right.</p>
         <div class="hero-cta">
-          <a class="btn btn-primary" href="game.html">Play free in your browser →</a>
-          <a class="btn btn-secondary" href="#how">See how it works</a>
+          <a class="btn btn-primary" href="game">Play free in your browser →</a>
+          <a class="btn btn-secondary" href="#how-it-works">See how it works</a>
         </div>
       </div>
       <div id="messages">
         <section class="human" id="message-1">
           <div>
             <p>I want to add this unit test.</p>
-            <code class="block"><div class="new"><span class="function">powerMode</span>(<span class="number">20</span>) <span class="operator">===</span> <span class="string">"NORMAL MODE"</span></div></code>
+            <code class="block">
+              <div class="new"><span class="function">powerMode</span>(<span class="number">20</span>) <span class="operator">===</span> <span class="string">"NORMAL MODE"</span></div>
+            </code>
           </div>
         </section>
         <section class="computer" id="message-2">
           <div>
-            <code class="block"><div><span class="keyword">function</span> <span class="function">powerMode</span>(<span class="variable">batteryLevel</span>) {</div><div class="code-wrap"><div>    <span class="keyword">return</span> <span class="string">"NORMAL MODE"</span></div><div class="circle generalization-false"></div></div><div>}</div></code>
-            <span class="handwritten generalization-false">passes your unit test,<br>no generalization yet</span>
+            <code class="block">
+              <div><span class="keyword">function</span> <span class="function">powerMode</span>(<span class="variable">batteryLevel</span>) {</div>
+              <div class="code-wrap">
+                <div>    <span class="keyword">return</span> <span class="string">"NORMAL MODE"</span></div>
+                <div class="generalization-false"></div>
+              </div>
+              <div>}</div>
+            </code>
+            <span class="handwritten generalization-false">passes your unit test → no generalization yet</span>
           </div>
         </section>
         <section class="human" id="message-3">
           <div>
             <p>I want to add this unit test.</p>
-            <code class="block"><div class="new"><span class="function">powerMode</span>(<span class="number">19</span>) <span class="operator">===</span> <span class="string">"LOW POWER MODE"</span></div></code>
+            <code class="block">
+              <div class="new"><span class="function">powerMode</span>(<span class="number">19</span>) <span class="operator">===</span> <span class="string">"LOW POWER MODE"</span></div>
+            </code>
           </div>
         </section>
         <section class="computer" id="message-4">
           <div>
-            <code class="block"><div><span class="keyword">function</span> <span class="function">powerMode</span>(<span class="variable">batteryLevel</span>) {</div><div class="code-wrap"><div>    <span class="keyword">if</span> (<span class="variable">batteryLevel</span> <span class="operator">&gt;=</span> <span class="number">20</span>) <span class="keyword">return</span> <span class="string">"NORMAL MODE"</span></div><div>    <span class="keyword">return</span> <span class="string">"LOW POWER MODE"</span></div><div class="circle generalization-true"></div></div><div>}</div></code>
-            <span class="handwritten generalization-true">passes both unit tests,<br>with generalization!</span>
+            <code class="block">
+              <div><span class="keyword">function</span> <span class="function">powerMode</span>(<span class="variable">batteryLevel</span>) {</div>
+              <div class="code-wrap">
+                <div>    <span class="keyword">if</span> (<span class="variable">batteryLevel</span> <span class="operator">&gt;=</span> <span class="number">20</span>) <span class="keyword">return</span> <span class="string">"NORMAL MODE"</span></div>
+                <div>    <span class="keyword">return</span> <span class="string">"LOW POWER MODE"</span></div>
+                <div class="generalization-true"></div>
+              </div>
+              <div>}</div>
+            </code>
+            <span class="handwritten generalization-true">passes both unit tests → forced generalization</span>
           </div>
         </section>
       </div>
     </header>
-    <section id="how">
-      <div class="section-head">
-        <h2>Learning Test-Driven Development by feel</h2>
-        <p>No lectures. No quizzes. Just a bot exploiting every hole in your unit tests.</p>
+    <section id="how-it-works">
+      <div>
+        <h2>Learn Test-Driven Development by feel</h2>
+        <p>
+          No lectures.
+          No quizzes. 
+          Just a bot exploiting every hole in your unit tests.
+        </p>
       </div>
-      <ol class="steps">
+      <ol>
         <li>
           <h3><span>1</span> Read the spec</h3>
-          <p>See what the function is supposed to do, in plain input → output terms.</p>
+          <p>
+            See what the function is supposed to do, 
+            in plain input → output terms.
+          </p>
         </li>
         <li>
           <h3><span>2</span> Watch it cheat</h3>
-          <p>The AI bot ships the laziest code that satisfies exactly what you tested.</p>
+          <p>
+            The AI bot ships the laziest code
+            that satisfies exactly what you tested.
+          </p>
         </li>
         <li>
           <h3><span>3</span> Catch the gap</h3>
-          <p>Spot the edge case it dodged, and add a unit test that exposes it.</p>
+          <p>
+            Spot the edge case it dodged,
+            and add a unit test that exposes it.
+          </p>
         </li>
         <li>
           <h3><span>4</span> Tighten until solid</h3>
-          <p>Repeat until there's no shortcut left. Level completed!</p>
+          <p>
+            Repeat until there's no shortcut left.
+            Level completed!
+          </p>
         </li>
       </ol>
     </section>
-    <section id="why">
-      <div class="section-head">
+    <section id="why-it-works">
+      <div>
         <h2>Built for people who ship real code</h2>
-        <p>It plays like a game. It sticks like a habit. It changes your way of testing.</p>
+        <p>
+          It plays like a game. 
+          It sticks like a habit. 
+          It changes your way of testing.
+        </p>
       </div>
-      <ul class="features">
+      <ul>
         <li>
           <h3><span>🕵️</span> A worthy opponent</h3>
-          <p>The AI bot is maliciously compliant. Every rewrite is a lesson about your blind spot.</p>
+          <p>
+            The AI bot is maliciously compliant. 
+            Every move is a lesson about your blind spot.
+          </p>
         </li>
         <li>
           <h3><span>📈</span> Escalating difficulty</h3>
-          <p>Start with battery levels. End up untangling speed displays and parking fees.</p>
+          <p>
+            Start with battery levels. 
+            End up untangling speed displays and parking fees.
+          </p>
         </li>
         <li>
           <h3><span>🔓</span> Real progression</h3>
-          <p>A level board tracks what you've unlocked, so you always know what's next.</p>
+          <p>
+            A level board tracks what you've unlocked,
+            so you always know what's next.
+          </p>
         </li>
         <li>
           <h3><span>🌍</span> Six conversation languages</h3>
-          <p>Converse in English, Dutch, German, French, Spanish, or Italian.</p>
+          <p>
+            Converse in English, Dutch, German,
+            French, Spanish, or Italian.
+          </p>
         </li>
         <li>
           <h3><span>💻</span> Six programming languages</h3>
-          <p>Let the AI bot write programs in JavaScript, TypeScript, Python, Java, C#, or PHP.</p>
+          <p>
+            Let the AI bot write programs in
+            JavaScript, TypeScript, Python, Java, C#, or PHP.
+          </p>
         </li>
         <li>
           <h3><span>🧩</span> No setup at all</h3>
-          <p>Runs entirely in the browser. No account, no install, no dependencies to fight with.</p>
+          <p>
+            Runs entirely in the browser. 
+            No account, no install, no dependencies to fight with.
+          </p>
         </li>
       </ul>
     </section>
     <section id="levels">
-      <div class="section-head">
+      <div>
         <h2>Ten levels, ten ways to get outsmarted</h2>
-        <p>Each one looks simple. Until the AI bot finds another input you forgot to test.</p>
+        <p>
+          Each one looks simple.
+          Until the AI bot finds another input you forgot to test.
+        </p>
       </div>
-      <ol class="levels">
+      <ol>
         <li>
-          <div class="card-head">
-            <span class="tag">Warm-up</span>
-            <span class="difficulty" aria-label="Difficulty 1 of 3">★☆☆</span>
+          <div>
+            <span>Level 0</span>
+            <span>easy</span>
           </div>
           <h3>Battery Level</h3>
           <p>A single cutoff, and plenty of ways to miss it.</p>
         </li>
         <li>
-          <div class="card-head">
-            <span class="tag">Boundaries</span>
-            <span class="difficulty" aria-label="Difficulty 1 of 3">★☆☆</span>
+          <div>
+            <span>Level 1</span>
+            <span>easy</span>
           </div>
           <h3>Voting Age</h3>
           <p>One threshold. Zero room for an off-by-one.</p>
         </li>
         <li>
-          <div class="card-head">
-            <span class="tag">Lookup</span>
-            <span class="difficulty" aria-label="Difficulty 2 of 3">★★☆</span>
+          <div>
+            <span>Level 2</span>
+            <span>easy</span>
           </div>
           <h3>Wind Scale</h3>
           <p>Beaufort scale thresholds, bucket by bucket.</p>
         </li>
         <li>
-          <div class="card-head">
-            <span class="tag">Checkpoint</span>
-            <span class="difficulty" aria-label="Difficulty 2 of 3">★★☆</span>
+          <div>
+            <span>Level 3</span>
+            <span>medium</span>
           </div>
           <h3>Review</h3>
           <p>Everything you've learned so far, all at once.</p>
         </li>
         <li>
-          <div class="card-head">
-            <span class="tag">Money</span>
-            <span class="difficulty" aria-label="Difficulty 2 of 3">★★☆</span>
+          <div>
+            <span>Level 4</span>
+            <span>medium</span>
           </div>
           <h3>Discount</h3>
           <p>Shopping hides more edge cases than you'd think.</p>
         </li>
         <li>
-          <div class="card-head">
-            <span class="tag">Classic</span>
-            <span class="difficulty" aria-label="Difficulty 2 of 3">★★☆</span>
+          <div>
+            <span>Level 5</span>
+            <span>medium</span>
           </div>
           <h3>FizzBuzz</h3>
           <p>The classic, with a bot that works against you.</p>
         </li>
         <li>
-          <div class="card-head">
-            <span class="tag">Dates</span>
-            <span class="difficulty" aria-label="Difficulty 2 of 3">★★☆</span>
+          <div>
+            <span>Level 6</span>
+            <span>medium</span>
           </div>
           <h3>Leap Year</h3>
           <p>Simple math, but hard to get right.</p>
         </li>
         <li>
-          <div class="card-head">
-            <span class="tag">Logic</span>
-            <span class="difficulty" aria-label="Difficulty 3 of 3">★★★</span>
+          <div>
+            <span>Level 7</span>
+            <span>hard</span>
           </div>
           <h3>Triangle Type</h3>
           <p>Classify a triangle by side length, carefully.</p>
         </li>
         <li>
-          <div class="card-head">
-            <span class="tag">Units</span>
-            <span class="difficulty" aria-label="Difficulty 3 of 3">★★★</span>
+          <div>
+            <span>Level 8</span>
+            <span>hard</span>
           </div>
           <h3>Speed Display</h3>
           <p>Unit conversion under pressure.</p>
         </li>
         <li>
-          <div class="card-head">
-            <span class="tag">Finale</span>
-            <span class="difficulty" aria-label="Difficulty 3 of 3">★★★</span>
+          <div>
+            <span>Level 9</span>
+            <span>hard</span>
           </div>
           <h3>Parking Fee</h3>
           <p>Pricing logic that loves to round wrong.</p>
         </li>
       </ol>
     </section>
-    <section>
-      <div class="section-head">
+    <section id="faq">
+      <div>
         <h2>Frequently Asked Questions</h2>
+        <p>Everything you need to know before you start playing.</p>
       </div>
-      <ul class="faq">
+      <ul>
         <li>
           <h4>Is it really free?</h4>
           <p>Yes. No ads, no tracking, no paywall. Just a free game.</p>
@@ -229,7 +290,7 @@
         </li>
         <li>
           <h4>Do I need to install anything?</h4>
-          <p>Nope. It runs entirely in your browser.</p>
+          <p>Nope. It runs entirely in your browser. Without external libraries.</p>
         </li>
         <li>
           <h4>Do I need an account?</h4>
@@ -252,8 +313,8 @@
     <section>
       <div class="cta-band">
         <h2>The AI bot is waiting for you. Don't get fooled.</h2>
-        <p>Click the button, follow the instructions, and see what it tries to get away with.</p>
-        <a class="btn btn-primary" href="game.html">Play UnitTestGame free →</a>
+        <p>Click the button, follow the instructions, and see what the AI bot tries to get away with.</p>
+        <a class="btn btn-primary" href="game">Play UnitTestGame free →</a>
       </div>
     </section>
     <footer>

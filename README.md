@@ -111,7 +111,7 @@ npx five-server
 ```
 
 Then open the URL:
-`http://localhost:5520/game.html`
+`http://localhost:5520`
 
 ## CI
 

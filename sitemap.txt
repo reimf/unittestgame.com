@@ -1,2 +1,2 @@
 https://unittestgame.com
-https://unittestgame.com/game.html
+https://unittestgame.com/game

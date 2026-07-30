@@ -2,7 +2,7 @@ import { test, expect } from '../fixture/fixture-coverage'
 
 test.describe('conversation languages', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('/game.html')
+        await page.goto('/game')
     })
 
     test('produces text for every method in every language', async ({ page }) => {

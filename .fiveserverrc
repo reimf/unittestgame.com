@@ -2,7 +2,6 @@
     "wait": 2000,
     "host": "localhost",
     "port": 5520,
-    "open": "game.html",
     "ignore": [
         "**/node_modules/**",
         "**/test/**",
