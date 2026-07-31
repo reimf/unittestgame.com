@@ -3,4 +3,4 @@
 /playwright-coverage/
 /test-results/
 */**/*.js
-*.map
+*/**/*.map
