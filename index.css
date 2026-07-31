@@ -4,8 +4,8 @@
   --heading-foreground-purple: #606;
   --card-background: #fffa;
   --card-border: #0001;
-  --generalization-false: #f00;
-  --generalization-true: #080;
+  --generalization-no: #f00;
+  --generalization-yes: #080;
   --gradient-background-left: #606;
   --gradient-background-right: #f3c;
   --peach: #fc6;
@@ -156,6 +156,7 @@ header {
   font-family: monospace;
   box-shadow: 0 2rem 4rem -1.5rem var(--button-shadow);
   min-width: 35rem;
+  overflow: visible;
   position: relative;
 
   section {
@@ -186,40 +187,58 @@ header {
     }
   }
 
-    code.block {
-      overflow: visible;
-    }
-
-  .code-wrap {
-    position: relative;
-    white-space: normal;
+  code.block {
+    overflow: visible;
   }
 
-  .handwritten {
+  .comment {
     animation: show 0.1s ease forwards;
-    bottom: 1.25rem;
     font-family: cursive;
     font-weight: bold;
     font-size: 1.5rem;
-    left: 3.5rem;
-    line-height: 1.2;
     opacity: 0;
     pointer-events: none;
     position: absolute;
-    text-align: center;
-    transform: rotate(-5deg);
-    white-space: normal;
+    white-space: pre-wrap;
     width: max-content;
     z-index: 5;
 
-    &.generalization-false {
-      animation-delay: 6s;
-      color: var(--generalization-false);
+    &.this-is-you {
+      bottom: 3rem;
+      color: var(--heading-foreground-purple);
+      line-height: 1;
+      right: -2rem;
+      text-align: right;
+      transform: rotate(45deg);
     }
 
-    &.generalization-true {
+    &.this-is-the-ai-bot {
+      bottom: 4.5rem;
+      color: var(--heading-foreground-purple);
+      left: -3rem;
+      line-height: 1;
+      text-align: left;
+      transform: rotate(-45deg);
+    }
+
+    &.generalization-no {
+      animation-delay: 6s;
+      bottom: -0.5rem;
+      color: var(--generalization-no);
+      left: 4rem;
+      line-height: 1.1;
+      text-align: left;
+      transform: rotate(-5deg);
+    }
+
+    &.generalization-yes {
       animation-delay: 12s;
-      color: var(--generalization-true);
+      bottom: -0.5rem;
+      color: var(--generalization-yes);
+      left: 4rem;
+      line-height: 1.1;
+      text-align: left;
+      transform: rotate(-5deg);
     }
   }
 }

@@ -46,19 +46,18 @@
             <code class="block">
               <div class="new"><span class="function">powerMode</span>(<span class="number">20</span>) <span class="operator">===</span> <span class="string">"NORMAL MODE"</span></div>
             </code>
+            <span class="comment this-is-you">this is you<br>↓</span>
           </div>
         </section>
         <section class="computer" id="message-2">
           <div>
             <code class="block">
               <div><span class="keyword">function</span> <span class="function">powerMode</span>(<span class="variable">batteryLevel</span>) {</div>
-              <div class="code-wrap">
-                <div>    <span class="keyword">return</span> <span class="string">"NORMAL MODE"</span></div>
-                <div class="generalization-false"></div>
-              </div>
+              <div>    <span class="keyword">return</span> <span class="string">"NORMAL MODE"</span></div>
               <div>}</div>
             </code>
-            <span class="handwritten generalization-false">passes your unit test → no generalization yet</span>
+            <span class="comment this-is-the-ai-bot">this is the AI bot<br>↓</span>
+            <span class="comment generalization-no">↑<br>this function passes your unit test<br>                              but it didn't generalize…</span>
           </div>
         </section>
         <section class="human" id="message-3">
@@ -73,14 +72,11 @@
           <div>
             <code class="block">
               <div><span class="keyword">function</span> <span class="function">powerMode</span>(<span class="variable">batteryLevel</span>) {</div>
-              <div class="code-wrap">
-                <div>    <span class="keyword">if</span> (<span class="variable">batteryLevel</span> <span class="operator">&gt;=</span> <span class="number">20</span>) <span class="keyword">return</span> <span class="string">"NORMAL MODE"</span></div>
-                <div>    <span class="keyword">return</span> <span class="string">"LOW POWER MODE"</span></div>
-                <div class="generalization-true"></div>
-              </div>
+              <div>    <span class="keyword">if</span> (<span class="variable">batteryLevel</span> <span class="operator">&gt;=</span> <span class="number">20</span>) <span class="keyword">return</span> <span class="string">"NORMAL MODE"</span></div>
+              <div>    <span class="keyword">return</span> <span class="string">"LOW POWER MODE"</span></div>      
               <div>}</div>
             </code>
-            <span class="handwritten generalization-true">passes both unit tests → forced generalization</span>
+            <span class="comment generalization-yes">↑<br>this function passes both unit tests<br>                                       and it generalized!</span>
           </div>
         </section>
       </div>
@@ -273,7 +269,7 @@
     <section id="faq">
       <div>
         <h2>Frequently Asked Questions</h2>
-        <p>Everything you need to know before you start playing.</p>
+        <p>No sales pitch. Just answers.</p>
       </div>
       <ul>
         <li>
