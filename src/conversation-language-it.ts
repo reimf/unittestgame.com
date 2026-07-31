@@ -249,8 +249,8 @@ export class Italian extends ConversationLanguage {
 
     public override parkingFeeSpecification(): ConversationText {
         return ConversationLanguage.bless('Restituisci `0` se il numero di minuti di parcheggio è inferiore a `30`, o se il cliente ha fatto acquisti nel weekend. ' +
-            'Restituisci `10` se è fine settimana. ' +
-            'Altrimenti, restituisci il numero di blocchi completi di 15 minuti, o il numero di blocchi completi di 30 minuti se il cliente ha fatto acquisti.')
+            'Restituisci `1000` centesimi se è fine settimana. ' +
+            'Altrimenti, restituisci 5 centesimi al minuto se il cliente non ha fatto acquisti, o 3 centesimi al minuto se il cliente ha fatto acquisti.')
     }
 
     public override or(): ConversationText {

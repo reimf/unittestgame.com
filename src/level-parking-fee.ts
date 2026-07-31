@@ -27,21 +27,21 @@ export class ParkingFee extends Level<[number, boolean, boolean], number> {
                 '',
             ],
             [
-                '    if (isWeekend) return 10',
-                '    if (isWeekend || hasShopped) return 10',
-                '    if (isWeekend && hasShopped) return 10',
+                '    if (isWeekend) return 1000',
+                '    if (isWeekend || hasShopped) return 1000',
+                '    if (isWeekend && hasShopped) return 1000',
                 '',
             ],
             [
-                '    if (hasShopped) return Math.floor(minutesParked / 30)',
-                '    if (hasShopped) return Math.floor(minutesParked / 15)',
+                '    if (hasShopped) return minutesParked * 3',
+                '    if (hasShopped) return minutesParked * 5',
                 '',
             ],
             [
                 '    return 0',
-                '    return 10',
-                '    return Math.floor(minutesParked / 30)',
-                '    return Math.floor(minutesParked / 15)',
+                '    return 1000',
+                '    return minutesParked * 3',
+                '    return minutesParked * 5',
             ],
             [
                 '}'
@@ -51,9 +51,9 @@ export class ParkingFee extends Level<[number, boolean, boolean], number> {
 
     protected* minimalUnitTestGenerator(): Generator<[[number, boolean, boolean], number]> {
         yield [[29, false, false], 0]
-        yield [[30, false, false], 2]
-        yield [[65, true, false], 2]
-        yield [[30, false, true], 10]
+        yield [[30, false, false], 150]
+        yield [[65, true, false], 195]
+        yield [[30, false, true], 1000]
     }
 
     protected* hintGenerator(): Generator<[number, boolean, boolean]> {

@@ -249,8 +249,8 @@ export class Spanish extends ConversationLanguage {
 
     public override parkingFeeSpecification(): ConversationText {
         return ConversationLanguage.bless('Retorna `0` si el número de minutos aparcados es menor que `30`, o si el cliente ha comprado el fin de semana. ' +
-            'Retorna `10` si es fin de semana. ' +
-            'De lo contrario, retorna el número de bloques completos de 15 minutos, o el número de bloques completos de 30 minutos si el cliente ha comprado.')
+            'Retorna `1000` céntimos si es fin de semana. ' +
+            'De lo contrario, retorna 5 céntimos por minuto si el cliente no ha comprado, o 3 céntimos por minuto si el cliente ha comprado.')
     }
 
     public override or(): ConversationText {
