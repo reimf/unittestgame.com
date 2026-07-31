@@ -70,7 +70,7 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
         const parameterList = functionDefinition.match(/\((.*)\)/)![1]!
         return parameterList.split(', ').map(parameter => {
             const [name, type] = parameter.split(': ')
-            const label = this.conversationLanguage.parameterLabel(name!)
+            const label = this.conversationLanguage.parameterLabel(this.programmingLanguage.formatVariableName(name!))
             if (type === 'boolean')
                 return new BooleanVariable(label, name!)
             return new IntegerVariable(label, name!)
@@ -81,9 +81,7 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
         const functionDefinition = candidateElements[0]![0]!
         const functionName = functionDefinition.match(/^function (\w+)/)![1]!
         const returnType = functionDefinition.match(/\):\s*(\w+)/)![1]!
-        const parameterList = functionDefinition.match(/\((.*)\)/)![1]!
-        const parameterNames = parameterList.split(', ').map(parameter => parameter.split(': ')[0])
-        const label = this.conversationLanguage.returnValueLabel(`${functionName}(${parameterNames.join(', ')})`)
+        const label = this.conversationLanguage.returnValueLabel(`${functionName}(…)`)
         if (returnType === 'boolean')
             return new BooleanVariable(label, functionName)
         if (returnType === 'number')
@@ -228,17 +226,9 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
         const formUnitTest = new Div().setId('form-unit-test').addClass('new')
         const formCodeBlock = new CodeBlock().appendChild(formUnitTest)
         const form = new Form(formData => this.addUnitTest(formData)).appendChildren([...variables, addButton, formCodeBlock])
-        form.onChange(formData => {
-            this.showFormUnitTest(formUnitTest, formData)
-            this.updateUnitLabel(formData)
-        })
+        form.onChange(formData => this.showFormUnitTest(formUnitTest, formData))
         const divider = new Div().appendText(this.conversationLanguage.or()).addClass('or')
         new HumanMessage([form, divider, submitButton]).show()
-    }
-
-    private updateUnitLabel(formData: FormData): void {
-        const argumentTexts = this.parameters.map(parameter => (formData.get(parameter.name) as string|null) || parameter.name)
-        this.unit.updateLabel(this.conversationLanguage.returnValueLabel(`${this.unit.name}(${argumentTexts.join(', ')})`))
     }
 
     private buildUnitTest(formData: FormData): UnitTest<Parameters, Result> {

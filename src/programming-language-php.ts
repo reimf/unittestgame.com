@@ -5,6 +5,10 @@ export class Php extends ProgrammingLanguage {
     public override readonly id = 'php' as const
     public override readonly name = 'PHP'
 
+    public override formatVariableName(name: string): string {
+        return `$${name}`
+    }
+
     public override transpile(typescriptCode: string): string {
         const signatureMatch = typescriptCode.match(/\bfunction \w+\((.*?)\):/)
         const parameterNames = signatureMatch?.[1] ? signatureMatch[1].split(', ').map(parameter => parameter.split(': ')[0]!) : []

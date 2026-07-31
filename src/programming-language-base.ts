@@ -14,6 +14,10 @@ export abstract class ProgrammingLanguage {
 
     protected abstract getTokenTypes(): TokenTypes
 
+    public formatVariableName(name: string): string {
+        return name
+    }
+
     public highlight(currentCode: string, previousCode?: string): Div[] {
         const tokenizer = new Tokenizer(this.tokenTypes)
         const highlighter = new Highlighter()
