@@ -208,8 +208,8 @@ export class German extends ConversationLanguage {
     public override speedDisplaySpecification(): ConversationText {
         return ConversationLanguage.bless('Der Geschwindigkeitssensor meldet die Geschwindigkeit in Zehnteln von Kilometern pro Stunde (z.B. 131 bedeutet 13.1 km/h). ' +
             'Gib die Geschwindigkeit zurück, wie sie auf dem Display angezeigt wird. ' +
-            'Verwende eine Dezimalstelle, wenn sie auf das Display passt (z.B. 131 → `13.1`). ' +
-            'Zeige sonst nur ganze Kilometer, ohne die Dezimalstelle (z.B. 876 → `87`). ' +
+            'Gib `DECIMAL` zurück, wenn eine Dezimalstelle auf das Display passt (z.B. 131 → `DECIMAL`, weil 13.1 auf das Display passt). ' +
+            'Gib sonst `INTEGER` zurück (z.B. 826 → `INTEGER`, weil 82.6 nicht auf das Display passt, aber 83 schon). ' +
             'Wenn das Auto nicht fährt, gib `START` zurück. ' +
             'Wenn die Geschwindigkeit nicht mehr auf das Display passt, gib `DANGER` zurück (z.B. 3000 → `DANGER`).\n' +
             'Das Display sieht so aus, wobei jedes X eine LED-Leuchte ist:\n' +

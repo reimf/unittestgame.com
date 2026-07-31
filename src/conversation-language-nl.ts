@@ -207,10 +207,10 @@ export class Dutch extends ConversationLanguage {
 
     public override speedDisplaySpecification(): ConversationText {
         return ConversationLanguage.bless('De snelheidssensor geeft de snelheid in tienden van kilometers per uur (bijvoorbeeld 131 betekent 13.1 km/u). ' +
-            'Geef de snelheid terug zoals die op het scherm wordt getoond. ' +
-            'Gebruik één decimaal als het op het scherm past (bijvoorbeeld 131 → `13.1`). ' +
-            'Toon anders alleen hele kilometers, zonder de decimaal (bijvoorbeeld 876 → `87`). ' +
-            'Als de auto niet beweegt, geef `START` terug. ' +
+            'Geef terug wat er op het scherm getoond moet worden. ' +
+            'Geef `DECIMAL` terug als er een decimaal op het scherm past (bijvoorbeeld 131 → `DECIMAL` want 13.1 past op het scherm). ' +
+            'Geef anders `INTEGER` terug (bijvoorbeeld 826 → `INTEGER` want 82.6 past niet op het scherm en 83 wel). ' +
+            'Als de auto stil staat, geef `START` terug. ' +
             'Als de snelheid niet meer op het scherm past, geef `DANGER` terug (bijvoorbeeld 3000 → `DANGER`).\n' +
             'Het scherm ziet er zo uit, waarbij elke X een LED-lampje is:\n' +
             '+-------------------+\n' +

@@ -208,8 +208,8 @@ export class Italian extends ConversationLanguage {
     public override speedDisplaySpecification(): ConversationText {
         return ConversationLanguage.bless('Il sensore di velocità indica la velocità in decimi di chilometri all\'ora (es. 131 significa 13.1 km/h). ' +
             'Restituisci la velocità come mostrata sul display. ' +
-            'Usa un decimale se entra nel display (es. 131 → `13.1`). ' +
-            'Altrimenti, mostra solo i chilometri interi, senza il decimale (es. 876 → `87`). ' +
+            'Restituisci `DECIMAL` se un decimale entra nel display (es. 131 → `DECIMAL` perché 13.1 entra nel display). ' +
+            'Altrimenti, restituisci `INTEGER` (es. 826 → `INTEGER` perché 82.6 non entra nel display ma 83 sì). ' +
             'Se la macchina non si muove, restituisci `START`. ' +
             'Se la velocità non entra più nel display, restituisci `DANGER` (es. 3000 → `DANGER`).\n' +
             'Il display è così, dove ogni X è una luce LED:\n' +

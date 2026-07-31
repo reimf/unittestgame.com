@@ -22,10 +22,10 @@ export class SpeedDisplay extends Level<[number], string> {
                 '',
             ],
             [
-                '    if (speed < 199) return Math.floor(speed / 10).toString() + "." + (speed % 10).toString()',
-                '    if (speed < 200) return Math.floor(speed / 10).toString() + "." + (speed % 10).toString()',
-                '    if (speed <= 200) return Math.floor(speed / 10).toString() + "." + (speed % 10).toString()',
-                '    if (speed < 300) return Math.floor(speed / 10).toString() + "." + (speed % 10).toString()',
+                '    if (speed < 199) return "DECIMAL"',
+                '    if (speed < 200) return "DECIMAL"',
+                '    if (speed <= 200) return "DECIMAL"',
+                '    if (speed < 300) return "DECIMAL"',
                 '',
             ],
             [
@@ -36,8 +36,8 @@ export class SpeedDisplay extends Level<[number], string> {
                 '',
             ],
             [
-                '    return Math.floor(speed / 10).toString()',
-                '    return Math.floor(speed / 10).toString() + "." + (speed % 10).toString()',
+                '    return "INTEGER"',
+                '    return "DECIMAL"',
                 '    return "START"',
                 '    return "DANGER"',
                 '    return "UNKNOWN"',
@@ -50,10 +50,10 @@ export class SpeedDisplay extends Level<[number], string> {
 
     protected* minimalUnitTestGenerator(): Generator<[[number], string]> {
         yield [[0], 'START']
-        yield [[1], '0.1']
-        yield [[199], '19.9']
-        yield [[200], '20']
-        yield [[1999], '199']
+        yield [[1], 'DECIMAL']
+        yield [[199], 'DECIMAL']
+        yield [[200], 'INTEGER']
+        yield [[1999], 'INTEGER']
         yield [[2000], 'DANGER']
     }
 
