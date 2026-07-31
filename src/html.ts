@@ -26,8 +26,8 @@ export abstract class Html extends Content {
         super(element)
     }
 
-    public getElement(): HTMLElement {
-        return this.node as HTMLElement
+    public getElement<T extends HTMLElement = HTMLElement>(): T {
+        return this.node as T
     }
 
     public setId(id: string): this {
@@ -122,41 +122,37 @@ class Text extends Content {
 export class Input extends Html {
     public constructor() {
         super('input')
-        const input = this.getInputElement()
-        input.addEventListener('focus', () => this.getInputElement().checked = true)
-    }
-
-    private getInputElement(): HTMLInputElement {
-        return this.getElement() as HTMLInputElement
+        const input = this.getElement<HTMLInputElement>()
+        input.addEventListener('focus', () => input.checked = true)
     }
 
     public setType(type: string): this {
-        this.getInputElement().type = type
+        this.getElement<HTMLInputElement>().type = type
         return this
     }
 
     public setName(name: string): this {
-        this.getInputElement().name = name
+        this.getElement<HTMLInputElement>().name = name
         return this
     }
 
     public setValue(value: string): this {
-        this.getInputElement().value = value
+        this.getElement<HTMLInputElement>().value = value
         return this
     }
 
     public setRequired(required: boolean = true): this {
-        this.getInputElement().required = required
+        this.getElement<HTMLInputElement>().required = required
         return this
     }
 
     public setPattern(pattern: RegExp): this {
-        this.getInputElement().pattern = pattern.toString().replaceAll('/', '')
+        this.getElement<HTMLInputElement>().pattern = pattern.toString().replaceAll('/', '')
         return this
     }
 
     public setTitle(title: string): this {
-        this.getInputElement().title = title
+        this.getElement<HTMLInputElement>().title = title
         return this
     }
 }
@@ -171,25 +167,21 @@ export class Submit extends Input {
 export class Form extends Html {
     public constructor(callback: (formData: FormData) => void) {
         super('form')
-        this.getFormElement().addEventListener('submit', event => {
+        this.getElement<HTMLFormElement>().addEventListener('submit', event => {
             event.preventDefault()
-            const formData = new FormData(this.getFormElement())
-            const submit = this.getFormElement().querySelector('input[type="submit"]') as HTMLInputElement
-            this.replaceEnclosingMessageContent(this.getFormElement(), ConversationLanguage.bless(submit.value))
+            const formData = new FormData(this.getElement<HTMLFormElement>())
+            const submit = this.getElement<HTMLFormElement>().querySelector('input[type="submit"]') as HTMLInputElement
+            this.replaceEnclosingMessageContent(this.getElement<HTMLFormElement>(), ConversationLanguage.bless(submit.value))
             callback(formData)
         })
     }
 
     public onChange(callback: (formData: FormData) => void): this {
         // radio inputs are checked on focus (see Input's constructor), which does not bubble as a 'change' event, so 'focusin' is needed too
-        const handler = () => callback(new FormData(this.getFormElement()))
-        this.getFormElement().addEventListener('change', handler)
-        this.getFormElement().addEventListener('focusin', handler)
+        const handler = () => callback(new FormData(this.getElement<HTMLFormElement>()))
+        this.getElement<HTMLFormElement>().addEventListener('change', handler)
+        this.getElement<HTMLFormElement>().addEventListener('focusin', handler)
         return this
-    }
-
-    private getFormElement(): HTMLFormElement {
-        return this.getElement() as HTMLFormElement
     }
 }
 
@@ -226,25 +218,18 @@ export class Label extends Html {
 export class Select extends Html {
     public constructor(callback: (value: string) => void) {
         super('select')
-        this.getSelectElement().addEventListener('change', () => callback(this.getSelectElement().value))
-    }
-
-    private getSelectElement(): HTMLSelectElement {
-        return this.getElement() as HTMLSelectElement
+        const select = this.getElement<HTMLSelectElement>()
+        select.addEventListener('change', () => callback(select.value))
     }
 }
 
 export class Option extends Html {
     public constructor(value: string, text: ConversationText, selected: boolean) {
         super('option')
-        const option = this.getOptionElement()
+        const option = this.getElement<HTMLOptionElement>()
         option.value = value
         option.defaultSelected = selected
         this.appendText(text)
-    }
-
-    private getOptionElement(): HTMLOptionElement {
-        return this.getElement() as HTMLOptionElement
     }
 }
 
@@ -312,24 +297,15 @@ export class Italic extends Html {
 export class Anchor extends Html {
     public constructor(href: string) {
         super('a')
-        const a = this.getAnchorElement()
-        a.href = href
-    }
-
-    private getAnchorElement(): HTMLAnchorElement {
-        return this.getElement() as HTMLAnchorElement
+        this.getElement<HTMLAnchorElement>().href = href
     }
 }
 
 export class Img extends Html {
     public constructor(src: string, alt: string) {
         super('img')
-        const img = this.getImgElement()
+        const img = this.getElement<HTMLImageElement>()
         img.src = src
         img.alt = alt
-    }
-
-    private getImgElement(): HTMLImageElement {
-        return this.getElement() as HTMLImageElement
     }
 }
