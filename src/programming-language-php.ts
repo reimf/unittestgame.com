@@ -5,12 +5,12 @@ export class Php extends ProgrammingLanguage {
     public override readonly id = 'php' as const
     public override readonly name = 'PHP'
 
-    public override transpile(javascriptCode: string): string {
-        const signatureMatch = javascriptCode.match(/\bfunction \w+\((.*?)\):/)
+    public override transpile(typescriptCode: string): string {
+        const signatureMatch = typescriptCode.match(/\bfunction \w+\((.*?)\):/)
         const parameterNames = signatureMatch?.[1] ? signatureMatch[1].split(', ').map(parameter => parameter.split(': ')[0]!) : []
         const prefixedCode = parameterNames.length > 0
-            ? javascriptCode.replace(new RegExp(`\\b(${parameterNames.join('|')})\\b`, 'g'), '$$$1')
-            : javascriptCode
+            ? typescriptCode.replace(new RegExp(`\\b(${parameterNames.join('|')})\\b`, 'g'), '$$$1')
+            : typescriptCode
         return prefixedCode
             .replace(/\bnumber\b/g, 'int')
             .replace(/\bboolean\b/g, 'bool')
@@ -18,7 +18,6 @@ export class Php extends ProgrammingLanguage {
             .replace(/(\$?\w+): (\w+)/g, '$2 $1')
             .replace(/(\$\w+)\.length\b/g, 'strlen($1)')
             .replace(/\bMath\.floor\((\$\w+) \/ (\d+)\)/g, 'intdiv($1, $2)')
-            .replace(/(\w+\([^()]*\))\.toString\(\)|\(((?:[^()]|\([^()]*\))*)\)\.toString\(\)|(\$\w+)\.toString\(\)/g, 'strval($1$2$3)')
             .replace(/ \+= /g, ' .= ')
             .replace(/ \+ /g, ' . ')
             .replace(/^( +.+)$/gm, '$1;')

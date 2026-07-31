@@ -5,8 +5,8 @@ export class Java extends ProgrammingLanguage {
     public override readonly id = 'java' as const
     public override readonly name = 'Java'
 
-    public override transpile(javascriptCode: string): string {
-        return javascriptCode
+    public override transpile(typescriptCode: string): string {
+        return typescriptCode
             .replace(/\bnumber\b/g, 'int')
             .replace(/\bboolean\b/g, 'boolean')
             .replace(/\bstring\b/g, 'String')
@@ -14,7 +14,6 @@ export class Java extends ProgrammingLanguage {
             .replace(/(\w+): (\w+)/g, '$2 $1')
             .replace(/(\w+)\.length\b/g, '$1.length()')
             .replace(/\bMath\.floor\((\w+) \/ (\d+)\)/g, '($1 / $2)')
-            .replace(/\(((?:[^()]|\([^()]*\))*)\)\.toString\(\)|(\w+)\.toString\(\)/g, 'String.valueOf($1$2)')
             .replace(/^(.*) === ("[^"]*")$/gm, '$2.equals($1)')
             .replace(/===/g, '==')
             .replace(/!==/g, '!=')

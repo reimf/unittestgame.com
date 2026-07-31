@@ -5,15 +5,14 @@ export class Python extends ProgrammingLanguage {
     public override readonly id = 'python' as const
     public override readonly name = 'Python'
 
-    public override transpile(javascriptCode: string): string {
-        return javascriptCode
+    public override transpile(typescriptCode: string): string {
+        return typescriptCode
             .replace(/\bnumber\b/g, 'int')
             .replace(/\bboolean\b/g, 'bool')
             .replace(/\bstring\b/g, 'str')
             .replace(/\bfunction (\w+)\((.*?)\): (\w+) \{/g, 'def $1($2) -> $3:')
             .replace(/(\w+)\.length\b/g, 'len($1)')
             .replace(/\bMath\.floor\((\w+) \/ (\d+)\)/g, '($1 // $2)')
-            .replace(/\(((?:[^()]|\([^()]*\))*)\)\.toString\(\)|(\w+)\.toString\(\)/g, 'str($1$2)')
             .replace(/\btrue\b/g, 'True')
             .replace(/\bfalse\b/g, 'False')
             .replace(/===/g, '==')

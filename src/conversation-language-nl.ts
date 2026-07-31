@@ -196,7 +196,7 @@ export class Dutch extends ConversationLanguage {
         return ConversationLanguage.bless('Geef `FIZZ` terug als het getal deelbaar is door 3, ' +
             '`BUZZ` als het deelbaar is door 5, ' +
             '`FIZZBUZZ` als het deelbaar is door zowel 3 als 5, ' +
-            'en het getal zelf voor elk ander getal.')
+            'en `NUMBER` voor elk ander getal.')
     }
 
     public override leapYearSpecification(): ConversationText {

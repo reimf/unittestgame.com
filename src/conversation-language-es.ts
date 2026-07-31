@@ -196,7 +196,7 @@ export class Spanish extends ConversationLanguage {
         return ConversationLanguage.bless('Retorna `FIZZ` si el número es divisible por 3, ' +
             '`BUZZ` si es divisible por 5, ' +
             '`FIZZBUZZ` si es divisible por 3 y por 5, ' +
-            'y el número mismo para cualquier otro número.')
+            'y `NUMBER` para cualquier otro número.')
     }
 
     public override leapYearSpecification(): ConversationText {

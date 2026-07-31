@@ -196,7 +196,7 @@ export class German extends ConversationLanguage {
         return ConversationLanguage.bless('Gib `FIZZ` zurück, wenn die Zahl durch 3 teilbar ist, ' +
             '`BUZZ` wenn sie durch 5 teilbar ist, ' +
             '`FIZZBUZZ` wenn sie durch 3 und 5 teilbar ist, ' +
-            'und die Zahl selbst für jede andere Zahl.')
+            'und `NUMBER` für jede andere Zahl.')
     }
 
     public override leapYearSpecification(): ConversationText {

@@ -10,7 +10,7 @@ export abstract class ProgrammingLanguage {
         this.tokenTypes = this.getTokenTypes()
     }
 
-    protected abstract transpile(javascriptCode: string): string
+    protected abstract transpile(typescriptCode: string): string
 
     protected abstract getTokenTypes(): TokenTypes
 

@@ -5,15 +5,14 @@ export class Csharp extends ProgrammingLanguage {
     public override readonly id = 'csharp' as const
     public override readonly name = 'C#'
 
-    public override transpile(javascriptCode: string): string {
-        return javascriptCode
+    public override transpile(typescriptCode: string): string {
+        return typescriptCode
             .replace(/\bnumber\b/g, 'int')
             .replace(/\bboolean\b/g, 'bool')
             .replace(/\bfunction (\w+)\((.*?)\): (\w+) \{/g, 'static $3 $1($2)\n{')
             .replace(/(\w+): (\w+)/g, '$2 $1')
             .replace(/(\w+)\.length\b/g, '$1.Length')
             .replace(/\bMath\.floor\((\w+) \/ (\d+)\)/g, '($1 / $2)')
-            .replace(/\.toString\(\)/g, '.ToString()')
             .replace(/===/g, '==')
             .replace(/!==/g, '!=')
             .replace(/^( +.+)$/gm, '$1;')

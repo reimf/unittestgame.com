@@ -8,9 +8,6 @@ export class JavaScript extends ProgrammingLanguage {
     public override transpile(typescriptCode: string): string {
         return typescriptCode
             .replace(/: \w+/g, '')
-            .replace(/(Math\.floor\(\w+ \/ \d+\))\.toString\(\) \+ "\." \+ \((\w+ % \d+)\)\.toString\(\)/g, '$1 + "." + ($2)')
-            .replace(/"\$" \+ (Math\.floor\(\w+ \/ \d+\))\.toString\(\)/g, '"$" + $1')
-            .replace(/"\$" \+ (\(Math\.floor\(\w+ \/ \d+\) \* \d+\))\.toString\(\)/g, '"$" + $1')
     }
 
     public override getTokenTypes(): TokenTypes {

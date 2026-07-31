@@ -34,7 +34,7 @@ export class FizzBuzz extends Level<[number], string> {
                 '    return "FIZZ"',
                 '    return "BUZZ"',
                 '    return "FIZZBUZZ"',
-                '    return num.toString()',
+                '    return "NUMBER"',
                 '    return "UNKNOWN"',
             ],
             [
@@ -47,7 +47,7 @@ export class FizzBuzz extends Level<[number], string> {
         yield [[6], 'FIZZ']
         yield [[25], 'BUZZ']
         yield [[30], 'FIZZBUZZ']
-        yield [[1], '1']
+        yield [[1], 'NUMBER']
     }
 
     protected* hintGenerator(): Generator<[number]> {

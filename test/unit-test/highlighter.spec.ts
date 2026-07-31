@@ -259,53 +259,6 @@ test.describe('class Python', () => {
         ])
     })
 
-    test('transpiles Math.floor division and modulo to str() with // and %', () => {
-        const highlighted = python.highlight('return Math.floor(speed / 10).toString() + "." + (speed % 10).toString()')
-        expect(html(highlighted)).toEqual([
-            '<div>' +
-                '<span class="keyword">return</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="function">str</span>' +
-                '<span class="punctuation">(</span>' +
-                '<span class="variable">speed</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="operator">//</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="number">10</span>' +
-                '<span class="punctuation">)</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="operator">+</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="string">"."</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="operator">+</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="function">str</span>' +
-                '<span class="punctuation">(</span>' +
-                '<span class="variable">speed</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="operator">%</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="number">10</span>' +
-                '<span class="punctuation">)</span>' +
-            '</div>',
-        ])
-    })
-
-    test('transpiles toString() to str(x)', () => {
-        const highlighted = python.highlight('return num.toString()')
-        expect(html(highlighted)).toEqual([
-            '<div>' +
-                '<span class="keyword">return</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="function">str</span>' +
-                '<span class="punctuation">(</span>' +
-                '<span class="variable">num</span>' +
-                '<span class="punctuation">)</span>' +
-            '</div>',
-        ])
-    })
-
     test('transpiles function into def and handles the closing curly bracket', () => {
         const highlighted = python.highlight('function isEven(num: number): boolean {\n    if (num % 2 === 0) return true\n    return false\n}')
         expect(html(highlighted)).toEqual([
@@ -494,54 +447,6 @@ test.describe('class Ruby', () => {
                 '<span class="whitespace"> </span>' +
                 '<span class="operator">!</span>' +
                 '<span class="variable">ok</span>' +
-            '</div>',
-        ])
-    })
-
-    test('transpiles Math.floor division and modulo to (x).to_s', () => {
-        const highlighted = ruby.highlight('return Math.floor(speed / 10).toString() + "." + (speed % 10).toString()')
-        expect(html(highlighted)).toEqual([
-            '<div>' +
-                '<span class="keyword">return</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="punctuation">(</span>' +
-                '<span class="variable">speed</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="operator">/</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="number">10</span>' +
-                '<span class="punctuation">)</span>' +
-                '<span class="dot">.</span>' +
-                '<span class="variable">to_s</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="operator">+</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="string">"."</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="operator">+</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="punctuation">(</span>' +
-                '<span class="variable">speed</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="operator">%</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="number">10</span>' +
-                '<span class="punctuation">)</span>' +
-                '<span class="dot">.</span>' +
-                '<span class="variable">to_s</span>' +
-            '</div>',
-        ])
-    })
-
-    test('transpiles toString() to to_s', () => {
-        const highlighted = ruby.highlight('return num.toString()')
-        expect(html(highlighted)).toEqual([
-            '<div>' +
-                '<span class="keyword">return</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="variable">num</span>' +
-                '<span class="dot">.</span>' +
-                '<span class="variable">to_s</span>' +
             '</div>',
         ])
     })
