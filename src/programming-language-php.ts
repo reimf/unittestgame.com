@@ -17,7 +17,6 @@ export class Php extends ProgrammingLanguage {
             .replace(/\bfunction (\w+)\((.*?)\): (\w+) \{/g, 'function $1($2): $3 {')
             .replace(/(\$?\w+): (\w+)/g, '$2 $1')
             .replace(/(\$\w+)\.length\b/g, 'strlen($1)')
-            .replace(/\bMath\.floor\((\$\w+) \/ (\d+)\)/g, 'intdiv($1, $2)')
             .replace(/ \+= /g, ' .= ')
             .replace(/ \+ /g, ' . ')
             .replace(/^( +.+)$/gm, '$1;')

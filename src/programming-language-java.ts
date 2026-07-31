@@ -13,7 +13,6 @@ export class Java extends ProgrammingLanguage {
             .replace(/\bfunction (\w+)\((.*?)\): (\w+) \{/g, 'static $3 $1($2) {')
             .replace(/(\w+): (\w+)/g, '$2 $1')
             .replace(/(\w+)\.length\b/g, '$1.length()')
-            .replace(/\bMath\.floor\((\w+) \/ (\d+)\)/g, '($1 / $2)')
             .replace(/^(.*) === ("[^"]*")$/gm, '$2.equals($1)')
             .replace(/===/g, '==')
             .replace(/!==/g, '!=')

@@ -9,7 +9,6 @@ export class Ruby extends ProgrammingLanguage {
         return typescriptCode
             .replace(/: (?:number|boolean|string)/g, '')
             .replace(/\bfunction (\w+)\((.*?)\) \{/g, 'def $1($2)')
-            .replace(/\bMath\.floor\((\w+) \/ (\d+)\)/g, '($1 / $2)')
             .replace(/===/g, '==')
             .replace(/!==/g, '!=')
             .replace(/\bif +\((.+?)\) +return (.+)$/gm, 'return $2 if $1')

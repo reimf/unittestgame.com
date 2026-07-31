@@ -12,7 +12,6 @@ export class Csharp extends ProgrammingLanguage {
             .replace(/\bfunction (\w+)\((.*?)\): (\w+) \{/g, 'static $3 $1($2)\n{')
             .replace(/(\w+): (\w+)/g, '$2 $1')
             .replace(/(\w+)\.length\b/g, '$1.Length')
-            .replace(/\bMath\.floor\((\w+) \/ (\d+)\)/g, '($1 / $2)')
             .replace(/===/g, '==')
             .replace(/!==/g, '!=')
             .replace(/^( +.+)$/gm, '$1;')
