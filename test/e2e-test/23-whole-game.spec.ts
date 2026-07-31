@@ -53,7 +53,7 @@ test.describe('whole game', () => {
                         else if (variable instanceof BooleanVariable)
                             await page.locator(`input[name="${variable.name}"][value="${value}"]`).check()
                         else
-                            await page.getByLabel(variable.label, { exact: true }).fill(value.toString())
+                            await page.locator(`input[name="${variable.name}"]`).fill(value.toString())
                     }
                     await page.getByRole('button', { name: 'I want to add this unit test' }).click()
                 }

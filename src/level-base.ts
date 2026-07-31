@@ -230,9 +230,17 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
         const formUnitTest = new Div().setId('form-unit-test').addClass('new')
         const formCodeBlock = new CodeBlock().appendChild(formUnitTest)
         const form = new Form(formData => this.addUnitTest(formData)).appendChildren([...variables, addButton, formCodeBlock])
-        form.onChange(formData => this.showFormUnitTest(formUnitTest, formData))
+        form.onChange(formData => {
+            this.showFormUnitTest(formUnitTest, formData)
+            this.updateUnitLabel(formData)
+        })
         const divider = new Div().appendText(this.conversationLanguage.or()).addClass('or')
         new HumanMessage([form, divider, submitButton]).show()
+    }
+
+    private updateUnitLabel(formData: FormData): void {
+        const argumentTexts = this.parameters.map(parameter => (formData.get(parameter.name) as string|null) || parameter.name)
+        this.unit.updateLabel(this.conversationLanguage.returnValueLabel(`${this.unit.name}(${argumentTexts.join(', ')})`))
     }
 
     private buildUnitTest(formData: FormData): UnitTest<Parameters, Result> {

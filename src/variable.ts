@@ -6,10 +6,20 @@ export type Value = boolean|number|string
 export abstract class Variable {
     public readonly label: ConversationText
     public readonly name: string
+    private labelDiv: Div|undefined
 
     protected constructor(label: ConversationText, name: string) {
         this.label = label
         this.name = name
+    }
+
+    protected buildLabelDiv(): Div {
+        this.labelDiv = new Div().appendText(this.label)
+        return this.labelDiv
+    }
+
+    public updateLabel(label: ConversationText): void {
+        this.labelDiv?.setText(label)
     }
 
     public abstract getInput(value: string): Value
@@ -38,7 +48,7 @@ export class RadioVariable extends Variable {
               .setRequired()
             return new Label().appendChild(input).appendText(text)
         })
-        const paragraph = new Paragraph().appendChild(new Div().appendText(this.label)).appendChildren(radioButtons)
+        const paragraph = new Paragraph().appendChild(this.buildLabelDiv()).appendChildren(radioButtons)
         return paragraph
     }
 
@@ -65,7 +75,7 @@ export class BooleanVariable extends Variable {
               .setRequired()
             return new Label().appendChild(input).appendText(text)
         })
-        const paragraph = new Paragraph().appendChild(new Div().appendText(this.label)).appendChildren(radioButtons)
+        const paragraph = new Paragraph().appendChild(this.buildLabelDiv()).appendChildren(radioButtons)
         return paragraph
     }
 
@@ -90,7 +100,7 @@ export class TextVariable extends Variable {
           .setRequired()
           .setPattern(/.{1,10}/)
           .setTitle('a text with at most 10 characters')
-        const label = new Label().appendChild(new Div().appendText(this.label)).appendChild(input)
+        const label = new Label().appendChild(this.buildLabelDiv()).appendChild(input)
         return new Paragraph().appendChild(label)
     }
 
@@ -115,7 +125,7 @@ export class IntegerVariable extends Variable {
           .setRequired()
           .setPattern(/[0-9]{1,4}/)
           .setTitle('an integer number with at most 4 digits')
-        const label = new Label().appendChild(new Div().appendText(this.label)).appendChild(input)
+        const label = new Label().appendChild(this.buildLabelDiv()).appendChild(input)
         return new Paragraph().appendChild(label)
     }
 
