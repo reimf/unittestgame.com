@@ -1,7 +1,7 @@
 import { Level } from './level-base.js'
 import { ConversationText } from './conversation-language-base.js'
 
-export class ParkingFee extends Level<[number, boolean, boolean], string> {
+export class ParkingFee extends Level<[number, boolean, boolean], number> {
     protected name(): string {
         return 'Parking Fee'
     }
@@ -13,35 +13,35 @@ export class ParkingFee extends Level<[number, boolean, boolean], string> {
     protected getCandidateElements(): string[][] {
         return [
             [
-                'function parkingFee(minutesParked: number, hasShopped: boolean, isWeekend: boolean): string {'
+                'function parkingFee(minutesParked: number, hasShopped: boolean, isWeekend: boolean): number {'
             ],
             [
-                '    if (minutesParked < 30 || (isWeekend && hasShopped)) return "FREE"',
-                '    if (minutesParked < 29 || (isWeekend && hasShopped)) return "FREE"',
-                '    if (minutesParked < 30 || (isWeekend || hasShopped)) return "FREE"',
-                '    if (minutesParked < 29 || (isWeekend || hasShopped)) return "FREE"',
-                '    if (minutesParked < 30 && (isWeekend && hasShopped)) return "FREE"',
-                '    if (minutesParked < 29 && (isWeekend && hasShopped)) return "FREE"',
-                '    if (minutesParked < 30 && (isWeekend || hasShopped)) return "FREE"',
-                '    if (minutesParked < 29 && (isWeekend || hasShopped)) return "FREE"',
+                '    if (minutesParked < 30 || (isWeekend && hasShopped)) return 0',
+                '    if (minutesParked < 29 || (isWeekend && hasShopped)) return 0',
+                '    if (minutesParked < 30 || (isWeekend || hasShopped)) return 0',
+                '    if (minutesParked < 29 || (isWeekend || hasShopped)) return 0',
+                '    if (minutesParked < 30 && (isWeekend && hasShopped)) return 0',
+                '    if (minutesParked < 29 && (isWeekend && hasShopped)) return 0',
+                '    if (minutesParked < 30 && (isWeekend || hasShopped)) return 0',
+                '    if (minutesParked < 29 && (isWeekend || hasShopped)) return 0',
                 '',
             ],
             [
-                '    if (isWeekend) return "$10"',
-                '    if (isWeekend || hasShopped) return "$10"',
-                '    if (isWeekend && hasShopped) return "$10"',
+                '    if (isWeekend) return 10',
+                '    if (isWeekend || hasShopped) return 10',
+                '    if (isWeekend && hasShopped) return 10',
                 '',
             ],
             [
-                '    if (hasShopped) return "$" + Math.floor(minutesParked / 30).toString()',
-                '    if (hasShopped) return "$" + Math.floor(minutesParked / 15).toString()',
+                '    if (hasShopped) return Math.floor(minutesParked / 30)',
+                '    if (hasShopped) return Math.floor(minutesParked / 15)',
                 '',
             ],
             [
-                '    return "FREE"',
-                '    return "$10"',
-                '    return "$" + Math.floor(minutesParked / 30).toString()',
-                '    return "$" + Math.floor(minutesParked / 15).toString()',
+                '    return 0',
+                '    return 10',
+                '    return Math.floor(minutesParked / 30)',
+                '    return Math.floor(minutesParked / 15)',
             ],
             [
                 '}'
@@ -49,11 +49,11 @@ export class ParkingFee extends Level<[number, boolean, boolean], string> {
         ]
     }
 
-    protected* minimalUnitTestGenerator(): Generator<[[number, boolean, boolean], string]> {
-        yield [[29, false, false], 'FREE']
-        yield [[30, false, false], '$2']
-        yield [[65, true, false], '$2']
-        yield [[30, false, true], '$10']
+    protected* minimalUnitTestGenerator(): Generator<[[number, boolean, boolean], number]> {
+        yield [[29, false, false], 0]
+        yield [[30, false, false], 2]
+        yield [[65, true, false], 2]
+        yield [[30, false, true], 10]
     }
 
     protected* hintGenerator(): Generator<[number, boolean, boolean]> {

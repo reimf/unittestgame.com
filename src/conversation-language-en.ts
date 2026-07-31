@@ -248,9 +248,9 @@ export class English extends ConversationLanguage {
     }
 
     public override parkingFeeSpecification(): ConversationText {
-        return ConversationLanguage.bless('Return `FREE` if the number of minutes parked is less than `30`, or if it is a weekend and the customer has shopped. ' +
-            'Return `$10` if it is a weekend. ' +
-            'Otherwise, return $1 for every full 15 minutes parked, or $1 for every full 30 minutes parked if the customer has shopped.')
+        return ConversationLanguage.bless('Return `0` if the number of minutes parked is less than `30`, or if the customer has shopped on the weekend. ' +
+            'Return `10` if it is a weekend. ' +
+            'Otherwise, return the number of complete 15-minute blocks, or the number of complete 30-minute blocks if the customer has shopped.')
     }
 
     public override or(): ConversationText {
