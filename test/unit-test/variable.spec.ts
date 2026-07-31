@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 import { JSDOM } from 'jsdom'
-import { RadioVariable, BooleanVariable, TextVariable, IntegerVariable } from '../../src/variable.js'
+import { RadioVariable, BooleanVariable, IntegerVariable } from '../../src/variable.js'
 import { ConversationLanguage } from '../../src/conversation-language-base.js'
 
 const { document } = new JSDOM('<!DOCTYPE html>').window
@@ -46,19 +46,6 @@ test.describe('class Variable', () => {
                 '<label>' +
                     '<input type="radio" name="isEven" value="false" required="">' +
                     'false' +
-                '</label>' +
-            '</p>'
-        )
-    })
-
-    test('subclass TextVariable', () => {
-        const variable = new TextVariable(ConversationLanguage.bless('Output'), 'fizzBuzz')
-        const html = variable.toHtml()
-        expect(html.getElement().outerHTML).toBe(
-            '<p>' +
-                '<label>' +
-                    '<div>Output</div>' +
-                    '<input type="text" autocomplete="off" name="fizzBuzz" required="" pattern=".{1,10}" title="a text with at most 10 characters">' +
                 '</label>' +
             '</p>'
         )

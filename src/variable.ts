@@ -84,31 +84,6 @@ export class BooleanVariable extends Variable {
     }
 }
 
-export class TextVariable extends Variable {
-    public constructor(label: ConversationText, name: string) {
-        super(label, name)
-    }
-
-    public getInput(value: string): string {
-        return value
-    }
-
-    public toHtml(): Html {
-        const input = new Input()
-          .setType('text')
-          .setName(this.name)
-          .setRequired()
-          .setPattern(/.{1,10}/)
-          .setTitle('a text with at most 10 characters')
-        const label = new Label().appendChild(this.buildLabelDiv()).appendChild(input)
-        return new Paragraph().appendChild(label)
-    }
-
-    public format(value: string): string {
-        return `"${value}"`
-    }
-}
-
 export class IntegerVariable extends Variable {
     public constructor(label: ConversationText, name: string) {
         super(label, name)

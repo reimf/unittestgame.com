@@ -6,7 +6,7 @@ import { ConversationLanguage, ConversationText } from './conversation-language-
 import { Picker } from './picker.js'
 import { TestResult } from './test-result.js'
 import { UnitTest } from './unit-test.js'
-import { BooleanVariable, IntegerVariable, RadioVariable, TextVariable, Value, Variable } from './variable.js'
+import { BooleanVariable, IntegerVariable, RadioVariable, Value, Variable } from './variable.js'
 import { ProgrammingLanguage } from './programming-language-base.js'
 
 export type AnyLevel = Level<readonly Value[], Value>
@@ -91,8 +91,6 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
         const returnValues = candidateElements.flat()
             .map(line => line.match(/return (.+)$/)?.[1])
             .filter((value): value is string => value !== undefined && value !== '"UNKNOWN"')
-        if (returnValues.some(value => !/^"[^"]*"$/.test(value)))
-            return new TextVariable(label, functionName)
         const texts = [...new Set(returnValues)]
             .filter(value => value !== '""')
             .map(value => ConversationLanguage.bless(value.slice(1, -1)))
