@@ -132,8 +132,6 @@ export class Input extends Html {
 
     public setType(type: string): this {
         this.getInputElement().type = type
-        if (type === 'text')
-            this.getInputElement().autocomplete = 'off'
         return this
     }
 

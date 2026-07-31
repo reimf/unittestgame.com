@@ -80,7 +80,7 @@ test.describe('class Html', () => {
     test('has input', () => {
         const input = new Input().setType('text').setName('postcode').setValue('value').setRequired().setPattern(/[0-9]{4}[A-Z]{2}/).setTitle('ongeldige postcode')
         expect(input.getElement().outerHTML).toBe(
-            '<input type="text" autocomplete="off" name="postcode" required="" pattern="[0-9]{4}[A-Z]{2}" title="ongeldige postcode">'
+            '<input type="text" name="postcode" required="" pattern="[0-9]{4}[A-Z]{2}" title="ongeldige postcode">'
         )
     })
 
