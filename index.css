@@ -173,21 +173,69 @@ header {
     }
   }
 
-  #replay {
-    bottom: -1rem;
-    font-size: 1.5rem;
+  #play {
+    background-color: transparent;
+    bottom: -2.8rem;
+    color: var(--heading-foreground-green);
+    cursor: pointer;
+    font-size: 2rem;
     font-weight: normal;
-    height: 2.5rem;
     justify-content: center;
+    left: 0rem;
     padding: 0;
     position: absolute;
-    right: -1rem;
-    width: 2.5rem;
     z-index: 10;
+
+    &:disabled {
+      cursor: default;
+      opacity: 0.2;
+    }
+  }
+
+  #progress {
+    appearance: none;
+    background: var(--card-border);
+    border: none;
+    border-radius: 100rem;
+    bottom: -2rem;
+    height: 0.5rem;
+    left: 2rem;
+    opacity: 0.5;
+    overflow: hidden;
+    position: absolute;
+    width: calc(100% - 2rem);
+
+    &::-webkit-progress-bar {
+      background: none;
+    }
+
+    &::-webkit-progress-value {
+      animation: progress 22s linear forwards;
+      background: var(--heading-foreground-green);
+      border-radius: inherit;
+      transform-origin: left;
+    }
+
+    &::-moz-progress-bar {
+      animation: progress 22s linear forwards;
+      background: var(--heading-foreground-green);
+      border-radius: inherit;
+      transform-origin: left;
+    }
+
+    &.resetting::-webkit-progress-value {
+      animation: none;
+      transform: scaleX(0);
+    }
+
+    &.resetting::-moz-progress-bar {
+      animation: none;
+      transform: scaleX(0);
+    }
   }
 
   .comment {
-    animation: show 0.1s ease forwards;
+    animation: show 0s ease forwards;
     color: var(--gradient-background-right);
     font-family: cursive;
     font-weight: bold;
@@ -300,6 +348,15 @@ header {
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
   }
 }
 

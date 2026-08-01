@@ -89,7 +89,8 @@
           </div>
         </section>
         <span class="comment" id="second-function">the rewritten function passes both unit tests<br>                         and now it generalizes 👍</span>
-        <button type="button" id="replay" class="btn btn-secondary">↻</button>
+        <button type="button" id="play" disabled>▶</button>
+        <progress id="progress" max="100" value="100"></progress>
       </div>
     </header>
     <section id="how-it-works">
@@ -333,13 +334,30 @@
       </div>
     </footer>
     <script>
-      document.getElementById('replay').addEventListener('click', () => {
+      const SEQUENCE_DURATION = 22000
+      const playButton = document.getElementById('play')
+
+      function playSequence() {
+        playButton.disabled = true
+        setTimeout(() => {
+          playButton.disabled = false
+        }, SEQUENCE_DURATION)
+      }
+
+      playButton.addEventListener('click', () => {
         document.querySelectorAll('#messages section, #messages .comment').forEach(element => {
-          element.style.animation = 'none';
-          element.offsetHeight;
-          element.style.animation = '';
-        });
-      });
+          element.style.animation = 'none'
+          element.offsetHeight
+          element.style.animation = ''
+        })
+        const progress = document.getElementById('progress')
+        progress.classList.add('resetting')
+        progress.offsetHeight
+        progress.classList.remove('resetting')
+        playSequence()
+      })
+
+      playSequence()
     </script>
   </body>
 </html>
