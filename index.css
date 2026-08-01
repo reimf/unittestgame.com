@@ -1,11 +1,8 @@
 :root {
-  --background-base: #f6f3ff;
   --heading-foreground-green: #063;
   --heading-foreground-purple: #606;
-  --card-background: #fffa;
+  --card-background: #fff;
   --card-border: #0001;
-  --generalization-no: #f00;
-  --generalization-yes: #080;
   --gradient-background-left: #606;
   --gradient-background-right: #f3c;
   --peach: #fc6;
@@ -18,9 +15,7 @@ html {
 body {
   font-family: sans-serif;
   color: var(--dark-text);
-  background:
-    radial-gradient(50rem 40rem at 110% 10%, color-mix(in srgb, var(--gradient-background-right), white 50%), transparent 50%),
-    var(--background-base);
+  background-color: var(--general-background);
   line-height: 1.5;
   overflow-x: hidden;
 }
@@ -35,13 +30,16 @@ a {
   }
 }
 
-a.btn {
+a.btn,
+button.btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
   font-weight: bold;
+  border: none;
   border-radius: 100rem;
   padding: 1rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
   white-space: nowrap;
 
@@ -58,13 +56,13 @@ a.btn {
   &.btn-secondary {
     background: var(--card-background);
     border: 0.1rem solid var(--card-border);
-    color: var(--dark-text);
+    color: var(--gradient-background-left);
   }
 }
 
 nav {
   backdrop-filter: blur(0.75rem);
-  background: color-mix(in srgb, var(--background-base) 70%, transparent);
+  background: color-mix(in srgb, var(--general-background) 70%, transparent);
   border-bottom: 0.1rem solid var(--card-border);
   display: flex;
   height: 4rem;
@@ -121,7 +119,7 @@ header {
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    max-width: 35rem;
+    max-width: 31rem;
 
     h1 {
       color: var(--heading-foreground-green);
@@ -154,7 +152,7 @@ header {
   border: 0.1rem solid var(--card-border);
   border-radius: 1.5rem;
   font-family: monospace;
-  box-shadow: 0 2rem 4rem -1.5rem var(--button-shadow);
+  box-shadow: 0 0 5rem var(--gradient-background-left);
   min-width: 35rem;
   overflow: visible;
   position: relative;
@@ -162,37 +160,35 @@ header {
   section {
     animation: rise 0.5s ease forwards;
 
-    &#message-1 {
-      animation-delay: 2s;
-    }
-
-    &#message-2 {
-      animation-delay: 4s;
-    }
-
-    &#message-3 {
-      animation-delay: 8s;
-    }
-
-    &#message-4 {
-      animation-delay: 10s;
-    }
-
     > div {
       overflow: visible;
 
       p {
         margin: 0.75rem 0;
       }
+
+      code.block {
+        overflow: visible;
+      }
     }
   }
 
-  code.block {
-    overflow: visible;
+  #replay {
+    bottom: -1rem;
+    font-size: 1.5rem;
+    font-weight: normal;
+    height: 2.5rem;
+    justify-content: center;
+    padding: 0;
+    position: absolute;
+    right: -1rem;
+    width: 2.5rem;
+    z-index: 10;
   }
 
   .comment {
     animation: show 0.1s ease forwards;
+    color: var(--gradient-background-right);
     font-family: cursive;
     font-weight: bold;
     font-size: 1.5rem;
@@ -203,43 +199,87 @@ header {
     width: max-content;
     z-index: 5;
 
-    &.this-is-you {
-      bottom: 3rem;
-      color: var(--heading-foreground-purple);
+    &#this-is-you {
+      top: 1.25rem;
+      left: 27.6rem;
       line-height: 1;
-      right: -2rem;
       text-align: right;
-      transform: rotate(45deg);
     }
 
-    &.this-is-the-ai-bot {
-      bottom: 4.5rem;
-      color: var(--heading-foreground-purple);
-      left: -3rem;
+    &#first-unit-test {
+      top: 5rem;
+      left: 16.5rem;
+      line-height: 1;
+      text-align: right;
+    }
+
+    &#second-unit-test {
+      top: 17.84rem;
+      left: 14.06rem;
+      line-height: 1;
+      text-align: right;
+    }
+
+    &#this-is-the-ai-bot {
+      top: 13.16rem;
+      left: 0.56rem;
       line-height: 1;
       text-align: left;
-      transform: rotate(-45deg);
     }
 
-    &.generalization-no {
-      animation-delay: 6s;
-      bottom: -0.5rem;
-      color: var(--generalization-no);
-      left: 4rem;
+    &#first-function {
+      top: 10.1rem;
+      left: 5.06rem;
       line-height: 1.1;
       text-align: left;
-      transform: rotate(-5deg);
     }
 
-    &.generalization-yes {
-      animation-delay: 12s;
-      bottom: -0.5rem;
-      color: var(--generalization-yes);
-      left: 4rem;
+    &#second-function {
+      top: 24.17rem;
+      left: 5.06rem;
       line-height: 1.1;
       text-align: left;
-      transform: rotate(-5deg);
     }
+  }
+
+  #message-1 {
+    animation-delay: 2s;
+  }
+
+  #this-is-you {
+    animation-delay: 4s;
+  }
+
+  #first-unit-test {
+    animation-delay: 6s;
+  }
+
+  #message-2 {
+    animation-delay: 8s;
+  }
+
+  #this-is-the-ai-bot {
+    animation-delay: 10s;
+  }
+
+  #first-function {
+    animation-delay: 12s;
+  }
+
+  #message-3 {
+    animation-delay: 16s;
+  }
+
+  #second-unit-test {
+    animation-delay: 18s;
+  }
+
+  #message-4 {
+    animation-delay: 20s;
+  }
+
+  #second-function {
+    animation-delay: 22s;
   }
 }
 
