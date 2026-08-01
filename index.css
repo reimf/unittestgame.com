@@ -125,7 +125,7 @@ header {
 
     h1 {
       color: var(--heading-foreground-green);
-      font-size: 3rem;
+      font-size: 3.5rem;
       line-height: 1;
       letter-spacing: -0.02em;
       text-align: center;
