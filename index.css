@@ -20,7 +20,7 @@ body {
   overflow-x: hidden;
 }
 
-a {
+a, button {
   color: inherit;
   text-decoration: none;
   text-wrap: nowrap;
@@ -118,8 +118,8 @@ header {
   .hero-copy {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
-    max-width: 31rem;
+    gap: 2.5rem;
+    width: 31rem;
 
     h1 {
       color: var(--heading-foreground-green);
@@ -136,7 +136,7 @@ header {
     }
 
     p {
-      font-size: 1.1rem;
+      font-size: 1.2rem;
     }
 
     .hero-cta {
@@ -149,7 +149,6 @@ header {
 
 #messages {
   background: var(--general-background);
-  border: 0.1rem solid var(--card-border);
   border-radius: 1.5rem;
   font-family: monospace;
   box-shadow: 0 0 5rem var(--gradient-background-left);
@@ -176,7 +175,7 @@ header {
   #play {
     background-color: transparent;
     bottom: -2.8rem;
-    color: var(--heading-foreground-green);
+    color: var(--heading-foreground-purple);
     cursor: pointer;
     font-size: 2rem;
     font-weight: normal;
@@ -185,11 +184,6 @@ header {
     padding: 0;
     position: absolute;
     z-index: 10;
-
-    &:disabled {
-      cursor: default;
-      opacity: 0.2;
-    }
   }
 
   #progress {
@@ -200,7 +194,6 @@ header {
     bottom: -2rem;
     height: 0.5rem;
     left: 2rem;
-    opacity: 0.5;
     overflow: hidden;
     position: absolute;
     width: calc(100% - 2rem);
@@ -211,14 +204,14 @@ header {
 
     &::-webkit-progress-value {
       animation: progress 22s linear forwards;
-      background: var(--heading-foreground-green);
+      background: linear-gradient(135deg, var(--gradient-background-left), var(--gradient-background-right));
       border-radius: inherit;
       transform-origin: left;
     }
 
     &::-moz-progress-bar {
       animation: progress 22s linear forwards;
-      background: var(--heading-foreground-green);
+      background: linear-gradient(135deg, var(--gradient-background-left), var(--gradient-background-right));
       border-radius: inherit;
       transform-origin: left;
     }
@@ -371,13 +364,15 @@ body {
     padding-bottom: 5rem;
 
     > div:first-child {
-      max-width: 46rem;
+      max-width: 50rem;
       margin: 0 auto 3rem;
       text-align: center;
 
       h2 {
+        color: var(--heading-foreground-green);
         font-size: 2rem;
         letter-spacing: -0.02em;
+        line-height: 1.1;
         margin-bottom: 0.75rem;
       }
 
@@ -402,14 +397,31 @@ ol, ul {
     &:hover {
       transform: translateY(-0.2rem);
     }
+
+    h3 {
+      align-items: center;
+      color: var(--heading-foreground-purple);
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 0.5rem;
+
+      .square {
+        align-items: center;
+        background: linear-gradient(135deg, var(--gradient-background-left), var(--gradient-background-right));
+        border-radius: 0.5rem;
+        color: var(--light-text);
+        display: flex;
+        font-size: 1.25rem;
+        font-weight: bold;
+        height: 2rem;
+        justify-content: center;
+        width: 2rem;
+      }
+    }
   }
 }
 
 #how-it-works {
-  h2 {
-    color: var(--heading-foreground-purple);
-  }
-
   ol {
     > li {
       flex: 1 1 13rem;
@@ -421,39 +433,11 @@ ol, ul {
       @media (max-width: 31.25rem) {
         flex-basis: 100%;
       }
-
-      span {
-        align-items: center;
-        background: linear-gradient(135deg, var(--gradient-background-left), var(--gradient-background-right));
-        border-radius: 0.5rem;
-        color: var(--light-text);
-        display: flex;
-        font-size: 1.25rem;
-        font-weight: bold;
-        height: 2rem;
-        justify-content: center;
-        margin-bottom: 1rem;
-        width: 2rem;
-      }
-
-      h3 {
-        color: var(--heading-foreground-green);
-        font-size: 1.1rem;
-        margin-bottom: 0.5rem;
-      }
-
-      p {
-        font-size: 0.9rem;
-      }
     }
   }
 }
 
 #why-it-works {
-  h2 {
-    color: var(--heading-foreground-green);
-  }
-
   ul {
     > li {
       flex: 1 1 20rem;
@@ -469,30 +453,11 @@ ol, ul {
       @media (max-width: 45.25rem) {
         flex-basis: 100%;
       }
-
-      h3 {
-        color: var(--heading-foreground-purple);
-        font-size: 1rem;
-        margin-bottom: 0.4rem;
-
-        span {
-          font-size: 1.2rem;
-          margin-right: 0.5rem;
-        }
-      }
-
-      p {
-        font-size: 0.9rem;
-      }
     }
   }
 }
 
 #levels {
-  h2 {
-    color: var(--heading-foreground-purple);
-  }
-
   ol {
     > li {
       flex: 0 1 calc(10% - 1.125rem);
@@ -535,7 +500,7 @@ ol, ul {
 
       div {
         align-items: center;
-        color: var(--heading-foreground-purple);
+        color: var(--heading-foreground-green);
         display: flex;
         font-size: 0.7rem;
         font-weight: bold;
@@ -543,24 +508,11 @@ ol, ul {
         margin-bottom: 0.5rem;
         text-transform: uppercase;
       }
-
-      h3 {
-        color: var(--heading-foreground-green);
-        font-size: 1rem;
-      }
-
-      p {
-        font-size: 0.8rem;
-      }
     }
   }
 }
 
 #faq {
-  h2 {
-    color: var(--heading-foreground-purple);
-  }
-
   ul {
     > li {
       flex: 1 1 calc(50% - 0.625rem);
@@ -569,27 +521,11 @@ ol, ul {
         flex-basis: 100%;
       }
 
-      h4 {
+      h3 {
         align-items: center;
-        color: var(--heading-foreground-green);
         display: flex;
         font-weight: bold;
         gap: 1rem;
-        margin-bottom: 0.25rem;
-
-        &::before {
-          align-items: center;
-          background: linear-gradient(135deg, var(--gradient-background-left), var(--gradient-background-right));
-          border-radius: 0.5rem;
-          color: var(--light-text);
-          content: "Q";
-          display: flex;
-          flex-shrink: 0;
-          font-size: 1.25rem;
-          height: 2rem;
-          justify-content: center;
-          width: 2rem;
-        }
       }
 
       p {
@@ -611,10 +547,6 @@ ol, ul {
   gap: 1rem;
   padding: 3.5rem 2rem;
   text-align: center;
-
-  h2 {
-    color: var(--heading-foreground-green);
-  }
 
   a.btn {
     align-self: center;
