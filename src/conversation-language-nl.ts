@@ -185,15 +185,31 @@ export class Dutch extends ConversationLanguage {
         return ConversationLanguage.bless('Lever de *Unit Testen* opnieuw in om te controleren of de *Huidige Functie* eindelijk voldoet aan de *Specificatie*.')
     }
 
+    public override votingAgeSpecification(): ConversationText {
+        return ConversationLanguage.bless('Je mag stemmen als je leeftijd `18` jaar of hoger is.')
+    }
+
     public override windScaleSpecification(): ConversationText {
-        return ConversationLanguage.bless('Geef `CALM` terug als de windsnelheid minder dan `20` is. ' +
-            'Geef `BREEZE` terug als de windsnelheid minder dan `50` is. ' +
-            'Geef `GALE` terug als de windsnelheid minder dan `90` is. ' +
-            'Geef `STORM` terug in alle andere gevallen.')
+        return ConversationLanguage.bless('Het is `CALM` als de windsnelheid minder dan `20` is, ' +
+            '`BREEZE` als deze minder dan `50` is, ' +
+            '`GALE` als deze minder dan `90` is, ' +
+            'en anders `STORM`.')
+    }
+
+    public override reviewSpecification(): ConversationText {
+        return ConversationLanguage.bless('Jouw recensie is `GOOD` als de prijs minder dan `20` is en de kwaliteit ten minste `7` is, ' +
+            '`BAD` als de prijs `20` of meer is en de kwaliteit minder dan `7` is, ' +
+            'en anders `OK`.')
+    }
+
+    public override discountSpecification(): ConversationText {
+        return ConversationLanguage.bless('Je krijgt `20`% korting als het totaalbedrag ten minste `200` is en je een lidmaatschapskaart hebt, ' +
+            '`10`% als het totaalbedrag ten minste `100` is of je een lidmaatschapskaart hebt, ' +
+            'en anders `0`%.')
     }
 
     public override fizzBuzzSpecification(): ConversationText {
-        return ConversationLanguage.bless('Geef `FIZZ` terug als het getal deelbaar is door 3, ' +
+        return ConversationLanguage.bless('Zeg `FIZZ` als het getal deelbaar is door 3, ' +
             '`BUZZ` als het deelbaar is door 5, ' +
             '`FIZZBUZZ` als het deelbaar is door zowel 3 als 5, ' +
             'en `NUMBER` voor elk ander getal.')
@@ -205,13 +221,19 @@ export class Dutch extends ConversationLanguage {
             'De uitzondering is dat jaren die deelbaar zijn door 100 geen schrikkeljaren zijn, tenzij ze ook deelbaar zijn door 400.')
     }
 
+    public override triangleTypeSpecification(): ConversationText {
+        return ConversationLanguage.bless('Het type van de driehoek is `EQUILATERAL` (gelijkzijdig), `ISOSCELES` (gelijkbenig) of `SCALENE` (ongelijkzijdig). ' +
+            'Een driehoek is gelijkzijdig als alle drie de zijden even lang zijn. ' +
+            'Een driehoek is gelijkbenig als precies twee zijden even lang zijn. ' +
+            'Een driehoek is ongelijkzijdig als alle drie de zijden verschillende lengtes hebben.')
+    }
+
     public override speedDisplaySpecification(): ConversationText {
         return ConversationLanguage.bless('De snelheidssensor geeft de snelheid in tienden van kilometers per uur (bijvoorbeeld 131 betekent 13.1 km/u). ' +
-            'Geef terug wat er op het scherm getoond moet worden. ' +
-            'Geef `DECIMAL` terug als er een decimaal op het scherm past (bijvoorbeeld 131 → `DECIMAL` want 13.1 past op het scherm). ' +
-            'Geef anders `INTEGER` terug (bijvoorbeeld 826 → `INTEGER` want 82.6 past niet op het scherm en 83 wel). ' +
-            'Als de auto stil staat, geef `START` terug. ' +
-            'Als de snelheid niet meer op het scherm past, geef `DANGER` terug (bijvoorbeeld 3000 → `DANGER`).\n' +
+            'Toon op het scherm `DECIMAL` als er een decimaal op past (bijvoorbeeld 131 → `DECIMAL` want 13.1 past op het scherm), ' +
+            'of anders `INTEGER` (bijvoorbeeld 826 → `INTEGER` want 82.6 past niet op het scherm en 83 wel). ' +
+            'Als de auto stil staat, is het `START`. ' +
+            'Als de snelheid niet meer op het scherm past, is het `DANGER` (bijvoorbeeld 3000 → `DANGER`).\n' +
             'Het scherm ziet er zo uit, waarbij elke X een LED-lampje is:\n' +
             '+-------------------+\n' +
             '|  X   XXXX   XXXX  |\n' +
@@ -224,33 +246,10 @@ export class Dutch extends ConversationLanguage {
             '+-------------------+')
     }
 
-    public override triangleTypeSpecification(): ConversationText {
-        return ConversationLanguage.bless('Geef het type van de driehoek terug: `EQUILATERAL` (gelijkzijdig), `ISOSCELES` (gelijkbenig) of `SCALENE` (ongelijkzijdig). ' +
-            'Een driehoek is gelijkzijdig als alle drie de zijden even lang zijn. ' +
-            'Een driehoek is gelijkbenig als precies twee zijden even lang zijn. ' +
-            'Een driehoek is ongelijkzijdig als alle drie de zijden verschillende lengtes hebben.')
-    }
-
-    public override votingAgeSpecification(): ConversationText {
-        return ConversationLanguage.bless('Geef `true` terug als de leeftijd `18` jaar of hoger is, en anders `false`.')
-    }
-
-    public override reviewSpecification(): ConversationText {
-        return ConversationLanguage.bless('Geef `GOOD` terug als de prijs minder dan `20` is en de kwaliteit ten minste `7` is. ' +
-            'Geef `BAD` terug als de prijs `20` of meer is en de kwaliteit minder dan `7` is. ' +
-            'Geef `OK` terug in alle andere gevallen.')
-    }
-
-    public override discountSpecification(): ConversationText {
-        return ConversationLanguage.bless('Geef `20` terug als het totaalbedrag ten minste `200` is en de klant een lidmaatschapskaart heeft. ' +
-            'Geef `10` terug als het totaalbedrag ten minste `100` is, of als de klant een lidmaatschapskaart heeft. ' +
-            'Geef `0` terug in alle andere gevallen.')
-    }
-
     public override parkingFeeSpecification(): ConversationText {
-        return ConversationLanguage.bless('Geef `0` terug als het aantal geparkeerde minuten minder dan `30` is, of als de klant heeft gewinkeld in het weekend. ' +
-            'Geef `1000` centen terug als het weekend is. ' +
-            'Geef anders 5 cent per minuut terug als de klant niet heeft gewinkeld of 3 cent per minuut als de klant heeft gewinkeld.')
+        return ConversationLanguage.bless('De parkeerkosten zijn `0` cent als de auto minder dan een half uur geparkeerd staat, of als de klant heeft gewinkeld in het weekend. ' +
+            'Ze zijn `1000` cent als het weekend is. ' +
+            'Anders zijn ze 5 cent per minuut als de klant niet heeft gewinkeld, of 3 cent per minuut als de klant heeft gewinkeld.')
     }
 
     public override or(): ConversationText {

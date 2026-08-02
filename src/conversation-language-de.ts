@@ -185,17 +185,33 @@ export class German extends ConversationLanguage {
         return ConversationLanguage.bless('Reiche die *Unit-Tests* erneut ein, um zu prüfen, ob die *Aktuelle Funktion* endlich der *Spezifikation* entspricht.')
     }
 
+    public override votingAgeSpecification(): ConversationText {
+        return ConversationLanguage.bless('Du darfst wählen, wenn dein Alter `18` oder älter ist.')
+    }
+
     public override windScaleSpecification(): ConversationText {
-        return ConversationLanguage.bless('Gib `CALM` zurück, wenn die Windgeschwindigkeit weniger als `20` beträgt. ' +
-            'Gib `BREEZE` zurück, wenn die Windgeschwindigkeit weniger als `50` beträgt. ' +
-            'Gib `GALE` zurück, wenn die Windgeschwindigkeit weniger als `90` beträgt. ' +
-            'Gib in allen anderen Fällen `STORM` zurück.')
+        return ConversationLanguage.bless('Es ist `CALM`, wenn die Windgeschwindigkeit weniger als `20` beträgt, ' +
+            '`BREEZE`, wenn sie weniger als `50` beträgt, ' +
+            '`GALE`, wenn sie weniger als `90` beträgt, ' +
+            'und andernfalls `STORM`.')
+    }
+
+    public override reviewSpecification(): ConversationText {
+        return ConversationLanguage.bless('Deine Bewertung ist `GOOD`, wenn der Preis weniger als `20` ist und die Qualität mindestens `7` beträgt, ' +
+            '`BAD`, wenn der Preis `20` oder mehr ist und die Qualität weniger als `7` beträgt, ' +
+            'und sonst `OK`.')
+    }
+
+    public override discountSpecification(): ConversationText {
+        return ConversationLanguage.bless('Du bekommst `20`% Rabatt, wenn der Gesamtbetrag mindestens `200` beträgt und du eine Mitgliedskarte hast, ' +
+            '`10`%, wenn der Gesamtbetrag mindestens `100` beträgt oder du eine Mitgliedskarte hast, ' +
+            'und sonst `0`%.')
     }
 
     public override fizzBuzzSpecification(): ConversationText {
-        return ConversationLanguage.bless('Gib `FIZZ` zurück, wenn die Zahl durch 3 teilbar ist, ' +
-            '`BUZZ` wenn sie durch 5 teilbar ist, ' +
-            '`FIZZBUZZ` wenn sie durch 3 und 5 teilbar ist, ' +
+        return ConversationLanguage.bless('Sage `FIZZ`, wenn die Zahl durch 3 teilbar ist, ' +
+            '`BUZZ`, wenn sie durch 5 teilbar ist, ' +
+            '`FIZZBUZZ`, wenn sie durch 3 und 5 teilbar ist, ' +
             'und `NUMBER` für jede andere Zahl.')
     }
 
@@ -205,13 +221,19 @@ export class German extends ConversationLanguage {
             'Die Ausnahme ist, dass Jahre, die durch 100 teilbar sind, keine Schaltjahre sind, es sei denn, sie sind auch durch 400 teilbar.')
     }
 
+    public override triangleTypeSpecification(): ConversationText {
+        return ConversationLanguage.bless('Der Typ des Dreiecks ist `EQUILATERAL` (gleichseitig), `ISOSCELES` (gleichschenklig) oder `SCALENE` (ungleichseitig). ' +
+            'Ein Dreieck ist gleichseitig, wenn alle drei Seiten gleich lang sind. ' +
+            'Ein Dreieck ist gleichschenklig, wenn genau zwei Seiten gleich lang sind. ' +
+            'Ein Dreieck ist ungleichseitig, wenn alle drei Seiten unterschiedliche Längen haben.')
+    }
+
     public override speedDisplaySpecification(): ConversationText {
         return ConversationLanguage.bless('Der Geschwindigkeitssensor meldet die Geschwindigkeit in Zehnteln von Kilometern pro Stunde (z.B. 131 bedeutet 13.1 km/h). ' +
-            'Gib die Geschwindigkeit zurück, wie sie auf dem Display angezeigt wird. ' +
-            'Gib `DECIMAL` zurück, wenn eine Dezimalstelle auf das Display passt (z.B. 131 → `DECIMAL`, weil 13.1 auf das Display passt). ' +
-            'Gib sonst `INTEGER` zurück (z.B. 826 → `INTEGER`, weil 82.6 nicht auf das Display passt, aber 83 schon). ' +
-            'Wenn das Auto nicht fährt, gib `START` zurück. ' +
-            'Wenn die Geschwindigkeit nicht mehr auf das Display passt, gib `DANGER` zurück (z.B. 3000 → `DANGER`).\n' +
+            'Zeige auf dem Display `DECIMAL`, wenn eine Dezimalstelle passt (z.B. 131 → `DECIMAL`, weil 13.1 auf das Display passt), ' +
+            'oder sonst `INTEGER` (z.B. 826 → `INTEGER`, weil 82.6 nicht auf das Display passt, aber 83 schon). ' +
+            'Wenn das Auto nicht fährt, ist es `START`. ' +
+            'Wenn die Geschwindigkeit nicht mehr auf das Display passt, ist es `DANGER` (z.B. 3000 → `DANGER`).\n' +
             'Das Display sieht so aus, wobei jedes X eine LED-Leuchte ist:\n' +
             '+-------------------+\n' +
             '|  X   XXXX   XXXX  |\n' +
@@ -224,33 +246,10 @@ export class German extends ConversationLanguage {
             '+-------------------+')
     }
 
-    public override triangleTypeSpecification(): ConversationText {
-        return ConversationLanguage.bless('Gib den Typ des Dreiecks zurück: `EQUILATERAL` (gleichseitig), `ISOSCELES` (gleichschenklig) oder `SCALENE` (ungleichseitig). ' +
-            'Ein Dreieck ist gleichseitig, wenn alle drei Seiten gleich lang sind. ' +
-            'Ein Dreieck ist gleichschenklig, wenn genau zwei Seiten gleich lang sind. ' +
-            'Ein Dreieck ist ungleichseitig, wenn alle drei Seiten unterschiedliche Längen haben.')
-    }
-
-    public override votingAgeSpecification(): ConversationText {
-        return ConversationLanguage.bless('Gib `true` zurück, wenn das Alter `18` oder älter ist, und sonst `false`.')
-    }
-
-    public override reviewSpecification(): ConversationText {
-        return ConversationLanguage.bless('Gib `GOOD` zurück, wenn der Preis weniger als `20` ist und die Qualität mindestens `7` beträgt. ' +
-            'Gib `BAD` zurück, wenn der Preis `20` oder mehr ist und die Qualität weniger als `7` beträgt. ' +
-            'Gib `OK` in allen anderen Fällen zurück.')
-    }
-
-    public override discountSpecification(): ConversationText {
-        return ConversationLanguage.bless('Gib `20` zurück, wenn der Gesamtbetrag mindestens `200` beträgt und der Kunde eine Mitgliedskarte hat. ' +
-            'Gib `10` zurück, wenn der Gesamtbetrag mindestens `100` beträgt, oder wenn der Kunde eine Mitgliedskarte hat. ' +
-            'Gib `0` in allen anderen Fällen zurück.')
-    }
-
     public override parkingFeeSpecification(): ConversationText {
-        return ConversationLanguage.bless('Gib `0` zurück, wenn die Anzahl der geparkten Minuten weniger als `30` beträgt, oder wenn der Kunde am Wochenende eingekauft hat. ' +
-            'Gib `1000` Cent zurück, wenn es Wochenende ist. ' +
-            'Gib andernfalls 5 Cent pro Minute zurück, wenn der Kunde nicht eingekauft hat, oder 3 Cent pro Minute, wenn der Kunde eingekauft hat.')
+        return ConversationLanguage.bless('Die Parkgebühr beträgt `0` Cent, wenn das Auto weniger als eine halbe Stunde geparkt ist, oder wenn der Kunde am Wochenende eingekauft hat. ' +
+            'Sie beträgt `1000` Cent, wenn es Wochenende ist. ' +
+            'Andernfalls beträgt sie 5 Cent pro Minute, wenn der Kunde nicht eingekauft hat, oder 3 Cent pro Minute, wenn der Kunde eingekauft hat.')
     }
 
     public override or(): ConversationText {

@@ -185,15 +185,31 @@ export class French extends ConversationLanguage {
         return ConversationLanguage.bless('Soumets à nouveau les *Unit Tests* pour vérifier si la *Fonction Actuelle* correspond enfin à la *Spécification*.')
     }
 
+    public override votingAgeSpecification(): ConversationText {
+        return ConversationLanguage.bless('Tu peux voter si ton âge est `18` ou plus.')
+    }
+
     public override windScaleSpecification(): ConversationText {
-        return ConversationLanguage.bless('Retourne `CALM` si la vitesse du vent est inférieure à `20`. ' +
-            'Retourne `BREEZE` si la vitesse du vent est inférieure à `50`. ' +
-            'Retourne `GALE` si la vitesse du vent est inférieure à `90`. ' +
-            'Retourne `STORM` dans tous les autres cas.')
+        return ConversationLanguage.bless('C\'est `CALM` si la vitesse du vent est inférieure à `20`, ' +
+            '`BREEZE` si elle est inférieure à `50`, ' +
+            '`GALE` si elle est inférieure à `90`, ' +
+            'et `STORM` dans tous les autres cas.')
+    }
+
+    public override reviewSpecification(): ConversationText {
+        return ConversationLanguage.bless('Ton avis est `GOOD` si le prix est inférieur à `20` et la qualité est au moins `7`, ' +
+            '`BAD` si le prix est `20` ou plus et la qualité est inférieure à `7`, ' +
+            'et `OK` sinon.')
+    }
+
+    public override discountSpecification(): ConversationText {
+        return ConversationLanguage.bless('Tu obtiens `20`% de réduction si le total est au moins `200` et que tu as une carte de membre, ' +
+            '`10`% si le total est au moins `100` ou que tu as une carte de membre, ' +
+            'et `0`% sinon.')
     }
 
     public override fizzBuzzSpecification(): ConversationText {
-        return ConversationLanguage.bless('Retourne `FIZZ` si le nombre est divisible par 3, ' +
+        return ConversationLanguage.bless('Dis `FIZZ` si le nombre est divisible par 3, ' +
             '`BUZZ` s\'il est divisible par 5, ' +
             '`FIZZBUZZ` s\'il est divisible par 3 et par 5, ' +
             'et `NUMBER` pour tout autre nombre.')
@@ -205,13 +221,19 @@ export class French extends ConversationLanguage {
             'L\'exception est que les années divisibles par 100 ne sont pas des années bissextiles, sauf si elles sont aussi divisibles par 400.')
     }
 
+    public override triangleTypeSpecification(): ConversationText {
+        return ConversationLanguage.bless('Le type du triangle est `EQUILATERAL` (équilatéral), `ISOSCELES` (isocèle) ou `SCALENE` (scalène). ' +
+            'Un triangle est équilatéral si les trois côtés ont la même longueur. ' +
+            'Un triangle est isocèle si exactement deux côtés ont la même longueur. ' +
+            'Un triangle est scalène si les trois côtés ont des longueurs différentes.')
+    }
+
     public override speedDisplaySpecification(): ConversationText {
         return ConversationLanguage.bless('Le capteur de vitesse indique la vitesse en dixièmes de kilomètres par heure (ex. 131 signifie 13.1 km/h). ' +
-            'Retourne la vitesse telle qu\'affichée sur l\'écran. ' +
-            'Retourne `DECIMAL` si une décimale tient sur l\'écran (ex. 131 → `DECIMAL` car 13.1 tient sur l\'écran). ' +
-            'Sinon, retourne `INTEGER` (ex. 826 → `INTEGER` car 82.6 ne tient pas sur l\'écran mais 83 oui). ' +
-            'Si la voiture ne bouge pas, retourne `START`. ' +
-            'Si la vitesse ne tient plus sur l\'écran, retourne `DANGER` (ex. 3000 → `DANGER`).\n' +
+            'Affiche `DECIMAL` sur l\'écran si une décimale y tient (ex. 131 → `DECIMAL` car 13.1 tient sur l\'écran), ' +
+            'ou `INTEGER` sinon (ex. 826 → `INTEGER` car 82.6 ne tient pas sur l\'écran mais 83 oui). ' +
+            'Si la voiture ne bouge pas, c\'est `START`. ' +
+            'Si la vitesse ne tient plus sur l\'écran, c\'est `DANGER` (ex. 3000 → `DANGER`).\n' +
             'L\'écran ressemble à ceci, où chaque X est une LED :\n' +
             '+-------------------+\n' +
             '|  X   XXXX   XXXX  |\n' +
@@ -224,33 +246,10 @@ export class French extends ConversationLanguage {
             '+-------------------+')
     }
 
-    public override triangleTypeSpecification(): ConversationText {
-        return ConversationLanguage.bless('Retourne le type du triangle : `EQUILATERAL` (équilatéral), `ISOSCELES` (isocèle) ou `SCALENE` (scalène). ' +
-            'Un triangle est équilatéral si les trois côtés ont la même longueur. ' +
-            'Un triangle est isocèle si exactement deux côtés ont la même longueur. ' +
-            'Un triangle est scalène si les trois côtés ont des longueurs différentes.')
-    }
-
-    public override votingAgeSpecification(): ConversationText {
-        return ConversationLanguage.bless('Retourne `true` si l\'âge est `18` ou plus, et `false` sinon.')
-    }
-
-    public override reviewSpecification(): ConversationText {
-        return ConversationLanguage.bless('Retourne `GOOD` si le prix est inférieur à `20` et la qualité est au moins `7`. ' +
-            'Retourne `BAD` si le prix est `20` ou plus et la qualité est inférieure à `7`. ' +
-            'Retourne `OK` dans tous les autres cas.')
-    }
-
-    public override discountSpecification(): ConversationText {
-        return ConversationLanguage.bless('Retourne `20` si le total est au moins `200` et que le client a une carte de membre. ' +
-            'Retourne `10` si le total est au moins `100`, ou si le client a une carte de membre. ' +
-            'Retourne `0` dans tous les autres cas.')
-    }
-
     public override parkingFeeSpecification(): ConversationText {
-        return ConversationLanguage.bless('Retourne `0` si le nombre de minutes de stationnement est inférieur à `30`, ou si le client a fait des achats le week-end. ' +
-            'Retourne `1000` centimes si c\'est le week-end. ' +
-            'Sinon, retourne 5 centimes par minute si le client n\'a pas fait d\'achats, ou 3 centimes par minute si le client a fait des achats.')
+        return ConversationLanguage.bless('Le tarif de stationnement est de `0` centime si la voiture est garée moins d\'une demi-heure, ou si le client a fait des achats le week-end. ' +
+            'Il est de `1000` centimes si c\'est le week-end. ' +
+            'Sinon, il est de 5 centimes par minute si le client n\'a pas fait d\'achats, ou de 3 centimes par minute si le client a fait des achats.')
     }
 
     public override or(): ConversationText {

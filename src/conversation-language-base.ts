@@ -48,14 +48,14 @@ export abstract class ConversationLanguage {
     public abstract submitUnitTestsSecond(): ConversationText
     public abstract addBatteryLevel18(): ConversationText
     public abstract submitUnitTestsThird(): ConversationText
-    public abstract windScaleSpecification(): ConversationText
-    public abstract fizzBuzzSpecification(): ConversationText
-    public abstract leapYearSpecification(): ConversationText
-    public abstract speedDisplaySpecification(): ConversationText
-    public abstract triangleTypeSpecification(): ConversationText
     public abstract votingAgeSpecification(): ConversationText
+    public abstract windScaleSpecification(): ConversationText
     public abstract reviewSpecification(): ConversationText
     public abstract discountSpecification(): ConversationText
+    public abstract fizzBuzzSpecification(): ConversationText
+    public abstract leapYearSpecification(): ConversationText
+    public abstract triangleTypeSpecification(): ConversationText
+    public abstract speedDisplaySpecification(): ConversationText
     public abstract parkingFeeSpecification(): ConversationText
     public abstract or(): ConversationText
     public abstract parameterLabel(parameterName: string): ConversationText
