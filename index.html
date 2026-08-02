@@ -15,6 +15,7 @@
     <link rel="icon" type="image/ico" href="favicon.ico">
     <link rel="stylesheet" href="shared.css">
     <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="animation.css">
     <title>UnitTestGame.com: Outsmart the AI bot that cheats on purpose</title>
   </head>
   <body>
@@ -67,8 +68,9 @@
             </code>
           </div>
         </section>
-        <span class="comment" id="this-is-the-ai-bot">↑<br>this is the<br>AI bot</span>
-        <span class="comment" id="first-function">the function it wrote passes your unit test<br>                    but it doesn't generalize 👎</span>
+        <span class="comment" id="this-is-the-ai-bot">↑<br>the AI bot</span>
+        <span class="comment" id="first-function">the function it wrote passes your unit test</span>
+        <span class="comment" id="first-verdict">but it doesn't generalize 👎</span>
         <section class="human" id="message-3">
           <div>
             <p>I want to add this unit test.</p>
@@ -77,7 +79,7 @@
             </code>
           </div>
         </section>
-        <span class="comment" id="second-unit-test">this is your second unit test</span>
+        <span class="comment" id="second-unit-test">your second unit test</span>
         <section class="computer" id="message-4">
           <div>
             <code class="block">
@@ -88,7 +90,8 @@
             </code>
           </div>
         </section>
-        <span class="comment" id="second-function">the rewritten function passes both unit tests<br>                         and now it generalizes 👍</span>
+        <span class="comment" id="second-function">the rewritten function passes both unit tests</span>
+        <span class="comment" id="second-verdict">and now it generalizes 👍</span>
         <button type="button" id="play">⟳</button>
         <progress id="progress" max="100" value="100"></progress>
       </div>

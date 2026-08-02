@@ -156,19 +156,15 @@ header {
   overflow: visible;
   position: relative;
 
-  section {
-    animation: rise 0.5s ease forwards;
+  section > div {
+    overflow: visible;
 
-    > div {
+    p {
+      margin: 0.75rem 0;
+    }
+
+    code.block {
       overflow: visible;
-
-      p {
-        margin: 0.75rem 0;
-      }
-
-      code.block {
-        overflow: visible;
-      }
     }
   }
 
@@ -201,156 +197,63 @@ header {
     &::-webkit-progress-bar {
       background: none;
     }
-
-    &::-webkit-progress-value {
-      animation: progress 22s linear forwards;
-      background: linear-gradient(135deg, var(--gradient-background-left), var(--gradient-background-right));
-      border-radius: inherit;
-      transform-origin: left;
-    }
-
-    &::-moz-progress-bar {
-      animation: progress 22s linear forwards;
-      background: linear-gradient(135deg, var(--gradient-background-left), var(--gradient-background-right));
-      border-radius: inherit;
-      transform-origin: left;
-    }
-
-    &.resetting::-webkit-progress-value {
-      animation: none;
-      transform: scaleX(0);
-    }
-
-    &.resetting::-moz-progress-bar {
-      animation: none;
-      transform: scaleX(0);
-    }
   }
 
   .comment {
-    animation: show 0s ease forwards;
     color: var(--gradient-background-right);
     font-family: cursive;
     font-weight: bold;
     font-size: 1.5rem;
-    opacity: 0;
+    line-height: 1;
     pointer-events: none;
     position: absolute;
-    white-space: pre-wrap;
     width: max-content;
     z-index: 5;
 
     &#this-is-you {
       top: 1.25rem;
-      left: 27.6rem;
-      line-height: 1;
+      right: 0.5rem;
       text-align: right;
     }
 
     &#first-unit-test {
       top: 5rem;
-      left: 16.5rem;
+      right: 3.5rem;
       line-height: 1;
-      text-align: right;
-    }
-
-    &#second-unit-test {
-      top: 17.84rem;
-      left: 14.06rem;
-      line-height: 1;
-      text-align: right;
     }
 
     &#this-is-the-ai-bot {
-      top: 13.16rem;
-      left: 0.56rem;
-      line-height: 1;
+      top: 13rem;
+      left: 0.5rem;
       text-align: left;
     }
 
     &#first-function {
-      top: 10.1rem;
-      left: 5.06rem;
-      line-height: 1.1;
-      text-align: left;
+      top: 10rem;
+      left: 4.5rem;
+    }
+
+    &#first-verdict {
+      top: 11.75rem;
+      right: 1rem;
+    }
+
+    &#second-unit-test {
+      top: 17.5rem;
+      right: 3.5rem;
     }
 
     &#second-function {
-      top: 24.17rem;
-      left: 5.06rem;
-      line-height: 1.1;
-      text-align: left;
+      top: 24rem;
+      left: 4.5rem;
+    }
+
+    &#second-verdict {
+      top: 25.75rem;
+      right: 1rem;
     }
   }
 
-  #message-1 {
-    animation-delay: 2s;
-  }
-
-  #this-is-you {
-    animation-delay: 4s;
-  }
-
-  #first-unit-test {
-    animation-delay: 6s;
-  }
-
-  #message-2 {
-    animation-delay: 8s;
-  }
-
-  #this-is-the-ai-bot {
-    animation-delay: 10s;
-  }
-
-  #first-function {
-    animation-delay: 12s;
-  }
-
-  #message-3 {
-    animation-delay: 16s;
-  }
-
-  #second-unit-test {
-    animation-delay: 18s;
-  }
-
-  #message-4 {
-    animation-delay: 20s;
-  }
-
-  #second-function {
-    animation-delay: 22s;
-  }
-}
-
-@keyframes rise {
-  from {
-    opacity: 0;
-    transform: translateY(0.6rem);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes show {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes progress {
-  from {
-    transform: scaleX(0);
-  }
-  to {
-    transform: scaleX(1);
-  }
 }
 
 body {
