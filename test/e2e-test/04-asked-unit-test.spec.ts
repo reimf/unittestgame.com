@@ -3,10 +3,10 @@ import { test, expect } from '../fixture/fixture-coverage'
 test.describe('asked unit test', () => {
     test.beforeEach(async ({ page }) => {
         await page.goto('/game?speed=fast')
-        await page.getByRole('button', { name: 'I want to play Level 0 - Battery Level' }).click()
+        await page.getByRole('button', { name: 'I want to play Level 0 - Battery Level', exact: true }).click()
         await page.getByLabel('batteryLevel').fill('20')
-        await page.getByLabel('NORMAL MODE').check()
-        await page.getByRole('button', { name: 'I want to add this unit test' }).click()
+        await page.getByLabel('"NORMAL MODE"', { exact: true }).check()
+        await page.getByRole('button', { name: 'I want to add this unit test', exact: true }).click()
     })
 
     test('has unit test message', async ({ page }) => {
@@ -41,22 +41,22 @@ test.describe('asked unit test', () => {
     })
 
     test('has a battery level field', async ({ page }) => {
-        const batteryLevel = page.getByRole('spinbutton', { name: 'batteryLevel' })
+        const batteryLevel = page.getByRole('spinbutton', { name: 'Value of parameter batteryLevel', exact: true})
         await expect(batteryLevel).toBeVisible()
     })
 
     test('has a power mode field', async ({ page }) => {
-        const powerMode = page.getByRole('radio', { name: 'Power Mode' })
+        const powerMode = page.getByRole('radio', { name: '"LOW POWER MODE"', exact: true })
         await expect(powerMode).toBeVisible()
     })
 
     test('has add this unit test button', async ({ page }) => {
-        const button = page.getByRole('button', { name: 'I want to add this unit test' })
+        const button = page.getByRole('button', { name: 'I want to add this unit test', exact: true })
         await expect(button).toBeVisible()
     })
 
     test('has submit unit tests button', async ({ page }) => {
-        const button = page.getByRole('button', { name: 'I want to submit the unit tests' })
+        const button = page.getByRole('button', { name: 'I want to submit the unit tests', exact: true })
         await expect(button).toBeVisible()
     })
 })

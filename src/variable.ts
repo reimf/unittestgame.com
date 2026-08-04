@@ -1,5 +1,5 @@
 import { Div, Html, Input, Label, Paragraph } from './html.js'
-import { ConversationText } from './conversation-language-base.js'
+import { ConversationText, ConversationLanguage } from './conversation-language-base.js'
 
 export type Value = boolean|number|string
 
@@ -40,7 +40,8 @@ export class RadioVariable extends Variable {
               .setName(this.name)
               .setValue(text)
               .setRequired()
-            return new Label().appendChild(input).appendText(text)
+            const labelText = ConversationLanguage.bless(this.format(text))
+            return new Label().appendChild(input).appendText(labelText)
         })
         const paragraph = new Paragraph().appendChild(this.buildLabelDiv()).appendChildren(radioButtons)
         return paragraph

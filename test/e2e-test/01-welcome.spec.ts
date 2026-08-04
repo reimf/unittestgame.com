@@ -30,7 +30,7 @@ test.describe('welcome', () => {
     })
 
     test('has link to home page', async ({ page }) => {
-        const link = page.getByRole('link', { name: 'Home' })
+        const link = page.getByRole('link', { name: 'Home', exact: true })
         expect(await link.getAttribute('href')).toBe('/')
     })
 

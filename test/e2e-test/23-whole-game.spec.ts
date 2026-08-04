@@ -27,20 +27,20 @@ test.describe('whole game', () => {
 
             if (level instanceof BatteryLevel) {
                 await page.getByLabel('batteryLevel').fill('20')
-                await page.getByLabel('NORMAL MODE').check()
-                await page.getByRole('button', { name: 'I want to add this unit test' }).click()
+                await page.getByLabel('"NORMAL MODE"', { exact: true }).check()
+                await page.getByRole('button', { name: 'I want to add this unit test', exact: true }).click()
                 await page.getByLabel('batteryLevel').fill('19')
-                await page.getByLabel('LOW POWER MODE').check()
-                await page.getByRole('button', { name: 'I want to add this unit test' }).click()
-                await page.getByRole('button', { name: 'I want to submit the unit tests' }).click()
+                await page.getByLabel('"LOW POWER MODE"', { exact: true }).check()
+                await page.getByRole('button', { name: 'I want to add this unit test', exact: true }).click()
+                await page.getByRole('button', { name: 'I want to submit the unit tests', exact: true }).click()
                 await page.getByLabel('batteryLevel').fill('21')
-                await page.getByLabel('NORMAL MODE').check()
-                await page.getByRole('button', { name: 'I want to add this unit test' }).click()
-                await page.getByRole('button', { name: 'I want to submit the unit tests' }).click()
+                await page.getByLabel('"NORMAL MODE"', { exact: true }).check()
+                await page.getByRole('button', { name: 'I want to add this unit test', exact: true }).click()
+                await page.getByRole('button', { name: 'I want to submit the unit tests', exact: true }).click()
                 await page.getByLabel('batteryLevel').fill('18')
-                await page.getByLabel('LOW POWER MODE').check()
-                await page.getByRole('button', { name: 'I want to add this unit test' }).click()
-                await page.getByRole('button', { name: 'I want to submit the unit tests' }).click()
+                await page.getByLabel('"LOW POWER MODE"', { exact: true }).check()
+                await page.getByRole('button', { name: 'I want to add this unit test', exact: true }).click()
+                await page.getByRole('button', { name: 'I want to submit the unit tests', exact: true }).click()
             }
             else {
                 const variables = [...level.parameters, level.unit]
@@ -49,19 +49,19 @@ test.describe('whole game', () => {
                     for (let i = 0; i < variables.length; i++) {
                         const [variable, value] = [variables[i]!, values[i]!]
                         if (variable instanceof RadioVariable)
-                            await page.getByLabel(value.toString(), { exact: true }).check()
+                            await page.getByLabel(`"${value}"`, { exact: true }).check()
                         else if (variable instanceof BooleanVariable)
                             await page.locator(`input[name="${variable.name}"][value="${value}"]`).check()
                         else
                             await page.locator(`input[name="${variable.name}"]`).fill(value.toString())
                     }
-                    await page.getByRole('button', { name: 'I want to add this unit test' }).click()
+                    await page.getByRole('button', { name: 'I want to add this unit test', exact: true }).click()
                 }
-                await page.getByRole('button', { name: 'I want to submit the unit tests' }).click()
+                await page.getByRole('button', { name: 'I want to submit the unit tests', exact: true }).click()
             }
         }
 
-        const button = page.getByRole('button', { name: 'I\'ve completed all the levels' })
+        const button = page.getByRole('button', { name: 'I\'ve completed all the levels', exact: true })
         await expect(button).toBeVisible()
         button.click()
         const messages = page.getByTestId('messages')

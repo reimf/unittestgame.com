@@ -93,7 +93,7 @@ for (const language of languages) {
     test.describe(`${language.name} programming language`, () => {
         test(language.battery.title, async ({ page }) => {
             await page.goto(`/game?speed=fast&picker=fixed&programming_language=${language.name}`)
-            await page.getByRole('button', { name: 'I want to play Level 0 - Battery Level' }).click()
+            await page.getByRole('button', { name: 'I want to play Level 0 - Battery Level', exact: true }).click()
             const currentFunctionPanel = page.getByTestId('current-function')
             const codeLines = currentFunctionPanel.locator('code')
             await expect(codeLines).toContainText(language.battery.expected)
@@ -101,10 +101,10 @@ for (const language of languages) {
 
         test(language.votingAge.title, async ({ page }) => {
             await page.goto(`/game?speed=fast&programming_language=${language.name}&setitem=level-battery-level-finished:1`)
-            await page.getByRole('button', { name: 'I want to play Level 1 - Voting Age' }).click()
+            await page.getByRole('button', { name: 'I want to play Level 1 - Voting Age', exact: true }).click()
             await page.getByLabel('Age').fill('18')
             await page.getByLabel('true').check()
-            await page.getByRole('button', { name: 'I want to add this unit test' }).click()
+            await page.getByRole('button', { name: 'I want to add this unit test', exact: true }).click()
             const currentFunctionPanel = page.getByTestId('current-function')
             const codeLines = currentFunctionPanel.locator('code')
             await expect(codeLines).toContainText(language.votingAge.expected)
@@ -113,7 +113,7 @@ for (const language of languages) {
         if (language.speedDisplay) {
             test(language.speedDisplay.title, async ({ page }) => {
                 await page.goto(`/game?speed=fast&programming_language=${language.name}&setitem=level-battery-level-finished:1&setitem=level-voting-age-finished:1&setitem=level-wind-scale-finished:1&setitem=level-review-finished:1&setitem=level-discount-finished:1&setitem=level-fizz-buzz-finished:1&setitem=level-leap-year-finished:1&setitem=level-triangle-type-finished:1`)
-                await page.getByRole('button', { name: 'I want to play Level 8 - Speed Display' }).click()
+                await page.getByRole('button', { name: 'I want to play Level 8 - Speed Display', exact: true }).click()
                 const currentFunctionPanel = page.getByTestId('current-function')
                 const codeLines = currentFunctionPanel.locator('code')
                 await expect(codeLines).toContainText(language.speedDisplay.expected)

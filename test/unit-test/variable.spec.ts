@@ -21,15 +21,15 @@ test.describe('class Variable', () => {
                 '<div>Type of triangle</div>' +
                 '<label>' +
                     '<input type="radio" name="triangleType" value="EQUILATERAL" required="">' +
-                    'EQUILATERAL' +
+                    '"EQUILATERAL"' +
                 '</label>' +
                 '<label>' +
                     '<input type="radio" name="triangleType" value="ISOSCELES" required="">' +
-                    'ISOSCELES' +
+                    '"ISOSCELES"' +
                 '</label>' +
                 '<label>' +
                     '<input type="radio" name="triangleType" value="SCALENE" required="">' +
-                    'SCALENE' +
+                    '"SCALENE"' +
                 '</label>' +
             '</p>'
         )
