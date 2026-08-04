@@ -2,10 +2,11 @@
   --heading-foreground-green: #063;
   --heading-foreground-purple: #606;
   --card-background: #fff;
-  --card-border: #0002;
+  --card-border: #ddd;
   --gradient-background-left: #606;
   --gradient-background-right: #f3c;
   --peach: #fc6;
+  --dots-background: #bbb;
 }
 
 html {
