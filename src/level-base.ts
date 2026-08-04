@@ -72,7 +72,7 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
             const [name, type] = parameter.split(': ')
             const label = this.conversationLanguage.parameterLabel(this.programmingLanguage.formatVariableName(name!))
             if (type === 'boolean')
-                return new BooleanVariable(label, name!)
+                return new BooleanVariable(label, name!, [ConversationLanguage.bless(this.programmingLanguage.transpile('true')), ConversationLanguage.bless(this.programmingLanguage.transpile('false'))])
             return new IntegerVariable(label, name!)
         })
     }
@@ -83,7 +83,7 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
         const returnType = functionDefinition.match(/\):\s*(\w+)/)![1]!
         const label = this.conversationLanguage.returnValueLabel(`${functionName}(…)`)
         if (returnType === 'boolean')
-            return new BooleanVariable(label, functionName)
+            return new BooleanVariable(label, functionName, [ConversationLanguage.bless(this.programmingLanguage.transpile('true')), ConversationLanguage.bless(this.programmingLanguage.transpile('false'))])
         if (returnType === 'number')
             return new IntegerVariable(label, functionName)
         const returnValues = candidateElements.flat()

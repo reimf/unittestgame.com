@@ -2,6 +2,8 @@ import { test, expect } from '@playwright/test'
 import { JSDOM } from 'jsdom'
 import { RadioVariable, BooleanVariable, IntegerVariable } from '../../src/variable.js'
 import { ConversationLanguage } from '../../src/conversation-language-base.js'
+import { JavaScript } from '../../src/programming-language-javascript.js'
+import { Python } from '../../src/programming-language-python.js'
 
 const { document } = new JSDOM('<!DOCTYPE html>').window
 global.document = document
@@ -34,7 +36,11 @@ test.describe('class Variable', () => {
     })
 
     test('subclass BooleanVariable', () => {
-        const variable = new BooleanVariable(ConversationLanguage.bless('Is even'), 'isEven')
+        const javascript = new JavaScript()
+        const variable = new BooleanVariable(ConversationLanguage.bless('Is even'), 'isEven', [
+            ConversationLanguage.bless(javascript.transpile('true')),
+            ConversationLanguage.bless(javascript.transpile('false')),
+        ])
         const html = variable.toHtml()
         expect(html.getElement().outerHTML).toBe(
             '<p>' +
@@ -46,6 +52,28 @@ test.describe('class Variable', () => {
                 '<label>' +
                     '<input type="radio" name="isEven" value="false" required="">' +
                     'false' +
+                '</label>' +
+            '</p>'
+        )
+    })
+
+    test('subclass BooleanVariable for Python capitalizes True/False', () => {
+        const python = new Python()
+        const variable = new BooleanVariable(ConversationLanguage.bless('Is even'), 'isEven', [
+            ConversationLanguage.bless(python.transpile('true')),
+            ConversationLanguage.bless(python.transpile('false')),
+        ])
+        const html = variable.toHtml()
+        expect(html.getElement().outerHTML).toBe(
+            '<p>' +
+                '<div>Is even</div>' +
+                '<label>' +
+                    '<input type="radio" name="isEven" value="true" required="">' +
+                    'True' +
+                '</label>' +
+                '<label>' +
+                    '<input type="radio" name="isEven" value="false" required="">' +
+                    'False' +
                 '</label>' +
             '</p>'
         )

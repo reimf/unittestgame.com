@@ -1,12 +1,11 @@
 import { Div, Html, Input, Label, Paragraph } from './html.js'
-import { ConversationLanguage, ConversationText } from './conversation-language-base.js'
+import { ConversationText } from './conversation-language-base.js'
 
 export type Value = boolean|number|string
 
 export abstract class Variable {
     public readonly label: ConversationText
     public readonly name: string
-    private labelDiv: Div|undefined
 
     protected constructor(label: ConversationText, name: string) {
         this.label = label
@@ -14,12 +13,7 @@ export abstract class Variable {
     }
 
     protected buildLabelDiv(): Div {
-        this.labelDiv = new Div().appendText(this.label)
-        return this.labelDiv
-    }
-
-    public updateLabel(label: ConversationText): void {
-        this.labelDiv?.setText(label)
+        return new Div().appendText(this.label)
     }
 
     public abstract getInput(value: string): Value
@@ -58,8 +52,11 @@ export class RadioVariable extends Variable {
 }
 
 export class BooleanVariable extends Variable {
-    public constructor(label: ConversationText, name: string) {
+    private readonly texts: readonly [ConversationText, ConversationText]
+
+    public constructor(label: ConversationText, name: string, texts: readonly [ConversationText, ConversationText]) {
         super(label, name)
+        this.texts = texts
     }
 
     public getInput(value: string): boolean {
@@ -67,13 +64,13 @@ export class BooleanVariable extends Variable {
     }
 
     public toHtml(): Html {
-        const radioButtons = [ConversationLanguage.bless('true'), ConversationLanguage.bless('false')].map(text => {
+        const radioButtons = [true, false].map((value, index) => {
             const input = new Input()
               .setType('radio')
               .setName(this.name)
-              .setValue(text)
+              .setValue(`${value}`)
               .setRequired()
-            return new Label().appendChild(input).appendText(text)
+            return new Label().appendChild(input).appendText(this.texts[index]!)
         })
         const paragraph = new Paragraph().appendChild(this.buildLabelDiv()).appendChildren(radioButtons)
         return paragraph

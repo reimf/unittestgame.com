@@ -76,11 +76,6 @@ export abstract class Html extends Content {
         return this
     }
 
-    public setText(text: ConversationText): this {
-        this.getElement().replaceChildren(new Text(text).getNode())
-        return this
-    }
-
     public prependChild(child: Content): this {
         this.getElement().prepend(child.getNode())
         return this
