@@ -2,7 +2,7 @@
   --heading-foreground-green: #063;
   --heading-foreground-purple: #606;
   --card-background: #fff;
-  --card-border: #0001;
+  --card-border: #0002;
   --gradient-background-left: #606;
   --gradient-background-right: #f3c;
   --peach: #fc6;
@@ -166,37 +166,6 @@ header {
 
     code.block {
       overflow: visible;
-    }
-  }
-
-  #play {
-    background-color: transparent;
-    bottom: -2.8rem;
-    color: var(--heading-foreground-purple);
-    cursor: pointer;
-    font-size: 2rem;
-    font-weight: normal;
-    justify-content: center;
-    left: 0rem;
-    padding: 0;
-    position: absolute;
-    z-index: 10;
-  }
-
-  #progress {
-    appearance: none;
-    background: var(--card-border);
-    border: none;
-    border-radius: 100rem;
-    bottom: -2rem;
-    height: 0.5rem;
-    left: 2rem;
-    overflow: hidden;
-    position: absolute;
-    width: calc(100% - 2rem);
-
-    &::-webkit-progress-bar {
-      background: none;
     }
   }
 

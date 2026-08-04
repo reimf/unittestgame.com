@@ -1,113 +1,93 @@
 #messages {
   section {
-    animation: rise 0.5s ease forwards;
-  }
+    opacity: 0;
+    transform: translateY(1rem);
+    transition: opacity 0.4s ease, transform 0.4s ease;
 
-  #progress {
-    &::-webkit-progress-value {
-      animation: progress 24s linear forwards;
-      background: linear-gradient(135deg, var(--gradient-background-left), var(--gradient-background-right));
-      border-radius: inherit;
-      transform-origin: left;
-    }
-
-    &::-moz-progress-bar {
-      animation: progress 24s linear forwards;
-      background: linear-gradient(135deg, var(--gradient-background-left), var(--gradient-background-right));
-      border-radius: inherit;
-      transform-origin: left;
-    }
-
-    &.resetting::-webkit-progress-value {
-      animation: none;
-      transform: scaleX(0);
-    }
-
-    &.resetting::-moz-progress-bar {
-      animation: none;
-      transform: scaleX(0);
+    &.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 
   .comment {
-    animation: show 0s ease forwards;
     opacity: 0;
+    transition: opacity 0s ease;
+
+    &.visible {
+      opacity: 1;
+    }
   }
 
-  #message-1 {
-    animation-delay: 2s;
+  #steps {
+    bottom: -3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    left: 0;
+    position: absolute;
+    width: 100%;
   }
 
-  #this-is-you {
-    animation-delay: 4s;
+  #dots {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+    .dot {
+      background-color: var(--card-border);
+      border-radius: 100%;
+      cursor: pointer;
+      height: 0.8rem;
+      margin: 0 1rem;
+      padding: 0;
+      position: relative;
+      width: 0.8rem;
+
+      &:not(:first-child)::before {
+        background-color: var(--card-border);
+        content: '';
+        height: 0.1rem;
+        position: absolute;
+        right: 100%;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 2rem;
+      }
+
+      &.filled {
+        background: linear-gradient(90deg, var(--gradient-background-left), var(--gradient-background-right));
+
+        &:not(:first-child)::before {
+          background: linear-gradient(90deg, var(--gradient-background-right), var(--gradient-background-left));
+        }
+      }
+    }
   }
 
-  #first-unit-test {
-    animation-delay: 6s;
+  #prev-step,
+  #next-step {
+    font-size: 2rem;
+    height: 3rem;
+    justify-content: center;
+    line-height: 1;
+    padding-bottom: 1.25rem;
+    width: 3rem;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+
+    &:disabled {
+      cursor: default;
+      opacity: 1;
+    }
   }
 
-  #message-2 {
-    animation-delay: 8s;
+  #prev-step {
+    left: -2.75rem;
   }
 
-  #this-is-the-ai-bot {
-    animation-delay: 10s;
-  }
-
-  #first-function {
-    animation-delay: 12s;
-  }
-
-  #first-verdict {
-    animation-delay: 14s;
-  }
-
-  #message-3 {
-    animation-delay: 16s;
-  }
-
-  #second-unit-test {
-    animation-delay: 18s;
-  }
-
-  #message-4 {
-    animation-delay: 20s;
-  }
-
-  #second-function {
-    animation-delay: 22s;
-  }
-
-  #second-verdict {
-    animation-delay: 24s;
-  }
-}
-
-@keyframes rise {
-  from {
-    opacity: 0;
-    transform: translateY(0.6rem);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes show {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes progress {
-  from {
-    transform: scaleX(0);
-  }
-  to {
-    transform: scaleX(1);
+  #next-step {
+    right: -2.75rem;
   }
 }

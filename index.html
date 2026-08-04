@@ -92,8 +92,11 @@
         </section>
         <span class="comment" id="second-function">the rewritten function passes both unit tests</span>
         <span class="comment" id="second-verdict">and now it generalizes 👍</span>
-        <button type="button" id="play">⟳</button>
-        <progress id="progress" max="100" value="100"></progress>
+        <div id="steps">
+          <div id="dots"></div>
+        </div>
+        <button class="btn btn-secondary" id="prev-step">◀</button>
+        <button class="btn btn-primary" id="next-step">▶</button>
       </div>
     </header>
     <section id="how-it-works">
@@ -337,19 +340,53 @@
       </div>
     </footer>
     <script>
-      const playButton = document.getElementById('play')
+      const steps = [
+        'message-1',
+        'this-is-you',
+        'first-unit-test',
+        'message-2',
+        'this-is-the-ai-bot',
+        'first-function',
+        'first-verdict',
+        'message-3',
+        'second-unit-test',
+        'message-4',
+        'second-function',
+        'second-verdict',
+      ]
+      const dotsContainer = document.getElementById('dots')
+      const prevButton = document.getElementById('prev-step')
+      const nextButton = document.getElementById('next-step')
+      let currentStep = 0
 
-      playButton.addEventListener('click', () => {
-        document.querySelectorAll('#messages section, #messages .comment').forEach(element => {
-          element.style.animation = 'none'
-          element.offsetHeight
-          element.style.animation = ''
-        })
-        const progress = document.getElementById('progress')
-        progress.classList.add('resetting')
-        progress.offsetHeight
-        progress.classList.remove('resetting')
+      const dots = steps.map((id, index) => {
+        const dot = document.createElement('button')
+        dot.type = 'button'
+        dot.className = 'dot'
+        dot.setAttribute('aria-label', `Go to step ${index + 1}`)
+        dot.addEventListener('click', () => goToStep(index))
+        dotsContainer.append(dot)
+        return dot
       })
+
+      function render() {
+        steps.forEach((id, index) => {
+          document.getElementById(id).classList.toggle('visible', index <= currentStep)
+        })
+        dots.forEach((dot, index) => dot.classList.toggle('filled', index <= currentStep))
+        prevButton.disabled = currentStep === 0
+        nextButton.disabled = currentStep === steps.length - 1
+      }
+
+      function goToStep(index) {
+        currentStep = index
+        render()
+      }
+
+      prevButton.addEventListener('click', () => goToStep(Math.max(currentStep - 1, 0)))
+      nextButton.addEventListener('click', () => goToStep(Math.min(currentStep + 1, steps.length - 1)))
+
+      render()
     </script>
   </body>
 </html>
