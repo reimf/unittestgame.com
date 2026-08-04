@@ -12,15 +12,16 @@ export class TypeScript extends ProgrammingLanguage {
     public override getTokenTypes(): TokenTypes {
         return new Map([
             ['whitespace', /^ +/],
-            ['number', /^\d+(\.\d+)?/],
-            ['keyword', /^(function|if|return|let|new|number|boolean|string)\b/],
+            ['number', /^\d+/],
+            ['type', /^(number|boolean|string)\b/],
+            ['keyword', /^(function|if|return)\b/],
             ['literal', /^(true|false)\b/],
+            ['operator', /^(===|!==|<=|<|>=|>|=|\*|%|!|\|\||&&)/],
             ['class', /^[A-Z][a-zA-Z]*/],
             ['function', /^[a-zA-Z]+(?=\()/],
             ['variable', /^[a-zA-Z]+/],
             ['string', /^".*?"/],
-            ['operator', /^(!==|!|%|&&|\+=|\+|-|\*|<=|<|===|=|>=|>|\|\||\/)/],
-            ['punctuation', /^[(){}:,]/],
+            ['punctuation', /^(\(|\)|\{|\}|:|,)/],
             ['dot', /^\./],
             ['error', /^.+/],
         ] as const)

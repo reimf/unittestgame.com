@@ -2,9 +2,9 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
-    "test": "npm run build && npx playwright test",
-    "test:transpile": "npm run build && npx playwright test --config=playwright.transpile.config.js",
-    "test:tokenize": "npm run build && npx playwright test --config=playwright.tokenize.config.js",
+    "test": "npx playwright test",
+    "test:transpile": "npx playwright test --config=playwright.transpile.config.js",
+    "test:tokenize": "npx playwright test --config=playwright.tokenize.config.js",
     "testui": "npx playwright test --ui"
   },
   "dependencies": {

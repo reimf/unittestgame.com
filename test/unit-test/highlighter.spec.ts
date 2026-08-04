@@ -15,8 +15,8 @@ test.describe('class ProgrammingLanguage', () => {
 
     test('highlight with 1 argument', () => {
         const javascript = 'function isFloatFormat(text) {' +
-            '    if (!regex.test(text)) regex += speed.toFixed(1)' +
-            '    if (a < Math.abs(20.0) && a >= c && b !== c) return true' +
+            '    if (!regex.test(text)) return regex' +
+            '    if (a < Math.abs(20) && a >= c && b !== c) return true' +
             '    if (num % 2 === 0) return false' +
             '    return regex' +
             '}'
@@ -44,16 +44,9 @@ test.describe('class ProgrammingLanguage', () => {
                 '<span class="punctuation">)</span>' +
                 '<span class="punctuation">)</span>' +
                 '<span class="whitespace"> </span>' +
+                '<span class="keyword">return</span>' +
+                '<span class="whitespace"> </span>' +
                 '<span class="variable">regex</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="operator">+=</span>' +
-                '<span class="whitespace"> </span>' +
-                '<span class="variable">speed</span>' +
-                '<span class="dot">.</span>' +
-                '<span class="function">toFixed</span>' +
-                '<span class="punctuation">(</span>' +
-                '<span class="number">1</span>' +
-                '<span class="punctuation">)</span>' +
                 '<span class="whitespace">    </span>' +
                 '<span class="keyword">if</span>' +
                 '<span class="whitespace"> </span>' +
@@ -66,7 +59,7 @@ test.describe('class ProgrammingLanguage', () => {
                 '<span class="dot">.</span>' +
                 '<span class="function">abs</span>' +
                 '<span class="punctuation">(</span>' +
-                '<span class="number">20.0</span>' +
+                '<span class="number">20</span>' +
                 '<span class="punctuation">)</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="operator">&amp;&amp;</span>' +
@@ -183,7 +176,7 @@ test.describe('class Python', () => {
                 '<span class="whitespace"> </span>' +
                 '<span class="number">19</span>' +
                 '<span class="whitespace"> </span>' +
-                '<span class="keyword">and</span>' +
+                '<span class="operator">and</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="variable">quality</span>' +
                 '<span class="whitespace"> </span>' +
@@ -225,7 +218,7 @@ test.describe('class Python', () => {
                 '<span class="whitespace"> </span>' +
                 '<span class="variable">b</span>' +
                 '<span class="whitespace"> </span>' +
-                '<span class="keyword">or</span>' +
+                '<span class="operator">or</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="variable">b</span>' +
                 '<span class="whitespace"> </span>' +
@@ -247,7 +240,7 @@ test.describe('class Python', () => {
             '<div>' +
                 '<span class="keyword">if</span>' +
                 '<span class="whitespace"> </span>' +
-                '<span class="keyword">not</span>' +
+                '<span class="operator">not</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="variable">ok</span>' +
                 '<span class="punctuation">:</span>' +
@@ -270,12 +263,12 @@ test.describe('class Python', () => {
                 '<span class="variable">num</span>' +
                 '<span class="punctuation">:</span>' +
                 '<span class="whitespace"> </span>' +
-                '<span class="keyword">int</span>' +
+                '<span class="type">int</span>' +
                 '<span class="punctuation">)</span>' +
                 '<span class="whitespace"> </span>' +
-                '<span class="operator">-&gt;</span>' +
+                '<span class="punctuation">-&gt;</span>' +
                 '<span class="whitespace"> </span>' +
-                '<span class="keyword">bool</span>' +
+                '<span class="type">bool</span>' +
                 '<span class="punctuation">:</span>' +
             '</div>',
             '<div>' +

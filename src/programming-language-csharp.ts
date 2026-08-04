@@ -11,7 +11,6 @@ export class Csharp extends ProgrammingLanguage {
             .replace(/\bboolean\b/g, 'bool')
             .replace(/\bfunction (\w+)\((.*?)\): (\w+) \{/g, 'static $3 $1($2)\n{')
             .replace(/(\w+): (\w+)/g, '$2 $1')
-            .replace(/(\w+)\.length\b/g, '$1.Length')
             .replace(/===/g, '==')
             .replace(/!==/g, '!=')
             .replace(/^( +.+)$/gm, '$1;')
@@ -20,15 +19,16 @@ export class Csharp extends ProgrammingLanguage {
     public override getTokenTypes(): TokenTypes {
         return new Map([
             ['whitespace', /^ +/],
-            ['number', /^\d+(\.\d+)?/],
-            ['keyword', /^(using|static|var|int|bool|string|if|return)\b/],
+            ['number', /^\d+/],
+            ['type', /^(int|bool|string)\b/],
+            ['keyword', /^(static|if|return)\b/],
             ['literal', /^(true|false)\b/],
+            ['operator', /^(==|!=|<=|<|>=|>|=|\*|%|!|\|\||&&)/],
             ['function', /^[a-zA-Z][a-zA-Z0-9]*(?=\()/],
             ['class', /^[A-Z][a-zA-Z]*/],
             ['variable', /^[a-zA-Z][a-zA-Z0-9]*/],
             ['string', /^".*?"/],
-            ['operator', /^(!=|!|%|&&|\+=|\+|-|\*|<=|<|==|=|>=|>|\|\||\/)/],
-            ['punctuation', /^[(){};,]/],
+            ['punctuation', /^(\(|\)|\{|\}|;|,)/],
             ['dot', /^\./],
             ['error', /^.+/],
         ] as const)

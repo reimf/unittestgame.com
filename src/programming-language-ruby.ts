@@ -18,14 +18,15 @@ export class Ruby extends ProgrammingLanguage {
     public override getTokenTypes(): TokenTypes {
         return new Map([
             ['whitespace', /^ +/],
-            ['number', /^\d+(\.\d+)?/],
+            ['number', /^\d+/],
+            ['type', /^RUBY-IS-DYNAMICALLY-TYPED/],
             ['keyword', /^(def|if|return|end)\b/],
             ['literal', /^(true|false)\b/],
+            ['operator', /^(==|!=|<=|<|>=|>|=|\*|%|!|\|\||&&)/],
             ['function', /^[a-zA-Z_][a-zA-Z0-9_]*(?=\()/],
             ['variable', /^[a-zA-Z_][a-zA-Z0-9_]*/],
-            ['string', /^("[^"]*"|'[^']*')/],
-            ['operator', /^(!=|==|<=|>=|&&|\|\||%|\+|\/|<|>|=|!|-|\*)/],
-            ['punctuation', /^[(),]/],
+            ['string', /^".*?"/],
+            ['punctuation', /^(\(|\)|,)/],
             ['dot', /^\./],
             ['error', /^.+/],
         ] as const)

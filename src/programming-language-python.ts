@@ -11,7 +11,6 @@ export class Python extends ProgrammingLanguage {
             .replace(/\bboolean\b/g, 'bool')
             .replace(/\bstring\b/g, 'str')
             .replace(/\bfunction (\w+)\((.*?)\): (\w+) \{/g, 'def $1($2) -> $3:')
-            .replace(/(\w+)\.length\b/g, 'len($1)')
             .replace(/\btrue\b/g, 'True')
             .replace(/\bfalse\b/g, 'False')
             .replace(/===/g, '==')
@@ -26,15 +25,16 @@ export class Python extends ProgrammingLanguage {
     public override getTokenTypes(): TokenTypes {
         return new Map([
             ['whitespace', /^ +/],
-            ['number', /^\d+(\.\d+)?/],
-            ['keyword', /^(def|if|return|and|or|not|is)\b|^(?:int|bool|str)\b(?!\()/],
-            ['literal', /^(True|False|None)\b/],
+            ['number', /^\d+/],
+            ['type', /^(int|bool|str)\b/],
+            ['keyword', /^(def|if|return)\b/],
+            ['literal', /^(True|False)\b/],
+            ['operator', /^(==|!=|<=|<|>=|>|=|\*|%|not|or|and)/],
             ['class', /^[A-Z][a-zA-Z]*/],
             ['function', /^[a-zA-Z_][a-zA-Z0-9_]*(?=\()/],
             ['variable', /^[a-zA-Z_][a-zA-Z0-9_]*/],
-            ['string', /^("[^"]*"|'[^']*')/],
-            ['operator', /^(!=|%|\+|\/\/|\/|<=|<|==|=|>=|>|->|-|\*)/],
-            ['punctuation', /^[(){}[\]:,]/],
+            ['string', /^".*?"/],
+            ['punctuation', /^(\(|\)|\{|\}|\[|\]|:|,|->)/],
             ['dot', /^\./],
             ['error', /^.+/],
         ] as const)

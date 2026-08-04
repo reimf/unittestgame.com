@@ -12,7 +12,6 @@ export class Java extends ProgrammingLanguage {
             .replace(/\bstring\b/g, 'String')
             .replace(/\bfunction (\w+)\((.*?)\): (\w+) \{/g, 'static $3 $1($2) {')
             .replace(/(\w+): (\w+)/g, '$2 $1')
-            .replace(/(\w+)\.length\b/g, '$1.length()')
             .replace(/^(.*) === ("[^"]*")$/gm, '$2.equals($1)')
             .replace(/===/g, '==')
             .replace(/!==/g, '!=')
@@ -22,15 +21,16 @@ export class Java extends ProgrammingLanguage {
     public override getTokenTypes(): TokenTypes {
         return new Map([
             ['whitespace', /^ +/],
-            ['number', /^\d+(\.\d+)?/],
-            ['keyword', /^(import|static|var|int|boolean|String|if|return)\b/],
+            ['number', /^\d+/],
+            ['type', /^(int|boolean|String)\b/],
+            ['keyword', /^(static|if|return)\b/],
             ['literal', /^(true|false)\b/],
+            ['operator', /^(==|!=|<=|<|>=|>|=|\*|%|!|\|\||&&)/],
             ['function', /^[a-zA-Z][a-zA-Z0-9]*(?=\()/],
             ['class', /^[A-Z][a-zA-Z]*/],
             ['variable', /^[a-zA-Z][a-zA-Z0-9]*/],
             ['string', /^".*?"/],
-            ['operator', /^(!=|!|%|&&|\+=|\+|-|\*|<=|<|==|=|>=|>|\|\||\/)/],
-            ['punctuation', /^[(){};,]/],
+            ['punctuation', /^(\(|\)|\{|\}|;|,)/],
             ['dot', /^\./],
             ['error', /^.+/],
         ] as const)

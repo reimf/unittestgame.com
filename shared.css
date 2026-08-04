@@ -18,6 +18,7 @@
   --unlocked-foreground: #fff;
   --locked-background: #eee;
   --locked-foreground: #666;
+  --highlight-type: #c33;
   --highlight-keyword: #c33;
   --highlight-class: #66c;
   --highlight-function: #669;
@@ -77,6 +78,10 @@ code {
         text-decoration: none;
       }
 
+      .type {
+        color: var(--highlight-type);
+      }
+      
       .keyword {
         color: var(--highlight-keyword);
       }

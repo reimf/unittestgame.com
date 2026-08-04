@@ -20,7 +20,6 @@ export class Php extends ProgrammingLanguage {
             .replace(/\bboolean\b/g, 'bool')
             .replace(/\bfunction (\w+)\((.*?)\): (\w+) \{/g, 'function $1($2): $3 {')
             .replace(/(\$?\w+): (\w+)/g, '$2 $1')
-            .replace(/(\$\w+)\.length\b/g, 'strlen($1)')
             .replace(/ \+= /g, ' .= ')
             .replace(/ \+ /g, ' . ')
             .replace(/^( +.+)$/gm, '$1;')
@@ -29,14 +28,15 @@ export class Php extends ProgrammingLanguage {
     public override getTokenTypes(): TokenTypes {
         return new Map([
             ['whitespace', /^ +/],
-            ['number', /^\d+(\.\d+)?/],
-            ['keyword', /^(function|if|return|int|bool|string)\b/],
+            ['number', /^\d+/],
+            ['type', /^(int|bool|string)\b/],
+            ['keyword', /^(function|if|return)\b/],
             ['literal', /^(true|false)\b/],
+            ['operator', /^(===|!==|<=|<|>=|>|=|\*|%|!|\|\||&&)/],
             ['function', /^[a-zA-Z_][a-zA-Z0-9_]*(?=\()/],
             ['variable', /^\$?[a-zA-Z_][a-zA-Z0-9_]*/],
             ['string', /^".*?"/],
-            ['operator', /^(!==|!|%|&&|\.=|\.|-|\*|<=|<|===|=|>=|>|\|\||\/)/],
-            ['punctuation', /^[(){};:,]/],
+            ['punctuation', /^(\(|\)|\{|\}|;|:|,)/],
             ['error', /^.+/],
         ] as const)
     }
