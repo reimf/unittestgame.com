@@ -1,3 +1,9 @@
+#hero-animation {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
 #messages {
   section {
     opacity: 0;
@@ -18,80 +24,65 @@
       opacity: 1;
     }
   }
+}
 
-  #steps {
-    bottom: -3rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    left: 0;
-    position: absolute;
-    width: 100%;
-  }
+#steps {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  left: 0;
+  width: 100%;
+}
 
-  #dots {
-    align-items: center;
-    display: flex;
-    justify-content: center;
+#dots {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  position: relative;
+
+  .dot {
+    background-color: var(--dots-background);
+    border-radius: 100%;
+    cursor: pointer;
+    height: 0.8rem;
+    margin: 0 0.75rem;
+    padding: 0;
     position: relative;
+    width: 0.8rem;
+    z-index: 1;
 
-    &::before {
+    &.filled {
+      background: linear-gradient(90deg, var(--gradient-background-left), var(--gradient-background-right));
+    }
+
+    & + &::before {
       background-color: var(--dots-background);
       content: '';
       height: 0.1rem;
-      left: 1.75rem;
       position: absolute;
-      right: 1.75rem;
+      right: 100%;
       top: 50%;
       transform: translateY(-50%);
+      width: 1.5rem;
     }
 
-    .dot {
-      background-color: var(--dots-background);
-      border-radius: 100%;
-      cursor: pointer;
-      height: 0.8rem;
-      margin: 0 1rem;
-      padding: 0;
-      position: relative;
-      width: 0.8rem;
-      z-index: 1;
-
-      &.filled {
-        background: linear-gradient(90deg, var(--gradient-background-left), var(--gradient-background-right));
-      }
+    &.filled::before {
+      background: linear-gradient(90deg, var(--gradient-background-left), var(--gradient-background-right));
     }
   }
+}
 
-  #prev-step,
-  #next-step {
-    font-size: 2rem;
-    height: 3rem;
-    justify-content: center;
-    line-height: 1;
-    padding-bottom: 1.25rem;
-    width: 3rem;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+#prev-step,
+#next-step {
+  font-size: 1.5rem;
+  height: 3rem;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  width: 3rem;
 
-    &:hover {
-      transform: translateY(calc(-50% - 0.1rem));
-    }
-
-    &:disabled {
-      cursor: default;
-      opacity: 1;
-    }
-  }
-
-  #prev-step {
-    padding-left: 1rem;
-    left: -2.5rem;
-  }
-
-  #next-step {
-    padding-right: 1rem;
-    right: -2.5rem;
+  &:disabled {
+    cursor: default;
+    opacity: 1;
   }
 }
