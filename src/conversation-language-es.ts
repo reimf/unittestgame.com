@@ -45,12 +45,20 @@ export class Spanish extends ConversationLanguage {
         return ConversationLanguage.bless(`Quiero jugar ${levelDescription}`)
     }
 
+    public override playButton(): ConversationText {
+        return ConversationLanguage.bless('Jugar')
+    }
+
     public override retryButton(): ConversationText {
         return ConversationLanguage.bless('Reintentar')
     }
 
     public override retryLevelButton(levelDescription: string): ConversationText {
         return ConversationLanguage.bless(`Quiero reintentar ${levelDescription}`)
+    }
+
+    public override lockedButton(): ConversationText {
+        return ConversationLanguage.bless('Bloqueado')
     }
 
     public override allLevels(): ConversationText {

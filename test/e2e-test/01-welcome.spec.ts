@@ -37,16 +37,16 @@ test.describe('welcome', () => {
     test('has level overview panel', async ({ page }) => {
         const levelsPanel = page.getByTestId('level-overview')
         await expect(levelsPanel).toContainText(
-            '▶️Level 0 - Battery Level' +
-            '🔒Level 1 - Voting Age' +
-            '🔒Level 2 - Wind Scale' +
-            '🔒Level 3 - Review' +
-            '🔒Level 4 - Discount' +
-            '🔒Level 5 - FizzBuzz' +
-            '🔒Level 6 - Leap Year' +
-            '🔒Level 7 - Triangle Type' +
-            '🔒Level 8 - Speed Display' +
-            '🔒Level 9 - Parking Fee')
+            '▶️Level 0 - Battery LevelPlay' +
+            '🔒Level 1 - Voting AgeLocked' +
+            '🔒Level 2 - Wind ScaleLocked' +
+            '🔒Level 3 - ReviewLocked' +
+            '🔒Level 4 - DiscountLocked' +
+            '🔒Level 5 - FizzBuzzLocked' +
+            '🔒Level 6 - Leap YearLocked' +
+            '🔒Level 7 - Triangle TypeLocked' +
+            '🔒Level 8 - Speed DisplayLocked' +
+            '🔒Level 9 - Parking FeeLocked')
     })
 
     test('has see example message', async ({ page }) => {

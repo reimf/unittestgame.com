@@ -19,8 +19,10 @@ export abstract class ConversationLanguage {
     public abstract invitation(): ConversationText
     public abstract level(levelNumber: number, levelName: string): ConversationText
     public abstract nextLevelButton(levelDescription: string): ConversationText
+    public abstract playButton(): ConversationText
     public abstract retryButton(): ConversationText
     public abstract retryLevelButton(levelDescription: string): ConversationText
+    public abstract lockedButton(): ConversationText
     public abstract allLevels(): ConversationText
     public abstract closeTab(): ConversationText
     public abstract unitTestsTitle(): ConversationText

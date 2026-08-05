@@ -9,11 +9,11 @@ test.describe('level emojis', () => {
             '🥈Level 1 - Voting AgeRetry' +
             '🥉Level 2 - Wind ScaleRetry' +
             '💩Level 3 - ReviewRetry' +
-            '▶️Level 4 - Discount' +
-            '🔒Level 5 - FizzBuzz' +
-            '🔒Level 6 - Leap Year' +
-            '🔒Level 7 - Triangle Type' +
-            '🔒Level 8 - Speed Display' +
-            '🔒Level 9 - Parking Fee')
+            '▶️Level 4 - DiscountPlay' +
+            '🔒Level 5 - FizzBuzzLocked' +
+            '🔒Level 6 - Leap YearLocked' +
+            '🔒Level 7 - Triangle TypeLocked' +
+            '🔒Level 8 - Speed DisplayLocked' +
+            '🔒Level 9 - Parking FeeLocked')
     })
 })

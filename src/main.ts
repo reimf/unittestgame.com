@@ -41,6 +41,11 @@ export class Main {
         level.play(() => this.continue())
     }
 
+    private playNextLevel(level: AnyLevel): void {
+        this.nextLevelMessage?.answer(this.conversationLanguage.nextLevelButton(level.description()))
+        this.play(level)
+    }
+
     private retry(level: AnyLevel): void {
         this.nextLevelMessage?.answer(this.conversationLanguage.retryLevelButton(level.description()))
         this.play(level)
@@ -104,7 +109,11 @@ export class Main {
             ])
             const children: Html[] = [info]
             if (level.isFinished())
-                children.push(new Button(this.conversationLanguage.retryButton(), () => this.retry(level)).addClass('retry'))
+                children.push(new Button(this.conversationLanguage.retryButton(), () => this.retry(level)).addClass('level-action'))
+            else if (level === nextLevel)
+                children.push(new Button(this.conversationLanguage.playButton(), () => this.playNextLevel(level)).addClass('level-action'))
+            else
+                children.push(new Button(this.conversationLanguage.lockedButton(), () => {}).addClass('level-action').setDisabled())
             return new ListItem().addClass(state).appendChildren(children)
         })
         const div = new OrderedList().addClass('level-board').appendChildren(items)

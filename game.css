@@ -24,7 +24,6 @@ body {
 button {
   background-color: var(--input-background);
   border-radius: 0.5rem;
-  box-shadow: 0 0.25rem 0.5rem var(--button-shadow);
   color: var(--light-text);
   line-height: 1.5rem;
   margin: 0.75rem 0;
@@ -78,7 +77,6 @@ input {
   &[type="submit"] {
     background-color: var(--input-background);
     border-radius: 0.5rem;
-    box-shadow: 0 0.25rem 0.5rem var(--button-shadow);
     color: var(--light-text);
     display: block;
     line-height: 1.5rem;
@@ -140,18 +138,11 @@ p {
 a,
 button,
 input:not([type="radio"]),
-label:has(input[type="radio"]) {
+label:has(input[type="radio"]),
+select {
 
   &:focus-within,
   &:focus,
-  &:hover,
-  &:has(:focus) {
-    box-shadow: 0 0 0.3rem 0.3rem var(--focus-shadow);
-    opacity: 1;
-  }
-}
-
-select {
   &:hover {
     box-shadow: 0 0 0.3rem 0.3rem var(--focus-shadow);
   }
@@ -263,22 +254,22 @@ select {
               vertical-align: middle;
             }
 
-            button.retry {
+            button.level-action {
               align-items: center;
               align-self: stretch;
               border-radius: 0 0.5rem 0.5rem 0;
-              box-shadow: none;
               display: flex;
               justify-content: center;
               margin: -0.5rem -0.5rem -0.5rem 0;
+              min-width: 7rem;
               padding: 0 0.75rem;
               width: auto;
 
-              &:focus-within,
-              &:focus,
-              &:hover,
-              &:has(:focus) {
-                box-shadow: 0 0 0.3rem 0.3rem var(--focus-shadow);
+              &:disabled {
+                background-color: var(--locked-foreground);
+                color: var(--locked-background);
+                opacity: 0.4;
+                pointer-events: none;
               }
             }
           }

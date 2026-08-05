@@ -203,6 +203,11 @@ export class Button extends Html {
         event.preventDefault()
         this.callback()
     }
+
+    public setDisabled(disabled: boolean = true): this {
+        this.getElement<HTMLButtonElement>().disabled = disabled
+        return this
+    }
 }
 
 export class MessageButton extends Button {

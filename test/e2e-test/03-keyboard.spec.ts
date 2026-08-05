@@ -39,3 +39,15 @@ test.describe('keyboard', () => {
         await expect(page.getByRole('button', { name: 'I want to submit the unit tests', exact: true })).toBeFocused()
     })
 })
+
+test.describe('keyboard across messages and panels', () => {
+    test.beforeEach(async ({ page }) => {
+        await page.goto('/game?speed=fast')
+    })
+
+    test('has the home link focused after arrow down from the last message', async ({ page }) => {
+        await page.getByRole('button', { name: 'I want to play Level 0 - Battery Level', exact: true }).focus()
+        await page.keyboard.press('ArrowDown')
+        await expect(page.getByRole('link', { name: 'Home', exact: true })).toBeFocused()
+    })
+})
