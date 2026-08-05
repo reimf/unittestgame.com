@@ -15,13 +15,14 @@ document.addEventListener('keydown', event => {
         const currentElement = document.activeElement as HTMLElement
         if (focusableElements.includes(currentElement)) {
             const messages = document.querySelector('#messages')!
-            const tops = new Map(focusableElements.map(focusable => [focusable, (messages.contains(focusable) ? 0 : 1) * 1_000_000 + focusable.getBoundingClientRect().top]))
+            const height = (element: HTMLElement) => (messages.contains(element) ? 0 : 1) * 1_000_000 + element.getBoundingClientRect().top
+            const tops = new Map(focusableElements.map(element => [element, height(element)]))
             const uniqueTops = [...new Set(tops.values())].sort((a, b) => a - b)
             const currentIndex = uniqueTops.indexOf(tops.get(currentElement)!)
             const direction = event.key === 'ArrowUp' ? -1 : 1
             const targetTop = uniqueTops[(currentIndex + direction + uniqueTops.length) % uniqueTops.length]
-            const possibleTargets = focusableElements.filter(focusable => tops.get(focusable) === targetTop)
-            const preferableTargets = possibleTargets.filter(focusable => focusable instanceof HTMLInputElement && focusable.checked)
+            const possibleTargets = focusableElements.filter(element => tops.get(element) === targetTop)
+            const preferableTargets = possibleTargets.filter(element => element instanceof HTMLInputElement && element.checked)
             const targetElement = preferableTargets[0] ?? possibleTargets[0]
             if (targetElement)
                 targetElement.focus()
