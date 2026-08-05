@@ -193,14 +193,22 @@ export class Paragraph extends Html {
 }
 
 export class Button extends Html {
-    public constructor(text: ConversationText, callback: () => void) {
+    public constructor(text: ConversationText, private readonly callback: () => void) {
         super('button')
         this.appendText(text)
-        this.getElement().addEventListener('click', event => {
-            event.preventDefault()
-            this.replaceEnclosingMessageContent(this.getElement(), ConversationLanguage.bless(this.getElement().textContent))
-            callback()
-        })
+        this.getElement().addEventListener('click', event => this.handleClick(event))
+    }
+
+    protected handleClick(event: Event): void {
+        event.preventDefault()
+        this.callback()
+    }
+}
+
+export class MessageButton extends Button {
+    protected override handleClick(event: Event): void {
+        this.replaceEnclosingMessageContent(this.getElement(), ConversationLanguage.bless(this.getElement().textContent))
+        super.handleClick(event)
     }
 }
 

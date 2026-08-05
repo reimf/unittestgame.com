@@ -45,6 +45,14 @@ export class French extends ConversationLanguage {
         return ConversationLanguage.bless(`Je veux jouer ${levelDescription}`)
     }
 
+    public override retryButton(): ConversationText {
+        return ConversationLanguage.bless('Réessayer')
+    }
+
+    public override retryLevelButton(levelDescription: string): ConversationText {
+        return ConversationLanguage.bless(`Je veux réessayer ${levelDescription}`)
+    }
+
     public override allLevels(): ConversationText {
         return ConversationLanguage.bless('J\'ai terminé tous les niveaux')
     }

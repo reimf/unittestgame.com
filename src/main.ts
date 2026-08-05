@@ -1,7 +1,7 @@
 import { Levels } from './levels.js'
 import { Store } from './store.js'
 import { Panel, Message, ComputerMessage, QuestionMessage } from './frame.js'
-import { Div, Label, ListItem, Option, OrderedList, Select, Span } from './html.js'
+import { Div, Html, Label, ListItem, Option, OrderedList, Button, Select, Span } from './html.js'
 import { AnyLevel } from './level-base.js'
 import { ConversationLanguage } from './conversation-language-base.js'
 import { conversationLanguages } from './conversation-languages.js'
@@ -13,6 +13,7 @@ export class Main {
     private readonly conversationLanguage: ConversationLanguage
     private readonly programmingLanguage: ProgrammingLanguage
     private readonly levels: ReturnType<Levels['all']>
+    private nextLevelMessage: QuestionMessage|undefined
 
     constructor(conversationLanguage: ConversationLanguage, programmingLanguage: ProgrammingLanguage, picker: Picker, store: Store) {
         this.conversationLanguage = conversationLanguage
@@ -38,6 +39,11 @@ export class Main {
         Message.hideAllButLast()
         Panel.removeAll()
         level.play(() => this.continue())
+    }
+
+    private retry(level: AnyLevel): void {
+        this.nextLevelMessage?.answer(this.conversationLanguage.retryLevelButton(level.description()))
+        this.play(level)
     }
 
     private showWelcomeMessage(): void {
@@ -92,10 +98,14 @@ export class Main {
         const items = this.levels.map(level => {
             const emoji = level.emoji(nextLevel)
             const state = level === nextLevel || level.isFinished() ? 'unlocked' : 'locked'
-            return new ListItem().addClass(state).appendChildren([
+            const info = new Span().addClass('level-info').appendChildren([
                 new Span().appendText(ConversationLanguage.bless(emoji)),
                 new Span().appendText(ConversationLanguage.bless(level.description()))
             ])
+            const children: Html[] = [info]
+            if (level.isFinished())
+                children.push(new Button(this.conversationLanguage.retryButton(), () => this.retry(level)).addClass('retry'))
+            return new ListItem().addClass(state).appendChildren(children)
         })
         const div = new OrderedList().addClass('level-board').appendChildren(items)
         new Panel('level-overview', this.conversationLanguage.levelOverviewTitle(), [div]).show()
@@ -103,10 +113,10 @@ export class Main {
 
     private showNextLevel(): void {
         const nextLevel = this.levels.find(level => !level.isFinished())
-        if (nextLevel)
-            new QuestionMessage(this.conversationLanguage.nextLevelButton(nextLevel.description()), () => this.play(nextLevel)).show()
-        else
-            new QuestionMessage(this.conversationLanguage.allLevels(), () => this.quit()).show()
+        this.nextLevelMessage = nextLevel
+            ? new QuestionMessage(this.conversationLanguage.nextLevelButton(nextLevel.description()), () => this.play(nextLevel))
+            : new QuestionMessage(this.conversationLanguage.allLevels(), () => this.quit())
+        this.nextLevelMessage.show()
     }
 
     private quit(): void {

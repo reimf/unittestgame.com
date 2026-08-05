@@ -1,4 +1,4 @@
-import { Button, Div, Html, Header, Paragraph, Section } from './html.js'
+import { MessageButton, Div, Html, Header, Paragraph, Section } from './html.js'
 import type { ConversationText } from './conversation-language-base.js'
 
 abstract class Frame extends Section {
@@ -93,9 +93,15 @@ export class HumanMessage extends Message {
 }
 
 export class QuestionMessage extends HumanMessage {
+    private readonly button: MessageButton
+
     public constructor(text: ConversationText, callback: () => void) {
-        super([
-            new Button(text, callback)
-        ])
+        const button = new MessageButton(text, callback)
+        super([button])
+        this.button = button
+    }
+
+    public answer(text: ConversationText): void {
+        this.replaceEnclosingMessageContent(this.button.getElement(), text)
     }
 }

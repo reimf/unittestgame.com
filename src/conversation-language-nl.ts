@@ -45,6 +45,14 @@ export class Dutch extends ConversationLanguage {
         return ConversationLanguage.bless(`Ik wil ${levelDescription} spelen`)
     }
 
+    public override retryButton(): ConversationText {
+        return ConversationLanguage.bless('Opnieuw')
+    }
+
+    public override retryLevelButton(levelDescription: string): ConversationText {
+        return ConversationLanguage.bless(`Ik wil ${levelDescription} opnieuw spelen`)
+    }
+
     public override allLevels(): ConversationText {
         return ConversationLanguage.bless('Ik heb alle levels voltooid')
     }

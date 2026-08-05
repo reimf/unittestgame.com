@@ -1,7 +1,7 @@
 import { Candidate } from './candidate.js'
 import { Store } from './store.js'
 import { ComputerMessage, HumanMessage, Panel } from './frame.js'
-import { Button, CodeBlock, Div, Form, ListItem, OrderedList, Submit } from './html.js'
+import { MessageButton, CodeBlock, Div, Form, ListItem, OrderedList, Submit } from './html.js'
 import { ConversationLanguage, ConversationText } from './conversation-language-base.js'
 import { Picker } from './picker.js'
 import { TestResult } from './test-result.js'
@@ -221,7 +221,7 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
     protected showMenuMessage(): void {
         this.showBeforeMenuMessage()
         const addButton = new Submit(this.conversationLanguage.addUnitTestButton())
-        const submitButton = new Button(this.conversationLanguage.submitUnitTestsButton(), () => this.submitUnitTests())
+        const submitButton = new MessageButton(this.conversationLanguage.submitUnitTestsButton(), () => this.submitUnitTests())
         const variables = [...this.parameters, this.unit].map(variable => variable.toHtml())
         const formUnitTest = new Div().setId('form-unit-test').addClass('new')
         const formCodeBlock = new CodeBlock().appendChild(formUnitTest)
