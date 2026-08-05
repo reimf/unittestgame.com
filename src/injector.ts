@@ -5,11 +5,10 @@ export class Injector {
         this.parameters = parameters
     }
 
-    public getOption(key: string, options: readonly string[]): string {
-        if (!this.parameters.has(key))
-            return options[0]!
-        const value = this.parameters.get(key)!
+    public getOption(key: string, defaultOption: string, otherOptions: readonly string[]): string {
+        const value = this.parameters.get(key) ?? defaultOption
         this.parameters.delete(key)
+        const options = [defaultOption, ...otherOptions]
         if (options.includes(value))
             return value
         throw new Error(`Parameter ${key}=${value}, but ${value} is not one of ${options.join(', ')}`)

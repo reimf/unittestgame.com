@@ -33,13 +33,15 @@ document.addEventListener('keydown', event => {
 
 document.addEventListener('DOMContentLoaded', () => {
     const injector = new Injector(new URL(window.location.href).searchParams)
-    const conversationLanguageId = injector.getOption('conversation_language', conversationLanguages.map(conversationLanguage => conversationLanguage.id))
+    const [defaultConversationLanguage, ...otherConversationLanguages] = conversationLanguages
+    const conversationLanguageId = injector.getOption('conversation_language', defaultConversationLanguage.id, otherConversationLanguages.map(conversationLanguage => conversationLanguage.id))
     const conversationLanguage = conversationLanguages.find(conversationLanguage => conversationLanguage.id === conversationLanguageId)!
-    const programmingLanguageId = injector.getOption('programming_language', programmingLanguages.map(programmingLanguage => programmingLanguage.id))
+    const [defaultProgrammingLanguage, ...otherProgrammingLanguages] = programmingLanguages
+    const programmingLanguageId = injector.getOption('programming_language', defaultProgrammingLanguage.id, otherProgrammingLanguages.map(programmingLanguage => programmingLanguage.id))
     const programmingLanguage = programmingLanguages.find(programmingLanguage => programmingLanguage.id === programmingLanguageId)!
-    const picker = injector.getOption('picker', ['random', 'fixed']) === 'fixed' ? new FixedPicker() : new RandomPicker()
-    const store = injector.getOption('store', ['local', 'map']) === 'map' ? new MapStore() : new LocalStore()
-    if (injector.getOption('speed', ['normal', 'fast']) === 'fast') {
+    const picker = injector.getOption('picker', 'random', ['fixed']) === 'fixed' ? new FixedPicker() : new RandomPicker()
+    const store = injector.getOption('store', 'local', ['map']) === 'map' ? new MapStore() : new LocalStore()
+    if (injector.getOption('speed', 'normal', ['fast']) === 'fast') {
         window.setTimeout = ((callback: () => void): void => callback()) as typeof setTimeout
         const style = document.createElement('style')
         style.textContent = '* { animation-duration: 0s !important; transition-duration: 0s !important; }'

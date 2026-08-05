@@ -5,22 +5,22 @@ test.describe('class Injector', () => {
     test.describe('getOption', () => {
         test('returns the value when key is present and value is in options', () => {
             const injector = new Injector(new URLSearchParams('mode=easy'))
-            expect(injector.getOption('mode', ['easy', 'hard'])).toBe('easy')
+            expect(injector.getOption('mode', 'easy', ['hard'])).toBe('easy')
         })
 
         test('throws when key is present but value is not in options', () => {
             const injector = new Injector(new URLSearchParams('mode=unknown'))
-            expect(() => injector.getOption('mode', ['easy', 'hard'])).toThrow('Parameter mode=unknown, but unknown is not one of easy, hard')
+            expect(() => injector.getOption('mode', 'easy', ['hard'])).toThrow('Parameter mode=unknown, but unknown is not one of easy, hard')
         })
 
-        test('returns the first option when key is absent', () => {
+        test('returns the default option when key is absent', () => {
             const injector = new Injector(new URLSearchParams())
-            expect(injector.getOption('mode', ['first', 'last'])).toBe('first')
+            expect(injector.getOption('mode', 'first', ['last'])).toBe('first')
         })
 
         test('deletes the key after reading', () => {
             const injector = new Injector(new URLSearchParams('mode=easy'))
-            injector.getOption('mode', ['easy', 'hard'])
+            injector.getOption('mode', 'easy', ['hard'])
             expect(() => injector.checkEmpty()).not.toThrow()
         })
     })
