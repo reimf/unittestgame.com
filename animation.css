@@ -75,6 +75,10 @@
     top: 50%;
     transform: translateY(-50%);
 
+    &:hover {
+      transform: translateY(calc(-50% - 0.1rem));
+    }
+
     &:disabled {
       cursor: default;
       opacity: 1;
