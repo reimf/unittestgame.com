@@ -52,7 +52,7 @@
     z-index: 1;
 
     &.filled {
-      background: linear-gradient(90deg, var(--gradient-background-left), var(--gradient-background-right));
+      background: linear-gradient(90deg, var(--gradient-button-left), var(--gradient-button-right));
     }
 
     & + &::before {
@@ -67,7 +67,7 @@
     }
 
     &.filled::before {
-      background: linear-gradient(90deg, var(--gradient-background-left), var(--gradient-background-right));
+      background: linear-gradient(90deg, var(--gradient-button-left), var(--gradient-button-right));
     }
   }
 }

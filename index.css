@@ -3,8 +3,6 @@
   --heading-foreground-purple: #606;
   --card-background: #fff;
   --card-border: #ddd;
-  --gradient-background-left: #606;
-  --gradient-background-right: #f3c;
   --peach: #fc6;
   --dots-background: #bbb;
 }
@@ -23,7 +21,6 @@ body {
 
 a,
 button {
-  color: inherit;
   text-decoration: none;
   text-wrap: nowrap;
 
@@ -32,11 +29,18 @@ button {
   }
 }
 
+a {
+  color: var(--gradient-button-left);
+}
+
+button {
+  color: inherit;
+}
+
 a.btn,
 button.btn {
   display: inline-flex;
   align-items: center;
-  font-weight: bold;
   border: none;
   border-radius: 100rem;
   padding: 1rem 1.5rem;
@@ -46,19 +50,19 @@ button.btn {
   white-space: nowrap;
 
   &.btn-primary {
-    background: linear-gradient(135deg, var(--gradient-background-left), var(--gradient-background-right));
+    background: linear-gradient(135deg, var(--gradient-button-left), var(--gradient-button-right));
     color: var(--light-text);
-    box-shadow: 0 0.6rem 1.5rem -0.5rem color-mix(in srgb, var(--gradient-background-left), white 25%);
+    box-shadow: 0 0.6rem 1.5rem -0.5rem color-mix(in srgb, var(--gradient-button-left), white 25%);
 
     &:hover {
-      box-shadow: 0 0.9rem 2rem -0.5rem color-mix(in srgb, var(--gradient-background-left), white 25%);
+      box-shadow: 0 0.9rem 2rem -0.5rem color-mix(in srgb, var(--gradient-button-left), white 25%);
     }
   }
 
   &.btn-secondary {
     background: var(--card-background);
     border: 0.1rem solid var(--card-border);
-    color: var(--gradient-background-left);
+    color: var(--gradient-button-left);
   }
 }
 
@@ -113,39 +117,39 @@ header {
   justify-content: center;
   padding: 5rem 2rem 4rem;
 
-  @media (max-width: 71rem) {
+  @media (max-width: 72rem) {
     flex-direction: column;
   }
+}
 
-  #hero-copy {
+#hero-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  width: 31rem;
+
+  h1 {
+    color: var(--heading-foreground-purple);
+    font-size: 3.5rem;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-align: center;
+
+    .gradient-text {
+      background: linear-gradient(120deg, var(--gradient-background-left), var(--gradient-background-right) 60%, var(--peach) 100%);
+      background-clip: text;
+      color: transparent;
+    }
+  }
+
+  p {
+    font-size: 1.2rem;
+  }
+
+  .hero-cta {
     display: flex;
-    flex-direction: column;
-    gap: 2.5rem;
-    width: 31rem;
-
-    h1 {
-      color: var(--heading-foreground-green);
-      font-size: 3.5rem;
-      line-height: 1;
-      letter-spacing: -0.02em;
-      text-align: center;
-
-      .gradient-text {
-        background: linear-gradient(120deg, var(--gradient-background-left), var(--gradient-background-right) 60%, var(--peach) 100%);
-        background-clip: text;
-        color: transparent;
-      }
-    }
-
-    p {
-      font-size: 1.2rem;
-    }
-
-    .hero-cta {
-      display: flex;
-      gap: 2rem;
-      justify-content: center;
-    }
+    gap: 2rem;
+    justify-content: center;
   }
 }
 
@@ -243,7 +247,7 @@ body {
       text-align: center;
 
       h2 {
-        color: var(--heading-foreground-green);
+        color: var(--heading-foreground-purple);
         font-size: 2rem;
         letter-spacing: -0.02em;
         line-height: 1.1;
@@ -273,25 +277,26 @@ ul {
       transform: translateY(-0.2rem);
     }
 
+    .square {
+      align-items: center;
+      background: linear-gradient(135deg, var(--gradient-background-left), var(--gradient-background-right));
+      border-radius: 0.5rem;
+      color: var(--light-text);
+      display: flex;
+      flex-shrink: 0;
+      font-size: 1.25rem;
+      font-weight: bold;
+      height: 2rem;
+      justify-content: center;
+      width: 2rem;
+    }
+
     h3 {
       align-items: center;
-      color: var(--heading-foreground-purple);
+      color: var(--heading-foreground-green);
       display: flex;
       gap: 1rem;
       margin-bottom: 0.5rem;
-
-      .square {
-        align-items: center;
-        background: linear-gradient(135deg, var(--gradient-background-left), var(--gradient-background-right));
-        border-radius: 0.5rem;
-        color: var(--light-text);
-        display: flex;
-        font-size: 1.25rem;
-        font-weight: bold;
-        height: 2rem;
-        justify-content: center;
-        width: 2rem;
-      }
     }
   }
 }
@@ -375,7 +380,7 @@ ul {
 
       div {
         align-items: center;
-        color: var(--heading-foreground-green);
+        color: var(--heading-foreground-purple);
         display: flex;
         font-size: 0.7rem;
         font-weight: bold;

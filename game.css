@@ -1,6 +1,6 @@
 a {
   /* markdown: [text](url) */
-  background-color: var(--input-background);
+  background: linear-gradient(135deg, var(--gradient-button-left), var(--gradient-button-right));
   border-radius: 0.5rem;
   color: var(--light-text);
   display: inline-block;
@@ -22,7 +22,7 @@ body {
 }
 
 button {
-  background-color: var(--input-background);
+  background: linear-gradient(135deg, var(--gradient-button-left), var(--gradient-button-right));
   border-radius: 0.5rem;
   color: var(--light-text);
   line-height: 1.5rem;
@@ -33,7 +33,7 @@ button {
 
 select {
   appearance: none;
-  background-color: var(--input-background);
+  background: linear-gradient(135deg, var(--gradient-button-left), var(--gradient-button-right));
   border-radius: 0.5rem;
   color: var(--light-text);
   cursor: pointer;
@@ -44,7 +44,7 @@ select {
 
 i {
   /* markdown: *italic* */
-  background-color: var(--panel-heading-background);
+  background: linear-gradient(135deg, var(--gradient-background-left), var(--gradient-background-right));
   border-radius: 0.25rem 0.25rem 0 0;
   color: var(--light-text);
   font-style: normal;
@@ -57,7 +57,7 @@ input {
 
   &[type="text"],
   &[type="number"] {
-    background-color: var(--input-background);
+    background: linear-gradient(135deg, var(--gradient-button-left), var(--gradient-button-right));
     border-radius: 0.5rem;
     color: var(--light-text);
     height: 2rem;
@@ -75,7 +75,7 @@ input {
   }
 
   &[type="submit"] {
-    background-color: var(--input-background);
+    background: linear-gradient(135deg, var(--gradient-button-left), var(--gradient-button-right));
     border-radius: 0.5rem;
     color: var(--light-text);
     display: block;
@@ -110,7 +110,7 @@ label {
   }
 
   &:has(input[type="radio"]) {
-    background-color: var(--input-background);
+    background: linear-gradient(135deg, var(--gradient-button-left), var(--gradient-button-right));
     color: var(--light-text);
     display: inline-block;
     line-height: 2rem;
@@ -170,7 +170,7 @@ select {
       overflow: hidden;
 
       header {
-        background-color: var(--panel-heading-background);
+        background: linear-gradient(135deg, var(--gradient-background-left), var(--gradient-background-right));
         border-radius: 0.5rem 0.5rem 0 0;
         color: var(--light-text);
         padding: 0.75rem;
@@ -266,8 +266,8 @@ select {
               width: auto;
 
               &:disabled {
-                background-color: var(--locked-foreground);
-                color: var(--locked-background);
+                background: none;
+                color: var(--locked-foreground);
                 opacity: 0.4;
                 pointer-events: none;
               }

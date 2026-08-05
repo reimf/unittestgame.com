@@ -1,8 +1,10 @@
 :root {
   --dark-text: #333;
   --light-text: #fff;
-  --panel-heading-background: #606;
-  --input-background: #063;
+  --gradient-background-left: #606;
+  --gradient-background-right: #f3c;
+  --gradient-button-left: #063;
+  --gradient-button-right: #6c3;
   --human-message-background: #efe;
   --general-background: #f6f3ff;
   --computer-message-background: #fff;
