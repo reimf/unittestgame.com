@@ -34,7 +34,7 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
     private previousCandidate: Candidate<Parameters, Result>|undefined = undefined
     private failingTestResult: TestResult<Parameters, Result>|undefined = undefined
     private lastUnitTest: UnitTest<Parameters, Result>|undefined = undefined
-    private numberOfSubmissions: number = 0
+    protected numberOfPenalties: number = 0
 
     public constructor(conversationLanguage: ConversationLanguage, programmingLanguage: ProgrammingLanguage, picker: Picker, store: Store, levelNumber: number) {
         this.conversationLanguage = conversationLanguage
@@ -178,24 +178,28 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
         return fullSetOfMinimalUnitTests.length
     }
 
-    protected isFormDataOk(_formData: FormData): boolean {
+    protected isAddUnitTestOk(_formData: FormData): boolean {
+        return true
+    }
+
+    protected isSubmitUnitTestsOk(): boolean {
+        if (this.failingTestResult)
+            this.numberOfPenalties += 1
         return true
     }
 
     public emoji(nextLevel: AnyLevel|undefined): string {
-        return this === nextLevel ? '▶️' : this.finishedEmoji()
-    }
-
-    protected finishedEmoji(): string {
-        return ['🔒', '🥇', '🥈', '🥉'].at(this.isFinished()) ?? '💩'
+        if (this === nextLevel)
+            return '▶️'
+        return ['🔒', '🥇', '🥈', '🥉'].at(this.penalties() + 1) ?? '💩'
     }
 
     public description(): string {
         return this.conversationLanguage.level(this.levelNumber, this.name())
     }
 
-    public isFinished(): number {
-        return this.store.get(`level-${this.identifier()}-finished`)
+    public penalties(): number {
+        return this.store.get(`penalties-level-${this.identifier()}`)
     }
 
     public play(callback: () => void): void {
@@ -251,12 +255,16 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
     private addUnitTest(formData: FormData): void {
         const unitTest = this.buildUnitTest(formData)
         ComputerMessage.addToLast([new CodeBlock().appendChild(unitTest.toHtml(this.programmingLanguage).addClass('new'))])
-        if (!this.isFormDataOk(formData))
+        if (!this.isAddUnitTestOk(formData))
             return
-        if (!new TestResult(this.perfectCandidate, unitTest).passes)
+        if (!new TestResult(this.perfectCandidate, unitTest).passes) {
+            this.numberOfPenalties += 1
             this.handleIncorrectUnitTest()
-        else if (new TestResult(this.currentCandidate, unitTest).passes)
+        }
+        else if (new TestResult(this.currentCandidate, unitTest).passes) {
+            this.numberOfPenalties += 1
             this.handleUselessUnitTest(unitTest)
+        }
         else
             this.handleUsefulUnitTest(unitTest)
         this.menu()
@@ -285,9 +293,8 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
     }
 
     private submitUnitTests(): void {
-        if (!this.isFormDataOk(new FormData()))
+        if (!this.isSubmitUnitTestsOk())
             return
-        this.numberOfSubmissions += 1
         if (this.failingTestResult) {
             this.showInvalidUnitTestMessage()
             this.menu()
@@ -297,7 +304,7 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
     }
 
     private end(): void {
-        this.store.set(`level-${this.identifier()}-finished`, this.numberOfSubmissions)
+        this.store.set(`penalties-level-${this.identifier()}`, this.numberOfPenalties)
         this.showPanels()
         this.showEndMessage()
         this.callback!()
@@ -351,6 +358,7 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
         new ComputerMessage([this.conversationLanguage.currentFunctionCorrect()]).show()
         const numberOfUnneccessaryUnitTests = this.humanUnitTests.length - this.minimalUnitTests.length
         if (numberOfUnneccessaryUnitTests > 0) {
+            this.numberOfPenalties += numberOfUnneccessaryUnitTests
             const redundantUnitTests = this.findRedundantUnitTests()
             const listItems = redundantUnitTests.map(unitTest => new ListItem().appendChild(new CodeBlock().appendChild(unitTest.toHtml(this.programmingLanguage))))
             const orderedList = new OrderedList().appendChildren(listItems)

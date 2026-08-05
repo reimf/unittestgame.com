@@ -2,7 +2,7 @@ import { test, expect } from '../fixture/fixture-coverage'
 
 test.describe('submit 1 out of 1 too many unit tests', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('/game?speed=fast&setitem=level-battery-level-finished:1&setitem=level-voting-age-finished:1')
+        await page.goto('/game?speed=fast&setitem=penalties-level-battery-level:0&setitem=penalties-level-voting-age:1')
         await page.getByRole('button', { name: 'I want to play Level 2 - Wind Scale', exact: true }).click()
         await page.getByLabel('speed').fill('19')
         await page.getByLabel('"CALM"', { exact: true }).check()

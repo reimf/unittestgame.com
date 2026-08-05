@@ -4,8 +4,8 @@ import { ConversationText } from './conversation-language-base.js'
 
 type FormStringsType = {
     message: ConversationText
-    batteryLevel: string|null
-    powerMode: string|null
+    batteryLevel?: string
+    powerMode?: string
 }
 
 
@@ -69,8 +69,6 @@ export class BatteryLevel extends Level<[number], string> {
         },
         {
             message: this.conversationLanguage.submitUnitTestsFirst(),
-            batteryLevel: null,
-            powerMode: null
         },
         {
             message: this.conversationLanguage.addBatteryLevel21(),
@@ -79,8 +77,6 @@ export class BatteryLevel extends Level<[number], string> {
         },
         {
             message: this.conversationLanguage.submitUnitTestsSecond(),
-            batteryLevel: null,
-            powerMode: null
         },
         {
             message: this.conversationLanguage.addBatteryLevel18(),
@@ -89,8 +85,6 @@ export class BatteryLevel extends Level<[number], string> {
         },
         {
             message: this.conversationLanguage.submitUnitTestsThird(),
-            batteryLevel: null,
-            powerMode: null
         }
     ]
 
@@ -102,20 +96,28 @@ export class BatteryLevel extends Level<[number], string> {
         new ComputerMessage([this.conversationLanguage.wrongAction()]).show()
     }
 
-    protected override isFormDataOk(formData: FormData): boolean {
-        const exampleForm = this.exampleForms[0]!
-        const batteryLevelOk = formData.get('batteryLevel') === exampleForm.batteryLevel
-        const powerModeOk = formData.get('powerMode') === exampleForm.powerMode
-        if (batteryLevelOk && powerModeOk) {
+    private isExampleExpected(everythingOk: boolean): boolean {
+        if (everythingOk) {
             this.exampleForms.shift()
             return true
         }
+        this.numberOfPenalties += 1
         this.showWarning()
         this.showMenuMessage()
         return false
     }
 
-    protected override finishedEmoji(): string {
-        return '👍'
+    protected override isAddUnitTestOk(formData: FormData): boolean {
+        const exampleForm = this.exampleForms[0]!
+        const batteryLevelOk = exampleForm.batteryLevel === formData.get('batteryLevel')
+        const powerModeOk = exampleForm.powerMode === formData.get('powerMode')
+        return this.isExampleExpected(batteryLevelOk && powerModeOk)
+    }
+
+    protected override isSubmitUnitTestsOk(): boolean {
+        const exampleForm = this.exampleForms[0]!
+        const batteryLevelOk = !exampleForm.hasOwnProperty('batteryLevel')
+        const powerModeOk = !exampleForm.hasOwnProperty('powerMode')
+        return this.isExampleExpected(batteryLevelOk && powerModeOk)
     }
 }

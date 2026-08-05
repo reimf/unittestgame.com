@@ -7,7 +7,7 @@ export class LocalStore extends Store {
     public get(key: string): number {
         const value = localStorage.getItem(key)
         if (!value)
-            return 0
+            return -1
         return Number(value)
     }
 
@@ -22,7 +22,7 @@ export class MapStore extends Store {
     public get(key: string): number {
         const value = this.mapStorage.get(key)
         if (!value)
-            return 0
+            return -1
         return Number(value)
     }
 

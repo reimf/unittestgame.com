@@ -38,7 +38,7 @@ test.describe('example level', () => {
     test('has updatedlevel overview panel', async ({ page }) => {
         const levelsPanel = page.getByTestId('level-overview')
         await expect(levelsPanel).toContainText(
-            '👍Level 0 - Battery LevelRetry' +
+            '🥇Level 0 - Battery LevelRetry' +
             '▶️Level 1 - Voting AgePlay' +
             '🔒Level 2 - Wind ScaleLocked' +
             '🔒Level 3 - ReviewLocked' +

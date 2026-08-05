@@ -99,16 +99,16 @@ export class Main {
     }
 
     private showLevelOverviewPanel(): void {
-        const nextLevel = this.levels.find(level => !level.isFinished())
+        const nextLevel = this.levels.find(level => level.penalties() === -1)
         const items = this.levels.map(level => {
             const emoji = level.emoji(nextLevel)
-            const state = level === nextLevel || level.isFinished() ? 'unlocked' : 'locked'
+            const state = level === nextLevel || level.penalties() !== -1 ? 'unlocked' : 'locked'
             const info = new Span().addClass('level-info').appendChildren([
                 new Span().appendText(ConversationLanguage.bless(emoji)),
                 new Span().appendText(ConversationLanguage.bless(level.description()))
             ])
             const children: Html[] = [info]
-            if (level.isFinished())
+            if (level.penalties() !== -1)
                 children.push(new Button(this.conversationLanguage.retryButton(), () => this.retry(level)).addClass('level-action'))
             else if (level === nextLevel)
                 children.push(new Button(this.conversationLanguage.playButton(), () => this.playNextLevel(level)).addClass('level-action'))
@@ -121,7 +121,7 @@ export class Main {
     }
 
     private showNextLevel(): void {
-        const nextLevel = this.levels.find(level => !level.isFinished())
+        const nextLevel = this.levels.find(level => level.penalties() === -1)
         this.nextLevelMessage = nextLevel
             ? new QuestionMessage(this.conversationLanguage.nextLevelButton(nextLevel.description()), () => this.play(nextLevel))
             : new QuestionMessage(this.conversationLanguage.allLevels(), () => this.quit())
