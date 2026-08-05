@@ -19,6 +19,8 @@ test.describe('conversation languages', () => {
                 conversationLanguage.invitation(),
                 conversationLanguage.level(1, 'Voting Age'),
                 conversationLanguage.nextLevelButton('Level 1 - Voting Age'),
+                conversationLanguage.retryButton(),
+                conversationLanguage.retryLevelButton('Level 1 - Voting Age'),
                 conversationLanguage.allLevels(),
                 conversationLanguage.closeTab(),
                 conversationLanguage.unitTestsTitle(),
