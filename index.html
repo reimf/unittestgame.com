@@ -34,7 +34,7 @@
     <header>
       <div id="hero-copy">
         <h1>
-          An AI bot can pass <span class="gradient-text">every unit test</span>.<br>
+          An AI bot writes code that passes <span class="gradient-text">every unit test</span>.<br>
           But is that what <span class="gradient-text">you really want</span>?
         </h1>
         <p>
@@ -95,9 +95,8 @@
           <span class="comment" id="second-verdict">and now it generalizes 👍</span>
         </div>
         <div id="steps">
-          <button class="btn btn-secondary" id="prev-step">◀</button>
+          <button class="btn btn-primary" id="control-animation"></button>
           <div id="dots"></div>
-          <button class="btn btn-primary" id="next-step">▶</button>
         </div>
       </div>
     </header>
@@ -355,29 +354,32 @@
         'message-4',
         'second-function',
         'second-verdict',
-      ]
+      ].map(id => document.getElementById(id))
+      const maxStep = steps.length - 1
       const dotsContainer = document.getElementById('dots')
-      const prevButton = document.getElementById('prev-step')
-      const nextButton = document.getElementById('next-step')
+      const controlAnimationButton = document.getElementById('control-animation')
       let currentStep = 0
+      let playing = null
 
-      const dots = steps.map((id, index) => {
+      const dots = steps.map((_, index) => {
         const dot = document.createElement('button')
         dot.type = 'button'
         dot.className = 'dot'
         dot.setAttribute('aria-label', `Go to step ${index + 1}`)
-        dot.addEventListener('click', () => goToStep(index))
+        dot.addEventListener('click', () => {
+          stopAutoplay()
+          goToStep(index)
+        })
         dotsContainer.append(dot)
         return dot
       })
 
       function render() {
-        steps.forEach((id, index) => {
-          document.getElementById(id).classList.toggle('visible', index <= currentStep)
+        steps.forEach((_, index) => {
+          steps[index].classList.toggle('visible', index <= currentStep)
+          dots[index].classList.toggle('filled', index <= currentStep)
         })
-        dots.forEach((dot, index) => dot.classList.toggle('filled', index <= currentStep))
-        prevButton.disabled = currentStep === 0
-        nextButton.disabled = currentStep === steps.length - 1
+        controlAnimationButton.textContent = currentStep === maxStep ? '⟲' : playing ? '⏸' : '⇥'
       }
 
       function goToStep(index) {
@@ -385,10 +387,31 @@
         render()
       }
 
-      prevButton.addEventListener('click', () => goToStep(Math.max(currentStep - 1, 0)))
-      nextButton.addEventListener('click', () => goToStep(Math.min(currentStep + 1, steps.length - 1)))
+      function stopAutoplay() {
+        clearInterval(playing)
+        playing = null
+        render()
+      }
 
-      render()
+      function startAutoplay() {
+        playing = setInterval(() => {
+          goToStep(currentStep + 1)
+          if (currentStep === maxStep)
+            stopAutoplay()
+        }, 4000)
+        render()
+      }
+
+      controlAnimationButton.addEventListener('click', () => {
+        if (currentStep === maxStep)
+          goToStep(0)
+        else if (playing)
+          stopAutoplay()
+        else
+          goToStep(currentStep + 1)
+      })
+
+      startAutoplay()
     </script>
   </body>
 </html>

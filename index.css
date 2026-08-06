@@ -39,13 +39,12 @@ button {
 
 a.btn,
 button.btn {
-  display: inline-flex;
   align-items: center;
+  display: inline-flex;
   border: none;
   border-radius: 100rem;
-  padding: 1rem 1.5rem;
-  font-size: 1rem;
-  cursor: pointer;
+  height: 3.5rem;
+  padding: 0 1.5rem;
   transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
   white-space: nowrap;
 
@@ -143,7 +142,7 @@ header {
   }
 
   p {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
   }
 
   .hero-cta {
@@ -160,6 +159,7 @@ header {
   box-shadow: 0 0 5rem var(--gradient-background-left);
   min-width: 34rem;
   overflow: visible;
+  padding-bottom: 5rem;
   position: relative;
 
   section>div {
@@ -255,7 +255,7 @@ body {
       }
 
       p {
-        font-size: 1.1rem;
+        font-size: 1.25rem;
       }
     }
   }
@@ -284,7 +284,7 @@ ul {
       color: var(--light-text);
       display: flex;
       flex-shrink: 0;
-      font-size: 1.25rem;
+      font-size: 1.5rem;
       font-weight: bold;
       height: 2rem;
       justify-content: center;
@@ -382,11 +382,9 @@ ul {
         align-items: center;
         color: var(--heading-foreground-purple);
         display: flex;
-        font-size: 0.7rem;
         font-weight: bold;
         justify-content: space-between;
         margin-bottom: 0.5rem;
-        text-transform: uppercase;
       }
     }
   }
