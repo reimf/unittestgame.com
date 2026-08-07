@@ -31,7 +31,7 @@
   bottom: 1rem;
   display: flex;
   flex-direction: row;
-  gap: 0.5rem;
+  gap: 1rem;
   justify-content: center;
   left: 0;
   position: absolute;
@@ -49,25 +49,27 @@
     border-radius: 100%;
     cursor: pointer;
     height: 0.8rem;
-    margin: 0 0.8rem;
     padding: 0;
     position: relative;
     width: 0.8rem;
     z-index: 1;
 
-    &:not(.filled) {
-      opacity: 0.2;
+    &:not(:first-child) {
+      margin-left: 1.6rem;
+
+      &::before {
+        background: var(--gradient-button-right);
+        content: '';
+        height: 0.15rem;
+        position: absolute;
+        right: 100%;
+        top: calc(50% - 0.15rem / 2);
+        width: 1.6rem;
+      }
     }
 
-    & + &::before {
-      background: var(--gradient-button-right);
-      content: '';
-      height: 0.15rem;
-      position: absolute;
-      right: 100%;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 1.6rem;
+    &:not(.filled) {
+      opacity: 0.2;
     }
   }
 }
