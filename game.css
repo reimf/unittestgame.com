@@ -1,8 +1,8 @@
 a {
   /* markdown: [text](url) */
-  background: linear-gradient(135deg, var(--gradient-button-left), var(--gradient-button-right));
+  background: linear-gradient(135deg, var(--button-background-left), var(--button-background-right));
   border-radius: 0.5rem;
-  color: var(--light-text);
+  color: var(--general-text-light);
   display: inline-block;
   line-height: 2rem;
   padding: 0 1rem;
@@ -11,7 +11,7 @@ a {
 
 body {
   background-color: var(--general-background);
-  color: var(--dark-text);
+  color: var(--general-text-dark);
   font-family: monospace;
   line-height: 1.25rem;
 
@@ -22,9 +22,9 @@ body {
 }
 
 button {
-  background: linear-gradient(135deg, var(--gradient-button-left), var(--gradient-button-right));
+  background: linear-gradient(135deg, var(--button-background-left), var(--button-background-right));
   border-radius: 0.5rem;
-  color: var(--light-text);
+  color: var(--general-text-light);
   line-height: 1.5rem;
   margin: 0.75rem 0;
   padding: 0.5rem 0.75rem;
@@ -33,9 +33,9 @@ button {
 
 select {
   appearance: none;
-  background: linear-gradient(135deg, var(--gradient-button-left), var(--gradient-button-right));
+  background: linear-gradient(135deg, var(--button-background-left), var(--button-background-right));
   border-radius: 0.5rem;
-  color: var(--light-text);
+  color: var(--general-text-light);
   cursor: pointer;
   height: 2rem;
   padding: 0 2rem 0 1rem;
@@ -44,9 +44,9 @@ select {
 
 i {
   /* markdown: *italic* */
-  background: linear-gradient(135deg, var(--gradient-background-left), var(--gradient-background-right));
+  background: linear-gradient(135deg, var(--panel-background-left), var(--panel-background-right));
   border-radius: 0.25rem 0.25rem 0 0;
-  color: var(--light-text);
+  color: var(--general-text-light);
   font-style: normal;
   padding: 0.1rem 0.25rem;
   white-space: nowrap;
@@ -57,9 +57,9 @@ input {
 
   &[type="text"],
   &[type="number"] {
-    background: linear-gradient(135deg, var(--gradient-button-left), var(--gradient-button-right));
+    background: linear-gradient(135deg, var(--button-background-left), var(--button-background-right));
     border-radius: 0.5rem;
-    color: var(--light-text);
+    color: var(--general-text-light);
     height: 2rem;
     padding: 0 0.5rem;
     width: 8rem;
@@ -75,9 +75,9 @@ input {
   }
 
   &[type="submit"] {
-    background: linear-gradient(135deg, var(--gradient-button-left), var(--gradient-button-right));
+    background: linear-gradient(135deg, var(--button-background-left), var(--button-background-right));
     border-radius: 0.5rem;
-    color: var(--light-text);
+    color: var(--general-text-light);
     display: block;
     line-height: 1.5rem;
     margin: 0.75rem 0;
@@ -98,7 +98,7 @@ label {
       position: relative;
 
       &::after {
-        color: var(--light-text);
+        color: var(--general-text-light);
         content: '▾';
         pointer-events: none;
         position: absolute;
@@ -110,8 +110,8 @@ label {
   }
 
   &:has(input[type="radio"]) {
-    background: linear-gradient(135deg, var(--gradient-button-left), var(--gradient-button-right));
-    color: var(--light-text);
+    background: linear-gradient(135deg, var(--button-background-left), var(--button-background-right));
+    color: var(--general-text-light);
     display: inline-block;
     line-height: 2rem;
     margin-right: 0.75rem;
@@ -144,7 +144,7 @@ select {
   &:focus-within,
   &:focus,
   &:hover {
-    box-shadow: 0 0 0.3rem 0.3rem var(--focus-shadow);
+    box-shadow: 0 0 0.3rem 0.3rem var(--button-focus-shadow);
   }
 }
 
@@ -165,14 +165,14 @@ select {
     section {
       background-color: var(--panel-body-background);
       border-radius: 0.5rem;
-      color: var(--dark-text);
+      color: var(--general-text-dark);
       margin: 0.75rem;
       overflow: hidden;
 
       header {
-        background: linear-gradient(135deg, var(--gradient-background-left), var(--gradient-background-right));
+        background: linear-gradient(135deg, var(--panel-background-left), var(--panel-background-right));
         border-radius: 0.5rem 0.5rem 0 0;
-        color: var(--light-text);
+        color: var(--general-text-light);
         padding: 0.75rem;
       }
 
@@ -239,13 +239,13 @@ select {
             white-space: nowrap;
 
             &.unlocked {
-              background-color: var(--unlocked-background);
-              color: var(--unlocked-foreground);
+              background-color: var(--level-unlocked-background);
+              color: var(--level-unlocked-foreground);
             }
 
             &.locked {
-              background-color: var(--locked-background);
-              color: var(--locked-foreground);
+              background-color: var(--level-locked-background);
+              color: var(--level-locked-foreground);
             }
 
             .level-info span:first-child {
@@ -267,7 +267,7 @@ select {
 
               &:disabled {
                 background: none;
-                color: var(--locked-foreground);
+                color: var(--level-locked-foreground);
                 opacity: 0.4;
                 pointer-events: none;
               }
@@ -287,7 +287,7 @@ select {
   &:before,
   &:after {
     content: "";
-    border-bottom: 1px solid var(--dark-text);
+    border-bottom: 1px solid var(--general-text-dark);
     display: inline-block;
     height: 0;
     position: relative;

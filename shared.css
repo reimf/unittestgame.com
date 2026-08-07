@@ -1,37 +1,42 @@
 :root {
-  --dark-text: #333;
-  --light-text: #fff;
-  --gradient-background-left: #606;
-  --gradient-background-right: #f3c;
-  --gradient-button-left: #063;
-  --gradient-button-right: #6c3;
-  --human-message-background: #efe;
+  --button-background-left: #063;
+  --button-background-right: #6c3;
+  --button-focus-shadow: #f60;
+  --card-background: #fff;
+  --card-border: #ddd;
+  --code-diff-deleted-background: #fee;
+  --code-diff-inserted-background: #efe;
+  --code-general-background: #333;
+  --code-general-foreground: #fff;
+  --code-highlight-class: #66c;
+  --code-highlight-dot: #660;
+  --code-highlight-function: #669;
+  --code-highlight-keyword: #c33;
+  --code-highlight-literal: #06c;
+  --code-highlight-number: #06c;
+  --code-highlight-operator: #06c;
+  --code-highlight-string: #036;
+  --code-highlight-type: #c33;
+  --code-highlight-variable: #060;
   --general-background: #f6f3ff;
-  --computer-message-background: #fff;
+  --general-text-dark: #333;
+  --general-text-light: #fff;
+  --heading-foreground-green: #063;
+  --heading-foreground-purple: #606;
+  --level-unlocked-background: #333;
+  --level-unlocked-foreground: #fff;
+  --level-locked-background: #eee;
+  --level-locked-foreground: #666;
+  --message-border: #ddd;
+  --message-computer-background: #fff;
+  --message-human-background: #efe;
+  --panel-background-left: #606;
+  --panel-background-right: #f3c;
+  --panel-background-xtra: #fc6;
   --panel-body-background: #fff;
-  --button-shadow: #0006;
-  --focus-shadow: #f60;
   --separator-shadow: #0003;
-  --inserted-background: #efe;
-  --deleted-background: #fee;
-  --new-background: #eef;
-  --old-background: #fff;
-  --unlocked-background: #333;
-  --unlocked-foreground: #fff;
-  --locked-background: #eee;
-  --locked-foreground: #666;
-  --highlight-type: #c33;
-  --highlight-keyword: #c33;
-  --highlight-class: #66c;
-  --highlight-function: #669;
-  --highlight-variable: #060;
-  --highlight-literal: #06c;
-  --highlight-number: #06c;
-  --highlight-operator: #06c;
-  --highlight-string: #036;
-  --highlight-dot: #660;
-  --code-background: #333;
-  --code-foreground: #fff;
+  --unittest-new-background: #eef;
+  --unittest-old-background: #fff;
 }
 
 * {
@@ -47,9 +52,9 @@
 
 code {
   &:not(.block) {
-    background-color: var(--code-background);
+    background-color: var(--code-general-background);
     border-radius: 0.25rem;
-    color: var(--code-foreground);
+    color: var(--code-general-foreground);
     padding: 0.1rem 0.25rem;
     white-space: pre;
   }
@@ -63,61 +68,61 @@ code {
       white-space: pre;
 
       &.old {
-        background-color: var(--old-background);
+        background-color: var(--unittest-old-background);
       }
 
       &.new {
-        background-color: var(--new-background);
+        background-color: var(--unittest-new-background);
       }
 
       ins {
-        background-color: var(--inserted-background);
+        background-color: var(--code-diff-inserted-background);
         text-decoration: none;
       }
 
       del {
-        background-color: var(--deleted-background);
+        background-color: var(--code-diff-deleted-background);
         text-decoration: none;
       }
 
       .type {
-        color: var(--highlight-type);
+        color: var(--code-highlight-type);
       }
       
       .keyword {
-        color: var(--highlight-keyword);
+        color: var(--code-highlight-keyword);
       }
 
       .class {
-        color: var(--highlight-class);
+        color: var(--code-highlight-class);
       }
 
       .function {
-        color: var(--highlight-function);
+        color: var(--code-highlight-function);
       }
 
       .variable {
-        color: var(--highlight-variable);
+        color: var(--code-highlight-variable);
       }
 
       .literal {
-        color: var(--highlight-literal);
+        color: var(--code-highlight-literal);
       }
 
       .number {
-        color: var(--highlight-number);
+        color: var(--code-highlight-number);
       }
 
       .operator {
-        color: var(--highlight-operator);
+        color: var(--code-highlight-operator);
       }
 
       .string {
-        color: var(--highlight-string);
+        color: var(--code-highlight-string);
       }
 
       .dot {
-        color: var(--highlight-dot);
+        color: var(--code-highlight-dot);
       }
     }
   }
@@ -163,9 +168,9 @@ ul {
       }
 
       >div {
-        background-color: var(--human-message-background);
+        background-color: var(--message-human-background);
         border-bottom-right-radius: 0;
-        color: var(--dark-text);
+        color: var(--general-text-dark);
         margin-right: 2.5rem;
       }
     }
@@ -183,9 +188,9 @@ ul {
       }
 
       >div {
-        background-color: var(--computer-message-background);
+        background-color: var(--message-computer-background);
         border-bottom-left-radius: 0;
-        color: var(--dark-text);
+        color: var(--general-text-dark);
         margin-left: 2.5rem;
       }
     }
@@ -195,8 +200,9 @@ ul {
     }
 
     >div {
+      border: 0.1rem solid var(--message-border);
       border-radius: 1.25rem;
-      color: var(--dark-text);
+      color: var(--general-text-dark);
       display: flow-root;
       margin: 0.75rem;
       overflow: hidden;

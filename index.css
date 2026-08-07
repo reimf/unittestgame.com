@@ -1,19 +1,10 @@
-:root {
-  --heading-foreground-green: #063;
-  --heading-foreground-purple: #606;
-  --card-background: #fff;
-  --card-border: #ddd;
-  --peach: #fc6;
-  --dots-background: #bbb;
-}
-
 html {
   scroll-behavior: smooth;
 }
 
 body {
   font-family: sans-serif;
-  color: var(--dark-text);
+  color: var(--general-text-dark);
   background-color: var(--general-background);
   line-height: 1.5;
   overflow-x: hidden;
@@ -30,7 +21,7 @@ button {
 }
 
 a {
-  color: var(--gradient-button-left);
+  color: var(--button-background-left);
 }
 
 button {
@@ -49,19 +40,19 @@ button.btn {
   white-space: nowrap;
 
   &.btn-primary {
-    background: linear-gradient(135deg, var(--gradient-button-left), var(--gradient-button-right));
-    color: var(--light-text);
-    box-shadow: 0 0.6rem 1.5rem -0.5rem color-mix(in srgb, var(--gradient-button-left), white 25%);
+    background: linear-gradient(135deg, var(--button-background-left), var(--button-background-right));
+    color: var(--general-text-light);
+    box-shadow: 0 0.6rem 1.5rem -0.5rem color-mix(in srgb, var(--button-background-left), white 25%);
 
     &:hover {
-      box-shadow: 0 0.9rem 2rem -0.5rem color-mix(in srgb, var(--gradient-button-left), white 25%);
+      box-shadow: 0 0.9rem 2rem -0.5rem color-mix(in srgb, var(--button-background-left), white 25%);
     }
   }
 
   &.btn-secondary {
     background: var(--card-background);
     border: 0.1rem solid var(--card-border);
-    color: var(--gradient-button-left);
+    color: var(--button-background-left);
   }
 }
 
@@ -135,7 +126,7 @@ header {
     text-align: center;
 
     .gradient-text {
-      background: linear-gradient(120deg, var(--gradient-background-left), var(--gradient-background-right), var(--peach));
+      background: linear-gradient(120deg, var(--panel-background-left), var(--panel-background-right), var(--panel-background-xtra));
       background-clip: text;
       color: transparent;
     }
@@ -156,7 +147,7 @@ header {
   background: var(--general-background);
   border-radius: 1.5rem;
   font-family: monospace;
-  box-shadow: 0 0 5rem var(--gradient-background-left);
+  box-shadow: 0 0 5rem var(--panel-background-left);
   min-width: 35rem;
   overflow: visible;
   padding-bottom: 5rem;
@@ -175,7 +166,7 @@ header {
   }
 
   .comment {
-    color: var(--gradient-background-right);
+    color: var(--panel-background-right);
     font-family: cursive;
     font-weight: bold;
     font-size: 1.5rem;
@@ -279,9 +270,9 @@ ul {
 
     .square {
       align-items: center;
-      background: linear-gradient(135deg, var(--gradient-background-left), var(--gradient-background-right));
+      background: linear-gradient(135deg, var(--panel-background-left), var(--panel-background-right));
       border-radius: 0.5rem;
-      color: var(--light-text);
+      color: var(--general-text-light);
       display: flex;
       flex-shrink: 0;
       font-size: 1.5rem;
@@ -416,8 +407,8 @@ ul {
 
 .cta-band {
   background: linear-gradient(135deg,
-      color-mix(in srgb, var(--gradient-background-left) 15%, transparent),
-      color-mix(in srgb, var(--gradient-background-right) 5%, transparent));
+      color-mix(in srgb, var(--panel-background-left) 15%, transparent),
+      color-mix(in srgb, var(--panel-background-right) 5%, transparent));
   border-radius: 1.5rem;
   display: flex;
   flex-direction: column;
