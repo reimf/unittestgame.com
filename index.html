@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'; form-action 'self'">
     <meta name="description" content="Learn to write effective unit tests with an interactive game where you collaborate with a maliciously compliant AI bot to improve your skills in Test-Driven Development.">
     <meta name="theme-color" content="#0b0620">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -16,6 +17,7 @@
     <link rel="stylesheet" href="shared.css">
     <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="animation.css">
+    <script src="index.js" type="module"></script>
     <title>UnitTestGame.com: Outsmart the AI bot that cheats on purpose</title>
   </head>
   <body>
@@ -34,8 +36,8 @@
     <header>
       <div id="hero-copy">
         <h1>
-          Some code passes <span class="gradient-text">your unit tests</span>.<br>
-          But does it do what <span class="gradient-text">you really want</span>?
+          The code passes <span class="gradient-text">your unit tests.</span><br>
+          But does it do what <span class="gradient-text">you really want?</span>
         </h1>
         <p>
           UnitTestGame pairs you with a maliciously compliant AI bot.
@@ -44,7 +46,7 @@
           Your job: write unit tests until the program is right.
         </p>
         <div class="hero-cta">
-          <a class="btn btn-primary" href="game">Play free in your browser →</a>
+          <a class="btn btn-primary" href="game">Play for free in your browser →</a>
           <a class="btn btn-secondary" href="#how-it-works">See how it works</a>
         </div>
       </div>
@@ -329,7 +331,7 @@
       <div class="cta-band">
         <h2>The AI bot is waiting for you. Don't get fooled.</h2>
         <p>Click the button, follow the instructions, and see what the AI bot tries to get away with.</p>
-        <a class="btn btn-primary" href="game">Play UnitTestGame free →</a>
+        <a class="btn btn-primary" href="game">Play UnitTestGame for free →</a>
       </div>
     </section>
     <footer>
@@ -340,78 +342,5 @@
         <a href="mailto:contact@unittestgame.com">Contact</a>
       </div>
     </footer>
-    <script>
-      const steps = [
-        'message-1',
-        'this-is-you',
-        'first-unit-test',
-        'message-2',
-        'this-is-the-ai-bot',
-        'first-function',
-        'first-verdict',
-        'message-3',
-        'second-unit-test',
-        'message-4',
-        'second-function',
-        'second-verdict',
-      ].map(id => document.getElementById(id))
-      const maxStep = steps.length - 1
-      const dotsContainer = document.getElementById('dots')
-      const controlAnimationButton = document.getElementById('control-animation')
-      let currentStep = 0
-      let playing = null
-
-      const dots = steps.map((_, index) => {
-        const dot = document.createElement('button')
-        dot.type = 'button'
-        dot.className = 'dot'
-        dot.setAttribute('aria-label', `Go to step ${index + 1}`)
-        dot.addEventListener('click', () => {
-          stopAutoplay()
-          goToStep(index)
-        })
-        dotsContainer.append(dot)
-        return dot
-      })
-
-      function render() {
-        steps.forEach((_, index) => {
-          steps[index].classList.toggle('visible', index <= currentStep)
-          dots[index].classList.toggle('filled', index <= currentStep)
-        })
-        controlAnimationButton.textContent = currentStep === maxStep ? '⟲' : playing ? '⏸' : '⇥'
-      }
-
-      function goToStep(index) {
-        currentStep = index
-        render()
-      }
-
-      function stopAutoplay() {
-        clearInterval(playing)
-        playing = null
-        render()
-      }
-
-      function startAutoplay() {
-        playing = setInterval(() => {
-          goToStep(currentStep + 1)
-          if (currentStep === maxStep)
-            stopAutoplay()
-        }, 4000)
-        render()
-      }
-
-      controlAnimationButton.addEventListener('click', () => {
-        if (currentStep === maxStep)
-          goToStep(0)
-        else if (playing)
-          stopAutoplay()
-        else
-          goToStep(currentStep + 1)
-      })
-
-      startAutoplay()
-    </script>
   </body>
 </html>

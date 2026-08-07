@@ -135,7 +135,7 @@ header {
     text-align: center;
 
     .gradient-text {
-      background: linear-gradient(120deg, var(--gradient-background-left), var(--gradient-background-right) 60%, var(--peach) 100%);
+      background: linear-gradient(120deg, var(--gradient-background-left), var(--gradient-background-right), var(--peach));
       background-clip: text;
       color: transparent;
     }

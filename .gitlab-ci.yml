@@ -1,6 +1,10 @@
 default:
   image: node:latest
 
+workflow:
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+
 stages:
   - compile
   - test
@@ -13,12 +17,9 @@ typescript:
     - npx tsc --build --force --verbose
   artifacts:
     paths:
-      - "src/**/*.js"
-      - "src/**/*.js.map"
-      - "test/**/*.js"
-      - "test/**/*.js.map"
-  only:
-    - main
+      - "src/**/*.js*"
+      - "test/**/*.js*"
+      - "index.js*"
 
 playwright:
   stage: test
@@ -34,19 +35,14 @@ playwright:
     paths:
       - playwright-report/
       - playwright-coverage/
-  only:
-    - main
 
 pages:
   stage: deploy
   script:
-    - mkdir public
-    - cp *.{css,html,ico,png,txt} public
-    - mkdir public/src
+    - mkdir -p public/src
+    - cp *.{css,html,ico,png,txt} index.js index.js.map public
     - cp src/*.{js,js.map} public/src
-    - gzip -k -6 public/*.{css,html} public/src/*.js
+    - gzip -k -6 public/*.{css,html,js} public/src/*.js
   artifacts:
     paths:
       - public
-  only:
-    - main
