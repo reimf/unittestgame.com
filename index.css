@@ -147,47 +147,34 @@ header {
   background: var(--general-background);
   border-radius: 1.5rem;
   font-family: monospace;
-  box-shadow: 0 0 5rem var(--panel-background-left);
-  min-width: 30rem;
-  overflow: visible;
-  position: relative;
-
-  section>div {
-    overflow: visible;
-
-    p {
-      margin: 0.75rem 0;
-    }
-
-    code.block {
-      overflow: visible;
-    }
-  }
+  box-shadow: 0 0 3rem var(--panel-background-left);
+  min-width: 27rem;
 
   .comment {
     color: var(--panel-background-right);
     display: block;
-    font-family: cursive;
-    font-weight: bold;
-    font-size: 1.5rem;
+    font-family: sans-serif;
+    font-size: 1.25rem;
     line-height: 1.25;
-    padding: 0 0.4rem 0 0.5rem;
-    pointer-events: none;
 
-    &.human {
+    &#this-is-you, &#this-is-you-again {
+      margin-right: 0.75rem;
       text-align: right;
-
-      &#first-unit-test, &#second-unit-test {
-        padding-right: 2.5rem;
-      }
+    }
+  
+    &#first-unit-test, &#second-unit-test {
+      margin-right: 2rem;
+      text-align: right;
+    }
+  
+    &#this-is-the-ai-bot, &#this-is-the-ai-bot-again {
+      margin-left: 0.75rem;
+      text-align: left;
     }
 
-    &.computer {
+    &#first-function, &#second-function, &#first-verdict, &#second-verdict {
+      margin-left: 2rem;
       text-align: left;
-
-      &#first-function, &#first-verdict, &#second-function, &#second-verdict {
-        padding-left: 2.5rem;
-      }
     }
   }
 }

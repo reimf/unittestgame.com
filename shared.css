@@ -208,13 +208,11 @@ ul {
       overflow: hidden;
       padding: 0 0.75rem;
 
-      code {
+      code, ol, p {
         margin: 0.75rem 0;
       }
 
       ol {
-        margin: 0.75rem 0;
-
         >li {
           overflow: hidden;
           text-overflow: ellipsis;
