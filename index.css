@@ -148,9 +148,8 @@ header {
   border-radius: 1.5rem;
   font-family: monospace;
   box-shadow: 0 0 5rem var(--panel-background-left);
-  min-width: 35rem;
+  min-width: 30rem;
   overflow: visible;
-  padding-bottom: 5rem;
   position: relative;
 
   section>div {
@@ -167,59 +166,30 @@ header {
 
   .comment {
     color: var(--panel-background-right);
+    display: block;
     font-family: cursive;
     font-weight: bold;
     font-size: 1.5rem;
-    line-height: 1;
+    line-height: 1.25;
+    padding: 0 0.4rem 0 0.5rem;
     pointer-events: none;
-    position: absolute;
-    width: max-content;
-    z-index: 5;
 
-    &#this-is-you {
-      top: 1.25rem;
-      right: 0.5rem;
+    &.human {
       text-align: right;
+
+      &#first-unit-test, &#second-unit-test {
+        padding-right: 2.5rem;
+      }
     }
 
-    &#first-unit-test {
-      top: 5rem;
-      right: 3.5rem;
-      line-height: 1;
-    }
-
-    &#this-is-the-ai-bot {
-      top: 13rem;
-      left: 0.5rem;
+    &.computer {
       text-align: left;
-    }
 
-    &#first-function {
-      top: 10rem;
-      left: 4.5rem;
-    }
-
-    &#first-verdict {
-      top: 11.75rem;
-      right: 1rem;
-    }
-
-    &#second-unit-test {
-      top: 17.5rem;
-      right: 3.5rem;
-    }
-
-    &#second-function {
-      top: 24rem;
-      left: 4.5rem;
-    }
-
-    &#second-verdict {
-      top: 25.75rem;
-      right: 1rem;
+      &#first-function, &#first-verdict, &#second-function, &#second-verdict {
+        padding-left: 2.5rem;
+      }
     }
   }
-
 }
 
 body {

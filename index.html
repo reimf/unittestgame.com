@@ -56,49 +56,47 @@
             <div>
               <p>I want to add this unit test.</p>
               <code class="block">
-                <div class="new"><span class="function">powerMode</span>(<span class="number">20</span>) <span class="operator">===</span> <span class="string">"NORMAL MODE"</span></div>
+                <div class="new"><span class="function">isAllowedToVote</span>(<span class="number">18</span>) <span class="operator">===</span> <span class="literal">true</span></div>
               </code>
             </div>
           </section>
-          <span class="comment" id="this-is-you">this is you<br>↓</span>
-          <span class="comment" id="first-unit-test">with your first unit test</span>
+          <span class="human comment" id="this-is-you">this is you ↑</span>
+          <span class="human comment" id="first-unit-test">with your first unit test</span>
           <section class="computer" id="message-2">
             <div>
               <code class="block">
-                <div><span class="keyword">function</span> <span class="function">powerMode</span>(<span class="variable">batteryLevel</span>) {</div>
-                <div>    <span class="keyword">return</span> <span class="string">"NORMAL MODE"</span></div>
+                <div><span class="keyword">function</span> <span class="function">isAllowedToVote</span>(<span class="variable">age</span>) {</div>
+                <div>    <span class="keyword">return</span> <span class="literal">true</span></div>
                 <div>}</div>
               </code>
             </div>
           </section>
-          <span class="comment" id="this-is-the-ai-bot">↑<br>the AI bot</span>
-          <span class="comment" id="first-function">the function it wrote passes your unit test</span>
-          <span class="comment" id="first-verdict">but it doesn't generalize 👎</span>
+          <span class="computer comment" id="this-is-the-ai-bot">↑ this is the AI bot</span>
+          <span class="computer comment" id="first-function">its first function passes your unit test</span>
+          <span class="computer comment" id="first-verdict">but it doesn't generalize 👎</span>
           <section class="human" id="message-3">
             <div>
               <p>I want to add this unit test.</p>
               <code class="block">
-                <div class="new"><span class="function">powerMode</span>(<span class="number">19</span>) <span class="operator">===</span> <span class="string">"LOW POWER MODE"</span></div>
+                <div class="new"><span class="function">isAllowedToVote</span>(<span class="number">17</span>) <span class="operator">===</span> <span class="literal">false</span></div>
               </code>
             </div>
           </section>
-          <span class="comment" id="second-unit-test">your second unit test</span>
+          <span class="human comment" id="this-is-you-again">this is you again ↑</span>
+          <span class="human comment" id="second-unit-test">now with your second unit test</span>
           <section class="computer" id="message-4">
             <div>
               <code class="block">
-                <div><span class="keyword">function</span> <span class="function">powerMode</span>(<span class="variable">batteryLevel</span>) {</div>
-                <div>    <span class="keyword">if</span> (<span class="variable">batteryLevel</span> <span class="operator">&gt;=</span> <span class="number">20</span>) <span class="keyword">return</span> <span class="string">"NORMAL MODE"</span></div>
-                <div>    <span class="keyword">return</span> <span class="string">"LOW POWER MODE"</span></div>
+                <div><span class="keyword">function</span> <span class="function">isAllowedToVote</span>(<span class="variable">age</span>) {</div>
+                <div>    <span class="keyword">if</span> (<span class="variable">age</span> <span class="operator">&gt;=</span> <span class="number">18</span>) <span class="keyword">return</span> <span class="literal">true</span></div>
+                <div>    <span class="keyword">return</span> <span class="literal">false</span></div>
                 <div>}</div>
               </code>
             </div>
           </section>
-          <span class="comment" id="second-function">the rewritten function passes both unit tests</span>
-          <span class="comment" id="second-verdict">and now it generalizes 👍</span>
-        </div>
-        <div id="steps">
-          <button class="btn btn-primary" id="control-animation"></button>
-          <div id="dots"></div>
+          <span class="computer comment" id="this-is-the-ai-bot-again">↑ this is the AI bot again</span>
+          <span class="computer comment" id="second-function">its second function passes both unit tests</span>
+          <span class="computer comment" id="second-verdict">and now it generalizes 👍</span>
         </div>
       </div>
     </header>
