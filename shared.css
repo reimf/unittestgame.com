@@ -4,9 +4,10 @@
   --button-focus-shadow: #f60;
   --card-background: #fff;
   --card-border: #ddd;
-  --code-diff-deleted-background: #fee;
-  --code-diff-inserted-background: #efe;
-  --code-general-background: #333;
+  --code-diff-deleted-background: #fdd;
+  --code-diff-inserted-background: #dfd;
+  --code-general-background-left: #333;
+  --code-general-background-right: #999;
   --code-general-foreground: #fff;
   --code-highlight-class: #66c;
   --code-highlight-dot: #660;
@@ -23,11 +24,13 @@
   --general-text-light: #fff;
   --heading-foreground-green: #063;
   --heading-foreground-purple: #606;
-  --level-unlocked-background: #333;
-  --level-unlocked-foreground: #fff;
-  --level-locked-background: #eee;
+  --level-locked-background-left: #ddd;
+  --level-locked-background-right: #f9f9f9;
   --level-locked-foreground: #666;
-  --message-border: #ddd;
+  --level-unlocked-background-left: #333;
+  --level-unlocked-background-right: #999;
+  --level-unlocked-foreground: #fff;
+  --message-border: #eee;
   --message-computer-background: #fff;
   --message-human-background: #efe;
   --panel-background-left: #606;
@@ -35,7 +38,8 @@
   --panel-background-xtra: #fc6;
   --panel-body-background: #fff;
   --separator-shadow: #0003;
-  --unittest-new-background: #eef;
+  --unittest-new-background-left: #ddf;
+  --unittest-new-background-right: #f3f3ff;
   --unittest-old-background: #fff;
 }
 
@@ -52,7 +56,7 @@
 
 code {
   &:not(.block) {
-    background-color: var(--code-general-background);
+    background: linear-gradient(135deg, var(--code-general-background-left), var(--code-general-background-right));
     border-radius: 0.25rem;
     color: var(--code-general-foreground);
     padding: 0.1rem 0.25rem;
@@ -72,7 +76,7 @@ code {
       }
 
       &.new {
-        background-color: var(--unittest-new-background);
+        background: linear-gradient(135deg, var(--unittest-new-background-left), var(--unittest-new-background-right));
       }
 
       ins {

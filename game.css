@@ -238,12 +238,12 @@ select {
             white-space: nowrap;
 
             &.unlocked {
-              background-color: var(--level-unlocked-background);
+              background: linear-gradient(135deg, var(--level-unlocked-background-left), var(--level-unlocked-background-right));
               color: var(--level-unlocked-foreground);
             }
 
             &.locked {
-              background-color: var(--level-locked-background);
+              background: linear-gradient(135deg, var(--level-locked-background-left), var(--level-locked-background-right));
               color: var(--level-locked-foreground);
             }
 
@@ -267,7 +267,7 @@ select {
               &:disabled {
                 background: none;
                 color: var(--level-locked-foreground);
-                opacity: 0.4;
+                opacity: 0.6;
                 pointer-events: none;
               }
             }

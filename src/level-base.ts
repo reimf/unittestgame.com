@@ -227,9 +227,8 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
         const addButton = new Submit(this.conversationLanguage.addUnitTestButton())
         const submitButton = new MessageButton(this.conversationLanguage.submitUnitTestsButton(), () => this.submitUnitTests())
         const variables = [...this.parameters, this.unit].map(variable => variable.toHtml())
-        const formUnitTest = new Div().setId('form-unit-test').addClass('new')
-        const formCodeBlock = new CodeBlock().appendChild(formUnitTest)
-        const form = new Form(formData => this.addUnitTest(formData)).appendChildren([...variables, addButton, formCodeBlock])
+        const formUnitTest = new Div().setId('form-unit-test')
+        const form = new Form(formData => this.addUnitTest(formData)).appendChildren([...variables, addButton, formUnitTest])
         form.onChange(formData => this.showFormUnitTest(formUnitTest, formData))
         const divider = new Div().appendText(this.conversationLanguage.or()).addClass('or')
         new HumanMessage([form, divider, submitButton]).show()
@@ -243,18 +242,19 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
     }
 
     private showFormUnitTest(formUnitTest: Div, formData: FormData): void {
+        formUnitTest.replaceChildren([])
         const hasEveryValue = [...this.parameters, this.unit].every(variable => formData.get(variable.name))
-        if (!hasEveryValue) {
-            formUnitTest.replaceChildren([])
+        if (!hasEveryValue)
             return
-        }
         const unitTest = this.buildUnitTest(formData)
-        formUnitTest.replaceChildren([new CodeBlock().appendChild(unitTest.toHtml(this.programmingLanguage))])
+        const div = unitTest.toHtml(this.programmingLanguage).addClass('new')
+        formUnitTest.appendChild(new CodeBlock().appendChild(div))
     }
 
     private addUnitTest(formData: FormData): void {
         const unitTest = this.buildUnitTest(formData)
-        ComputerMessage.addToLast([new CodeBlock().appendChild(unitTest.toHtml(this.programmingLanguage).addClass('new'))])
+        const div = unitTest.toHtml(this.programmingLanguage).addClass('new')
+        ComputerMessage.addToLast([new CodeBlock().appendChild(div)])
         if (!this.isAddUnitTestOk(formData))
             return
         if (!new TestResult(this.perfectCandidate, unitTest).passes) {
