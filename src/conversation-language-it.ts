@@ -14,7 +14,7 @@ export class Italian extends ConversationLanguage {
     }
 
     public override slogan(): ConversationText {
-        return ConversationLanguage.bless('![Logo di UnitTestGame](apple-touch-icon.png)Impara il Test-Driven Development scrivendo unit tests che guidano un bot IA.')
+        return ConversationLanguage.bless('![Logo di UnitTestGame](apple-touch-icon.png)Impara a scrivere unit tests che guidano un bot IA.')
     }
 
     public override home(): ConversationText {
@@ -67,7 +67,7 @@ export class Italian extends ConversationLanguage {
 
     public override closeTab(): ConversationText {
         return ConversationLanguage.bless('Bravo! Hai completato tutti i livelli. ' +
-            'Ora puoi applicare il TDD ai tuoi progetti.')
+            'Ora puoi scrivere unit tests per i tuoi progetti.')
     }
 
     public override unitTestsTitle(): ConversationText {
