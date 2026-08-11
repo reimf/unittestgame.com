@@ -1,4 +1,5 @@
 import { ConversationLanguage, ConversationText } from './conversation-language-base.js'
+import { parseMarkdown } from './markdown.js'
 
 abstract class Content {
     private static timeOfLastDelayedCall: number = 0
@@ -46,28 +47,7 @@ export abstract class Html extends Content {
     }
 
     public appendMarkdown(markdown: ConversationText): this {
-        const patterns = [
-            /\*(?<italic>.+?)\*/,
-            /`(?<code>.+?)`/,
-            /!\[(?<alt>.+?)\]\((?<src>.+?)\)/,
-            /\[(?<text>.+?)\]\((?<href>.+?)\)/,
-            /(?<plain>[^*`![]+|[*`![])/
-        ]
-        const pattern = new RegExp(patterns.map(regexp => regexp.source).join('|'), 'g')
-
-        for (const { groups } of markdown.matchAll(pattern)) {
-            const { italic, code, text, href, plain, alt, src } = groups!
-            if (italic)
-                this.appendChild(new Italic().appendMarkdown(ConversationLanguage.bless(italic)))
-            else if (code)
-                this.appendChild(new Code().appendMarkdown(ConversationLanguage.bless(code)))
-            else if (alt && src)
-                this.appendChild(new Img(src, alt))
-            else if (text && href)
-                this.appendChild(new Anchor(href).appendMarkdown(ConversationLanguage.bless(text)))
-            else if (plain)
-                this.appendText(ConversationLanguage.bless(plain))
-        }
+        this.getElement().append(...parseMarkdown(markdown))
         return this
     }
 

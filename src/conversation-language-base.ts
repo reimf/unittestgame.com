@@ -107,9 +107,9 @@ export abstract class ConversationLanguage {
     public abstract whyItWorksItem3Title(): ConversationText
     public abstract whyItWorksItem3Desc(): ConversationText
     public abstract whyItWorksItem4Title(): ConversationText
-    public abstract whyItWorksItem4Desc(): ConversationText
+    public abstract languagesList(): ConversationText
     public abstract whyItWorksItem5Title(): ConversationText
-    public abstract whyItWorksItem5Desc(): ConversationText
+    public abstract programmingLanguagesList(): ConversationText
     public abstract whyItWorksItem6Title(): ConversationText
     public abstract whyItWorksItem6Desc(): ConversationText
     public abstract levelsTitle(): ConversationText
@@ -132,9 +132,7 @@ export abstract class ConversationLanguage {
     public abstract faqQuestion1(): ConversationText
     public abstract faqAnswer1(): ConversationText
     public abstract faqQuestion2(): ConversationText
-    public abstract faqAnswer2(): ConversationText
     public abstract faqQuestion3(): ConversationText
-    public abstract faqAnswer3(): ConversationText
     public abstract faqQuestion4(): ConversationText
     public abstract faqAnswer4(): ConversationText
     public abstract faqQuestion5(): ConversationText

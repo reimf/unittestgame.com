@@ -281,11 +281,11 @@ export class German extends ConversationLanguage {
     }
 
     public override indexMetaDescription(): ConversationText {
-        return ConversationLanguage.bless('Lerne effektive Unit-Tests zu schreiben mit einem interaktiven Spiel, in dem du mit einem hinterhältig kooperativen KI-Bot zusammenarbeitest, um deine Fähigkeiten im Unit-Testing zu verbessern.')
+        return ConversationLanguage.bless('Lerne effektive Unit-Tests zu schreiben mit einem interaktiven Spiel, in dem du mit einem gegnerischen KI-Bot zusammenarbeiten musst.')
     }
 
     public override indexPageTitle(): ConversationText {
-        return ConversationLanguage.bless('UnitTestGame.com: Überliste den KI-Bot, der absichtlich schummelt')
+        return ConversationLanguage.bless('UnitTestGame.com: Überliste den KI-Bot, der gegen dich arbeitet')
     }
 
     public override navHowItWorks(): ConversationText {
@@ -301,7 +301,7 @@ export class German extends ConversationLanguage {
     }
 
     public override navPlayNow(): ConversationText {
-        return ConversationLanguage.bless('Jetzt spielen')
+        return ConversationLanguage.bless('[Jetzt spielen](game?conversation_language=de)')
     }
 
     public override heroTitleLine1Start(): ConversationText {
@@ -321,14 +321,14 @@ export class German extends ConversationLanguage {
     }
 
     public override heroSubtitle(): ConversationText {
-        return ConversationLanguage.bless('UnitTestGame stellt dir einen hinterhältig kooperativen KI-Bot zur Seite. ' +
-            'Er schreibt den faulsten Code, der deine Unit-Tests besteht. ' +
+        return ConversationLanguage.bless('UnitTestGame stellt dir einen gegnerischen KI-Bot zur Seite. ' +
+            'Er schreibt korrekten Code, der deine Unit-Tests besteht. ' +
             'Und nichts weiter. ' +
             'Deine Aufgabe: Schreibe Unit-Tests, bis das Programm stimmt.')
     }
 
     public override heroCtaPrimary(): ConversationText {
-        return ConversationLanguage.bless('Kostenlos im Browser spielen →')
+        return ConversationLanguage.bless('[Kostenlos im Browser spielen →](game?conversation_language=de)')
     }
 
     public override heroCtaSecondary(): ConversationText {
@@ -384,7 +384,7 @@ export class German extends ConversationLanguage {
     }
 
     public override howItWorksSubtitle(): ConversationText {
-        return ConversationLanguage.bless('Keine Vorlesungen. ' +
+        return ConversationLanguage.bless('Keine Videos. ' +
             'Keine Quizze. ' +
             'Nur ein KI-Bot, der jede Lücke in deinen Unit-Tests ausnutzt.')
     }
@@ -403,7 +403,7 @@ export class German extends ConversationLanguage {
     }
 
     public override howItWorksStep2Desc(): ConversationText {
-        return ConversationLanguage.bless('Der KI-Bot liefert den faulsten Code, ' +
+        return ConversationLanguage.bless('Der KI-Bot schreibt korrekten Code, ' +
             'der genau das erfüllt, was du getestet hast.')
     }
 
@@ -417,11 +417,11 @@ export class German extends ConversationLanguage {
     }
 
     public override howItWorksStep4Title(): ConversationText {
-        return ConversationLanguage.bless('Verschärfe, bis es hält')
+        return ConversationLanguage.bless('Mach weiter, bis es stimmt')
     }
 
     public override howItWorksStep4Desc(): ConversationText {
-        return ConversationLanguage.bless('Wiederhole, bis keine Abkürzung mehr übrig ist. ' +
+        return ConversationLanguage.bless('Wiederhole, bis es keinen anderen Weg mehr gibt. ' +
             'Level geschafft!')
     }
 
@@ -431,7 +431,7 @@ export class German extends ConversationLanguage {
 
     public override whyItWorksSubtitle(): ConversationText {
         return ConversationLanguage.bless('Es spielt sich wie ein Spiel. ' +
-            'Es bleibt hängen wie eine Gewohnheit. ' +
+            'Es wird zur Gewohnheit. ' +
             'Es verändert deine Art zu testen.')
     }
 
@@ -440,7 +440,7 @@ export class German extends ConversationLanguage {
     }
 
     public override whyItWorksItem1Desc(): ConversationText {
-        return ConversationLanguage.bless('Der KI-Bot ist hinterhältig kooperativ. ' +
+        return ConversationLanguage.bless('Der KI-Bot arbeitet gegen dich. ' +
             'Jeder Zug ist eine Lektion über deinen blinden Fleck.')
     }
 
@@ -458,26 +458,30 @@ export class German extends ConversationLanguage {
     }
 
     public override whyItWorksItem3Desc(): ConversationText {
-        return ConversationLanguage.bless('Ein Levelboard zeigt, was du freigeschaltet hast, ' +
+        return ConversationLanguage.bless('Ein Scoreboard zeigt, was du freigeschaltet hast, ' +
             'sodass du immer weißt, was als Nächstes kommt.')
     }
 
     public override whyItWorksItem4Title(): ConversationText {
-        return ConversationLanguage.bless('Sechs Gesprächssprachen')
+        return ConversationLanguage.bless('Sechs Sprachen')
     }
 
-    public override whyItWorksItem4Desc(): ConversationText {
-        return ConversationLanguage.bless('Unterhalte dich auf Englisch, Niederländisch, Deutsch, ' +
-            'Französisch, Spanisch oder Italienisch.')
+    public override languagesList(): ConversationText {
+        return ConversationLanguage.bless('Auf Deutsch natürlich, aber auch auf ' +
+            '[Englisch](index), [Niederländisch](index?conversation_language=nl), [Französisch](index?conversation_language=fr), ' +
+            '[Spanisch](index?conversation_language=es) oder [Italienisch](index?conversation_language=it).')
     }
 
     public override whyItWorksItem5Title(): ConversationText {
         return ConversationLanguage.bless('Sieben Programmiersprachen')
     }
 
-    public override whyItWorksItem5Desc(): ConversationText {
+    public override programmingLanguagesList(): ConversationText {
         return ConversationLanguage.bless('Lass den KI-Bot Programme schreiben in ' +
-            'JavaScript, TypeScript, Python, Java, C#, PHP oder Ruby.')
+            '[JavaScript](game?conversation_language=de&programming_language=javascript), [TypeScript](game?conversation_language=de&programming_language=typescript), ' +
+            '[Python](game?conversation_language=de&programming_language=python), [Java](game?conversation_language=de&programming_language=java), ' +
+            '[C#](game?conversation_language=de&programming_language=csharp), [PHP](game?conversation_language=de&programming_language=php) ' +
+            'oder [Ruby](game?conversation_language=de&programming_language=ruby).')
     }
 
     public override whyItWorksItem6Title(): ConversationText {
@@ -486,7 +490,7 @@ export class German extends ConversationLanguage {
 
     public override whyItWorksItem6Desc(): ConversationText {
         return ConversationLanguage.bless('Läuft komplett im Browser. ' +
-            'Kein Konto, keine Installation, keine Abhängigkeiten, mit denen man kämpfen muss.')
+            'Kein Konto, keine Installation, keine Abhängigkeiten.')
     }
 
     public override levelsTitle(): ConversationText {
@@ -495,7 +499,7 @@ export class German extends ConversationLanguage {
 
     public override levelsSubtitle(): ConversationText {
         return ConversationLanguage.bless('Jedes wirkt einfach. ' +
-            'Bis der KI-Bot einen weiteren Bereich findet, den du zu testen vergessen hast.')
+            'Bis der KI-Bot etwas findet, das du zu testen vergessen hast.')
     }
 
     public override levelsDifficultyEasy(): ConversationText {
@@ -515,7 +519,7 @@ export class German extends ConversationLanguage {
     }
 
     public override levelBlurb1(): ConversationText {
-        return ConversationLanguage.bless('Ein Geburtstag. Zwei mögliche Ergebnisse.')
+        return ConversationLanguage.bless('Darfst du wählen? Zwei mögliche Ergebnisse.')
     }
 
     public override levelBlurb2(): ConversationText {
@@ -539,7 +543,7 @@ export class German extends ConversationLanguage {
     }
 
     public override levelBlurb7(): ConversationText {
-        return ConversationLanguage.bless('Jede Seitenlänge verändert das Urteil.')
+        return ConversationLanguage.bless('Jede Seite verändert das Urteil.')
     }
 
     public override levelBlurb8(): ConversationText {
@@ -570,16 +574,8 @@ export class German extends ConversationLanguage {
         return ConversationLanguage.bless('Welche Programmiersprachen werden unterstützt?')
     }
 
-    public override faqAnswer2(): ConversationText {
-        return ConversationLanguage.bless('JavaScript, TypeScript, Python, Java, C#, PHP und Ruby.')
-    }
-
     public override faqQuestion3(): ConversationText {
-        return ConversationLanguage.bless('Welche Gesprächssprachen werden unterstützt?')
-    }
-
-    public override faqAnswer3(): ConversationText {
-        return ConversationLanguage.bless('Englisch, Niederländisch, Deutsch, Französisch, Spanisch und Italienisch.')
+        return ConversationLanguage.bless('Welche Sprachen werden unterstützt?')
     }
 
     public override faqQuestion4(): ConversationText {
@@ -631,7 +627,7 @@ export class German extends ConversationLanguage {
     }
 
     public override ctaButton(): ConversationText {
-        return ConversationLanguage.bless('UnitTestGame kostenlos spielen →')
+        return ConversationLanguage.bless('[UnitTestGame kostenlos spielen →](game?conversation_language=de)')
     }
 
     public override footerContact(): ConversationText {

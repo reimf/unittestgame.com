@@ -3,13 +3,13 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'; form-action 'self'">
-    <meta name="description" content="Learn to write effective unit tests with an interactive game where you collaborate with a maliciously compliant AI bot to improve your skills in unit testing.">
+    <meta name="description" data-i18n="indexMetaDescription" content="Learn to write effective unit tests with an interactive game where you have to work with an adversarial AI bot.">
     <meta name="theme-color" content="#0b0620">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://unittestgame.com">
     <meta property="og:title" content="UnitTestGame.com">
-    <meta property="og:description" content="Learn to write effective unit tests with an interactive game where you collaborate with a maliciously compliant AI bot to improve your skills in unit testing.">
+    <meta property="og:description" data-i18n="indexMetaDescription" content="Learn to write effective unit tests with an interactive game where you have to work with an adversarial AI bot.">
     <meta property="og:image" content="https://unittestgame.com/apple-touch-icon.png">
     <meta name="twitter:card" content="summary">
     <link rel="canonical" href="https://unittestgame.com">
@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="animation.css">
     <script src="index.js" type="module"></script>
-    <title>UnitTestGame.com: Outsmart the AI bot that cheats on purpose</title>
+    <title data-i18n="indexPageTitle">UnitTestGame.com: Outsmart the AI bot that works against you</title>
   </head>
   <body>
     <nav>
@@ -31,23 +31,23 @@
         <a href="#levels" data-i18n="navLevels">Levels</a>
         <a href="#why-it-works" data-i18n="navWhyItWorks">Why it works</a>
         <span><select id="language-switcher"></select></span>
-        <a class="btn" href="game" data-i18n="navPlayNow">Play now</a>
+        <span data-i18n="navPlayNow" class="btn"><a href="game">Play now</a></span>
       </div>
     </nav>
     <header>
       <div id="hero-copy">
         <h1>
-          <span data-i18n="heroTitleLine1Start">The code passes</span> <span class="gradient-text" data-i18n="heroTitleLine1Gradient">your unit tests.</span><br>
-          <span data-i18n="heroTitleLine2Start">But does it do what</span> <span class="gradient-text" data-i18n="heroTitleLine2Gradient">you really want?</span>
+          <span data-i18n="heroTitleLine1Start">The code passes</span><br><span class="gradient-text" data-i18n="heroTitleLine1Gradient">your unit tests.</span><br>
+          <span data-i18n="heroTitleLine2Start">But does it do what</span><br><span class="gradient-text" data-i18n="heroTitleLine2Gradient">you really want?</span>
         </h1>
         <p data-i18n="heroSubtitle">
-          UnitTestGame pairs you with a maliciously compliant AI bot.
-          It writes the laziest code that satisfies your unit tests.
+          UnitTestGame pairs you with an adversarial AI bot.
+          It writes correct code that satisfies your unit tests.
           And nothing more.
           Your job: write unit tests until the program is right.
         </p>
         <div id="hero-buttonrow">
-          <a class="btn" href="game" data-i18n="heroCtaPrimary">Play for free in your browser →</a>
+          <span data-i18n="heroCtaPrimary" class="btn"><a href="game">Play for free in your browser →</a></span>
           <a href="#how-it-works" data-i18n="heroCtaSecondary">See how it works</a>
         </div>
       </div>
@@ -105,7 +105,7 @@
       <div>
         <h2 data-i18n="howItWorksTitle">Learn to write unit tests by feel</h2>
         <p data-i18n="howItWorksSubtitle">
-          No lectures.
+          No videos.
           No quizzes.
           Just an AI bot exploiting every hole in your unit tests.
         </p>
@@ -121,7 +121,7 @@
         <li>
           <h3><span class="square">②</span> <span data-i18n="howItWorksStep2Title">Watch it cheat</span></h3>
           <p data-i18n="howItWorksStep2Desc">
-            The AI bot ships the laziest code
+            The AI bot writes correct code
             that satisfies exactly what you tested.
           </p>
         </li>
@@ -133,9 +133,9 @@
           </p>
         </li>
         <li>
-          <h3><span class="square">④</span> <span data-i18n="howItWorksStep4Title">Tighten until solid</span></h3>
+          <h3><span class="square">④</span> <span data-i18n="howItWorksStep4Title">Keep going until it's right</span></h3>
           <p data-i18n="howItWorksStep4Desc">
-            Repeat until there's no shortcut left.
+            Repeat until there's no other way.
             Level completed!
           </p>
         </li>
@@ -146,7 +146,7 @@
         <h2 data-i18n="whyItWorksTitle">For developers who want to prevent bugs</h2>
         <p data-i18n="whyItWorksSubtitle">
           It plays like a game.
-          It sticks like a habit.
+          It becomes a habit.
           It changes your way of testing.
         </p>
       </div>
@@ -154,7 +154,7 @@
         <li>
           <h3><span class="">🕵️</span> <span data-i18n="whyItWorksItem1Title">A worthy opponent</span></h3>
           <p data-i18n="whyItWorksItem1Desc">
-            The AI bot is maliciously compliant.
+            The AI bot works against you.
             Every move is a lesson about your blind spot.
           </p>
         </li>
@@ -168,29 +168,30 @@
         <li>
           <h3><span>🔓</span> <span data-i18n="whyItWorksItem3Title">Real progression</span></h3>
           <p data-i18n="whyItWorksItem3Desc">
-            A level board tracks what you've unlocked,
+            A scoreboard tracks what you've unlocked,
             so you always know what's next.
           </p>
         </li>
         <li>
-          <h3><span>🌍</span> <span data-i18n="whyItWorksItem4Title">Six conversation languages</span></h3>
-          <p data-i18n="whyItWorksItem4Desc">
-            Converse in English, Dutch, German,
-            French, Spanish, or Italian.
+          <h3><span>🌍</span> <span data-i18n="whyItWorksItem4Title">Six languages</span></h3>
+          <p data-i18n="languagesList">
+            In English of course, but also in <a href="?conversation_language=nl">Dutch</a>, <a href="?conversation_language=de">German</a>,
+            <a href="?conversation_language=fr">French</a>, <a href="?conversation_language=es">Spanish</a>, or <a href="?conversation_language=it">Italian</a>.
           </p>
         </li>
         <li>
           <h3><span>💻</span> <span data-i18n="whyItWorksItem5Title">Seven programming languages</span></h3>
-          <p data-i18n="whyItWorksItem5Desc">
+          <p data-i18n="programmingLanguagesList">
             Let the AI bot write programs in
-            JavaScript, TypeScript, Python, Java, C#, PHP, or Ruby.
+            <a href="game?programming_language=javascript">JavaScript</a>, <a href="game?programming_language=typescript">TypeScript</a>, <a href="game?programming_language=python">Python</a>,
+            <a href="game?programming_language=java">Java</a>, <a href="game?programming_language=csharp">C#</a>, <a href="game?programming_language=php">PHP</a>, or <a href="game?programming_language=ruby">Ruby</a>.
           </p>
         </li>
         <li>
           <h3><span>🧩</span> <span data-i18n="whyItWorksItem6Title">No setup at all</span></h3>
           <p data-i18n="whyItWorksItem6Desc">
             Runs entirely in the browser.
-            No account, no install, no dependencies to fight with.
+            No account, no install, no dependencies.
           </p>
         </li>
       </ul>
@@ -200,7 +201,7 @@
         <h2 data-i18n="levelsTitle">Ten levels, ten ways to get outsmarted</h2>
         <p data-i18n="levelsSubtitle">
           Each one looks simple.
-          Until the AI bot finds another range you forgot to test.
+          Until the AI bot finds something you forgot to test.
         </p>
       </div>
       <ol>
@@ -218,7 +219,7 @@
             <span data-i18n="levelsDifficultyEasy">easy</span>
           </div>
           <h3>Voting Age</h3>
-          <p data-i18n="levelBlurb1">One birthday. Two possible outcomes.</p>
+          <p data-i18n="levelBlurb1">Can you vote? Two possible outcomes.</p>
         </li>
         <li>
           <div>
@@ -266,7 +267,7 @@
             <span data-i18n="levelsDifficultyHard">hard</span>
           </div>
           <h3>Triangle Type</h3>
-          <p data-i18n="levelBlurb7">Every side length changes the verdict.</p>
+          <p data-i18n="levelBlurb7">Every side changes the verdict.</p>
         </li>
         <li>
           <div>
@@ -298,11 +299,18 @@
         </li>
         <li>
           <h3><span class="square">Q</span> <span data-i18n="faqQuestion2">What programming languages are supported?</span></h3>
-          <p data-i18n="faqAnswer2">JavaScript, TypeScript, Python, Java, C#, PHP, and Ruby.</p>
+          <p data-i18n="programmingLanguagesList">
+            Let the AI bot write programs in
+            <a href="game?programming_language=javascript">JavaScript</a>, <a href="game?programming_language=typescript">TypeScript</a>, <a href="game?programming_language=python">Python</a>,
+            <a href="game?programming_language=java">Java</a>, <a href="game?programming_language=csharp">C#</a>, <a href="game?programming_language=php">PHP</a> or <a href="game?programming_language=ruby">Ruby</a>.
+          </p>
         </li>
         <li>
-          <h3><span class="square">Q</span> <span data-i18n="faqQuestion3">What conversation languages are supported?</span></h3>
-          <p data-i18n="faqAnswer3">English, Dutch, German, French, Spanish, and Italian.</p>
+          <h3><span class="square">Q</span> <span data-i18n="faqQuestion3">What languages are supported?</span></h3>
+          <p data-i18n="languagesList">
+            In English of course, but also in <a href="index?conversation_language=nl">Dutch</a>, <a href="index?conversation_language=de">German</a>,
+            <a href="index?conversation_language=fr">French</a>, <a href="index?conversation_language=es">Spanish</a> or <a href="index?conversation_language=it">Italian</a>.
+          </p>
         </li>
         <li>
           <h3><span class="square">Q</span> <span data-i18n="faqQuestion4">Do I need to install anything?</span></h3>
@@ -330,7 +338,7 @@
       <div class="cta-band">
         <h2 data-i18n="ctaTitle">The AI bot is waiting for you. Don't get fooled.</h2>
         <p data-i18n="ctaSubtitle">Click the button, follow the instructions, and see what the AI bot tries to get away with.</p>
-        <a class="btn" href="game" data-i18n="ctaButton">Play UnitTestGame for free →</a>
+        <span data-i18n="ctaButton" class="btn"><a href="game">Play UnitTestGame for free →</a></span>
       </div>
     </section>
     <footer>

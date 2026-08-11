@@ -1,5 +1,6 @@
 import type { ConversationLanguage } from './src/conversation-language-base.js'
 import { conversationLanguages } from './src/conversation-languages.js'
+import { parseMarkdown } from './src/markdown.js'
 
 type NullaryTextMethod = { [K in keyof ConversationLanguage]: ConversationLanguage[K] extends () => string ? K : never }[keyof ConversationLanguage]
 
@@ -8,13 +9,14 @@ const requestedLanguageId = url.searchParams.get('conversation_language')
 const conversationLanguage = conversationLanguages.find(language => language.id === requestedLanguageId) ?? conversationLanguages[0]
 
 document.documentElement.lang = conversationLanguage.id
-document.title = conversationLanguage.indexPageTitle()
-document.querySelector('meta[name="description"]')!.setAttribute('content', conversationLanguage.indexMetaDescription())
-document.querySelector('meta[property="og:description"]')!.setAttribute('content', conversationLanguage.indexMetaDescription())
 
 for (const element of document.querySelectorAll<HTMLElement>('[data-i18n]')) {
     const methodName = element.dataset['i18n'] as NullaryTextMethod
-    element.textContent = conversationLanguage[methodName]()
+    const text = conversationLanguage[methodName]()
+    if (element instanceof HTMLMetaElement)
+        element.content = text
+    else
+        element.replaceChildren(...parseMarkdown(text))
 }
 
 const languageSwitcher = document.getElementById('language-switcher') as HTMLSelectElement

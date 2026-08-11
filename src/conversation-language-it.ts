@@ -281,11 +281,11 @@ export class Italian extends ConversationLanguage {
     }
 
     public override indexMetaDescription(): ConversationText {
-        return ConversationLanguage.bless('Impara a scrivere unit test efficaci con un gioco interattivo in cui collabori con un bot IA maliziosamente compiacente per migliorare le tue abilità con i unit test.')
+        return ConversationLanguage.bless('Impara a scrivere unit test efficaci con un gioco interattivo in cui devi lavorare con un bot IA ostile.')
     }
 
     public override indexPageTitle(): ConversationText {
-        return ConversationLanguage.bless('UnitTestGame.com: Supera il bot IA che bara di proposito')
+        return ConversationLanguage.bless('UnitTestGame.com: Supera il bot IA che gioca contro di te')
     }
 
     public override navHowItWorks(): ConversationText {
@@ -301,7 +301,7 @@ export class Italian extends ConversationLanguage {
     }
 
     public override navPlayNow(): ConversationText {
-        return ConversationLanguage.bless('Gioca ora')
+        return ConversationLanguage.bless('[Gioca ora](game?conversation_language=it)')
     }
 
     public override heroTitleLine1Start(): ConversationText {
@@ -321,14 +321,14 @@ export class Italian extends ConversationLanguage {
     }
 
     public override heroSubtitle(): ConversationText {
-        return ConversationLanguage.bless('UnitTestGame ti abbina a un bot IA maliziosamente compiacente. ' +
-            'Scrive il codice più pigro che soddisfa i tuoi unit test. ' +
+        return ConversationLanguage.bless('UnitTestGame ti abbina a un bot IA ostile. ' +
+            'Scrive codice corretto che soddisfa i tuoi unit test. ' +
             'E niente di più. ' +
             'Il tuo compito: scrivere unit test finché il programma non è corretto.')
     }
 
     public override heroCtaPrimary(): ConversationText {
-        return ConversationLanguage.bless('Gioca gratis nel tuo browser →')
+        return ConversationLanguage.bless('[Gioca gratis nel tuo browser →](game?conversation_language=it)')
     }
 
     public override heroCtaSecondary(): ConversationText {
@@ -384,7 +384,7 @@ export class Italian extends ConversationLanguage {
     }
 
     public override howItWorksSubtitle(): ConversationText {
-        return ConversationLanguage.bless('Niente lezioni. ' +
+        return ConversationLanguage.bless('Niente video. ' +
             'Niente quiz. ' +
             'Solo un bot IA che sfrutta ogni falla nei tuoi unit test.')
     }
@@ -403,7 +403,7 @@ export class Italian extends ConversationLanguage {
     }
 
     public override howItWorksStep2Desc(): ConversationText {
-        return ConversationLanguage.bless('Il bot IA consegna il codice più pigro ' +
+        return ConversationLanguage.bless('Il bot IA scrive codice corretto ' +
             'che soddisfa esattamente quello che hai testato.')
     }
 
@@ -417,11 +417,11 @@ export class Italian extends ConversationLanguage {
     }
 
     public override howItWorksStep4Title(): ConversationText {
-        return ConversationLanguage.bless('Rafforza finché non regge')
+        return ConversationLanguage.bless('Continua finché non è corretto')
     }
 
     public override howItWorksStep4Desc(): ConversationText {
-        return ConversationLanguage.bless('Ripeti finché non resta più nessuna scorciatoia. ' +
+        return ConversationLanguage.bless('Ripeti finché non c\'è più un altro modo. ' +
             'Livello completato!')
     }
 
@@ -431,7 +431,7 @@ export class Italian extends ConversationLanguage {
 
     public override whyItWorksSubtitle(): ConversationText {
         return ConversationLanguage.bless('Si gioca come un gioco. ' +
-            'Resta come un\'abitudine. ' +
+            'Diventa un\'abitudine. ' +
             'Cambia il tuo modo di testare.')
     }
 
@@ -440,7 +440,7 @@ export class Italian extends ConversationLanguage {
     }
 
     public override whyItWorksItem1Desc(): ConversationText {
-        return ConversationLanguage.bless('Il bot IA è maliziosamente compiacente. ' +
+        return ConversationLanguage.bless('Il bot IA gioca contro di te. ' +
             'Ogni mossa è una lezione sul tuo punto cieco.')
     }
 
@@ -458,26 +458,30 @@ export class Italian extends ConversationLanguage {
     }
 
     public override whyItWorksItem3Desc(): ConversationText {
-        return ConversationLanguage.bless('Una bacheca dei livelli tiene traccia di cosa hai sbloccato, ' +
+        return ConversationLanguage.bless('Un tabellone dei punteggi tiene traccia di cosa hai sbloccato, ' +
             'così sai sempre cosa viene dopo.')
     }
 
     public override whyItWorksItem4Title(): ConversationText {
-        return ConversationLanguage.bless('Sei lingue di conversazione')
+        return ConversationLanguage.bless('Sei lingue')
     }
 
-    public override whyItWorksItem4Desc(): ConversationText {
-        return ConversationLanguage.bless('Conversa in inglese, olandese, tedesco, ' +
-            'francese, spagnolo o italiano.')
+    public override languagesList(): ConversationText {
+        return ConversationLanguage.bless('In italiano ovviamente, ma anche in ' +
+            '[inglese](index), [olandese](index?conversation_language=nl), [tedesco](index?conversation_language=de), ' +
+            '[francese](index?conversation_language=fr) o [spagnolo](index?conversation_language=es).')
     }
 
     public override whyItWorksItem5Title(): ConversationText {
         return ConversationLanguage.bless('Sette linguaggi di programmazione')
     }
 
-    public override whyItWorksItem5Desc(): ConversationText {
+    public override programmingLanguagesList(): ConversationText {
         return ConversationLanguage.bless('Lascia che il bot IA scriva programmi in ' +
-            'JavaScript, TypeScript, Python, Java, C#, PHP o Ruby.')
+            '[JavaScript](game?conversation_language=it&programming_language=javascript), [TypeScript](game?conversation_language=it&programming_language=typescript), ' +
+            '[Python](game?conversation_language=it&programming_language=python), [Java](game?conversation_language=it&programming_language=java), ' +
+            '[C#](game?conversation_language=it&programming_language=csharp), [PHP](game?conversation_language=it&programming_language=php) ' +
+            'o [Ruby](game?conversation_language=it&programming_language=ruby).')
     }
 
     public override whyItWorksItem6Title(): ConversationText {
@@ -486,7 +490,7 @@ export class Italian extends ConversationLanguage {
 
     public override whyItWorksItem6Desc(): ConversationText {
         return ConversationLanguage.bless('Funziona interamente nel browser. ' +
-            'Nessun account, nessuna installazione, nessuna dipendenza con cui combattere.')
+            'Nessun account, nessuna installazione, nessuna dipendenza.')
     }
 
     public override levelsTitle(): ConversationText {
@@ -495,7 +499,7 @@ export class Italian extends ConversationLanguage {
 
     public override levelsSubtitle(): ConversationText {
         return ConversationLanguage.bless('Ognuno sembra semplice. ' +
-            'Finché il bot IA non trova un altro intervallo che hai dimenticato di testare.')
+            'Finché il bot IA non trova qualcosa che hai dimenticato di testare.')
     }
 
     public override levelsDifficultyEasy(): ConversationText {
@@ -515,7 +519,7 @@ export class Italian extends ConversationLanguage {
     }
 
     public override levelBlurb1(): ConversationText {
-        return ConversationLanguage.bless('Un compleanno. Due possibili esiti.')
+        return ConversationLanguage.bless('Puoi votare? Due possibili esiti.')
     }
 
     public override levelBlurb2(): ConversationText {
@@ -539,7 +543,7 @@ export class Italian extends ConversationLanguage {
     }
 
     public override levelBlurb7(): ConversationText {
-        return ConversationLanguage.bless('Ogni lunghezza del lato cambia il verdetto.')
+        return ConversationLanguage.bless('Ogni lato cambia il verdetto.')
     }
 
     public override levelBlurb8(): ConversationText {
@@ -570,16 +574,8 @@ export class Italian extends ConversationLanguage {
         return ConversationLanguage.bless('Quali linguaggi di programmazione sono supportati?')
     }
 
-    public override faqAnswer2(): ConversationText {
-        return ConversationLanguage.bless('JavaScript, TypeScript, Python, Java, C#, PHP e Ruby.')
-    }
-
     public override faqQuestion3(): ConversationText {
-        return ConversationLanguage.bless('Quali lingue di conversazione sono supportate?')
-    }
-
-    public override faqAnswer3(): ConversationText {
-        return ConversationLanguage.bless('Inglese, olandese, tedesco, francese, spagnolo e italiano.')
+        return ConversationLanguage.bless('Quali lingue sono supportate?')
     }
 
     public override faqQuestion4(): ConversationText {
@@ -631,7 +627,7 @@ export class Italian extends ConversationLanguage {
     }
 
     public override ctaButton(): ConversationText {
-        return ConversationLanguage.bless('Gioca a UnitTestGame gratis →')
+        return ConversationLanguage.bless('[Gioca a UnitTestGame gratis →](game?conversation_language=it)')
     }
 
     public override footerContact(): ConversationText {

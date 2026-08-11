@@ -150,7 +150,7 @@ ul {
 select {
   appearance: none;
   background: var(--button-background-gradient);
-  border-radius: 0.5rem;
+  border-radius: 100rem;
   color: var(--general-text-light);
   cursor: pointer;
   height: 2rem;

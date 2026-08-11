@@ -281,11 +281,11 @@ export class Dutch extends ConversationLanguage {
     }
 
     public override indexMetaDescription(): ConversationText {
-        return ConversationLanguage.bless('Leer effectieve unit tests schrijven met een interactief spel waarin je samenwerkt met een sluw meewerkende AI bot om je vaardigheden in unit testen te verbeteren.')
+        return ConversationLanguage.bless('Leer effectieve unit testen schrijven met een interactief spel waarin je moet samenwerken met een tegenwerkende AI bot.')
     }
 
     public override indexPageTitle(): ConversationText {
-        return ConversationLanguage.bless('UnitTestGame.com: Versla de AI bot die expres vals speelt')
+        return ConversationLanguage.bless('UnitTestGame.com: Versla de AI bot die je tegenwerkt')
     }
 
     public override navHowItWorks(): ConversationText {
@@ -301,15 +301,15 @@ export class Dutch extends ConversationLanguage {
     }
 
     public override navPlayNow(): ConversationText {
-        return ConversationLanguage.bless('Nu spelen')
+        return ConversationLanguage.bless('[Nu spelen](game?conversation_language=nl)')
     }
 
     public override heroTitleLine1Start(): ConversationText {
-        return ConversationLanguage.bless('De code doorstaat')
+        return ConversationLanguage.bless('De code voldoet aan')
     }
 
     public override heroTitleLine1Gradient(): ConversationText {
-        return ConversationLanguage.bless('jouw unit tests.')
+        return ConversationLanguage.bless('jouw unit testen.')
     }
 
     public override heroTitleLine2Start(): ConversationText {
@@ -321,14 +321,14 @@ export class Dutch extends ConversationLanguage {
     }
 
     public override heroSubtitle(): ConversationText {
-        return ConversationLanguage.bless('UnitTestGame koppelt je aan een sluw meewerkende AI bot. ' +
-            'Hij schrijft de luiste code die aan jouw unit tests voldoet. ' +
+        return ConversationLanguage.bless('UnitTestGame koppelt je aan een tegenwerkende AI bot. ' +
+            'Hij schrijft correcte code die voldoet aan jouw unit testen. ' +
             'En niets meer. ' +
-            'Jouw taak: schrijf unit tests totdat het programma klopt.')
+            'Jouw taak: schrijf unit testen totdat het programma klopt.')
     }
 
     public override heroCtaPrimary(): ConversationText {
-        return ConversationLanguage.bless('Speel gratis in je browser →')
+        return ConversationLanguage.bless('[Speel gratis in je browser →](game?conversation_language=nl)')
     }
 
     public override heroCtaSecondary(): ConversationText {
@@ -352,11 +352,11 @@ export class Dutch extends ConversationLanguage {
     }
 
     public override heroCommentFirstFunctionPasses(): ConversationText {
-        return ConversationLanguage.bless('zijn eerste functie doorstaat jouw unit test')
+        return ConversationLanguage.bless('zijn eerste functie voldoet aan jouw unit test')
     }
 
     public override heroCommentFirstVerdict(): ConversationText {
-        return ConversationLanguage.bless('maar hij generaliseert niet 👎')
+        return ConversationLanguage.bless('maar het generaliseert niet 👎')
     }
 
     public override heroCommentThisIsYouAgain(): ConversationText {
@@ -372,21 +372,21 @@ export class Dutch extends ConversationLanguage {
     }
 
     public override heroCommentSecondFunctionPasses(): ConversationText {
-        return ConversationLanguage.bless('zijn tweede functie doorstaat beide unit tests')
+        return ConversationLanguage.bless('zijn tweede functie voldoet aan beide unit testen')
     }
 
     public override heroCommentSecondVerdict(): ConversationText {
-        return ConversationLanguage.bless('en nu generaliseert hij wel 👍')
+        return ConversationLanguage.bless('en nu generaliseert het wel 👍')
     }
 
     public override howItWorksTitle(): ConversationText {
-        return ConversationLanguage.bless('Leer unit tests schrijven op gevoel')
+        return ConversationLanguage.bless('Leer unit testen schrijven op gevoel')
     }
 
     public override howItWorksSubtitle(): ConversationText {
-        return ConversationLanguage.bless('Geen colleges. ' +
-            'Geen quizzen. ' +
-            'Gewoon een AI bot die elk gat in jouw unit tests uitbuit.')
+        return ConversationLanguage.bless('Geen video\'s. ' +
+            'Geen quizjes. ' +
+            'Gewoon een AI bot die elk gat in jouw unit testen uitbuit.')
     }
 
     public override howItWorksStep1Title(): ConversationText {
@@ -403,7 +403,7 @@ export class Dutch extends ConversationLanguage {
     }
 
     public override howItWorksStep2Desc(): ConversationText {
-        return ConversationLanguage.bless('De AI bot levert de luiste code ' +
+        return ConversationLanguage.bless('De AI bot schrijft correcte code ' +
             'die precies voldoet aan wat jij hebt getest.')
     }
 
@@ -417,11 +417,11 @@ export class Dutch extends ConversationLanguage {
     }
 
     public override howItWorksStep4Title(): ConversationText {
-        return ConversationLanguage.bless('Verstevig tot het klopt')
+        return ConversationLanguage.bless('Ga door tot het klopt')
     }
 
     public override howItWorksStep4Desc(): ConversationText {
-        return ConversationLanguage.bless('Herhaal tot er geen kortere weg meer over is. ' +
+        return ConversationLanguage.bless('Herhaal tot er geen andere weg meer is. ' +
             'Level voltooid!')
     }
 
@@ -431,7 +431,7 @@ export class Dutch extends ConversationLanguage {
 
     public override whyItWorksSubtitle(): ConversationText {
         return ConversationLanguage.bless('Het speelt als een spel. ' +
-            'Het beklijft als een gewoonte. ' +
+            'Het wordt een gewoonte. ' +
             'Het verandert hoe jij test.')
     }
 
@@ -440,7 +440,7 @@ export class Dutch extends ConversationLanguage {
     }
 
     public override whyItWorksItem1Desc(): ConversationText {
-        return ConversationLanguage.bless('De AI bot is sluw meewerkend. ' +
+        return ConversationLanguage.bless('De AI bot werkt tegen. ' +
             'Elke zet is een les over jouw blinde vlek.')
     }
 
@@ -458,26 +458,30 @@ export class Dutch extends ConversationLanguage {
     }
 
     public override whyItWorksItem3Desc(): ConversationText {
-        return ConversationLanguage.bless('Een levelbord houdt bij wat je hebt ontgrendeld, ' +
+        return ConversationLanguage.bless('Een scorebord houdt bij wat je hebt ontgrendeld, ' +
             'zodat je altijd weet wat je te wachten staat.')
     }
 
     public override whyItWorksItem4Title(): ConversationText {
-        return ConversationLanguage.bless('Zes gesprekstalen')
+        return ConversationLanguage.bless('Zes talen')
     }
 
-    public override whyItWorksItem4Desc(): ConversationText {
-        return ConversationLanguage.bless('Converseer in het Engels, Nederlands, Duits, ' +
-            'Frans, Spaans of Italiaans.')
+    public override languagesList(): ConversationText {
+        return ConversationLanguage.bless('In het Nederlands natuurlijk, maar ook in het ' +
+            '[Engels](index), [Duits](index?conversation_language=de), [Frans](index?conversation_language=fr), ' +
+            '[Spaans](index?conversation_language=es) of [Italiaans](index?conversation_language=it).')
     }
 
     public override whyItWorksItem5Title(): ConversationText {
         return ConversationLanguage.bless('Zeven programmeertalen')
     }
 
-    public override whyItWorksItem5Desc(): ConversationText {
+    public override programmingLanguagesList(): ConversationText {
         return ConversationLanguage.bless('Laat de AI bot programma\'s schrijven in ' +
-            'JavaScript, TypeScript, Python, Java, C#, PHP of Ruby.')
+            '[JavaScript](game?conversation_language=nl&programming_language=javascript), [TypeScript](game?conversation_language=nl&programming_language=typescript), ' +
+            '[Python](game?conversation_language=nl&programming_language=python), [Java](game?conversation_language=nl&programming_language=java), ' +
+            '[C#](game?conversation_language=nl&programming_language=csharp), [PHP](game?conversation_language=nl&programming_language=php) ' +
+            'of [Ruby](game?conversation_language=nl&programming_language=ruby).')
     }
 
     public override whyItWorksItem6Title(): ConversationText {
@@ -486,16 +490,16 @@ export class Dutch extends ConversationLanguage {
 
     public override whyItWorksItem6Desc(): ConversationText {
         return ConversationLanguage.bless('Draait volledig in de browser. ' +
-            'Geen account, geen installatie, geen dependencies om mee te vechten.')
+            'Geen account, geen installatie, geen afhankelijkheden.')
     }
 
     public override levelsTitle(): ConversationText {
-        return ConversationLanguage.bless('Tien levels, tien manieren om te worden overtroefd')
+        return ConversationLanguage.bless('Tien levels, tien manieren om te worden afgetroefd')
     }
 
     public override levelsSubtitle(): ConversationText {
         return ConversationLanguage.bless('Elk level lijkt simpel. ' +
-            'Tot de AI bot weer een bereik vindt dat jij vergat te testen.')
+            'Tot de AI bot weer iets vindt dat jij vergat te testen.')
     }
 
     public override levelsDifficultyEasy(): ConversationText {
@@ -515,7 +519,7 @@ export class Dutch extends ConversationLanguage {
     }
 
     public override levelBlurb1(): ConversationText {
-        return ConversationLanguage.bless('Eén verjaardag. Twee mogelijke uitkomsten.')
+        return ConversationLanguage.bless('Mag je stemmen? Twee mogelijke uitkomsten.')
     }
 
     public override levelBlurb2(): ConversationText {
@@ -539,7 +543,7 @@ export class Dutch extends ConversationLanguage {
     }
 
     public override levelBlurb7(): ConversationText {
-        return ConversationLanguage.bless('Elke zijlengte verandert de uitkomst.')
+        return ConversationLanguage.bless('Elke zijde verandert de uitkomst.')
     }
 
     public override levelBlurb8(): ConversationText {
@@ -570,16 +574,8 @@ export class Dutch extends ConversationLanguage {
         return ConversationLanguage.bless('Welke programmeertalen worden ondersteund?')
     }
 
-    public override faqAnswer2(): ConversationText {
-        return ConversationLanguage.bless('JavaScript, TypeScript, Python, Java, C#, PHP en Ruby.')
-    }
-
     public override faqQuestion3(): ConversationText {
-        return ConversationLanguage.bless('Welke gesprekstalen worden ondersteund?')
-    }
-
-    public override faqAnswer3(): ConversationText {
-        return ConversationLanguage.bless('Engels, Nederlands, Duits, Frans, Spaans en Italiaans.')
+        return ConversationLanguage.bless('Welke talen worden ondersteund?')
     }
 
     public override faqQuestion4(): ConversationText {
@@ -587,7 +583,7 @@ export class Dutch extends ConversationLanguage {
     }
 
     public override faqAnswer4(): ConversationText {
-        return ConversationLanguage.bless('Nee. Het draait volledig in je browser. Zonder externe libraries.')
+        return ConversationLanguage.bless('Nee. Het draait volledig in je browser. Zonder externe bibliotheken.')
     }
 
     public override faqQuestion5(): ConversationText {
@@ -631,7 +627,7 @@ export class Dutch extends ConversationLanguage {
     }
 
     public override ctaButton(): ConversationText {
-        return ConversationLanguage.bless('Speel UnitTestGame gratis →')
+        return ConversationLanguage.bless('[Speel UnitTestGame gratis →](game?conversation_language=nl)')
     }
 
     public override footerContact(): ConversationText {
