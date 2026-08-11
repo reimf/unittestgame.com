@@ -147,6 +147,31 @@ ul {
   list-style-type: none;
 }
 
+select {
+  appearance: none;
+  background: var(--button-background-gradient);
+  border-radius: 0.5rem;
+  color: var(--general-text-light);
+  cursor: pointer;
+  height: 2rem;
+  padding: 0 2rem 0 1rem;
+  width: 100%;
+}
+
+span:has(> select) {
+  position: relative;
+
+  &::after {
+    color: var(--general-text-light);
+    content: '▾';
+    pointer-events: none;
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
 #messages {
   box-shadow: 0.25rem 0 0.5rem var(--separator-shadow);
   display: flex;

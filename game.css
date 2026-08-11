@@ -31,17 +31,6 @@ button {
   width: 100%;
 }
 
-select {
-  appearance: none;
-  background: var(--button-background-gradient);
-  border-radius: 0.5rem;
-  color: var(--general-text-light);
-  cursor: pointer;
-  height: 2rem;
-  padding: 0 2rem 0 1rem;
-  width: 100%;
-}
-
 i {
   /* markdown: *italic* */
   background: var(--panel-background-gradient);
@@ -93,20 +82,6 @@ label {
 
   &:has(select) {
     display: contents;
-
-    span {
-      position: relative;
-
-      &::after {
-        color: var(--general-text-light);
-        content: '▾';
-        pointer-events: none;
-        position: absolute;
-        right: 0.5rem;
-        top: 50%;
-        transform: translateY(-50%);
-      }
-    }
   }
 
   &:has(input[type="radio"]) {
