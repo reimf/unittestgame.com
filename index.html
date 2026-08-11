@@ -27,41 +27,42 @@
         <span>UnitTestGame</span>
       </div>
       <div id="nav-links">
-        <a href="#how-it-works">How it works</a>
-        <a href="#levels">Levels</a>
-        <a href="#why-it-works">Why it works</a>
-        <a class="btn" href="game">Play now</a>
+        <a href="#how-it-works" data-i18n="navHowItWorks">How it works</a>
+        <a href="#levels" data-i18n="navLevels">Levels</a>
+        <a href="#why-it-works" data-i18n="navWhyItWorks">Why it works</a>
+        <select id="language-switcher"></select>
+        <a class="btn" href="game" data-i18n="navPlayNow">Play now</a>
       </div>
     </nav>
     <header>
       <div id="hero-copy">
         <h1>
-          The code passes <span class="gradient-text">your unit tests.</span><br>
-          But does it do what <span class="gradient-text">you really want?</span>
+          <span data-i18n="heroTitleLine1Start">The code passes</span> <span class="gradient-text" data-i18n="heroTitleLine1Gradient">your unit tests.</span><br>
+          <span data-i18n="heroTitleLine2Start">But does it do what</span> <span class="gradient-text" data-i18n="heroTitleLine2Gradient">you really want?</span>
         </h1>
-        <p>
+        <p data-i18n="heroSubtitle">
           UnitTestGame pairs you with a maliciously compliant AI bot.
           It writes the laziest code that satisfies your unit tests.
           And nothing more.
           Your job: write unit tests until the program is right.
         </p>
         <div id="hero-buttonrow">
-          <a class="btn" href="game">Play for free in your browser →</a>
-          <a href="#how-it-works">See how it works</a>
+          <a class="btn" href="game" data-i18n="heroCtaPrimary">Play for free in your browser →</a>
+          <a href="#how-it-works" data-i18n="heroCtaSecondary">See how it works</a>
         </div>
       </div>
       <div id="hero-animation">
         <div id="messages">
           <section class="human" id="message-1">
             <div>
-              <p>I want to add this unit test.</p>
+              <p data-i18n="humanWantsToAddUnitTest">I want to add this unit test.</p>
               <code class="block">
                 <div class="new"><span class="function">isAllowedToVote</span>(<span class="number">18</span>) <span class="operator">===</span> <span class="literal">true</span></div>
               </code>
             </div>
           </section>
-          <span class="human comment" id="this-is-you">this is you ↑</span>
-          <span class="human comment" id="first-unit-test">with your first unit test</span>
+          <span class="human comment" id="this-is-you" data-i18n="heroCommentThisIsYou">this is you ↑</span>
+          <span class="human comment" id="first-unit-test" data-i18n="heroCommentFirstUnitTest">with your first unit test</span>
           <section class="computer" id="message-2">
             <div>
               <code class="block">
@@ -71,19 +72,19 @@
               </code>
             </div>
           </section>
-          <span class="computer comment" id="this-is-the-ai-bot">↑ this is the AI bot</span>
-          <span class="computer comment" id="first-function">its first function passes your unit test</span>
-          <span class="computer comment" id="first-verdict">but it doesn't generalize 👎</span>
+          <span class="computer comment" id="this-is-the-ai-bot" data-i18n="heroCommentThisIsTheAiBot">↑ this is the AI bot</span>
+          <span class="computer comment" id="first-function" data-i18n="heroCommentFirstFunctionPasses">its first function passes your unit test</span>
+          <span class="computer comment" id="first-verdict" data-i18n="heroCommentFirstVerdict">but it doesn't generalize 👎</span>
           <section class="human" id="message-3">
             <div>
-              <p>I want to add this unit test.</p>
+              <p data-i18n="humanWantsToAddUnitTest">I want to add this unit test.</p>
               <code class="block">
                 <div class="new"><span class="function">isAllowedToVote</span>(<span class="number">17</span>) <span class="operator">===</span> <span class="literal">false</span></div>
               </code>
             </div>
           </section>
-          <span class="human comment" id="this-is-you-again">this is you again ↑</span>
-          <span class="human comment" id="second-unit-test">now with your second unit test</span>
+          <span class="human comment" id="this-is-you-again" data-i18n="heroCommentThisIsYouAgain">this is you again ↑</span>
+          <span class="human comment" id="second-unit-test" data-i18n="heroCommentSecondUnitTest">now with your second unit test</span>
           <section class="computer" id="message-4">
             <div>
               <code class="block">
@@ -94,46 +95,46 @@
               </code>
             </div>
           </section>
-          <span class="computer comment" id="this-is-the-ai-bot-again">↑ this is the AI bot again</span>
-          <span class="computer comment" id="second-function">its second function passes both unit tests</span>
-          <span class="computer comment" id="second-verdict">and now it generalizes 👍</span>
+          <span class="computer comment" id="this-is-the-ai-bot-again" data-i18n="heroCommentThisIsTheAiBotAgain">↑ this is the AI bot again</span>
+          <span class="computer comment" id="second-function" data-i18n="heroCommentSecondFunctionPasses">its second function passes both unit tests</span>
+          <span class="computer comment" id="second-verdict" data-i18n="heroCommentSecondVerdict">and now it generalizes 👍</span>
         </div>
       </div>
     </header>
     <section id="how-it-works">
       <div>
-        <h2>Learn to write unit tests by feel</h2>
-        <p>
+        <h2 data-i18n="howItWorksTitle">Learn to write unit tests by feel</h2>
+        <p data-i18n="howItWorksSubtitle">
           No lectures.
-          No quizzes. 
+          No quizzes.
           Just an AI bot exploiting every hole in your unit tests.
         </p>
       </div>
       <ol>
         <li>
-          <h3><span class="square">①</span> Read the spec</h3>
-          <p>
-            See what the function is supposed to do, 
+          <h3><span class="square">①</span> <span data-i18n="howItWorksStep1Title">Read the spec</span></h3>
+          <p data-i18n="howItWorksStep1Desc">
+            See what the function is supposed to do,
             in plain input → output terms.
           </p>
         </li>
         <li>
-          <h3><span class="square">②</span> Watch it cheat</h3>
-          <p>
+          <h3><span class="square">②</span> <span data-i18n="howItWorksStep2Title">Watch it cheat</span></h3>
+          <p data-i18n="howItWorksStep2Desc">
             The AI bot ships the laziest code
             that satisfies exactly what you tested.
           </p>
         </li>
         <li>
-          <h3><span class="square">③</span> Catch the gap</h3>
-          <p>
+          <h3><span class="square">③</span> <span data-i18n="howItWorksStep3Title">Catch the gap</span></h3>
+          <p data-i18n="howItWorksStep3Desc">
             Spot the edge case it dodged,
             and add a unit test that exposes it.
           </p>
         </li>
         <li>
-          <h3><span class="square">④</span> Tighten until solid</h3>
-          <p>
+          <h3><span class="square">④</span> <span data-i18n="howItWorksStep4Title">Tighten until solid</span></h3>
+          <p data-i18n="howItWorksStep4Desc">
             Repeat until there's no shortcut left.
             Level completed!
           </p>
@@ -142,53 +143,53 @@
     </section>
     <section id="why-it-works">
       <div>
-        <h2>For developers who want to prevent bugs</h2>
-        <p>
-          It plays like a game. 
-          It sticks like a habit. 
+        <h2 data-i18n="whyItWorksTitle">For developers who want to prevent bugs</h2>
+        <p data-i18n="whyItWorksSubtitle">
+          It plays like a game.
+          It sticks like a habit.
           It changes your way of testing.
         </p>
       </div>
       <ul>
         <li>
-          <h3><span class="">🕵️</span> A worthy opponent</h3>
-          <p>
-            The AI bot is maliciously compliant. 
+          <h3><span class="">🕵️</span> <span data-i18n="whyItWorksItem1Title">A worthy opponent</span></h3>
+          <p data-i18n="whyItWorksItem1Desc">
+            The AI bot is maliciously compliant.
             Every move is a lesson about your blind spot.
           </p>
         </li>
         <li>
-          <h3><span>📈</span> Escalating difficulty</h3>
-          <p>
-            Start with battery levels. 
+          <h3><span>📈</span> <span data-i18n="whyItWorksItem2Title">Escalating difficulty</span></h3>
+          <p data-i18n="whyItWorksItem2Desc">
+            Start with battery levels.
             End up untangling speed displays and parking fees.
           </p>
         </li>
         <li>
-          <h3><span>🔓</span> Real progression</h3>
-          <p>
+          <h3><span>🔓</span> <span data-i18n="whyItWorksItem3Title">Real progression</span></h3>
+          <p data-i18n="whyItWorksItem3Desc">
             A level board tracks what you've unlocked,
             so you always know what's next.
           </p>
         </li>
         <li>
-          <h3><span>🌍</span> Six conversation languages</h3>
-          <p>
+          <h3><span>🌍</span> <span data-i18n="whyItWorksItem4Title">Six conversation languages</span></h3>
+          <p data-i18n="whyItWorksItem4Desc">
             Converse in English, Dutch, German,
             French, Spanish, or Italian.
           </p>
         </li>
         <li>
-          <h3><span>💻</span> Seven programming languages</h3>
-          <p>
+          <h3><span>💻</span> <span data-i18n="whyItWorksItem5Title">Seven programming languages</span></h3>
+          <p data-i18n="whyItWorksItem5Desc">
             Let the AI bot write programs in
             JavaScript, TypeScript, Python, Java, C#, PHP, or Ruby.
           </p>
         </li>
         <li>
-          <h3><span>🧩</span> No setup at all</h3>
-          <p>
-            Runs entirely in the browser. 
+          <h3><span>🧩</span> <span data-i18n="whyItWorksItem6Title">No setup at all</span></h3>
+          <p data-i18n="whyItWorksItem6Desc">
+            Runs entirely in the browser.
             No account, no install, no dependencies to fight with.
           </p>
         </li>
@@ -196,8 +197,8 @@
     </section>
     <section id="levels">
       <div>
-        <h2>Ten levels, ten ways to get outsmarted</h2>
-        <p>
+        <h2 data-i18n="levelsTitle">Ten levels, ten ways to get outsmarted</h2>
+        <p data-i18n="levelsSubtitle">
           Each one looks simple.
           Until the AI bot finds another range you forgot to test.
         </p>
@@ -206,137 +207,137 @@
         <li>
           <div>
             <span class="square">0</span>
-            <span>easy</span>
+            <span data-i18n="levelsDifficultyEasy">easy</span>
           </div>
           <h3>Battery Level</h3>
-          <p>The AI bot shows you first. Then it's your turn.</p>
+          <p data-i18n="levelBlurb0">The AI bot shows you first. Then it's your turn.</p>
         </li>
         <li>
           <div>
             <span class="square">1</span>
-            <span>easy</span>
+            <span data-i18n="levelsDifficultyEasy">easy</span>
           </div>
           <h3>Voting Age</h3>
-          <p>One birthday. Two possible outcomes.</p>
+          <p data-i18n="levelBlurb1">One birthday. Two possible outcomes.</p>
         </li>
         <li>
           <div>
             <span class="square">2</span>
-            <span>easy</span>
+            <span data-i18n="levelsDifficultyEasy">easy</span>
           </div>
           <h3>Wind Scale</h3>
-          <p>Three thresholds stand between calm and storm.</p>
+          <p data-i18n="levelBlurb2">Three thresholds stand between calm and storm.</p>
         </li>
         <li>
           <div>
             <span class="square">3</span>
-            <span>medium</span>
+            <span data-i18n="levelsDifficultyMedium">medium</span>
           </div>
           <h3>Review</h3>
-          <p>Price and quality, working against each other.</p>
+          <p data-i18n="levelBlurb3">Price and quality, working against each other.</p>
         </li>
         <li>
           <div>
             <span class="square">4</span>
-            <span>medium</span>
+            <span data-i18n="levelsDifficultyMedium">medium</span>
           </div>
           <h3>Discount</h3>
-          <p>A full cart, a member card, or both at once.</p>
+          <p data-i18n="levelBlurb4">A full cart, a member card, or both at once.</p>
         </li>
         <li>
           <div>
             <span class="square">5</span>
-            <span>medium</span>
+            <span data-i18n="levelsDifficultyMedium">medium</span>
           </div>
           <h3>FizzBuzz</h3>
-          <p>Everyone knows FizzBuzz. The bot doesn't.</p>
+          <p data-i18n="levelBlurb5">Everyone knows FizzBuzz. The bot doesn't.</p>
         </li>
         <li>
           <div>
             <span class="square">6</span>
-            <span>medium</span>
+            <span data-i18n="levelsDifficultyMedium">medium</span>
           </div>
           <h3>Leap Year</h3>
-          <p>An exception to the exception to the rule.</p>
+          <p data-i18n="levelBlurb6">An exception to the exception to the rule.</p>
         </li>
         <li>
           <div>
             <span class="square">7</span>
-            <span>hard</span>
+            <span data-i18n="levelsDifficultyHard">hard</span>
           </div>
           <h3>Triangle Type</h3>
-          <p>Every side length changes the verdict.</p>
+          <p data-i18n="levelBlurb7">Every side length changes the verdict.</p>
         </li>
         <li>
           <div>
             <span class="square">8</span>
-            <span>hard</span>
+            <span data-i18n="levelsDifficultyHard">hard</span>
           </div>
           <h3>Speed Display</h3>
-          <p>The physical display has limits. Find them all.</p>
+          <p data-i18n="levelBlurb8">The physical display has limits. Find them all.</p>
         </li>
         <li>
           <div>
             <span class="square">9</span>
-            <span>hard</span>
+            <span data-i18n="levelsDifficultyHard">hard</span>
           </div>
           <h3>Parking Fee</h3>
-          <p>Free, flat, or by the minute. What now?</p>
+          <p data-i18n="levelBlurb9">Free, flat, or by the minute. What now?</p>
         </li>
       </ol>
     </section>
     <section id="faq">
       <div>
-        <h2>Frequently Asked Questions</h2>
-        <p>No sales pitch. Just answers.</p>
+        <h2 data-i18n="faqTitle">Frequently Asked Questions</h2>
+        <p data-i18n="faqSubtitle">No sales pitch. Just answers.</p>
       </div>
       <ul>
         <li>
-          <h3><span class="square">Q</span> Is it really free?</h3>
-          <p>Yes. No ads, no tracking, no paywall. Just a free game.</p>
+          <h3><span class="square">Q</span> <span data-i18n="faqQuestion1">Is it really free?</span></h3>
+          <p data-i18n="faqAnswer1">Yes. No ads, no tracking, no paywall. Just a free game.</p>
         </li>
         <li>
-          <h3><span class="square">Q</span> What programming languages are supported?</h3>
-          <p>JavaScript, TypeScript, Python, Java, C#, PHP, and Ruby.</p>
+          <h3><span class="square">Q</span> <span data-i18n="faqQuestion2">What programming languages are supported?</span></h3>
+          <p data-i18n="faqAnswer2">JavaScript, TypeScript, Python, Java, C#, PHP, and Ruby.</p>
         </li>
         <li>
-          <h3><span class="square">Q</span> What conversation languages are supported?</h3>
-          <p>English, Dutch, German, French, Spanish, and Italian.</p>
+          <h3><span class="square">Q</span> <span data-i18n="faqQuestion3">What conversation languages are supported?</span></h3>
+          <p data-i18n="faqAnswer3">English, Dutch, German, French, Spanish, and Italian.</p>
         </li>
         <li>
-          <h3><span class="square">Q</span> Do I need to install anything?</h3>
-          <p>Nope. It runs entirely in your browser. Without external libraries.</p>
+          <h3><span class="square">Q</span> <span data-i18n="faqQuestion4">Do I need to install anything?</span></h3>
+          <p data-i18n="faqAnswer4">Nope. It runs entirely in your browser. Without external libraries.</p>
         </li>
         <li>
-          <h3><span class="square">Q</span> Do I need an account?</h3>
-          <p>Nope. You can only play anonymously.</p>
+          <h3><span class="square">Q</span> <span data-i18n="faqQuestion5">Do I need an account?</span></h3>
+          <p data-i18n="faqAnswer5">Nope. You can only play anonymously.</p>
         </li>
         <li>
-          <h3><span class="square">Q</span> What information is stored?</h3>
-          <p>Your progress is saved in your browser. It doesn't leave your computer.</p>
+          <h3><span class="square">Q</span> <span data-i18n="faqQuestion6">What information is stored?</span></h3>
+          <p data-i18n="faqAnswer6">Your progress is saved in your browser. It doesn't leave your computer.</p>
         </li>
         <li>
-          <h3><span class="square">Q</span> Is it open source?</h3>
-          <p>Yes. The source code is available on GitHub.</p>
+          <h3><span class="square">Q</span> <span data-i18n="faqQuestion7">Is it open source?</span></h3>
+          <p data-i18n="faqAnswer7">Yes. The source code is available on GitHub.</p>
         </li>
         <li>
-          <h3><span class="square">Q</span> Who made this?</h3>
-          <p>This game is created by a CS teacher. For the love of programming and testing.</p>
+          <h3><span class="square">Q</span> <span data-i18n="faqQuestion8">Who made this?</span></h3>
+          <p data-i18n="faqAnswer8">This game is created by a CS teacher. For the love of programming and testing.</p>
         </li>
       </ul>
     </section>
     <section>
       <div class="cta-band">
-        <h2>The AI bot is waiting for you. Don't get fooled.</h2>
-        <p>Click the button, follow the instructions, and see what the AI bot tries to get away with.</p>
-        <a class="btn" href="game">Play UnitTestGame for free →</a>
+        <h2 data-i18n="ctaTitle">The AI bot is waiting for you. Don't get fooled.</h2>
+        <p data-i18n="ctaSubtitle">Click the button, follow the instructions, and see what the AI bot tries to get away with.</p>
+        <a class="btn" href="game" data-i18n="ctaButton">Play UnitTestGame for free →</a>
       </div>
     </section>
     <footer>
       <span>© 2026 UnitTestGame</span>
       <div class="foot-links">
         <a href="https://github.com/reimf/unittestgame.com">GitHub</a>
-        <a href="mailto:contact@unittestgame.com">Contact</a>
+        <a href="mailto:contact@unittestgame.com" data-i18n="footerContact">Contact</a>
       </div>
     </footer>
   </body>

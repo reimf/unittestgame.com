@@ -279,4 +279,362 @@ export class German extends ConversationLanguage {
     public override returnValueLabel(functionCall: string): ConversationText {
         return ConversationLanguage.bless(`Ergebnis von ${functionCall}`)
     }
+
+    public override indexMetaDescription(): ConversationText {
+        return ConversationLanguage.bless('Lerne effektive Unit-Tests zu schreiben mit einem interaktiven Spiel, in dem du mit einem hinterhältig kooperativen KI-Bot zusammenarbeitest, um deine Fähigkeiten im Unit-Testing zu verbessern.')
+    }
+
+    public override indexPageTitle(): ConversationText {
+        return ConversationLanguage.bless('UnitTestGame.com: Überliste den KI-Bot, der absichtlich schummelt')
+    }
+
+    public override navHowItWorks(): ConversationText {
+        return ConversationLanguage.bless('So funktioniert\'s')
+    }
+
+    public override navLevels(): ConversationText {
+        return ConversationLanguage.bless('Levels')
+    }
+
+    public override navWhyItWorks(): ConversationText {
+        return ConversationLanguage.bless('Warum es funktioniert')
+    }
+
+    public override navPlayNow(): ConversationText {
+        return ConversationLanguage.bless('Jetzt spielen')
+    }
+
+    public override heroTitleLine1Start(): ConversationText {
+        return ConversationLanguage.bless('Der Code besteht')
+    }
+
+    public override heroTitleLine1Gradient(): ConversationText {
+        return ConversationLanguage.bless('deine Unit-Tests.')
+    }
+
+    public override heroTitleLine2Start(): ConversationText {
+        return ConversationLanguage.bless('Aber macht er auch, was')
+    }
+
+    public override heroTitleLine2Gradient(): ConversationText {
+        return ConversationLanguage.bless('du wirklich willst?')
+    }
+
+    public override heroSubtitle(): ConversationText {
+        return ConversationLanguage.bless('UnitTestGame stellt dir einen hinterhältig kooperativen KI-Bot zur Seite. ' +
+            'Er schreibt den faulsten Code, der deine Unit-Tests besteht. ' +
+            'Und nichts weiter. ' +
+            'Deine Aufgabe: Schreibe Unit-Tests, bis das Programm stimmt.')
+    }
+
+    public override heroCtaPrimary(): ConversationText {
+        return ConversationLanguage.bless('Kostenlos im Browser spielen →')
+    }
+
+    public override heroCtaSecondary(): ConversationText {
+        return ConversationLanguage.bless('Sieh, wie es funktioniert')
+    }
+
+    public override humanWantsToAddUnitTest(): ConversationText {
+        return ConversationLanguage.bless('Ich möchte diesen Unit-Test hinzufügen.')
+    }
+
+    public override heroCommentThisIsYou(): ConversationText {
+        return ConversationLanguage.bless('das bist du ↑')
+    }
+
+    public override heroCommentFirstUnitTest(): ConversationText {
+        return ConversationLanguage.bless('mit deinem ersten Unit-Test')
+    }
+
+    public override heroCommentThisIsTheAiBot(): ConversationText {
+        return ConversationLanguage.bless('↑ das ist der KI-Bot')
+    }
+
+    public override heroCommentFirstFunctionPasses(): ConversationText {
+        return ConversationLanguage.bless('seine erste Funktion besteht deinen Unit-Test')
+    }
+
+    public override heroCommentFirstVerdict(): ConversationText {
+        return ConversationLanguage.bless('aber sie verallgemeinert nicht 👎')
+    }
+
+    public override heroCommentThisIsYouAgain(): ConversationText {
+        return ConversationLanguage.bless('das bist du wieder ↑')
+    }
+
+    public override heroCommentSecondUnitTest(): ConversationText {
+        return ConversationLanguage.bless('jetzt mit deinem zweiten Unit-Test')
+    }
+
+    public override heroCommentThisIsTheAiBotAgain(): ConversationText {
+        return ConversationLanguage.bless('↑ das ist der KI-Bot wieder')
+    }
+
+    public override heroCommentSecondFunctionPasses(): ConversationText {
+        return ConversationLanguage.bless('seine zweite Funktion besteht beide Unit-Tests')
+    }
+
+    public override heroCommentSecondVerdict(): ConversationText {
+        return ConversationLanguage.bless('und jetzt verallgemeinert sie 👍')
+    }
+
+    public override howItWorksTitle(): ConversationText {
+        return ConversationLanguage.bless('Lerne Unit-Tests aus dem Gefühl heraus zu schreiben')
+    }
+
+    public override howItWorksSubtitle(): ConversationText {
+        return ConversationLanguage.bless('Keine Vorlesungen. ' +
+            'Keine Quizze. ' +
+            'Nur ein KI-Bot, der jede Lücke in deinen Unit-Tests ausnutzt.')
+    }
+
+    public override howItWorksStep1Title(): ConversationText {
+        return ConversationLanguage.bless('Lies die Spec')
+    }
+
+    public override howItWorksStep1Desc(): ConversationText {
+        return ConversationLanguage.bless('Sieh dir an, was die Funktion tun soll, ' +
+            'in einfachen Input-→-Output-Begriffen.')
+    }
+
+    public override howItWorksStep2Title(): ConversationText {
+        return ConversationLanguage.bless('Sieh ihm beim Schummeln zu')
+    }
+
+    public override howItWorksStep2Desc(): ConversationText {
+        return ConversationLanguage.bless('Der KI-Bot liefert den faulsten Code, ' +
+            'der genau das erfüllt, was du getestet hast.')
+    }
+
+    public override howItWorksStep3Title(): ConversationText {
+        return ConversationLanguage.bless('Finde die Lücke')
+    }
+
+    public override howItWorksStep3Desc(): ConversationText {
+        return ConversationLanguage.bless('Erkenne den Grenzfall, dem er ausgewichen ist, ' +
+            'und füge einen Unit-Test hinzu, der ihn aufdeckt.')
+    }
+
+    public override howItWorksStep4Title(): ConversationText {
+        return ConversationLanguage.bless('Verschärfe, bis es hält')
+    }
+
+    public override howItWorksStep4Desc(): ConversationText {
+        return ConversationLanguage.bless('Wiederhole, bis keine Abkürzung mehr übrig ist. ' +
+            'Level geschafft!')
+    }
+
+    public override whyItWorksTitle(): ConversationText {
+        return ConversationLanguage.bless('Für Entwickler, die Bugs vermeiden wollen')
+    }
+
+    public override whyItWorksSubtitle(): ConversationText {
+        return ConversationLanguage.bless('Es spielt sich wie ein Spiel. ' +
+            'Es bleibt hängen wie eine Gewohnheit. ' +
+            'Es verändert deine Art zu testen.')
+    }
+
+    public override whyItWorksItem1Title(): ConversationText {
+        return ConversationLanguage.bless('Ein würdiger Gegner')
+    }
+
+    public override whyItWorksItem1Desc(): ConversationText {
+        return ConversationLanguage.bless('Der KI-Bot ist hinterhältig kooperativ. ' +
+            'Jeder Zug ist eine Lektion über deinen blinden Fleck.')
+    }
+
+    public override whyItWorksItem2Title(): ConversationText {
+        return ConversationLanguage.bless('Steigender Schwierigkeitsgrad')
+    }
+
+    public override whyItWorksItem2Desc(): ConversationText {
+        return ConversationLanguage.bless('Beginne mit Batteriestufen. ' +
+            'Ende beim Entwirren von Geschwindigkeitsanzeigen und Parkgebühren.')
+    }
+
+    public override whyItWorksItem3Title(): ConversationText {
+        return ConversationLanguage.bless('Echter Fortschritt')
+    }
+
+    public override whyItWorksItem3Desc(): ConversationText {
+        return ConversationLanguage.bless('Ein Levelboard zeigt, was du freigeschaltet hast, ' +
+            'sodass du immer weißt, was als Nächstes kommt.')
+    }
+
+    public override whyItWorksItem4Title(): ConversationText {
+        return ConversationLanguage.bless('Sechs Gesprächssprachen')
+    }
+
+    public override whyItWorksItem4Desc(): ConversationText {
+        return ConversationLanguage.bless('Unterhalte dich auf Englisch, Niederländisch, Deutsch, ' +
+            'Französisch, Spanisch oder Italienisch.')
+    }
+
+    public override whyItWorksItem5Title(): ConversationText {
+        return ConversationLanguage.bless('Sieben Programmiersprachen')
+    }
+
+    public override whyItWorksItem5Desc(): ConversationText {
+        return ConversationLanguage.bless('Lass den KI-Bot Programme schreiben in ' +
+            'JavaScript, TypeScript, Python, Java, C#, PHP oder Ruby.')
+    }
+
+    public override whyItWorksItem6Title(): ConversationText {
+        return ConversationLanguage.bless('Gar keine Einrichtung')
+    }
+
+    public override whyItWorksItem6Desc(): ConversationText {
+        return ConversationLanguage.bless('Läuft komplett im Browser. ' +
+            'Kein Konto, keine Installation, keine Abhängigkeiten, mit denen man kämpfen muss.')
+    }
+
+    public override levelsTitle(): ConversationText {
+        return ConversationLanguage.bless('Zehn Levels, zehn Arten, ausgetrickst zu werden')
+    }
+
+    public override levelsSubtitle(): ConversationText {
+        return ConversationLanguage.bless('Jedes wirkt einfach. ' +
+            'Bis der KI-Bot einen weiteren Bereich findet, den du zu testen vergessen hast.')
+    }
+
+    public override levelsDifficultyEasy(): ConversationText {
+        return ConversationLanguage.bless('leicht')
+    }
+
+    public override levelsDifficultyMedium(): ConversationText {
+        return ConversationLanguage.bless('mittel')
+    }
+
+    public override levelsDifficultyHard(): ConversationText {
+        return ConversationLanguage.bless('schwer')
+    }
+
+    public override levelBlurb0(): ConversationText {
+        return ConversationLanguage.bless('Der KI-Bot macht es dir zuerst vor. Dann bist du dran.')
+    }
+
+    public override levelBlurb1(): ConversationText {
+        return ConversationLanguage.bless('Ein Geburtstag. Zwei mögliche Ergebnisse.')
+    }
+
+    public override levelBlurb2(): ConversationText {
+        return ConversationLanguage.bless('Drei Schwellenwerte zwischen Flaute und Sturm.')
+    }
+
+    public override levelBlurb3(): ConversationText {
+        return ConversationLanguage.bless('Preis und Qualität, gegeneinander.')
+    }
+
+    public override levelBlurb4(): ConversationText {
+        return ConversationLanguage.bless('Ein voller Warenkorb, eine Mitgliedskarte, oder beides zugleich.')
+    }
+
+    public override levelBlurb5(): ConversationText {
+        return ConversationLanguage.bless('Jeder kennt FizzBuzz. Der Bot nicht.')
+    }
+
+    public override levelBlurb6(): ConversationText {
+        return ConversationLanguage.bless('Eine Ausnahme von der Ausnahme von der Regel.')
+    }
+
+    public override levelBlurb7(): ConversationText {
+        return ConversationLanguage.bless('Jede Seitenlänge verändert das Urteil.')
+    }
+
+    public override levelBlurb8(): ConversationText {
+        return ConversationLanguage.bless('Die physische Anzeige hat Grenzen. Finde sie alle.')
+    }
+
+    public override levelBlurb9(): ConversationText {
+        return ConversationLanguage.bless('Kostenlos, pauschal, oder pro Minute. Was jetzt?')
+    }
+
+    public override faqTitle(): ConversationText {
+        return ConversationLanguage.bless('Häufig gestellte Fragen')
+    }
+
+    public override faqSubtitle(): ConversationText {
+        return ConversationLanguage.bless('Keine Verkaufsmasche. Nur Antworten.')
+    }
+
+    public override faqQuestion1(): ConversationText {
+        return ConversationLanguage.bless('Ist es wirklich kostenlos?')
+    }
+
+    public override faqAnswer1(): ConversationText {
+        return ConversationLanguage.bless('Ja. Keine Werbung, kein Tracking, keine Bezahlschranke. Einfach ein kostenloses Spiel.')
+    }
+
+    public override faqQuestion2(): ConversationText {
+        return ConversationLanguage.bless('Welche Programmiersprachen werden unterstützt?')
+    }
+
+    public override faqAnswer2(): ConversationText {
+        return ConversationLanguage.bless('JavaScript, TypeScript, Python, Java, C#, PHP und Ruby.')
+    }
+
+    public override faqQuestion3(): ConversationText {
+        return ConversationLanguage.bless('Welche Gesprächssprachen werden unterstützt?')
+    }
+
+    public override faqAnswer3(): ConversationText {
+        return ConversationLanguage.bless('Englisch, Niederländisch, Deutsch, Französisch, Spanisch und Italienisch.')
+    }
+
+    public override faqQuestion4(): ConversationText {
+        return ConversationLanguage.bless('Muss ich etwas installieren?')
+    }
+
+    public override faqAnswer4(): ConversationText {
+        return ConversationLanguage.bless('Nein. Es läuft komplett in deinem Browser. Ohne externe Bibliotheken.')
+    }
+
+    public override faqQuestion5(): ConversationText {
+        return ConversationLanguage.bless('Brauche ich ein Konto?')
+    }
+
+    public override faqAnswer5(): ConversationText {
+        return ConversationLanguage.bless('Nein. Du kannst nur anonym spielen.')
+    }
+
+    public override faqQuestion6(): ConversationText {
+        return ConversationLanguage.bless('Welche Informationen werden gespeichert?')
+    }
+
+    public override faqAnswer6(): ConversationText {
+        return ConversationLanguage.bless('Dein Fortschritt wird in deinem Browser gespeichert. Er verlässt nie deinen Computer.')
+    }
+
+    public override faqQuestion7(): ConversationText {
+        return ConversationLanguage.bless('Ist es Open Source?')
+    }
+
+    public override faqAnswer7(): ConversationText {
+        return ConversationLanguage.bless('Ja. Der Quellcode ist auf GitHub verfügbar.')
+    }
+
+    public override faqQuestion8(): ConversationText {
+        return ConversationLanguage.bless('Wer hat das gemacht?')
+    }
+
+    public override faqAnswer8(): ConversationText {
+        return ConversationLanguage.bless('Dieses Spiel wurde von einem Informatiklehrer erstellt. Aus Liebe zum Programmieren und Testen.')
+    }
+
+    public override ctaTitle(): ConversationText {
+        return ConversationLanguage.bless('Der KI-Bot wartet auf dich. Lass dich nicht reinlegen.')
+    }
+
+    public override ctaSubtitle(): ConversationText {
+        return ConversationLanguage.bless('Klicke auf den Button, folge den Anweisungen, und sieh, womit der KI-Bot davonkommen will.')
+    }
+
+    public override ctaButton(): ConversationText {
+        return ConversationLanguage.bless('UnitTestGame kostenlos spielen →')
+    }
+
+    public override footerContact(): ConversationText {
+        return ConversationLanguage.bless('Kontakt')
+    }
 }
