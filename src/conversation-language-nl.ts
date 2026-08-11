@@ -154,9 +154,9 @@ export class Dutch extends ConversationLanguage {
     }
 
     public override batteryLevelSpecification(): ConversationText {
-        return ConversationLanguage.bless('Een smartphone werkt normaal in `NORMAL MODE`, ' +
+        return ConversationLanguage.bless('Een smartphone werkt normaal in `"NORMAL MODE"`, ' +
             'maar wanneer het batterijpercentage minder dan `20` is, ' +
-            'werkt een smartphone in `LOW POWER MODE`.')
+            'werkt een smartphone in `"LOW POWER MODE"`.')
     }
 
     public override wrongAction(): ConversationText {
@@ -167,23 +167,23 @@ export class Dutch extends ConversationLanguage {
     public override addBatteryLevel20(): ConversationText {
         return ConversationLanguage.bless('De *Specificatie* bevat het getal 20. ' +
             'Dat is een goed startpunt. ' +
-            'Wanneer het batterijpercentage `20` is moet de functie `NORMAL MODE` teruggeven.')
+            'Wanneer het batterijpercentage `20` is moet de functie `"NORMAL MODE"` teruggeven.')
     }
 
     public override addBatteryLevel19(): ConversationText {
-        return ConversationLanguage.bless('De *Huidige Functie* geeft nu altijd `NORMAL MODE` terug, ' +
-            'maar de *Specificatie* zegt dat batterijpercentage `19` `LOW POWER MODE` moet teruggeven. ' +
+        return ConversationLanguage.bless('De *Huidige Functie* geeft nu altijd `"NORMAL MODE"` terug, ' +
+            'maar de *Specificatie* zegt dat batterijpercentage `19` `"LOW POWER MODE"` moet teruggeven. ' +
             'Voeg daar een unit test voor toe.')
     }
 
     public override submitUnitTestsFirst(): ConversationText {
-        return ConversationLanguage.bless('De *Huidige Functie* kan nu `NORMAL MODE` of `LOW POWER MODE` teruggeven. ' +
+        return ConversationLanguage.bless('De *Huidige Functie* kan nu `"NORMAL MODE"` of `"LOW POWER MODE"` teruggeven. ' +
             'Lever de *Unit Testen* in om te controleren of de *Huidige Functie* voldoet aan de *Specificatie*.')
     }
 
     public override addBatteryLevel21(): ConversationText {
-        return ConversationLanguage.bless('De *Huidige Functie* geeft nu alleen `NORMAL MODE` terug voor batterijpercentage `20`. ' +
-            'De *Specificatie* zegt dat `21` ook `NORMAL MODE` moet teruggeven. ' +
+        return ConversationLanguage.bless('De *Huidige Functie* geeft nu alleen `"NORMAL MODE"` terug voor batterijpercentage `20`. ' +
+            'De *Specificatie* zegt dat `21` ook `"NORMAL MODE"` moet teruggeven. ' +
             'Voeg daar een unit test voor toe.')
     }
 
@@ -192,8 +192,8 @@ export class Dutch extends ConversationLanguage {
     }
 
     public override addBatteryLevel18(): ConversationText {
-        return ConversationLanguage.bless('De *Huidige Functie* geeft nu alleen `LOW POWER MODE` terug voor batterijpercentage `19`. ' +
-            'De *Specificatie* zegt dat `18` ook `LOW POWER MODE` moet teruggeven. ' +
+        return ConversationLanguage.bless('De *Huidige Functie* geeft nu alleen `"LOW POWER MODE"` terug voor batterijpercentage `19`. ' +
+            'De *Specificatie* zegt dat `18` ook `"LOW POWER MODE"` moet teruggeven. ' +
             'Voeg daar een unit test voor toe.')
     }
 
@@ -206,16 +206,16 @@ export class Dutch extends ConversationLanguage {
     }
 
     public override windScaleSpecification(): ConversationText {
-        return ConversationLanguage.bless('Het is `CALM` als de windsnelheid minder dan `20` is, ' +
-            '`BREEZE` als deze minder dan `50` is, ' +
-            '`GALE` als deze minder dan `90` is, ' +
-            'en anders `STORM`.')
+        return ConversationLanguage.bless('Het is `"CALM"` als de windsnelheid minder dan `20` is, ' +
+            '`"BREEZE"` als deze minder dan `50` is, ' +
+            '`"GALE"` als deze minder dan `90` is, ' +
+            'en anders `"STORM"`.')
     }
 
     public override reviewSpecification(): ConversationText {
-        return ConversationLanguage.bless('Jouw recensie is `GOOD` als de prijs minder dan `20` is en de kwaliteit ten minste `7` is, ' +
-            '`BAD` als de prijs `20` of meer is en de kwaliteit minder dan `7` is, ' +
-            'en anders `OK`.')
+        return ConversationLanguage.bless('Jouw recensie is `"GOOD"` als de prijs minder dan `20` is en de kwaliteit ten minste `7` is, ' +
+            '`"BAD"` als de prijs `20` of meer is en de kwaliteit minder dan `7` is, ' +
+            'en anders `"OK"`.')
     }
 
     public override discountSpecification(): ConversationText {
@@ -225,10 +225,10 @@ export class Dutch extends ConversationLanguage {
     }
 
     public override fizzBuzzSpecification(): ConversationText {
-        return ConversationLanguage.bless('Zeg `FIZZ` als het getal deelbaar is door 3, ' +
-            '`BUZZ` als het deelbaar is door 5, ' +
-            '`FIZZBUZZ` als het deelbaar is door zowel 3 als 5, ' +
-            'en `NUMBER` voor elk ander getal.')
+        return ConversationLanguage.bless('Zeg `"FIZZ"` als het getal deelbaar is door 3, ' +
+            '`"BUZZ"` als het deelbaar is door 5, ' +
+            '`"FIZZBUZZ"` als het deelbaar is door zowel 3 als 5, ' +
+            'en `"NUMBER"` voor elk ander getal.')
     }
 
     public override leapYearSpecification(): ConversationText {
@@ -238,7 +238,7 @@ export class Dutch extends ConversationLanguage {
     }
 
     public override triangleTypeSpecification(): ConversationText {
-        return ConversationLanguage.bless('Het type van de driehoek is `EQUILATERAL` (gelijkzijdig), `ISOSCELES` (gelijkbenig) of `SCALENE` (ongelijkzijdig). ' +
+        return ConversationLanguage.bless('Het type van de driehoek is `"EQUILATERAL"` (gelijkzijdig), `"ISOSCELES"` (gelijkbenig) of `"SCALENE"` (ongelijkzijdig). ' +
             'Een driehoek is gelijkzijdig als alle drie de zijden even lang zijn. ' +
             'Een driehoek is gelijkbenig als precies twee zijden even lang zijn. ' +
             'Een driehoek is ongelijkzijdig als alle drie de zijden verschillende lengtes hebben.')
@@ -246,10 +246,10 @@ export class Dutch extends ConversationLanguage {
 
     public override speedDisplaySpecification(): ConversationText {
         return ConversationLanguage.bless('De snelheidssensor geeft de snelheid in tienden van kilometers per uur (bijvoorbeeld 131 betekent 13.1 km/u). ' +
-            'Toon op het scherm `DECIMAL` als er een decimaal op past (bijvoorbeeld 131 → `DECIMAL` want 13.1 past op het scherm), ' +
-            'of anders `INTEGER` (bijvoorbeeld 826 → `INTEGER` want 82.6 past niet op het scherm en 83 wel). ' +
-            'Als de auto stil staat, is het `START`. ' +
-            'Als de snelheid niet meer op het scherm past, is het `DANGER` (bijvoorbeeld 3000 → `DANGER`).\n' +
+            'Toon op het scherm `"DECIMAL"` als er een decimaal op past (bijvoorbeeld 131 → `"DECIMAL"` want 13.1 past op het scherm), ' +
+            'of anders `"INTEGER"` (bijvoorbeeld 826 → `"INTEGER"` want 82.6 past niet op het scherm en 83 wel). ' +
+            'Als de auto stil staat, is het `"START"`. ' +
+            'Als de snelheid niet meer op het scherm past, is het `"DANGER"` (bijvoorbeeld 3000 → `"DANGER"`).\n' +
             'Het scherm ziet er zo uit, waarbij elke X een LED-lampje is:\n' +
             '+-------------------+\n' +
             '|  X   XXXX   XXXX  |\n' +

@@ -161,23 +161,23 @@ export class English extends ConversationLanguage {
     public override addBatteryLevel20(): ConversationText {
         return ConversationLanguage.bless('The *Specification* contains the number `20`. ' +
             'That is a good starting point. ' +
-            'When the battery level is `20`, the function must return `NORMAL MODE`.')
+            'When the battery level is `20`, the function must return `"NORMAL MODE"`.')
     }
 
     public override addBatteryLevel19(): ConversationText {
-        return ConversationLanguage.bless('The *Current Function* now always returns `NORMAL MODE`, ' +
-            'but the *Specification* says battery level `19` must return `LOW POWER MODE`. ' +
+        return ConversationLanguage.bless('The *Current Function* now always returns `"NORMAL MODE"`, ' +
+            'but the *Specification* says battery level `19` must return `"LOW POWER MODE"`. ' +
             'Add a unit test for that.')
     }
 
     public override submitUnitTestsFirst(): ConversationText {
-        return ConversationLanguage.bless('The *Current Function* can now return either `NORMAL MODE` or `LOW POWER MODE`. ' +
+        return ConversationLanguage.bless('The *Current Function* can now return either `"NORMAL MODE"` or `"LOW POWER MODE"`. ' +
             'Submit the *Unit Tests* to check if the *Current Function* matches the *Specification*.')
     }
 
     public override addBatteryLevel21(): ConversationText {
-        return ConversationLanguage.bless('The *Current Function* now returns `NORMAL MODE` only for battery level `20`. ' +
-            'The *Specification* says `21` must also return `NORMAL MODE`. ' +
+        return ConversationLanguage.bless('The *Current Function* now returns `"NORMAL MODE"` only for battery level `20`. ' +
+            'The *Specification* says `21` must also return `"NORMAL MODE"`. ' +
             'Add a unit test for that.')
     }
 
@@ -186,8 +186,8 @@ export class English extends ConversationLanguage {
     }
 
     public override addBatteryLevel18(): ConversationText {
-        return ConversationLanguage.bless('The *Current Function* now returns `LOW POWER MODE` only for battery level `19`. ' +
-            'The *Specification* says `18` must also return `LOW POWER MODE`. ' +
+        return ConversationLanguage.bless('The *Current Function* now returns `"LOW POWER MODE"` only for battery level `19`. ' +
+            'The *Specification* says `18` must also return `"LOW POWER MODE"`. ' +
             'Add a unit test for that.')
     }
 
@@ -196,9 +196,9 @@ export class English extends ConversationLanguage {
     }
 
     public override batteryLevelSpecification(): ConversationText {
-        return ConversationLanguage.bless('A smartphone normally operates in `NORMAL MODE`, ' +
+        return ConversationLanguage.bless('A smartphone normally operates in `"NORMAL MODE"`, ' +
             'but when the battery level is less than `20`, ' +
-            'it operates in `LOW POWER MODE`.')
+            'it operates in `"LOW POWER MODE"`.')
     }
 
     public override votingAgeSpecification(): ConversationText {
@@ -206,16 +206,16 @@ export class English extends ConversationLanguage {
     }
 
     public override windScaleSpecification(): ConversationText {
-        return ConversationLanguage.bless('It\'s `CALM` if the wind speed is less than `20`, ' +
-            '`BREEZE` if less than `50`, ' +
-            '`GALE` if less than `90`, ' +
-            'and `STORM` otherwise.')
+        return ConversationLanguage.bless('It\'s `"CALM"` if the wind speed is less than `20`, ' +
+            '`"BREEZE"` if less than `50`, ' +
+            '`"GALE"` if less than `90`, ' +
+            'and `"STORM"` otherwise.')
     }
 
     public override reviewSpecification(): ConversationText {
-        return ConversationLanguage.bless('Your review is `GOOD` if the price is less than `20` and the quality is at least `7`, ' +
-            '`BAD` if the price is `20` or more and the quality is less than `7`, ' +
-            'and `OK` otherwise.')
+        return ConversationLanguage.bless('Your review is `"GOOD"` if the price is less than `20` and the quality is at least `7`, ' +
+            '`"BAD"` if the price is `20` or more and the quality is less than `7`, ' +
+            'and `"OK"` otherwise.')
     }
 
     public override discountSpecification(): ConversationText {
@@ -225,10 +225,10 @@ export class English extends ConversationLanguage {
     }
 
     public override fizzBuzzSpecification(): ConversationText {
-        return ConversationLanguage.bless('Say `FIZZ` if the number is divisible by 3, ' +
-            '`BUZZ` if divisible by 5, ' +
-            '`FIZZBUZZ` if divisible by both 3 and 5, ' +
-            'and `NUMBER` for any other number.')
+        return ConversationLanguage.bless('Say `"FIZZ"` if the number is divisible by 3, ' +
+            '`"BUZZ"` if divisible by 5, ' +
+            '`"FIZZBUZZ"` if divisible by both 3 and 5, ' +
+            'and `"NUMBER"` for any other number.')
     }
 
     public override leapYearSpecification(): ConversationText {
@@ -238,18 +238,18 @@ export class English extends ConversationLanguage {
     }
 
     public override triangleTypeSpecification(): ConversationText {
-        return ConversationLanguage.bless('The type of the triangle is `EQUILATERAL`, `ISOSCELES`, or `SCALENE`. ' +
-            'A triangle is `EQUILATERAL` if all three sides have the same length. ' +
-            'A triangle is `ISOSCELES` if exactly two sides have the same length. ' +
-            'A triangle is `SCALENE` if all three sides have different lengths.')
+        return ConversationLanguage.bless('The type of the triangle is `"EQUILATERAL"`, `"ISOSCELES"`, or `"SCALENE"`. ' +
+            'A triangle is `"EQUILATERAL"` if all three sides have the same length. ' +
+            'A triangle is `"ISOSCELES"` if exactly two sides have the same length. ' +
+            'A triangle is `"SCALENE"` if all three sides have different lengths.')
     }
 
     public override speedDisplaySpecification(): ConversationText {
         return ConversationLanguage.bless('The speed sensor reports the speed in tenths of kilometers per hour (e.g. 131 means 13.1 km/h). ' +
-            'Show the speed on the display as `DECIMAL` if a decimal fits (e.g. 131 → `DECIMAL` because 13.1 fits on the display), ' +
-            'or `INTEGER` otherwise (e.g. 826 → `INTEGER` because 82.6 doesn\'t fit on the display but 83 does). ' +
-            'If the car isn\'t moving, it\'s `START`. ' +
-            'If the speed no longer fits on the display, it\'s `DANGER` (e.g. 3000 → `DANGER`).\n' +
+            'Show the speed on the display as `"DECIMAL"` if a decimal fits (e.g. 131 → `"DECIMAL"` because 13.1 fits on the display), ' +
+            'or `"INTEGER"` otherwise (e.g. 826 → `"INTEGER"` because 82.6 doesn\'t fit on the display but 83 does). ' +
+            'If the car isn\'t moving, it\'s `"START"`. ' +
+            'If the speed no longer fits on the display, it\'s `"DANGER"` (e.g. 3000 → `"DANGER"`).\n' +
             'The display looks like this, where every X is a LED light:\n' +
             '+-------------------+\n' +
             '|  X   XXXX   XXXX  |\n' +

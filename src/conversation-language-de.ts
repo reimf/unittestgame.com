@@ -154,9 +154,9 @@ export class German extends ConversationLanguage {
     }
 
     public override batteryLevelSpecification(): ConversationText {
-        return ConversationLanguage.bless('Ein Smartphone funktioniert normalerweise im `NORMAL MODE`, ' +
+        return ConversationLanguage.bless('Ein Smartphone funktioniert normalerweise im `"NORMAL MODE"`, ' +
             'aber wenn der Akkustand unter `20` liegt, ' +
-            'funktioniert es im `LOW POWER MODE`.')
+            'funktioniert es im `"LOW POWER MODE"`.')
     }
 
     public override wrongAction(): ConversationText {
@@ -167,23 +167,23 @@ export class German extends ConversationLanguage {
     public override addBatteryLevel20(): ConversationText {
         return ConversationLanguage.bless('Die *Spezifikation* enthält die Zahl `20`. ' +
             'Das ist ein guter Ausgangspunkt. ' +
-            'Wenn der Akkustand `20` ist, muss die Funktion `NORMAL MODE` zurückgeben.')
+            'Wenn der Akkustand `20` ist, muss die Funktion `"NORMAL MODE"` zurückgeben.')
     }
 
     public override addBatteryLevel19(): ConversationText {
-        return ConversationLanguage.bless('Die *Aktuelle Funktion* gibt jetzt immer `NORMAL MODE` zurück, ' +
-            'aber die *Spezifikation* sagt, dass Akkustand `19` `LOW POWER MODE` zurückgeben muss. ' +
+        return ConversationLanguage.bless('Die *Aktuelle Funktion* gibt jetzt immer `"NORMAL MODE"` zurück, ' +
+            'aber die *Spezifikation* sagt, dass Akkustand `19` `"LOW POWER MODE"` zurückgeben muss. ' +
             'Füge dafür einen Unit-Test hinzu.')
     }
 
     public override submitUnitTestsFirst(): ConversationText {
-        return ConversationLanguage.bless('Die *Aktuelle Funktion* kann jetzt entweder `NORMAL MODE` oder `LOW POWER MODE` zurückgeben. ' +
+        return ConversationLanguage.bless('Die *Aktuelle Funktion* kann jetzt entweder `"NORMAL MODE"` oder `"LOW POWER MODE"` zurückgeben. ' +
             'Reiche die *Unit-Tests* ein, um zu prüfen, ob die *Aktuelle Funktion* der *Spezifikation* entspricht.')
     }
 
     public override addBatteryLevel21(): ConversationText {
-        return ConversationLanguage.bless('Die *Aktuelle Funktion* gibt jetzt `NORMAL MODE` nur für Akkustand `20` zurück. ' +
-            'Die *Spezifikation* sagt, dass `21` auch `NORMAL MODE` zurückgeben muss. ' +
+        return ConversationLanguage.bless('Die *Aktuelle Funktion* gibt jetzt `"NORMAL MODE"` nur für Akkustand `20` zurück. ' +
+            'Die *Spezifikation* sagt, dass `21` auch `"NORMAL MODE"` zurückgeben muss. ' +
             'Füge dafür einen Unit-Test hinzu.')
     }
 
@@ -192,8 +192,8 @@ export class German extends ConversationLanguage {
     }
 
     public override addBatteryLevel18(): ConversationText {
-        return ConversationLanguage.bless('Die *Aktuelle Funktion* gibt jetzt `LOW POWER MODE` nur für Akkustand `19` zurück. ' +
-            'Die *Spezifikation* sagt, dass `18` auch `LOW POWER MODE` zurückgeben muss. ' +
+        return ConversationLanguage.bless('Die *Aktuelle Funktion* gibt jetzt `"LOW POWER MODE"` nur für Akkustand `19` zurück. ' +
+            'Die *Spezifikation* sagt, dass `18` auch `"LOW POWER MODE"` zurückgeben muss. ' +
             'Füge dafür einen Unit-Test hinzu.')
     }
 
@@ -206,16 +206,16 @@ export class German extends ConversationLanguage {
     }
 
     public override windScaleSpecification(): ConversationText {
-        return ConversationLanguage.bless('Es ist `CALM`, wenn die Windgeschwindigkeit weniger als `20` beträgt, ' +
-            '`BREEZE`, wenn sie weniger als `50` beträgt, ' +
-            '`GALE`, wenn sie weniger als `90` beträgt, ' +
-            'und andernfalls `STORM`.')
+        return ConversationLanguage.bless('Es ist `"CALM"`, wenn die Windgeschwindigkeit weniger als `20` beträgt, ' +
+            '`"BREEZE"`, wenn sie weniger als `50` beträgt, ' +
+            '`"GALE"`, wenn sie weniger als `90` beträgt, ' +
+            'und andernfalls `"STORM"`.')
     }
 
     public override reviewSpecification(): ConversationText {
-        return ConversationLanguage.bless('Deine Bewertung ist `GOOD`, wenn der Preis weniger als `20` ist und die Qualität mindestens `7` beträgt, ' +
-            '`BAD`, wenn der Preis `20` oder mehr ist und die Qualität weniger als `7` beträgt, ' +
-            'und sonst `OK`.')
+        return ConversationLanguage.bless('Deine Bewertung ist `"GOOD"`, wenn der Preis weniger als `20` ist und die Qualität mindestens `7` beträgt, ' +
+            '`"BAD"`, wenn der Preis `20` oder mehr ist und die Qualität weniger als `7` beträgt, ' +
+            'und sonst `"OK"`.')
     }
 
     public override discountSpecification(): ConversationText {
@@ -225,10 +225,10 @@ export class German extends ConversationLanguage {
     }
 
     public override fizzBuzzSpecification(): ConversationText {
-        return ConversationLanguage.bless('Sage `FIZZ`, wenn die Zahl durch 3 teilbar ist, ' +
-            '`BUZZ`, wenn sie durch 5 teilbar ist, ' +
-            '`FIZZBUZZ`, wenn sie durch 3 und 5 teilbar ist, ' +
-            'und `NUMBER` für jede andere Zahl.')
+        return ConversationLanguage.bless('Sage `"FIZZ"`, wenn die Zahl durch 3 teilbar ist, ' +
+            '`"BUZZ"`, wenn sie durch 5 teilbar ist, ' +
+            '`"FIZZBUZZ"`, wenn sie durch 3 und 5 teilbar ist, ' +
+            'und `"NUMBER"` für jede andere Zahl.')
     }
 
     public override leapYearSpecification(): ConversationText {
@@ -238,7 +238,7 @@ export class German extends ConversationLanguage {
     }
 
     public override triangleTypeSpecification(): ConversationText {
-        return ConversationLanguage.bless('Der Typ des Dreiecks ist `EQUILATERAL` (gleichseitig), `ISOSCELES` (gleichschenklig) oder `SCALENE` (ungleichseitig). ' +
+        return ConversationLanguage.bless('Der Typ des Dreiecks ist `"EQUILATERAL"` (gleichseitig), `"ISOSCELES"` (gleichschenklig) oder `"SCALENE"` (ungleichseitig). ' +
             'Ein Dreieck ist gleichseitig, wenn alle drei Seiten gleich lang sind. ' +
             'Ein Dreieck ist gleichschenklig, wenn genau zwei Seiten gleich lang sind. ' +
             'Ein Dreieck ist ungleichseitig, wenn alle drei Seiten unterschiedliche Längen haben.')
@@ -246,10 +246,10 @@ export class German extends ConversationLanguage {
 
     public override speedDisplaySpecification(): ConversationText {
         return ConversationLanguage.bless('Der Geschwindigkeitssensor meldet die Geschwindigkeit in Zehnteln von Kilometern pro Stunde (z.B. 131 bedeutet 13.1 km/h). ' +
-            'Zeige auf dem Display `DECIMAL`, wenn eine Dezimalstelle passt (z.B. 131 → `DECIMAL`, weil 13.1 auf das Display passt), ' +
-            'oder sonst `INTEGER` (z.B. 826 → `INTEGER`, weil 82.6 nicht auf das Display passt, aber 83 schon). ' +
-            'Wenn das Auto nicht fährt, ist es `START`. ' +
-            'Wenn die Geschwindigkeit nicht mehr auf das Display passt, ist es `DANGER` (z.B. 3000 → `DANGER`).\n' +
+            'Zeige auf dem Display `"DECIMAL"`, wenn eine Dezimalstelle passt (z.B. 131 → `"DECIMAL"`, weil 13.1 auf das Display passt), ' +
+            'oder sonst `"INTEGER"` (z.B. 826 → `"INTEGER"`, weil 82.6 nicht auf das Display passt, aber 83 schon). ' +
+            'Wenn das Auto nicht fährt, ist es `"START"`. ' +
+            'Wenn die Geschwindigkeit nicht mehr auf das Display passt, ist es `"DANGER"` (z.B. 3000 → `"DANGER"`).\n' +
             'Das Display sieht so aus, wobei jedes X eine LED-Leuchte ist:\n' +
             '+-------------------+\n' +
             '|  X   XXXX   XXXX  |\n' +

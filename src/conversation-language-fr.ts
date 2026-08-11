@@ -154,9 +154,9 @@ export class French extends ConversationLanguage {
     }
 
     public override batteryLevelSpecification(): ConversationText {
-        return ConversationLanguage.bless('Un smartphone fonctionne normalement en `NORMAL MODE`, ' +
+        return ConversationLanguage.bless('Un smartphone fonctionne normalement en `"NORMAL MODE"`, ' +
             'mais lorsque le niveau de batterie est inférieur à `20`, ' +
-            'il fonctionne en `LOW POWER MODE`.')
+            'il fonctionne en `"LOW POWER MODE"`.')
     }
 
     public override wrongAction(): ConversationText {
@@ -167,23 +167,23 @@ export class French extends ConversationLanguage {
     public override addBatteryLevel20(): ConversationText {
         return ConversationLanguage.bless('La *Spécification* contient le nombre `20`. ' +
             'C\'est un bon point de départ. ' +
-            'Quand le niveau de batterie est `20`, la fonction doit retourner `NORMAL MODE`.')
+            'Quand le niveau de batterie est `20`, la fonction doit retourner `"NORMAL MODE"`.')
     }
 
     public override addBatteryLevel19(): ConversationText {
-        return ConversationLanguage.bless('La *Fonction Actuelle* retourne maintenant toujours `NORMAL MODE`, ' +
-            'mais la *Spécification* dit que le niveau de batterie `19` doit retourner `LOW POWER MODE`. ' +
+        return ConversationLanguage.bless('La *Fonction Actuelle* retourne maintenant toujours `"NORMAL MODE"`, ' +
+            'mais la *Spécification* dit que le niveau de batterie `19` doit retourner `"LOW POWER MODE"`. ' +
             'Ajoute un unit test pour cela.')
     }
 
     public override submitUnitTestsFirst(): ConversationText {
-        return ConversationLanguage.bless('La *Fonction Actuelle* peut maintenant retourner soit `NORMAL MODE` soit `LOW POWER MODE`. ' +
+        return ConversationLanguage.bless('La *Fonction Actuelle* peut maintenant retourner soit `"NORMAL MODE"` soit `"LOW POWER MODE"`. ' +
             'Soumets les *Unit Tests* pour vérifier si la *Fonction Actuelle* correspond à la *Spécification*.')
     }
 
     public override addBatteryLevel21(): ConversationText {
-        return ConversationLanguage.bless('La *Fonction Actuelle* retourne maintenant `NORMAL MODE` uniquement pour le niveau de batterie `20`. ' +
-            'La *Spécification* dit que `21` doit aussi retourner `NORMAL MODE`. ' +
+        return ConversationLanguage.bless('La *Fonction Actuelle* retourne maintenant `"NORMAL MODE"` uniquement pour le niveau de batterie `20`. ' +
+            'La *Spécification* dit que `21` doit aussi retourner `"NORMAL MODE"`. ' +
             'Ajoute un unit test pour cela.')
     }
 
@@ -192,8 +192,8 @@ export class French extends ConversationLanguage {
     }
 
     public override addBatteryLevel18(): ConversationText {
-        return ConversationLanguage.bless('La *Fonction Actuelle* retourne maintenant `LOW POWER MODE` uniquement pour le niveau de batterie `19`. ' +
-            'La *Spécification* dit que `18` doit aussi retourner `LOW POWER MODE`. ' +
+        return ConversationLanguage.bless('La *Fonction Actuelle* retourne maintenant `"LOW POWER MODE"` uniquement pour le niveau de batterie `19`. ' +
+            'La *Spécification* dit que `18` doit aussi retourner `"LOW POWER MODE"`. ' +
             'Ajoute un unit test pour cela.')
     }
 
@@ -206,16 +206,16 @@ export class French extends ConversationLanguage {
     }
 
     public override windScaleSpecification(): ConversationText {
-        return ConversationLanguage.bless('C\'est `CALM` si la vitesse du vent est inférieure à `20`, ' +
-            '`BREEZE` si elle est inférieure à `50`, ' +
-            '`GALE` si elle est inférieure à `90`, ' +
-            'et `STORM` dans tous les autres cas.')
+        return ConversationLanguage.bless('C\'est `"CALM"` si la vitesse du vent est inférieure à `20`, ' +
+            '`"BREEZE"` si elle est inférieure à `50`, ' +
+            '`"GALE"` si elle est inférieure à `90`, ' +
+            'et `"STORM"` dans tous les autres cas.')
     }
 
     public override reviewSpecification(): ConversationText {
-        return ConversationLanguage.bless('Ton avis est `GOOD` si le prix est inférieur à `20` et la qualité est au moins `7`, ' +
-            '`BAD` si le prix est `20` ou plus et la qualité est inférieure à `7`, ' +
-            'et `OK` sinon.')
+        return ConversationLanguage.bless('Ton avis est `"GOOD"` si le prix est inférieur à `20` et la qualité est au moins `7`, ' +
+            '`"BAD"` si le prix est `20` ou plus et la qualité est inférieure à `7`, ' +
+            'et `"OK"` sinon.')
     }
 
     public override discountSpecification(): ConversationText {
@@ -225,10 +225,10 @@ export class French extends ConversationLanguage {
     }
 
     public override fizzBuzzSpecification(): ConversationText {
-        return ConversationLanguage.bless('Dis `FIZZ` si le nombre est divisible par 3, ' +
-            '`BUZZ` s\'il est divisible par 5, ' +
-            '`FIZZBUZZ` s\'il est divisible par 3 et par 5, ' +
-            'et `NUMBER` pour tout autre nombre.')
+        return ConversationLanguage.bless('Dis `"FIZZ"` si le nombre est divisible par 3, ' +
+            '`"BUZZ"` s\'il est divisible par 5, ' +
+            '`"FIZZBUZZ"` s\'il est divisible par 3 et par 5, ' +
+            'et `"NUMBER"` pour tout autre nombre.')
     }
 
     public override leapYearSpecification(): ConversationText {
@@ -238,7 +238,7 @@ export class French extends ConversationLanguage {
     }
 
     public override triangleTypeSpecification(): ConversationText {
-        return ConversationLanguage.bless('Le type du triangle est `EQUILATERAL` (équilatéral), `ISOSCELES` (isocèle) ou `SCALENE` (scalène). ' +
+        return ConversationLanguage.bless('Le type du triangle est `"EQUILATERAL"` (équilatéral), `"ISOSCELES"` (isocèle) ou `"SCALENE"` (scalène). ' +
             'Un triangle est équilatéral si les trois côtés ont la même longueur. ' +
             'Un triangle est isocèle si exactement deux côtés ont la même longueur. ' +
             'Un triangle est scalène si les trois côtés ont des longueurs différentes.')
@@ -246,10 +246,10 @@ export class French extends ConversationLanguage {
 
     public override speedDisplaySpecification(): ConversationText {
         return ConversationLanguage.bless('Le capteur de vitesse indique la vitesse en dixièmes de kilomètres par heure (ex. 131 signifie 13.1 km/h). ' +
-            'Affiche `DECIMAL` sur l\'écran si une décimale y tient (ex. 131 → `DECIMAL` car 13.1 tient sur l\'écran), ' +
-            'ou `INTEGER` sinon (ex. 826 → `INTEGER` car 82.6 ne tient pas sur l\'écran mais 83 oui). ' +
-            'Si la voiture ne bouge pas, c\'est `START`. ' +
-            'Si la vitesse ne tient plus sur l\'écran, c\'est `DANGER` (ex. 3000 → `DANGER`).\n' +
+            'Affiche `"DECIMAL"` sur l\'écran si une décimale y tient (ex. 131 → `"DECIMAL"` car 13.1 tient sur l\'écran), ' +
+            'ou `"INTEGER"` sinon (ex. 826 → `"INTEGER"` car 82.6 ne tient pas sur l\'écran mais 83 oui). ' +
+            'Si la voiture ne bouge pas, c\'est `"START"`. ' +
+            'Si la vitesse ne tient plus sur l\'écran, c\'est `"DANGER"` (ex. 3000 → `"DANGER"`).\n' +
             'L\'écran ressemble à ceci, où chaque X est une LED :\n' +
             '+-------------------+\n' +
             '|  X   XXXX   XXXX  |\n' +
