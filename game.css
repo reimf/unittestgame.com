@@ -116,7 +116,7 @@ label {
     line-height: 2rem;
     margin-right: 0.75rem;
     margin-top: 0.5rem;
-    opacity: 0.25;
+    opacity: 0.5;
     padding-right: 0.75rem;
 
     &:has(input:checked) {
@@ -267,7 +267,7 @@ select {
               &:disabled {
                 background: none;
                 color: var(--level-locked-foreground);
-                opacity: 0.6;
+                opacity: 0.5;
                 pointer-events: none;
               }
             }
