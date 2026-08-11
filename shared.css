@@ -41,6 +41,16 @@
   --unittest-new-background-left: #ddf;
   --unittest-new-background-right: #f3f3ff;
   --unittest-old-background: #fff;
+
+  --button-background-gradient: linear-gradient(135deg, var(--button-background-left), var(--button-background-right));
+  --button-background-tint: color-mix(in srgb, var(--button-background-left), white 25%);
+  --code-general-background-gradient: linear-gradient(135deg, var(--code-general-background-left), var(--code-general-background-right));
+  --cta-band-background-gradient: linear-gradient(135deg, color-mix(in srgb, var(--panel-background-left) 15%, transparent), color-mix(in srgb, var(--panel-background-right) 5%, transparent));
+  --level-locked-background-gradient: linear-gradient(135deg, var(--level-locked-background-left), var(--level-locked-background-right));
+  --level-unlocked-background-gradient: linear-gradient(135deg, var(--level-unlocked-background-left), var(--level-unlocked-background-right));
+  --panel-background-gradient: linear-gradient(135deg, var(--panel-background-left), var(--panel-background-right));
+  --panel-background-text-gradient: linear-gradient(120deg, var(--panel-background-left), var(--panel-background-right), var(--panel-background-xtra));
+  --unittest-new-background-gradient: linear-gradient(135deg, var(--unittest-new-background-left), var(--unittest-new-background-right));
 }
 
 * {
@@ -56,7 +66,7 @@
 
 code {
   &:not(.block) {
-    background: linear-gradient(135deg, var(--code-general-background-left), var(--code-general-background-right));
+    background: var(--code-general-background-gradient);
     border-radius: 0.25rem;
     color: var(--code-general-foreground);
     padding: 0.1rem 0.25rem;
@@ -76,7 +86,7 @@ code {
       }
 
       &.new {
-        background: linear-gradient(135deg, var(--unittest-new-background-left), var(--unittest-new-background-right));
+        background: var(--unittest-new-background-gradient);
       }
 
       ins {

@@ -1,6 +1,6 @@
 a {
   /* markdown: [text](url) */
-  background: linear-gradient(135deg, var(--button-background-left), var(--button-background-right));
+  background: var(--button-background-gradient);
   border-radius: 0.5rem;
   color: var(--general-text-light);
   display: inline-block;
@@ -22,7 +22,7 @@ body {
 }
 
 button {
-  background: linear-gradient(135deg, var(--button-background-left), var(--button-background-right));
+  background: var(--button-background-gradient);
   border-radius: 0.5rem;
   color: var(--general-text-light);
   line-height: 1.5rem;
@@ -33,7 +33,7 @@ button {
 
 select {
   appearance: none;
-  background: linear-gradient(135deg, var(--button-background-left), var(--button-background-right));
+  background: var(--button-background-gradient);
   border-radius: 0.5rem;
   color: var(--general-text-light);
   cursor: pointer;
@@ -44,7 +44,7 @@ select {
 
 i {
   /* markdown: *italic* */
-  background: linear-gradient(135deg, var(--panel-background-left), var(--panel-background-right));
+  background: var(--panel-background-gradient);
   border-radius: 0.25rem 0.25rem 0 0;
   color: var(--general-text-light);
   font-style: normal;
@@ -57,7 +57,7 @@ input {
 
   &[type="text"],
   &[type="number"] {
-    background: linear-gradient(135deg, var(--button-background-left), var(--button-background-right));
+    background: var(--button-background-gradient);
     border-radius: 0.5rem;
     color: var(--general-text-light);
     height: 2rem;
@@ -75,7 +75,7 @@ input {
   }
 
   &[type="submit"] {
-    background: linear-gradient(135deg, var(--button-background-left), var(--button-background-right));
+    background: var(--button-background-gradient);
     border-radius: 0.5rem;
     color: var(--general-text-light);
     display: block;
@@ -110,7 +110,7 @@ label {
   }
 
   &:has(input[type="radio"]) {
-    background: linear-gradient(135deg, var(--button-background-left), var(--button-background-right));
+    background: var(--button-background-gradient);
     color: var(--general-text-light);
     display: inline-block;
     line-height: 2rem;
@@ -169,7 +169,7 @@ select {
       overflow: hidden;
 
       header {
-        background: linear-gradient(135deg, var(--panel-background-left), var(--panel-background-right));
+        background: var(--panel-background-gradient);
         border-radius: 0.5rem 0.5rem 0 0;
         color: var(--general-text-light);
         padding: 0.75rem;
@@ -238,12 +238,12 @@ select {
             white-space: nowrap;
 
             &.unlocked {
-              background: linear-gradient(135deg, var(--level-unlocked-background-left), var(--level-unlocked-background-right));
+              background: var(--level-unlocked-background-gradient);
               color: var(--level-unlocked-foreground);
             }
 
             &.locked {
-              background: linear-gradient(135deg, var(--level-locked-background-left), var(--level-locked-background-right));
+              background: var(--level-locked-background-gradient);
               color: var(--level-locked-foreground);
             }
 

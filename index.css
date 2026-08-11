@@ -40,12 +40,12 @@ button.btn {
   white-space: nowrap;
 
   &.btn-primary {
-    background: linear-gradient(135deg, var(--button-background-left), var(--button-background-right));
+    background: var(--button-background-gradient);
     color: var(--general-text-light);
-    box-shadow: 0 0.6rem 1.5rem -0.5rem color-mix(in srgb, var(--button-background-left), white 25%);
+    box-shadow: 0 0.6rem 1.5rem -0.5rem var(--button-background-tint);
 
     &:hover {
-      box-shadow: 0 0.9rem 2rem -0.5rem color-mix(in srgb, var(--button-background-left), white 25%);
+      box-shadow: 0 0.9rem 2rem -0.5rem var(--button-background-tint);
     }
   }
 
@@ -126,7 +126,7 @@ header {
     text-align: center;
 
     .gradient-text {
-      background: linear-gradient(120deg, var(--panel-background-left), var(--panel-background-right), var(--panel-background-xtra));
+      background: var(--panel-background-text-gradient);
       background-clip: text;
       color: transparent;
     }
@@ -227,7 +227,7 @@ ul {
 
     .square {
       align-items: center;
-      background: linear-gradient(135deg, var(--panel-background-left), var(--panel-background-right));
+      background: var(--panel-background-gradient);
       border-radius: 0.5rem;
       color: var(--general-text-light);
       display: flex;
@@ -363,9 +363,7 @@ ul {
 }
 
 .cta-band {
-  background: linear-gradient(135deg,
-      color-mix(in srgb, var(--panel-background-left) 15%, transparent),
-      color-mix(in srgb, var(--panel-background-right) 5%, transparent));
+  background: var(--cta-band-background-gradient);
   border-radius: 1.5rem;
   display: flex;
   flex-direction: column;
