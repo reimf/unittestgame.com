@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 import { JSDOM } from 'jsdom'
-import { Span, Div, Section, Code, CodeBlock, Label, Paragraph, Form, Header, Input, Italic, Anchor, Submit, Select, Option, Img } from '../../src/html.js'
+import { Span, Div, Section, Code, CodeBlock, Label, Paragraph, Form, Header, Input, Submit, Select, Option } from '../../src/html.js'
 import { ConversationLanguage } from '../../src/conversation-language-base.js'
 
 const { document } = new JSDOM('<!DOCTYPE html>').window
@@ -112,13 +112,6 @@ test.describe('class Html', () => {
         )
     })
 
-    test('has anchor', () => {
-        const anchor = new Anchor('https://example.com').appendText(ConversationLanguage.bless('website'))
-        expect(anchor.getElement().outerHTML).toBe(
-            '<a href="https://example.com">website</a>'
-        )
-    })
-
     test('has label', () => {
         const label = new Label().appendText(ConversationLanguage.bless('text'))
         expect(label.getElement().outerHTML).toBe(
@@ -161,13 +154,6 @@ test.describe('class Html', () => {
         )
     })
 
-    test('has italic', () => {
-        const italic = new Italic().appendText(ConversationLanguage.bless('text'))
-        expect(italic.getElement().outerHTML).toBe(
-            '<i>text</i>'
-        )
-    })
-
     test('has select', () => {
         const select = new Select(() => {})
             .appendChildren([
@@ -176,13 +162,6 @@ test.describe('class Html', () => {
             ])
         expect(select.getElement().outerHTML).toBe(
             '<select><option value="a">Option A</option><option value="b" selected="">Option B</option></select>'
-        )
-    })
-
-    test('has img', () => {
-        const img = new Img('https://example.com/image.png', 'example')
-        expect(img.getElement().outerHTML).toBe(
-            '<img src="https://example.com/image.png" alt="example">'
         )
     })
 })

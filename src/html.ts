@@ -276,24 +276,3 @@ export class Ins extends Html {
     }
 }
 
-export class Italic extends Html {
-    public constructor() {
-        super('i')
-    }
-}
-
-export class Anchor extends Html {
-    public constructor(href: string) {
-        super('a')
-        this.getElement<HTMLAnchorElement>().href = href
-    }
-}
-
-export class Img extends Html {
-    public constructor(src: string, alt: string) {
-        super('img')
-        const img = this.getElement<HTMLImageElement>()
-        img.src = src
-        img.alt = alt
-    }
-}
