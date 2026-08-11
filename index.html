@@ -22,15 +22,15 @@
   </head>
   <body>
     <nav>
-      <div class="brand">
+      <div id="brand">
         <img src="apple-touch-icon.png" alt="Logo of UnitTestGame">
         <span>UnitTestGame</span>
       </div>
-      <div class="nav-links">
+      <div id="nav-links">
         <a href="#how-it-works">How it works</a>
         <a href="#levels">Levels</a>
         <a href="#why-it-works">Why it works</a>
-        <a class="btn btn-primary" href="game">Play now</a>
+        <a class="btn" href="game">Play now</a>
       </div>
     </nav>
     <header>
@@ -45,9 +45,9 @@
           And nothing more.
           Your job: write unit tests until the program is right.
         </p>
-        <div class="hero-cta">
-          <a class="btn btn-primary" href="game">Play for free in your browser →</a>
-          <a class="btn btn-secondary" href="#how-it-works">See how it works</a>
+        <div id="hero-buttonrow">
+          <a class="btn" href="game">Play for free in your browser →</a>
+          <a href="#how-it-works">See how it works</a>
         </div>
       </div>
       <div id="hero-animation">
@@ -111,28 +111,28 @@
       </div>
       <ol>
         <li>
-          <h3><span class="square">1</span> Read the spec</h3>
+          <h3><span class="square">①</span> Read the spec</h3>
           <p>
             See what the function is supposed to do, 
             in plain input → output terms.
           </p>
         </li>
         <li>
-          <h3><span class="square">2</span> Watch it cheat</h3>
+          <h3><span class="square">②</span> Watch it cheat</h3>
           <p>
             The AI bot ships the laziest code
             that satisfies exactly what you tested.
           </p>
         </li>
         <li>
-          <h3><span class="square">3</span> Catch the gap</h3>
+          <h3><span class="square">③</span> Catch the gap</h3>
           <p>
             Spot the edge case it dodged,
             and add a unit test that exposes it.
           </p>
         </li>
         <li>
-          <h3><span class="square">4</span> Tighten until solid</h3>
+          <h3><span class="square">④</span> Tighten until solid</h3>
           <p>
             Repeat until there's no shortcut left.
             Level completed!
@@ -151,7 +151,7 @@
       </div>
       <ul>
         <li>
-          <h3><span>🕵️</span> A worthy opponent</h3>
+          <h3><span class="">🕵️</span> A worthy opponent</h3>
           <p>
             The AI bot is maliciously compliant. 
             Every move is a lesson about your blind spot.
@@ -329,7 +329,7 @@
       <div class="cta-band">
         <h2>The AI bot is waiting for you. Don't get fooled.</h2>
         <p>Click the button, follow the instructions, and see what the AI bot tries to get away with.</p>
-        <a class="btn btn-primary" href="game">Play UnitTestGame for free →</a>
+        <a class="btn" href="game">Play UnitTestGame for free →</a>
       </div>
     </section>
     <footer>

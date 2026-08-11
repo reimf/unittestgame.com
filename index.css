@@ -10,36 +10,27 @@ body {
   overflow-x: hidden;
 }
 
-a,
-button {
-  text-decoration: none;
+a {
+  color: var(--button-background-left);
   text-wrap: nowrap;
 
   &:hover {
     transform: translateY(-0.1rem);
   }
-}
 
-a {
-  color: var(--button-background-left);
-}
+  &.btn {
+    align-items: center;
+    display: inline-flex;
+    border: none;
+    border-radius: 2rem;
+    height: 4rem;
+    padding: 0 2rem;
+    text-decoration: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    white-space: nowrap;
+  }
 
-button {
-  color: inherit;
-}
-
-a.btn,
-button.btn {
-  align-items: center;
-  display: inline-flex;
-  border: none;
-  border-radius: 100rem;
-  height: 4rem;
-  padding: 0 2rem;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-  white-space: nowrap;
-
-  &.btn-primary {
+  &.btn {
     background: var(--button-background-gradient);
     color: var(--general-text-light);
     box-shadow: 0 0.6rem 1.5rem -0.5rem var(--button-background-tint);
@@ -47,12 +38,6 @@ button.btn {
     &:hover {
       box-shadow: 0 0.9rem 2rem -0.5rem var(--button-background-tint);
     }
-  }
-
-  &.btn-secondary {
-    background: var(--card-background);
-    border: 0.1rem solid var(--card-border);
-    color: var(--button-background-left);
   }
 }
 
@@ -68,7 +53,7 @@ nav {
   top: 0;
   z-index: 50;
 
-  .brand {
+  #brand {
     color: var(--heading-foreground-purple);
     display: flex;
     align-items: center;
@@ -83,7 +68,7 @@ nav {
     }
   }
 
-  .nav-links {
+  #nav-links {
     display: flex;
     align-items: center;
     gap: 2rem;
@@ -136,7 +121,8 @@ header {
     font-size: 1.25rem;
   }
 
-  .hero-cta {
+  #hero-buttonrow {
+    align-items: center;
     display: flex;
     gap: 1rem;
     justify-content: center;
