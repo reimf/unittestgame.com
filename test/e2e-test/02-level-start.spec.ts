@@ -19,7 +19,7 @@ test.describe('level start', () => {
     test('has specification panel', async ({ page }) => {
         const specificationPanel = page.getByTestId('specification')
         await expect(specificationPanel).toContainText('Specification (Level 0 - Battery Level)')
-        await expect(specificationPanel).toContainText('A smartphone normally operates in NORMAL MODE, but when the battery level is less than 20, it operates in LOW POWER MODE.')
+        await expect(specificationPanel).toContainText('A smartphone normally operates in "NORMAL MODE", but when the battery level is less than 20, it operates in "LOW POWER MODE".')
     })
 
     test('has NO unit tests panel', async ({ page }) => {

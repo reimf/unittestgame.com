@@ -37,7 +37,7 @@ test.describe('asked unit test', () => {
 
     test('has before menu message', async ({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('The Current Function now always returns NORMAL MODE')
+        await expect(messages).toContainText('The Current Function now always returns "NORMAL MODE"')
     })
 
     test('has a battery level field', async ({ page }) => {
