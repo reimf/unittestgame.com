@@ -4,9 +4,8 @@ import { conversationLanguages } from './src/conversation-languages.js'
 type NullaryTextMethod = { [K in keyof ConversationLanguage]: ConversationLanguage[K] extends () => string ? K : never }[keyof ConversationLanguage]
 
 const url = new URL(window.location.href)
-const requestedLanguageId = url.searchParams.get('conversation_language') ?? window.localStorage.getItem('conversation_language')
+const requestedLanguageId = url.searchParams.get('conversation_language')
 const conversationLanguage = conversationLanguages.find(language => language.id === requestedLanguageId) ?? conversationLanguages[0]
-window.localStorage.setItem('conversation_language', conversationLanguage.id)
 
 document.documentElement.lang = conversationLanguage.id
 document.title = conversationLanguage.indexPageTitle()
