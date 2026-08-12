@@ -19,7 +19,6 @@ typescript:
     paths:
       - "src/**/*.js*"
       - "test/**/*.js*"
-      - "index.js*"
 
 playwright:
   stage: test
@@ -40,7 +39,7 @@ pages:
   stage: deploy
   script:
     - mkdir -p public/src
-    - cp *.{css,html,ico,png,txt} index.js index.js.map public
+    - cp *.{css,html,ico,png,txt} public
     - cp src/*.{js,js.map} public/src
     - gzip -k -6 public/*.{css,html,js} public/src/*.js
   artifacts:
