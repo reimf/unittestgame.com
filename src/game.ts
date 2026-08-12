@@ -12,16 +12,17 @@ window.onerror = (message, source, lineno, colno, error) => {
 document.addEventListener('keydown', event => {
     if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
         const focusableElements = [...document.querySelectorAll<HTMLElement>('a, input, summary, button:not([disabled])')]
+        const visibleElements = focusableElements.filter(element => element.checkVisibility())
         const currentElement = document.activeElement as HTMLElement
-        if (focusableElements.includes(currentElement)) {
+        if (visibleElements.includes(currentElement)) {
             const messages = document.querySelector('#messages')!
             const height = (element: HTMLElement) => (messages.contains(element) ? 0 : 1) * 1_000_000 + element.getBoundingClientRect().top
-            const tops = new Map(focusableElements.map(element => [element, height(element)]))
+            const tops = new Map(visibleElements.map(element => [element, height(element)]))
             const uniqueTops = [...new Set(tops.values())].sort((a, b) => a - b)
             const currentIndex = uniqueTops.indexOf(tops.get(currentElement)!)
             const direction = event.key === 'ArrowUp' ? -1 : 1
             const targetTop = uniqueTops[(currentIndex + direction + uniqueTops.length) % uniqueTops.length]
-            const possibleTargets = focusableElements.filter(element => tops.get(element) === targetTop)
+            const possibleTargets = visibleElements.filter(element => tops.get(element) === targetTop)
             const preferableTargets = possibleTargets.filter(element => element instanceof HTMLInputElement && element.checked)
             const targetElement = preferableTargets[0] ?? possibleTargets[0]
             if (targetElement)
