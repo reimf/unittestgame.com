@@ -193,9 +193,10 @@ ul {
     border: 0.1rem solid var(--card-border);
     border-radius: 1rem;
     padding: 1.5rem;
+    transition: transform 0.5s ease;
 
     &:hover {
-      transform: translateY(-0.1rem);
+      transform: scale(1.05);
     }
 
     .square {
