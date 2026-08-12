@@ -223,27 +223,27 @@ export class Label extends Html {
     }
 }
 
-export class Select extends Html {
-    public constructor(callback: (value: string) => void) {
-        super('select')
-        const select = this.getElement<HTMLSelectElement>()
-        select.addEventListener('change', () => callback(select.value))
+export class Details extends Html {
+    public constructor() {
+        super('details')
     }
 }
 
-export class Option extends Html {
-    public constructor(value: string, text: ConversationText, selected: boolean) {
-        super('option')
-        const option = this.getElement<HTMLOptionElement>()
-        option.value = value
-        option.defaultSelected = selected
-        this.appendText(text)
+export class Summary extends Html {
+    public constructor() {
+        super('summary')
     }
 }
 
 export class OrderedList extends Html {
     public constructor() {
         super('ol')
+    }
+}
+
+export class UnorderedList extends Html {
+    public constructor() {
+        super('ul')
     }
 }
 

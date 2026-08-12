@@ -10,7 +10,7 @@ body {
   overflow-x: hidden;
 }
 
-a {
+a, summary {
   color: var(--button-background-left);
   text-wrap: nowrap;
 
@@ -73,14 +73,20 @@ nav {
     align-items: center;
     gap: 2rem;
 
-    a.btn {
-      height: 3rem;
-    }
-
     a:not(.btn) {
-      @media (max-width: 50rem) {
+      @media (max-width: 65rem) {
         display: none;
       }
+    }
+
+    details {
+      @media (max-width: 40rem) {
+        display: none;
+      }
+    }
+
+    a.btn {
+      height: 3rem;
     }
   }
 }
@@ -148,12 +154,12 @@ header {
       margin-right: 0.75rem;
       text-align: right;
     }
-  
+
     &#first-unit-test, &#second-unit-test {
       margin-right: 2rem;
       text-align: right;
     }
-  
+
     &#this-is-the-ai-bot, &#this-is-the-ai-bot-again {
       margin-left: 0.75rem;
       text-align: left;
@@ -209,7 +215,7 @@ ul {
     padding: 1.5rem;
 
     &:hover {
-      transform: translateY(-0.2rem);
+      transform: translateY(-0.1rem);
     }
 
     .square {

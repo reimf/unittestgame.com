@@ -2,19 +2,23 @@ import { test, expect } from '../fixture/fixture-coverage'
 
 test.describe('change programming language', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('/game?speed=fast&picker=fixed')
-        await page.getByTestId('programming-language-switcher').selectOption('python')
+        await page.goto('/game-en.html?speed=fast&picker=fixed')
+        const switcher = page.getByTestId('programming-language-switcher')
+        await switcher.locator('summary').click()
+        await switcher.getByRole('link', { name: 'Python', exact: true }).click()
         await page.waitForLoadState()
     })
 
-    test('has programming language selector with Python as selected option', async ({ page }) => {
-        const select = page.getByTestId('programming-language-switcher')
-        await expect(select).toHaveValue('python')
+    test('has programming language selector showing Python as the current language', async ({ page }) => {
+        const summary = page.getByTestId('programming-language-switcher').locator('summary')
+        await expect(summary).toContainText('Python')
     })
 
     test('has programming language selector with JavaScript as an alternative option', async ({ page }) => {
-        const option = page.getByTestId('programming-language-switcher').locator('option[value="javascript"]')
-        await expect(option).toHaveText('JavaScript')
+        const switcher = page.getByTestId('programming-language-switcher')
+        await switcher.locator('summary').click()
+        const option = switcher.getByRole('link', { name: 'JavaScript', exact: true })
+        await expect(option).toBeVisible()
     })
 
     test('has the simplest candidate rendered in Python format in the current function panel', async ({ page }) => {

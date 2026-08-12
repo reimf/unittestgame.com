@@ -2,7 +2,7 @@ import { test, expect } from '../fixture/fixture-coverage'
 
 test.describe('level emojis', () => {
     test('has level overview panel', async ({ page }) => {
-        await page.goto('/game?speed=fast&setitem=penalties-level-battery-level:0&setitem=penalties-level-voting-age:1&setitem=penalties-level-wind-scale:2&setitem=penalties-level-review:3')
+        await page.goto('/game-en.html?speed=fast&setitem=penalties-level-battery-level:0&setitem=penalties-level-voting-age:1&setitem=penalties-level-wind-scale:2&setitem=penalties-level-review:3')
         const levelsPanel = page.getByTestId('level-overview')
         await expect(levelsPanel).toContainText(
             '🥇Level 0 - Battery LevelRetry' +

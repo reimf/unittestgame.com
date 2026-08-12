@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 import { JSDOM } from 'jsdom'
-import { Span, Div, Section, Code, CodeBlock, Label, Paragraph, Form, Header, Input, Italic, Anchor, Submit, Select, Option, Img } from '../../src/html.js'
+import { Span, Div, Section, Code, CodeBlock, Label, Paragraph, Form, Header, Input, Italic, Anchor, Submit, Details, Summary, UnorderedList, ListItem, Img } from '../../src/html.js'
 import { ConversationLanguage } from '../../src/conversation-language-base.js'
 
 const { document } = new JSDOM('<!DOCTYPE html>').window
@@ -168,14 +168,17 @@ test.describe('class Html', () => {
         )
     })
 
-    test('has select', () => {
-        const select = new Select(() => {})
+    test('has details', () => {
+        const details = new Details()
             .appendChildren([
-                new Option('a', ConversationLanguage.bless('Option A'), false),
-                new Option('b', ConversationLanguage.bless('Option B'), true),
+                new Summary().appendText(ConversationLanguage.bless('Options')),
+                new UnorderedList().appendChildren([
+                    new ListItem().appendChild(new Anchor('a').appendText(ConversationLanguage.bless('Option A'))),
+                    new ListItem().appendChild(new Anchor('b').appendText(ConversationLanguage.bless('Option B'))),
+                ]),
             ])
-        expect(select.getElement().outerHTML).toBe(
-            '<select><option value="a">Option A</option><option value="b" selected="">Option B</option></select>'
+        expect(details.getElement().outerHTML).toBe(
+            '<details><summary>Options</summary><ul><li><a href="a">Option A</a></li><li><a href="b">Option B</a></li></ul></details>'
         )
     })
 

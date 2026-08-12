@@ -7,12 +7,12 @@
     <meta name="theme-color" content="#0b0620">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://unittestgame.com/index-de.html">
+    <meta property="og:url" content="https://unittestgame.com/index-de">
     <meta property="og:title" content="UnitTestGame.com">
     <meta property="og:description" content="Lerne effektive Unit-Tests zu schreiben mit einem interaktiven Spiel, in dem du mit einem ausweichenden KI-Bot zusammenarbeiten musst.">
     <meta property="og:image" content="https://unittestgame.com/apple-touch-icon.png">
     <meta name="twitter:card" content="summary">
-    <link rel="canonical" href="https://unittestgame.com/index-de.html">
+    <link rel="canonical" href="https://unittestgame.com/index-de">
     <link rel="icon" type="image/ico" href="favicon.ico">
     <link rel="stylesheet" href="shared.css">
     <link rel="stylesheet" href="index.css">
@@ -30,14 +30,17 @@
         <a href="#how-it-works">So funktioniert's</a>
         <a href="#levels">Levels</a>
         <a href="#why-it-works">Warum es funktioniert</a>
-        <span><select id="language-switcher">
-          <option value="en">English</option>
-          <option value="nl">Nederlands</option>
-          <option value="de" selected>Deutsch</option>
-          <option value="fr">Français</option>
-          <option value="es">Español</option>
-          <option value="it">Italiano</option>
-        </select></span>
+        <details class="switcher" id="language-switcher">
+          <summary>Deutsch</summary>
+          <ul>
+            <li><a href="index-en.html">English</a></li>
+            <li><a href="index-nl.html">Nederlands</a></li>
+            <li><a href="index-fr.html">Français</a></li>
+            <li><a href="index-es.html">Español</a></li>
+            <li><a href="index-it.html">Italiano</a></li>
+          </ul>
+        </details>
+        <a class="btn" href="game-de.html">Jetzt spielen</a>
       </div>
     </nav>
     <header>
@@ -48,7 +51,7 @@
         </h1>
         <p>UnitTestGame stellt dir einen ausweichenden KI-Bot zur Seite. Er schreibt korrekten Code, der deine Unit-Tests besteht. Und nichts weiter. Deine Aufgabe: Schreibe Unit-Tests, bis das Programm stimmt.</p>
         <div id="hero-buttonrow">
-          <a class="btn" href="game?conversation_language=de">Kostenlos im Browser spielen →</a>
+          <a class="btn" href="game-de.html">Kostenlos im Browser spielen →</a>
           <a href="#how-it-works">Sieh, wie es funktioniert</a>
         </div>
       </div>
@@ -150,7 +153,7 @@
         </li>
         <li>
           <h3><span>💻</span> <span>Sieben Programmiersprachen</span></h3>
-          <p>Lass den KI-Bot Programme schreiben in <a href="game?conversation_language=de&amp;programming_language=javascript">JavaScript</a>, <a href="game?conversation_language=de&amp;programming_language=typescript">TypeScript</a>, <a href="game?conversation_language=de&amp;programming_language=python">Python</a>, <a href="game?conversation_language=de&amp;programming_language=java">Java</a>, <a href="game?conversation_language=de&amp;programming_language=csharp">C#</a>, <a href="game?conversation_language=de&amp;programming_language=php">PHP</a> oder <a href="game?conversation_language=de&amp;programming_language=ruby">Ruby</a>.</p>
+          <p>Lass den KI-Bot Programme schreiben in <a href="game-de.html?programming_language=javascript">JavaScript</a>, <a href="game-de.html?programming_language=typescript">TypeScript</a>, <a href="game-de.html?programming_language=python">Python</a>, <a href="game-de.html?programming_language=java">Java</a>, <a href="game-de.html?programming_language=csharp">C#</a>, <a href="game-de.html?programming_language=php">PHP</a> oder <a href="game-de.html?programming_language=ruby">Ruby</a>.</p>
         </li>
         <li>
           <h3><span>🧩</span> <span>Gar keine Einrichtung</span></h3>
@@ -258,7 +261,7 @@
         </li>
         <li>
           <h3><span class="square">Q</span> <span>Welche Programmiersprachen werden unterstützt?</span></h3>
-          <p>Lass den KI-Bot Programme schreiben in <a href="game?conversation_language=de&amp;programming_language=javascript">JavaScript</a>, <a href="game?conversation_language=de&amp;programming_language=typescript">TypeScript</a>, <a href="game?conversation_language=de&amp;programming_language=python">Python</a>, <a href="game?conversation_language=de&amp;programming_language=java">Java</a>, <a href="game?conversation_language=de&amp;programming_language=csharp">C#</a>, <a href="game?conversation_language=de&amp;programming_language=php">PHP</a> oder <a href="game?conversation_language=de&amp;programming_language=ruby">Ruby</a>.</p>
+          <p>Lass den KI-Bot Programme schreiben in <a href="game-de.html?programming_language=javascript">JavaScript</a>, <a href="game-de.html?programming_language=typescript">TypeScript</a>, <a href="game-de.html?programming_language=python">Python</a>, <a href="game-de.html?programming_language=java">Java</a>, <a href="game-de.html?programming_language=csharp">C#</a>, <a href="game-de.html?programming_language=php">PHP</a> oder <a href="game-de.html?programming_language=ruby">Ruby</a>.</p>
         </li>
         <li>
           <h3><span class="square">Q</span> <span>Welche Sprachen werden unterstützt?</span></h3>
@@ -290,7 +293,7 @@
       <div class="cta-band">
         <h2>Der KI-Bot wartet auf dich. Lass dich nicht reinlegen.</h2>
         <p>Klicke auf den Button, folge den Anweisungen, und sieh, womit der KI-Bot davonkommen will.</p>
-        <a class="btn" href="game?conversation_language=de">UnitTestGame kostenlos spielen →</a>
+        <a class="btn" href="game-de.html">UnitTestGame kostenlos spielen →</a>
       </div>
     </section>
     <footer>

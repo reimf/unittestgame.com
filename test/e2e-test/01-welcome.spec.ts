@@ -2,7 +2,7 @@ import { test, expect } from '../fixture/fixture-coverage'
 
 test.describe('welcome', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('/game?speed=fast&store=map')
+        await page.goto('/game-en.html?speed=fast&store=map')
     })
 
     test('has title', async ({ page }) => {
@@ -22,11 +22,6 @@ test.describe('welcome', () => {
     test('has settings panel', async ({ page }) => {
         const settingsPanel = page.getByTestId('settings')
         await expect(settingsPanel).toContainText('Settings')
-    })
-
-    test('has language selector with Dutch as an option', async ({ page }) => {
-        const option = page.getByTestId('language-switcher').locator('option[value="nl"]')
-        await expect(option).toHaveText('Nederlands')
     })
 
     test('has link to home page', async ({ page }) => {

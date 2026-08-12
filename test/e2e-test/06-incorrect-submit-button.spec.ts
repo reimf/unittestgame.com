@@ -2,7 +2,7 @@ import { test, expect } from '../fixture/fixture-coverage'
 
 test.describe('incorrect submit button', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('/game?speed=fast&picker=fixed')
+        await page.goto('/game-en.html?speed=fast&picker=fixed')
         await page.getByRole('button', { name: 'I want to play Level 0 - Battery Level', exact: true }).click()
         await page.getByRole('button', { name: 'I want to submit the unit tests', exact: true }).click()
     })

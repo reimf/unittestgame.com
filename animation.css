@@ -18,7 +18,6 @@
 
   .comment {
     opacity: 0;
-    transition: opacity 0s ease;
 
     &.visible {
       opacity: 1;

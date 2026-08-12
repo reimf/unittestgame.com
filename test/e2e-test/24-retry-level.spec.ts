@@ -2,7 +2,7 @@ import { test, expect } from '../fixture/fixture-coverage'
 
 test.describe('retry level', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('/game?speed=fast&setitem=penalties-level-battery-level:1&store=map')
+        await page.goto('/game-en.html?speed=fast&setitem=penalties-level-battery-level:1&store=map')
     })
 
     test('has a retry button only for the finished level', async ({ page }) => {

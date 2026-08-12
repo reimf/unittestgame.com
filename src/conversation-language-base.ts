@@ -14,8 +14,6 @@ export abstract class ConversationLanguage {
     public abstract slogan(): ConversationText
     public abstract home(): ConversationText
     public abstract settingsTitle(): ConversationText
-    public abstract changeLanguage(): ConversationText
-    public abstract changeProgrammingLanguage(): ConversationText
     public abstract invitation(): ConversationText
     public abstract level(levelNumber: number, levelName: string): ConversationText
     public abstract nextLevelButton(levelDescription: string): ConversationText

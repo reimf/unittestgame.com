@@ -92,7 +92,7 @@ const languages = [
 for (const language of languages) {
     test.describe(`${language.name} programming language`, () => {
         test(language.battery.title, async ({ page }) => {
-            await page.goto(`/game?speed=fast&picker=fixed&programming_language=${language.name}`)
+            await page.goto(`/game-en.html?speed=fast&picker=fixed&programming_language=${language.name}`)
             await page.getByRole('button', { name: 'I want to play Level 0 - Battery Level', exact: true }).click()
             const currentFunctionPanel = page.getByTestId('current-function')
             const codeLines = currentFunctionPanel.locator('code')
@@ -100,7 +100,7 @@ for (const language of languages) {
         })
 
         test(language.votingAge.title, async ({ page }) => {
-            await page.goto(`/game?speed=fast&programming_language=${language.name}&setitem=penalties-level-battery-level:1`)
+            await page.goto(`/game-en.html?speed=fast&programming_language=${language.name}&setitem=penalties-level-battery-level:1`)
             await page.getByRole('button', { name: 'I want to play Level 1 - Voting Age', exact: true }).click()
             await page.getByLabel('Age').fill('18')
             await page.getByLabel('true').check()
@@ -112,7 +112,7 @@ for (const language of languages) {
 
         if (language.speedDisplay) {
             test(language.speedDisplay.title, async ({ page }) => {
-                await page.goto(`/game?speed=fast&programming_language=${language.name}&setitem=penalties-level-battery-level:1&setitem=penalties-level-voting-age:1&setitem=penalties-level-wind-scale:1&setitem=penalties-level-review:1&setitem=penalties-level-discount:1&setitem=penalties-level-fizz-buzz:1&setitem=penalties-level-leap-year:1&setitem=penalties-level-triangle-type:1`)
+                await page.goto(`/game-en.html?speed=fast&programming_language=${language.name}&setitem=penalties-level-battery-level:1&setitem=penalties-level-voting-age:1&setitem=penalties-level-wind-scale:1&setitem=penalties-level-review:1&setitem=penalties-level-discount:1&setitem=penalties-level-fizz-buzz:1&setitem=penalties-level-leap-year:1&setitem=penalties-level-triangle-type:1`)
                 await page.getByRole('button', { name: 'I want to play Level 8 - Speed Display', exact: true }).click()
                 const currentFunctionPanel = page.getByTestId('current-function')
                 const codeLines = currentFunctionPanel.locator('code')

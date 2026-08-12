@@ -2,7 +2,7 @@ import { test, expect } from '../fixture/fixture-coverage'
 
 test.describe('play next level from overview', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('/game?speed=fast')
+        await page.goto('/game-en.html?speed=fast')
     })
 
     test('starts the next level', async ({ page }) => {

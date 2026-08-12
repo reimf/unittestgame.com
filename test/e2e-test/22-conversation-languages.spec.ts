@@ -2,7 +2,7 @@ import { test, expect } from '../fixture/fixture-coverage'
 
 test.describe('conversation languages', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('/game')
+        await page.goto('/game-en.html')
     })
 
     test('produces text for every method in every language', async ({ page }) => {
@@ -14,8 +14,6 @@ test.describe('conversation languages', () => {
                 conversationLanguage.slogan(),
                 conversationLanguage.home(),
                 conversationLanguage.settingsTitle(),
-                conversationLanguage.changeLanguage(),
-                conversationLanguage.changeProgrammingLanguage(),
                 conversationLanguage.invitation(),
                 conversationLanguage.level(1, 'Voting Age'),
                 conversationLanguage.nextLevelButton('Level 1 - Voting Age'),

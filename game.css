@@ -80,10 +80,6 @@ label {
   border-radius: 0.5rem;
   min-height: 2rem;
 
-  &:has(select) {
-    display: contents;
-  }
-
   &:has(input[type="radio"]) {
     background: var(--button-background-gradient);
     color: var(--general-text-light);
@@ -113,7 +109,7 @@ a,
 button,
 input:not([type="radio"]),
 label:has(input[type="radio"]),
-select {
+summary {
 
   &:focus-within,
   &:focus,
@@ -141,7 +137,6 @@ select {
       border-radius: 0.5rem;
       color: var(--general-text-dark);
       margin: 0.75rem;
-      overflow: hidden;
 
       header {
         background: var(--panel-background-gradient);
@@ -155,6 +150,7 @@ select {
         flex-direction: column;
         gap: 0.75rem;
         margin: 0.75rem;
+        padding-bottom: 0.75rem;
 
         img {
           float: right;
@@ -172,28 +168,6 @@ select {
 
         p {
           margin: 0;
-        }
-
-        .switchers {
-          display: flex;
-          flex-direction: column;
-          gap: 0.75rem;
-
-          label {
-            align-items: center;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            width: fit-content;
-
-            >span {
-              display: block;
-
-              &:first-child {
-                width: 12rem;
-              }
-            }
-          }
         }
 
         .level-board {

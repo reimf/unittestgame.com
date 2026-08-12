@@ -11,7 +11,7 @@ window.onerror = (message, source, lineno, colno, error) => {
 
 document.addEventListener('keydown', event => {
     if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
-        const focusableElements = [...document.querySelectorAll<HTMLElement>('a, input, select, button:not([disabled])')]
+        const focusableElements = [...document.querySelectorAll<HTMLElement>('a, input, summary, button:not([disabled])')]
         const currentElement = document.activeElement as HTMLElement
         if (focusableElements.includes(currentElement)) {
             const messages = document.querySelector('#messages')!
@@ -33,8 +33,7 @@ document.addEventListener('keydown', event => {
 
 document.addEventListener('DOMContentLoaded', () => {
     const injector = new Injector(new URL(window.location.href).searchParams)
-    const [defaultConversationLanguage, ...otherConversationLanguages] = conversationLanguages
-    const conversationLanguageId = injector.getOption('conversation_language', defaultConversationLanguage.id, otherConversationLanguages.map(conversationLanguage => conversationLanguage.id))
+    const conversationLanguageId = document.documentElement.lang
     const conversationLanguage = conversationLanguages.find(conversationLanguage => conversationLanguage.id === conversationLanguageId)!
     const [defaultProgrammingLanguage, ...otherProgrammingLanguages] = programmingLanguages
     const programmingLanguageId = injector.getOption('programming_language', defaultProgrammingLanguage.id, otherProgrammingLanguages.map(programmingLanguage => programmingLanguage.id))

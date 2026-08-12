@@ -9,7 +9,7 @@ import { JavaScript } from '../../src/programming-language-javascript'
 
 test.describe('whole game', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('/game?speed=fast')
+        await page.goto('/game-en.html?speed=fast')
     })
 
     test('plays whole game', async ({ page }) => {

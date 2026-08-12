@@ -25,14 +25,6 @@ export class Spanish extends ConversationLanguage {
         return ConversationLanguage.bless('Configuración')
     }
 
-    public override changeLanguage(): ConversationText {
-        return ConversationLanguage.bless('Idioma de conversación')
-    }
-
-    public override changeProgrammingLanguage(): ConversationText {
-        return ConversationLanguage.bless('Idioma de programación')
-    }
-
     public override invitation(): ConversationText {
         return ConversationLanguage.bless('¿Qué nivel quieres jugar?')
     }

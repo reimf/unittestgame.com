@@ -25,14 +25,6 @@ export class Dutch extends ConversationLanguage {
         return ConversationLanguage.bless('Instellingen')
     }
 
-    public override changeLanguage(): ConversationText {
-        return ConversationLanguage.bless('Gesprekstaal')
-    }
-
-    public override changeProgrammingLanguage(): ConversationText {
-        return ConversationLanguage.bless('Programmeertaal')
-    }
-
     public override invitation(): ConversationText {
         return ConversationLanguage.bless('Welk level wil je spelen?')
     }

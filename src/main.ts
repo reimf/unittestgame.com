@@ -1,10 +1,9 @@
 import { Levels } from './levels.js'
 import { Store } from './store.js'
 import { Panel, Message, ComputerMessage, QuestionMessage } from './frame.js'
-import { Div, Html, Label, ListItem, Option, OrderedList, Button, Select, Span } from './html.js'
+import { Anchor, Details, Html, ListItem, OrderedList, Button, Span, Summary, UnorderedList } from './html.js'
 import { AnyLevel } from './level-base.js'
 import { ConversationLanguage } from './conversation-language-base.js'
-import { conversationLanguages } from './conversation-languages.js'
 import { Picker } from './picker.js'
 import { ProgrammingLanguage } from './programming-language-base.js'
 import { programmingLanguages } from './programming-languages.js'
@@ -55,34 +54,24 @@ export class Main {
         new ComputerMessage([this.conversationLanguage.welcome()]).show()
     }
 
-    private switchTo(parameterName: string, parameterValue: string): void {
+    private urlWith(parameterName: string, parameterValue: string): string {
         const url = new URL(window.location.href)
         url.searchParams.set(parameterName, parameterValue)
-        window.location.href = url.toString()
+        return url.toString()
     }
 
-    private languageSwitcher(): Label {
-        const select = new Select(id => this.switchTo('conversation_language', id)).setId('language-switcher')
-        const options = conversationLanguages.map(conversationLanguage => new Option(conversationLanguage.id, ConversationLanguage.bless(conversationLanguage.name), conversationLanguage.id === this.conversationLanguage.id))
-        select.appendChildren(options)
-        return new Label().appendChildren([
-            new Span().appendText(this.conversationLanguage.changeLanguage()),
-            new Span().appendChild(select)
+    private programmingLanguageSwitcher(): Details {
+        const items = programmingLanguages
+            .filter(programmingLanguage => programmingLanguage.id !== this.programmingLanguage.id)
+            .map(programmingLanguage => new ListItem().appendChild(
+                new Anchor(this.urlWith('programming_language', programmingLanguage.id)).appendText(ConversationLanguage.bless(programmingLanguage.name))
+            ))
+        return new Details().addClass('switcher').setId('programming-language-switcher').appendChildren([
+            new Summary().appendChild(
+                new Span().appendText(ConversationLanguage.bless(this.programmingLanguage.name))
+            ),
+            new UnorderedList().appendChildren(items)
         ])
-    }
-
-    private programmingLanguageSwitcher(): Label {
-        const select = new Select(id => this.switchTo('programming_language', id)).setId('programming-language-switcher')
-        const options = programmingLanguages.map(programmingLanguage => new Option(programmingLanguage.id, ConversationLanguage.bless(programmingLanguage.name), programmingLanguage.id === this.programmingLanguage.id))
-        select.appendChildren(options)
-        return new Label().appendChildren([
-            new Span().appendText(this.conversationLanguage.changeProgrammingLanguage()),
-            new Span().appendChild(select)
-        ])
-    }
-
-    private switchers(): Div {
-        return new Div().addClass('switchers').appendChildren([this.languageSwitcher(), this.programmingLanguageSwitcher()])
     }
 
     private showAboutPanel(): void {
@@ -91,7 +80,7 @@ export class Main {
     }
 
     private showSettingsPanel(): void {
-        new Panel('settings', this.conversationLanguage.settingsTitle(), [this.switchers()]).show()
+        new Panel('settings', this.conversationLanguage.settingsTitle(), [this.programmingLanguageSwitcher()]).show()
     }
 
     private showInvitationMessage(): void {
