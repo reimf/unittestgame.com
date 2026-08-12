@@ -44,13 +44,12 @@ i {
 input {
   margin-top: 0.5rem;
 
-  &[type="text"],
   &[type="number"] {
     background: var(--button-background-gradient);
-    border-radius: 0.5rem;
+    border-radius: 100rem;
     color: var(--general-text-light);
     height: 2rem;
-    padding: 0 0.5rem;
+    padding: 0 0.5rem 0 0.75rem;
     width: 8rem;
   }
 
@@ -77,7 +76,7 @@ input {
 }
 
 label {
-  border-radius: 0.5rem;
+  border-radius: 100rem;
   min-height: 2rem;
 
   &:has(input[type="radio"]) {
