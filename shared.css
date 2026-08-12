@@ -147,16 +147,28 @@ ul {
   list-style-type: none;
 }
 
+.btn {
+  align-items: center;
+  background: var(--button-background-gradient);
+  border-radius: 2rem;
+  box-shadow: 0 0.6rem 1.5rem -0.5rem var(--button-background-tint);
+  color: var(--general-text-light);
+  display: inline-flex;
+  height: 4rem;
+  padding: 0 2rem;
+  text-decoration: none;
+  white-space: nowrap;
+
+  &:hover {
+    box-shadow: 0 0.9rem 2rem -0.5rem var(--button-background-tint);
+  }
+}
+
 details {
   position: relative;
 
-  summary {
-    align-items: center;
-    background: var(--button-background-gradient);
-    border-radius: 100rem;
-    color: var(--general-text-light);
+  summary.btn {
     cursor: pointer;
-    display: flex;
     gap: 0.5rem;
     height: 2rem;
     list-style: none;
@@ -198,17 +210,12 @@ details {
       border-radius: 0;
       padding: 0;
 
-      a {
-        background: var(--button-background-gradient);
-        border-radius: 100rem;
-        color: var(--general-text-light);
+      a.btn {
         display: block;
         height: 2rem;
         line-height: 2rem;
         padding: 0 1rem;
-        text-decoration: none;
-        white-space: nowrap;
-        width: 100%;
+        width: 7rem;
       }
     }
   }

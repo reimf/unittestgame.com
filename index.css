@@ -17,28 +17,6 @@ a, summary {
   &:hover {
     transform: translateY(-0.1rem);
   }
-
-  &.btn {
-    align-items: center;
-    display: inline-flex;
-    border: none;
-    border-radius: 2rem;
-    height: 4rem;
-    padding: 0 2rem;
-    text-decoration: none;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-    white-space: nowrap;
-  }
-
-  &.btn {
-    background: var(--button-background-gradient);
-    color: var(--general-text-light);
-    box-shadow: 0 0.6rem 1.5rem -0.5rem var(--button-background-tint);
-
-    &:hover {
-      box-shadow: 0 0.9rem 2rem -0.5rem var(--button-background-tint);
-    }
-  }
 }
 
 nav {
@@ -85,7 +63,7 @@ nav {
       }
     }
 
-    a.btn {
+    > a.btn {
       height: 3rem;
     }
   }

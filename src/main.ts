@@ -64,10 +64,10 @@ export class Main {
         const items = programmingLanguages
             .filter(programmingLanguage => programmingLanguage.id !== this.programmingLanguage.id)
             .map(programmingLanguage => new ListItem().appendChild(
-                new Anchor(this.urlWith('programming_language', programmingLanguage.id)).appendText(ConversationLanguage.bless(programmingLanguage.name))
+                new Anchor(this.urlWith('programming_language', programmingLanguage.id)).addClass('btn').appendText(ConversationLanguage.bless(programmingLanguage.name))
             ))
         return new Details().addClass('switcher').setId('programming-language-switcher').appendChildren([
-            new Summary().appendChild(
+            new Summary().addClass('btn').appendChild(
                 new Span().appendText(ConversationLanguage.bless(this.programmingLanguage.name))
             ),
             new UnorderedList().appendChildren(items)
