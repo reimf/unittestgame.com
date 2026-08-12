@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'; form-action 'self'">
+    <meta name="description" content="Lerne effektive Unit-Tests zu schreiben mit einem interaktiven Spiel, in dem du mit einem gegnerischen KI-Bot zusammenarbeiten musst.">
+    <meta name="theme-color" content="#0b0620">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://unittestgame.com/index-de.html">
+    <meta property="og:title" content="UnitTestGame.com">
+    <meta property="og:description" content="Lerne effektive Unit-Tests zu schreiben mit einem interaktiven Spiel, in dem du mit einem gegnerischen KI-Bot zusammenarbeiten musst.">
+    <meta property="og:image" content="https://unittestgame.com/apple-touch-icon.png">
+    <meta name="twitter:card" content="summary">
+    <link rel="canonical" href="https://unittestgame.com/index-de.html">
+    <link rel="icon" type="image/ico" href="favicon.ico">
+    <link rel="stylesheet" href="shared.css">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="animation.css">
+    <script src="index.js" type="module"></script>
+    <title>UnitTestGame.com: Überliste den KI-Bot, der gegen dich arbeitet</title>
+  </head>
+  <body>
+    <nav>
+      <div id="brand">
+        <img src="apple-touch-icon.png" alt="Logo of UnitTestGame">
+        <span>UnitTestGame</span>
+      </div>
+      <div id="nav-links">
+        <a href="#how-it-works">So funktioniert's</a>
+        <a href="#levels">Levels</a>
+        <a href="#why-it-works">Warum es funktioniert</a>
+        <span><select id="language-switcher">
+          <option value="en">English</option>
+          <option value="nl">Nederlands</option>
+          <option value="de" selected>Deutsch</option>
+          <option value="fr">Français</option>
+          <option value="es">Español</option>
+          <option value="it">Italiano</option>
+        </select></span>
+      </div>
+    </nav>
+    <header>
+      <div id="hero-copy">
+        <h1>
+          <span>Der Code besteht</span><br><span class="gradient-text">deine Unit-Tests.</span><br>
+          <span>Aber macht er auch, was</span><br><span class="gradient-text">du wirklich willst?</span>
+        </h1>
+        <p>UnitTestGame stellt dir einen gegnerischen KI-Bot zur Seite. Er schreibt korrekten Code, der deine Unit-Tests besteht. Und nichts weiter. Deine Aufgabe: Schreibe Unit-Tests, bis das Programm stimmt.</p>
+        <div id="hero-buttonrow">
+          <a class="btn" href="game?conversation_language=de">Kostenlos im Browser spielen →</a>
+          <a href="#how-it-works">Sieh, wie es funktioniert</a>
+        </div>
+      </div>
+      <div id="hero-animation">
+        <div id="messages">
+          <section class="human" id="message-1">
+            <div>
+              <p>Ich möchte diesen Unit-Test hinzufügen.</p>
+              <code class="block">
+                <div class="new"><span class="function">isAllowedToVote</span>(<span class="number">18</span>) <span class="operator">===</span> <span class="literal">true</span></div>
+              </code>
+            </div>
+          </section>
+          <span class="human comment" id="this-is-you">das bist du ↑</span>
+          <span class="human comment" id="first-unit-test">mit deinem ersten Unit-Test</span>
+          <section class="computer" id="message-2">
+            <div>
+              <code class="block">
+                <div><span class="keyword">function</span> <span class="function">isAllowedToVote</span>(<span class="variable">age</span>) {</div>
+                <div>    <span class="keyword">return</span> <span class="literal">true</span></div>
+                <div>}</div>
+              </code>
+            </div>
+          </section>
+          <span class="computer comment" id="this-is-the-ai-bot">↑ das ist der KI-Bot</span>
+          <span class="computer comment" id="first-function">seine erste Funktion besteht deinen Unit-Test</span>
+          <span class="computer comment" id="first-verdict">aber sie verallgemeinert nicht 👎</span>
+          <section class="human" id="message-3">
+            <div>
+              <p>Ich möchte diesen Unit-Test hinzufügen.</p>
+              <code class="block">
+                <div class="new"><span class="function">isAllowedToVote</span>(<span class="number">17</span>) <span class="operator">===</span> <span class="literal">false</span></div>
+              </code>
+            </div>
+          </section>
+          <span class="human comment" id="this-is-you-again">das bist du wieder ↑</span>
+          <span class="human comment" id="second-unit-test">jetzt mit deinem zweiten Unit-Test</span>
+          <section class="computer" id="message-4">
+            <div>
+              <code class="block">
+                <div><span class="keyword">function</span> <span class="function">isAllowedToVote</span>(<span class="variable">age</span>) {</div>
+                <div>    <span class="keyword">if</span> (<span class="variable">age</span> <span class="operator">&gt;=</span> <span class="number">18</span>) <span class="keyword">return</span> <span class="literal">true</span></div>
+                <div>    <span class="keyword">return</span> <span class="literal">false</span></div>
+                <div>}</div>
+              </code>
+            </div>
+          </section>
+          <span class="computer comment" id="this-is-the-ai-bot-again">↑ das ist der KI-Bot wieder</span>
+          <span class="computer comment" id="second-function">seine zweite Funktion besteht beide Unit-Tests</span>
+          <span class="computer comment" id="second-verdict">und jetzt verallgemeinert sie 👍</span>
+        </div>
+      </div>
+    </header>
+    <section id="how-it-works">
+      <div>
+        <h2>Lerne Unit-Tests aus dem Gefühl heraus zu schreiben</h2>
+        <p>Keine Videos. Keine Quizze. Nur ein KI-Bot, der jede Lücke in deinen Unit-Tests ausnutzt.</p>
+      </div>
+      <ol>
+        <li>
+          <h3><span class="square">①</span> <span>Lies die Spec</span></h3>
+          <p>Sieh dir an, was die Funktion tun soll, in einfachen Input-→-Output-Begriffen.</p>
+        </li>
+        <li>
+          <h3><span class="square">②</span> <span>Sieh ihm beim Schummeln zu</span></h3>
+          <p>Der KI-Bot schreibt korrekten Code, der genau das erfüllt, was du getestet hast.</p>
+        </li>
+        <li>
+          <h3><span class="square">③</span> <span>Finde die Lücke</span></h3>
+          <p>Erkenne den Grenzfall, dem er ausgewichen ist, und füge einen Unit-Test hinzu, der ihn aufdeckt.</p>
+        </li>
+        <li>
+          <h3><span class="square">④</span> <span>Mach weiter, bis es stimmt</span></h3>
+          <p>Wiederhole, bis es keinen anderen Weg mehr gibt. Level geschafft!</p>
+        </li>
+      </ol>
+    </section>
+    <section id="why-it-works">
+      <div>
+        <h2>Für Entwickler, die Bugs vermeiden wollen</h2>
+        <p>Es spielt sich wie ein Spiel. Es wird zur Gewohnheit. Es verändert deine Art zu testen.</p>
+      </div>
+      <ul>
+        <li>
+          <h3><span class="">🕵️</span> <span>Ein würdiger Gegner</span></h3>
+          <p>Der KI-Bot arbeitet gegen dich. Jeder Zug ist eine Lektion über deinen blinden Fleck.</p>
+        </li>
+        <li>
+          <h3><span>📈</span> <span>Steigender Schwierigkeitsgrad</span></h3>
+          <p>Beginne mit Batteriestufen. Ende beim Entwirren von Geschwindigkeitsanzeigen und Parkgebühren.</p>
+        </li>
+        <li>
+          <h3><span>🔓</span> <span>Echter Fortschritt</span></h3>
+          <p>Ein Scoreboard zeigt, was du freigeschaltet hast, sodass du immer weißt, was als Nächstes kommt.</p>
+        </li>
+        <li>
+          <h3><span>🌍</span> <span>Sechs Sprachen</span></h3>
+          <p>Auf Deutsch natürlich, aber auch auf <a href="index-en.html">Englisch</a>, <a href="index-nl.html">Niederländisch</a>, <a href="index-fr.html">Französisch</a>, <a href="index-es.html">Spanisch</a> oder <a href="index-it.html">Italienisch</a>.</p>
+        </li>
+        <li>
+          <h3><span>💻</span> <span>Sieben Programmiersprachen</span></h3>
+          <p>Lass den KI-Bot Programme schreiben in <a href="game?conversation_language=de&amp;programming_language=javascript">JavaScript</a>, <a href="game?conversation_language=de&amp;programming_language=typescript">TypeScript</a>, <a href="game?conversation_language=de&amp;programming_language=python">Python</a>, <a href="game?conversation_language=de&amp;programming_language=java">Java</a>, <a href="game?conversation_language=de&amp;programming_language=csharp">C#</a>, <a href="game?conversation_language=de&amp;programming_language=php">PHP</a> oder <a href="game?conversation_language=de&amp;programming_language=ruby">Ruby</a>.</p>
+        </li>
+        <li>
+          <h3><span>🧩</span> <span>Gar keine Einrichtung</span></h3>
+          <p>Läuft komplett im Browser. Kein Konto, keine Installation, keine Abhängigkeiten.</p>
+        </li>
+      </ul>
+    </section>
+    <section id="levels">
+      <div>
+        <h2>Zehn Levels, zehn Arten, ausgetrickst zu werden</h2>
+        <p>Jedes wirkt einfach. Bis der KI-Bot etwas findet, das du zu testen vergessen hast.</p>
+      </div>
+      <ol>
+        <li>
+          <div>
+            <span class="square">0</span>
+            <span>leicht</span>
+          </div>
+          <h3>Battery Level</h3>
+          <p>Der KI-Bot macht es dir zuerst vor. Dann bist du dran.</p>
+        </li>
+        <li>
+          <div>
+            <span class="square">1</span>
+            <span>leicht</span>
+          </div>
+          <h3>Voting Age</h3>
+          <p>Darfst du wählen? Zwei mögliche Ergebnisse.</p>
+        </li>
+        <li>
+          <div>
+            <span class="square">2</span>
+            <span>leicht</span>
+          </div>
+          <h3>Wind Scale</h3>
+          <p>Drei Schwellenwerte zwischen Flaute und Sturm.</p>
+        </li>
+        <li>
+          <div>
+            <span class="square">3</span>
+            <span>mittel</span>
+          </div>
+          <h3>Review</h3>
+          <p>Preis und Qualität, gegeneinander.</p>
+        </li>
+        <li>
+          <div>
+            <span class="square">4</span>
+            <span>mittel</span>
+          </div>
+          <h3>Discount</h3>
+          <p>Ein voller Warenkorb, eine Mitgliedskarte, oder beides zugleich.</p>
+        </li>
+        <li>
+          <div>
+            <span class="square">5</span>
+            <span>mittel</span>
+          </div>
+          <h3>FizzBuzz</h3>
+          <p>Jeder kennt FizzBuzz. Der Bot nicht.</p>
+        </li>
+        <li>
+          <div>
+            <span class="square">6</span>
+            <span>mittel</span>
+          </div>
+          <h3>Leap Year</h3>
+          <p>Eine Ausnahme von der Ausnahme von der Regel.</p>
+        </li>
+        <li>
+          <div>
+            <span class="square">7</span>
+            <span>schwer</span>
+          </div>
+          <h3>Triangle Type</h3>
+          <p>Jede Seite verändert das Urteil.</p>
+        </li>
+        <li>
+          <div>
+            <span class="square">8</span>
+            <span>schwer</span>
+          </div>
+          <h3>Speed Display</h3>
+          <p>Die physische Anzeige hat Grenzen. Finde sie alle.</p>
+        </li>
+        <li>
+          <div>
+            <span class="square">9</span>
+            <span>schwer</span>
+          </div>
+          <h3>Parking Fee</h3>
+          <p>Kostenlos, pauschal, oder pro Minute. Was jetzt?</p>
+        </li>
+      </ol>
+    </section>
+    <section id="faq">
+      <div>
+        <h2>Häufig gestellte Fragen</h2>
+        <p>Keine Verkaufsmasche. Nur Antworten.</p>
+      </div>
+      <ul>
+        <li>
+          <h3><span class="square">Q</span> <span>Ist es wirklich kostenlos?</span></h3>
+          <p>Ja. Keine Werbung, kein Tracking, keine Bezahlschranke. Einfach ein kostenloses Spiel.</p>
+        </li>
+        <li>
+          <h3><span class="square">Q</span> <span>Welche Programmiersprachen werden unterstützt?</span></h3>
+          <p>Lass den KI-Bot Programme schreiben in <a href="game?conversation_language=de&amp;programming_language=javascript">JavaScript</a>, <a href="game?conversation_language=de&amp;programming_language=typescript">TypeScript</a>, <a href="game?conversation_language=de&amp;programming_language=python">Python</a>, <a href="game?conversation_language=de&amp;programming_language=java">Java</a>, <a href="game?conversation_language=de&amp;programming_language=csharp">C#</a>, <a href="game?conversation_language=de&amp;programming_language=php">PHP</a> oder <a href="game?conversation_language=de&amp;programming_language=ruby">Ruby</a>.</p>
+        </li>
+        <li>
+          <h3><span class="square">Q</span> <span>Welche Sprachen werden unterstützt?</span></h3>
+          <p>Auf Deutsch natürlich, aber auch auf <a href="index-en.html">Englisch</a>, <a href="index-nl.html">Niederländisch</a>, <a href="index-fr.html">Französisch</a>, <a href="index-es.html">Spanisch</a> oder <a href="index-it.html">Italienisch</a>.</p>
+        </li>
+        <li>
+          <h3><span class="square">Q</span> <span>Muss ich etwas installieren?</span></h3>
+          <p>Nein. Es läuft komplett in deinem Browser. Ohne externe Bibliotheken.</p>
+        </li>
+        <li>
+          <h3><span class="square">Q</span> <span>Brauche ich ein Konto?</span></h3>
+          <p>Nein. Du kannst nur anonym spielen.</p>
+        </li>
+        <li>
+          <h3><span class="square">Q</span> <span>Welche Informationen werden gespeichert?</span></h3>
+          <p>Dein Fortschritt wird in deinem Browser gespeichert. Er verlässt nie deinen Computer.</p>
+        </li>
+        <li>
+          <h3><span class="square">Q</span> <span>Ist es Open Source?</span></h3>
+          <p>Ja. Der Quellcode ist auf GitHub verfügbar.</p>
+        </li>
+        <li>
+          <h3><span class="square">Q</span> <span>Wer hat das gemacht?</span></h3>
+          <p>Dieses Spiel wurde von einem Informatiklehrer erstellt. Aus Liebe zum Programmieren und Testen.</p>
+        </li>
+      </ul>
+    </section>
+    <section>
+      <div class="cta-band">
+        <h2>Der KI-Bot wartet auf dich. Lass dich nicht reinlegen.</h2>
+        <p>Klicke auf den Button, folge den Anweisungen, und sieh, womit der KI-Bot davonkommen will.</p>
+        <a class="btn" href="game?conversation_language=de">UnitTestGame kostenlos spielen →</a>
+      </div>
+    </section>
+    <footer>
+      <span>© 2026 UnitTestGame</span>
+      <div class="foot-links">
+        <a href="https://github.com/reimf/unittestgame.com">GitHub</a>
+        <a href="mailto:contact@unittestgame.com">Kontakt</a>
+      </div>
+    </footer>
+  </body>
+</html>

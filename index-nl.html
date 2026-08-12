@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'; form-action 'self'">
+    <meta name="description" content="Leer effectieve unit testen schrijven met een interactief spel waarin je moet samenwerken met een tegenwerkende AI bot.">
+    <meta name="theme-color" content="#0b0620">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://unittestgame.com/index-nl.html">
+    <meta property="og:title" content="UnitTestGame.com">
+    <meta property="og:description" content="Leer effectieve unit testen schrijven met een interactief spel waarin je moet samenwerken met een tegenwerkende AI bot.">
+    <meta property="og:image" content="https://unittestgame.com/apple-touch-icon.png">
+    <meta name="twitter:card" content="summary">
+    <link rel="canonical" href="https://unittestgame.com/index-nl.html">
+    <link rel="icon" type="image/ico" href="favicon.ico">
+    <link rel="stylesheet" href="shared.css">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="animation.css">
+    <script src="index.js" type="module"></script>
+    <title>UnitTestGame.com: Versla de AI bot die je tegenwerkt</title>
+  </head>
+  <body>
+    <nav>
+      <div id="brand">
+        <img src="apple-touch-icon.png" alt="Logo of UnitTestGame">
+        <span>UnitTestGame</span>
+      </div>
+      <div id="nav-links">
+        <a href="#how-it-works">Hoe het werkt</a>
+        <a href="#levels">Levels</a>
+        <a href="#why-it-works">Waarom het werkt</a>
+        <span><select id="language-switcher">
+          <option value="en">English</option>
+          <option value="nl" selected>Nederlands</option>
+          <option value="de">Deutsch</option>
+          <option value="fr">Français</option>
+          <option value="es">Español</option>
+          <option value="it">Italiano</option>
+        </select></span>
+      </div>
+    </nav>
+    <header>
+      <div id="hero-copy">
+        <h1>
+          <span>De code voldoet aan</span><br><span class="gradient-text">jouw unit testen.</span><br>
+          <span>Maar doet het ook wat</span><br><span class="gradient-text">jij eigenlijk wilt?</span>
+        </h1>
+        <p>UnitTestGame koppelt je aan een tegenwerkende AI bot. Hij schrijft correcte code die voldoet aan jouw unit testen. En niets meer. Jouw taak: schrijf unit testen totdat het programma klopt.</p>
+        <div id="hero-buttonrow">
+          <a class="btn" href="game?conversation_language=nl">Speel gratis in je browser →</a>
+          <a href="#how-it-works">Bekijk hoe het werkt</a>
+        </div>
+      </div>
+      <div id="hero-animation">
+        <div id="messages">
+          <section class="human" id="message-1">
+            <div>
+              <p>Ik wil deze unit test toevoegen.</p>
+              <code class="block">
+                <div class="new"><span class="function">isAllowedToVote</span>(<span class="number">18</span>) <span class="operator">===</span> <span class="literal">true</span></div>
+              </code>
+            </div>
+          </section>
+          <span class="human comment" id="this-is-you">dit ben jij ↑</span>
+          <span class="human comment" id="first-unit-test">met je eerste unit test</span>
+          <section class="computer" id="message-2">
+            <div>
+              <code class="block">
+                <div><span class="keyword">function</span> <span class="function">isAllowedToVote</span>(<span class="variable">age</span>) {</div>
+                <div>    <span class="keyword">return</span> <span class="literal">true</span></div>
+                <div>}</div>
+              </code>
+            </div>
+          </section>
+          <span class="computer comment" id="this-is-the-ai-bot">↑ dit is de AI bot</span>
+          <span class="computer comment" id="first-function">zijn eerste functie voldoet aan jouw unit test</span>
+          <span class="computer comment" id="first-verdict">maar het generaliseert niet 👎</span>
+          <section class="human" id="message-3">
+            <div>
+              <p>Ik wil deze unit test toevoegen.</p>
+              <code class="block">
+                <div class="new"><span class="function">isAllowedToVote</span>(<span class="number">17</span>) <span class="operator">===</span> <span class="literal">false</span></div>
+              </code>
+            </div>
+          </section>
+          <span class="human comment" id="this-is-you-again">dit ben jij weer ↑</span>
+          <span class="human comment" id="second-unit-test">nu met je tweede unit test</span>
+          <section class="computer" id="message-4">
+            <div>
+              <code class="block">
+                <div><span class="keyword">function</span> <span class="function">isAllowedToVote</span>(<span class="variable">age</span>) {</div>
+                <div>    <span class="keyword">if</span> (<span class="variable">age</span> <span class="operator">&gt;=</span> <span class="number">18</span>) <span class="keyword">return</span> <span class="literal">true</span></div>
+                <div>    <span class="keyword">return</span> <span class="literal">false</span></div>
+                <div>}</div>
+              </code>
+            </div>
+          </section>
+          <span class="computer comment" id="this-is-the-ai-bot-again">↑ dit is de AI bot weer</span>
+          <span class="computer comment" id="second-function">zijn tweede functie voldoet aan beide unit testen</span>
+          <span class="computer comment" id="second-verdict">en nu generaliseert het wel 👍</span>
+        </div>
+      </div>
+    </header>
+    <section id="how-it-works">
+      <div>
+        <h2>Leer unit testen schrijven op gevoel</h2>
+        <p>Geen video's. Geen quizjes. Gewoon een AI bot die elk gat in jouw unit testen uitbuit.</p>
+      </div>
+      <ol>
+        <li>
+          <h3><span class="square">①</span> <span>Lees de spec</span></h3>
+          <p>Bekijk wat de functie moet doen, in simpele input → output termen.</p>
+        </li>
+        <li>
+          <h3><span class="square">②</span> <span>Zie hem vals spelen</span></h3>
+          <p>De AI bot schrijft correcte code die precies voldoet aan wat jij hebt getest.</p>
+        </li>
+        <li>
+          <h3><span class="square">③</span> <span>Vind het gat</span></h3>
+          <p>Spot het randgeval dat hij ontweek, en voeg een unit test toe die dat blootlegt.</p>
+        </li>
+        <li>
+          <h3><span class="square">④</span> <span>Ga door tot het klopt</span></h3>
+          <p>Herhaal tot er geen andere weg meer is. Level voltooid!</p>
+        </li>
+      </ol>
+    </section>
+    <section id="why-it-works">
+      <div>
+        <h2>Voor developers die bugs willen voorkomen</h2>
+        <p>Het speelt als een spel. Het wordt een gewoonte. Het verandert hoe jij test.</p>
+      </div>
+      <ul>
+        <li>
+          <h3><span class="">🕵️</span> <span>Een waardige tegenstander</span></h3>
+          <p>De AI bot werkt tegen. Elke zet is een les over jouw blinde vlek.</p>
+        </li>
+        <li>
+          <h3><span>📈</span> <span>Oplopende moeilijkheidsgraad</span></h3>
+          <p>Begin met batterijniveaus. Eindig met het ontrafelen van snelheidsdisplays en parkeerkosten.</p>
+        </li>
+        <li>
+          <h3><span>🔓</span> <span>Echte progressie</span></h3>
+          <p>Een scorebord houdt bij wat je hebt ontgrendeld, zodat je altijd weet wat je te wachten staat.</p>
+        </li>
+        <li>
+          <h3><span>🌍</span> <span>Zes talen</span></h3>
+          <p>In het Nederlands natuurlijk, maar ook in het <a href="index-en.html">Engels</a>, <a href="index-de.html">Duits</a>, <a href="index-fr.html">Frans</a>, <a href="index-es.html">Spaans</a> of <a href="index-it.html">Italiaans</a>.</p>
+        </li>
+        <li>
+          <h3><span>💻</span> <span>Zeven programmeertalen</span></h3>
+          <p>Laat de AI bot programma's schrijven in <a href="game?conversation_language=nl&amp;programming_language=javascript">JavaScript</a>, <a href="game?conversation_language=nl&amp;programming_language=typescript">TypeScript</a>, <a href="game?conversation_language=nl&amp;programming_language=python">Python</a>, <a href="game?conversation_language=nl&amp;programming_language=java">Java</a>, <a href="game?conversation_language=nl&amp;programming_language=csharp">C#</a>, <a href="game?conversation_language=nl&amp;programming_language=php">PHP</a> of <a href="game?conversation_language=nl&amp;programming_language=ruby">Ruby</a>.</p>
+        </li>
+        <li>
+          <h3><span>🧩</span> <span>Helemaal geen installatie</span></h3>
+          <p>Draait volledig in de browser. Geen account, geen installatie, geen afhankelijkheden.</p>
+        </li>
+      </ul>
+    </section>
+    <section id="levels">
+      <div>
+        <h2>Tien levels, tien manieren om te worden afgetroefd</h2>
+        <p>Elk level lijkt simpel. Tot de AI bot weer iets vindt dat jij vergat te testen.</p>
+      </div>
+      <ol>
+        <li>
+          <div>
+            <span class="square">0</span>
+            <span>makkelijk</span>
+          </div>
+          <h3>Battery Level</h3>
+          <p>De AI bot doet het je eerst voor. Daarna ben jij aan de beurt.</p>
+        </li>
+        <li>
+          <div>
+            <span class="square">1</span>
+            <span>makkelijk</span>
+          </div>
+          <h3>Voting Age</h3>
+          <p>Mag je stemmen? Twee mogelijke uitkomsten.</p>
+        </li>
+        <li>
+          <div>
+            <span class="square">2</span>
+            <span>makkelijk</span>
+          </div>
+          <h3>Wind Scale</h3>
+          <p>Drie grenswaarden tussen kalm en storm.</p>
+        </li>
+        <li>
+          <div>
+            <span class="square">3</span>
+            <span>gemiddeld</span>
+          </div>
+          <h3>Review</h3>
+          <p>Prijs en kwaliteit, tegen elkaar in.</p>
+        </li>
+        <li>
+          <div>
+            <span class="square">4</span>
+            <span>gemiddeld</span>
+          </div>
+          <h3>Discount</h3>
+          <p>Een volle winkelwagen, een ledenkaart, of allebei tegelijk.</p>
+        </li>
+        <li>
+          <div>
+            <span class="square">5</span>
+            <span>gemiddeld</span>
+          </div>
+          <h3>FizzBuzz</h3>
+          <p>Iedereen kent FizzBuzz. De bot niet.</p>
+        </li>
+        <li>
+          <div>
+            <span class="square">6</span>
+            <span>gemiddeld</span>
+          </div>
+          <h3>Leap Year</h3>
+          <p>Een uitzondering op de uitzondering op de regel.</p>
+        </li>
+        <li>
+          <div>
+            <span class="square">7</span>
+            <span>moeilijk</span>
+          </div>
+          <h3>Triangle Type</h3>
+          <p>Elke zijde verandert de uitkomst.</p>
+        </li>
+        <li>
+          <div>
+            <span class="square">8</span>
+            <span>moeilijk</span>
+          </div>
+          <h3>Speed Display</h3>
+          <p>Het fysieke scherm heeft grenzen. Vind ze allemaal.</p>
+        </li>
+        <li>
+          <div>
+            <span class="square">9</span>
+            <span>moeilijk</span>
+          </div>
+          <h3>Parking Fee</h3>
+          <p>Gratis, vast bedrag, of per minuut. En nu?</p>
+        </li>
+      </ol>
+    </section>
+    <section id="faq">
+      <div>
+        <h2>Veelgestelde vragen</h2>
+        <p>Geen verkooppraatje. Gewoon antwoorden.</p>
+      </div>
+      <ul>
+        <li>
+          <h3><span class="square">Q</span> <span>Is het echt gratis?</span></h3>
+          <p>Ja. Geen advertenties, geen tracking, geen betaalmuur. Gewoon een gratis spel.</p>
+        </li>
+        <li>
+          <h3><span class="square">Q</span> <span>Welke programmeertalen worden ondersteund?</span></h3>
+          <p>Laat de AI bot programma's schrijven in <a href="game?conversation_language=nl&amp;programming_language=javascript">JavaScript</a>, <a href="game?conversation_language=nl&amp;programming_language=typescript">TypeScript</a>, <a href="game?conversation_language=nl&amp;programming_language=python">Python</a>, <a href="game?conversation_language=nl&amp;programming_language=java">Java</a>, <a href="game?conversation_language=nl&amp;programming_language=csharp">C#</a>, <a href="game?conversation_language=nl&amp;programming_language=php">PHP</a> of <a href="game?conversation_language=nl&amp;programming_language=ruby">Ruby</a>.</p>
+        </li>
+        <li>
+          <h3><span class="square">Q</span> <span>Welke talen worden ondersteund?</span></h3>
+          <p>In het Nederlands natuurlijk, maar ook in het <a href="index-en.html">Engels</a>, <a href="index-de.html">Duits</a>, <a href="index-fr.html">Frans</a>, <a href="index-es.html">Spaans</a> of <a href="index-it.html">Italiaans</a>.</p>
+        </li>
+        <li>
+          <h3><span class="square">Q</span> <span>Moet ik iets installeren?</span></h3>
+          <p>Nee. Het draait volledig in je browser. Zonder externe bibliotheken.</p>
+        </li>
+        <li>
+          <h3><span class="square">Q</span> <span>Heb ik een account nodig?</span></h3>
+          <p>Nee. Je kunt alleen anoniem spelen.</p>
+        </li>
+        <li>
+          <h3><span class="square">Q</span> <span>Welke informatie wordt opgeslagen?</span></h3>
+          <p>Je voortgang wordt opgeslagen in je browser. Het verlaat nooit je computer.</p>
+        </li>
+        <li>
+          <h3><span class="square">Q</span> <span>Is het open source?</span></h3>
+          <p>Ja. De broncode is beschikbaar op GitHub.</p>
+        </li>
+        <li>
+          <h3><span class="square">Q</span> <span>Wie heeft dit gemaakt?</span></h3>
+          <p>Dit spel is gemaakt door een informaticadocent. Uit liefde voor programmeren en testen.</p>
+        </li>
+      </ul>
+    </section>
+    <section>
+      <div class="cta-band">
+        <h2>De AI bot wacht op je. Laat je niet beetnemen.</h2>
+        <p>Klik op de knop, volg de instructies, en zie wat de AI bot probeert uit te halen.</p>
+        <a class="btn" href="game?conversation_language=nl">Speel UnitTestGame gratis →</a>
+      </div>
+    </section>
+    <footer>
+      <span>© 2026 UnitTestGame</span>
+      <div class="foot-links">
+        <a href="https://github.com/reimf/unittestgame.com">GitHub</a>
+        <a href="mailto:contact@unittestgame.com">Contact</a>
+      </div>
+    </footer>
+  </body>
+</html>

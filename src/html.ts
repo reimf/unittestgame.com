@@ -1,5 +1,4 @@
 import { ConversationLanguage, ConversationText } from './conversation-language-base.js'
-import { parseMarkdown } from './markdown.js'
 
 abstract class Content {
     private static timeOfLastDelayedCall: number = 0
@@ -47,7 +46,28 @@ export abstract class Html extends Content {
     }
 
     public appendMarkdown(markdown: ConversationText): this {
-        this.getElement().append(...parseMarkdown(markdown))
+        const patterns = [
+            /\*(?<italic>.+?)\*/,
+            /`(?<code>.+?)`/,
+            /!\[(?<alt>.+?)\]\((?<src>.+?)\)/,
+            /\[(?<text>.+?)\]\((?<href>.+?)\)/,
+            /(?<plain>[^*`![]+|[*`![])/
+        ]
+        const pattern = new RegExp(patterns.map(regexp => regexp.source).join('|'), 'g')
+
+        for (const { groups } of markdown.matchAll(pattern)) {
+            const { italic, code, text, href, plain, alt, src } = groups!
+            if (italic)
+                this.appendChild(new Italic().appendMarkdown(ConversationLanguage.bless(italic)))
+            else if (code)
+                this.appendChild(new Code().appendMarkdown(ConversationLanguage.bless(code)))
+            else if (alt && src)
+                this.appendChild(new Img(src, alt))
+            else if (text && href)
+                this.appendChild(new Anchor(href).appendMarkdown(ConversationLanguage.bless(text)))
+            else if (plain)
+                this.appendText(ConversationLanguage.bless(plain))
+        }
         return this
     }
 
@@ -273,6 +293,28 @@ export class Del extends Html {
 export class Ins extends Html {
     public constructor() {
         super('ins')
+    }
+}
+
+export class Italic extends Html {
+    public constructor() {
+        super('i')
+    }
+}
+
+export class Anchor extends Html {
+    public constructor(href: string) {
+        super('a')
+        this.getElement<HTMLAnchorElement>().href = href
+    }
+}
+
+export class Img extends Html {
+    public constructor(src: string, alt: string) {
+        super('img')
+        const img = this.getElement<HTMLImageElement>()
+        img.src = src
+        img.alt = alt
     }
 }
 

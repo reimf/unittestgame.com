@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'; form-action 'self'">
+    <meta name="description" content="Aprende a escribir unit tests efectivos con un juego interactivo en el que tienes que trabajar con un bot de IA hostil.">
+    <meta name="theme-color" content="#0b0620">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://unittestgame.com/index-es.html">
+    <meta property="og:title" content="UnitTestGame.com">
+    <meta property="og:description" content="Aprende a escribir unit tests efectivos con un juego interactivo en el que tienes que trabajar con un bot de IA hostil.">
+    <meta property="og:image" content="https://unittestgame.com/apple-touch-icon.png">
+    <meta name="twitter:card" content="summary">
+    <link rel="canonical" href="https://unittestgame.com/index-es.html">
+    <link rel="icon" type="image/ico" href="favicon.ico">
+    <link rel="stylesheet" href="shared.css">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="animation.css">
+    <script src="index.js" type="module"></script>
+    <title>UnitTestGame.com: Supera al bot de IA que juega en tu contra</title>
+  </head>
+  <body>
+    <nav>
+      <div id="brand">
+        <img src="apple-touch-icon.png" alt="Logo of UnitTestGame">
+        <span>UnitTestGame</span>
+      </div>
+      <div id="nav-links">
+        <a href="#how-it-works">Cómo funciona</a>
+        <a href="#levels">Niveles</a>
+        <a href="#why-it-works">Por qué funciona</a>
+        <span><select id="language-switcher">
+          <option value="en">English</option>
+          <option value="nl">Nederlands</option>
+          <option value="de">Deutsch</option>
+          <option value="fr">Français</option>
+          <option value="es" selected>Español</option>
+          <option value="it">Italiano</option>
+        </select></span>
+      </div>
+    </nav>
+    <header>
+      <div id="hero-copy">
+        <h1>
+          <span>El código pasa</span><br><span class="gradient-text">tus unit tests.</span><br>
+          <span>Pero ¿hace lo que</span><br><span class="gradient-text">realmente quieres?</span>
+        </h1>
+        <p>UnitTestGame te empareja con un bot de IA hostil. Escribe código correcto que satisface tus unit tests. Y nada más. Tu trabajo: escribir unit tests hasta que el programa sea correcto.</p>
+        <div id="hero-buttonrow">
+          <a class="btn" href="game?conversation_language=es">Juega gratis en tu navegador →</a>
+          <a href="#how-it-works">Ver cómo funciona</a>
+        </div>
+      </div>
+      <div id="hero-animation">
+        <div id="messages">
+          <section class="human" id="message-1">
+            <div>
+              <p>Quiero añadir este unit test.</p>
+              <code class="block">
+                <div class="new"><span class="function">isAllowedToVote</span>(<span class="number">18</span>) <span class="operator">===</span> <span class="literal">true</span></div>
+              </code>
+            </div>
+          </section>
+          <span class="human comment" id="this-is-you">este eres tú ↑</span>
+          <span class="human comment" id="first-unit-test">con tu primer unit test</span>
+          <section class="computer" id="message-2">
+            <div>
+              <code class="block">
+                <div><span class="keyword">function</span> <span class="function">isAllowedToVote</span>(<span class="variable">age</span>) {</div>
+                <div>    <span class="keyword">return</span> <span class="literal">true</span></div>
+                <div>}</div>
+              </code>
+            </div>
+          </section>
+          <span class="computer comment" id="this-is-the-ai-bot">↑ este es el bot de IA</span>
+          <span class="computer comment" id="first-function">su primera función pasa tu unit test</span>
+          <span class="computer comment" id="first-verdict">pero no generaliza 👎</span>
+          <section class="human" id="message-3">
+            <div>
+              <p>Quiero añadir este unit test.</p>
+              <code class="block">
+                <div class="new"><span class="function">isAllowedToVote</span>(<span class="number">17</span>) <span class="operator">===</span> <span class="literal">false</span></div>
+              </code>
+            </div>
+          </section>
+          <span class="human comment" id="this-is-you-again">este eres tú otra vez ↑</span>
+          <span class="human comment" id="second-unit-test">ahora con tu segundo unit test</span>
+          <section class="computer" id="message-4">
+            <div>
+              <code class="block">
+                <div><span class="keyword">function</span> <span class="function">isAllowedToVote</span>(<span class="variable">age</span>) {</div>
+                <div>    <span class="keyword">if</span> (<span class="variable">age</span> <span class="operator">&gt;=</span> <span class="number">18</span>) <span class="keyword">return</span> <span class="literal">true</span></div>
+                <div>    <span class="keyword">return</span> <span class="literal">false</span></div>
+                <div>}</div>
+              </code>
+            </div>
+          </section>
+          <span class="computer comment" id="this-is-the-ai-bot-again">↑ este es el bot de IA otra vez</span>
+          <span class="computer comment" id="second-function">su segunda función pasa ambos unit tests</span>
+          <span class="computer comment" id="second-verdict">y ahora sí generaliza 👍</span>
+        </div>
+      </div>
+    </header>
+    <section id="how-it-works">
+      <div>
+        <h2>Aprende unit tests por instinto</h2>
+        <p>Sin vídeos. Sin cuestionarios. Solo un bot de IA que explota cada agujero en tus unit tests.</p>
+      </div>
+      <ol>
+        <li>
+          <h3><span class="square">①</span> <span>Lee la spec</span></h3>
+          <p>Descubre qué se supone que hace la función, en términos simples de entrada → salida.</p>
+        </li>
+        <li>
+          <h3><span class="square">②</span> <span>Míralo hacer trampa</span></h3>
+          <p>El bot de IA escribe código correcto que satisface exactamente lo que probaste.</p>
+        </li>
+        <li>
+          <h3><span class="square">③</span> <span>Detecta el hueco</span></h3>
+          <p>Detecta el caso límite que esquivó, y añade un unit test que lo exponga.</p>
+        </li>
+        <li>
+          <h3><span class="square">④</span> <span>Sigue hasta que sea correcto</span></h3>
+          <p>Repite hasta que no quede otra manera. ¡Nivel completado!</p>
+        </li>
+      </ol>
+    </section>
+    <section id="why-it-works">
+      <div>
+        <h2>Para desarrolladores que quieren prevenir errores</h2>
+        <p>Se juega como un juego. Se convierte en un hábito. Cambia tu forma de probar.</p>
+      </div>
+      <ul>
+        <li>
+          <h3><span class="">🕵️</span> <span>Un rival a la altura</span></h3>
+          <p>El bot de IA juega en tu contra. Cada movimiento es una lección sobre tu punto ciego.</p>
+        </li>
+        <li>
+          <h3><span>📈</span> <span>Dificultad creciente</span></h3>
+          <p>Empieza con niveles de batería. Termina desenredando pantallas de velocidad y tarifas de aparcamiento.</p>
+        </li>
+        <li>
+          <h3><span>🔓</span> <span>Progresión real</span></h3>
+          <p>Un marcador registra lo que has desbloqueado, para que siempre sepas qué sigue.</p>
+        </li>
+        <li>
+          <h3><span>🌍</span> <span>Seis idiomas</span></h3>
+          <p>En español por supuesto, pero también en <a href="index-en.html">inglés</a>, <a href="index-nl.html">neerlandés</a>, <a href="index-de.html">alemán</a>, <a href="index-fr.html">francés</a> o <a href="index-it.html">italiano</a>.</p>
+        </li>
+        <li>
+          <h3><span>💻</span> <span>Siete lenguajes de programación</span></h3>
+          <p>Deja que el bot de IA escriba programas en <a href="game?conversation_language=es&amp;programming_language=javascript">JavaScript</a>, <a href="game?conversation_language=es&amp;programming_language=typescript">TypeScript</a>, <a href="game?conversation_language=es&amp;programming_language=python">Python</a>, <a href="game?conversation_language=es&amp;programming_language=java">Java</a>, <a href="game?conversation_language=es&amp;programming_language=csharp">C#</a>, <a href="game?conversation_language=es&amp;programming_language=php">PHP</a> o <a href="game?conversation_language=es&amp;programming_language=ruby">Ruby</a>.</p>
+        </li>
+        <li>
+          <h3><span>🧩</span> <span>Sin instalación alguna</span></h3>
+          <p>Funciona completamente en el navegador. Sin cuenta, sin instalación, sin dependencias.</p>
+        </li>
+      </ul>
+    </section>
+    <section id="levels">
+      <div>
+        <h2>Diez niveles, diez formas de que te superen</h2>
+        <p>Cada uno parece simple. Hasta que el bot de IA encuentra algo que olvidaste probar.</p>
+      </div>
+      <ol>
+        <li>
+          <div>
+            <span class="square">0</span>
+            <span>fácil</span>
+          </div>
+          <h3>Battery Level</h3>
+          <p>El bot de IA te lo muestra primero. Luego te toca a ti.</p>
+        </li>
+        <li>
+          <div>
+            <span class="square">1</span>
+            <span>fácil</span>
+          </div>
+          <h3>Voting Age</h3>
+          <p>¿Puedes votar? Dos resultados posibles.</p>
+        </li>
+        <li>
+          <div>
+            <span class="square">2</span>
+            <span>fácil</span>
+          </div>
+          <h3>Wind Scale</h3>
+          <p>Tres umbrales entre la calma y la tormenta.</p>
+        </li>
+        <li>
+          <div>
+            <span class="square">3</span>
+            <span>medio</span>
+          </div>
+          <h3>Review</h3>
+          <p>Precio y calidad, enfrentados.</p>
+        </li>
+        <li>
+          <div>
+            <span class="square">4</span>
+            <span>medio</span>
+          </div>
+          <h3>Discount</h3>
+          <p>Un carrito lleno, una tarjeta de socio, o ambos a la vez.</p>
+        </li>
+        <li>
+          <div>
+            <span class="square">5</span>
+            <span>medio</span>
+          </div>
+          <h3>FizzBuzz</h3>
+          <p>Todos conocen FizzBuzz. El bot no.</p>
+        </li>
+        <li>
+          <div>
+            <span class="square">6</span>
+            <span>medio</span>
+          </div>
+          <h3>Leap Year</h3>
+          <p>Una excepción a la excepción de la regla.</p>
+        </li>
+        <li>
+          <div>
+            <span class="square">7</span>
+            <span>difícil</span>
+          </div>
+          <h3>Triangle Type</h3>
+          <p>Cada lado cambia el veredicto.</p>
+        </li>
+        <li>
+          <div>
+            <span class="square">8</span>
+            <span>difícil</span>
+          </div>
+          <h3>Speed Display</h3>
+          <p>La pantalla física tiene límites. Encuéntralos todos.</p>
+        </li>
+        <li>
+          <div>
+            <span class="square">9</span>
+            <span>difícil</span>
+          </div>
+          <h3>Parking Fee</h3>
+          <p>Gratis, tarifa plana, o por minuto. ¿Y ahora qué?</p>
+        </li>
+      </ol>
+    </section>
+    <section id="faq">
+      <div>
+        <h2>Preguntas frecuentes</h2>
+        <p>Sin discurso de ventas. Solo respuestas.</p>
+      </div>
+      <ul>
+        <li>
+          <h3><span class="square">Q</span> <span>¿Es realmente gratis?</span></h3>
+          <p>Sí. Sin anuncios, sin rastreo, sin muro de pago. Solo un juego gratuito.</p>
+        </li>
+        <li>
+          <h3><span class="square">Q</span> <span>¿Qué lenguajes de programación son compatibles?</span></h3>
+          <p>Deja que el bot de IA escriba programas en <a href="game?conversation_language=es&amp;programming_language=javascript">JavaScript</a>, <a href="game?conversation_language=es&amp;programming_language=typescript">TypeScript</a>, <a href="game?conversation_language=es&amp;programming_language=python">Python</a>, <a href="game?conversation_language=es&amp;programming_language=java">Java</a>, <a href="game?conversation_language=es&amp;programming_language=csharp">C#</a>, <a href="game?conversation_language=es&amp;programming_language=php">PHP</a> o <a href="game?conversation_language=es&amp;programming_language=ruby">Ruby</a>.</p>
+        </li>
+        <li>
+          <h3><span class="square">Q</span> <span>¿Qué idiomas son compatibles?</span></h3>
+          <p>En español por supuesto, pero también en <a href="index-en.html">inglés</a>, <a href="index-nl.html">neerlandés</a>, <a href="index-de.html">alemán</a>, <a href="index-fr.html">francés</a> o <a href="index-it.html">italiano</a>.</p>
+        </li>
+        <li>
+          <h3><span class="square">Q</span> <span>¿Necesito instalar algo?</span></h3>
+          <p>No. Funciona completamente en tu navegador. Sin bibliotecas externas.</p>
+        </li>
+        <li>
+          <h3><span class="square">Q</span> <span>¿Necesito una cuenta?</span></h3>
+          <p>No. Solo puedes jugar de forma anónima.</p>
+        </li>
+        <li>
+          <h3><span class="square">Q</span> <span>¿Qué información se almacena?</span></h3>
+          <p>Tu progreso se guarda en tu navegador. Nunca sale de tu ordenador.</p>
+        </li>
+        <li>
+          <h3><span class="square">Q</span> <span>¿Es de código abierto?</span></h3>
+          <p>Sí. El código fuente está disponible en GitHub.</p>
+        </li>
+        <li>
+          <h3><span class="square">Q</span> <span>¿Quién hizo esto?</span></h3>
+          <p>Este juego lo creó un profesor de informática. Por amor a la programación y las pruebas.</p>
+        </li>
+      </ul>
+    </section>
+    <section>
+      <div class="cta-band">
+        <h2>El bot de IA te espera. No te dejes engañar.</h2>
+        <p>Haz clic en el botón, sigue las instrucciones, y mira con qué intenta salirse con la suya el bot de IA.</p>
+        <a class="btn" href="game?conversation_language=es">Juega a UnitTestGame gratis →</a>
+      </div>
+    </section>
+    <footer>
+      <span>© 2026 UnitTestGame</span>
+      <div class="foot-links">
+        <a href="https://github.com/reimf/unittestgame.com">GitHub</a>
+        <a href="mailto:contact@unittestgame.com">Contacto</a>
+      </div>
+    </footer>
+  </body>
+</html>
