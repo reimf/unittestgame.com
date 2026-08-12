@@ -41,7 +41,7 @@ pages:
     - mkdir -p public/src
     - cp *.{css,html,ico,png,txt} public
     - cp src/*.{js,js.map} public/src
-    - gzip -k -6 public/*.{css,html,js} public/src/*.js
+    - gzip -k -6 public/*.{css,html} public/src/*.js
   artifacts:
     paths:
       - public
