@@ -18,7 +18,7 @@ export class English extends ConversationLanguage {
     }
 
     public override home(): ConversationText {
-        return ConversationLanguage.bless('[Home](index-en.html)')
+        return ConversationLanguage.bless('[Home](index)')
     }
 
     public override settingsTitle(): ConversationText {

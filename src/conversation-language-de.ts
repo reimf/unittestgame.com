@@ -18,7 +18,7 @@ export class German extends ConversationLanguage {
     }
 
     public override home(): ConversationText {
-        return ConversationLanguage.bless('[Startseite](index-de.html)')
+        return ConversationLanguage.bless('[Startseite](index)')
     }
 
     public override settingsTitle(): ConversationText {

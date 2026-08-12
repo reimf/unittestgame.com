@@ -2,7 +2,7 @@ import { test, expect } from '../fixture/fixture-coverage'
 
 test.describe('welcome', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('/game-en.html?speed=fast&store=map')
+        await page.goto('/en/game?speed=fast&store=map')
     })
 
     test('has title', async ({ page }) => {
@@ -26,7 +26,7 @@ test.describe('welcome', () => {
 
     test('has link to home page', async ({ page }) => {
         const link = page.getByRole('link', { name: 'Home', exact: true })
-        expect(await link.getAttribute('href')).toBe('index-en.html')
+        expect(await link.getAttribute('href')).toBe('index')
     })
 
     test('has level overview panel', async ({ page }) => {

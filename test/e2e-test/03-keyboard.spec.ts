@@ -2,7 +2,7 @@ import { test, expect } from '../fixture/fixture-coverage'
 
 test.describe('keyboard', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('/game-en.html?speed=fast')
+        await page.goto('/en/game?speed=fast')
         await page.getByRole('button', { name: 'I want to play Level 0 - Battery Level', exact: true }).click()
     })
 
@@ -42,7 +42,7 @@ test.describe('keyboard', () => {
 
 test.describe('keyboard across messages and panels', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('/game-en.html?speed=fast')
+        await page.goto('/en/game?speed=fast')
     })
 
     test('has the home link focused after arrow down from the last message', async ({ page }) => {

@@ -9,7 +9,7 @@ test.describe('unknown parameters', () => {
             dialog.accept()
         })
 
-        await page.goto('/game-en.html?speed=fast&programming_language=perl')
+        await page.goto('/en/game?speed=fast&programming_language=perl')
     })
 
     test('has error in English', async ({ page }) => {
@@ -20,6 +20,6 @@ test.describe('unknown parameters', () => {
             dialog.accept()
         })
 
-        await page.goto('/game-en.html?speed=fast&unknown=parameter&other=value')
+        await page.goto('/en/game?speed=fast&unknown=parameter&other=value')
     })
 })

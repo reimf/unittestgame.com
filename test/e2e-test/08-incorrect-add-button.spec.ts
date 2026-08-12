@@ -2,7 +2,7 @@ import { test, expect } from '../fixture/fixture-coverage'
 
 test.describe('incorrect add button', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('/game-en.html?speed=fast')
+        await page.goto('/en/game?speed=fast')
         await page.getByRole('button', { name: 'I want to play Level 0 - Battery Level', exact: true }).click()
         await page.getByLabel('batteryLevel').fill('20')
         await page.getByLabel('"NORMAL MODE"', { exact: true }).check()

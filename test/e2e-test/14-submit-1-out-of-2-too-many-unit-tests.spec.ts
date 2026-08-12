@@ -2,7 +2,7 @@ import { test, expect } from '../fixture/fixture-coverage'
 
 test.describe('submit 1 out of 2 too many unit tests', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('/game-en.html?speed=fast&setitem=penalties-level-battery-level:1')
+        await page.goto('/en/game?speed=fast&setitem=penalties-level-battery-level:1')
         await page.getByRole('button', { name: 'I want to play Level 1 - Voting Age', exact: true }).click()
         await page.getByLabel('Age').fill('16')
         await page.getByLabel('false').check()

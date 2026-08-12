@@ -18,7 +18,7 @@ export class Dutch extends ConversationLanguage {
     }
 
     public override home(): ConversationText {
-        return ConversationLanguage.bless('[Startpagina](index-nl.html)')
+        return ConversationLanguage.bless('[Startpagina](index)')
     }
 
     public override settingsTitle(): ConversationText {

@@ -18,7 +18,7 @@ export class Spanish extends ConversationLanguage {
     }
 
     public override home(): ConversationText {
-        return ConversationLanguage.bless('[Inicio](index-es.html)')
+        return ConversationLanguage.bless('[Inicio](index)')
     }
 
     public override settingsTitle(): ConversationText {
