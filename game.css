@@ -82,6 +82,7 @@ label {
   &:has(input[type="radio"]) {
     background: var(--button-background-gradient);
     color: var(--general-text-light);
+    cursor: pointer;
     display: inline-block;
     line-height: 2rem;
     margin-right: 0.75rem;
@@ -91,10 +92,6 @@ label {
 
     &:has(input:checked) {
       opacity: 1;
-    }
-
-    &:hover {
-      cursor: pointer;
     }
   }
 }

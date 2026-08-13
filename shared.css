@@ -43,7 +43,6 @@
   --unittest-old-background: #fff;
 
   --button-background-gradient: linear-gradient(135deg, var(--button-background-left), var(--button-background-right));
-  --button-background-tint: color-mix(in srgb, var(--button-background-left), white 25%);
   --code-general-background-gradient: linear-gradient(135deg, var(--code-general-background-left), var(--code-general-background-right));
   --cta-band-background-gradient: linear-gradient(135deg, color-mix(in srgb, var(--panel-background-left) 15%, transparent), color-mix(in srgb, var(--panel-background-right) 5%, transparent));
   --level-locked-background-gradient: linear-gradient(135deg, var(--level-locked-background-left), var(--level-locked-background-right));
@@ -151,17 +150,13 @@ ul {
   align-items: center;
   background: var(--button-background-gradient);
   border-radius: 2rem;
-  box-shadow: 0 0.6rem 1.5rem -0.5rem var(--button-background-tint);
+  box-shadow: 0.5rem 0.5rem 1rem -0.5rem var(--panel-background-left);
   color: var(--general-text-light);
   display: inline-flex;
   height: 4rem;
   padding: 0 2rem;
   text-decoration: none;
   white-space: nowrap;
-
-  &:hover {
-    box-shadow: 0 0.9rem 2rem -0.5rem var(--button-background-tint);
-  }
 }
 
 a,
