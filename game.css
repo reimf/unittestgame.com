@@ -42,7 +42,7 @@ i {
 }
 
 input {
-  margin-top: 0.5rem;
+  margin-top: 0.25rem;
 
   &[type="number"] {
     background: var(--button-background-gradient);
@@ -86,7 +86,6 @@ label {
     display: inline-block;
     line-height: 2rem;
     margin-right: 0.75rem;
-    margin-top: 0.5rem;
     opacity: 0.5;
     padding-right: 0.75rem;
 
