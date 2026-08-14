@@ -10,7 +10,7 @@ const javaScript = new JavaScript()
 export class Candidate<Parameters extends readonly Value[] = readonly Value[], Result extends Value = Value> {
     private readonly lines: string[]
     public readonly nonEmptyLines: string[]
-    private readonly function: Function
+    private readonly function: (...args: unknown[]) => unknown
     private readonly complexity: number
 
     public constructor(lines: readonly string[]) {
@@ -59,7 +59,8 @@ export class Candidate<Parameters extends readonly Value[] = readonly Value[], R
     }
 
     public execute(argumentsList: Parameters): Result {
-        return this.function(...argumentsList)
+        // the cast is safe because the generated function's code is derived from Parameters/Result
+        return this.function(...argumentsList) as Result
     }
 
     public failingTestResults(unitTests: readonly UnitTest<Parameters, Result>[]): TestResult<Parameters, Result>[] {
