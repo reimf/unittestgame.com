@@ -34,9 +34,9 @@ export class TriangleType extends Level<[number, number, number], string> {
                 '',
             ],
             [
-                '    return "EQUILATERAL"',
-                '    return "ISOSCELES"',
                 '    return "SCALENE"',
+                '    return "ISOSCELES"',
+                '    return "EQUILATERAL"',
                 '    return "UNKNOWN"',
             ],
             [

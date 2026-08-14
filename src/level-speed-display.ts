@@ -36,10 +36,10 @@ export class SpeedDisplay extends Level<[number], string> {
                 '',
             ],
             [
+                '    return "DANGER"',
                 '    return "INTEGER"',
                 '    return "DECIMAL"',
                 '    return "START"',
-                '    return "DANGER"',
                 '    return "UNKNOWN"',
             ],
             [

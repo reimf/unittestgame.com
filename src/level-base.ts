@@ -89,6 +89,7 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
         const returnValues = candidateElements.flat()
             .map(line => line.match(/return (.+)$/)?.[1])
             .filter((value): value is string => value !== undefined && value !== '"UNKNOWN"')
+            .reverse()
         const texts = [...new Set(returnValues)]
             .filter(value => value !== '""')
             .map(value => ConversationLanguage.bless(value.slice(1, -1)))

@@ -31,9 +31,9 @@ export class FizzBuzz extends Level<[number], string> {
                 ''
             ],
             [
-                '    return "FIZZ"',
-                '    return "BUZZ"',
                 '    return "FIZZBUZZ"',
+                '    return "BUZZ"',
+                '    return "FIZZ"',
                 '    return "NUMBER"',
                 '    return "UNKNOWN"',
             ],

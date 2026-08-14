@@ -34,10 +34,10 @@ export class WindScale extends Level<[number], string> {
                 '',
             ],
             [
-                '    return "CALM"',
-                '    return "BREEZE"',
-                '    return "GALE"',
                 '    return "STORM"',
+                '    return "GALE"',
+                '    return "BREEZE"',
+                '    return "CALM"',
                 '    return "UNKNOWN"',
             ],
             [
