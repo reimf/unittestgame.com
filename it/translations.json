@@ -24,7 +24,7 @@
     "specificationTitle": "Specifica ({description})",
     "currentFunctionTitle": "Funzione Attuale",
     "differenceTitle": "Differenza",
-    "currentFunctionNotImproved": "Ho aggiunto il unit test, ma la *Funzione Attuale* lo supera già, quindi non ho migliorato la *Funzione Attuale*.",
+    "currentFunctionNotImproved": "Ho aggiunto il unit test, ma la *Funzione Attuale* lo supera già, quindi non l'ho migliorata.",
     "hint": "Scrivi un unit test che la *Funzione Attuale* non supera.",
     "currentFunctionImproved": "Ho aggiunto il unit test ai *Unit Tests* e migliorato la *Funzione Attuale* in modo che il nuovo unit test ora superi{numberOfUnitTests === 1 ? '' : ' anche'}.",
     "invalidUnitTest": "Il seguente unit test non corrisponde alla *Specifica*, ma la *Funzione Attuale* lo supera.",
