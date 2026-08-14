@@ -21,10 +21,6 @@ export interface ConversationStrings {
     submitUnitTestsButton: string
     unitTestNotAdded: string
     tooManyUnitTests: string
-    tooManyUnitTestsUnitTestSingular: string
-    tooManyUnitTestsUnitTestPlural: string
-    tooManyUnitTestsRedundantSingular: string
-    tooManyUnitTestsRedundantPlural: string
     readSpecification: string
     improveCurrentFunction: string
     submitUnitTests: string
@@ -34,14 +30,8 @@ export interface ConversationStrings {
     currentFunctionNotImproved: string
     hint: string
     currentFunctionImproved: string
-    currentFunctionImprovedAlsoSingular: string
-    currentFunctionImprovedAlsoPlural: string
     invalidUnitTest: string
     moreUnitTests: string
-    moreUnitTestsUnitTestSingular: string
-    moreUnitTestsUnitTestPlural: string
-    moreUnitTestsSupplementaireSingular: string
-    moreUnitTestsSupplementairePlural: string
     currentFunctionCorrect: string
     levelOverviewTitle: string
     batteryLevelSpecification: string
@@ -77,7 +67,9 @@ export abstract class ConversationLanguage {
     }
 
     protected format(template: string, params: Record<string, string | number> = {}): ConversationText {
-        const formatted = template.replace(/\{(\w+)\}/g, (_, key: string) => String(params[key]))
+        const formatted = template
+            .replace(/\{(\w+)\}/g, (_, key: string) => String(params[key]))
+            .replace(/\{(\w+) === 1 \? '(.*?)' : '(.*?)'\}/g, (_, key: string, singular: string, plural: string) => Number(params[key]) === 1 ? singular : plural)
         return ConversationLanguage.bless(formatted)
     }
 
@@ -154,11 +146,7 @@ export abstract class ConversationLanguage {
     }
 
     public tooManyUnitTests(numberOfUnnecessaryUnitTests: number, numberOfRedundantUnitTests: number): ConversationText {
-        return this.format(this.strings.tooManyUnitTests, {
-            numberOfUnnecessaryUnitTests,
-            unitTestWord: numberOfUnnecessaryUnitTests === 1 ? this.strings.tooManyUnitTestsUnitTestSingular : this.strings.tooManyUnitTestsUnitTestPlural,
-            redundantPhrase: numberOfRedundantUnitTests === 1 ? this.strings.tooManyUnitTestsRedundantSingular : this.strings.tooManyUnitTestsRedundantPlural,
-        })
+        return this.format(this.strings.tooManyUnitTests, { numberOfUnnecessaryUnitTests, numberOfRedundantUnitTests })
     }
 
     public readSpecification(): ConversationText {
@@ -194,9 +182,7 @@ export abstract class ConversationLanguage {
     }
 
     public currentFunctionImproved(numberOfUnitTests: number): ConversationText {
-        return this.format(this.strings.currentFunctionImproved, {
-            alsoWord: numberOfUnitTests === 1 ? this.strings.currentFunctionImprovedAlsoSingular : this.strings.currentFunctionImprovedAlsoPlural,
-        })
+        return this.format(this.strings.currentFunctionImproved, { numberOfUnitTests })
     }
 
     public invalidUnitTest(): ConversationText {
@@ -204,11 +190,7 @@ export abstract class ConversationLanguage {
     }
 
     public moreUnitTests(numberOfUnitTestsStillNeeded: number): ConversationText {
-        return this.format(this.strings.moreUnitTests, {
-            numberOfUnitTestsStillNeeded,
-            unitTestWord: numberOfUnitTestsStillNeeded === 1 ? this.strings.moreUnitTestsUnitTestSingular : this.strings.moreUnitTestsUnitTestPlural,
-            supplementaire: numberOfUnitTestsStillNeeded === 1 ? this.strings.moreUnitTestsSupplementaireSingular : this.strings.moreUnitTestsSupplementairePlural,
-        })
+        return this.format(this.strings.moreUnitTests, { numberOfUnitTestsStillNeeded })
     }
 
     public currentFunctionCorrect(): ConversationText {
