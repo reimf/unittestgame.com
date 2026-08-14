@@ -1,7 +1,7 @@
 {
     "welcome": "Bonjour! Je suis un bot IA qui écrit du code. Ton rôle est de me guider avec des unit tests.",
     "unitTestGameTitle": "UnitTestGame",
-    "slogan": "![Logo de UnitTestGame](apple-touch-icon.png)Apprends à écrire des unit tests qui guident un bot IA.",
+    "slogan": "![Logo de UnitTestGame](../apple-touch-icon.png)Apprends à écrire des unit tests qui guident un bot IA.",
     "home": "[Accueil](index)",
     "settingsTitle": "Paramètres",
     "invitation": "Quel niveau veux-tu jouer ?",

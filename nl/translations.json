@@ -1,7 +1,7 @@
 {
     "welcome": "Hoi! Ik ben een AI bot die code schrijft. Jouw taak is om mij bij te sturen met unit testen.",
     "unitTestGameTitle": "UnitTestGame",
-    "slogan": "![Logo van UnitTestGame](apple-touch-icon.png)Leer unit testen schrijven die een AI bot bijsturen.",
+    "slogan": "![Logo van UnitTestGame](../apple-touch-icon.png)Leer unit testen schrijven die een AI bot bijsturen.",
     "home": "[Startpagina](index)",
     "settingsTitle": "Instellingen",
     "invitation": "Welk level wil je spelen?",
