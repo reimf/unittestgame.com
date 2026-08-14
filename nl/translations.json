@@ -17,7 +17,7 @@
     "addUnitTestButton": "Ik wil deze unit test toevoegen",
     "submitUnitTestsButton": "Ik wil de unit testen inleveren",
     "unitTestNotAdded": "Ik heb de unit test niet toegevoegd, omdat deze niet voldoet aan de *Specificatie*.",
-    "tooManyUnitTests": "Je hebt de *Huidige Functie* grondig getest, maar je hebt {numberOfUnnecessaryUnitTests} {numberOfUnnecessaryUnitTests === 1 ? 'unit test' : 'unit testen'} meer dan nodig is. {numberOfRedundantUnitTests === 1 ? 'De volgende' : 'Minstens één van de volgende'} kun je weglaten.",
+    "tooManyUnitTests": "Je hebt de *Huidige Functie* grondig getest, maar je hebt {numberOfUnnecessaryUnitTests} {numberOfUnnecessaryUnitTests === 1 ? 'unit test' : 'unit testen'} meer dan nodig is. {numberOfRedundantUnitTests === 1 ? 'De volgende' : 'Minstens één van de volgende'} had je weg kun laten.",
     "readSpecification": "Lees eerst de *Specificatie*. Schrijf daarna een unit test waarvoor de *Huidige Functie* faalt.",
     "improveCurrentFunction": "Nadat je een unit test hebt toegevoegd verbeter ik de *Huidige Functie* zodat alle *Unit Testen* weer slagen.",
     "submitUnitTests": "Lever de *Unit Testen* in als je denkt dat de *Huidige Functie* voldoet aan de *Specificatie*.",

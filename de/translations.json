@@ -17,7 +17,7 @@
     "addUnitTestButton": "Ich möchte diesen Unit-Test hinzufügen",
     "submitUnitTestsButton": "Ich möchte die Unit-Tests einreichen",
     "unitTestNotAdded": "Ich habe den Unit-Test nicht hinzugefügt, weil er nicht der *Spezifikation* entspricht.",
-    "tooManyUnitTests": "Du hast die *Aktuelle Funktion* gründlich getestet, aber du hast {numberOfUnnecessaryUnitTests} {numberOfUnnecessaryUnitTests === 1 ? 'Unit-Test' : 'Unit-Tests'} mehr als nötig geschrieben. {numberOfRedundantUnitTests === 1 ? 'Der folgende' : 'Mindestens einer der folgenden'} kann weggelassen werden.",
+    "tooManyUnitTests": "Du hast die *Aktuelle Funktion* gründlich getestet, aber du hast {numberOfUnnecessaryUnitTests} {numberOfUnnecessaryUnitTests === 1 ? 'Unit-Test' : 'Unit-Tests'} mehr als nötig geschrieben. {numberOfRedundantUnitTests === 1 ? 'Der folgende' : 'Mindestens einer der folgenden'} hätte weggelassen werden können.",
     "readSpecification": "Lies zuerst die *Spezifikation*. Schreibe dann einen Unit-Test, den die *Aktuelle Funktion* nicht besteht.",
     "improveCurrentFunction": "Nachdem du einen Unit-Test hinzugefügt hast, verbessere ich die *Aktuelle Funktion*, damit alle *Unit-Tests* wieder bestehen.",
     "submitUnitTests": "Reiche die *Unit-Tests* ein, wenn du denkst, dass die *Aktuelle Funktion* der *Spezifikation* entspricht.",

@@ -17,7 +17,7 @@
     "addUnitTestButton": "Quiero añadir este unit test",
     "submitUnitTestsButton": "Quiero enviar los unit tests",
     "unitTestNotAdded": "No he añadido el unit test, porque no coincide con la *Especificación*.",
-    "tooManyUnitTests": "Has probado la *Función Actual* exhaustivamente, pero has escrito {numberOfUnnecessaryUnitTests} {numberOfUnnecessaryUnitTests === 1 ? 'unit test' : 'unit tests'} más de lo necesario. {numberOfRedundantUnitTests === 1 ? 'El siguiente' : 'Al menos uno de los siguientes'} puede omitirse.",
+    "tooManyUnitTests": "Has probado la *Función Actual* exhaustivamente, pero has escrito {numberOfUnnecessaryUnitTests} {numberOfUnnecessaryUnitTests === 1 ? 'unit test' : 'unit tests'} más de lo necesario. {numberOfRedundantUnitTests === 1 ? 'El siguiente' : 'Al menos uno de los siguientes'} podría haberse omitido.",
     "readSpecification": "Primero, lee la *Especificación*. Luego escribe un unit test que la *Función Actual* no supere.",
     "improveCurrentFunction": "Después de añadir un unit test, mejoraré la *Función Actual* para que todos los *Unit Tests* vuelvan a pasar.",
     "submitUnitTests": "Envía los *Unit Tests* cuando creas que la *Función Actual* coincide con la *Especificación*.",
