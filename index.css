@@ -15,7 +15,7 @@ a, summary {
   text-wrap: nowrap;
 }
 
-a:not(.btn) {
+a:not(.btn), summary {
   border-radius: 100rem;
   margin: -0.25rem -0.75rem;
   padding: 0.25rem 0.75rem;

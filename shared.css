@@ -175,27 +175,10 @@ summary {
 details {
   position: relative;
 
-  summary.btn {
+  summary {
     cursor: pointer;
-    gap: 0.5rem;
-    height: 2rem;
-    list-style: none;
-    padding: 0 2rem 0 1rem;
     position: relative;
-    width: 8rem;
-
-    &::-webkit-details-marker {
-      display: none;
-    }
-
-    &::after {
-      content: '▾';
-      pointer-events: none;
-      position: absolute;
-      right: 0.5rem;
-      top: 50%;
-      transform: translateY(-50%);
-    }
+    text-decoration: underline;
   }
 
   ul {
@@ -205,11 +188,10 @@ details {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    left: 0;
-    margin-top: 0.25rem;
+    left: -1rem;
     padding: 0.5rem;
     position: absolute;
-    top: 100%;
+    top: 2rem;
     z-index: 20;
 
     li {
@@ -223,7 +205,6 @@ details {
         height: 2rem;
         line-height: 2rem;
         padding: 0 1rem;
-        width: 7rem;
       }
     }
   }
