@@ -157,7 +157,9 @@ body {
     padding-left: 2rem;
     padding-right: 2rem;
   }
+}
 
+main {
   >section {
     padding-top: 5rem;
     padding-bottom: 5rem;
