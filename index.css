@@ -124,7 +124,7 @@ header {
   min-width: 30rem;
 
   .comment {
-    color: var(--panel-background-right);
+    color: var(--panel-background-left);
     display: block;
     font-family: sans-serif;
     font-size: 1.25rem;
