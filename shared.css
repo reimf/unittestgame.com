@@ -63,6 +63,11 @@
   padding: 0;
 }
 
+a, summary {
+  color: var(--button-background-left);
+  text-wrap: nowrap;
+}
+
 code {
   &:not(.block) {
     background: var(--code-general-background-gradient);
@@ -159,6 +164,12 @@ ul {
   white-space: nowrap;
 }
 
+a:not(.btn), summary {
+  border-radius: 100rem;
+  margin: -0.25rem -0.75rem;
+  padding: 0.25rem 0.75rem;
+}
+
 a,
 button,
 input:not([type="radio"]),
@@ -179,6 +190,7 @@ details {
     cursor: pointer;
     position: relative;
     text-decoration: underline;
+    width: fit-content;
   }
 
   ul {

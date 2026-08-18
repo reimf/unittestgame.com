@@ -1,14 +1,3 @@
-a {
-  /* markdown: [text](url) */
-  background: var(--button-background-gradient);
-  border-radius: 100rem;
-  color: var(--general-text-light);
-  display: inline-block;
-  line-height: 2rem;
-  padding: 0 1rem;
-  text-decoration: none;
-}
-
 body {
   background-color: var(--general-background);
   color: var(--general-text-dark);

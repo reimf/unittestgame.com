@@ -10,17 +10,6 @@ body {
   overflow-x: hidden;
 }
 
-a, summary {
-  color: var(--button-background-left);
-  text-wrap: nowrap;
-}
-
-a:not(.btn), summary {
-  border-radius: 100rem;
-  margin: -0.25rem -0.75rem;
-  padding: 0.25rem 0.75rem;
-}
-
 nav {
   backdrop-filter: blur(0.75rem);
   background: color-mix(in srgb, var(--general-background) 70%, transparent);

@@ -67,7 +67,7 @@ export class Main {
                 new Anchor(this.urlWith('programming_language', programmingLanguage.id)).addClass('btn').appendText(ConversationLanguage.bless(programmingLanguage.name))
             ))
         return new Details().addClass('switcher').setId('programming-language-switcher').appendChildren([
-            new Summary().addClass('btn').appendChild(
+            new Summary().appendChild(
                 new Span().appendText(ConversationLanguage.bless(this.programmingLanguage.name))
             ),
             new UnorderedList().appendChildren(items)
