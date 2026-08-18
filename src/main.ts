@@ -75,7 +75,7 @@ export class Main {
     }
 
     private showAboutPanel(): void {
-        const content = [this.conversationLanguage.slogan(), this.conversationLanguage.home()]
+        const content = [this.conversationLanguage.slogan()]
         new Panel('unittestgame', this.conversationLanguage.unitTestGameTitle(), content).show()
     }
 

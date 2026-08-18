@@ -1,8 +1,7 @@
 {
     "welcome": "Hallo! Ich bin ein KI-Bot, der Code schreibt. Deine Aufgabe ist es, mich mit Unit-Tests zu steuern.",
     "unitTestGameTitle": "UnitTestGame",
-    "slogan": "![Logo von UnitTestGame](../apple-touch-icon.png)Lerne, Unit-Tests zu schreiben, die einen KI-Bot steuern.",
-    "home": "[Startseite](index)",
+    "slogan": "![Logo von UnitTestGame](/apple-touch-icon.png)Lerne, Unit-Tests zu schreiben, die einen KI-Bot steuern.\n\n[Startseite](/index)",
     "settingsTitle": "Einstellungen",
     "invitation": "Welches Level möchtest du spielen?",
     "level": "Level {levelNumber} - {levelName}",

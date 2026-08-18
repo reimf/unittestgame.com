@@ -12,7 +12,6 @@ test.describe('conversation languages', () => {
                 conversationLanguage.welcome(),
                 conversationLanguage.unitTestGameTitle(),
                 conversationLanguage.slogan(),
-                conversationLanguage.home(),
                 conversationLanguage.settingsTitle(),
                 conversationLanguage.invitation(),
                 conversationLanguage.level(1, 'Voting Age'),

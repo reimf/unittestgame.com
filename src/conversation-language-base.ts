@@ -5,7 +5,6 @@ export interface ConversationStrings {
     welcome: string
     unitTestGameTitle: string
     slogan: string
-    home: string
     settingsTitle: string
     invitation: string
     level: string
@@ -83,10 +82,6 @@ export abstract class ConversationLanguage {
 
     public slogan(): ConversationText {
         return this.format(this.strings.slogan)
-    }
-
-    public home(): ConversationText {
-        return this.format(this.strings.home)
     }
 
     public settingsTitle(): ConversationText {
