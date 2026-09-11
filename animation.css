@@ -24,3 +24,60 @@
     }
   }
 }
+
+#steps {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+#control-animation {
+  height: 2.5rem;
+  justify-content: center;
+  padding: 0;
+  width: 2.5rem;
+
+  svg {
+    display: block;
+    height: 1.75rem;
+    width: 1.75rem;
+  }
+}
+
+#progress {
+  appearance: none;
+  border: none;
+  border-radius: 100rem;
+  cursor: pointer;
+  flex: 1 1 auto;
+  height: 0.75rem;
+  overflow: hidden;
+
+  &::-webkit-progress-bar {
+    background: var(--card-border);
+    border-radius: inherit;
+  }
+
+  &::-webkit-progress-value {
+    background: var(--button-background-gradient);
+    border-radius: inherit;
+    transition: width 0.3s ease;
+  }
+
+  &::-moz-progress-bar {
+    background: var(--button-background-gradient);
+    border-radius: inherit;
+    transition: width 0.3s ease;
+  }
+
+  &.playing {
+    &::-webkit-progress-value {
+      transition: none;
+    }
+
+    &::-moz-progress-bar {
+      transition: none;
+    }
+  }
+}
