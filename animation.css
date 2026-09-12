@@ -53,6 +53,7 @@
   flex: 1 1 auto;
   height: 0.75rem;
   overflow: hidden;
+  touch-action: none;
 
   &::-webkit-progress-bar {
     background: var(--card-border);
@@ -71,7 +72,8 @@
     transition: width 0.3s ease;
   }
 
-  &.playing {
+  &.playing,
+  &.seeking {
     &::-webkit-progress-value {
       transition: none;
     }

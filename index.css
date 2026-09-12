@@ -124,7 +124,7 @@ header {
       text-align: right;
     }
 
-    &#first-unit-test, &#second-unit-test {
+    &#with-your-first-unit-test, &#now-with-your-second-unit-test {
       margin-right: 2rem;
       text-align: right;
     }
@@ -134,7 +134,7 @@ header {
       text-align: left;
     }
 
-    &#first-function, &#second-function, &#first-verdict, &#second-verdict {
+    &#its-first-function-passes-your-unit-test, &#its-second-function-passes-both-unit-tests, &#but-it-doesnt-generalize, &#and-now-it-generalizes {
       margin-left: 2rem;
       text-align: left;
     }
