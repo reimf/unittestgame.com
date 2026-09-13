@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const ICONS = {
         play:   '<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M7,4 L19,12 L7,20 Z"/></svg>',
         pause:  '<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6,4 h3 v16 h-3 z M15,4 h3 v16 h-3 z"/></svg>',
-        replay: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M16,9.3 h5 v0 M3,19.6 v-5 m0,0 h5 m-5,0 3.2,3.2 a8.3,8.3 0 0 0 13.8,-3.7 M4,9.9 a8.3,8.3 0 0 1 13.8,-3.7 l3.2,3.2 m0,-5 v5"/></svg>',
+        replay: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M3,19.6 v-5 h5 m-5,0 3.2,3.2 a8.3,8.3 0 1 0 -2.2,-8"/></svg>',
     }
 
     const controlAnimationButton = document.getElementById('control-animation') as HTMLButtonElement
