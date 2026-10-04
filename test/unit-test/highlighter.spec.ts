@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test'
 import { JSDOM } from 'jsdom'
 import { Div } from '../../src/html.js'
+import { Basic } from '../../src/programming-language-basic.js'
 import { JavaScript } from '../../src/programming-language-javascript.js'
 import { Pascal } from '../../src/programming-language-pascal.js'
 import { Python } from '../../src/programming-language-python.js'
@@ -330,6 +331,169 @@ test.describe('class Python', () => {
                 '<span class="whitespace"> </span>' +
                 '<del class="literal">False</del>' +
                 '<ins class="literal">True</ins>' +
+            '</div>',
+        ])
+    })
+})
+
+test.describe('class Basic', () => {
+    const basic = new Basic()
+
+    test('transpiles === to = and capitalizes keywords and literals across multiple lines', () => {
+        const highlighted = basic.highlight('if (age === 17) return false\nreturn true')
+        expect(html(highlighted)).toEqual([
+            '<div>' +
+                '<span class="keyword">If</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="variable">age</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="operator">=</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="number">17</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="keyword">Then</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="keyword">Return</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="literal">False</span>' +
+            '</div>',
+            '<div>' +
+                '<span class="keyword">Return</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="literal">True</span>' +
+            '</div>',
+        ])
+    })
+
+    test('transpiles && to And', () => {
+        const highlighted = basic.highlight('if (price < 19 && quality >= 6) return "GOOD"')
+        expect(html(highlighted)).toEqual([
+            '<div>' +
+                '<span class="keyword">If</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="variable">price</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="operator">&lt;</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="number">19</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="operator">And</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="variable">quality</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="operator">&gt;=</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="number">6</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="keyword">Then</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="keyword">Return</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="string">"GOOD"</span>' +
+            '</div>',
+        ])
+    })
+
+    test('transpiles || and !==', () => {
+        const highlighted = basic.highlight('if (a !== b || isWeekend) return "SCALENE"')
+        expect(html(highlighted)).toEqual([
+            '<div>' +
+                '<span class="keyword">If</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="variable">a</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="operator">&lt;&gt;</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="variable">b</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="operator">Or</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="variable">isWeekend</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="keyword">Then</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="keyword">Return</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="string">"SCALENE"</span>' +
+            '</div>',
+        ])
+    })
+
+    test('transpiles ! to Not', () => {
+        const highlighted = basic.highlight('if (!ok) return false')
+        expect(html(highlighted)).toEqual([
+            '<div>' +
+                '<span class="keyword">If</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="operator">Not</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="variable">ok</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="keyword">Then</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="keyword">Return</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="literal">False</span>' +
+            '</div>',
+        ])
+    })
+
+    test('transpiles function into Function and End Function', () => {
+        const highlighted = basic.highlight('function isEven(num: number, strict: boolean): boolean {\n    if (num % 2 === 0) return true\n    return false\n}')
+        expect(html(highlighted)).toEqual([
+            '<div>' +
+                '<span class="keyword">Function</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="function">isEven</span>' +
+                '<span class="punctuation">(</span>' +
+                '<span class="variable">num</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="keyword">As</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="type">Integer</span>' +
+                '<span class="punctuation">,</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="variable">strict</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="keyword">As</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="type">Boolean</span>' +
+                '<span class="punctuation">)</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="keyword">As</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="type">Boolean</span>' +
+            '</div>',
+            '<div>' +
+                '<span class="whitespace">    </span>' +
+                '<span class="keyword">If</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="variable">num</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="operator">Mod</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="number">2</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="operator">=</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="number">0</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="keyword">Then</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="keyword">Return</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="literal">True</span>' +
+            '</div>',
+            '<div>' +
+                '<span class="whitespace">    </span>' +
+                '<span class="keyword">Return</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="literal">False</span>' +
+            '</div>',
+            '<div>' +
+                '<span class="keyword">End</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="keyword">Function</span>' +
             '</div>',
         ])
     })

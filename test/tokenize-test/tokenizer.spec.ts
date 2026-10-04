@@ -7,6 +7,7 @@ import { MapStore } from '../../src/store.js'
 import { ProgrammingLanguage } from '../../src/programming-language-base.js'
 import { JavaScript } from '../../src/programming-language-javascript.js'
 import { TypeScript } from '../../src/programming-language-typescript.js'
+import { Basic } from '../../src/programming-language-basic.js'
 import { Csharp } from '../../src/programming-language-csharp.js'
 import { Java } from '../../src/programming-language-java.js'
 import { Pascal } from '../../src/programming-language-pascal.js'
@@ -17,7 +18,7 @@ import { Ruby } from '../../src/programming-language-ruby.js'
 const { document } = new JSDOM('<!DOCTYPE html>').window
 global.document = document
 
-const programmingLanguages: ProgrammingLanguage[] = [new JavaScript(), new TypeScript(), new Csharp(), new Java(), new Pascal(), new Php(), new Python(), new Ruby()]
+const programmingLanguages: ProgrammingLanguage[] = [new JavaScript(), new TypeScript(), new Basic(), new Csharp(), new Java(), new Pascal(), new Php(), new Python(), new Ruby()]
 
 test.describe('tokenizer', () => {
     for (const programmingLanguage of programmingLanguages) {
