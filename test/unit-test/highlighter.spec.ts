@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test'
 import { JSDOM } from 'jsdom'
 import { Div } from '../../src/html.js'
 import { JavaScript } from '../../src/programming-language-javascript.js'
+import { Pascal } from '../../src/programming-language-pascal.js'
 import { Python } from '../../src/programming-language-python.js'
 import { Ruby } from '../../src/programming-language-ruby.js'
 
@@ -329,6 +330,189 @@ test.describe('class Python', () => {
                 '<span class="whitespace"> </span>' +
                 '<del class="literal">False</del>' +
                 '<ins class="literal">True</ins>' +
+            '</div>',
+        ])
+    })
+})
+
+test.describe('class Pascal', () => {
+    const pascal = new Pascal()
+
+    test('transpiles === to = and return to exit across multiple lines', () => {
+        const highlighted = pascal.highlight('if (age === 17) return false\nreturn true')
+        expect(html(highlighted)).toEqual([
+            '<div>' +
+                '<span class="keyword">if</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="variable">age</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="operator">=</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="number">17</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="keyword">then</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="keyword">exit</span>' +
+                '<span class="punctuation">(</span>' +
+                '<span class="literal">false</span>' +
+                '<span class="punctuation">)</span>' +
+                '<span class="punctuation">;</span>' +
+            '</div>',
+            '<div>' +
+                '<span class="keyword">exit</span>' +
+                '<span class="punctuation">(</span>' +
+                '<span class="literal">true</span>' +
+                '<span class="punctuation">)</span>' +
+                '<span class="punctuation">;</span>' +
+            '</div>',
+        ])
+    })
+
+    test('transpiles && and puts the comparisons between parentheses', () => {
+        const highlighted = pascal.highlight('if (price < 19 && quality >= 6) return "GOOD"')
+        expect(html(highlighted)).toEqual([
+            '<div>' +
+                '<span class="keyword">if</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="punctuation">(</span>' +
+                '<span class="variable">price</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="operator">&lt;</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="number">19</span>' +
+                '<span class="punctuation">)</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="operator">and</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="punctuation">(</span>' +
+                '<span class="variable">quality</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="operator">&gt;=</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="number">6</span>' +
+                '<span class="punctuation">)</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="keyword">then</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="keyword">exit</span>' +
+                '<span class="punctuation">(</span>' +
+                '<span class="string">\'GOOD\'</span>' +
+                '<span class="punctuation">)</span>' +
+                '<span class="punctuation">;</span>' +
+            '</div>',
+        ])
+    })
+
+    test('transpiles || and !==', () => {
+        const highlighted = pascal.highlight('if (a !== b || isWeekend) return "SCALENE"')
+        expect(html(highlighted)).toEqual([
+            '<div>' +
+                '<span class="keyword">if</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="punctuation">(</span>' +
+                '<span class="variable">a</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="operator">&lt;&gt;</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="variable">b</span>' +
+                '<span class="punctuation">)</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="operator">or</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="variable">isWeekend</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="keyword">then</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="keyword">exit</span>' +
+                '<span class="punctuation">(</span>' +
+                '<span class="string">\'SCALENE\'</span>' +
+                '<span class="punctuation">)</span>' +
+                '<span class="punctuation">;</span>' +
+            '</div>',
+        ])
+    })
+
+    test('transpiles ! to not', () => {
+        const highlighted = pascal.highlight('if (!ok) return false')
+        expect(html(highlighted)).toEqual([
+            '<div>' +
+                '<span class="keyword">if</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="operator">not</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="variable">ok</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="keyword">then</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="keyword">exit</span>' +
+                '<span class="punctuation">(</span>' +
+                '<span class="literal">false</span>' +
+                '<span class="punctuation">)</span>' +
+                '<span class="punctuation">;</span>' +
+            '</div>',
+        ])
+    })
+
+    test('transpiles function into function with begin and end', () => {
+        const highlighted = pascal.highlight('function isEven(num: number, strict: boolean): boolean {\n    if (num % 2 === 0) return true\n    return false\n}')
+        expect(html(highlighted)).toEqual([
+            '<div>' +
+                '<span class="keyword">function</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="function">isEven</span>' +
+                '<span class="punctuation">(</span>' +
+                '<span class="variable">num</span>' +
+                '<span class="punctuation">:</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="type">integer</span>' +
+                '<span class="punctuation">;</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="variable">strict</span>' +
+                '<span class="punctuation">:</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="type">boolean</span>' +
+                '<span class="punctuation">)</span>' +
+                '<span class="punctuation">:</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="type">boolean</span>' +
+                '<span class="punctuation">;</span>' +
+            '</div>',
+            '<div>' +
+                '<span class="keyword">begin</span>' +
+            '</div>',
+            '<div>' +
+                '<span class="whitespace">    </span>' +
+                '<span class="keyword">if</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="variable">num</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="operator">mod</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="number">2</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="operator">=</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="number">0</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="keyword">then</span>' +
+                '<span class="whitespace"> </span>' +
+                '<span class="keyword">exit</span>' +
+                '<span class="punctuation">(</span>' +
+                '<span class="literal">true</span>' +
+                '<span class="punctuation">)</span>' +
+                '<span class="punctuation">;</span>' +
+            '</div>',
+            '<div>' +
+                '<span class="whitespace">    </span>' +
+                '<span class="keyword">exit</span>' +
+                '<span class="punctuation">(</span>' +
+                '<span class="literal">false</span>' +
+                '<span class="punctuation">)</span>' +
+                '<span class="punctuation">;</span>' +
+            '</div>',
+            '<div>' +
+                '<span class="keyword">end</span>' +
+                '<span class="punctuation">;</span>' +
             '</div>',
         ])
     })

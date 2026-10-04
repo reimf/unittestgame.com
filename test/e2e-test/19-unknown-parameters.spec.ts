@@ -5,7 +5,7 @@ test.describe('unknown parameters', () => {
 
         page.on('dialog', async (dialog) => {
             expect(dialog.type()).toContain('alert')
-            expect(dialog.message()).toContain('Parameter programming_language=perl, but perl is not one of javascript, typescript, python, csharp, java, php, ruby')
+            expect(dialog.message()).toContain('Parameter programming_language=perl, but perl is not one of javascript, typescript, python, csharp, java, php, ruby, pascal')
             dialog.accept()
         })
 

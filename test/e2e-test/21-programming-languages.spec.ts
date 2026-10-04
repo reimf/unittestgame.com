@@ -32,6 +32,21 @@ const languages = [
         },
     },
     {
+        name: 'pascal',
+        battery: {
+            title: 'has the simplest candidate rendered in Pascal format in the current function panel',
+            expected: 'function powerMode(batteryLevel: integer): string;begin    exit(\'UNKNOWN\');end;',
+        },
+        votingAge: {
+            title: 'has a plain boolean return type in the current function panel',
+            expected: 'function isAllowedToVote(age: integer): boolean;begin    exit(true);end;',
+        },
+        speedDisplay: {
+            title: 'has an integer parameter type in the current function panel of Speed Display',
+            expected: 'function display(speed: integer): string;',
+        },
+    },
+    {
         name: 'php',
         battery: {
             title: 'has the simplest candidate rendered in PHP format in the current function panel',
