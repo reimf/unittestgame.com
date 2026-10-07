@@ -292,6 +292,11 @@ ul {
         flex-basis: 100%;
       }
 
+      h3 {
+        font-size: 1.25rem;
+        margin-bottom: 0.25rem;
+      }
+
       div {
         align-items: center;
         color: var(--heading-foreground-purple);
