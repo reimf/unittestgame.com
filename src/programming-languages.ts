@@ -1,12 +1,10 @@
-import { Basic } from './programming-language-basic.js'
 import { Csharp } from './programming-language-csharp.js'
 import { Java } from './programming-language-java.js'
 import { JavaScript } from './programming-language-javascript.js'
-import { Pascal } from './programming-language-pascal.js'
 import { Php } from './programming-language-php.js'
 import { Python } from './programming-language-python.js'
 import { Ruby } from './programming-language-ruby.js'
 import { TypeScript } from './programming-language-typescript.js'
 
-export const programmingLanguages = [new JavaScript(), new TypeScript(), new Python(), new Csharp(), new Java(), new Php(), new Ruby(), new Pascal(), new Basic()] as const
+export const programmingLanguages = [new JavaScript(), new TypeScript(), new Python(), new Csharp(), new Java(), new Php(), new Ruby()] as const
 export type ProgrammingLanguageId = typeof programmingLanguages[number]['id']

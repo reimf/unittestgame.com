@@ -2,21 +2,6 @@ import { test, expect } from '../fixture/fixture-coverage'
 
 const languages = [
     {
-        name: 'basic',
-        battery: {
-            title: 'has the simplest candidate rendered in BASIC format in the current function panel',
-            expected: 'Function powerMode(batteryLevel As Integer) As String    Return "UNKNOWN"End Function',
-        },
-        votingAge: {
-            title: 'has a plain Boolean return type in the current function panel',
-            expected: 'Function isAllowedToVote(age As Integer) As Boolean    Return TrueEnd Function',
-        },
-        speedDisplay: {
-            title: 'has an Integer parameter type in the current function panel of Speed Display',
-            expected: 'Function display(speed As Integer) As String',
-        },
-    },
-    {
         name: 'csharp',
         battery: {
             title: 'has the simplest candidate rendered in C# format in the current function panel',
@@ -44,21 +29,6 @@ const languages = [
         speedDisplay: {
             title: 'has an int parameter type in the current function panel of Speed Display',
             expected: 'static String display(int speed) {',
-        },
-    },
-    {
-        name: 'pascal',
-        battery: {
-            title: 'has the simplest candidate rendered in Pascal format in the current function panel',
-            expected: 'function powerMode(batteryLevel: integer): string;begin    exit(\'UNKNOWN\');end;',
-        },
-        votingAge: {
-            title: 'has a plain boolean return type in the current function panel',
-            expected: 'function isAllowedToVote(age: integer): boolean;begin    exit(true);end;',
-        },
-        speedDisplay: {
-            title: 'has an integer parameter type in the current function panel of Speed Display',
-            expected: 'function display(speed: integer): string;',
         },
     },
     {
