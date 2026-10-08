@@ -98,7 +98,7 @@ export class Main {
             ])
             const children: Html[] = [info]
             if (level.penalties() !== -1)
-                children.push(new Button(this.conversationLanguage.retryButton(), () => this.retry(level)).addClass('level-action'))
+                children.push(new Button(this.conversationLanguage.retryButton(), () => this.retry(level)).addClass('level-action').addClass('retry'))
             else if (level === nextLevel)
                 children.push(new Button(this.conversationLanguage.playButton(), () => this.playNextLevel(level)).addClass('level-action'))
             else

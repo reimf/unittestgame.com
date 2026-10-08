@@ -1,54 +1,64 @@
 :root {
+  color-scheme: light dark;
+
+  --accent-left: light-dark(#606, #b3b);
+  --accent-right: #f3c;
   --button-background-left: #063;
   --button-background-right: #6c3;
   --button-focus-shadow: #f60;
-  --card-background: #fff;
-  --card-border: #ddd;
-  --code-diff-deleted-background: #fdd;
-  --code-diff-inserted-background: #dfd;
-  --code-general-background-left: #333;
+  --button-retry-background-left: #343;
+  --button-retry-background-right: #9a9;
+  --card-background: light-dark(#fff, #223);
+  --card-border: light-dark(#ddd, #435);
+  --code-diff-deleted-background: light-dark(#fdd, #522);
+  --code-diff-inserted-background: light-dark(#dfd, #242);
+  --code-general-background-left: light-dark(#333, #555);
   --code-general-background-right: #999;
   --code-general-foreground: #fff;
-  --code-highlight-class: #66c;
-  --code-highlight-dot: #660;
-  --code-highlight-function: #669;
-  --code-highlight-keyword: #c33;
-  --code-highlight-literal: #06c;
-  --code-highlight-number: #06c;
-  --code-highlight-operator: #06c;
-  --code-highlight-string: #036;
-  --code-highlight-type: #c33;
-  --code-highlight-variable: #060;
-  --general-background: #f6f3ff;
-  --general-text-dark: #333;
+  --code-highlight-class: light-dark(#66c, #99f);
+  --code-highlight-dot: light-dark(#660, #cc6);
+  --code-highlight-function: light-dark(#669, #aad);
+  --code-highlight-keyword: light-dark(#c33, #f77);
+  --code-highlight-literal: light-dark(#06c, #6bf);
+  --code-highlight-number: light-dark(#06c, #6bf);
+  --code-highlight-operator: light-dark(#06c, #6bf);
+  --code-highlight-string: light-dark(#036, #9cf);
+  --code-highlight-type: light-dark(#c33, #f77);
+  --code-highlight-variable: light-dark(#060, #7d7);
+  --comment-foreground: light-dark(#606, #edf);
+  --general-background: light-dark(#eee, #111);
+  --general-text: light-dark(#333, #ede);
   --general-text-light: #fff;
-  --heading-foreground-green: #063;
-  --heading-foreground-purple: #606;
-  --level-locked-background-left: #ddd;
-  --level-locked-background-right: #f9f9f9;
-  --level-locked-foreground: #666;
-  --level-unlocked-background-left: #333;
+  --heading-foreground-green: light-dark(#063, #6c3);
+  --heading-foreground-purple: light-dark(#606, #d8f);
+  --level-locked-background-left: light-dark(#ddd, #223);
+  --level-locked-background-right: light-dark(#fff, #334);
+  --level-locked-foreground: light-dark(#666, #aab);
+  --level-unlocked-background-left: light-dark(#333, #555);
   --level-unlocked-background-right: #999;
   --level-unlocked-foreground: #fff;
-  --message-border: #ddd;
-  --message-computer-background: #fff;
-  --message-human-background: #efe;
-  --panel-background-left: #606;
-  --panel-background-right: #f3c;
+  --link-foreground: light-dark(#063, #6c3);
+  --message-border: light-dark(#ddd, #435);
+  --message-computer-background: light-dark(#fff, #223);
+  --message-foreground: light-dark(#333, #fff);
+  --message-human-background: light-dark(#efe, #232);
+  --panel-background-left: light-dark(#606, #303);
+  --panel-background-right: light-dark(#f3c, #a18);
   --panel-background-xtra: #fc6;
-  --panel-body-background: #fff;
-  --separator-shadow: #0003;
-  --unittest-new-background-left: #ddf;
-  --unittest-new-background-right: #f3f3ff;
-  --unittest-old-background: #fff;
+  --panel-body-background: light-dark(#fff, #223);
+  --separator-shadow: light-dark(#0003, #0009);
+  --unittest-new-background-left: light-dark(#ddf, #325);
+  --unittest-new-background-right: light-dark(#eef, #224);
+  --unittest-old-background: light-dark(#fff, #112);
 
   --button-background-gradient: linear-gradient(135deg, var(--button-background-left), var(--button-background-right));
+  --button-retry-background-gradient: linear-gradient(135deg, var(--button-retry-background-left), var(--button-retry-background-right));
   --code-general-background-gradient: linear-gradient(135deg, var(--code-general-background-left), var(--code-general-background-right));
-  --cta-band-background-gradient: linear-gradient(135deg, color-mix(in srgb, var(--panel-background-left) 15%, transparent), color-mix(in srgb, var(--panel-background-right) 5%, transparent));
+  --cta-band-background-gradient: linear-gradient(135deg, color-mix(in srgb, var(--accent-left) 15%, transparent), color-mix(in srgb, var(--accent-right) 5%, transparent));
   --level-locked-background-gradient: linear-gradient(135deg, var(--level-locked-background-left), var(--level-locked-background-right));
   --level-unlocked-background-gradient: linear-gradient(135deg, var(--level-unlocked-background-left), var(--level-unlocked-background-right));
   --panel-background-gradient: linear-gradient(135deg, var(--panel-background-left), var(--panel-background-right));
-  --panel-background-text-gradient: linear-gradient(120deg, var(--panel-background-left), var(--panel-background-right), var(--panel-background-xtra));
+  --panel-background-text-gradient: linear-gradient(120deg, var(--accent-left), var(--accent-right), var(--panel-background-xtra));
   --unittest-new-background-gradient: linear-gradient(135deg, var(--unittest-new-background-left), var(--unittest-new-background-right));
 }
 
@@ -64,7 +74,7 @@
 }
 
 a, summary {
-  color: var(--button-background-left);
+  color: var(--link-foreground);
   text-wrap: nowrap;
 }
 
@@ -155,7 +165,7 @@ ul {
   align-items: center;
   background: var(--button-background-gradient);
   border-radius: 2rem;
-  box-shadow: 0.5rem 0.5rem 1rem -0.5rem var(--panel-background-left);
+  box-shadow: 0.5rem 0.5rem 1rem -0.5rem var(--accent-left);
   color: var(--general-text-light);
   display: inline-flex;
   height: 4rem;
@@ -259,7 +269,7 @@ details {
       >div {
         background-color: var(--message-human-background);
         border-bottom-right-radius: 0;
-        color: var(--general-text-dark);
+        color: var(--message-foreground);
         margin-right: 2.5rem;
       }
     }
@@ -279,7 +289,7 @@ details {
       >div {
         background-color: var(--message-computer-background);
         border-bottom-left-radius: 0;
-        color: var(--general-text-dark);
+        color: var(--message-foreground);
         margin-left: 2.5rem;
       }
     }
@@ -291,7 +301,7 @@ details {
     >div {
       border: 0.1rem solid var(--message-border);
       border-radius: 1.25rem;
-      color: var(--general-text-dark);
+      color: var(--message-foreground);
       display: flow-root;
       margin: 0.75rem;
       overflow: hidden;

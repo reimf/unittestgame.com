@@ -1,6 +1,6 @@
 body {
   background-color: var(--general-background);
-  color: var(--general-text-dark);
+  color: var(--general-text);
   font-family: monospace;
   line-height: 1.25rem;
 
@@ -37,6 +37,7 @@ input {
     background: var(--button-background-gradient);
     border-radius: 100rem;
     color: var(--general-text-light);
+    color-scheme: light;
     height: 2rem;
     padding: 0 0.5rem 0 0.75rem;
     width: 8rem;
@@ -106,7 +107,7 @@ p {
     section {
       background-color: var(--panel-body-background);
       border-radius: 0.5rem;
-      color: var(--general-text-dark);
+      color: var(--general-text);
       margin: 0.75rem;
 
       header {
@@ -184,6 +185,10 @@ p {
               padding: 0 0.75rem;
               width: auto;
 
+              &.retry {
+                background: var(--button-retry-background-gradient);
+              }
+
               &:disabled {
                 background: none;
                 color: var(--level-locked-foreground);
@@ -206,7 +211,7 @@ p {
   &:before,
   &:after {
     content: "";
-    border-bottom: 1px solid var(--general-text-dark);
+    border-bottom: 1px solid var(--general-text);
     display: inline-block;
     height: 0;
     position: relative;
