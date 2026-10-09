@@ -9,6 +9,6 @@ test.describe('immediate submit unit tests', () => {
 
     test('has need message', async ({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('The Current Function doesn\'t match the Specification yet. You need at least 4 more unit tests, so write a unit test that matches the Specification and that the Current Function fails.')
+        await expect(messages).toContainText('The Current Function doesn\'t match the Specification yet. You need at least 4 more unit tests. Find an input for which the Current Function returns something other than the Specification says, and write a unit test for that input.')
     })
 })

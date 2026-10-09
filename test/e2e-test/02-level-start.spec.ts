@@ -40,7 +40,7 @@ test.describe('level start', () => {
 
     test('has NO read specification message', async ({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).not.toContainText('First, read the Specification. Then write a unit test')
+        await expect(messages).not.toContainText('First, read the Specification. Then find an input')
     })
 
     test('has NO submit message', async ({ page }) => {

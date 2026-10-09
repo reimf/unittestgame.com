@@ -11,7 +11,7 @@ test.describe('incorrect unit test', () => {
 
     test('has read specification message', async ({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('First, read the Specification. Then write a unit test')
+        await expect(messages).toContainText('First, read the Specification. Then find an input')
     })
 
     test('has submit message', async ({ page }) => {
