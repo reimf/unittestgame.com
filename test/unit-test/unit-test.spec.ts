@@ -33,6 +33,27 @@ test.describe('class UnitTest', () => {
         )
     })
 
+    test('equals a unit test with the same arguments and the same expected value', () => {
+        const parameters = [new IntegerVariable(ConversationLanguage.bless('A'), 'a'), new IntegerVariable(ConversationLanguage.bless('B'), 'b')]
+        const unit = new IntegerVariable(ConversationLanguage.bless('Divide'), 'divide')
+        const unitTest = new UnitTest<[number, number], number>(parameters, [6, 3], unit, 2)
+        expect(unitTest.equals(new UnitTest<[number, number], number>(parameters, [6, 3], unit, 2))).toBe(true)
+    })
+
+    test('does NOT equal a unit test with other arguments', () => {
+        const parameters = [new IntegerVariable(ConversationLanguage.bless('A'), 'a'), new IntegerVariable(ConversationLanguage.bless('B'), 'b')]
+        const unit = new IntegerVariable(ConversationLanguage.bless('Divide'), 'divide')
+        const unitTest = new UnitTest<[number, number], number>(parameters, [6, 3], unit, 2)
+        expect(unitTest.equals(new UnitTest<[number, number], number>(parameters, [6, 2], unit, 2))).toBe(false)
+    })
+
+    test('does NOT equal a unit test with another expected value', () => {
+        const parameters = [new IntegerVariable(ConversationLanguage.bless('A'), 'a'), new IntegerVariable(ConversationLanguage.bless('B'), 'b')]
+        const unit = new IntegerVariable(ConversationLanguage.bless('Divide'), 'divide')
+        const unitTest = new UnitTest<[number, number], number>(parameters, [6, 3], unit, 2)
+        expect(unitTest.equals(new UnitTest<[number, number], number>(parameters, [6, 3], unit, 3))).toBe(false)
+    })
+
     test('converts to a string with another result', () => {
         const parameters = [new IntegerVariable(ConversationLanguage.bless('A'), 'a'), new IntegerVariable(ConversationLanguage.bless('B'), 'b')]
         const unit = new IntegerVariable(ConversationLanguage.bless('Divide'), 'divide')

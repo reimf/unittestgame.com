@@ -27,6 +27,7 @@ export interface ConversationStrings {
     currentFunctionTitle: string
     differenceTitle: string
     currentFunctionNotImproved: string
+    duplicateUnitTest: string
     hint: string
     currentFunctionImproved: string
     invalidUnitTest: string
@@ -173,6 +174,10 @@ export abstract class ConversationLanguage {
 
     public currentFunctionNotImproved(): ConversationText {
         return this.format(this.strings.currentFunctionNotImproved)
+    }
+
+    public duplicateUnitTest(): ConversationText {
+        return this.format(this.strings.duplicateUnitTest)
     }
 
     public hint(): ConversationText {

@@ -35,6 +35,7 @@ test.describe('conversation languages', () => {
                 conversationLanguage.currentFunctionTitle(),
                 conversationLanguage.differenceTitle(),
                 conversationLanguage.currentFunctionNotImproved(),
+                conversationLanguage.duplicateUnitTest(),
                 conversationLanguage.hint(),
                 conversationLanguage.currentFunctionImproved(1),
                 conversationLanguage.currentFunctionImproved(2),

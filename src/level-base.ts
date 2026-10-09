@@ -272,6 +272,10 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
             this.numberOfPenalties += 1
             this.handleIncorrectUnitTest()
         }
+        else if (this.humanUnitTests.some(humanUnitTest => humanUnitTest.equals(unitTest))) {
+            this.numberOfPenalties += 1
+            this.handleDuplicateUnitTest()
+        }
         else if (new TestResult(this.currentCandidate, unitTest).passes) {
             this.numberOfPenalties += 1
             this.handleUselessUnitTest(unitTest)
@@ -283,6 +287,10 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
 
     private handleIncorrectUnitTest(): void {
         this.showIncorrectUnitTestMessage()
+    }
+
+    private handleDuplicateUnitTest(): void {
+        this.showDuplicateUnitTestMessage()
     }
 
     private handleUselessUnitTest(unitTest: UnitTest<Parameters, Result>): void {
@@ -346,6 +354,11 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
 
     private showIncorrectUnitTestMessage(): void {
         new ComputerMessage([this.conversationLanguage.unitTestNotAdded()]).show()
+    }
+
+    private showDuplicateUnitTestMessage(): void {
+        new ComputerMessage([this.conversationLanguage.duplicateUnitTest()]).show()
+        new ComputerMessage([this.conversationLanguage.hint()]).show()
     }
 
     private showUselessUnitTestMessage(): void {

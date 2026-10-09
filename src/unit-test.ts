@@ -15,6 +15,10 @@ export class UnitTest<Parameters extends readonly Value[] = readonly Value[], Re
         this.expected = expected
     }
 
+    public equals(unitTest: UnitTest<Parameters, Result>): boolean {
+        return this.argumentList.every((value, index) => value === unitTest.argumentList[index]) && this.expected === unitTest.expected
+    }
+
     public toTextWithResult(result: Result): string {
         const argumentsText = this.argumentList.map((value, index) => this.parameters[index]!.format(value)).join(', ')
         return `${this.unit.name}(${argumentsText}) === ${this.unit.format(result)}`

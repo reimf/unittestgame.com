@@ -24,6 +24,7 @@
     "currentFunctionTitle": "Aktuelle Funktion",
     "differenceTitle": "Unterschied",
     "currentFunctionNotImproved": "Ich habe den Unit-Test hinzugefügt, aber die *Aktuelle Funktion* besteht ihn bereits, also habe ich sie nicht verbessert.",
+    "duplicateUnitTest": "Diesen Unit-Test hattest du bereits hinzugefügt, also habe ich ihn nicht noch einmal hinzugefügt.",
     "hint": "Suche eine Eingabe, bei der die *Aktuelle Funktion* etwas anderes zurückgibt, als die *Spezifikation* sagt, und schreibe einen Unit-Test für diese Eingabe.",
     "currentFunctionImproved": "Ich habe den Unit-Test zu den *Unit-Tests* hinzugefügt und die *Aktuelle Funktion* verbessert, damit der neue Unit-Test jetzt{numberOfUnitTests === 1 ? '' : ' auch'} besteht.",
     "invalidUnitTest": "Die *Aktuelle Funktion* gibt jetzt zum Beispiel Folgendes zurück, aber das entspricht nicht der *Spezifikation*.",
