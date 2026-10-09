@@ -95,6 +95,10 @@ export class BatteryLevel extends Level<[number], string> {
         this.exampleForms = [...this.allExampleForms]
     }
 
+    protected override showStepMessages(): void {
+        //nothing
+    }
+
     protected override showBeforeMenuMessage(): void {
         new ComputerMessage([this.exampleForms[0]!.message]).show()
     }

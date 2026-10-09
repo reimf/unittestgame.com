@@ -329,7 +329,7 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
         //nothing
     }
 
-    private showStepMessages(): void {
+    protected showStepMessages(): void {
         new ComputerMessage([this.conversationLanguage.readSpecification()]).show()
         new ComputerMessage([this.conversationLanguage.improveCurrentFunction()]).show()
         new ComputerMessage([this.conversationLanguage.submitUnitTests()]).show()

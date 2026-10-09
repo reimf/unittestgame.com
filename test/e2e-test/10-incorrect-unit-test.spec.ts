@@ -9,6 +9,16 @@ test.describe('incorrect unit test', () => {
         await page.getByRole('button', { name: 'I want to add this unit test', exact: true }).click()
     })
 
+    test('has read specification message', async ({ page }) => {
+        const messages = page.getByTestId('messages')
+        await expect(messages).toContainText('First, read the Specification. Then write a unit test')
+    })
+
+    test('has submit message', async ({ page }) => {
+        const messages = page.getByTestId('messages')
+        await expect(messages).toContainText('when you think the Current Function matches the Specification')
+    })
+
     test('has unit test message', async ({ page }) => {
         const messages = page.getByTestId('messages')
         await expect(messages).toContainText('isAllowedToVote(17) === true')

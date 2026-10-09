@@ -38,14 +38,14 @@ test.describe('level start', () => {
         await expect(theFunctionPanel).not.toBeVisible()
     })
 
-    test('has read specification message', async ({ page }) => {
+    test('has NO read specification message', async ({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('First, read the Specification. Then write a unit test')
+        await expect(messages).not.toContainText('First, read the Specification. Then write a unit test')
     })
 
-    test('has submit message', async ({ page }) => {
+    test('has NO submit message', async ({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('when you think the Current Function matches the Specification')
+        await expect(messages).not.toContainText('when you think the Current Function matches the Specification')
     })
 
     test('has before menu message', async ({ page }) => {
