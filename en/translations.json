@@ -31,7 +31,7 @@
     "currentFunctionCorrect": "Well done! The *Current Function* matches the *Specification*.",
     "levelOverviewTitle": "Level Overview",
     "wrongAction": "Hmm, that's not quite right. Try again.",
-    "addBatteryLevel20": "The *Specification* contains the number `20`. That is a good starting point. When the battery level is `20`, the function must return `\"NORMAL MODE\"`.",
+    "addBatteryLevel20": "The *Current Function* now always returns `\"UNKNOWN\"`. The *Specification* contains the number `20`, which is a good starting point: when the battery level is `20`, the function must return `\"NORMAL MODE\"`. Add a unit test for that.",
     "addBatteryLevel19": "The *Current Function* now always returns `\"NORMAL MODE\"`, but the *Specification* says battery level `19` must return `\"LOW POWER MODE\"`. Add a unit test for that.",
     "submitUnitTestsFirst": "The *Current Function* can now return either `\"NORMAL MODE\"` or `\"LOW POWER MODE\"`. Submit the *Unit Tests* to check if the *Current Function* matches the *Specification*.",
     "addBatteryLevel21": "The *Current Function* now returns `\"NORMAL MODE\"` only for battery level `20`. The *Specification* says `21` must also return `\"NORMAL MODE\"`. Add a unit test for that.",

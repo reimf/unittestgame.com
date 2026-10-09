@@ -32,7 +32,7 @@
     "levelOverviewTitle": "Panoramica dei Livelli",
     "batteryLevelSpecification": "Uno smartphone normalmente funziona in `\"NORMAL MODE\"`, ma quando il livello della batteria è inferiore a `20`, funziona in `\"LOW POWER MODE\"`.",
     "wrongAction": "Hmm, non è del tutto corretto. Riprova.",
-    "addBatteryLevel20": "La *Specifica* contiene il numero `20`. Questo è un buon punto di partenza. Quando il livello della batteria è `20`, la funzione deve restituire `\"NORMAL MODE\"`.",
+    "addBatteryLevel20": "La *Funzione Attuale* ora restituisce sempre `\"UNKNOWN\"`. La *Specifica* contiene il numero `20`, che è un buon punto di partenza: quando il livello della batteria è `20`, la funzione deve restituire `\"NORMAL MODE\"`. Aggiungi un unit test per questo.",
     "addBatteryLevel19": "La *Funzione Attuale* ora restituisce sempre `\"NORMAL MODE\"`, ma la *Specifica* dice che il livello della batteria `19` deve restituire `\"LOW POWER MODE\"`. Aggiungi un unit test per questo.",
     "submitUnitTestsFirst": "La *Funzione Attuale* ora può restituire `\"NORMAL MODE\"` o `\"LOW POWER MODE\"`. Invia i *Unit Tests* per verificare se la *Funzione Attuale* corrisponde alla *Specifica*.",
     "addBatteryLevel21": "La *Funzione Attuale* ora restituisce `\"NORMAL MODE\"` solo per il livello della batteria `20`. La *Specifica* dice che `21` deve anche restituire `\"NORMAL MODE\"`. Aggiungi un unit test per questo.",

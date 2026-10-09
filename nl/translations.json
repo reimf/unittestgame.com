@@ -31,7 +31,7 @@
     "currentFunctionCorrect": "Goed gedaan! De *Huidige Functie* voldoet aan de *Specificatie*.",
     "levelOverviewTitle": "Level Overzicht",
     "wrongAction": "Hmm, dat klopt niet helemaal. Probeer het opnieuw.",
-    "addBatteryLevel20": "De *Specificatie* bevat het getal 20. Dat is een goed startpunt. Wanneer het batterijpercentage `20` is moet de functie `\"NORMAL MODE\"` teruggeven.",
+    "addBatteryLevel20": "De *Huidige Functie* geeft nu altijd `\"UNKNOWN\"` terug. De *Specificatie* bevat het getal `20`, dat is een goed startpunt: bij batterijpercentage `20` moet de functie `\"NORMAL MODE\"` teruggeven. Voeg daar een unit test voor toe.",
     "addBatteryLevel19": "De *Huidige Functie* geeft nu altijd `\"NORMAL MODE\"` terug, maar de *Specificatie* zegt dat batterijpercentage `19` `\"LOW POWER MODE\"` moet teruggeven. Voeg daar een unit test voor toe.",
     "submitUnitTestsFirst": "De *Huidige Functie* kan nu `\"NORMAL MODE\"` of `\"LOW POWER MODE\"` teruggeven. Lever de *Unit Testen* in om te controleren of de *Huidige Functie* voldoet aan de *Specificatie*.",
     "addBatteryLevel21": "De *Huidige Functie* geeft nu alleen `\"NORMAL MODE\"` terug voor batterijpercentage `20`. De *Specificatie* zegt dat `21` ook `\"NORMAL MODE\"` moet teruggeven. Voeg daar een unit test voor toe.",
