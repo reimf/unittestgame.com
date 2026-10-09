@@ -107,32 +107,38 @@ export class BatteryLevel extends Level<[number], string> {
         new ComputerMessage([this.conversationLanguage.batteryLevelLesson()]).show()
     }
 
-    private showWarning() {
-        new ComputerMessage([this.conversationLanguage.wrongAction()]).show()
+    private showWarning(warning: ConversationText) {
+        new ComputerMessage([warning]).show()
     }
 
-    private isExampleExpected(everythingOk: boolean): boolean {
+    private isExampleExpected(everythingOk: boolean, warning: ConversationText): boolean {
         if (everythingOk) {
             this.exampleForms.shift()
             return true
         }
         this.numberOfPenalties += 1
-        this.showWarning()
+        this.showWarning(warning)
         this.showMenuMessage()
         return false
     }
 
-    protected override isAddUnitTestOk(formData: FormData): boolean {
-        const exampleForm = this.exampleForms[0]!
-        const batteryLevelOk = exampleForm.batteryLevel === formData.get('batteryLevel')
-        const powerModeOk = exampleForm.powerMode === formData.get('powerMode')
-        return this.isExampleExpected(batteryLevelOk && powerModeOk)
-    }
-
-    protected override isSubmitUnitTestsOk(): boolean {
+    private isSubmitExpected(): boolean {
         const exampleForm = this.exampleForms[0]!
         const batteryLevelOk = !exampleForm.hasOwnProperty('batteryLevel')
         const powerModeOk = !exampleForm.hasOwnProperty('powerMode')
-        return this.isExampleExpected(batteryLevelOk && powerModeOk)
+        return batteryLevelOk && powerModeOk
+    }
+
+    protected override isAddUnitTestOk(formData: FormData): boolean {
+        if (this.isSubmitExpected())
+            return this.isExampleExpected(false, this.conversationLanguage.wrongAdd())
+        const exampleForm = this.exampleForms[0]!
+        const batteryLevelOk = exampleForm.batteryLevel === formData.get('batteryLevel')
+        const powerModeOk = exampleForm.powerMode === formData.get('powerMode')
+        return this.isExampleExpected(batteryLevelOk && powerModeOk, this.conversationLanguage.wrongUnitTest())
+    }
+
+    protected override isSubmitUnitTestsOk(): boolean {
+        return this.isExampleExpected(this.isSubmitExpected(), this.conversationLanguage.wrongSubmit())
     }
 }

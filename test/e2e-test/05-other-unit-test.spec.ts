@@ -21,7 +21,7 @@ test.describe('other unit test', () => {
 
     test('has not asked message', async ({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('Hmm, that\'s not quite right. Try again.')
+        await expect(messages).toContainText('That\'s not the unit test I meant. Try again.')
     })
 
     test('has NO unit tests panel', async ({ page }) => {

@@ -14,7 +14,7 @@ test.describe('incorrect submit button', () => {
 
     test('has not asked message', async ({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('Hmm, that\'s not quite right. Try again.')
+        await expect(messages).toContainText('Don\'t submit the Unit Tests yet. Add the unit test first.')
     })
 
     test('has NOT updated the current function panel', async ({ page }) => {

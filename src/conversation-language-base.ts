@@ -34,7 +34,9 @@ export interface ConversationStrings {
     currentFunctionCorrect: string
     levelOverviewTitle: string
     batteryLevelSpecification: string
-    wrongAction: string
+    wrongUnitTest: string
+    wrongSubmit: string
+    wrongAdd: string
     addBatteryLevel20: string
     addBatteryLevel19: string
     submitUnitTestsFirst: string
@@ -201,8 +203,16 @@ export abstract class ConversationLanguage {
         return this.format(this.strings.batteryLevelSpecification)
     }
 
-    public wrongAction(): ConversationText {
-        return this.format(this.strings.wrongAction)
+    public wrongUnitTest(): ConversationText {
+        return this.format(this.strings.wrongUnitTest)
+    }
+
+    public wrongSubmit(): ConversationText {
+        return this.format(this.strings.wrongSubmit)
+    }
+
+    public wrongAdd(): ConversationText {
+        return this.format(this.strings.wrongAdd)
     }
 
     public addBatteryLevel20(): ConversationText {
