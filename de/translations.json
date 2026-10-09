@@ -1,5 +1,5 @@
 {
-    "welcome": "Hallo! Ich bin ein KI-Bot, der Code schreibt. Deine Aufgabe ist es, mich mit Unit-Tests zu steuern.",
+    "welcome": "Hallo! Ich bin ein KI-Bot, der Code schreibt, aber ich schreibe nicht mehr, als deine Unit-Tests erzwingen. Ein Unit-Test ist ein Beispiel für eine Eingabe mit dem dazugehörigen Ergebnis. Deine Aufgabe ist es, mich mit Unit-Tests zu steuern, bis der Code stimmt.",
     "unitTestGameTitle": "UnitTestGame",
     "slogan": "![Logo von UnitTestGame](/apple-touch-icon.png)Lerne, Unit-Tests zu schreiben, die einen KI-Bot steuern.\n\n[Startseite](/index)",
     "settingsTitle": "Einstellungen",

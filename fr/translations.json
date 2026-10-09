@@ -1,5 +1,5 @@
 {
-    "welcome": "Bonjour! Je suis un bot IA qui écrit du code. Ton rôle est de me guider avec des unit tests.",
+    "welcome": "Bonjour! Je suis un bot IA qui écrit du code, mais je n'écris pas plus que ce que tes unit tests imposent. Un unit test est un exemple d'entrée avec le résultat qui lui correspond. Ton rôle est de me guider avec des unit tests jusqu'à ce que le code soit correct.",
     "unitTestGameTitle": "UnitTestGame",
     "slogan": "![Logo de UnitTestGame](/apple-touch-icon.png)Apprends à écrire des unit tests qui guident un bot IA.\n\n[Accueil](/index)",
     "settingsTitle": "Paramètres",

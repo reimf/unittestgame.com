@@ -11,7 +11,7 @@ test.describe('welcome', () => {
 
     test('has welcome message', async ({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('Hi! I\'m an AI bot that writes code. Your job is to guide me using unit tests.')
+        await expect(messages).toContainText('Hi! I\'m an AI bot that writes code, but I don\'t write more than your unit tests force me to. A unit test is an example of an input with the outcome that goes with it. Your job is to guide me using unit tests until the code is right.')
     })
 
     test('has unittestgame panel', async ({ page }) => {
