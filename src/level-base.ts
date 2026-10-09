@@ -26,7 +26,7 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
     public readonly subsetsOfMinimalUnitTests: UnitTest<Parameters, Result>[][]
     public readonly perfectCandidates: Candidate<Parameters, Result>[]
     private readonly perfectCandidate: Candidate<Parameters, Result>
-    private readonly humanUnitTests: UnitTest<Parameters, Result>[] = []
+    private humanUnitTests: UnitTest<Parameters, Result>[] = []
     public readonly hints: UnitTest<Parameters, Result>[]
 
     private callback?: () => void
@@ -203,8 +203,18 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
         return this.store.get(`penalties-level-${this.identifier()}`)
     }
 
+    protected reset(): void {
+        this.humanUnitTests = []
+        this.previousCandidate = undefined
+        this.lastUnitTest = undefined
+        this.numberOfPenalties = 0
+        this.currentCandidate = this.findSimplestPassingCandidate(this.candidates, this.perfectCandidates, this.humanUnitTests)
+        this.failingTestResult = this.findFailingTestResult(this.currentCandidate, this.hints, this.minimalUnitTests)
+    }
+
     public play(callback: () => void): void {
         this.callback = callback
+        this.reset()
         this.showInstructionsMessage()
         this.showSidebarMessage()
         this.showStepMessages()

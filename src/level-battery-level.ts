@@ -56,7 +56,7 @@ export class BatteryLevel extends Level<[number], string> {
             yield [batteryLevel]
     }
 
-    private exampleForms: FormStringsType[] = [
+    private readonly allExampleForms: FormStringsType[] = [
         {
             message: this.conversationLanguage.addBatteryLevel20(),
             batteryLevel: '20',
@@ -87,6 +87,13 @@ export class BatteryLevel extends Level<[number], string> {
             message: this.conversationLanguage.submitUnitTestsThird(),
         }
     ]
+
+    private exampleForms: FormStringsType[] = [...this.allExampleForms]
+
+    protected override reset(): void {
+        super.reset()
+        this.exampleForms = [...this.allExampleForms]
+    }
 
     protected override showBeforeMenuMessage(): void {
         new ComputerMessage([this.exampleForms[0]!.message]).show()
