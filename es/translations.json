@@ -34,7 +34,7 @@
     "wrongAction": "Hmm, eso no es del todo correcto. Inténtalo de nuevo.",
     "addBatteryLevel20": "La *Función Actual* ahora siempre retorna `\"UNKNOWN\"`. La *Especificación* contiene el número `20`, que es un buen punto de partida: cuando el nivel de batería es `20`, la función debe retornar `\"NORMAL MODE\"`. Añade un unit test para eso.",
     "addBatteryLevel19": "La *Función Actual* ahora siempre retorna `\"NORMAL MODE\"`, pero la *Especificación* dice que el nivel de batería `19` debe retornar `\"LOW POWER MODE\"`. Añade un unit test para eso.",
-    "submitUnitTestsFirst": "La *Función Actual* ahora puede retornar `\"NORMAL MODE\"` o `\"LOW POWER MODE\"`. Envía los *Unit Tests* para comprobar si la *Función Actual* coincide con la *Especificación*.",
+    "submitUnitTestsFirst": "La *Función Actual* ahora puede retornar `\"NORMAL MODE\"` o `\"LOW POWER MODE\"`. Parece suficiente, pero ¿lo es? Envía los *Unit Tests* para comprobar si la *Función Actual* coincide con la *Especificación*.",
     "addBatteryLevel21": "La *Función Actual* ahora retorna `\"NORMAL MODE\"` solo para el nivel de batería `20`. La *Especificación* dice que `21` también debe retornar `\"NORMAL MODE\"`. Añade un unit test para eso.",
     "submitUnitTestsSecond": "Envía de nuevo los *Unit Tests* para comprobar si la *Función Actual* coincide con la *Especificación*.",
     "addBatteryLevel18": "La *Función Actual* ahora retorna `\"LOW POWER MODE\"` solo para el nivel de batería `19`. La *Especificación* dice que `18` también debe retornar `\"LOW POWER MODE\"`. Añade un unit test para eso.",

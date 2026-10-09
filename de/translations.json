@@ -34,7 +34,7 @@
     "wrongAction": "Hmm, das ist nicht ganz richtig. Versuche es erneut.",
     "addBatteryLevel20": "Die *Aktuelle Funktion* gibt jetzt immer `\"UNKNOWN\"` zurück. Die *Spezifikation* enthält die Zahl `20`, das ist ein guter Ausgangspunkt: Wenn der Akkustand `20` ist, muss die Funktion `\"NORMAL MODE\"` zurückgeben. Füge dafür einen Unit-Test hinzu.",
     "addBatteryLevel19": "Die *Aktuelle Funktion* gibt jetzt immer `\"NORMAL MODE\"` zurück, aber die *Spezifikation* sagt, dass Akkustand `19` `\"LOW POWER MODE\"` zurückgeben muss. Füge dafür einen Unit-Test hinzu.",
-    "submitUnitTestsFirst": "Die *Aktuelle Funktion* kann jetzt entweder `\"NORMAL MODE\"` oder `\"LOW POWER MODE\"` zurückgeben. Reiche die *Unit-Tests* ein, um zu prüfen, ob die *Aktuelle Funktion* der *Spezifikation* entspricht.",
+    "submitUnitTestsFirst": "Die *Aktuelle Funktion* kann jetzt entweder `\"NORMAL MODE\"` oder `\"LOW POWER MODE\"` zurückgeben. Das scheint zu reichen, aber stimmt das auch? Reiche die *Unit-Tests* ein, um zu prüfen, ob die *Aktuelle Funktion* der *Spezifikation* entspricht.",
     "addBatteryLevel21": "Die *Aktuelle Funktion* gibt jetzt `\"NORMAL MODE\"` nur für Akkustand `20` zurück. Die *Spezifikation* sagt, dass `21` auch `\"NORMAL MODE\"` zurückgeben muss. Füge dafür einen Unit-Test hinzu.",
     "submitUnitTestsSecond": "Reiche die *Unit-Tests* erneut ein, um zu prüfen, ob die *Aktuelle Funktion* der *Spezifikation* entspricht.",
     "addBatteryLevel18": "Die *Aktuelle Funktion* gibt jetzt `\"LOW POWER MODE\"` nur für Akkustand `19` zurück. Die *Spezifikation* sagt, dass `18` auch `\"LOW POWER MODE\"` zurückgeben muss. Füge dafür einen Unit-Test hinzu.",
