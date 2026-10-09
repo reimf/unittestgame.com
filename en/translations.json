@@ -38,6 +38,7 @@
     "submitUnitTestsSecond": "Submit the *Unit Tests* again to check if the *Current Function* matches the *Specification*.",
     "addBatteryLevel18": "The *Current Function* now returns `\"LOW POWER MODE\"` only for battery level `19`. The *Specification* says `18` must also return `\"LOW POWER MODE\"`. Add a unit test for that.",
     "submitUnitTestsThird": "Submit the *Unit Tests* again to check if the *Current Function* finally matches the *Specification*.",
+    "batteryLevelLesson": "Remember for the next levels: I don't write more code than your unit tests force me to. So test both sides of every boundary, like `19` and `20` here, and also a value further away, like `18` and `21`.",
     "batteryLevelSpecification": "A smartphone normally operates in `\"NORMAL MODE\"`, but when the battery level is less than `20`, it operates in `\"LOW POWER MODE\"`.",
     "votingAgeSpecification": "You can vote if your age is `18` or over.",
     "windScaleSpecification": "It's `\"CALM\"` if the wind speed is less than `20`, `\"BREEZE\"` if less than `50`, `\"GALE\"` if less than `90`, and `\"STORM\"` otherwise.",

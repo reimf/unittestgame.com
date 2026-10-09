@@ -42,6 +42,7 @@ export interface ConversationStrings {
     submitUnitTestsSecond: string
     addBatteryLevel18: string
     submitUnitTestsThird: string
+    batteryLevelLesson: string
     votingAgeSpecification: string
     windScaleSpecification: string
     reviewSpecification: string
@@ -230,6 +231,10 @@ export abstract class ConversationLanguage {
 
     public submitUnitTestsThird(): ConversationText {
         return this.format(this.strings.submitUnitTestsThird)
+    }
+
+    public batteryLevelLesson(): ConversationText {
+        return this.format(this.strings.batteryLevelLesson)
     }
 
     public votingAgeSpecification(): ConversationText {

@@ -318,6 +318,7 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
         this.store.set(`penalties-level-${this.identifier()}`, this.numberOfPenalties)
         this.showPanels()
         this.showEndMessage()
+        this.showAfterEndMessage()
         this.callback!()
     }
 
@@ -336,6 +337,10 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
     }
 
     protected showBeforeMenuMessage(): void {
+        //nothing
+    }
+
+    protected showAfterEndMessage(): void {
         //nothing
     }
 

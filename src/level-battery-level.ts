@@ -103,6 +103,10 @@ export class BatteryLevel extends Level<[number], string> {
         new ComputerMessage([this.exampleForms[0]!.message]).show()
     }
 
+    protected override showAfterEndMessage(): void {
+        new ComputerMessage([this.conversationLanguage.batteryLevelLesson()]).show()
+    }
+
     private showWarning() {
         new ComputerMessage([this.conversationLanguage.wrongAction()]).show()
     }

@@ -39,6 +39,7 @@
     "submitUnitTestsSecond": "Soumets à nouveau les *Unit Tests* pour vérifier si la *Fonction Actuelle* correspond à la *Spécification*.",
     "addBatteryLevel18": "La *Fonction Actuelle* retourne maintenant `\"LOW POWER MODE\"` uniquement pour le niveau de batterie `19`. La *Spécification* dit que `18` doit aussi retourner `\"LOW POWER MODE\"`. Ajoute un unit test pour cela.",
     "submitUnitTestsThird": "Soumets à nouveau les *Unit Tests* pour vérifier si la *Fonction Actuelle* correspond enfin à la *Spécification*.",
+    "batteryLevelLesson": "Retiens pour les prochains niveaux : je n'écris pas plus de code que ce que tes unit tests imposent. Teste donc les deux côtés de chaque limite, comme ici `19` et `20`, et aussi une valeur plus éloignée, comme `18` et `21`.",
     "votingAgeSpecification": "Tu peux voter si ton âge est `18` ou plus.",
     "windScaleSpecification": "C'est `\"CALM\"` si la vitesse du vent est inférieure à `20`, `\"BREEZE\"` si elle est inférieure à `50`, `\"GALE\"` si elle est inférieure à `90`, et `\"STORM\"` dans tous les autres cas.",
     "reviewSpecification": "Ton avis est `\"GOOD\"` si le prix est inférieur à `20` et la qualité est au moins `7`, `\"BAD\"` si le prix est `20` ou plus et la qualité est inférieure à `7`, et `\"OK\"` sinon.",

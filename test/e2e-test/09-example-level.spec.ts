@@ -50,6 +50,11 @@ test.describe('example level', () => {
             '🔒Level 9 - Parking FeeLocked')
     })
 
+    test('has lesson message', async ({ page }) => {
+        const messages = page.getByTestId('messages')
+        await expect(messages).toContainText('So test both sides of every boundary, like 19 and 20 here')
+    })
+
     test('has play next level message', async ({ page }) => {
         const messages = page.getByTestId('messages')
         const button = messages.getByRole('button')

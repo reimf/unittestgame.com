@@ -38,6 +38,7 @@
     "submitUnitTestsSecond": "Lever de *Unit Testen* opnieuw in om te controleren of de *Huidige Functie* voldoet aan de *Specificatie*.",
     "addBatteryLevel18": "De *Huidige Functie* geeft nu alleen `\"LOW POWER MODE\"` terug voor batterijpercentage `19`. De *Specificatie* zegt dat `18` ook `\"LOW POWER MODE\"` moet teruggeven. Voeg daar een unit test voor toe.",
     "submitUnitTestsThird": "Lever de *Unit Testen* opnieuw in om te controleren of de *Huidige Functie* eindelijk voldoet aan de *Specificatie*.",
+    "batteryLevelLesson": "Onthoud voor de volgende levels: ik schrijf niet meer code dan je unit testen afdwingen. Test daarom beide kanten van elke grens, zoals hier `19` en `20`, en ook een waarde verder weg, zoals `18` en `21`.",
     "batteryLevelSpecification": "Een smartphone werkt normaal in `\"NORMAL MODE\"`, maar wanneer het batterijpercentage minder dan `20` is, werkt een smartphone in `\"LOW POWER MODE\"`.",
     "votingAgeSpecification": "Je mag stemmen als je leeftijd `18` jaar of hoger is.",
     "windScaleSpecification": "Het is `\"CALM\"` als de windsnelheid minder dan `20` is, `\"BREEZE\"` als deze minder dan `50` is, `\"GALE\"` als deze minder dan `90` is, en anders `\"STORM\"`.",
