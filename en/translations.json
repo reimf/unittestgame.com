@@ -23,7 +23,7 @@
     "specificationTitle": "Specification ({description})",
     "currentFunctionTitle": "Current Function",
     "differenceTitle": "Difference",
-    "currentFunctionNotImproved": "I've added the unit test, but the *Current Function* already passes it, so I didn't improve it.",
+    "currentFunctionNotImproved": "I've added the unit test, but the *Current Function* already gave the right outcome for that input, so I didn't improve it.",
     "duplicateUnitTest": "You had already added this unit test, so I didn't add it again.",
     "hint": "Find an input for which the *Current Function* returns something other than the *Specification* says, and write a unit test for that input.",
     "currentFunctionImproved": "I've added the unit test to the *Unit Tests* and improved the *Current Function* so the new unit test now passes{numberOfUnitTests === 1 ? '' : ' as well'}.",

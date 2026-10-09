@@ -23,7 +23,7 @@
     "specificationTitle": "Specificatie ({description})",
     "currentFunctionTitle": "Huidige Functie",
     "differenceTitle": "Verschil",
-    "currentFunctionNotImproved": "Ik heb de unit test toegevoegd, maar de *Huidige Functie* slaagt er al voor, dus heb ik die niet verbeterd.",
+    "currentFunctionNotImproved": "Ik heb de unit test toegevoegd, maar de *Huidige Functie* gaf voor die invoer al de juiste uitkomst, dus heb ik die niet verbeterd.",
     "duplicateUnitTest": "Deze unit test had je al toegevoegd, dus ik heb hem niet nog een keer toegevoegd.",
     "hint": "Zoek een invoer waarbij de *Huidige Functie* iets anders teruggeeft dan de *Specificatie* zegt, en schrijf een unit test voor die invoer.",
     "currentFunctionImproved": "Ik heb de unit test toegevoegd aan de *Unit Testen* en de *Huidige Functie* verbeterd zodat de nieuwe unit test nu{numberOfUnitTests === 1 ? '' : ' ook'} slaagt.",

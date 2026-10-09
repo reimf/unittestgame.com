@@ -23,7 +23,7 @@
     "specificationTitle": "Specifica ({description})",
     "currentFunctionTitle": "Funzione Attuale",
     "differenceTitle": "Differenza",
-    "currentFunctionNotImproved": "Ho aggiunto il unit test, ma la *Funzione Attuale* lo supera già, quindi non l'ho migliorata.",
+    "currentFunctionNotImproved": "Ho aggiunto il unit test, ma la *Funzione Attuale* dava già il risultato corretto per quell'input, quindi non l'ho migliorata.",
     "duplicateUnitTest": "Avevi già aggiunto questo unit test, quindi non l'ho aggiunto di nuovo.",
     "hint": "Cerca un input per cui la *Funzione Attuale* restituisce qualcosa di diverso da ciò che dice la *Specifica*, e scrivi un unit test per quell'input.",
     "currentFunctionImproved": "Ho aggiunto il unit test ai *Unit Tests* e migliorato la *Funzione Attuale* in modo che il nuovo unit test ora superi{numberOfUnitTests === 1 ? '' : ' anche'}.",
