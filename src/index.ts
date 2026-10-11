@@ -35,6 +35,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const isFinished = (): boolean => progressElement.value === phaseCount
 
+    // The icon alone gives the button no accessible name, so the label follows the icon.
+    const showControl = (control: keyof typeof ICONS): void => {
+        controlAnimationButton.innerHTML = ICONS[control]
+        controlAnimationButton.ariaLabel = controlAnimationButton.dataset[`label${control[0]!.toUpperCase()}${control.slice(1)}`]!
+    }
+
     // currentStep and elapsed-in-phase are both derivable from progressElement.value,
     // so it's the single source of truth instead of parallel state kept in sync by hand.
     const stepForValue = (value: number): number =>
@@ -46,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
             steps[index]!.classList.toggle('visible', index <= step)
         )
         progressElement.classList.remove('playing')
-        controlAnimationButton.innerHTML = isFinished() ? ICONS.replay : playing !== null ? ICONS.pause : ICONS.play
+        showControl(isFinished() ? 'replay' : playing !== null ? 'pause' : 'play')
     }
 
     const goToStep = (index: number): void => {
@@ -63,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const startAutoplay = (): void => {
         render()
         progressElement.classList.add('playing')
-        controlAnimationButton.innerHTML = ICONS.pause
+        showControl('pause')
         const elapsed = (progressElement.value - Math.floor(progressElement.value)) * STEP_DURATION
         stepStart = performance.now() - elapsed
 
