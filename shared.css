@@ -4,7 +4,7 @@
   --accent-left: light-dark(#606, #b3b);
   --accent-right: #f3c;
   --button-background-left: #063;
-  --button-background-right: #6c3;
+  --button-background-right: light-dark(#6c3, #595);
   --button-focus-shadow: #f60;
   --button-retry-background-left: #343;
   --button-retry-background-right: #9a9;
@@ -37,13 +37,13 @@
   --level-unlocked-background-left: light-dark(#333, #555);
   --level-unlocked-background-right: #999;
   --level-unlocked-foreground: #fff;
-  --link-foreground: light-dark(#063, #6c3);
+  --link-foreground: light-dark(#063, #7a6);
   --message-border: light-dark(#ddd, #435);
   --message-computer-background: light-dark(#fff, #223);
   --message-foreground: light-dark(#333, #fff);
   --message-human-background: light-dark(#efe, #232);
   --panel-background-left: light-dark(#606, #303);
-  --panel-background-right: light-dark(#f3c, #a18);
+  --panel-background-right: light-dark(#f3c, #826);
   --panel-background-xtra: #fc6;
   --panel-body-background: light-dark(#fff, #223);
   --separator-shadow: light-dark(#0003, #0009);
