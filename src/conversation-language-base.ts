@@ -6,8 +6,10 @@ export interface ConversationStrings {
     unitTestGameTitle: string
     slogan: string
     settingsTitle: string
-    lightTheme: string
-    darkTheme: string
+    lightColorTheme: string
+    lightGrayscaleTheme: string
+    darkColorTheme: string
+    darkGrayscaleTheme: string
     invitation: string
     level: string
     nextLevelButton: string
@@ -94,12 +96,20 @@ export abstract class ConversationLanguage {
         return this.format(this.strings.settingsTitle)
     }
 
-    public lightTheme(): ConversationText {
-        return this.format(this.strings.lightTheme)
+    public lightColorTheme(): ConversationText {
+        return this.format(this.strings.lightColorTheme)
     }
 
-    public darkTheme(): ConversationText {
-        return this.format(this.strings.darkTheme)
+    public lightGrayscaleTheme(): ConversationText {
+        return this.format(this.strings.lightGrayscaleTheme)
+    }
+
+    public darkColorTheme(): ConversationText {
+        return this.format(this.strings.darkColorTheme)
+    }
+
+    public darkGrayscaleTheme(): ConversationText {
+        return this.format(this.strings.darkGrayscaleTheme)
     }
 
     public invitation(): ConversationText {

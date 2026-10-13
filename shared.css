@@ -62,6 +62,18 @@
   --unittest-new-background-gradient: linear-gradient(135deg, var(--unittest-new-background-left), var(--unittest-new-background-right));
 }
 
+:root[data-theme^="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme^="dark"] {
+  color-scheme: dark;
+}
+
+:root[data-theme$="grayscale"] {
+  filter: grayscale(1);
+}
+
 * {
   border: none;
   box-sizing: border-box;

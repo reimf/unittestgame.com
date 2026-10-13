@@ -80,14 +80,16 @@ export class Main {
 
     private switchTheme(theme: string): void {
         localStorage.setItem('theme', theme)
-        document.documentElement.style.colorScheme = theme
+        document.documentElement.dataset['theme'] = theme
         this.showSettingsPanel()
     }
 
     private themeSwitcher(): Details {
         const themes = new Map([
-            ['light', this.conversationLanguage.lightTheme()],
-            ['dark', this.conversationLanguage.darkTheme()],
+            ['light', this.conversationLanguage.lightColorTheme()],
+            ['light-grayscale', this.conversationLanguage.lightGrayscaleTheme()],
+            ['dark', this.conversationLanguage.darkColorTheme()],
+            ['dark-grayscale', this.conversationLanguage.darkGrayscaleTheme()],
         ])
         const currentTheme = this.currentTheme()
         const items = [...themes]
