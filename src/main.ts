@@ -3,7 +3,8 @@ import { Store } from './store.js'
 import { Panel, Message, ComputerMessage, QuestionMessage } from './frame.js'
 import { Anchor, Details, Html, ListItem, OrderedList, Button, Span, Summary, UnorderedList } from './html.js'
 import { AnyLevel } from './level-base.js'
-import { ConversationLanguage } from './conversation-language-base.js'
+import { ConversationLanguage, ConversationText } from './conversation-language-base.js'
+import { conversationLanguages } from './conversation-languages.js'
 import { Picker } from './picker.js'
 import { ProgrammingLanguage } from './programming-language-base.js'
 import { programmingLanguages } from './programming-languages.js'
@@ -60,18 +61,33 @@ export class Main {
         return url.toString()
     }
 
-    private programmingLanguageSwitcher(): Details {
-        const items = programmingLanguages
-            .filter(programmingLanguage => programmingLanguage.id !== this.programmingLanguage.id)
-            .map(programmingLanguage => new ListItem().appendChild(
-                new Anchor(this.urlWith('programming_language', programmingLanguage.id)).addClass('btn').appendText(ConversationLanguage.bless(programmingLanguage.name))
-            ))
-        return new Details().addClass('switcher').setId('programming-language-switcher').appendChildren([
+    private urlInConversationLanguage(conversationLanguageId: string): string {
+        const url = new URL(window.location.href)
+        url.pathname = url.pathname.replace(`/${this.conversationLanguage.id}/`, `/${conversationLanguageId}/`)
+        return url.toString()
+    }
+
+    private switcher(id: string, currentName: ConversationText, options: readonly Html[]): Details {
+        return new Details().addClass('switcher').setId(id).appendChildren([
             new Summary().appendChild(
-                new Span().appendText(ConversationLanguage.bless(this.programmingLanguage.name))
+                new Span().appendText(currentName)
             ),
-            new UnorderedList().appendChildren(items)
+            new UnorderedList().appendChildren(options.map(option => new ListItem().appendChild(option.addClass('btn'))))
         ])
+    }
+
+    private programmingLanguageSwitcher(): Details {
+        const options = programmingLanguages
+            .filter(programmingLanguage => programmingLanguage.id !== this.programmingLanguage.id)
+            .map(programmingLanguage => new Anchor(this.urlWith('programming_language', programmingLanguage.id)).appendText(ConversationLanguage.bless(programmingLanguage.name)))
+        return this.switcher('programming-language-switcher', ConversationLanguage.bless(this.programmingLanguage.name), options)
+    }
+
+    private conversationLanguageSwitcher(): Details {
+        const options = conversationLanguages
+            .filter(conversationLanguage => conversationLanguage.id !== this.conversationLanguage.id)
+            .map(conversationLanguage => new Anchor(this.urlInConversationLanguage(conversationLanguage.id)).appendText(ConversationLanguage.bless(conversationLanguage.name)))
+        return this.switcher('conversation-language-switcher', ConversationLanguage.bless(this.conversationLanguage.name), options)
     }
 
     private currentTheme(): string {
@@ -92,17 +108,10 @@ export class Main {
             ['dark-grayscale', this.conversationLanguage.darkGrayscaleTheme()],
         ])
         const currentTheme = this.currentTheme()
-        const items = [...themes]
+        const options = [...themes]
             .filter(([theme]) => theme !== currentTheme)
-            .map(([theme, name]) => new ListItem().appendChild(
-                new Button(name, () => this.switchTheme(theme)).addClass('btn')
-            ))
-        return new Details().addClass('switcher').setId('theme-switcher').appendChildren([
-            new Summary().appendChild(
-                new Span().appendText(themes.get(currentTheme)!)
-            ),
-            new UnorderedList().appendChildren(items)
-        ])
+            .map(([theme, name]) => new Button(name, () => this.switchTheme(theme)))
+        return this.switcher('theme-switcher', themes.get(currentTheme)!, options)
     }
 
     private showAboutPanel(): void {
@@ -111,7 +120,7 @@ export class Main {
     }
 
     private showSettingsPanel(): void {
-        new Panel('settings', this.conversationLanguage.settingsTitle(), [this.programmingLanguageSwitcher(), this.themeSwitcher()]).show()
+        new Panel('settings', this.conversationLanguage.settingsTitle(), [this.conversationLanguageSwitcher(), this.programmingLanguageSwitcher(), this.themeSwitcher()]).show()
     }
 
     private showInvitationMessage(): void {
