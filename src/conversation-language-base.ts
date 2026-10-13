@@ -6,6 +6,8 @@ export interface ConversationStrings {
     unitTestGameTitle: string
     slogan: string
     settingsTitle: string
+    lightTheme: string
+    darkTheme: string
     invitation: string
     level: string
     nextLevelButton: string
@@ -90,6 +92,14 @@ export abstract class ConversationLanguage {
 
     public settingsTitle(): ConversationText {
         return this.format(this.strings.settingsTitle)
+    }
+
+    public lightTheme(): ConversationText {
+        return this.format(this.strings.lightTheme)
+    }
+
+    public darkTheme(): ConversationText {
+        return this.format(this.strings.darkTheme)
     }
 
     public invitation(): ConversationText {

@@ -3,6 +3,8 @@
     "unitTestGameTitle": "UnitTestGame",
     "slogan": "![Logo von UnitTestGame](/apple-touch-icon.png)Lerne, Unit-Tests zu schreiben, die einen KI-Bot steuern.\n\n[Startseite](/index)",
     "settingsTitle": "Einstellungen",
+    "lightTheme": "Helles Design",
+    "darkTheme": "Dunkles Design",
     "invitation": "Welches Level möchtest du spielen?",
     "level": "Level {levelNumber} - {levelName}",
     "nextLevelButton": "Ich möchte {levelDescription} spielen",

@@ -222,11 +222,13 @@ details {
       border-radius: 0;
       padding: 0;
 
-      a.btn {
+      .btn {
         display: block;
         height: 2rem;
         line-height: 2rem;
+        margin: 0;
         padding: 0 1rem;
+        text-align: left;
       }
     }
   }

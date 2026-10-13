@@ -3,6 +3,8 @@
     "unitTestGameTitle": "UnitTestGame",
     "slogan": "![Logo di UnitTestGame](/apple-touch-icon.png)Impara a scrivere unit tests che guidano un bot IA.\n\n[Home](/index)",
     "settingsTitle": "Impostazioni",
+    "lightTheme": "Tema chiaro",
+    "darkTheme": "Tema scuro",
     "invitation": "Quale livello vuoi giocare?",
     "level": "Livello {levelNumber} - {levelName}",
     "nextLevelButton": "Voglio giocare {levelDescription}",

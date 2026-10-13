@@ -74,13 +74,42 @@ export class Main {
         ])
     }
 
+    private currentTheme(): string {
+        return localStorage.getItem('theme') ?? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+    }
+
+    private switchTheme(theme: string): void {
+        localStorage.setItem('theme', theme)
+        document.documentElement.style.colorScheme = theme
+        this.showSettingsPanel()
+    }
+
+    private themeSwitcher(): Details {
+        const themes = new Map([
+            ['light', this.conversationLanguage.lightTheme()],
+            ['dark', this.conversationLanguage.darkTheme()],
+        ])
+        const currentTheme = this.currentTheme()
+        const items = [...themes]
+            .filter(([theme]) => theme !== currentTheme)
+            .map(([theme, name]) => new ListItem().appendChild(
+                new Button(name, () => this.switchTheme(theme)).addClass('btn')
+            ))
+        return new Details().addClass('switcher').setId('theme-switcher').appendChildren([
+            new Summary().appendChild(
+                new Span().appendText(themes.get(currentTheme)!)
+            ),
+            new UnorderedList().appendChildren(items)
+        ])
+    }
+
     private showAboutPanel(): void {
         const content = [this.conversationLanguage.slogan()]
         new Panel('unittestgame', this.conversationLanguage.unitTestGameTitle(), content).show()
     }
 
     private showSettingsPanel(): void {
-        new Panel('settings', this.conversationLanguage.settingsTitle(), [this.programmingLanguageSwitcher()]).show()
+        new Panel('settings', this.conversationLanguage.settingsTitle(), [this.programmingLanguageSwitcher(), this.themeSwitcher()]).show()
     }
 
     private showInvitationMessage(): void {
