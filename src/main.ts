@@ -90,24 +90,20 @@ export class Main {
         return this.switcher('conversation-language-switcher', ConversationLanguage.bless(this.conversationLanguage.name), options)
     }
 
-    private currentTheme(): string {
-        return localStorage.getItem('theme') ?? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
-    }
-
     private switchTheme(theme: string): void {
         localStorage.setItem('theme', theme)
-        document.documentElement.dataset['theme'] = theme
+        applyTheme(theme)
         this.showSettingsPanel()
     }
 
     private themeSwitcher(): Details {
         const themes = new Map([
-            ['light', this.conversationLanguage.lightColorTheme()],
+            ['light-color', this.conversationLanguage.lightColorTheme()],
             ['light-grayscale', this.conversationLanguage.lightGrayscaleTheme()],
-            ['dark', this.conversationLanguage.darkColorTheme()],
+            ['dark-color', this.conversationLanguage.darkColorTheme()],
             ['dark-grayscale', this.conversationLanguage.darkGrayscaleTheme()],
         ])
-        const currentTheme = this.currentTheme()
+        const currentTheme = getCurrentTheme()
         const options = [...themes]
             .filter(([theme]) => theme !== currentTheme)
             .map(([theme, name]) => new Button(name, () => this.switchTheme(theme)))

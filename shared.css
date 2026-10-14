@@ -1,12 +1,12 @@
-:root[data-theme^="light"] {
+:root.theme-light {
   color-scheme: light;
 }
 
-:root[data-theme^="dark"] {
+:root.theme-dark {
   color-scheme: dark;
 }
 
-:root[data-theme$="grayscale"] {
+:root.theme-grayscale {
   filter: grayscale(1);
 }
 

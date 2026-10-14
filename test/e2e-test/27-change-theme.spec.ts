@@ -8,6 +8,24 @@ const switchTheme = async (page: Page, name: string): Promise<void> => {
 }
 
 test.describe('change theme', () => {
+    test.describe('with a stored theme in an unknown format', () => {
+        test.use({ colorScheme: 'light' })
+
+        test.beforeEach(async ({ page }) => {
+            await page.addInitScript(() => localStorage.setItem('theme', 'dark'))
+            await page.goto('/en/game?speed=fast&picker=fixed')
+        })
+
+        test('has theme selector showing the system theme as the current theme', async ({ page }) => {
+            const summary = page.getByTestId('theme-switcher').locator('summary')
+            await expect(summary).toHaveText('Light theme with color')
+        })
+
+        test('has the system theme classes', async ({ page }) => {
+            await expect(page.locator('html')).toHaveClass('theme-light theme-color')
+        })
+    })
+
     test.describe('with a light system theme', () => {
         test.use({ colorScheme: 'light' })
 
@@ -85,6 +103,14 @@ test.describe('change theme', () => {
             await expect(summary).toHaveText('Dark theme with color')
             await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(17, 17, 17)')
         })
+
+        test('stores the theme', async ({ page }) => {
+            expect(await page.evaluate(() => localStorage.getItem('theme'))).toBe('dark-color')
+        })
+
+        test('has the dark and color theme classes', async ({ page }) => {
+            await expect(page.locator('html')).toHaveClass('theme-dark theme-color')
+        })
     })
 
     test.describe('after switching to the light theme grayscale', () => {
@@ -113,6 +139,7 @@ test.describe('change theme', () => {
             const summary = page.getByTestId('theme-switcher').locator('summary')
             await expect(summary).toHaveText('Light theme grayscale')
             await expect(page.locator('html')).toHaveCSS('filter', 'grayscale(1)')
+            await expect(page.locator('html')).toHaveClass('theme-light theme-grayscale')
         })
     })
 
@@ -135,6 +162,10 @@ test.describe('change theme', () => {
 
         test('has no color', async ({ page }) => {
             await expect(page.locator('html')).toHaveCSS('filter', 'grayscale(1)')
+        })
+
+        test('has the dark and grayscale theme classes', async ({ page }) => {
+            await expect(page.locator('html')).toHaveClass('theme-dark theme-grayscale')
         })
     })
 })
