@@ -92,7 +92,7 @@ export class Main {
 
     private switchTheme(theme: string): void {
         localStorage.setItem('theme', theme)
-        applyTheme(theme)
+        Theme.applyCurrent()
         this.showSettingsPanel()
     }
 
@@ -103,7 +103,7 @@ export class Main {
             ['dark-color', this.conversationLanguage.darkColorTheme()],
             ['dark-grayscale', this.conversationLanguage.darkGrayscaleTheme()],
         ])
-        const currentTheme = getCurrentTheme()
+        const currentTheme = Theme.current()
         const options = [...themes]
             .filter(([theme]) => theme !== currentTheme)
             .map(([theme, name]) => new Button(name, () => this.switchTheme(theme)))
