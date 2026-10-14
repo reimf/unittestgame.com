@@ -91,8 +91,8 @@ export class Main {
     }
 
     private switchTheme(theme: string): void {
-        localStorage.setItem('theme', theme)
-        Theme.applyCurrent()
+        Theme.set(theme)
+        Theme.apply(theme)
         this.showSettingsPanel()
     }
 
@@ -103,7 +103,7 @@ export class Main {
             ['dark-color', this.conversationLanguage.darkColorTheme()],
             ['dark-grayscale', this.conversationLanguage.darkGrayscaleTheme()],
         ])
-        const currentTheme = Theme.current()
+        const currentTheme = Theme.get()
         const options = [...themes]
             .filter(([theme]) => theme !== currentTheme)
             .map(([theme, name]) => new Button(name, () => this.switchTheme(theme)))
@@ -116,7 +116,8 @@ export class Main {
     }
 
     private showSettingsPanel(): void {
-        new Panel('settings', this.conversationLanguage.settingsTitle(), [this.conversationLanguageSwitcher(), this.programmingLanguageSwitcher(), this.themeSwitcher()]).show()
+        const content = [this.conversationLanguageSwitcher(), this.programmingLanguageSwitcher(), this.themeSwitcher()]
+        new Panel('settings', this.conversationLanguage.settingsTitle(), content).show()
     }
 
     private showInvitationMessage(): void {

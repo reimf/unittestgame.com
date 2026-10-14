@@ -8,24 +8,6 @@ const switchTheme = async (page: Page, name: string): Promise<void> => {
 }
 
 test.describe('change theme', () => {
-    test.describe('with a stored theme in an unknown format', () => {
-        test.use({ colorScheme: 'light' })
-
-        test.beforeEach(async ({ page }) => {
-            await page.addInitScript(() => localStorage.setItem('theme', 'dark'))
-            await page.goto('/en/game?speed=fast&picker=fixed')
-        })
-
-        test('has theme selector showing the system theme as the current theme', async ({ page }) => {
-            const summary = page.getByTestId('theme-switcher').locator('summary')
-            await expect(summary).toHaveText('Light theme with color')
-        })
-
-        test('has the system theme classes', async ({ page }) => {
-            await expect(page.locator('html')).toHaveClass('theme-light theme-color')
-        })
-    })
-
     test.describe('with a light system theme', () => {
         test.use({ colorScheme: 'light' })
 

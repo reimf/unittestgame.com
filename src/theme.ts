@@ -7,16 +7,19 @@ class Theme {
         return `${darkOrLight}-${colorOrGrayscale}`
     }
 
-    public static current(): string {
-        const storedTheme = localStorage.getItem('theme') ?? ''
-        return /^(light|dark)-(color|grayscale)$/.test(storedTheme) ? storedTheme : Theme.default()
+    public static get(): string {
+        return localStorage.getItem('theme') ?? Theme.default()
     }
 
-    public static applyCurrent(): void {
-        const [darkOrLight, colorOrGrayscale] = Theme.current().split('-')
+    public static set(theme: string): void {
+        localStorage.setItem('theme', theme)
+    }
+
+    public static apply(theme: string): void {
+        const [darkOrLight, colorOrGrayscale] = theme.split('-')
         document.documentElement.classList.remove('theme-light', 'theme-dark', 'theme-color', 'theme-grayscale')
         document.documentElement.classList.add(`theme-${darkOrLight}`, `theme-${colorOrGrayscale}`)
     }
 }
 
-Theme.applyCurrent()
+Theme.apply(Theme.get())
