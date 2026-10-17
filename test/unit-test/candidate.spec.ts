@@ -80,7 +80,7 @@ test.describe('class Candidate', () => {
         const html = candidate.toHtml(programmingLanguage)
         expect(html.getElement().outerHTML).toBe(
             '<code class="block">' +
-                '<div>' +
+                '<span>' +
                     '<span class="keyword">function</span>' +
                     '<span class="whitespace"> </span>' +
                     '<span class="function">nextYear</span>' +
@@ -89,16 +89,16 @@ test.describe('class Candidate', () => {
                     '<span class="punctuation">)</span>' +
                     '<span class="whitespace"> </span>' +
                     '<span class="punctuation">{</span>' +
-                '</div>' +
-                '<div>' +
+                '</span>' +
+                '<span>' +
                     '<span class="whitespace">    </span>' +
                     '<span class="keyword">return</span>' +
                     '<span class="whitespace"> </span>' +
                     '<span class="variable">year</span>' +
-                '</div>' +
-                '<div>' +
+                '</span>' +
+                '<span>' +
                     '<span class="punctuation">}</span>' +
-                '</div>' +
+                '</span>' +
             '</code>'
         )
     })
@@ -109,7 +109,7 @@ test.describe('class Candidate', () => {
         const htmlWithPrevious = candidate.toHtmlWithPrevious(previousCandidate, programmingLanguage)
         expect(htmlWithPrevious.getElement().outerHTML).toBe(
             '<code class="block">' +
-                '<div>' +
+                '<span>' +
                     '<span class="keyword">function</span>' +
                     '<span class="whitespace"> </span>' +
                     '<span class="function">nextYear</span>' +
@@ -118,8 +118,8 @@ test.describe('class Candidate', () => {
                     '<span class="punctuation">)</span>' +
                     '<span class="whitespace"> </span>' +
                     '<span class="punctuation">{</span>' +
-                '</div>' +
-                '<div>' +
+                '</span>' +
+                '<span>' +
                     '<del class="whitespace">    </del>' +
                     '<del class="keyword">if</del>' +
                     '<del class="whitespace"> </del>' +
@@ -134,8 +134,8 @@ test.describe('class Candidate', () => {
                     '<del class="keyword">return</del>' +
                     '<del class="whitespace"> </del>' +
                     '<del class="number">0</del>' +
-                '</div>' +
-                '<div>' +
+                '</span>' +
+                '<span>' +
                     '<ins class="whitespace">    </ins>' +
                     '<ins class="keyword">if</ins>' +
                     '<ins class="whitespace"> </ins>' +
@@ -150,8 +150,8 @@ test.describe('class Candidate', () => {
                     '<ins class="keyword">return</ins>' +
                     '<ins class="whitespace"> </ins>' +
                     '<ins class="number">0</ins>' +
-                '</div>' +
-                '<div>' +
+                '</span>' +
+                '<span>' +
                     '<span class="whitespace">    </span>' +
                     '<span class="keyword">return</span>' +
                     '<span class="whitespace"> </span>' +
@@ -161,10 +161,10 @@ test.describe('class Candidate', () => {
                     '<ins class="operator">%</ins>' +
                     '<ins class="whitespace"> </ins>' +
                     '<ins class="number">1</ins>' +
-                '</div>' +
-                '<div>' +
+                '</span>' +
+                '<span>' +
                     '<span class="punctuation">}</span>' +
-                '</div>' +
+                '</span>' +
             '</code>'
         )
     })

@@ -1,5 +1,5 @@
 import { Candidate } from './candidate.js'
-import { Div } from './html.js'
+import { CodeLine } from './html.js'
 import { ProgrammingLanguage } from './programming-language-base.js'
 import { UnitTest } from './unit-test.js'
 import { Value } from './variable.js'
@@ -15,7 +15,7 @@ export class TestResult<Parameters extends readonly Value[] = readonly Value[], 
         this.passes = this.result === unitTest.expected
     }
 
-    public toHtml(programmingLanguage: ProgrammingLanguage): Div {
+    public toHtml(programmingLanguage: ProgrammingLanguage): CodeLine {
         return this.unitTest.toHtmlWithResult(this.result, programmingLanguage)
     }
 }

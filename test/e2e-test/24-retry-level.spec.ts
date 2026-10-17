@@ -15,7 +15,7 @@ test.describe('retry level', () => {
         const specificationPanel = page.getByTestId('specification')
         await expect(specificationPanel).toContainText('Specification (Level 0 - Battery Level)')
         const currentFunctionPanel = page.getByTestId('current-function')
-        const codeLines = currentFunctionPanel.locator('code > div')
+        const codeLines = currentFunctionPanel.locator('code > span')
         await expect(codeLines).toContainText(['function powerMode(batteryLevel) {', '    return "UNKNOWN"', '}'])
     })
 
@@ -52,7 +52,7 @@ test.describe('retry level after playing it', () => {
 
     test('starts with the initial current function', async ({ page }) => {
         const currentFunctionPanel = page.getByTestId('current-function')
-        const codeLines = currentFunctionPanel.locator('code > div')
+        const codeLines = currentFunctionPanel.locator('code > span')
         await expect(codeLines).toContainText(['function powerMode(batteryLevel) {', '    return "UNKNOWN"', '}'])
     })
 

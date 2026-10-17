@@ -1,4 +1,4 @@
-import { Div } from "./html"
+import { CodeLine } from "./html"
 import { Highlighter, Tokenizer, type TokenTypes } from './highlighter.js'
 
 export abstract class ProgrammingLanguage {
@@ -18,7 +18,7 @@ export abstract class ProgrammingLanguage {
         return name
     }
 
-    public highlight(currentCode: string, previousCode?: string): Div[] {
+    public highlight(currentCode: string, previousCode?: string): CodeLine[] {
         const tokenizer = new Tokenizer(this.tokenTypes)
         const highlighter = new Highlighter()
         const currentLines = this.transpile(currentCode).split('\n')

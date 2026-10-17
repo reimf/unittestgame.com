@@ -1,4 +1,4 @@
-import { Del, Div, Ins, Span } from './html.js'
+import { CodeLine, Del, Ins, Span } from './html.js'
 import { ConversationLanguage } from './conversation-language-base.js'
 
 type TokenType = 'whitespace' | 'number' | 'type' | 'keyword' | 'literal' | 'operator' | 'class' | 'function' | 'variable' | 'string' | 'punctuation' | 'dot' | 'error'
@@ -42,16 +42,16 @@ export class Tokenizer {
 }
 
 export class Highlighter {
-    public highlightTokens(tokens: readonly Token[]): Div {
+    public highlightTokens(tokens: readonly Token[]): CodeLine {
         const spans = tokens.map(token => new Span().addClass(token.type).appendText(ConversationLanguage.bless(token.text)))
-        return new Div().appendChildren(spans)
+        return new CodeLine().appendChildren(spans)
     }
 
-    public highlightDiff(currentTokens: readonly Token[], previousTokens: readonly Token[]): Div {
+    public highlightDiff(currentTokens: readonly Token[], previousTokens: readonly Token[]): CodeLine {
         const previousTokensToConsume = [...previousTokens]
         const currentTokensToConsume = [...currentTokens]
         const commonTokens = this.longestCommonSubsequence(currentTokensToConsume, previousTokensToConsume)
-        const div = new Div()
+        const div = new CodeLine()
         while (previousTokensToConsume.length > 0 || currentTokensToConsume.length > 0) {
             if (commonTokens.length > 0 && previousTokensToConsume.length > 0 && currentTokensToConsume.length > 0 && previousTokensToConsume[0]!.equals(commonTokens[0]!) && currentTokensToConsume[0]!.equals(commonTokens[0]!)) {
                 const token = commonTokens.shift()!

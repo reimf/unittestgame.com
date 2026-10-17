@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 import { JSDOM } from 'jsdom'
-import { Div } from '../../src/html.js'
+import { CodeLine } from '../../src/html.js'
 import { JavaScript } from '../../src/programming-language-javascript.js'
 import { Python } from '../../src/programming-language-python.js'
 import { Ruby } from '../../src/programming-language-ruby.js'
@@ -8,7 +8,7 @@ import { Ruby } from '../../src/programming-language-ruby.js'
 const { document } = new JSDOM('<!DOCTYPE html>').window
 global.document = document
 
-const html = (divs: readonly Div[]): string[] => divs.map(div => div.getElement().outerHTML)
+const html = (lines: readonly CodeLine[]): string[] => lines.map(line => line.getElement().outerHTML)
 
 test.describe('class ProgrammingLanguage', () => {
     const programmingLanguage = new JavaScript()
@@ -22,7 +22,7 @@ test.describe('class ProgrammingLanguage', () => {
             '}'
         const highlighted = programmingLanguage.highlight(javascript)
         expect(html(highlighted)).toEqual([
-            '<div>' +
+            '<span>' +
                 '<span class="keyword">function</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="function">isFloatFormat</span>' +
@@ -105,7 +105,7 @@ test.describe('class ProgrammingLanguage', () => {
                 '<span class="whitespace"> </span>' +
                 '<span class="variable">regex</span>' +
                 '<span class="punctuation">}</span>' +
-            '</div>',
+            '</span>',
         ])
     })
 
@@ -114,7 +114,7 @@ test.describe('class ProgrammingLanguage', () => {
         const textTo = 'if (age >= 19) return false'
         const highlighted = programmingLanguage.highlight(textTo, textFrom)
         expect(html(highlighted)).toEqual([
-            '<div>' +
+            '<span>' +
                 '<span class="keyword">if</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="punctuation">(</span>' +
@@ -131,7 +131,7 @@ test.describe('class ProgrammingLanguage', () => {
                 '<span class="whitespace"> </span>' +
                 '<del class="literal">true</del>' +
                 '<ins class="literal">false</ins>' +
-            '</div>',
+            '</span>',
         ])
     })
 })
@@ -142,7 +142,7 @@ test.describe('class Python', () => {
     test('transpiles === with false and true across multiple lines', () => {
         const highlighted = python.highlight('if (age === 17) return false\nreturn true')
         expect(html(highlighted)).toEqual([
-            '<div>' +
+            '<span>' +
                 '<span class="keyword">if</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="variable">age</span>' +
@@ -155,19 +155,19 @@ test.describe('class Python', () => {
                 '<span class="keyword">return</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="literal">False</span>' +
-            '</div>',
-            '<div>' +
+            '</span>',
+            '<span>' +
                 '<span class="keyword">return</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="literal">True</span>' +
-            '</div>',
+            '</span>',
         ])
     })
 
     test('transpiles && and !== across multiple lines', () => {
         const highlighted = python.highlight('if (price < 19 && quality >= 6) return "GOOD"\nif (a !== b) return "SCALENE"')
         expect(html(highlighted)).toEqual([
-            '<div>' +
+            '<span>' +
                 '<span class="keyword">if</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="variable">price</span>' +
@@ -188,8 +188,8 @@ test.describe('class Python', () => {
                 '<span class="keyword">return</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="string">"GOOD"</span>' +
-            '</div>',
-            '<div>' +
+            '</span>',
+            '<span>' +
                 '<span class="keyword">if</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="variable">a</span>' +
@@ -202,14 +202,14 @@ test.describe('class Python', () => {
                 '<span class="keyword">return</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="string">"SCALENE"</span>' +
-            '</div>',
+            '</span>',
         ])
     })
 
     test('transpiles ||', () => {
         const highlighted = python.highlight('if (a === b || b === c) return "EQUILATERAL"')
         expect(html(highlighted)).toEqual([
-            '<div>' +
+            '<span>' +
                 '<span class="keyword">if</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="variable">a</span>' +
@@ -230,14 +230,14 @@ test.describe('class Python', () => {
                 '<span class="keyword">return</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="string">"EQUILATERAL"</span>' +
-            '</div>',
+            '</span>',
         ])
     })
 
     test('transpiles !', () => {
         const highlighted = python.highlight('if (!ok) return false')
         expect(html(highlighted)).toEqual([
-            '<div>' +
+            '<span>' +
                 '<span class="keyword">if</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="operator">not</span>' +
@@ -248,14 +248,14 @@ test.describe('class Python', () => {
                 '<span class="keyword">return</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="literal">False</span>' +
-            '</div>',
+            '</span>',
         ])
     })
 
     test('transpiles function into def and handles the closing curly bracket', () => {
         const highlighted = python.highlight('function isEven(num: number): boolean {\n    if (num % 2 === 0) return true\n    return false\n}')
         expect(html(highlighted)).toEqual([
-            '<div>' +
+            '<span>' +
                 '<span class="keyword">def</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="function">isEven</span>' +
@@ -270,8 +270,8 @@ test.describe('class Python', () => {
                 '<span class="whitespace"> </span>' +
                 '<span class="type">bool</span>' +
                 '<span class="punctuation">:</span>' +
-            '</div>',
-            '<div>' +
+            '</span>',
+            '<span>' +
                 '<span class="whitespace">    </span>' +
                 '<span class="keyword">if</span>' +
                 '<span class="whitespace"> </span>' +
@@ -289,47 +289,47 @@ test.describe('class Python', () => {
                 '<span class="keyword">return</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="literal">True</span>' +
-            '</div>',
-            '<div>' +
+            '</span>',
+            '<span>' +
                 '<span class="whitespace">    </span>' +
                 '<span class="keyword">return</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="literal">False</span>' +
-            '</div>',
+            '</span>',
         ])
     })
 
     test('highlights a diff when current and previous transpile to a different number of lines', () => {
         const highlighted = python.highlight('return true\nreturn false', 'return true')
         expect(html(highlighted)).toEqual([
-            '<div>' +
+            '<span>' +
                 '<ins class="keyword">return</ins>' +
                 '<ins class="whitespace"> </ins>' +
                 '<ins class="literal">True</ins>' +
-            '</div>',
-            '<div>' +
+            '</span>',
+            '<span>' +
                 '<span class="keyword">return</span>' +
                 '<span class="whitespace"> </span>' +
                 '<del class="literal">True</del>' +
                 '<ins class="literal">False</ins>' +
-            '</div>',
+            '</span>',
         ])
     })
 
     test('highlights a diff when current transpiles to fewer lines than previous', () => {
         const highlighted = python.highlight('return true', 'return true\nreturn false')
         expect(html(highlighted)).toEqual([
-            '<div>' +
+            '<span>' +
                 '<del class="keyword">return</del>' +
                 '<del class="whitespace"> </del>' +
                 '<del class="literal">True</del>' +
-            '</div>',
-            '<div>' +
+            '</span>',
+            '<span>' +
                 '<span class="keyword">return</span>' +
                 '<span class="whitespace"> </span>' +
                 '<del class="literal">False</del>' +
                 '<ins class="literal">True</ins>' +
-            '</div>',
+            '</span>',
         ])
     })
 })
@@ -340,7 +340,7 @@ test.describe('class Ruby', () => {
     test('transpiles === and !== to == and != across multiple lines', () => {
         const highlighted = ruby.highlight('if (age === 17) return false\nreturn true')
         expect(html(highlighted)).toEqual([
-            '<div>' +
+            '<span>' +
                 '<span class="keyword">return</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="literal">false</span>' +
@@ -352,19 +352,19 @@ test.describe('class Ruby', () => {
                 '<span class="operator">==</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="number">17</span>' +
-            '</div>',
-            '<div>' +
+            '</span>',
+            '<span>' +
                 '<span class="keyword">return</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="literal">true</span>' +
-            '</div>',
+            '</span>',
         ])
     })
 
     test('transpiles && and !== across multiple lines', () => {
         const highlighted = ruby.highlight('if (price < 19 && quality >= 6) return "GOOD"\nif (a !== b) return "SCALENE"')
         expect(html(highlighted)).toEqual([
-            '<div>' +
+            '<span>' +
                 '<span class="keyword">return</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="string">"GOOD"</span>' +
@@ -384,8 +384,8 @@ test.describe('class Ruby', () => {
                 '<span class="operator">&gt;=</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="number">6</span>' +
-            '</div>',
-            '<div>' +
+            '</span>',
+            '<span>' +
                 '<span class="keyword">return</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="string">"SCALENE"</span>' +
@@ -397,14 +397,14 @@ test.describe('class Ruby', () => {
                 '<span class="operator">!=</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="variable">b</span>' +
-            '</div>',
+            '</span>',
         ])
     })
 
     test('transpiles ||', () => {
         const highlighted = ruby.highlight('if (a === b || b === c) return "EQUILATERAL"')
         expect(html(highlighted)).toEqual([
-            '<div>' +
+            '<span>' +
                 '<span class="keyword">return</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="string">"EQUILATERAL"</span>' +
@@ -424,14 +424,14 @@ test.describe('class Ruby', () => {
                 '<span class="operator">==</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="variable">c</span>' +
-            '</div>',
+            '</span>',
         ])
     })
 
     test('keeps !', () => {
         const highlighted = ruby.highlight('if (!ok) return false')
         expect(html(highlighted)).toEqual([
-            '<div>' +
+            '<span>' +
                 '<span class="keyword">return</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="literal">false</span>' +
@@ -440,22 +440,22 @@ test.describe('class Ruby', () => {
                 '<span class="whitespace"> </span>' +
                 '<span class="operator">!</span>' +
                 '<span class="variable">ok</span>' +
-            '</div>',
+            '</span>',
         ])
     })
 
     test('transpiles function into def and handles the closing curly bracket', () => {
         const highlighted = ruby.highlight('function isEven(num: number): boolean {\n    if (num % 2 === 0) return true\n    return false\n}')
         expect(html(highlighted)).toEqual([
-            '<div>' +
+            '<span>' +
                 '<span class="keyword">def</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="function">isEven</span>' +
                 '<span class="punctuation">(</span>' +
                 '<span class="variable">num</span>' +
                 '<span class="punctuation">)</span>' +
-            '</div>',
-            '<div>' +
+            '</span>',
+            '<span>' +
                 '<span class="whitespace">    </span>' +
                 '<span class="keyword">return</span>' +
                 '<span class="whitespace"> </span>' +
@@ -472,50 +472,50 @@ test.describe('class Ruby', () => {
                 '<span class="operator">==</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="number">0</span>' +
-            '</div>',
-            '<div>' +
+            '</span>',
+            '<span>' +
                 '<span class="whitespace">    </span>' +
                 '<span class="keyword">return</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="literal">false</span>' +
-            '</div>',
-            '<div>' +
+            '</span>',
+            '<span>' +
                 '<span class="keyword">end</span>' +
-            '</div>',
+            '</span>',
         ])
     })
 
     test('highlights a diff when current and previous transpile to a different number of lines', () => {
         const highlighted = ruby.highlight('return true\nreturn false', 'return true')
         expect(html(highlighted)).toEqual([
-            '<div>' +
+            '<span>' +
                 '<ins class="keyword">return</ins>' +
                 '<ins class="whitespace"> </ins>' +
                 '<ins class="literal">true</ins>' +
-            '</div>',
-            '<div>' +
+            '</span>',
+            '<span>' +
                 '<span class="keyword">return</span>' +
                 '<span class="whitespace"> </span>' +
                 '<del class="literal">true</del>' +
                 '<ins class="literal">false</ins>' +
-            '</div>',
+            '</span>',
         ])
     })
 
     test('highlights a diff when current transpiles to fewer lines than previous', () => {
         const highlighted = ruby.highlight('return true', 'return true\nreturn false')
         expect(html(highlighted)).toEqual([
-            '<div>' +
+            '<span>' +
                 '<del class="keyword">return</del>' +
                 '<del class="whitespace"> </del>' +
                 '<del class="literal">true</del>' +
-            '</div>',
-            '<div>' +
+            '</span>',
+            '<span>' +
                 '<span class="keyword">return</span>' +
                 '<span class="whitespace"> </span>' +
                 '<del class="literal">false</del>' +
                 '<ins class="literal">true</ins>' +
-            '</div>',
+            '</span>',
         ])
     })
 })

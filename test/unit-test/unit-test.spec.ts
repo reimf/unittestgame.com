@@ -17,7 +17,7 @@ test.describe('class UnitTest', () => {
         const unitTest = new UnitTest(parameters, [6, 3], unit, 2)
         const html = unitTest.toHtml(programmingLanguage)
         expect(html.getElement().outerHTML).toBe(
-            '<div>' +
+            '<span>' +
                 '<span class="function">divide</span>' +
                 '<span class="punctuation">(</span>' +
                 '<span class="number">6</span>' +
@@ -29,7 +29,7 @@ test.describe('class UnitTest', () => {
                 '<span class="operator">===</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="number">2</span>' +
-            '</div>'
+            '</span>'
         )
     })
 
@@ -60,7 +60,7 @@ test.describe('class UnitTest', () => {
         const unitTest = new UnitTest<[number, number], number>(parameters, [6, 3], unit, 2)
         const htmlWithResult = unitTest.toHtmlWithResult(5, programmingLanguage)
         expect(htmlWithResult.getElement().outerHTML).toBe(
-            '<div>' +
+            '<span>' +
                 '<span class="function">divide</span>' +
                 '<span class="punctuation">(</span>' +
                 '<span class="number">6</span>' +
@@ -72,7 +72,7 @@ test.describe('class UnitTest', () => {
                 '<span class="operator">===</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="number">5</span>' +
-            '</div>'
+            '</span>'
         )
     })
 })

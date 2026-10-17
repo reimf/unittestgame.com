@@ -37,7 +37,7 @@ test.describe('class TestResult', () => {
         const testResult = new TestResult(candidate, unitTest)
         const html = testResult.toHtml(new JavaScript())
         expect(html.getElement().outerHTML).toBe(
-            '<div>' +
+            '<span>' +
                 '<span class="function">isNextNumber</span>' +
                 '<span class="punctuation">(</span>' +
                 '<span class="number">6</span>' +
@@ -49,7 +49,7 @@ test.describe('class TestResult', () => {
                 '<span class="operator">===</span>' +
                 '<span class="whitespace"> </span>' +
                 '<span class="literal">true</span>' +
-            '</div>'
+            '</span>'
         )
     })
 })

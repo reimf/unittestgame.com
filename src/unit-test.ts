@@ -1,4 +1,4 @@
-import { Div } from './html.js'
+import { CodeLine } from './html.js'
 import { ProgrammingLanguage } from './programming-language-base.js'
 import { Value, Variable } from './variable.js'
 
@@ -24,11 +24,11 @@ export class UnitTest<Parameters extends readonly Value[] = readonly Value[], Re
         return `${this.unit.name}(${argumentsText}) === ${this.unit.format(result)}`
     }
 
-    public toHtmlWithResult(result: Result, programmingLanguage: ProgrammingLanguage): Div {
+    public toHtmlWithResult(result: Result, programmingLanguage: ProgrammingLanguage): CodeLine {
         return programmingLanguage.highlight(this.toTextWithResult(result))[0]!
     }
 
-    public toHtml(programmingLanguage: ProgrammingLanguage): Div {
+    public toHtml(programmingLanguage: ProgrammingLanguage): CodeLine {
         return this.toHtmlWithResult(this.expected, programmingLanguage)
     }
 }

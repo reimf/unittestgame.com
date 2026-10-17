@@ -20,7 +20,7 @@ test.describe('correct submit button', () => {
 
     test('has NOT updated the current function panel', async ({ page }) => {
         const currentFunctionPanel = page.getByTestId('current-function')
-        const codeLines = currentFunctionPanel.locator('code > div')
+        const codeLines = currentFunctionPanel.locator('code > span')
         await expect(codeLines).toContainText(['function powerMode(batteryLevel) {', '    if (batteryLevel === 20) return "NORMAL MODE"', '    return "LOW POWER MODE"', '}'])
     })
 

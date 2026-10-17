@@ -104,7 +104,8 @@ code {
     overflow-x: auto;
     overflow-y: hidden;
 
-    div {
+    >span {
+      display: block;
       white-space: pre;
 
       &.old {

@@ -266,6 +266,12 @@ export class CodeBlock extends Code {
     }
 }
 
+export class CodeLine extends Html {
+    public constructor() {
+        super('span')
+    }
+}
+
 export class Section extends Html {
     public constructor() {
         super('section')
