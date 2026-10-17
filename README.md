@@ -137,9 +137,10 @@ Keep the translations in sync.
 To add a new language (e.g. `pt` for Portuguese):
 * Create `pt/translations.json` with the same keys, in the same order, as the other `translations.json` files.
 * Create `src/conversation-language-pt.ts`.
-* Register it in `src/conversation-languages.ts`.
+* Register it in `src/conversation-languages.ts` (this also adds it to the language switcher in the game's settings).
 * Create `pt/index.html` and `pt/game.html` and update `lang`, `og:url`, `canonical`, `<title>`, the meta description and the body text.
-* Add `pt` to the `hreflang` links and the language switcher on every locale's `index.html` and `game.html`.
+* Add `pt` to the `hreflang` links on every locale's `index.html` and `game.html`.
+* Add `pt` to the language switcher and the list of languages on every locale's `index.html`.
 * Add `pt/index` and `pt/game` to `sitemap.txt`.
 * Add `pt` to the `cp -r` and `gzip` lines of the `pages` job in `.gitlab-ci.yml`.
 * Update `test/unit-test/translations.spec.ts` and `conversation-language.spec.ts` to cover the new locale.
@@ -156,10 +157,10 @@ Change how a language transpiles or highlights code.
 
 To add a new programming language (e.g. `kotlin`):
 * Create `src/programming-language-kotlin.ts` (implement `transpile()` and `getTokenTypes()`).
-* Register it in `src/programming-languages.ts`.
+* Register it in `src/programming-languages.ts` (this also adds it to the programming language switcher in the game's settings).
 * Add `test/transpile-test/programming-language-kotlin.spec.ts`.
 * Add the language to `test/tokenize-test/tokenizer.spec.ts` and `test/e2e-test/21-programming-languages.spec.ts`.
-* Add a `game?programming_language=kotlin` link for the language on every other locale's `index.html` and `game.html`.
+* Add a `game?programming_language=kotlin` link for the language on every locale's `index.html`.
 
 ## Levels
 
