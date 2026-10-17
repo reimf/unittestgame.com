@@ -1,9 +1,9 @@
-import { MessageButton, Div, Html, Header, Paragraph, Section } from './html.js'
+import { MessageButton, Div, Html, Header, Heading2, Paragraph } from './html.js'
 import type { ConversationText } from './conversation-language-base.js'
 
-abstract class Frame extends Section {
-    protected constructor(elements: readonly (Html|ConversationText)[]) {
-        super()
+abstract class Frame extends Html {
+    protected constructor(tagName: string, elements: readonly (Html|ConversationText)[]) {
+        super(tagName)
         const children = elements.map(element => element instanceof Html ? element : new Paragraph().appendMarkdown(element))
         this.appendChild(new Div().appendChildren(children))
     }
@@ -21,8 +21,8 @@ abstract class Frame extends Section {
 
 export class Panel extends Frame {
     public constructor(id: string, title: ConversationText, elements: readonly (Html|ConversationText)[]) {
-        super(elements)
-        this.setId(id).prependChild(new Header().appendText(title))
+        super('section', elements)
+        this.setId(id).prependChild(new Header().appendChild(new Heading2().appendText(title)))
     }
 
     private static getPanelsElement(): HTMLElement {
@@ -42,9 +42,10 @@ export class Panel extends Frame {
     }
 }
 
+// a message is a chat bubble without a heading, so it's a div instead of a section
 export abstract class Message extends Frame {
     protected constructor(elements: readonly (Html|ConversationText)[]) {
-        super(elements)
+        super('div', elements)
     }
 
     private static getMessagesElement(): HTMLElement {

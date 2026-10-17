@@ -11,7 +11,7 @@ test.describe('class Frame', () => {
         const panel = new Panel('current-level', ConversationLanguage.bless('Current Level'), [ConversationLanguage.bless('Level 1')])
         expect(panel.getElement().outerHTML).toBe(
             '<section id="current-level">' +
-                '<header>Current Level</header>' +
+                '<header><h2>Current Level</h2></header>' +
                 '<div>' +
                     '<p>Level 1</p>' +
                 '</div>' +
@@ -22,35 +22,35 @@ test.describe('class Frame', () => {
     test('subclass ComputerMessage', () => {
         const computerMessage = new ComputerMessage([ConversationLanguage.bless('Hello'), ConversationLanguage.bless('World')])
         expect(computerMessage.getElement().outerHTML).toBe(
-            '<section class="computer">' +
+            '<div class="computer">' +
                 '<div>' +
                    '<p>Hello</p>' +
                     '<p>World</p>' +
                 '</div>' +
-            '</section>'
+            '</div>'
         )
     })
 
     test('subclass HumanMessage', () => {
         const humanMessage = new HumanMessage([ConversationLanguage.bless('Hello'), ConversationLanguage.bless('World')])
         expect(humanMessage.getElement().outerHTML).toBe(
-            '<section class="human">' +
+            '<div class="human">' +
                 '<div>' +
                     '<p>Hello</p>' +
                     '<p>World</p>' +
                 '</div>' +
-            '</section>'
+            '</div>'
         )
     })
 
     test('subclass QuestionMessage', () => {
         const questionMessage = new QuestionMessage(ConversationLanguage.bless('Hello'), () => {})
         expect(questionMessage.getElement().outerHTML).toBe(
-            '<section class="human">' +
+            '<div class="human">' +
                 '<div>' +
                    '<button>Hello</button>' +
                 '</div>' +
-            '</section>'
+            '</div>'
         )
     })
 })

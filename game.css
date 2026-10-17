@@ -115,6 +115,10 @@ p {
         border-radius: 0.5rem 0.5rem 0 0;
         color: var(--general-text-light);
         padding: 0.75rem;
+
+        h2 {
+          font-weight: inherit;
+        }
       }
 
       >div {

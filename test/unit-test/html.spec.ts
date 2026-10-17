@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 import { JSDOM } from 'jsdom'
-import { Span, Div, Section, Code, CodeBlock, Label, Paragraph, Form, Header, Input, Italic, Anchor, Submit, Details, Summary, UnorderedList, ListItem, Img } from '../../src/html.js'
+import { Span, Div, Code, CodeBlock, Label, Paragraph, Form, Header, Heading2, Input, Italic, Anchor, Submit, Details, Summary, UnorderedList, ListItem, Img } from '../../src/html.js'
 import { ConversationLanguage } from '../../src/conversation-language-base.js'
 
 const { document } = new JSDOM('<!DOCTYPE html>').window
@@ -140,10 +140,10 @@ test.describe('class Html', () => {
         )
     })
 
-    test('has section', () => {
-        const section = new Section().appendText(ConversationLanguage.bless('text'))
-        expect(section.getElement().outerHTML).toBe(
-            '<section>text</section>'
+    test('has heading 2', () => {
+        const heading = new Heading2().appendText(ConversationLanguage.bless('text'))
+        expect(heading.getElement().outerHTML).toBe(
+            '<h2>text</h2>'
         )
     })
 

@@ -255,7 +255,7 @@ details {
   padding-bottom: 1rem;
   scrollbar-width: none;
 
-  section {
+  >div {
     position: relative;
     opacity: 0;
 

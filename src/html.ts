@@ -97,13 +97,13 @@ export abstract class Html extends Content {
     }
 
     protected replaceEnclosingMessageContent(element: HTMLElement, text: ConversationText): void {
-        const section = element.closest('section')!
-        section.classList.remove('reveal')
+        const message = element.closest('#messages > div')!
+        message.classList.remove('reveal')
         const textNode = document.createTextNode(text + '.')
         const paragraph = document.createElement('p')
         paragraph.appendChild(textNode)
-        section.querySelector('div')?.replaceChildren(paragraph)
-        this.callDelayed(() => section.classList.add('reveal'))
+        message.querySelector('div')?.replaceChildren(paragraph)
+        this.callDelayed(() => message.classList.add('reveal'))
     }
 }
 
@@ -183,6 +183,12 @@ export class Form extends Html {
 export class Header extends Html {
     public constructor() {
         super('header')
+    }
+}
+
+export class Heading2 extends Html {
+    public constructor() {
+        super('h2')
     }
 }
 
@@ -269,12 +275,6 @@ export class CodeBlock extends Code {
 export class CodeLine extends Html {
     public constructor() {
         super('span')
-    }
-}
-
-export class Section extends Html {
-    public constructor() {
-        super('section')
     }
 }
 
