@@ -84,15 +84,17 @@ npx playwright test
 
 Expected output ends with something like:
 ```
-  961 passed (16.8s)
+  1000 passed (19.0s)
 
 =============================== Coverage summary ===============================
-Statements   : 100% ( 2772/2772 )
-Branches     : 100% ( 585/585 )
-Functions    : 100% ( 340/340 )
-Lines        : 100% ( 2772/2772 )
+Statements   : 100% ( 2930/2930 )
+Branches     : 100% ( 628/628 )
+Functions    : 100% ( 366/366 )
+Lines        : 100% ( 2930/2930 )
 ================================================================================
 ```
+
+All tests should pass, and branch coverage must stay at 100%: the CI pipeline fails below that.
 
 An HTML coverage report is written to `playwright-coverage/index.html`.
 
