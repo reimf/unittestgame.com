@@ -130,6 +130,7 @@ p {
 
         img {
           float: right;
+          height: 3rem;
           margin: 0 0 0.75rem 0.75rem;
           width: 3rem;
         }

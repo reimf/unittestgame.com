@@ -71,9 +71,9 @@ test.describe('class Html', () => {
     })
 
     test('appends img in markdown', () => {
-        const header = new Header().appendMarkdown(ConversationLanguage.bless('this is a ![example](https://example.com/image.png)'))
+        const header = new Header().appendMarkdown(ConversationLanguage.bless('this is a ![example](https://example.com/image.png 640x480)'))
         expect(header.getElement().outerHTML).toBe(
-            '<header>this is a <img src="https://example.com/image.png" alt="example"></header>'
+            '<header>this is a <img src="https://example.com/image.png" alt="example" width="640" height="480"></header>'
         )
     })
 
@@ -183,9 +183,9 @@ test.describe('class Html', () => {
     })
 
     test('has img', () => {
-        const img = new Img('https://example.com/image.png', 'example')
+        const img = new Img('https://example.com/image.png', 'example', 640, 480)
         expect(img.getElement().outerHTML).toBe(
-            '<img src="https://example.com/image.png" alt="example">'
+            '<img src="https://example.com/image.png" alt="example" width="640" height="480">'
         )
     })
 })

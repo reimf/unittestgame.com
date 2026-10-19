@@ -49,20 +49,20 @@ export abstract class Html extends Content {
         const patterns = [
             /\*(?<italic>.+?)\*/,
             /`(?<code>.+?)`/,
-            /!\[(?<alt>.+?)\]\((?<src>.+?)\)/,
+            /!\[(?<alt>.+?)\]\((?<src>\S+?) (?<width>\d+)x(?<height>\d+)\)/,
             /\[(?<text>.+?)\]\((?<href>.+?)\)/,
             /(?<plain>[^*`![]+|[*`![])/
         ]
         const pattern = new RegExp(patterns.map(regexp => regexp.source).join('|'), 'g')
 
         for (const { groups } of markdown.matchAll(pattern)) {
-            const { italic, code, text, href, plain, alt, src } = groups!
+            const { italic, code, text, href, plain, alt, src, width, height } = groups!
             if (italic)
                 this.appendChild(new Italic().appendMarkdown(ConversationLanguage.bless(italic)))
             else if (code)
                 this.appendChild(new Code().appendMarkdown(ConversationLanguage.bless(code)))
-            else if (alt && src)
-                this.appendChild(new Img(src, alt))
+            else if (alt && src && width && height)
+                this.appendChild(new Img(src, alt, Number(width), Number(height)))
             else if (text && href)
                 this.appendChild(new Anchor(href).appendMarkdown(ConversationLanguage.bless(text)))
             else if (plain)
@@ -316,11 +316,13 @@ export class Anchor extends Html {
 }
 
 export class Img extends Html {
-    public constructor(src: string, alt: string) {
+    public constructor(src: string, alt: string, width: number, height: number) {
         super('img')
         const img = this.getElement<HTMLImageElement>()
         img.src = src
         img.alt = alt
+        img.width = width
+        img.height = height
     }
 }
 
