@@ -5,22 +5,22 @@
 }
 
 #messages {
+  /* Reveal by transform only: a fading opacity makes contrast checks fail mid-animation. */
   >div {
-    opacity: 0;
-    transform: translateY(1rem);
-    transition: opacity 0.5s ease, transform 0.5s ease;
+    transform: translateY(-100%) rotateX(90deg);
+    transition: transform 0.5s ease;
 
     &.visible {
-      opacity: 1;
-      transform: translateY(0);
+      transform: translateY(0) rotateX(0deg);
     }
   }
 
   .comment {
-    opacity: 0;
+    transform: rotateX(90deg);
+    transition: transform 0.5s ease;
 
     &.visible {
-      opacity: 1;
+      transform: rotateX(0deg);
     }
   }
 }

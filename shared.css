@@ -257,7 +257,7 @@ details {
 
   >div {
     position: relative;
-    opacity: 0;
+    transform: rotateX(90deg);
 
     &:before {
       content: '';

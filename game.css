@@ -238,23 +238,19 @@ p {
 @keyframes revealComputer {
   from {
     transform: translateY(-100%) rotateX(90deg);
-    opacity: 0;
   }
 
   to {
     transform: translateY(0) rotateX(0deg);
-    opacity: 1;
   }
 }
 
 @keyframes revealHuman {
   from {
     transform: translateY(-100%) rotateX(90deg);
-    opacity: 0;
   }
 
   to {
     transform: translateY(0) rotateX(0deg);
-    opacity: 1;
   }
 }
