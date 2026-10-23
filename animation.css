@@ -16,11 +16,11 @@
   }
 
   .comment {
-    transform: rotateX(90deg);
+    transform: translateY(100%) rotateX(90deg);
     transition: transform 0.5s ease;
 
     &.visible {
-      transform: rotateX(0deg);
+      transform: translateY(0) rotateX(0deg);
     }
   }
 }
