@@ -1,21 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => {
     const steps = [
-        'i-have-to-write-a-function-that-decides-whether-you-are-allowed-to-vote',
+        'function-isallowedtovote-return-false',
         'this-is-the-ai-bot',
-        'telling-you-what-the-function-should-do',
+        'its-first-function-is-obviously-not-correct',
         'i-want-to-add-this-unit-test-18-true',
         'this-is-you',
         'with-your-first-unit-test',
         'function-isallowedtovote-return-true',
         'this-is-the-ai-bot-again',
-        'its-first-function-passes-your-unit-test',
+        'its-second-function-passes-your-unit-test',
         'but-it-doesnt-generalize',
         'i-want-to-add-this-unit-test-17-false',
         'this-is-you-again',
         'now-with-your-second-unit-test',
         'function-isallowedtovote-if-age-gte-18-return-true-return-false',
         'this-is-the-ai-bot-for-the-last-time',
-        'its-second-function-passes-both-unit-tests',
+        'its-third-function-passes-both-unit-tests',
         'and-now-it-generalizes',
     ].map(id => document.getElementById(id)!)
     const ICONS = {
