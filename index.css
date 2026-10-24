@@ -110,7 +110,7 @@ header {
   border-radius: 1.5rem;
   font-family: monospace;
   box-shadow: 0 0 3rem var(--accent-left);
-  min-width: 30rem;
+  width: 30rem;
 
   .comment {
     color: var(--comment-foreground);
@@ -134,7 +134,7 @@ header {
       text-align: left;
     }
 
-    &#its-first-function-is-obviously-not-correct, &#its-second-function-passes-your-unit-test, &#its-third-function-passes-both-unit-tests, &#but-it-doesnt-generalize, &#and-now-it-generalizes {
+    &#its-first-function-is-not-correct, &#its-second-function-passes-your-unit-test, &#its-third-function-passes-both-unit-tests, &#but-it-is-still-not-correct, &#and-now-it-is-correct {
       margin-left: 2rem;
       text-align: left;
     }
