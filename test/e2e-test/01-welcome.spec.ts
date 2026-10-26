@@ -6,7 +6,7 @@ test.describe('welcome', () => {
     })
 
     test('has title', async ({ page }) => {
-        await expect(page).toHaveTitle('UnitTestGame.com')
+        await expect(page).toHaveTitle('UnitTestGame.com: Play')
     })
 
     test('has welcome message', async ({ page }) => {
@@ -26,7 +26,7 @@ test.describe('welcome', () => {
 
     test('has link to home page', async ({ page }) => {
         const link = page.getByRole('link', { name: 'Home', exact: true })
-        expect(await link.getAttribute('href')).toBe('/index')
+        expect(await link.getAttribute('href')).toBe('/en/index')
     })
 
     test('has level overview panel', async ({ page }) => {

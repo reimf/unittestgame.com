@@ -1,7 +1,7 @@
 {
     "welcome": "Hoi! Ik ben een AI bot die code schrijft, maar ik schrijf niet meer dan jouw unit testen afdwingen. Een unit test is een voorbeeld van een invoer met de uitkomst die daarbij hoort. Jouw taak is om mij met unit testen bij te sturen tot de code klopt.",
     "unitTestGameTitle": "UnitTestGame",
-    "slogan": "![Logo van UnitTestGame](/apple-touch-icon.png 160x160)Leer unit testen schrijven die een AI bot bijsturen.\n\n[Startpagina](/index)",
+    "slogan": "![Logo van UnitTestGame](/apple-touch-icon.png 160x160)Leer unit testen schrijven die een AI bot bijsturen.\n\n[Startpagina](/nl/index)",
     "settingsTitle": "Instellingen",
     "lightColorTheme": "Licht thema met kleur",
     "lightGrayscaleTheme": "Licht thema in grijstinten",

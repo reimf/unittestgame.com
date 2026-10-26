@@ -1,7 +1,7 @@
 {
     "welcome": "Ciao! Sono un bot IA che scrive codice, ma non scrivo più di quanto i tuoi unit tests impongano. Un unit test è un esempio di un input con il risultato corrispondente. Il tuo compito è guidarmi con i unit tests finché il codice non è corretto.",
     "unitTestGameTitle": "UnitTestGame",
-    "slogan": "![Logo di UnitTestGame](/apple-touch-icon.png 160x160)Impara a scrivere unit tests che guidano un bot IA.\n\n[Home](/index)",
+    "slogan": "![Logo di UnitTestGame](/apple-touch-icon.png 160x160)Impara a scrivere unit tests che guidano un bot IA.\n\n[Home](/it/index)",
     "settingsTitle": "Impostazioni",
     "lightColorTheme": "Tema chiaro a colori",
     "lightGrayscaleTheme": "Tema chiaro in scala di grigi",
