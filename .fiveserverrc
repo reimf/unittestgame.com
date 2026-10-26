@@ -2,6 +2,7 @@
     "wait": 2000,
     "host": "localhost",
     "port": 5520,
+    "open": "en/index",
     "ignore": [
         "**/node_modules/**",
         "**/test/**",
