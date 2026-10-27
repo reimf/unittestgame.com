@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const steps = [
+        'the-ai-bots-function-must-implement-exactly-this',
         'function-isallowedtovote-return-false',
         'this-is-the-ai-bot',
         'its-first-function-is-not-correct',

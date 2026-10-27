@@ -112,12 +112,36 @@ header {
   box-shadow: 0 0 3rem var(--accent-left);
   width: 30rem;
 
+  #specification {
+    background-color: var(--panel-body-background);
+    border-radius: 0.5rem;
+    color: var(--general-text);
+    font-family: sans-serif;
+    margin: 0.75rem;
+    overflow: hidden;
+
+    h2 {
+      background: var(--panel-background-gradient);
+      color: var(--general-text-light);
+      font-weight: inherit;
+      padding: 0.75rem;
+    }
+
+    p {
+      padding: 0.75rem;
+    }
+  }
+
   .comment {
     color: var(--comment-foreground);
     display: block;
     font-family: sans-serif;
     font-size: 1.25rem;
     line-height: 1.25;
+
+    &#the-ai-bots-function-must-implement-exactly-this {
+      text-align: center;
+    }
 
     &#this-is-you, &#this-is-you-again {
       margin-right: 0.75rem;
