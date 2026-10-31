@@ -38,14 +38,33 @@
         <a href="#how-it-works">So funktioniert's</a>
         <a href="#levels">Levels</a>
         <a href="#why-it-works">Warum es funktioniert</a>
-        <details id="language-switcher">
-          <summary>Deutsch</summary>
+        <details id="settings-menu">
+          <summary class="secondary">Einstellungen</summary>
           <ul>
-            <li><a class="btn" href="/en/index">English</a></li>
-            <li><a class="btn" href="/nl/index">Nederlands</a></li>
-            <li><a class="btn" href="/fr/index">Français</a></li>
-            <li><a class="btn" href="/es/index">Español</a></li>
-            <li><a class="btn" href="/it/index">Italiano</a></li>
+            <li>
+              <button class="secondary" id="theme-toggle" type="button" data-label-light="Heller Modus" data-label-dark="Dunkler Modus">
+                <span aria-hidden="true">⚙&#xFE0E;</span>
+                <span>Heller Modus</span>
+              </button>
+            </li>
+            <li>
+              <button class="secondary" id="color-toggle" type="button" data-label-color="Farbe" data-label-grayscale="Graustufen">
+                <span aria-hidden="true">⚙&#xFE0E;</span>
+                <span>Farbe</span>
+              </button>
+            </li>
+            <li>
+              <details id="language-switcher">
+                <summary class="secondary">Deutsch</summary>
+                <ul>
+                  <li><a class="btn secondary" href="/en/index">English</a></li>
+                  <li><a class="btn secondary" href="/nl/index">Nederlands</a></li>
+                  <li><a class="btn secondary" href="/fr/index">Français</a></li>
+                  <li><a class="btn secondary" href="/es/index">Español</a></li>
+                  <li><a class="btn secondary" href="/it/index">Italiano</a></li>
+                </ul>
+              </details>
+            </li>
           </ul>
         </details>
         <a class="btn" href="/de/game">Jetzt spielen →</a>
@@ -66,17 +85,13 @@
           Deine Aufgabe: Schreibe Unit-Tests, bis das Programm stimmt.
         </p>
         <div id="hero-buttonrow">
-          <a class="btn" href="/de/game">Kostenlos im Browser spielen →</a>
+          <a class="btn" href="/de/game">Kostenlos spielen →</a>
           <a href="#how-it-works">Sieh, wie es funktioniert</a>
         </div>
       </div>
       <div id="hero-animation">
         <div id="messages">
-          <section id="specification">
-            <h2>Spezifikation</h2>
-            <p>Du darfst wählen, wenn du <code>18</code> oder älter bist.</p>
-          </section>
-          <span class="comment" id="the-ai-bots-function-must-implement-exactly-this">die Funktion des KI-Bots muss genau das implementieren</span>
+          <span class="comment" id="you-can-vote-if-your-age-is-18-or-over">Du darfst wählen, wenn du 18 oder älter bist.</span>
           <div class="computer" id="function-isallowedtovote-return-false">
             <div>
               <code class="block">
@@ -143,6 +158,7 @@
     <main>
       <section id="how-it-works">
         <div>
+          <span class="section-kicker">Der Lernkreislauf</span>
           <h2>Lerne Unit-Tests aus dem Gefühl heraus zu schreiben</h2>
           <p>Keine Videos. Keine Quizze. Nur ein KI-Bot, der jede Lücke in deinen Unit-Tests ausnutzt.</p>
         </div>
@@ -167,6 +183,7 @@
       </section>
       <section id="why-it-works">
         <div>
+          <span class="section-kicker">Warum Entwickler weiterspielen</span>
           <h2>Für Entwickler, die Bugs vermeiden wollen</h2>
           <p>Es spielt sich wie ein Spiel. Es wird zur Gewohnheit. Es verändert deine Art zu testen.</p>
         </div>
@@ -199,6 +216,7 @@
       </section>
       <section id="levels">
         <div>
+          <span class="section-kicker">Wähle deine Herausforderung</span>
           <h2>Zehn Levels, zehn Arten, ausgetrickst zu werden</h2>
           <p>Jedes wirkt einfach. Bis der KI-Bot etwas findet, das du noch nicht getestet hast.</p>
         </div>

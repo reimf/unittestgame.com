@@ -38,14 +38,33 @@
         <a href="#how-it-works">Comment ça marche</a>
         <a href="#levels">Niveaux</a>
         <a href="#why-it-works">Pourquoi ça marche</a>
-        <details id="language-switcher">
-          <summary>Français</summary>
+        <details id="settings-menu">
+          <summary class="secondary">Paramètres</summary>
           <ul>
-            <li><a class="btn" href="/en/index">English</a></li>
-            <li><a class="btn" href="/nl/index">Nederlands</a></li>
-            <li><a class="btn" href="/de/index">Deutsch</a></li>
-            <li><a class="btn" href="/es/index">Español</a></li>
-            <li><a class="btn" href="/it/index">Italiano</a></li>
+            <li>
+              <button class="secondary" id="theme-toggle" type="button" data-label-light="Mode clair" data-label-dark="Mode sombre">
+                <span aria-hidden="true">⚙&#xFE0E;</span>
+                <span>Mode clair</span>
+              </button>
+            </li>
+            <li>
+              <button class="secondary" id="color-toggle" type="button" data-label-color="Couleur" data-label-grayscale="Niveaux de gris">
+                <span aria-hidden="true">⚙&#xFE0E;</span>
+                <span>Couleur</span>
+              </button>
+            </li>
+            <li>
+              <details id="language-switcher">
+                <summary class="secondary">Français</summary>
+                <ul>
+                  <li><a class="btn secondary" href="/en/index">English</a></li>
+                  <li><a class="btn secondary" href="/nl/index">Nederlands</a></li>
+                  <li><a class="btn secondary" href="/de/index">Deutsch</a></li>
+                  <li><a class="btn secondary" href="/es/index">Español</a></li>
+                  <li><a class="btn secondary" href="/it/index">Italiano</a></li>
+                </ul>
+              </details>
+            </li>
           </ul>
         </details>
         <a class="btn" href="/fr/game">Jouer maintenant →</a>
@@ -66,17 +85,13 @@
           Ta mission : écrire des unit tests jusqu'à ce que le programme soit juste.
         </p>
         <div id="hero-buttonrow">
-          <a class="btn" href="/fr/game">Joue gratuitement dans ton navigateur →</a>
+          <a class="btn" href="/fr/game">Joue gratuitement →</a>
           <a href="#how-it-works">Voir comment ça marche</a>
         </div>
       </div>
       <div id="hero-animation">
         <div id="messages">
-          <section id="specification">
-            <h2>Spécification</h2>
-            <p>Tu peux voter si ton âge est <code>18</code> ou plus.</p>
-          </section>
-          <span class="comment" id="the-ai-bots-function-must-implement-exactly-this">la fonction du bot IA doit implémenter exactement ça</span>
+          <span class="comment" id="you-can-vote-if-your-age-is-18-or-over">Tu peux voter si ton âge est 18 ou plus.</span>
           <div class="computer" id="function-isallowedtovote-return-false">
             <div>
               <code class="block">
@@ -143,6 +158,7 @@
     <main>
       <section id="how-it-works">
         <div>
+          <span class="section-kicker">La boucle d'apprentissage</span>
           <h2>Apprends les unit tests à l'instinct</h2>
           <p>Pas de vidéos. Pas de quiz. Juste un bot IA qui exploite chaque faille dans tes unit tests.</p>
         </div>
@@ -167,6 +183,7 @@
       </section>
       <section id="why-it-works">
         <div>
+          <span class="section-kicker">Pourquoi les développeurs continuent de jouer</span>
           <h2>Pour les développeurs qui veulent prévenir les bugs</h2>
           <p>Ça se joue comme un jeu. Ça devient une habitude. Ça change ta façon de tester.</p>
         </div>
@@ -199,6 +216,7 @@
       </section>
       <section id="levels">
         <div>
+          <span class="section-kicker">Choisis ton défi</span>
           <h2>Dix niveaux, dix façons de se faire déjouer</h2>
           <p>Chacun semble simple. Jusqu'à ce que le bot IA trouve quelque chose que tu n'as pas encore testé.</p>
         </div>

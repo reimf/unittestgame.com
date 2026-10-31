@@ -15,11 +15,14 @@
 
   --accent-left: light-dark(#606, #b3b);
   --accent-right: #f3c;
-  --button-background-left: #063;
-  --button-background-right: light-dark(#6c3, #595);
-  --button-focus-shadow: #f60;
-  --button-retry-background-left: #343;
-  --button-retry-background-right: #9a9;
+  --button-background-left: #1d6f62;
+  --button-background-right: #25816c;
+  --button-border: #63d8b0;
+  --button-border-radius: 0.625rem;
+  --button-height: 2.625rem;
+  --button-secondary-foreground: light-dark(#343, #cdc);
+  --button-secondary-hover-background: color-mix(in srgb, currentColor 12%, transparent);
+  --button-shadow: 0 0.5rem 1.5rem rgb(35 155 132 / 20%);
   --card-background: light-dark(#fff, #223);
   --card-border: light-dark(#ddd, #435);
   --code-diff-deleted-background: light-dark(#fdd, #522);
@@ -38,6 +41,7 @@
   --code-highlight-type: light-dark(#c33, #f77);
   --code-highlight-variable: light-dark(#060, #7d7);
   --comment-foreground: light-dark(#606, #edf);
+  --focus-outline: var(--button-background-right);
   --general-background: light-dark(#eee, #111);
   --general-text: light-dark(#333, #ede);
   --general-text-light: #fff;
@@ -51,11 +55,10 @@
   --level-unlocked-foreground: #fff;
   --link-foreground: light-dark(#063, #7a6);
   --message-border: light-dark(#ddd, #435);
-  --message-computer-background: light-dark(#fff, #223);
+  --message-computer-background: light-dark(#edf4ee, #142a32);
   --message-foreground: light-dark(#333, #fff);
-  --message-human-background: light-dark(#efe, #232);
-  --panel-background-left: light-dark(#606, #303);
-  --panel-background-right: light-dark(#f3c, #826);
+  --message-human-background: light-dark(#fff8df, #30291a);
+  --messages-background: light-dark(#fbfaff, #152136);
   --panel-background-xtra: #fc6;
   --panel-body-background: light-dark(#fff, #223);
   --separator-shadow: light-dark(#0003, #0009);
@@ -64,12 +67,11 @@
   --unittest-old-background: light-dark(#fff, #112);
 
   --button-background-gradient: linear-gradient(135deg, var(--button-background-left), var(--button-background-right));
-  --button-retry-background-gradient: linear-gradient(135deg, var(--button-retry-background-left), var(--button-retry-background-right));
   --code-general-background-gradient: linear-gradient(135deg, var(--code-general-background-left), var(--code-general-background-right));
+  --cta-gradient: linear-gradient(100deg, light-dark(#eee0f3, #1f2f50), light-dark(#e4f1e2, #14423f));
   --cta-band-background-gradient: linear-gradient(135deg, color-mix(in srgb, var(--accent-left) 15%, transparent), color-mix(in srgb, var(--accent-right) 5%, transparent));
   --level-locked-background-gradient: linear-gradient(135deg, var(--level-locked-background-left), var(--level-locked-background-right));
   --level-unlocked-background-gradient: linear-gradient(135deg, var(--level-unlocked-background-left), var(--level-unlocked-background-right));
-  --panel-background-gradient: linear-gradient(135deg, var(--panel-background-left), var(--panel-background-right));
   --panel-background-text-gradient: linear-gradient(120deg, var(--accent-left), var(--accent-right), var(--panel-background-xtra));
   --unittest-new-background-gradient: linear-gradient(135deg, var(--unittest-new-background-left), var(--unittest-new-background-right));
 }
@@ -177,14 +179,39 @@ ul {
 .btn {
   align-items: center;
   background: var(--button-background-gradient);
-  border-radius: 2rem;
-  box-shadow: 0.5rem 0.5rem 1rem -0.5rem var(--accent-left);
+  border: 0.0625rem solid var(--button-border);
+  border-radius: var(--button-border-radius);
+  box-shadow: var(--button-shadow);
   color: var(--general-text-light);
   display: inline-flex;
-  height: 4rem;
+  font-weight: 800;
+  min-height: var(--button-height);
   padding: 0 2rem;
   text-decoration: none;
+  transition: filter 0.18s ease, transform 0.18s ease;
   white-space: nowrap;
+
+  &:hover {
+    filter: brightness(1.14);
+    transform: translateY(-0.125rem);
+  }
+}
+
+.secondary,
+#unittestgame a {
+  background: none;
+  border: 0.0625rem solid currentColor;
+  border-radius: var(--button-border-radius);
+  box-shadow: none;
+  color: var(--button-secondary-foreground);
+  font-weight: 800;
+  transition: background 0.18s ease, transform 0.18s ease;
+
+  &:hover {
+    background: var(--button-secondary-hover-background);
+    filter: none;
+    transform: translateY(-0.125rem);
+  }
 }
 
 a:not(.btn), summary {
@@ -193,17 +220,10 @@ a:not(.btn), summary {
   padding: 0.25rem 0.75rem;
 }
 
-a,
-button,
-input:not([type="radio"]),
-label:has(input[type="radio"]),
-summary {
-
-  &:focus-within,
-  &:focus,
-  &:hover {
-    box-shadow: 0 0 0.3rem 0.3rem var(--button-focus-shadow);
-  }
+:focus-visible:not([type="radio"]),
+label:has(input[type="radio"]:focus-visible) {
+  outline: 0.1875rem solid var(--focus-outline) !important;
+  outline-offset: 0.125rem;
 }
 
 details {
@@ -237,8 +257,7 @@ details {
 
       .btn {
         display: block;
-        height: 2rem;
-        line-height: 2rem;
+        line-height: calc(var(--button-height) - 0.125rem);
         margin: 0;
         padding: 0 1rem;
         text-align: left;
@@ -248,6 +267,7 @@ details {
 }
 
 #messages {
+  background: var(--messages-background);
   box-shadow: 0.25rem 0 0.5rem var(--separator-shadow);
   display: flex;
   flex-direction: column;

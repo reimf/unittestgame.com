@@ -10,21 +10,35 @@ body {
   }
 }
 
-button {
+button,
+input[type="submit"] {
   background: var(--button-background-gradient);
-  border-radius: 100rem;
+  border: 0.0625rem solid var(--button-border);
+  border-radius: var(--button-border-radius);
+  box-shadow: var(--button-shadow);
   color: var(--general-text-light);
+  font-weight: 800;
   line-height: 1.5rem;
+  min-height: var(--button-height);
+  transition: filter 0.18s ease, transform 0.18s ease;
+  width: 100%;
+
+  &:hover {
+    filter: brightness(1.14);
+    transform: translateY(-0.125rem);
+  }
+}
+
+button {
   margin: 0.75rem 0;
   padding: 0.5rem 0.75rem;
-  width: 100%;
 }
 
 i {
   /* markdown: *italic* */
-  background: var(--panel-background-gradient);
+  background: var(--cta-gradient);
   border-radius: 0.25rem 0.25rem 0 0;
-  color: var(--general-text-light);
+  color: var(--general-text);
   font-style: normal;
   padding: 0.1rem 0.5rem;
   white-space: nowrap;
@@ -35,10 +49,11 @@ input {
 
   &[type="number"] {
     background: var(--button-background-gradient);
-    border-radius: 100rem;
+    border: 0.0625rem solid var(--button-border);
+    border-radius: var(--button-border-radius);
     color: var(--general-text-light);
     color-scheme: light;
-    height: 2rem;
+    height: var(--button-height);
     padding: 0 0.5rem 0 0.75rem;
     width: 8rem;
   }
@@ -53,28 +68,24 @@ input {
   }
 
   &[type="submit"] {
-    background: var(--button-background-gradient);
-    border-radius: 100rem;
-    color: var(--general-text-light);
     display: block;
-    line-height: 1.5rem;
     margin: 0.75rem 0;
     padding: 0.5rem 0.75rem;
     white-space: inherit;
-    width: 100%;
   }
 }
 
 label {
-  border-radius: 100rem;
+  border-radius: var(--button-border-radius);
   min-height: 2rem;
 
   &:has(input[type="radio"]) {
     background: var(--button-background-gradient);
+    border: 0.0625rem solid var(--button-border);
     color: var(--general-text-light);
     cursor: pointer;
     display: inline-block;
-    line-height: 2rem;
+    line-height: 2.5rem;
     margin-right: 0.75rem;
     opacity: 0.5;
     padding-right: 0.75rem;
@@ -111,9 +122,9 @@ p {
       margin: 0.75rem;
 
       header {
-        background: var(--panel-background-gradient);
+        background: var(--cta-gradient);
         border-radius: 0.5rem 0.5rem 0 0;
-        color: var(--general-text-light);
+        color: var(--general-text);
         padding: 0.75rem;
 
         h2 {
@@ -154,48 +165,49 @@ p {
           gap: 0.5rem;
 
           li {
-            align-items: center;
-            border-radius: 100rem;
             display: flex;
             gap: 0.75rem;
-            justify-content: space-between;
-            overflow: visible;
-            padding: 0.5rem 0 0.5rem 1rem;
             white-space: nowrap;
 
-            &.unlocked {
+            &.unlocked .level-info {
               background: var(--level-unlocked-background-gradient);
               color: var(--level-unlocked-foreground);
             }
 
-            &.locked {
+            &.locked .level-info {
               background: var(--level-locked-background-gradient);
               color: var(--level-locked-foreground);
             }
 
-            .level-info span:first-child {
-              font-size: 1.5rem;
-              margin-right: 0.5rem;
-              vertical-align: middle;
+            .level-info {
+              border-radius: var(--button-border-radius);
+              flex: 1;
+              min-width: 0;
+              overflow: hidden;
+              padding: 0.5rem 1rem;
+              text-overflow: ellipsis;
+
+              span:first-child {
+                font-size: 1.5rem;
+                margin-right: 0.5rem;
+                vertical-align: middle;
+              }
             }
 
             button.level-action {
               align-items: center;
-              align-self: stretch;
-              border-radius: 100rem;
+              align-self: center;
               display: flex;
               justify-content: center;
-              margin: -0.5rem 0;
-              min-width: 7rem;
-              padding: 0 0.75rem;
-              width: auto;
-
-              &.retry {
-                background: var(--button-retry-background-gradient);
-              }
+              flex-shrink: 0;
+              margin: 0;
+              padding: 0 0.5rem;
+              width: 6.5rem;
 
               &:disabled {
                 background: none;
+                border: none;
+                box-shadow: none;
                 color: var(--level-locked-foreground);
                 opacity: 0.5;
                 pointer-events: none;
@@ -252,5 +264,55 @@ p {
 
   to {
     transform: translateY(0) rotateX(0deg);
+  }
+}
+
+#unittestgame a {
+  display: inline-block;
+  line-height: 1.5rem;
+  margin: 0;
+  padding: 0.5rem 0.75rem;
+  text-decoration: none;
+}
+
+#screen #panels #settings >div {
+  flex-flow: row wrap;
+  max-width: 22.75rem;
+
+  >details,
+  >button {
+    flex: 0 0 auto;
+    min-width: 7.5rem;
+    width: auto;
+  }
+
+  >button {
+    margin: 0;
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+  }
+}
+
+#screen #panels #settings >div >button::before,
+.switcher ul li .btn::before {
+  content: '⚙\FE0E' / '';
+  display: inline-block;
+  width: 0.8625rem;
+}
+
+.switcher {
+  summary {
+    line-height: 1.5rem;
+    margin: 0;
+    padding: 0.5rem 0.75rem;
+    text-decoration: none;
+    width: 100%;
+  }
+
+  ul {
+    left: 0;
+    min-width: 100%;
+    top: 2.875rem;
+    width: max-content;
   }
 }

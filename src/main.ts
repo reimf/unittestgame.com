@@ -69,10 +69,10 @@ export class Main {
 
     private switcher(id: string, currentName: ConversationText, options: readonly Html[]): Details {
         return new Details().addClass('switcher').setId(id).appendChildren([
-            new Summary().appendChild(
+            new Summary().addClass('secondary').appendChild(
                 new Span().appendText(currentName)
             ),
-            new UnorderedList().appendChildren(options.map(option => new ListItem().appendChild(option.addClass('btn'))))
+            new UnorderedList().appendChildren(options.map(option => new ListItem().appendChild(option.addClass('btn').addClass('secondary'))))
         ])
     }
 
@@ -96,18 +96,19 @@ export class Main {
         this.showSettingsPanel()
     }
 
-    private themeSwitcher(): Details {
-        const themes = new Map([
-            ['light-color', this.conversationLanguage.lightColorTheme()],
-            ['light-grayscale', this.conversationLanguage.lightGrayscaleTheme()],
-            ['dark-color', this.conversationLanguage.darkColorTheme()],
-            ['dark-grayscale', this.conversationLanguage.darkGrayscaleTheme()],
-        ])
-        const currentTheme = Theme.get()
-        const options = [...themes]
-            .filter(([theme]) => theme !== currentTheme)
-            .map(([theme, name]) => new Button(name, () => this.switchTheme(theme)))
-        return this.switcher('theme-switcher', themes.get(currentTheme)!, options)
+    // Each button shows the current setting, and a click switches it while keeping the other setting.
+    private lightDarkButton(): Button {
+        const [darkOrLight, colorOrGrayscale] = Theme.get().split('-')
+        return darkOrLight === 'light'
+            ? new Button(this.conversationLanguage.lightMode(), () => this.switchTheme(`dark-${colorOrGrayscale}`)).setId('light-dark-button').addClass('secondary')
+            : new Button(this.conversationLanguage.darkMode(), () => this.switchTheme(`light-${colorOrGrayscale}`)).setId('light-dark-button').addClass('secondary')
+    }
+
+    private colorGrayscaleButton(): Button {
+        const [darkOrLight, colorOrGrayscale] = Theme.get().split('-')
+        return colorOrGrayscale === 'color'
+            ? new Button(this.conversationLanguage.colorMode(), () => this.switchTheme(`${darkOrLight}-grayscale`)).setId('color-grayscale-button').addClass('secondary')
+            : new Button(this.conversationLanguage.grayscaleMode(), () => this.switchTheme(`${darkOrLight}-color`)).setId('color-grayscale-button').addClass('secondary')
     }
 
     private showAboutPanel(): void {
@@ -116,7 +117,7 @@ export class Main {
     }
 
     private showSettingsPanel(): void {
-        const content = [this.conversationLanguageSwitcher(), this.programmingLanguageSwitcher(), this.themeSwitcher()]
+        const content = [this.conversationLanguageSwitcher(), this.programmingLanguageSwitcher(), this.lightDarkButton(), this.colorGrayscaleButton()]
         new Panel('settings', this.conversationLanguage.settingsTitle(), content).show()
     }
 
@@ -135,9 +136,9 @@ export class Main {
             ])
             const children: Html[] = [info]
             if (level.penalties() !== -1)
-                children.push(new Button(this.conversationLanguage.retryButton(), () => this.retry(level)).addClass('level-action').addClass('retry'))
+                children.push(new Button(this.conversationLanguage.retryButton(), () => this.retry(level)).addClass('level-action').addClass('secondary'))
             else if (level === nextLevel)
-                children.push(new Button(this.conversationLanguage.playButton(), () => this.playNextLevel(level)).addClass('level-action'))
+                children.push(new Button(this.conversationLanguage.playButton(), () => this.playNextLevel(level)).addClass('level-action').addClass('secondary'))
             else
                 children.push(new Button(this.conversationLanguage.lockedButton(), () => {}).addClass('level-action').setDisabled())
             return new ListItem().addClass(state).appendChildren(children)

@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const steps = [
-        'the-ai-bots-function-must-implement-exactly-this',
+        'you-can-vote-if-your-age-is-18-or-over',
         'function-isallowedtovote-return-false',
         'this-is-the-ai-bot',
         'its-first-function-is-not-correct',
@@ -27,6 +27,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const controlAnimationButton = document.getElementById('control-animation') as HTMLButtonElement
     const progressElement = document.getElementById('progress') as HTMLProgressElement
+    const themeToggleButton = document.getElementById('theme-toggle') as HTMLButtonElement
+    const colorToggleButton = document.getElementById('color-toggle') as HTMLButtonElement
+
+    // The buttons show the current theme, and each switches its own half while keeping the other.
+    const showThemeToggles = (): void => {
+        const [darkOrLight, colorOrGrayscale] = Theme.get().split('-')
+        themeToggleButton.lastElementChild!.textContent = darkOrLight === 'light' ? themeToggleButton.dataset['labelLight']! : themeToggleButton.dataset['labelDark']!
+        colorToggleButton.lastElementChild!.textContent = colorOrGrayscale === 'color' ? colorToggleButton.dataset['labelColor']! : colorToggleButton.dataset['labelGrayscale']!
+    }
+
+    const switchTheme = (theme: string): void => {
+        Theme.set(theme)
+        Theme.apply(theme)
+        showThemeToggles()
+    }
+
+    themeToggleButton.addEventListener('click', () => {
+        const [darkOrLight, colorOrGrayscale] = Theme.get().split('-')
+        switchTheme(`${darkOrLight === 'light' ? 'dark' : 'light'}-${colorOrGrayscale}`)
+    })
+
+    colorToggleButton.addEventListener('click', () => {
+        const [darkOrLight, colorOrGrayscale] = Theme.get().split('-')
+        switchTheme(`${darkOrLight}-${colorOrGrayscale === 'color' ? 'grayscale' : 'color'}`)
+    })
+
+    showThemeToggles()
 
     const maxStep = steps.length - 1
     const STEP_DURATION = 3000
