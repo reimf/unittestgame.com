@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     showThemeToggles()
 
     const maxStep = steps.length - 1
-    const STEP_DURATION = 3000
+    const STEP_DURATION = 2400
     let playing: number | null = null
     let stepStart = 0
 
