@@ -582,7 +582,7 @@ main {
       text-transform: uppercase;
 
       &::after {
-        background: var(--home-level-border);
+        background: var(--home-purple);
         content: '';
         height: 1.5rem;
         margin: 0.125rem 0 0 1.15625rem;
@@ -608,6 +608,10 @@ main {
     }
 
     &:nth-child(n + 4) >div {
+      &::after {
+        background: var(--home-level-medium);
+      }
+
       .square {
         background: var(--home-level-circle-medium);
         border-color: var(--home-level-circle-medium-border);
@@ -619,6 +623,10 @@ main {
     }
 
     &:nth-child(n + 8) >div {
+      &::after {
+        background: var(--home-gold);
+      }
+
       .square {
         background: var(--home-level-circle-hard);
         border-color: var(--home-level-circle-hard-border);
