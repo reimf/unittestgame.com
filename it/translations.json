@@ -19,6 +19,7 @@
     "unitTestsTitle": "Unit Tests",
     "addUnitTestButton": "Voglio aggiungere questo unit test",
     "submitUnitTestsButton": "Voglio inviare i unit tests",
+    "abortLevelButton": "Voglio abbandonare questo livello",
     "unitTestNotAdded": "Non ho aggiunto il unit test, perché non corrisponde alla *Specifica*.",
     "tooManyUnitTests": "Hai testato la *Funzione Attuale* in modo approfondito, ma hai scritto {numberOfUnnecessaryUnitTests} {numberOfUnnecessaryUnitTests === 1 ? 'unit test' : 'unit tests'} in più del necessario. {numberOfRedundantUnitTests === 1 ? 'Il seguente' : 'Almeno uno dei seguenti'} avrebbe potuto essere omesso.",
     "readSpecification": "Prima, leggi la *Specifica*. Poi cerca un input per cui la *Funzione Attuale* restituisce qualcosa di diverso da ciò che dice la *Specifica*, e scrivi un unit test per quell'input.",

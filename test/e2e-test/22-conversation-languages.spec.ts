@@ -25,6 +25,7 @@ test.describe('conversation languages', () => {
                 conversationLanguage.unitTestsTitle(),
                 conversationLanguage.addUnitTestButton(),
                 conversationLanguage.submitUnitTestsButton(),
+                conversationLanguage.abortLevelButton(),
                 conversationLanguage.unitTestNotAdded(),
                 conversationLanguage.tooManyUnitTests(1, 1),
                 conversationLanguage.tooManyUnitTests(2, 2),

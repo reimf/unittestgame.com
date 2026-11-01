@@ -241,8 +241,12 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
         const formUnitTest = new Div().setId('form-unit-test')
         const form = new Form(formData => this.addUnitTest(formData)).appendChildren([...variables, addButton, formUnitTest])
         form.onChange(formData => this.showFormUnitTest(formUnitTest, formData))
-        const divider = new Div().appendText(this.conversationLanguage.or()).addClass('or')
-        new HumanMessage([form, divider, submitButton]).show()
+        const abortButton = new MessageButton(this.conversationLanguage.abortLevelButton(), () => this.abort()).addClass('secondary')
+        new HumanMessage([form, this.orDivider(), submitButton, this.orDivider(), abortButton]).show()
+    }
+
+    private orDivider(): Div {
+        return new Div().appendText(this.conversationLanguage.or()).addClass('or')
     }
 
     private buildUnitTest(formData: FormData): UnitTest<Parameters, Result> {
@@ -327,6 +331,10 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
         this.showPanels()
         this.showEndMessage()
         this.showAfterEndMessage()
+        this.callback!()
+    }
+
+    private abort(): void {
         this.callback!()
     }
 

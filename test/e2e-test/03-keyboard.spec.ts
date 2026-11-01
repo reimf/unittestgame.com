@@ -34,9 +34,17 @@ test.describe('keyboard', () => {
         await expect(page.getByRole('button', { name: 'I want to submit the unit tests', exact: true })).toBeFocused()
     })
 
-    test('has submit button focused after arrow up', async ({ page }) => {
+    test('has abort button focused after 4 arrow down', async ({ page }) => {
+        await page.keyboard.press('ArrowDown')
+        await page.keyboard.press('ArrowDown')
+        await page.keyboard.press('ArrowDown')
+        await page.keyboard.press('ArrowDown')
+        await expect(page.getByRole('button', { name: 'I want to abort this level', exact: true })).toBeFocused()
+    })
+
+    test('has abort button focused after arrow up', async ({ page }) => {
         await page.keyboard.press('ArrowUp')
-        await expect(page.getByRole('button', { name: 'I want to submit the unit tests', exact: true })).toBeFocused()
+        await expect(page.getByRole('button', { name: 'I want to abort this level', exact: true })).toBeFocused()
     })
 })
 

@@ -22,6 +22,7 @@ export interface ConversationStrings {
     unitTestsTitle: string
     addUnitTestButton: string
     submitUnitTestsButton: string
+    abortLevelButton: string
     unitTestNotAdded: string
     tooManyUnitTests: string
     readSpecification: string
@@ -158,6 +159,10 @@ export abstract class ConversationLanguage {
 
     public submitUnitTestsButton(): ConversationText {
         return this.format(this.strings.submitUnitTestsButton)
+    }
+
+    public abortLevelButton(): ConversationText {
+        return this.format(this.strings.abortLevelButton)
     }
 
     public unitTestNotAdded(): ConversationText {
