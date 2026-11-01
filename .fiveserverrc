@@ -6,7 +6,9 @@
     "ignore": [
         "**/node_modules/**",
         "**/test/**",
+        "**/playwright-coverage/**",
         "**/playwright-report/**",
-        "**/test-result/**"
+        "**/test-results/**",
+        "**/*.tsbuildinfo"
     ]
 }
