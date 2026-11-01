@@ -226,6 +226,11 @@ label:has(input[type="radio"]:focus-visible) {
   outline-offset: 0.125rem;
 }
 
+button,
+input[type="submit"] {
+  cursor: pointer;
+}
+
 details {
   position: relative;
 
