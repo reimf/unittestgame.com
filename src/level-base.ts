@@ -237,6 +237,8 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
         this.showBeforeMenuMessage()
         const addButton = new Submit(this.conversationLanguage.addUnitTestButton())
         const submitButton = new MessageButton(this.conversationLanguage.submitUnitTestsButton(), () => this.submitUnitTests())
+        if (this.humanUnitTests.length < this.minimalUnitTests.length)
+            submitButton.addClass('secondary')
         const variables = [...this.parameters, this.unit].map(variable => variable.toHtml())
         const formUnitTest = new Div().setId('form-unit-test')
         const form = new Form(formData => this.addUnitTest(formData)).appendChildren([...variables, addButton, formUnitTest])
