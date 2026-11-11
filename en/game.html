@@ -31,6 +31,49 @@
     <title>UnitTestGame.com: Play</title>
   </head>
   <body>
+    <nav>
+      <div id="brand">
+        <img src="/unittestgame-logo.png" alt="Logo of UnitTestGame" width="160" height="160">
+        <span>UnitTestGame</span>
+      </div>
+      <span id="level-name"></span>
+      <div id="nav-links">
+        <div id="level-progress">
+          <span id="level-progress-label"></span>
+          <progress aria-labelledby="level-progress-label"></progress>
+        </div>
+        <details id="settings-menu">
+          <summary class="secondary">Settings</summary>
+          <ul>
+            <li>
+              <button class="secondary" id="theme-toggle" type="button" data-label-light="Light → Dark mode" data-label-dark="Dark → Light mode">
+                <span aria-hidden="true">⚙&#xFE0E;</span>
+                <span>Light → Dark mode</span>
+              </button>
+            </li>
+            <li>
+              <button class="secondary" id="color-toggle" type="button" data-label-color="Color → Grayscale" data-label-grayscale="Grayscale → Color">
+                <span aria-hidden="true">⚙&#xFE0E;</span>
+                <span>Color → Grayscale</span>
+              </button>
+            </li>
+            <li>
+              <details id="language-switcher">
+                <summary class="secondary">English</summary>
+                <ul>
+                  <li><a class="btn secondary" href="/nl/game">Nederlands</a></li>
+                  <li><a class="btn secondary" href="/de/game">Deutsch</a></li>
+                  <li><a class="btn secondary" href="/fr/game">Français</a></li>
+                  <li><a class="btn secondary" href="/es/game">Español</a></li>
+                  <li><a class="btn secondary" href="/it/game">Italiano</a></li>
+                </ul>
+              </details>
+            </li>
+          </ul>
+        </details>
+        <a class="btn secondary" href="/en/index">Exit</a>
+      </div>
+    </nav>
     <header>
       <h1>Play UnitTestGame</h1>
     </header>

@@ -19,14 +19,16 @@ test.describe('welcome', () => {
         await expect(unittestgamePanel).toContainText('UnitTestGame')
     })
 
-    test('has settings panel', async ({ page }) => {
-        const settingsPanel = page.getByTestId('settings')
-        await expect(settingsPanel).toContainText('Settings')
+    test('has no settings panel', async ({ page }) => {
+        await expect(page.getByTestId('settings')).toHaveCount(0)
     })
 
-    test('has link to home page', async ({ page }) => {
-        const link = page.getByRole('link', { name: 'Home', exact: true })
-        expect(await link.getAttribute('href')).toBe('/en/index')
+    test('has the programming language in the settings menu', async ({ page }) => {
+        await expect(page.getByTestId('settings-menu').getByTestId('programming-language-switcher').locator('summary')).toHaveText('JavaScript')
+    })
+
+    test('has no home link in the panel', async ({ page }) => {
+        await expect(page.getByTestId('unittestgame').getByRole('link')).toHaveCount(0)
     })
 
     test('has level overview panel', async ({ page }) => {

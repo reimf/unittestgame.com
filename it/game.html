@@ -31,6 +31,49 @@
     <title>UnitTestGame.com: Gioca</title>
   </head>
   <body>
+    <nav>
+      <div id="brand">
+        <img src="/unittestgame-logo.png" alt="Logo di UnitTestGame" width="160" height="160">
+        <span>UnitTestGame</span>
+      </div>
+      <span id="level-name"></span>
+      <div id="nav-links">
+        <div id="level-progress">
+          <span id="level-progress-label"></span>
+          <progress aria-labelledby="level-progress-label"></progress>
+        </div>
+        <details id="settings-menu">
+          <summary class="secondary">Impostazioni</summary>
+          <ul>
+            <li>
+              <button class="secondary" id="theme-toggle" type="button" data-label-light="Modalità chiara → scura" data-label-dark="Modalità scura → chiara">
+                <span aria-hidden="true">⚙&#xFE0E;</span>
+                <span>Modalità chiara → scura</span>
+              </button>
+            </li>
+            <li>
+              <button class="secondary" id="color-toggle" type="button" data-label-color="Colore → Scala di grigi" data-label-grayscale="Scala di grigi → Colore">
+                <span aria-hidden="true">⚙&#xFE0E;</span>
+                <span>Colore → Scala di grigi</span>
+              </button>
+            </li>
+            <li>
+              <details id="language-switcher">
+                <summary class="secondary">Italiano</summary>
+                <ul>
+                  <li><a class="btn secondary" href="/en/game">English</a></li>
+                  <li><a class="btn secondary" href="/nl/game">Nederlands</a></li>
+                  <li><a class="btn secondary" href="/de/game">Deutsch</a></li>
+                  <li><a class="btn secondary" href="/fr/game">Français</a></li>
+                  <li><a class="btn secondary" href="/es/game">Español</a></li>
+                </ul>
+              </details>
+            </li>
+          </ul>
+        </details>
+        <a class="btn secondary" href="/it/index">Esci</a>
+      </div>
+    </nav>
     <header>
       <h1>Gioca a UnitTestGame</h1>
     </header>

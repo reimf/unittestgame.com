@@ -59,7 +59,7 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
         return this.name().replace(/(?<=[a-z])(?=[A-Z])/g, '-').replace(/\s+/g, '-').toLowerCase()
     }
 
-    protected abstract name(): string
+    public abstract name(): string
     protected abstract specification(): ConversationText
     protected abstract getCandidateElements(): string[][]
     protected abstract minimalUnitTestGenerator(): Generator<[Parameters, Result]>

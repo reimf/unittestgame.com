@@ -5,13 +5,9 @@ export interface ConversationStrings {
     welcome: string
     unitTestGameTitle: string
     slogan: string
-    settingsTitle: string
-    lightMode: string
-    darkMode: string
-    colorMode: string
-    grayscaleMode: string
     invitation: string
     level: string
+    levelProgress: string
     nextLevelButton: string
     playButton: string
     retryButton: string
@@ -93,26 +89,6 @@ export abstract class ConversationLanguage {
         return this.format(this.strings.slogan)
     }
 
-    public settingsTitle(): ConversationText {
-        return this.format(this.strings.settingsTitle)
-    }
-
-    public lightMode(): ConversationText {
-        return this.format(this.strings.lightMode)
-    }
-
-    public darkMode(): ConversationText {
-        return this.format(this.strings.darkMode)
-    }
-
-    public colorMode(): ConversationText {
-        return this.format(this.strings.colorMode)
-    }
-
-    public grayscaleMode(): ConversationText {
-        return this.format(this.strings.grayscaleMode)
-    }
-
     public invitation(): ConversationText {
         return this.format(this.strings.invitation)
     }
@@ -120,6 +96,10 @@ export abstract class ConversationLanguage {
     public level(levelNumber: number, levelName: string): ConversationText {
         return this.format(this.strings.level, { levelNumber, levelName })
     }
+    public levelProgress(levelNumber: number): ConversationText {
+        return this.format(this.strings.levelProgress, { levelNumber })
+    }
+
 
     public nextLevelButton(levelDescription: string): ConversationText {
         return this.format(this.strings.nextLevelButton, { levelDescription })

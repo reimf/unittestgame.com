@@ -50,23 +50,21 @@ export abstract class Html extends Content {
             /\*(?<italic>.+?)\*/,
             /`(?<code>.+?)`/,
             /!\[(?<alt>.+?)\]\((?<src>\S+?) (?<width>\d+)x(?<height>\d+)\)/,
-            /\[(?<text>.+?)\]\((?<href>.+?)\)/,
             /(?<plain>[^*`![]+|[*`![])/
         ]
         const pattern = new RegExp(patterns.map(regexp => regexp.source).join('|'), 'g')
 
+        // the last pattern matches any other text, so a match that is not one of the others is plain text
         for (const { groups } of markdown.matchAll(pattern)) {
-            const { italic, code, text, href, plain, alt, src, width, height } = groups!
+            const { italic, code, plain, alt, src, width, height } = groups!
             if (italic)
                 this.appendChild(new Italic().appendMarkdown(ConversationLanguage.bless(italic)))
             else if (code)
                 this.appendChild(new Code().appendMarkdown(ConversationLanguage.bless(code)))
             else if (alt && src && width && height)
                 this.appendChild(new Img(src, alt, Number(width), Number(height)))
-            else if (text && href)
-                this.appendChild(new Anchor(href).appendMarkdown(ConversationLanguage.bless(text)))
-            else if (plain)
-                this.appendText(ConversationLanguage.bless(plain))
+            else
+                this.appendText(ConversationLanguage.bless(plain!))
         }
         return this
     }

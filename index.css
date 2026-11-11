@@ -1,11 +1,7 @@
 /* Colors of the home page only: the game keeps the palette of shared.css, and so does #messages. */
 :root {
   --button-height: 3.125rem;
-  --home-background: light-dark(#f5f4f8, #0b1220);
-  --home-background-glow-left: light-dark(rgb(93 177 91 / 10%), rgb(43 173 151 / 11%));
-  --home-background-glow-right: light-dark(rgb(190 116 218 / 15%), rgb(76 105 212 / 20%));
   --home-border: light-dark(#d8d1df, #30445f);
-  --home-border-soft: light-dark(#ddd6e2, rgb(142 168 255 / 18%));
   --home-card-gradient: linear-gradient(145deg, light-dark(#fff, #1d304c), light-dark(#f5f1f8, #132034));
   --home-card-hover-background: light-dark(#f0edf5, #20304a);
   --home-card-hover-border: light-dark(#72617f, #72617f);
@@ -23,10 +19,8 @@
   --home-level-circle-medium-border: light-dark(#5f2c85, #5f5a91);
   --home-level-hover-background: light-dark(#f0edf5, #182b43);
   --home-level-medium: light-dark(#5d45b5, #b7a5ff);
-  --home-muted: light-dark(#625a6c, #a9bad0);
   --home-panel: light-dark(#fff, #17243a);
   --home-purple: light-dark(#8b36a9, #8ea8ff);
-  --home-text: light-dark(#211d28, #edf5ff);
 }
 
 html {
@@ -34,10 +28,8 @@ html {
 }
 
 body {
-  background:
-    radial-gradient(circle at 78% 12%, var(--home-background-glow-right), transparent 30rem),
-    radial-gradient(circle at 14% 40%, var(--home-background-glow-left), transparent 28rem),
-    var(--home-background);
+  background: var(--page-background);
+  background-attachment: fixed;
   color: var(--home-text);
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.5;
@@ -45,8 +37,8 @@ body {
 
   &::after {
     background-image:
-      linear-gradient(rgb(255 255 255 / 2.5%) 1px, transparent 1px),
-      linear-gradient(90deg, rgb(255 255 255 / 2.5%) 1px, transparent 1px);
+      linear-gradient(rgb(255 255 255 / 2.5%) 0.0625rem, transparent 0.0625rem),
+      linear-gradient(90deg, rgb(255 255 255 / 2.5%) 0.0625rem, transparent 0.0625rem);
     background-size: 2.75rem 2.75rem;
     content: '';
     inset: 0;
@@ -72,7 +64,6 @@ a:not(.btn) {
   padding: 0.25rem 1.25rem;
 }
 
-nav,
 header,
 main > section,
 footer {
@@ -88,142 +79,11 @@ footer {
   }
 }
 
-nav {
-  align-items: center;
-  border-bottom: 0.0625rem solid var(--home-border-soft);
-  display: flex;
-  justify-content: space-between;
-  min-height: 5.25rem;
-  position: relative;
-
-  @media (max-width: 35rem) {
-    min-height: 4.5rem;
+#nav-links >a.btn {
+  /* The hero has the same button right below the nav, and the nav no longer fits. */
+  @media (max-width: 26rem) {
+    display: none;
   }
-
-  #brand {
-    align-items: center;
-    color: var(--home-text);
-    display: flex;
-    font-size: 1.5rem;
-    font-weight: 800;
-    gap: 0.75rem;
-    letter-spacing: -0.04em;
-
-    @media (max-width: 40rem) {
-      font-size: 1.08rem;
-    }
-
-    img {
-      height: 2.375rem;
-      width: 2.375rem;
-    }
-
-    span {
-      @media (max-width: 30rem) {
-        display: none;
-      }
-    }
-  }
-
-  #nav-links {
-    align-items: center;
-    display: flex;
-    font-size: 1rem;
-    font-weight: 700;
-    gap: 1.625rem;
-
-    @media (max-width: 35rem) {
-      gap: 0.75rem;
-
-      >a.btn {
-        font-size: 1rem;
-        padding: 0.25rem 0.75rem;
-
-        /* The hero has the same button right below the nav, and the nav no longer fits. */
-        @media (max-width: 24rem) {
-          display: none;
-        }
-      }
-    }
-
-    >a:not(.btn) {
-      color: var(--home-muted);
-      text-decoration: none;
-
-      &:hover {
-        color: var(--home-text);
-      }
-    }
-
-    summary {
-      text-decoration: none;
-    }
-
-    >a:not(.btn) {
-      @media (max-width: 72rem) {
-        display: none;
-      }
-    }
-
-    #settings-menu {
-      /* On phones the menu is anchored to the nav, because the button is not at its right edge. */
-      @media (max-width: 35rem) {
-        position: static;
-      }
-
-      summary {
-        margin: 0;
-        padding: 0.75rem 0.7rem;
-      }
-
-      >ul {
-        box-shadow: 0 1rem 1.875rem rgb(0 0 0 / 30%);
-        left: auto;
-        min-width: 12.5rem;
-        right: 0;
-        top: 3.5rem;
-
-        @media (max-width: 35rem) {
-          top: 100%;
-        }
-      }
-
-      #language-switcher {
-        summary {
-          width: 100%;
-        }
-
-        ul {
-          box-shadow: 0 1rem 1.875rem rgb(0 0 0 / 30%);
-          left: 0.75rem;
-          min-width: 9.5rem;
-          right: auto;
-          top: calc(100% + 0.5rem);
-          width: max-content;
-        }
-
-        .btn {
-          font-size: 1rem;
-          padding: 0 0.7rem;
-
-          &::before {
-            content: '⚙\FE0E' / '';
-            margin-right: 0.45rem;
-          }
-        }
-      }
-    }
-  }
-}
-
-#theme-toggle, #color-toggle {
-  align-items: center;
-  display: inline-flex;
-  font-size: 1rem;
-  gap: 0.45rem;
-  min-height: var(--button-height);
-  padding: 0 0.7rem;
-  width: 100%;
 }
 
 header {
@@ -327,7 +187,6 @@ header {
   border: 0.0625rem solid light-dark(#d3cad9, #2d425d);
   border-radius: 1.5rem;
   font-family: monospace;
-  box-shadow: none;
   width: 30rem;
 
   .comment {
@@ -657,7 +516,7 @@ main {
 }
 
 .cta-band {
-  background: var(--cta-gradient);
+  background: var(--panel-heading-gradient);
   border: 0.0625rem solid var(--home-cta-border);
   border-radius: 1.125rem;
   padding: 3.75rem clamp(1.75rem, 6vw, 5rem);

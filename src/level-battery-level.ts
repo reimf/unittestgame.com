@@ -10,7 +10,7 @@ type FormStringsType = {
 
 
 export class BatteryLevel extends Level<[number], string> {
-    protected name(): string {
+    public name(): string {
         return 'Battery Level'
     }
 

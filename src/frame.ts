@@ -71,7 +71,7 @@ export abstract class Message extends Frame {
             const element = this.addTo(Message.getMessagesElement())
             element.classList.add('reveal')
             element.scrollIntoView()
-            const focusable = document.querySelector('button, input')
+            const focusable = document.querySelector('#screen :is(button, input)')
             if (focusable)
                 (focusable as HTMLElement).focus()
             extra()

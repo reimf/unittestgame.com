@@ -10,8 +10,16 @@
   filter: grayscale(1);
 }
 
+@media (max-width: 35rem) {
+  :root {
+    --nav-height: 3.25rem;
+  }
+}
+
 :root {
   color-scheme: light dark;
+
+  --nav-height: 3.5rem;
 
   --accent-left: light-dark(#606, #b3b);
   --accent-right: #f3c;
@@ -42,9 +50,14 @@
   --code-highlight-variable: light-dark(#060, #7d7);
   --comment-foreground: light-dark(#606, #edf);
   --focus-outline: var(--button-background-right);
-  --general-background: light-dark(#eee, #111);
   --general-text: light-dark(#333, #ede);
   --general-text-light: #fff;
+  --home-background: light-dark(#f5f4f8, #0b1220);
+  --home-background-glow-left: light-dark(rgb(93 177 91 / 10%), rgb(43 173 151 / 11%));
+  --home-background-glow-right: light-dark(rgb(190 116 218 / 15%), rgb(76 105 212 / 20%));
+  --home-border-soft: light-dark(#ddd6e2, rgb(142 168 255 / 18%));
+  --home-muted: light-dark(#625a6c, #a9bad0);
+  --home-text: light-dark(#211d28, #edf5ff);
   --heading-foreground-green: light-dark(#063, #6c3);
   --heading-foreground-purple: light-dark(#606, #d8f);
   --level-locked-background-left: light-dark(#ddd, #223);
@@ -61,14 +74,17 @@
   --messages-background: light-dark(#fbfaff, #152136);
   --panel-background-xtra: #fc6;
   --panel-body-background: light-dark(#fff, #223);
-  --separator-shadow: light-dark(#0003, #0009);
   --unittest-new-background-left: light-dark(#ddf, #325);
   --unittest-new-background-right: light-dark(#eef, #224);
   --unittest-old-background: light-dark(#fff, #112);
 
   --button-background-gradient: linear-gradient(135deg, var(--button-background-left), var(--button-background-right));
+  --page-background:
+    radial-gradient(circle at 78% 12%, var(--home-background-glow-right), transparent 30rem),
+    radial-gradient(circle at 14% 40%, var(--home-background-glow-left), transparent 28rem),
+    var(--home-background);
   --code-general-background-gradient: linear-gradient(135deg, var(--code-general-background-left), var(--code-general-background-right));
-  --cta-gradient: linear-gradient(100deg, light-dark(#eee0f3, #1f2f50), light-dark(#e4f1e2, #14423f));
+  --panel-heading-gradient: linear-gradient(90deg, light-dark(#ebfaf3, #123a33), light-dark(#f1f4fe, #1e2a4d));
   --cta-band-background-gradient: linear-gradient(135deg, color-mix(in srgb, var(--accent-left) 15%, transparent), color-mix(in srgb, var(--accent-right) 5%, transparent));
   --level-locked-background-gradient: linear-gradient(135deg, var(--level-locked-background-left), var(--level-locked-background-right));
   --level-unlocked-background-gradient: linear-gradient(135deg, var(--level-unlocked-background-left), var(--level-unlocked-background-right));
@@ -197,8 +213,7 @@ ul {
   }
 }
 
-.secondary,
-#unittestgame a {
+.secondary {
   background: none;
   border: 0.0625rem solid currentColor;
   border-radius: var(--button-border-radius);
@@ -273,7 +288,6 @@ details {
 
 #messages {
   background: var(--messages-background);
-  box-shadow: 0.25rem 0 0.5rem var(--separator-shadow);
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
@@ -364,4 +378,170 @@ details {
       }
     }
   }
+}
+
+html {
+  /* Scrolling to a message or section leaves room for the sticky nav. */
+  scroll-padding-top: var(--nav-height);
+}
+
+nav {
+  /* The nav spans the window, while its content and the line below it are as wide as the page content. */
+  --nav-content-width: min(70rem, calc(100% - 4rem));
+  --button-height: 2.5rem;
+
+  align-items: center;
+  /* The page background, fixed to the window like the body's, so the nav looks transparent but hides what scrolls under it. */
+  background: var(--page-background);
+  background-attachment: fixed;
+  display: flex;
+  font-family: Arial, Helvetica, sans-serif;
+  justify-content: space-between;
+  line-height: 1.5;
+  min-height: var(--nav-height);
+  padding-inline: calc((100% - var(--nav-content-width)) / 2);
+  position: sticky;
+  top: 0;
+  z-index: 30;
+
+  @media (max-width: 53.75rem) {
+    --nav-content-width: min(calc(100% - 2.5rem), 42.5rem);
+  }
+
+  @media (max-width: 35rem) {
+    --nav-content-width: calc(100% - 1.75rem);
+  }
+
+  &::after {
+    background: var(--home-border-soft);
+    bottom: 0;
+    content: '';
+    height: 0.0625rem;
+    left: 50%;
+    position: absolute;
+    transform: translateX(-50%);
+    width: var(--nav-content-width);
+  }
+
+  #brand {
+    align-items: center;
+    color: var(--home-text);
+    display: flex;
+    font-size: 1.5rem;
+    font-weight: 800;
+    gap: 0.75rem;
+    letter-spacing: -0.04em;
+
+    img {
+      height: 2.375rem;
+      width: 2.375rem;
+    }
+
+    span {
+      /* Narrower, the name no longer fits next to the buttons, so only the logo stays. */
+      @media (max-width: 38.75rem) {
+        display: none;
+      }
+    }
+  }
+
+  #nav-links {
+    align-items: center;
+    display: flex;
+    font-size: 1rem;
+    font-weight: 700;
+    gap: 1.625rem;
+
+    >a.btn {
+      justify-content: center;
+      padding: 0.25rem 1.25rem;
+    }
+
+    @media (max-width: 35rem) {
+      >a.btn {
+        padding: 0.25rem 0.75rem;
+      }
+    }
+
+    >a:not(.btn) {
+      color: var(--home-muted);
+      text-decoration: none;
+
+      &:hover {
+        color: var(--home-text);
+      }
+    }
+
+    summary {
+      text-decoration: none;
+    }
+
+    >a:not(.btn) {
+      @media (max-width: 72rem) {
+        display: none;
+      }
+    }
+
+    #settings-menu {
+      /* On phones the menu is anchored to the nav, because the button is not at its right edge. */
+      @media (max-width: 35rem) {
+        position: static;
+      }
+
+      summary {
+        margin: 0;
+        padding: 0.5rem 0.7rem;
+      }
+
+      >ul {
+        box-shadow: 0 1rem 1.875rem rgb(0 0 0 / 30%);
+        left: auto;
+        min-width: 16rem;
+        right: 0;
+        top: 3rem;
+
+        @media (max-width: 35rem) {
+          /* Anchored to the nav, which spans the window, so it lines up with the content instead. */
+          right: calc((100% - var(--nav-content-width)) / 2);
+          top: 100%;
+        }
+      }
+
+      #language-switcher, #programming-language-switcher {
+        summary {
+          width: 100%;
+        }
+
+        ul {
+          box-shadow: 0 1rem 1.875rem rgb(0 0 0 / 30%);
+          left: 0.75rem;
+          min-width: 9.5rem;
+          right: auto;
+          top: calc(100% + 0.5rem);
+          width: max-content;
+        }
+
+        .btn {
+          font-size: 1rem;
+          padding: 0 0.7rem;
+
+          &::before {
+            content: '⚙\FE0E' / '';
+            margin-right: 0.45rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+#theme-toggle, #color-toggle {
+  align-items: center;
+  display: inline-flex;
+  font-size: 1rem;
+  gap: 0.45rem;
+  margin: 0;
+  min-height: var(--button-height);
+  padding: 0 0.7rem;
+  width: 100%;
 }

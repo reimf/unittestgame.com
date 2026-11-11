@@ -1,7 +1,11 @@
 body {
-  background-color: var(--general-background);
+  background: var(--page-background);
+  background-attachment: fixed;
   color: var(--general-text);
+  display: flex;
+  flex-direction: column;
   font-family: monospace;
+  height: 100dvh;
   line-height: 1.25rem;
 
   >header {
@@ -35,13 +39,8 @@ button {
 }
 
 i {
-  /* markdown: *italic* */
-  background: var(--cta-gradient);
-  border-radius: 0.25rem 0.25rem 0 0;
-  color: var(--general-text);
+  /* markdown: *italic* marks the name of a panel, which reads as normal text */
   font-style: normal;
-  padding: 0.1rem 0.5rem;
-  white-space: nowrap;
 }
 
 input {
@@ -101,18 +100,21 @@ p {
   white-space: pre-wrap;
 }
 
+/* The messages and the panels each scroll below the nav. */
 #screen {
   display: flex;
+  flex: 1;
+  min-height: 0;
 
   #messages {
-    min-height: 100vh;
+    background: none;
+    border-right: 0.0625rem solid var(--home-border-soft);
+    overflow-y: auto;
     width: 60%;
   }
 
   #panels {
-    align-self: flex-start;
-    position: sticky;
-    top: 0;
+    overflow-y: auto;
     width: 40%;
 
     section {
@@ -122,10 +124,10 @@ p {
       margin: 0.75rem;
 
       header {
-        background: var(--cta-gradient);
+        background: var(--panel-heading-gradient);
         border-radius: 0.5rem 0.5rem 0 0;
         color: var(--general-text);
-        padding: 0.75rem;
+        padding: 0.5rem 0.75rem;
 
         h2 {
           font-weight: inherit;
@@ -142,7 +144,7 @@ p {
         img {
           float: right;
           height: 3rem;
-          margin: 0 0 0.75rem 0.75rem;
+          margin: 0 0 0 0.75rem;
           width: 3rem;
         }
 
@@ -179,18 +181,25 @@ p {
               color: var(--level-locked-foreground);
             }
 
+            /* A flex row centers the emoji and the name vertically, which inline alignment does not. */
             .level-info {
+              align-items: center;
               border-radius: var(--button-border-radius);
+              display: flex;
               flex: 1;
+              gap: 0.5rem;
               min-width: 0;
-              overflow: hidden;
               padding: 0.5rem 1rem;
-              text-overflow: ellipsis;
 
               span:first-child {
+                flex-shrink: 0;
                 font-size: 1.5rem;
-                margin-right: 0.5rem;
-                vertical-align: middle;
+                line-height: 1;
+              }
+
+              span:last-child {
+                overflow: hidden;
+                text-overflow: ellipsis;
               }
             }
 
@@ -228,7 +237,7 @@ p {
   &:before,
   &:after {
     content: "";
-    border-bottom: 1px solid var(--general-text);
+    border-bottom: 0.0625rem solid var(--general-text);
     display: inline-block;
     height: 0;
     position: relative;
@@ -267,52 +276,68 @@ p {
   }
 }
 
-#unittestgame a {
-  display: inline-block;
-  line-height: 1.5rem;
-  margin: 0;
-  padding: 0.5rem 0.75rem;
-  text-decoration: none;
+#level-progress {
+  align-items: center;
+
+  &[hidden] {
+    display: none;
+  }
+
+  color: var(--home-muted);
+  display: flex;
+  font-family: monospace;
+  font-size: 0.875rem;
+  font-weight: 400;
+  gap: 0.75rem;
+  white-space: nowrap;
+
+  /* Narrower, the bar leaves too little room for the level name. */
+  @media (max-width: 64rem) {
+    display: none;
+  }
+
+  progress {
+    appearance: none;
+    /* The unfilled part is the muted text color, faint enough to stay behind the filled part but clearly visible. */
+    background: color-mix(in srgb, var(--home-muted) 35%, transparent);
+    border: none;
+    border-radius: 100rem;
+    height: 0.5rem;
+    overflow: hidden;
+    width: 5rem;
+
+    &::-webkit-progress-bar {
+      background: transparent;
+    }
+
+    &::-webkit-progress-value {
+      background: var(--button-background-gradient);
+    }
+
+    &::-moz-progress-bar {
+      background: var(--button-background-gradient);
+    }
+  }
 }
 
-#screen #panels #settings >div {
-  flex-flow: row wrap;
-  max-width: 22.75rem;
+/* The level name fills the space between the brand and the buttons, so it sits in the middle and shrinks before anything wraps. */
+#level-name {
+  color: var(--home-muted);
+  flex: 1 1 0;
+  font-size: 1.25rem;
+  min-width: 0;
+  overflow: hidden;
+  padding-inline: 1rem;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
-  >details,
-  >button {
-    flex: 0 0 auto;
-    min-width: 7.5rem;
-    width: auto;
-  }
-
-  >button {
-    margin: 0;
-    padding: 0.5rem 0.75rem;
-    text-align: left;
+  @media (max-width: 48rem) {
+    display: none;
   }
 }
 
-#screen #panels #settings >div >button::before,
-.switcher ul li .btn::before {
-  content: '⚙\FE0E' / '';
-  display: inline-block;
-  width: 0.8625rem;
-}
-
-.switcher {
-  summary {
-    line-height: 1.5rem;
-    margin: 0;
-    padding: 0.5rem 0.75rem;
-    text-decoration: none;
-    width: 100%;
-  }
-
-  ul {
-    left: 0;
-    min-width: 100%;
-    top: 2.875rem;
-    width: max-content;
-  }
+/* The game uses the whole window, so the nav does too, with the margin of the panels. */
+nav {
+  --nav-content-width: calc(100% - 1.5rem);
 }

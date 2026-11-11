@@ -63,13 +63,6 @@ test.describe('class Html', () => {
         )
     })
 
-    test('appends anchor in markdown', () => {
-        const header = new Header().appendMarkdown(ConversationLanguage.bless('this is a [website](https://example.com)'))
-        expect(header.getElement().outerHTML).toBe(
-            '<header>this is a <a href="https://example.com">website</a></header>'
-        )
-    })
-
     test('appends img in markdown', () => {
         const header = new Header().appendMarkdown(ConversationLanguage.bless('this is a ![example](https://example.com/image.png 640x480)'))
         expect(header.getElement().outerHTML).toBe(

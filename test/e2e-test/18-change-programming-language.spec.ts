@@ -3,6 +3,7 @@ import { test, expect } from '../fixture/fixture-coverage'
 test.describe('change programming language', () => {
     test.beforeEach(async ({ page }) => {
         await page.goto('/en/game?speed=fast&picker=fixed')
+        await page.getByTestId('settings-menu').locator('summary').first().click()
         const switcher = page.getByTestId('programming-language-switcher')
         await switcher.locator('summary').click()
         await switcher.getByRole('link', { name: 'Python', exact: true }).click()
@@ -15,6 +16,7 @@ test.describe('change programming language', () => {
     })
 
     test('has programming language selector with JavaScript as an alternative option', async ({ page }) => {
+        await page.getByTestId('settings-menu').locator('summary').first().click()
         const switcher = page.getByTestId('programming-language-switcher')
         await switcher.locator('summary').click()
         const option = switcher.getByRole('link', { name: 'JavaScript', exact: true })

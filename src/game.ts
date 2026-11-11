@@ -4,6 +4,7 @@ import { programmingLanguages } from './programming-languages.js'
 import { Injector } from './injector.js'
 import { Main } from './main.js'
 import { conversationLanguages } from './conversation-languages.js'
+import { setUpSettingsMenu } from './settings-menu.js'
 
 window.onerror = (message, source, lineno, colno, error) => {
     alert(`${error?.name}: ${message}\n${source}:${lineno}:${colno}`)
@@ -11,7 +12,8 @@ window.onerror = (message, source, lineno, colno, error) => {
 
 document.addEventListener('keydown', event => {
     if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
-        const focusableElements = [...document.querySelectorAll<HTMLElement>('a, input, summary, button:not([disabled])')]
+        // The nav keeps the browser's Tab order, so the arrow keys only move through the messages and panels.
+        const focusableElements = [...document.querySelectorAll<HTMLElement>('#screen :is(a, input, summary, button:not([disabled]))')]
         const visibleElements = focusableElements.filter(element => element.checkVisibility())
         const currentElement = document.activeElement as HTMLElement
         if (visibleElements.includes(currentElement)) {
@@ -33,6 +35,7 @@ document.addEventListener('keydown', event => {
 })
 
 document.addEventListener('DOMContentLoaded', () => {
+    setUpSettingsMenu()
     const injector = new Injector(new URL(window.location.href).searchParams)
     const conversationLanguageId = document.documentElement.lang
     const conversationLanguage = conversationLanguages.find(conversationLanguage => conversationLanguage.id === conversationLanguageId)!

@@ -4,7 +4,6 @@ import { Panel, Message, ComputerMessage, QuestionMessage } from './frame.js'
 import { Anchor, Details, Html, ListItem, OrderedList, Button, Span, Summary, UnorderedList } from './html.js'
 import { AnyLevel } from './level-base.js'
 import { ConversationLanguage, ConversationText } from './conversation-language-base.js'
-import { conversationLanguages } from './conversation-languages.js'
 import { Picker } from './picker.js'
 import { ProgrammingLanguage } from './programming-language-base.js'
 import { programmingLanguages } from './programming-languages.js'
@@ -25,7 +24,7 @@ export class Main {
     public start(): void {
         this.showWelcomeMessage()
         this.showAboutPanel()
-        this.showSettingsPanel()
+        this.showProgrammingLanguageSwitcher()
         this.continue()
     }
 
@@ -36,6 +35,7 @@ export class Main {
     }
 
     private play(level: AnyLevel): void {
+        this.showLevelProgress(level)
         Message.hideAllButLast()
         Panel.removeAll()
         level.play(() => this.continue())
@@ -61,14 +61,8 @@ export class Main {
         return url.toString()
     }
 
-    private urlInConversationLanguage(conversationLanguageId: string): string {
-        const url = new URL(window.location.href)
-        url.pathname = url.pathname.replace(`/${this.conversationLanguage.id}/`, `/${conversationLanguageId}/`)
-        return url.toString()
-    }
-
     private switcher(id: string, currentName: ConversationText, options: readonly Html[]): Details {
-        return new Details().addClass('switcher').setId(id).appendChildren([
+        return new Details().setId(id).appendChildren([
             new Summary().addClass('secondary').appendChild(
                 new Span().appendText(currentName)
             ),
@@ -83,42 +77,14 @@ export class Main {
         return this.switcher('programming-language-switcher', ConversationLanguage.bless(this.programmingLanguage.name), options)
     }
 
-    private conversationLanguageSwitcher(): Details {
-        const options = conversationLanguages
-            .filter(conversationLanguage => conversationLanguage.id !== this.conversationLanguage.id)
-            .map(conversationLanguage => new Anchor(this.urlInConversationLanguage(conversationLanguage.id)).appendText(ConversationLanguage.bless(conversationLanguage.name)))
-        return this.switcher('conversation-language-switcher', ConversationLanguage.bless(this.conversationLanguage.name), options)
-    }
-
-    private switchTheme(theme: string): void {
-        Theme.set(theme)
-        Theme.apply(theme)
-        this.showSettingsPanel()
-    }
-
-    // Each button shows the current setting, and a click switches it while keeping the other setting.
-    private lightDarkButton(): Button {
-        const [darkOrLight, colorOrGrayscale] = Theme.get().split('-')
-        return darkOrLight === 'light'
-            ? new Button(this.conversationLanguage.lightMode(), () => this.switchTheme(`dark-${colorOrGrayscale}`)).setId('light-dark-button').addClass('secondary')
-            : new Button(this.conversationLanguage.darkMode(), () => this.switchTheme(`light-${colorOrGrayscale}`)).setId('light-dark-button').addClass('secondary')
-    }
-
-    private colorGrayscaleButton(): Button {
-        const [darkOrLight, colorOrGrayscale] = Theme.get().split('-')
-        return colorOrGrayscale === 'color'
-            ? new Button(this.conversationLanguage.colorMode(), () => this.switchTheme(`${darkOrLight}-grayscale`)).setId('color-grayscale-button').addClass('secondary')
-            : new Button(this.conversationLanguage.grayscaleMode(), () => this.switchTheme(`${darkOrLight}-color`)).setId('color-grayscale-button').addClass('secondary')
-    }
-
     private showAboutPanel(): void {
         const content = [this.conversationLanguage.slogan()]
         new Panel('unittestgame', this.conversationLanguage.unitTestGameTitle(), content).show()
     }
 
-    private showSettingsPanel(): void {
-        const content = [this.conversationLanguageSwitcher(), this.programmingLanguageSwitcher(), this.lightDarkButton(), this.colorGrayscaleButton()]
-        new Panel('settings', this.conversationLanguage.settingsTitle(), content).show()
+    // The programming language belongs to the game, so the game adds it to the settings menu in the nav.
+    private showProgrammingLanguageSwitcher(): void {
+        document.querySelector('#settings-menu > ul')!.appendChild(new ListItem().appendChild(this.programmingLanguageSwitcher()).getElement())
     }
 
     private showInvitationMessage(): void {
@@ -147,8 +113,19 @@ export class Main {
         new Panel('level-overview', this.conversationLanguage.levelOverviewTitle(), [div]).show()
     }
 
+    // The nav shows the level, and a bar with the finished levels, only while a level is played.
+    private showLevelProgress(level: AnyLevel|undefined): void {
+        document.getElementById('level-name')!.textContent = level ? level.name() : ''
+        document.getElementById('level-progress')!.hidden = level === undefined
+        document.getElementById('level-progress-label')!.textContent = level ? this.conversationLanguage.levelProgress(level.levelNumber) : ''
+        const progress = document.querySelector<HTMLProgressElement>('#level-progress progress')!
+        progress.max = this.levels.length
+        progress.value = this.levels.filter(level => level.penalties() !== -1).length
+    }
+
     private showNextLevel(): void {
         const nextLevel = this.levels.find(level => level.penalties() === -1)
+        this.showLevelProgress(undefined)
         this.nextLevelMessage = nextLevel
             ? new QuestionMessage(this.conversationLanguage.nextLevelButton(nextLevel.description()), () => this.play(nextLevel))
             : new QuestionMessage(this.conversationLanguage.allLevels(), () => this.quit())

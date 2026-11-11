@@ -53,9 +53,9 @@ test.describe('keyboard across messages and panels', () => {
         await page.goto('/en/game?speed=fast')
     })
 
-    test('has the home link focused after arrow down from the last message', async ({ page }) => {
+    test('has the play button of the level overview focused after arrow down from the last message', async ({ page }) => {
         await page.getByRole('button', { name: 'I want to play Level 0 - Battery Level', exact: true }).focus()
         await page.keyboard.press('ArrowDown')
-        await expect(page.getByRole('link', { name: 'Home', exact: true })).toBeFocused()
+        await expect(page.getByTestId('level-overview').getByRole('button', { name: 'Play', exact: true })).toBeFocused()
     })
 })

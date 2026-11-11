@@ -9,12 +9,12 @@ test.describe('change theme', () => {
         })
 
         test('has buttons showing light mode and color as the current theme', async ({ page }) => {
-            await expect(page.getByTestId('light-dark-button')).toHaveText('Light mode')
-            await expect(page.getByTestId('color-grayscale-button')).toHaveText('Color')
+            await expect(page.getByTestId('theme-toggle')).toHaveText(/Light → Dark mode/)
+            await expect(page.getByTestId('color-toggle')).toHaveText(/Color → Grayscale/)
         })
 
         test('has a light color scheme', async ({ page }) => {
-            await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(238, 238, 238)')
+            await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(245, 244, 248)')
         })
 
         test('has color', async ({ page }) => {
@@ -30,12 +30,12 @@ test.describe('change theme', () => {
         })
 
         test('has buttons showing dark mode and color as the current theme', async ({ page }) => {
-            await expect(page.getByTestId('light-dark-button')).toHaveText('Dark mode')
-            await expect(page.getByTestId('color-grayscale-button')).toHaveText('Color')
+            await expect(page.getByTestId('theme-toggle')).toHaveText(/Dark → Light mode/)
+            await expect(page.getByTestId('color-toggle')).toHaveText(/Color → Grayscale/)
         })
 
         test('has a dark color scheme', async ({ page }) => {
-            await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(17, 17, 17)')
+            await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(11, 18, 32)')
         })
     })
 
@@ -44,15 +44,16 @@ test.describe('change theme', () => {
 
         test.beforeEach(async ({ page }) => {
             await page.goto('/en/game?speed=fast&picker=fixed')
-            await page.getByTestId('light-dark-button').click()
+            await page.getByTestId('settings-menu').locator('summary').first().click()
+            await page.getByTestId('theme-toggle').click()
         })
 
         test('has a button showing dark mode', async ({ page }) => {
-            await expect(page.getByTestId('light-dark-button')).toHaveText('Dark mode')
+            await expect(page.getByTestId('theme-toggle')).toHaveText(/Dark → Light mode/)
         })
 
         test('has a dark color scheme', async ({ page }) => {
-            await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(17, 17, 17)')
+            await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(11, 18, 32)')
         })
 
         test('has color', async ({ page }) => {
@@ -61,8 +62,8 @@ test.describe('change theme', () => {
 
         test('keeps dark mode after a reload', async ({ page }) => {
             await page.reload()
-            await expect(page.getByTestId('light-dark-button')).toHaveText('Dark mode')
-            await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(17, 17, 17)')
+            await expect(page.getByTestId('theme-toggle')).toHaveText(/Dark → Light mode/)
+            await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(11, 18, 32)')
         })
 
         test('stores the theme', async ({ page }) => {
@@ -79,15 +80,16 @@ test.describe('change theme', () => {
 
         test.beforeEach(async ({ page }) => {
             await page.goto('/en/game?speed=fast&picker=fixed')
-            await page.getByTestId('color-grayscale-button').click()
+            await page.getByTestId('settings-menu').locator('summary').first().click()
+            await page.getByTestId('color-toggle').click()
         })
 
         test('has a button showing grayscale', async ({ page }) => {
-            await expect(page.getByTestId('color-grayscale-button')).toHaveText('Grayscale')
+            await expect(page.getByTestId('color-toggle')).toHaveText(/Grayscale → Color/)
         })
 
         test('has a light color scheme', async ({ page }) => {
-            await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(238, 238, 238)')
+            await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(245, 244, 248)')
         })
 
         test('has no color', async ({ page }) => {
@@ -96,14 +98,14 @@ test.describe('change theme', () => {
 
         test('keeps grayscale after a reload', async ({ page }) => {
             await page.reload()
-            await expect(page.getByTestId('color-grayscale-button')).toHaveText('Grayscale')
+            await expect(page.getByTestId('color-toggle')).toHaveText(/Grayscale → Color/)
             await expect(page.locator('html')).toHaveCSS('filter', 'grayscale(1)')
             await expect(page.locator('html')).toHaveClass('theme-light theme-grayscale')
         })
 
         test('switches back to color', async ({ page }) => {
-            await page.getByTestId('color-grayscale-button').click()
-            await expect(page.getByTestId('color-grayscale-button')).toHaveText('Color')
+            await page.getByTestId('color-toggle').click()
+            await expect(page.getByTestId('color-toggle')).toHaveText(/Color → Grayscale/)
             await expect(page.locator('html')).toHaveClass('theme-light theme-color')
         })
     })
@@ -113,17 +115,18 @@ test.describe('change theme', () => {
 
         test.beforeEach(async ({ page }) => {
             await page.goto('/en/game?speed=fast&picker=fixed')
-            await page.getByTestId('color-grayscale-button').click()
-            await page.getByTestId('light-dark-button').click()
+            await page.getByTestId('settings-menu').locator('summary').first().click()
+            await page.getByTestId('color-toggle').click()
+            await page.getByTestId('theme-toggle').click()
         })
 
         test('has buttons showing dark mode and grayscale', async ({ page }) => {
-            await expect(page.getByTestId('light-dark-button')).toHaveText('Dark mode')
-            await expect(page.getByTestId('color-grayscale-button')).toHaveText('Grayscale')
+            await expect(page.getByTestId('theme-toggle')).toHaveText(/Dark → Light mode/)
+            await expect(page.getByTestId('color-toggle')).toHaveText(/Grayscale → Color/)
         })
 
         test('has a dark color scheme', async ({ page }) => {
-            await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(17, 17, 17)')
+            await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(11, 18, 32)')
         })
 
         test('has no color', async ({ page }) => {
@@ -135,8 +138,8 @@ test.describe('change theme', () => {
         })
 
         test('switches back to light mode and keeps grayscale', async ({ page }) => {
-            await page.getByTestId('light-dark-button').click()
-            await expect(page.getByTestId('light-dark-button')).toHaveText('Light mode')
+            await page.getByTestId('theme-toggle').click()
+            await expect(page.getByTestId('theme-toggle')).toHaveText(/Light → Dark mode/)
             await expect(page.locator('html')).toHaveClass('theme-light theme-grayscale')
         })
     })
