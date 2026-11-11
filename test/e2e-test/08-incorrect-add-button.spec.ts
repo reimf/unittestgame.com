@@ -22,7 +22,7 @@ test.describe('incorrect add button', () => {
 
     test('has not asked message', async ({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('You don\'t need to add a unit test now. Submit the Unit Tests.')
+        await expect(messages).toContainText('Submit the unit tests now.')
     })
 
     test('has NOT added unit test in unit tests panel', async ({ page }) => {

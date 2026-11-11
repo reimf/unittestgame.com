@@ -349,9 +349,8 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
     }
 
     protected showStepMessages(): void {
-        new ComputerMessage([this.conversationLanguage.readSpecification()]).show()
-        new ComputerMessage([this.conversationLanguage.improveCurrentFunction()]).show()
-        new ComputerMessage([this.conversationLanguage.submitUnitTests()]).show()
+        new ComputerMessage([this.conversationLanguage.writeFunction()]).show()
+        new ComputerMessage([this.conversationLanguage.findWrongResult()]).show()
     }
 
     protected showBeforeMenuMessage(): void {
@@ -377,7 +376,7 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
     }
 
     private showUsefulUnitTestMessage(): void {
-        new ComputerMessage([this.conversationLanguage.currentFunctionImproved(this.humanUnitTests.length)]).show()
+        new ComputerMessage([this.conversationLanguage.currentFunctionImproved()]).show()
     }
 
     private showInvalidUnitTestMessage(): void {
@@ -406,7 +405,7 @@ export abstract class Level<Parameters extends readonly Value[], Result extends 
     }
 
     private showSpecificationPanel(): void {
-        new Panel('specification', this.conversationLanguage.specificationTitle(this.description()), [this.specification()]).show()
+        new Panel('specification', this.conversationLanguage.specificationTitle(), [this.specification()]).show()
     }
 
     private showCurrentFunctionPanel(): void {

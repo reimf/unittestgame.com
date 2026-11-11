@@ -9,14 +9,10 @@ test.describe('incorrect unit test', () => {
         await page.getByRole('button', { name: 'I want to add this unit test', exact: true }).click()
     })
 
-    test('has read specification message', async ({ page }) => {
+    test('has the step messages', async ({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('First, read the Specification. Then find an input')
-    })
-
-    test('has submit message', async ({ page }) => {
-        const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('when you think the Current Function matches the Specification')
+        await expect(messages).toContainText('I started writing My Function to match the Specification.')
+        await expect(messages).toContainText('Find values that give the wrong result.')
     })
 
     test('has unit test message', async ({ page }) => {
@@ -26,7 +22,7 @@ test.describe('incorrect unit test', () => {
 
     test('has incorrect unit test message', async ({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('I didn\'t add the unit test')
+        await expect(messages).toContainText('Not added: that result is wrong.')
     })
 
     test('has NO unit tests panel', async ({ page }) => {

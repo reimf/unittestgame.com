@@ -24,12 +24,12 @@ test.describe('submit 1 out of 2 too many unit tests', () => {
 
     test('has current function matches message', async ({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('Well done! The Current Function matches the Specification.')
+        await expect(messages).toContainText('Well done! My Function is correct.')
     })
 
     test('has tested thoroughly message', async ({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('You\'ve tested the Current Function thoroughly, but you wrote 1 more unit test than necessary')
+        await expect(messages).toContainText('Correct, but 1 unit test was not needed.')
     })
 
     test('has 2 unit tests in the message', async ({ page }) => {

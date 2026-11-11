@@ -8,7 +8,8 @@ test.describe('play next level from overview', () => {
     test('starts the next level', async ({ page }) => {
         await page.getByTestId('level-overview').getByRole('button', { name: 'Play', exact: true }).click()
         const specificationPanel = page.getByTestId('specification')
-        await expect(specificationPanel).toContainText('Specification (Level 0 - Battery Level)')
+        await expect(specificationPanel.locator('h2')).toHaveText('Specification')
+        await expect(page.getByTestId('level-name')).toHaveText('Battery Level')
     })
 
     test('answers the play next level message', async ({ page }) => {

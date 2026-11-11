@@ -21,9 +21,8 @@ export interface ConversationStrings {
     abortLevelButton: string
     unitTestNotAdded: string
     tooManyUnitTests: string
-    readSpecification: string
-    improveCurrentFunction: string
-    submitUnitTests: string
+    writeFunction: string
+    findWrongResult: string
     specificationTitle: string
     currentFunctionTitle: string
     differenceTitle: string
@@ -96,10 +95,10 @@ export abstract class ConversationLanguage {
     public level(levelNumber: number, levelName: string): ConversationText {
         return this.format(this.strings.level, { levelNumber, levelName })
     }
+
     public levelProgress(levelNumber: number): ConversationText {
         return this.format(this.strings.levelProgress, { levelNumber })
     }
-
 
     public nextLevelButton(levelDescription: string): ConversationText {
         return this.format(this.strings.nextLevelButton, { levelDescription })
@@ -153,20 +152,16 @@ export abstract class ConversationLanguage {
         return this.format(this.strings.tooManyUnitTests, { numberOfUnnecessaryUnitTests, numberOfRedundantUnitTests })
     }
 
-    public readSpecification(): ConversationText {
-        return this.format(this.strings.readSpecification)
+    public writeFunction(): ConversationText {
+        return this.format(this.strings.writeFunction)
     }
 
-    public improveCurrentFunction(): ConversationText {
-        return this.format(this.strings.improveCurrentFunction)
+    public findWrongResult(): ConversationText {
+        return this.format(this.strings.findWrongResult)
     }
 
-    public submitUnitTests(): ConversationText {
-        return this.format(this.strings.submitUnitTests)
-    }
-
-    public specificationTitle(description: string): ConversationText {
-        return this.format(this.strings.specificationTitle, { description })
+    public specificationTitle(): ConversationText {
+        return this.format(this.strings.specificationTitle)
     }
 
     public currentFunctionTitle(): ConversationText {
@@ -189,8 +184,8 @@ export abstract class ConversationLanguage {
         return this.format(this.strings.hint)
     }
 
-    public currentFunctionImproved(numberOfUnitTests: number): ConversationText {
-        return this.format(this.strings.currentFunctionImproved, { numberOfUnitTests })
+    public currentFunctionImproved(): ConversationText {
+        return this.format(this.strings.currentFunctionImproved)
     }
 
     public invalidUnitTest(): ConversationText {

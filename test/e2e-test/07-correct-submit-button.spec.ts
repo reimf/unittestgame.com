@@ -26,7 +26,7 @@ test.describe('correct submit button', () => {
 
     test('has not according message', async ({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('For example, the Current Function now returns the following, but that doesn\'t match the Specification.')
+        await expect(messages).toContainText('For example, this is still wrong:')
     })
 
     test('has failing unit test message', async ({ page }) => {
@@ -36,7 +36,7 @@ test.describe('correct submit button', () => {
 
     test('has need message', async ({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('The Current Function doesn\'t match the Specification yet. You need at least 2 more unit tests. Find an input for which the Current Function returns something other than the Specification says, and write a unit test for that input.')
+        await expect(messages).toContainText('Not correct yet. You need at least 2 more unit tests.')
     })
 
     test('has a battery level field', async ({ page }) => {

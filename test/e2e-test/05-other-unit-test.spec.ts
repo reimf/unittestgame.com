@@ -21,7 +21,7 @@ test.describe('other unit test', () => {
 
     test('has not asked message', async ({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('That\'s not the unit test I meant. Try again.')
+        await expect(messages).toContainText('That\'s not the unit test I meant.')
     })
 
     test('has NO unit tests panel', async ({ page }) => {
@@ -37,7 +37,7 @@ test.describe('other unit test', () => {
 
     test('has TWO before menu messages', async ({ page }) => {
         const messages = page.getByTestId('messages')
-        const beforeMenuMessages = messages.getByText('The Specification contains the number 20', { exact: false })
+        const beforeMenuMessages = messages.getByText('Start with 20: it must return "NORMAL MODE"', { exact: false })
         await expect(beforeMenuMessages).toHaveCount(2)
     })
 

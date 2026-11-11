@@ -52,7 +52,7 @@ test.describe('example level', () => {
 
     test('has lesson message', async ({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('So test both sides of every boundary, like 19 and 20 here')
+        await expect(messages).toContainText('Remember: test both sides of every boundary, like 19 and 20')
     })
 
     test('has play next level message', async ({ page }) => {

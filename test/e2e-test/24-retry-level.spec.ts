@@ -13,7 +13,8 @@ test.describe('retry level', () => {
     test('restarts the finished level', async ({ page }) => {
         await page.getByTestId('level-overview').getByRole('button', { name: 'Retry', exact: true }).click()
         const specificationPanel = page.getByTestId('specification')
-        await expect(specificationPanel).toContainText('Specification (Level 0 - Battery Level)')
+        await expect(specificationPanel.locator('h2')).toHaveText('Specification')
+        await expect(page.getByTestId('level-name')).toHaveText('Battery Level')
         const currentFunctionPanel = page.getByTestId('current-function')
         const codeLines = currentFunctionPanel.locator('code > span')
         await expect(codeLines).toContainText(['function powerMode(batteryLevel) {', '    return "UNKNOWN"', '}'])
@@ -57,12 +58,14 @@ test.describe('retry level after playing it', () => {
     })
 
     test('has no unit tests panel', async ({ page }) => {
-        await expect(page.getByTestId('specification')).toContainText('Specification (Level 0 - Battery Level)')
+        await expect(page.getByTestId('specification').locator('h2')).toHaveText('Specification')
+        await expect(page.getByTestId('level-name')).toHaveText('Battery Level')
         await expect(page.getByTestId('unit-tests')).toHaveCount(0)
     })
 
     test('has no difference panel', async ({ page }) => {
-        await expect(page.getByTestId('specification')).toContainText('Specification (Level 0 - Battery Level)')
+        await expect(page.getByTestId('specification').locator('h2')).toHaveText('Specification')
+        await expect(page.getByTestId('level-name')).toHaveText('Battery Level')
         await expect(page.getByTestId('difference-current-function')).toHaveCount(0)
     })
 

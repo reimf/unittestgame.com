@@ -18,7 +18,8 @@ test.describe('level start', () => {
 
     test('has specification panel', async ({ page }) => {
         const specificationPanel = page.getByTestId('specification')
-        await expect(specificationPanel).toContainText('Specification (Level 0 - Battery Level)')
+        await expect(specificationPanel.locator('h2')).toHaveText('Specification')
+        await expect(page.getByTestId('level-name')).toHaveText('Battery Level')
         await expect(specificationPanel).toContainText('A smartphone normally operates in "NORMAL MODE", but when the battery level is less than 20, it operates in "LOW POWER MODE".')
     })
 
@@ -38,19 +39,15 @@ test.describe('level start', () => {
         await expect(theFunctionPanel).not.toBeVisible()
     })
 
-    test('has NO read specification message', async ({ page }) => {
+    test('has NO step messages', async ({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).not.toContainText('First, read the Specification. Then find an input')
-    })
-
-    test('has NO submit message', async ({ page }) => {
-        const messages = page.getByTestId('messages')
-        await expect(messages).not.toContainText('when you think the Current Function matches the Specification')
+        await expect(messages).not.toContainText('I started writing My Function to match the Specification.')
+        await expect(messages).not.toContainText('Find values that give the wrong result.')
     })
 
     test('has before menu message', async ({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('The Specification contains the number 20')
+        await expect(messages).toContainText('Start with 20: it must return "NORMAL MODE"')
     })
 
     test('has a battery level field', async ({ page }) => {

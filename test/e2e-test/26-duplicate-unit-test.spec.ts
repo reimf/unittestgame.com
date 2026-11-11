@@ -14,12 +14,12 @@ test.describe('duplicate unit test', () => {
 
     test('has duplicate unit test message', async ({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('You had already added this unit test, so I didn\'t add it again.')
+        await expect(messages).toContainText('You already added this unit test.')
     })
 
     test('has hint message', async ({ page }) => {
         const messages = page.getByTestId('messages')
-        await expect(messages).toContainText('Find an input for which the Current Function returns something other than the Specification says, and write a unit test for that input.')
+        await expect(messages).toContainText('Find values that give the wrong result.')
     })
 
     test('has NOT added the unit test twice in unit tests panel', async ({ page }) => {
