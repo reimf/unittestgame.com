@@ -7,10 +7,32 @@ body {
   font-family: monospace;
   height: 100dvh;
   line-height: 1.25rem;
+}
 
-  >header {
-    height: 0;
+main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+
+  >h1 {
+    clip-path: inset(50%);
+    height: 0.0625rem;
     overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 0.0625rem;
+  }
+}
+
+footer {
+  /* As wide as the nav content, with the margin of the panels. */
+  margin-inline: auto;
+  padding: 0.5rem 0;
+  width: calc(100% - 1.5rem);
+
+  @media (max-width: 35rem) {
+    flex-direction: row;
   }
 }
 

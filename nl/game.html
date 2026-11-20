@@ -40,58 +40,67 @@
     <title>UnitTestGame.com: Spelen</title>
   </head>
   <body>
-    <nav>
-      <div id="brand">
-        <img src="/unittestgame-logo.png" alt="Logo van UnitTestGame" width="160" height="160">
-        <span>UnitTestGame</span>
-      </div>
-      <span id="level-name"></span>
-      <div id="nav-links">
-        <div id="level-progress">
-          <span id="level-progress-label"></span>
-          <progress aria-labelledby="level-progress-label"></progress>
-        </div>
-        <details id="settings-menu">
-          <summary class="secondary">Instellingen</summary>
-          <ul>
-            <li>
-              <button class="secondary" id="theme-toggle" type="button" data-label-light="Lichte → donkere modus" data-label-dark="Donkere → lichte modus">
-                <span aria-hidden="true">⚙&#xFE0E;</span>
-                <span>Lichte → donkere modus</span>
-              </button>
-            </li>
-            <li>
-              <button class="secondary" id="color-toggle" type="button" data-label-color="Kleur → Grijstinten" data-label-grayscale="Grijstinten → Kleur">
-                <span aria-hidden="true">⚙&#xFE0E;</span>
-                <span>Kleur → Grijstinten</span>
-              </button>
-            </li>
-            <li>
-              <details id="language-switcher">
-                <summary class="secondary">Nederlands</summary>
-                <ul>
-                  <li><a class="btn secondary" href="/en/game">English</a></li>
-                  <li><a class="btn secondary" href="/de/game">Deutsch</a></li>
-                  <li><a class="btn secondary" href="/fr/game">Français</a></li>
-                  <li><a class="btn secondary" href="/es/game">Español</a></li>
-                  <li><a class="btn secondary" href="/it/game">Italiano</a></li>
-                </ul>
-              </details>
-            </li>
-          </ul>
-        </details>
-        <a class="btn secondary" href="/nl/index">Stoppen</a>
-      </div>
-    </nav>
     <header>
-      <h1>Speel UnitTestGame</h1>
+      <nav>
+        <div id="brand">
+          <img src="/unittestgame-logo.png" alt="Logo van UnitTestGame" width="160" height="160">
+          <span>UnitTestGame</span>
+        </div>
+        <span id="level-name"></span>
+        <div id="nav-links">
+          <div id="level-progress">
+            <span id="level-progress-label"></span>
+            <progress aria-labelledby="level-progress-label"></progress>
+          </div>
+          <details id="settings-menu">
+            <summary class="secondary">Instellingen</summary>
+            <ul>
+              <li>
+                <button class="secondary" id="theme-toggle" type="button" data-label-light="Lichte → donkere modus" data-label-dark="Donkere → lichte modus">
+                  <span aria-hidden="true">⚙&#xFE0E;</span>
+                  <span>Lichte → donkere modus</span>
+                </button>
+              </li>
+              <li>
+                <button class="secondary" id="color-toggle" type="button" data-label-color="Kleur → Grijstinten" data-label-grayscale="Grijstinten → Kleur">
+                  <span aria-hidden="true">⚙&#xFE0E;</span>
+                  <span>Kleur → Grijstinten</span>
+                </button>
+              </li>
+              <li>
+                <details id="language-switcher">
+                  <summary class="secondary">Nederlands</summary>
+                  <ul>
+                    <li><a class="btn secondary" href="/en/game">English</a></li>
+                    <li><a class="btn secondary" href="/de/game">Deutsch</a></li>
+                    <li><a class="btn secondary" href="/fr/game">Français</a></li>
+                    <li><a class="btn secondary" href="/es/game">Español</a></li>
+                    <li><a class="btn secondary" href="/it/game">Italiano</a></li>
+                  </ul>
+                </details>
+              </li>
+            </ul>
+          </details>
+          <a class="btn secondary" href="/nl/index">Stoppen</a>
+        </div>
+      </nav>
     </header>
-    <noscript>
-      <p>UnitTestGame heeft JavaScript nodig. Zet JavaScript aan in je browser om te spelen.</p>
-    </noscript>
-    <main id="screen">
-      <div id="messages"></div>
-      <aside id="panels"></aside>
+    <main>
+      <h1>Speel UnitTestGame</h1>
+      <noscript>
+        <p>UnitTestGame heeft JavaScript nodig. Zet JavaScript aan in je browser om te spelen.</p>
+      </noscript>
+      <div id="screen">
+        <div id="messages"></div>
+        <aside id="panels"></aside>
+      </div>
     </main>
+    <footer>
+      <span>© 2026 UnitTestGame</span>
+      <div class="foot-links">
+        <a href="https://github.com/reimf/unittestgame.com">GitHub</a>
+        <a href="mailto:contact@unittestgame.com">Contact</a>
+      </div>
+    </footer>
   </body>
 </html>

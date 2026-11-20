@@ -385,6 +385,12 @@ html {
   scroll-padding-top: var(--nav-height);
 }
 
+body > header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+}
+
 nav {
   /* The nav spans the window, while its content and the line below it are as wide as the page content. */
   --nav-content-width: min(70rem, calc(100% - 4rem));
@@ -400,9 +406,7 @@ nav {
   line-height: 1.5;
   min-height: var(--nav-height);
   padding-inline: calc((100% - var(--nav-content-width)) / 2);
-  position: sticky;
-  top: 0;
-  z-index: 30;
+  position: relative;
 
   @media (max-width: 53.75rem) {
     --nav-content-width: min(calc(100% - 2.5rem), 42.5rem);
@@ -544,4 +548,31 @@ nav {
   min-height: var(--button-height);
   padding: 0 0.7rem;
   width: 100%;
+}
+
+footer {
+  border-top: 0.0625rem solid var(--home-border-soft);
+  color: var(--home-muted);
+  display: flex;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1rem;
+  justify-content: space-between;
+  line-height: 1.5;
+
+  @media (max-width: 35rem) {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .foot-links {
+    display: flex;
+    gap: 1.375rem;
+
+    a:not(.btn) {
+      color: var(--home-muted);
+      margin: 0;
+      padding: 0;
+    }
+  }
 }

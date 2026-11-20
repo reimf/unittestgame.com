@@ -41,133 +41,135 @@
     <title>UnitTestGame.com: Outsmart the AI bot that dodges your tests</title>
   </head>
   <body>
-    <nav>
-      <div id="brand">
-        <img src="/unittestgame-logo.png" alt="Logo of UnitTestGame" width="160" height="160">
-        <span>UnitTestGame</span>
-      </div>
-      <div id="nav-links">
-        <a href="#how-it-works">How it works</a>
-        <a href="#levels">Levels</a>
-        <a href="#why-it-works">Why it works</a>
-        <details id="settings-menu">
-          <summary class="secondary">Settings</summary>
-          <ul>
-            <li>
-              <button class="secondary" id="theme-toggle" type="button" data-label-light="Light → Dark mode" data-label-dark="Dark → Light mode">
-                <span aria-hidden="true">⚙&#xFE0E;</span>
-                <span>Light → Dark mode</span>
-              </button>
-            </li>
-            <li>
-              <button class="secondary" id="color-toggle" type="button" data-label-color="Color → Grayscale" data-label-grayscale="Grayscale → Color">
-                <span aria-hidden="true">⚙&#xFE0E;</span>
-                <span>Color → Grayscale</span>
-              </button>
-            </li>
-            <li>
-              <details id="language-switcher">
-                <summary class="secondary">English</summary>
-                <ul>
-                  <li><a class="btn secondary" href="/nl/index">Nederlands</a></li>
-                  <li><a class="btn secondary" href="/de/index">Deutsch</a></li>
-                  <li><a class="btn secondary" href="/fr/index">Français</a></li>
-                  <li><a class="btn secondary" href="/es/index">Español</a></li>
-                  <li><a class="btn secondary" href="/it/index">Italiano</a></li>
-                </ul>
-              </details>
-            </li>
-          </ul>
-        </details>
-        <a class="btn" href="/en/game">Play now →</a>
-      </div>
-    </nav>
     <header>
-      <div id="hero-copy">
-        <h1>
-          <span>The code passes</span><br>
-          <span class="gradient-text">your unit tests.</span><br>
-          <span>But does it do what</span><br>
-          <span class="gradient-text">you really want?</span>
-        </h1>
-        <p>
-          UnitTestGame pairs you with an evasive AI bot.
-          It writes correct code that satisfies your unit tests.
-          And nothing more.
-          Your job: write unit tests until the program is right.
-        </p>
-        <div id="hero-buttonrow">
-          <a class="btn" href="/en/game">Play for free →</a>
-          <a href="#how-it-works">See how it works</a>
+      <nav>
+        <div id="brand">
+          <img src="/unittestgame-logo.png" alt="Logo of UnitTestGame" width="160" height="160">
+          <span>UnitTestGame</span>
         </div>
-      </div>
-      <div id="hero-animation">
-        <div id="messages">
-          <span class="comment" id="you-can-vote-if-your-age-is-18-or-over">You can vote if your age is 18 or over.</span>
-          <div class="computer" id="function-isallowedtovote-return-false">
-            <div>
-              <code class="block">
-                <span><span class="keyword">function</span> <span class="function">isAllowedToVote</span>(<span class="variable">age</span>) {</span>
-                <span>    <span class="keyword">return</span> <span class="literal">false</span></span>
-                <span>}</span>
-              </code>
-            </div>
-          </div>
-          <span class="computer comment" id="this-is-the-ai-bot">↑ this is the AI bot</span>
-          <span class="computer comment" id="its-first-function-is-not-correct">its first function is not correct 👎</span>
-          <div class="human" id="i-want-to-add-this-unit-test-18-true">
-            <div>
-              <p>I want to add this unit test.</p>
-              <code class="block">
-                <span class="new"><span class="function">isAllowedToVote</span>(<span class="number">18</span>) <span class="operator">===</span> <span class="literal">true</span></span>
-              </code>
-            </div>
-          </div>
-          <span class="human comment" id="this-is-you">this is you ↑</span>
-          <span class="human comment" id="with-your-first-unit-test">with your first unit test</span>
-          <div class="computer" id="function-isallowedtovote-return-true">
-            <div>
-              <code class="block">
-                <span><span class="keyword">function</span> <span class="function">isAllowedToVote</span>(<span class="variable">age</span>) {</span>
-                <span>    <span class="keyword">return</span> <span class="literal">true</span></span>
-                <span>}</span>
-              </code>
-            </div>
-          </div>
-          <span class="computer comment" id="this-is-the-ai-bot-again">↑ this is the AI bot again</span>
-          <span class="computer comment" id="its-second-function-passes-your-unit-test">its second function passes your unit test</span>
-          <span class="computer comment" id="but-it-is-still-not-correct">but it is still not correct 👎</span>
-          <div class="human" id="i-want-to-add-this-unit-test-17-false">
-            <div>
-              <p>I want to add this unit test.</p>
-              <code class="block">
-                <span class="new"><span class="function">isAllowedToVote</span>(<span class="number">17</span>) <span class="operator">===</span> <span class="literal">false</span></span>
-              </code>
-            </div>
-          </div>
-          <span class="human comment" id="this-is-you-again">this is you again ↑</span>
-          <span class="human comment" id="now-with-your-second-unit-test">now with your second unit test</span>
-          <div class="computer" id="function-isallowedtovote-if-age-gte-18-return-true-return-false">
-            <div>
-              <code class="block">
-                <span><span class="keyword">function</span> <span class="function">isAllowedToVote</span>(<span class="variable">age</span>) {</span>
-                <span>    <span class="keyword">if</span> (<span class="variable">age</span> <span class="operator">&gt;=</span> <span class="number">18</span>) <span class="keyword">return</span> <span class="literal">true</span></span>
-                <span>    <span class="keyword">return</span> <span class="literal">false</span></span>
-                <span>}</span>
-              </code>
-            </div>
-          </div>
-          <span class="computer comment" id="this-is-the-ai-bot-for-the-last-time">↑ this is the AI bot for the last time</span>
-          <span class="computer comment" id="its-third-function-passes-both-unit-tests">its third function passes both unit tests</span>
-          <span class="computer comment" id="and-now-it-is-correct">and now it is correct 👍</span>
+        <div id="nav-links">
+          <a href="#how-it-works">How it works</a>
+          <a href="#levels">Levels</a>
+          <a href="#why-it-works">Why it works</a>
+          <details id="settings-menu">
+            <summary class="secondary">Settings</summary>
+            <ul>
+              <li>
+                <button class="secondary" id="theme-toggle" type="button" data-label-light="Light → Dark mode" data-label-dark="Dark → Light mode">
+                  <span aria-hidden="true">⚙&#xFE0E;</span>
+                  <span>Light → Dark mode</span>
+                </button>
+              </li>
+              <li>
+                <button class="secondary" id="color-toggle" type="button" data-label-color="Color → Grayscale" data-label-grayscale="Grayscale → Color">
+                  <span aria-hidden="true">⚙&#xFE0E;</span>
+                  <span>Color → Grayscale</span>
+                </button>
+              </li>
+              <li>
+                <details id="language-switcher">
+                  <summary class="secondary">English</summary>
+                  <ul>
+                    <li><a class="btn secondary" href="/nl/index">Nederlands</a></li>
+                    <li><a class="btn secondary" href="/de/index">Deutsch</a></li>
+                    <li><a class="btn secondary" href="/fr/index">Français</a></li>
+                    <li><a class="btn secondary" href="/es/index">Español</a></li>
+                    <li><a class="btn secondary" href="/it/index">Italiano</a></li>
+                  </ul>
+                </details>
+              </li>
+            </ul>
+          </details>
+          <a class="btn" href="/en/game">Play now →</a>
         </div>
-        <div id="steps">
-          <button class="btn" id="control-animation" aria-label="Play animation" data-label-play="Play animation" data-label-pause="Pause animation" data-label-replay="Replay animation"></button>
-          <progress id="progress" max="19" value="0"></progress>
-        </div>
-      </div>
+      </nav>
     </header>
     <main>
+      <section id="hero">
+        <div id="hero-copy">
+          <h1>
+            <span>The code passes</span><br>
+            <span class="gradient-text">your unit tests.</span><br>
+            <span>But does it do what</span><br>
+            <span class="gradient-text">you really want?</span>
+          </h1>
+          <p>
+            UnitTestGame pairs you with an evasive AI bot.
+            It writes correct code that satisfies your unit tests.
+            And nothing more.
+            Your job: write unit tests until the program is right.
+          </p>
+          <div id="hero-buttonrow">
+            <a class="btn" href="/en/game">Play for free →</a>
+            <a href="#how-it-works">See how it works</a>
+          </div>
+        </div>
+        <div id="hero-animation">
+          <div id="messages">
+            <span class="comment" id="you-can-vote-if-your-age-is-18-or-over">You can vote if your age is 18 or over.</span>
+            <div class="computer" id="function-isallowedtovote-return-false">
+              <div>
+                <code class="block">
+                  <span><span class="keyword">function</span> <span class="function">isAllowedToVote</span>(<span class="variable">age</span>) {</span>
+                  <span>    <span class="keyword">return</span> <span class="literal">false</span></span>
+                  <span>}</span>
+                </code>
+              </div>
+            </div>
+            <span class="computer comment" id="this-is-the-ai-bot">↑ this is the AI bot</span>
+            <span class="computer comment" id="its-first-function-is-not-correct">its first function is not correct 👎</span>
+            <div class="human" id="i-want-to-add-this-unit-test-18-true">
+              <div>
+                <p>I want to add this unit test.</p>
+                <code class="block">
+                  <span class="new"><span class="function">isAllowedToVote</span>(<span class="number">18</span>) <span class="operator">===</span> <span class="literal">true</span></span>
+                </code>
+              </div>
+            </div>
+            <span class="human comment" id="this-is-you">this is you ↑</span>
+            <span class="human comment" id="with-your-first-unit-test">with your first unit test</span>
+            <div class="computer" id="function-isallowedtovote-return-true">
+              <div>
+                <code class="block">
+                  <span><span class="keyword">function</span> <span class="function">isAllowedToVote</span>(<span class="variable">age</span>) {</span>
+                  <span>    <span class="keyword">return</span> <span class="literal">true</span></span>
+                  <span>}</span>
+                </code>
+              </div>
+            </div>
+            <span class="computer comment" id="this-is-the-ai-bot-again">↑ this is the AI bot again</span>
+            <span class="computer comment" id="its-second-function-passes-your-unit-test">its second function passes your unit test</span>
+            <span class="computer comment" id="but-it-is-still-not-correct">but it is still not correct 👎</span>
+            <div class="human" id="i-want-to-add-this-unit-test-17-false">
+              <div>
+                <p>I want to add this unit test.</p>
+                <code class="block">
+                  <span class="new"><span class="function">isAllowedToVote</span>(<span class="number">17</span>) <span class="operator">===</span> <span class="literal">false</span></span>
+                </code>
+              </div>
+            </div>
+            <span class="human comment" id="this-is-you-again">this is you again ↑</span>
+            <span class="human comment" id="now-with-your-second-unit-test">now with your second unit test</span>
+            <div class="computer" id="function-isallowedtovote-if-age-gte-18-return-true-return-false">
+              <div>
+                <code class="block">
+                  <span><span class="keyword">function</span> <span class="function">isAllowedToVote</span>(<span class="variable">age</span>) {</span>
+                  <span>    <span class="keyword">if</span> (<span class="variable">age</span> <span class="operator">&gt;=</span> <span class="number">18</span>) <span class="keyword">return</span> <span class="literal">true</span></span>
+                  <span>    <span class="keyword">return</span> <span class="literal">false</span></span>
+                  <span>}</span>
+                </code>
+              </div>
+            </div>
+            <span class="computer comment" id="this-is-the-ai-bot-for-the-last-time">↑ this is the AI bot for the last time</span>
+            <span class="computer comment" id="its-third-function-passes-both-unit-tests">its third function passes both unit tests</span>
+            <span class="computer comment" id="and-now-it-is-correct">and now it is correct 👍</span>
+          </div>
+          <div id="steps">
+            <button class="btn" id="control-animation" aria-label="Play animation" data-label-play="Play animation" data-label-pause="Pause animation" data-label-replay="Replay animation"></button>
+            <progress id="progress" max="19" value="0"></progress>
+          </div>
+        </div>
+      </section>
       <section id="how-it-works">
         <div>
           <span class="section-kicker">The learning loop</span>
