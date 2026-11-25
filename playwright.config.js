@@ -21,7 +21,7 @@ export default defineConfig({
     ],
     webServer: {
         command: `"${process.execPath}" node_modules/http-server/bin/http-server -p 3000`,
-        url: 'http://localhost:3000',
+        url: 'http://localhost:3000/en/index.html',
         reuseExistingServer: true,
     },
     reporter: [
