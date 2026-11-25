@@ -40,12 +40,12 @@ pages:
   script:
     - npm clean-install
     - mkdir -p public/src
-    - cp *.{css,ico,jpg,png,txt} _redirects public
+    - cp *.{css,ico,jpg,png,txt} 404.html _redirects public
     - cp -r en nl de fr es it public
     - cp src/theme.{js,js.map} public/src
     # one file per page instead of a chain of module imports, so slow connections wait for one download instead of five rounds
     - npx esbuild src/game.ts src/index.ts --bundle --format=esm --minify --sourcemap --outdir=public/src
-    - gzip -k -6 public/*.css public/{en,nl,de,fr,es,it}/*.html public/src/*.js
+    - gzip -k -6 public/*.css public/404.html public/{en,nl,de,fr,es,it}/*.html public/src/*.js
   artifacts:
     paths:
       - public
